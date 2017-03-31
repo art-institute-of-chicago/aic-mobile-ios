@@ -1,0 +1,48 @@
+#OS X Files
+*.DS_STORE
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+
+# Xcode Noise
+*~.nib
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+*.xcworkspace
+*.xcuserdata
+xcuserdata/
+build/
+
+#VS2012 Noise
+*.suo
+*.ncb
+*.sdf
+*.opensdf
+Debug/
+Release/
+ipch/
+
+DerivedData
+
+aic/Carthage/**
+aic/Pods/**
+
+# Configuration
+aic/aic/Config.plist
+aic/aic/GoogleService-Info.plist
+
+# Local temporary files
+tmp/

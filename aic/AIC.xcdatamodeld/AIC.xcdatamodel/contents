@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 7.0">
+    <entity name="AudioItem" syncable="YES">
+        <attribute name="transcript" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Department" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Gallery" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="long" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Object" syncable="YES">
+        <attribute name="artist_culture_place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artist_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artist_sort_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="credit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_display" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_range" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="department_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="gallery_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="in_gallery" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="long" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="medium" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reference_num" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Tour" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="intro" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tour_description" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TourItem" syncable="YES"/>
+    <elements>
+        <element name="Tour" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="AudioItem" positionX="-252" positionY="-9" width="128" height="73"/>
+        <element name="Object" positionX="-387" positionY="153" width="128" height="283"/>
+        <element name="Gallery" positionX="97" positionY="-81" width="128" height="105"/>
+        <element name="Department" positionX="0" positionY="81" width="128" height="75"/>
+        <element name="TourItem" positionX="-135" positionY="117" width="128" height="45"/>
+    </elements>
+</model>
