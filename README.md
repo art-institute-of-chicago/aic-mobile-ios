@@ -134,10 +134,10 @@ Once you have downloaded the repo, one way or another, open your terminal and ch
 cd /path/to/aic-mobile-app
 ```
 
-Then, run the `setup.sh` script. This script will fetch and build all of the required libraries for the app, create stub config files, and automatically launch Xcode when finished.
+Then, run the `install.sh` script. This script will fetch and build all of the required libraries for the app, create stub config files, and automatically launch Xcode when finished.
 
 ```bash
-./setup.sh
+./install.sh
 ```
 
 You should now be up-and-running in Xcode! The next steps will be to get started with some test data so you can run the app in the Simulator.
@@ -180,7 +180,7 @@ This section is meant to get you started with modifying the app for your own mus
 
 For readability, we assume that all config paths are relative to the `/aic/aic` subdirectory, unless otherwise noted. For instance, when we talk about `Info.plist`, we mean `/aic/aic/Info.plist` specifically.
 
-You might note that `Config.plist` and `GoogleService-Info.plist` are not included with the repository. Running `setup.sh` as part of the [installation process](#installation) will create these files for you. Any changes you make to these files will be ignored by Git.
+You might note that `Config.plist` and `GoogleService-Info.plist` are not included with the repository. Running `install.sh` as part of the [installation process](#installation) will create these files for you. Any changes you make to these files will be ignored by Git.
 
 We'll briefly go through these files and discuss the changes you may need to make.
 
@@ -286,7 +286,7 @@ PROJECT_ID
 GOOGLE_APP_ID
 ```
 
-Note that this file does not exist initially, and it is not tracked by git. Like `Config.plist`, it will be created when you run `setup.sh`.
+Note that this file does not exist initially, and it is not tracked by git. Like `Config.plist`, it will be created when you run `install.sh`.
 
 See the [Analytics](#analytics) section for more info.
 
@@ -509,7 +509,7 @@ The application relies on a few external libs, all of which are built using [Car
 
 The app uses Google Analytics, which currently does not support Carthage (support is supposedly being evaluated by Google). To use this libray, CocoaPods is required. Ideally, down the line, the dependency on CocoaPods can be fully eliminated in favor of Carthage.
 
-After running `setup.sh`, you will need to configure [GoogleService-Info.plist](#googleservice-infoplist) to enable analytics.
+After running `install.sh`, you will need to configure [GoogleService-Info.plist](#googleservice-infoplist) to enable analytics.
 
 See [AICAnalytics.swift](aic/aic/Analytics/AICAnalytics.swift) for details regarding which events are tracked.
 
