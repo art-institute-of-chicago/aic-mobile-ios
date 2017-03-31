@@ -1,13 +1,15 @@
 ![Art Institute of Chicago](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/master/aic-logo.gif)
 
-
-# AIC Mobile App
-
+# Art Institute of Chicago Official Mobile App
 > A digital guide to the Art Institute of Chicago. Built with Swift 3 for iOS.
 
-The Art Insitute of Chicago's [official mobile app](http://extras.artic.edu/new-mobile/) is your personal, pocket-sized guide to our collection. The new mobile experience merges location-aware technology with audio storytelling, letting the art speak to you. The Art Institute offers nearly a million square feet to explore—the New Mobile Experience will be your guide.
+The Art Insitute of Chicago [Official Mobile App](http://extras.artic.edu/new-mobile/) is your personal,
+pocket-sized guide to our collection. The mobile experience merges location-aware technology with audio
+storytelling, letting the art speak to you. The Art Institute offers nearly a million square feet to
+explore—the Official Mobile App will be your guide.
 
-The Art Institute's mobile app launched in the iOS App Store on August 10, 2016. It was open-sourced in early April 2017. It's still in place today and is being maintained by a team of internal developers.
+The Art Institute of Chicago's mobile app launched in the iOS App Store on August 10, 2016. It's
+still in place today and is being maintained by a team of internal developers.
 
 Please note that while we took steps to generalize this project, it is not meant to be a plug-and-play product for your institution. You may need to substantially modify the iOS app, beyond basic configuration. More importantly, you may need to contact Apple regarding indoor positioning, or research and implement some open-source alternative.
 
@@ -95,7 +97,7 @@ This app is split into five distinct sections. In the future, additional section
 
 ## Getting Started
 
-The AIC Mobile App consists of two parts: a content authoring system written in Drupal, and this repository - an iOS app written in Swift. The content authoring CMS can be found here:
+The Official Mobile App consists of two parts: a content authoring system written in Drupal, and this repository - an iOS app written in Swift. The content authoring CMS can be found here:
 
 https://github.com/art-institute-of-chicago/mobile-app-cms
 
@@ -349,7 +351,7 @@ Here's a breakdown of the expected data format:
       // Latitude, longitude, separated with comma and optional space
       "location": "41.879565,-87.623865",
 
-      // For the AIC, floor is either a number or "LL" for lower-level
+      // For the Art Institute of Chicago, floor is either a number or "LL" for lower-level
       // See AppDataParser.swift#L167
       "floor": 1
 
@@ -434,7 +436,7 @@ For more details, see [AppDataParser.swift](aic/aic/Data/AppDataParser.swift). I
 
 ### Featured Exhibitions
 
-This data feed is being recycled from AIC's website. It provides a list of current exhibitions, cross-referencing gallery and floor locations from the App Data file. Here is the annotated data structure:
+This data feed is being recycled from the Art Institute of Chicago's website. It provides a list of current exhibitions, cross-referencing gallery and floor locations from the App Data file. Here is the annotated data structure:
 
 ```javascript
 [
@@ -470,7 +472,7 @@ This data feed is being recycled from AIC's website. It provides a list of curre
 ]
 ```
 
-Check out this URL for AIC's "live" version:
+Check out this URL for the Art Institute of Chicago's "live" version:
 
 ```
 http://www.artic.edu/exhibitions-json/featured-exhibitions
@@ -484,7 +486,7 @@ For more details, see [AppDataParser.swift](aic/aic/Data/AppDataParser.swift#L53
 
 ### Member Card API
 
-The member card information is validated through a simple SOAP API that exists on AIC's server. Given a member's ID number and ZIP code, this API attempts to validate the user and returns their information if successful.
+The member card information is validated through a simple SOAP API that exists on the Art Institute of Chicago's server. Given a member's ID number and ZIP code, this API attempts to validate the user and returns their information if successful.
 
 Our membership system is based on Gateway's [Galaxy Connect](http://www.gatewayticketing.com/solutions/membership/). You will likely have to substantially modify the membership components of this app to suit your institution. Because this functionality is so specific to the Art Institute, we disabled the member card view by default. All the relevant code is still there, however. Toggle `showMemberCardView` in [InfoSectionView.swift](aic/aic/ViewControllers/Sections/About/InfoSectionView.swift#L16) to get started.
 
@@ -562,6 +564,6 @@ The code in this project is licensed under the [AGNU Affero General Public Licen
 
 ## Acknowledgements
 
-Designed and developed by [Potion](https://potiondesign.com)
+Design and development by [Potion](https://potiondesign.com)
 
 Additional development by [Josh Billions](https://github.com/joshbillions) at [MBLabs](http://www.mblabs.org)
