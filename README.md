@@ -99,7 +99,7 @@ This app is split into five distinct sections. In the future, additional section
 
 The Official Mobile App consists of two parts: a content authoring system written in Drupal, and this repository - an iOS app written in Swift. The content authoring CMS can be found here:
 
-https://github.com/art-institute-of-chicago/mobile-app-cms
+https://github.com/art-institute-of-chicago/aic-mobile-cms
 
 We included some SampleData with this repo, so you don't _need_ the CMS in order to run the front-end. As long as the expected data format is followed, feel free to serve the files statically (cf. [SampleData](SampleData)) or roll your own CMS.
 
@@ -123,7 +123,7 @@ Throughout this guide, we assume that you know the basics of using Git and Termi
 Clone this repo to your computer:
 
 ```bash
-git clone https://github.com/art-institute-of-chicago/aic-mobile-app.git
+git clone https://github.com/art-institute-of-chicago/aic-mobile-ios.git
 ```
 
 **Note:** We recommend against downloading the ZIP of this project to avoid "Missing Reference" issues. If you do download this project as a ZIP, you will need to fetch the `UIImageColors.swift` file from [jathu/UIImageColors](https://github.com/jathu/UIImageColors). Place the downloaded Swift file into the `aic/aic/ThirdParty/UIImageColors/` folder. This file will be automatically fetched if you clone the repository with Git.
@@ -131,7 +131,7 @@ git clone https://github.com/art-institute-of-chicago/aic-mobile-app.git
 Once you have downloaded the repo, one way or another, open your terminal and change your directory to the top level of the project:
 
 ```bash
-cd /path/to/aic-mobile-app
+cd /path/to/aic-mobile-ios
 ```
 
 Then, run the `install.sh` script. This script will fetch and build all of the required libraries for the app, create stub config files, and automatically launch Xcode when finished.
@@ -153,7 +153,7 @@ We've provided some sample data to test the iOS frontend and to demonstrate the 
 For the purposes of this documentation, we will use [devinrhode2/pache](https://github.com/devinrhode2/pache). Pache is a script that allows you to quickly start Apache from the commandline and host a folder at a specified port. Given that Mac OS X has Apache built-in, minimal configuration is required. However, `pache` requires `node.js` and `npm`.
 
 ```bash
-cd /path/to/aic-mobile-app/SampleData
+cd /path/to/aic-mobile-ios/SampleData
 pache . 8888
 ```
 
@@ -530,10 +530,10 @@ We encourage your contributions. Please fork this repository and make your chang
 
 ```bash
 # Clone the repo to your computer
-git clone https://github.com/your-github-account/aic-mobile.git
+git clone https://github.com/your-github-account/aic-mobile-ios.git
 
 # Enter the folder that was created by the clone
-cd aic-mobile
+cd aic-mobile-ios
 
 # Run the install script
 chmod a+rx install.sh
