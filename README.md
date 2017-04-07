@@ -294,7 +294,7 @@ See the [Analytics](#analytics) section for more info.
 
 ## Map + Indoor Positioning
 
-The map in this application is a persistent background UI element and provides users with accurate location information throughout the Art Institutes galleries. To make indoor user-positioning as accurate as possible, the Art Institute has partnered with Apple via the [Maps Connect](https://mapsconnect.apple.com/) program. Through this program, we utilize Apple's [Indoor Survey App](http://www.theverge.com/2015/11/2/9657304/apple-indoor-mapping-survey-app) to map the wireless signals throughout our buildings, creating a fingerprint of all of the areas of our venue.
+The map in this application is a persistent background UI element and provides users with accurate location information throughout the Art Institutes galleries. To make indoor user-positioning as accurate as possible, the Art Institute has partnered with Apple via the [MapsConnect](https://mapsconnect.apple.com/) program. Through this program, we utilize Apple's [Indoor Survey App](https://itunes.apple.com/us/app/indoor-survey/id994269367?mt=8) to map the wireless signals throughout our buildings, creating a fingerprint of all of the areas of our venue.
 
 These wireless fingerprints become a part Apple's venue database and are utilized by the CoreLocation API to place the users "blue dot" on the map. By utilizing [CoreLocation](https://developer.apple.com/reference/corelocation) in combination with the on-site survey, we are able to take advantage of advanced location metrics such as current floor level to provide a better navigation experience to our app users on-site.
 
