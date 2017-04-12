@@ -564,6 +564,9 @@ The code in this project is licensed under the [AGNU Affero General Public Licen
 
 ## Acknowledgements
 
+Supported By <br>
+<strong>[Bloomberg Philanthropies](http://www.bloomberg.org/)</strong>
+
 Design and development by [Potion](https://potiondesign.com)
 
 Additional development by [Josh Billions](https://github.com/joshbillions) at [MBLabs](http://www.mblabs.org)
