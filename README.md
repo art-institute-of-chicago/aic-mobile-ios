@@ -561,12 +561,10 @@ By participating in this project, you agree to abide by its [Code of Conduct](CO
 The code in this project is licensed under the [AGNU Affero General Public License Version 3](LICENSE).
 
 
+## Acknowledgments
 
-## Acknowledgements
+Supported by [Bloomberg Philanthropies](http://www.bloomberg.org/)
 
-Supported By <br>
-<strong>[Bloomberg Philanthropies](http://www.bloomberg.org/)</strong>
+Design and development by [Potion](http://www.potiondesign.com/)
 
-Design and development by [Potion](https://potiondesign.com)
-
-Additional development by [Josh Billions](https://github.com/joshbillions) at [MBLabs](http://www.mblabs.org)
+Additional development by [Josh Biillons](https://github.com/joshbillions/) at [MBLabs](http://www.mblabs.org/)
