@@ -144,7 +144,7 @@ class CoordinateConverter: NSObject {
             In the CG coordinate frame, clockwise rotation is NEGATIVE radians
             because in a PDF +x is rightward and +y is upward.
         */
-        oneMeterSouthwardVector = oneMeterEastwardVector.rotatedByRadians(CGFloat(-M_PI_2))
+        oneMeterSouthwardVector = oneMeterEastwardVector.rotatedByRadians(CGFloat(-Double.pi/2))
 
         /*
             We'll choose the midpoint between the two anchors to be our "tangent
@@ -315,7 +315,7 @@ class CoordinateConverter: NSObject {
             vector toward due east.
         */
         let resultRadians: CGFloat = atan2(oneMeterEastwardVector.dy, oneMeterEastwardVector.dx)
-        let result = resultRadians * 180.0 / CGFloat(M_PI)
+        let result = resultRadians * 180.0 / CGFloat(Double.pi)
 
         /*
             According to the CLLocationDirection documentation we must store a

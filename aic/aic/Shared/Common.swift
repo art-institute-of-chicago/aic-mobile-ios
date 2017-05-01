@@ -260,7 +260,7 @@ struct Common {
         // Get the object that is closest to a user location
         static func getClosestObject(toUserLocation userLocation:CLLocation, forObjects objects:[AICObjectModel]) -> AICObjectModel {
             var closestObject:AICObjectModel? = nil
-            var closestDistance:Double = DBL_MAX
+            var closestDistance:Double = Double.greatestFiniteMagnitude
 
             for object in objects {
                 let distance = getDistance(fromUserLocation: userLocation, toObjectLocation: object.location);
