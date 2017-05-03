@@ -134,7 +134,7 @@ struct Common {
 
     // MARK: URL Scheme/Deep Links
     struct DeepLinks {
-        static let domain = "AICOfficialMobileApp"
+        static let domain = "artic"
         static let tourCategory = "tour"
 
         static func getURL(forTour tour:AICTourModel) -> String{
@@ -260,7 +260,7 @@ struct Common {
         // Get the object that is closest to a user location
         static func getClosestObject(toUserLocation userLocation:CLLocation, forObjects objects:[AICObjectModel]) -> AICObjectModel {
             var closestObject:AICObjectModel? = nil
-            var closestDistance:Double = DBL_MAX
+            var closestDistance:Double = Double.greatestFiniteMagnitude
 
             for object in objects {
                 let distance = getDistance(fromUserLocation: userLocation, toObjectLocation: object.location);
@@ -335,11 +335,11 @@ struct Common {
 
         // Anchor pair for mapping GeoCoords to PDF Coords
         static let pdfSize = CGSize(width: 2400, height: 2400)
-        static let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.87998814333057,-87.62397855520248),
+        static let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.88002009571711,-87.62398928403854),
                                        pdfPoint: CGPoint(x: 855.955, y: pdfSize.height-1061.635)
         )
 
-        static let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.87999812845307,-87.62333750724792),
+        static let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.8800240897643,-87.62334823608397),
                                        pdfPoint: CGPoint(x: 1011.94, y: pdfSize.height-1061.635)
         )
 

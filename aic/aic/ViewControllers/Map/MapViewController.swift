@@ -467,7 +467,7 @@ class MapViewController: UIViewController {
             }
             
             // Set the department in the HUD
-            var closestDepartmentDistance = DBL_MAX
+            var closestDepartmentDistance = Double.greatestFiniteMagnitude
             var closestDepartment:MapDepartmentAnnotation? = nil
             
             let mapCenterPoint = MKMapPointForCoordinate(mapView.centerCoordinate)
