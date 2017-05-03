@@ -134,7 +134,7 @@ struct Common {
 
     // MARK: URL Scheme/Deep Links
     struct DeepLinks {
-        static let domain = "AICOfficialMobileApp"
+        static let domain = "artic"
         static let tourCategory = "tour"
 
         static func getURL(forTour tour:AICTourModel) -> String{
