@@ -464,15 +464,15 @@ class AppDataParser {
     
     private func getIntArray(fromJSON json: JSON, forArrayKey key:String) throws -> [Int]{
         
+        guard let jsonArray = json[key].array else {
+            throw ParseError.missingKey(key: key)
+        }
+        
         var intArray = [Int]()
         
-        if let jsonArray = json[key].array {
-            
-            for index in 0 ..< jsonArray.count {
+        for index in 0 ..< jsonArray.count {
                 let arrayInt = try self.getInt(fromJSON: json, forArrayKey: key, atIndex: index)
                 intArray.append(arrayInt)
-            }
-            
         }
         
         return intArray
