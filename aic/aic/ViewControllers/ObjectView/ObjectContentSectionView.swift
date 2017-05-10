@@ -120,13 +120,13 @@ class ObjectContentSectionView: BaseView {
 // Gesture Handlers
 extension ObjectContentSectionView {
     internal func collapseButtonTapped(_ gesture:UIGestureRecognizer) {
-        var rotation:CGFloat = CGFloat(-M_PI * 2.0)
+        var rotation:CGFloat = CGFloat(-Double.pi * 2.0)
         
         if isOpen {
             bodyTextView.removeFromSuperview()
         } else {
             contentView.addSubview(bodyTextView)
-            rotation = CGFloat(M_PI)
+            rotation = CGFloat(Double.pi)
         }
         
         // Set Button Rotation
