@@ -64,12 +64,14 @@ func getAttributedString(forHTMLText text:String, font:UIFont) -> NSAttributedSt
     let htmlText = NSString(format:"<span style=\"font-family: \(font.fontName); font-size: \(font.pointSize)\">%@</span>" as NSString, textWithHTMLReturns) as String
     
     // Create an HTML Attributed string
-    guard let data = htmlText.data(using: .utf8) else { return NSAttributedString() }
+    guard let data = htmlText.data(using: .utf8) else {
+        return NSAttributedString()
+    }
     
-    guard let attrStr = try? NSAttributedString(
+    let attrStr = try! NSAttributedString(
         data: data,
         options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue],
-        documentAttributes: nil) else { return NSAttributedString() }
+        documentAttributes: nil)
     
     return attrStr
 }

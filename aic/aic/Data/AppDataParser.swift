@@ -53,7 +53,6 @@ class AppDataParser {
     private func parse(newsItemData itemData:JSON) throws -> AICNewsItemModel {
         let title = try getString(fromJSON: itemData, forKey: "title")
         var description = try getString(fromJSON: itemData, forKey: "body")
-		var shortDescription = description
         
         // Remove any leading whitespace, currently a bug in JSON
         if description.characters.count > 1 && description.characters.first == " " {
@@ -63,16 +62,7 @@ class AppDataParser {
         let thumbnailURL = try getURL(fromJSON: itemData, forKey: "thumbnail")
         let imageURL = try getURL(fromJSON: itemData, forKey: "feature_image_mobile")
         let imageCropRect: CGRect? = try? getRect(fromJSON: itemData, forKey: "large_image_crop_rect")
-
-		//If HTML versions exist, replace the plain text copies
-		if let descriptionHTML = try? getString(fromJSON: itemData, forKey: "description_html") {
-			shortDescription = descriptionHTML
-		}
-
-		if let introHTML = try? getString(fromJSON: itemData, forKey: "intro_html"){
-			description = "\(shortDescription)<br><br>\(introHTML)"
-		}
-
+        
         // Parse out first gallery listed for exhibition
         var location:CoordinateWithFloor? = nil
         
@@ -107,7 +97,7 @@ class AppDataParser {
 
         // Return news item
         return AICNewsItemModel(title: title,
-                                shortDescription: shortDescription,
+                                shortDescription: description,
                                 longDescription: description,
                                 additionalInformation: dateString,
                                 imageUrl: imageURL,
@@ -266,7 +256,6 @@ class AppDataParser {
             audioFiles.append(audioFile)
         }
         
-        
         return AICObjectModel(nid: nid,
                               thumbnailUrl: thumbnail,
                               thumbnailCropRect: thumbnailCropRect,
@@ -337,7 +326,7 @@ class AppDataParser {
         let nid                 = try getInt(fromJSON:tourData, forKey: "nid")
         let title               = try getString(fromJSON: tourData, forKey: "title")
         let imageUrl            = try getURL(fromJSON: tourData, forKey: "image_url")
-        var shortDescription        = try getString(fromJSON: tourData, forKey: "description")
+        let shortDescription        = try getString(fromJSON: tourData, forKey: "description")
         
         var longDescription     = try getString(fromJSON: tourData, forKey: "intro")
         longDescription = "\(shortDescription)\r\r\(longDescription)"
@@ -345,24 +334,14 @@ class AppDataParser {
         let audioFileID         = try getInt(fromJSON:tourData, forKey: "tour_audio")
         let audioFile           = try getAudioFile(forNID:audioFileID)
         
-		//If HTML versions exist, replace the plain text copies
-		if let descriptionHTML = try? getString(fromJSON: tourData, forKey: "description_html") {
-			shortDescription = descriptionHTML
-		}
-
-		if let introHTML = try? getString(fromJSON: tourData, forKey: "intro_html"){
-			longDescription = "\(shortDescription)<br><br>\(introHTML)"
-		}
-
-
-		// Create overview
-		let overview = AICTourOverviewModel(title: "Tour Overview",
-		                                    description: longDescription,
-		                                    imageUrl: imageUrl,
-		                                    audio: audioFile,
-		                                    credits: "Copyright 2016 Art Institue of Chicago"
-		)
-
+        // Create overview
+        let overview = AICTourOverviewModel(title: "Tour Overview",
+                                            description: longDescription,
+                                            imageUrl: imageUrl,
+                                            audio: audioFile,
+                                            credits: "Copyright 2016 Art Institue of Chicago"
+        )
+        
         // Create Stops
         var stops:[AICTourStopModel] = []
         guard let stopsData = tourData["stops"].array else {
@@ -443,7 +422,6 @@ class AppDataParser {
     
     // Try to parse an int from a JSON string
     private func getInt(fromJSON json:JSON, forKey key:String) throws -> Int {
-        
         guard let int = json[key].int else {
             
             let str = try getString(fromJSON: json, forKey: key)
@@ -452,13 +430,11 @@ class AppDataParser {
             if int == nil  {
                 throw ParseError.badIntString(string: str)
             }
-
-            return int!
             
+            return int!
         }
-     
-        return int
         
+        return int
     }
     
     
