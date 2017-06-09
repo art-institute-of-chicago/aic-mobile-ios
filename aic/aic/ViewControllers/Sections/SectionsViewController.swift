@@ -208,6 +208,9 @@ class SectionsViewController : UIViewController {
 
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
         })
+        Common.DeepLinks.loadedEnoughToLink = true
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.triggerDeepLinkIfPresent()
     }
     
     func startTour(tour:AICTourModel) {
