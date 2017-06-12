@@ -134,11 +134,18 @@ struct Common {
 
     // MARK: URL Scheme/Deep Links
     struct DeepLinks {
+        
+        static var loadedEnoughToLink = false
+        
         static let domain = "artic"
         static let tourCategory = "tour"
 
-        static func getURL(forTour tour:AICTourModel) -> String{
-            return String("\(domain)://\(tourCategory)/\(tour.nid)")
+        static func getURL(forTour tour:AICTourModel) -> String?{
+            if (loadedEnoughToLink){
+                return String("\(domain)://\(tourCategory)/\(tour.nid)")
+            } else {
+                return nil
+            }
         }
     }
 

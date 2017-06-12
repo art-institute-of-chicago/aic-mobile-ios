@@ -12,6 +12,7 @@ import MediaPlayer
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var deepLinkString: String? = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -131,27 +132,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let queryArray = urlString.components(separatedBy: "/")
         let query = queryArray[2]
         
+        if Common.DeepLinks.loadedEnoughToLink {
+            
         // Check if it is a tour
-        guard let _ = query.range(of: "tour") else {
-            return true
+        
+        if query.range(of: "tour") != nil
+        {
+            let data = urlString.components(separatedBy: "/")
+            if (data.count) >= 3
+            {
+                guard let tourNID = Int(data[3]) else {
+                    return true
+                }
+                
+                guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else {
+                    return true
+                }
+                
+                    let rootVC = window?.rootViewController as! RootViewController
+                    rootVC.startTour(tour: tour)
+                }
+            }
+        } else {
+            
+            let data = urlString.components(separatedBy: "/")
+            deepLinkString = data[3]
         }
         
-        // Break it apart, make sure we have at least 3 components
-        let data = urlString.components(separatedBy: "/")
-        if data.count >= 3 {
-            guard let tourNID = Int(data[3]) else {
-                return true
+        return true
+    }
+    
+    
+    func triggerDeepLinkIfPresent()
+    {
+        if deepLinkString != nil {
+          
+            guard let tourNID = Int(deepLinkString!) else {
+                return
             }
-
+            
             guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else {
-                return true
+                return
             }
             
             let rootVC = window?.rootViewController as! RootViewController
             rootVC.startTour(tour: tour)
         }
-        
-        return true
     }
 }
 
