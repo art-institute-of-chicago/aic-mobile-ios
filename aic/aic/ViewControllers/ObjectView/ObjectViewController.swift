@@ -282,7 +282,7 @@ class ObjectViewController: UIViewController {
                         
                         // Auto-play on load
                         
-//                        self.play()
+                        self.play()
                         
                         break
                         
@@ -335,9 +335,6 @@ class ObjectViewController: UIViewController {
             // Init session with correct category
             try AVAudioSession.sharedInstance().setCategory(playbackCategory, with: AVAudioSessionCategoryOptions.allowBluetooth)
             try AVAudioSession.sharedInstance().setActive(true)
-            
-            // Try to play file if we have one
-            play()
         } catch {
             print("Could not initialize audio session")
         }
