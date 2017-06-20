@@ -281,7 +281,8 @@ class ObjectViewController: UIViewController {
                         MPNowPlayingInfoCenter.default().nowPlayingInfo = songInfo
                         
                         // Auto-play on load
-                        self.play()
+                        
+//                        self.play()
                         
                         break
                         
@@ -393,7 +394,7 @@ class ObjectViewController: UIViewController {
     }
     
     internal func pause() {
-        if let currentItem = avPlayer.currentItem {
+        if avPlayer.currentItem != nil {
             self.avPlayer.pause()
             synchronizePlayPauseButtons(forMode: PlayPauseButton.Mode.paused)
             
