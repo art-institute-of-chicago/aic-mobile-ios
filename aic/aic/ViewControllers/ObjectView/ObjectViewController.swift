@@ -281,6 +281,7 @@ class ObjectViewController: UIViewController {
                         MPNowPlayingInfoCenter.default().nowPlayingInfo = songInfo
                         
                         // Auto-play on load
+                        
                         self.play()
                         
                         break
@@ -334,9 +335,6 @@ class ObjectViewController: UIViewController {
             // Init session with correct category
             try AVAudioSession.sharedInstance().setCategory(playbackCategory, with: AVAudioSessionCategoryOptions.allowBluetooth)
             try AVAudioSession.sharedInstance().setActive(true)
-            
-            // Try to play file if we have one
-            play()
         } catch {
             print("Could not initialize audio session")
         }
@@ -393,7 +391,7 @@ class ObjectViewController: UIViewController {
     }
     
     internal func pause() {
-        if let currentItem = avPlayer.currentItem {
+        if avPlayer.currentItem != nil {
             self.avPlayer.pause()
             synchronizePlayPauseButtons(forMode: PlayPauseButton.Mode.paused)
             
