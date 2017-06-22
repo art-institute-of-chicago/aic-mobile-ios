@@ -804,7 +804,7 @@ extension MapViewController : CLLocationManagerDelegate {
                 userFloorNumber = Common.Testing.testFloorNumber
             } else {
                 if let floor = location.floor {
-                    userFloorNumber = floor.level + 1 // CoreLocation shows floors at -1 to 2
+                    userFloorNumber = floor.level
                 }
             }
             
