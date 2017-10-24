@@ -45,7 +45,7 @@ class AudioPlayerView : BaseView {
         titleLabel.numberOfLines = 0
         titleLabel.textColor = UIColor.black
         titleLabel.textAlignment = NSTextAlignment.center
-        titleLabel.font = UIFont.aicTitleFont()
+        titleLabel.font = UIFont.aicTitleFont
         titleLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - (margins.left + margins.right)
         
         timeRemainingLabel.numberOfLines = 1
@@ -112,36 +112,36 @@ class AudioPlayerView : BaseView {
     }
     
     override func updateConstraints() {
-        insetView.snp.remakeConstraints { (make) -> Void in
+        insetView.snp.remakeConstraints { (make) in
             make.edges.equalTo(insetView.superview!).inset(margins)
             make.bottom.equalTo(controlView)
         }
         
-        titleLabel.snp.remakeConstraints { (make) -> Void in
+        titleLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(insetView)
             make.left.right.equalTo(insetView)
             make.height.greaterThanOrEqualTo(1)
         }
         
-        timeRemainingLabel.snp.remakeConstraints { (make) -> Void in
+        timeRemainingLabel.snp.remakeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
             make.left.right.equalTo(insetView)
             make.height.greaterThanOrEqualTo(25)
         }
         
-        controlView.snp.remakeConstraints { (make) -> Void in
+        controlView.snp.remakeConstraints { (make) in
             make.top.equalTo(timeRemainingLabel.snp.bottom)
             make.left.right.equalTo(insetView)
             make.height.equalTo(playPauseButton.frame.height)
         }
         
-        playPauseButton.snp.remakeConstraints { (make) -> Void in
+        playPauseButton.snp.remakeConstraints { (make) in
             make.size.equalTo(playPauseButton.frame.size)
             make.centerY.equalTo(controlView)
             make.left.equalTo(controlView)
         }
         
-        slider.snp.remakeConstraints({ (make) -> Void in
+        slider.snp.remakeConstraints({ (make) in
             make.left.equalTo(playPauseButton.snp.right).offset(10)
             make.right.equalTo(controlView.snp.right)
             make.centerY.equalTo(controlView)

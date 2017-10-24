@@ -86,7 +86,7 @@ class NewsToursTableViewCell: UITableViewCell {
         headerImageView.isUserInteractionEnabled = true
         
         // Title
-        titleLabel.attributedText = getAttributedStringWithLineHeight(text: model.title.stringByDecodingHTMLEntities, font: UIFont.aicTitleFont()!, lineHeight: titleLineHeight)
+        titleLabel.attributedText = getAttributedStringWithLineHeight(text: model.title.stringByDecodingHTMLEntities, font: UIFont.aicTitleFont, lineHeight: titleLineHeight)
         titleLabel.numberOfLines = 0
         titleLabel.textColor = UIColor.black
         
@@ -111,7 +111,7 @@ class NewsToursTableViewCell: UITableViewCell {
             revealContentButton = UIButton()
             revealContentButton.setImage(UIImage(named:"buttonPin"), for: UIControlState())
             revealContentButton.setTitleColor(UIColor.aicButtonsColor(), for: UIControlState())
-            revealContentButton.titleLabel!.font = UIFont.aicTitleFont()
+            revealContentButton.titleLabel?.font = UIFont.aicTitleFont
             revealContentButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left;
             revealContentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0)
         }

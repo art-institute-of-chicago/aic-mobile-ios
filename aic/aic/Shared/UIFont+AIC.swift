@@ -22,8 +22,8 @@ extension UIFont {
 		return UIFont(name: "SourceSansPro-Regular", size: 21.0)
 	}
 
-	class func aicTitleFont() -> UIFont? {
-		return UIFont(name: "SourceSansPro-Bold", size: 22.0)
+    static var aicTitleFont:UIFont {
+        return UIFont(name: "SourceSansPro-Bold", size: 22.0)!
 	}
 
 	class func aicItalicTextFont() -> UIFont? {

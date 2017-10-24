@@ -20,7 +20,7 @@ class AICImageView : UIImageView {
     
     init() {
         super.init(frame:CGRect.zero)
-        self.backgroundColor = UIColor.gray
+        self.backgroundColor = .gray
         
         if AICImageView.manager == nil {
             let configuration = URLSessionConfiguration.default

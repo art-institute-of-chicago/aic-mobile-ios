@@ -94,7 +94,7 @@ class InfoSectionMemberCardView: BaseView {
         memberInputBarcodeView.backgroundColor = UIColor.white
         
         memberIDTitleLabel.text = Common.Info.memberIDTitle
-        memberIDTitleLabel.font = UIFont.aicTitleFont()
+        memberIDTitleLabel.font = UIFont.aicTitleFont
         
         memberIDTextField.placeholder = Common.Info.memberIDPlaceholder
         memberIDTextField.backgroundColor = UIColor.aicGrayColor()
@@ -102,14 +102,14 @@ class InfoSectionMemberCardView: BaseView {
         memberIDTextField.keyboardType = UIKeyboardType.numberPad
         
         memberZipCodeTitleLabel.text = Common.Info.memberZipTitle
-        memberZipCodeTitleLabel.font = UIFont.aicTitleFont()
+        memberZipCodeTitleLabel.font = UIFont.aicTitleFont
         
         memberZipCodeTextField.placeholder = Common.Info.memberZipPlaceholder
         memberZipCodeTextField.backgroundColor = UIColor.aicGrayColor()
         memberZipCodeTextField.font = UIFont.aicTextFont()
         memberZipCodeTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         
-        barcodeMemberName.font = UIFont.aicTitleFont()
+        barcodeMemberName.font = UIFont.aicTitleFont
         barcodeMemberLevel.font = UIFont.aicTextFont()
         barcodeExpirationDate.font = UIFont.aicTextFont()
         

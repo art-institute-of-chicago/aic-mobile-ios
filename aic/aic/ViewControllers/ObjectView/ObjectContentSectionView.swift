@@ -32,7 +32,7 @@ class ObjectContentSectionView: BaseView {
         
         titleLabel.numberOfLines = 1
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont.aicTitleFont()
+        titleLabel.font = UIFont.aicTitleFont
         
         bodyTextView.textColor = UIColor.black
         bodyTextView.font = UIFont.aicTextFont()

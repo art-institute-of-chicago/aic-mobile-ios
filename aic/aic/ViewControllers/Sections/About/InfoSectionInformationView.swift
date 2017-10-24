@@ -34,7 +34,7 @@ class InfoSectionInformationView: BaseView {
         
         titleLabel.text = Common.Info.museumInformationTitle
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont.aicTitleFont()
+        titleLabel.font = UIFont.aicTitleFont
         
         museumHoursTextView.text = Common.Info.museumInformationHours
         museumHoursTextView.font = UIFont.aicTextFont()
@@ -43,11 +43,11 @@ class InfoSectionInformationView: BaseView {
         
         locationLabel.text = "Location"
         locationLabel.textColor = UIColor.black
-        locationLabel.font = UIFont.aicTitleFont()
+        locationLabel.font = UIFont.aicTitleFont
         
         locationTextView.text = Common.Info.museumInformationAddress + "\n\n" + Common.Info.museumInformationPhoneNumber
         locationTextView.font = UIFont.aicTextFont()
-        locationTextView.dataDetectorTypes = [UIDataDetectorTypes.address, UIDataDetectorTypes.phoneNumber]
+        locationTextView.dataDetectorTypes = [.address, .phoneNumber]
         locationTextView.setDefaultsForAICAttributedTextView()
         
         let ticketsAttrString = NSMutableAttributedString(string: Common.Info.museumInformationGetTicketsTitle)
@@ -55,11 +55,11 @@ class InfoSectionInformationView: BaseView {
         ticketsAttrString.addAttributes([NSLinkAttributeName : ticketsURL.absoluteString], range: NSMakeRange(0, ticketsAttrString.string.characters.count))
         
         getTicketsTextView.attributedText = ticketsAttrString
-        getTicketsTextView.font = UIFont.aicTitleFont()
+        getTicketsTextView.font = UIFont.aicTitleFont
         getTicketsTextView.setDefaultsForAICAttributedTextView()
         getTicketsTextView.delegate = self
         
-        bloombergCreditsImageView.image = UIImage(named:"bloombergLogo")
+        bloombergCreditsImageView.image = #imageLiteral(resourceName: "bloombergLogo")
         
         let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject?
         let version = nsObject as! String

@@ -156,13 +156,15 @@ extension UIImage {
         let bitsPerComponent: Int = 8
         let randomColorsThreshold = Int(CGFloat(height)*0.01)
         let sortedColorComparator: Comparator = { (main, other) -> ComparisonResult in
-            let m = main as! PCCountedColor, o = other as! PCCountedColor
+            guard let m = main as? PCCountedColor, let o = other as? PCCountedColor else {
+                return .orderedDescending
+            }
             if m.count < o.count {
-                return ComparisonResult.orderedDescending
+                return .orderedDescending
             } else if m.count == o.count {
-                return ComparisonResult.orderedSame
+                return .orderedSame
             } else {
-                return ComparisonResult.orderedAscending
+                return .orderedAscending
             }
         }
         let blackColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)

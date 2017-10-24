@@ -204,7 +204,7 @@ class ObjectView: UIView {
     
     override func updateConstraints() {
         if !didSetupConstraints {
-            miniAudioPlayerView.snp.remakeConstraints { (make) -> Void in
+            miniAudioPlayerView.snp.remakeConstraints { make in
                 make.top.left.right.equalTo(miniAudioPlayerView.superview!)
                 make.height.equalTo(miniAudioPlayerViewHeight)
             }
@@ -248,7 +248,10 @@ class ObjectView: UIView {
         
         
         for (index, view) in contentViewHolder.subviews.enumerated() {
-            let view = view as! ObjectContentSectionView
+            guard let view = view as? ObjectContentSectionView else {
+                continue
+            }
+            
             view.snp.remakeConstraints({ (make) -> Void in
                 if(index == 0) {
                     make.top.equalTo(view.superview!)

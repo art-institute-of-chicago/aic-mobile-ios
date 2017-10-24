@@ -79,7 +79,7 @@ func getAttributedString(forHTMLText text:String, font:UIFont) -> NSAttributedSt
 
 // Create an attributed string with line-height set
 func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFloat) -> NSAttributedString {
-    let baselineOffset = lineHeight - UIFont.aicTitleFont()!.pointSize
+    let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = 0.0
     paragraphStyle.minimumLineHeight = lineHeight

@@ -48,12 +48,12 @@ class MessageLargeView: BaseView {
         
         actionButton.layer.borderWidth = 1
         actionButton.setTitle(model.actionButtonTitle, for: UIControlState())
-        actionButton.titleLabel?.font = UIFont.aicTitleFont()
+        actionButton.titleLabel?.font = UIFont.aicTitleFont
         
         if let cancelButtonTitle = model.cancelButtonTitle {
             let cancelButton = MessageLargeButton()
             
-            cancelButton.titleLabel?.font = UIFont.aicTitleFont()
+            cancelButton.titleLabel?.font = UIFont.aicTitleFont
             cancelButton.setTitle(cancelButtonTitle, for: UIControlState())
             
             self.cancelButton = cancelButton
