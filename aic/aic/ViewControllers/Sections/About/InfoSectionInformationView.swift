@@ -52,7 +52,7 @@ class InfoSectionInformationView: BaseView {
         
         let ticketsAttrString = NSMutableAttributedString(string: Common.Info.museumInformationGetTicketsTitle)
         let ticketsURL = URL(string: Common.Info.museumInformationGetTicketsURL)!
-        ticketsAttrString.addAttributes([NSLinkAttributeName : ticketsURL.absoluteString], range: NSMakeRange(0, ticketsAttrString.string.characters.count))
+        ticketsAttrString.addAttributes([NSAttributedStringKey.link : ticketsURL.absoluteString], range: NSMakeRange(0, ticketsAttrString.string.characters.count))
         
         getTicketsTextView.attributedText = ticketsAttrString
         getTicketsTextView.font = UIFont.aicTitleFont()
@@ -67,13 +67,13 @@ class InfoSectionInformationView: BaseView {
         let versionPlusPotionLink = "Version \(version) \(Common.Info.creditsPotion)"
         let potionCreditsAttrString = NSMutableAttributedString(string: versionPlusPotionLink)
         let potionUrl = URL(string: Common.Info.potionURL)!
-        potionCreditsAttrString.addAttributes([NSLinkAttributeName : potionUrl], range: NSMakeRange(0, potionCreditsAttrString.string.characters.count))
+        potionCreditsAttrString.addAttributes([NSAttributedStringKey.link : potionUrl], range: NSMakeRange(0, potionCreditsAttrString.string.characters.count))
         
         
         potionCreditsTextView.attributedText = potionCreditsAttrString
         potionCreditsTextView.font = UIFont.aicTextFont()
         potionCreditsTextView.setDefaultsForAICAttributedTextView()
-        potionCreditsTextView.linkTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        potionCreditsTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.white]
         
         // Add Subviews
         infoContentView.addSubview(titleLabel)

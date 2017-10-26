@@ -56,11 +56,11 @@ class InfoSectionViewController : SectionViewController {
 
 // Gesture Handlers
 extension InfoSectionViewController {
-    func accessButtonPressed(_ gesture:UITapGestureRecognizer) {
+    @objc func accessButtonPressed(_ gesture:UITapGestureRecognizer) {
         view.addSubview(infoView.memberCardView)
     }
     
-    func memberCardCloseButtonPressed(_ gesture:UITapGestureRecognizer) {
+    @objc func memberCardCloseButtonPressed(_ gesture:UITapGestureRecognizer) {
         infoView.memberCardView.removeFromSuperview()
         //Check again to see if a member just signed in, and update the BecomeMemberView
         infoView.becomeMemberView.savedMember = self.getSavedMember()

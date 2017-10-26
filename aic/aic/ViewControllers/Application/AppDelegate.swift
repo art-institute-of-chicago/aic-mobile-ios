@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
 
-    func resetEnterpriseApp() {
+    @objc func resetEnterpriseApp() {
         exit(0)
     }
     

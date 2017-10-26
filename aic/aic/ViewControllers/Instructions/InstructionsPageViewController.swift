@@ -140,7 +140,7 @@ class InstructionsPageViewController: UIPageViewController {
 
 // Gesture Handlers
 extension InstructionsPageViewController {
-    func getStartedButtonWasTapped(_ gesture:UIGestureRecognizer) {
+    @objc func getStartedButtonWasTapped(_ gesture:UIGestureRecognizer) {
         instructionsDelegate?.introPageGetStartedButtonTapped()
     }
 }

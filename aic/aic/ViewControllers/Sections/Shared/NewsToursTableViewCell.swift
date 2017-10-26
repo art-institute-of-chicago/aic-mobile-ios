@@ -128,9 +128,9 @@ class NewsToursTableViewCell: UITableViewCell {
             
             let bannerFont = UIFont(name: "SourceSansPro-Semibold", size: 18.0)!
             let attributedBannerString = NSMutableAttributedString.init(string: model.bannerString!, attributes: [
-                NSKernAttributeName : 1.75,
-                NSForegroundColorAttributeName : UIColor.darkGray,
-                NSFontAttributeName : bannerFont
+                NSAttributedStringKey.kern : 1.75,
+                NSAttributedStringKey.foregroundColor : UIColor.darkGray,
+                NSAttributedStringKey.font : bannerFont
                 ])
             newBannerLabel.attributedText = attributedBannerString
             newBannerLabel.textAlignment = .right
@@ -372,11 +372,11 @@ class NewsToursTableViewCell: UITableViewCell {
 
 // Gesture Handlers
 extension NewsToursTableViewCell {
-    func wasTapped() {
+    @objc func wasTapped() {
         delegate?.newsToursTableViewCellWasTapped(self)
     }
     
-    func revealContentTapped() {
+    @objc func revealContentTapped() {
         self.delegate?.newsToursTableViewCellRevealContentTapped(self)
     }
 }

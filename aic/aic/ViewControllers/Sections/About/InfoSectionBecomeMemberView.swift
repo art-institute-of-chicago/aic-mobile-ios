@@ -68,7 +68,7 @@ class InfoSectionBecomeMemberView: BaseView {
         
         let joinAttrText = NSMutableAttributedString(string: Common.Info.becomeMemberJoinMessage)
         let joinURL = URL(string: Common.Info.becomeMemberJoinURL)!
-        joinAttrText.addAttributes([NSLinkAttributeName : joinURL], range: NSMakeRange(0, joinAttrText.string.characters.count))
+        joinAttrText.addAttributes([NSAttributedStringKey.link : joinURL], range: NSMakeRange(0, joinAttrText.string.characters.count))
         
         joinTextView.setDefaultsForAICAttributedTextView()
         joinTextView.attributedText = joinAttrText

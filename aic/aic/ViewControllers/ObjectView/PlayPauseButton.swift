@@ -82,7 +82,7 @@ class PlayPauseButton : UIButton {
         }
     }
     
-    internal func buttonTapped(_ sender:UIButton!) {
+    @objc internal func buttonTapped(_ sender:UIButton!) {
         mode.toggle()
         
         delegate?.playPauseButton(self, modeChanged: self.mode)

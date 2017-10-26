@@ -119,7 +119,7 @@ class ObjectContentSectionView: BaseView {
 
 // Gesture Handlers
 extension ObjectContentSectionView {
-    internal func collapseButtonTapped(_ gesture:UIGestureRecognizer) {
+    @objc internal func collapseButtonTapped(_ gesture:UIGestureRecognizer) {
         var rotation:CGFloat = CGFloat(-Double.pi * 2.0)
         
         if isOpen {

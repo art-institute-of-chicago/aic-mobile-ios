@@ -119,7 +119,7 @@ class ToursSectionStopsScrollerView: NewsToursRevealView {
             make.left.right.equalTo(focusedStopLabel.superview!).inset(focusedStopLabelMargins).priority(Common.Layout.Priority.high.rawValue)
             make.bottom.equalTo(focusedStopLabel.superview!).priority(Common.Layout.Priority.high.rawValue)
             
-            focusedStopLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: UILayoutConstraintAxis.horizontal)
+            focusedStopLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: UILayoutConstraintAxis.horizontal)
         })
         
         stopsScrollView.snp.remakeConstraints { (make) in

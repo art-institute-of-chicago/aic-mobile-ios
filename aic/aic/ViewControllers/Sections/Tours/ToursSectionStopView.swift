@@ -79,7 +79,7 @@ class ToursSectionStopView: BaseView {
 
 // MARK: Gesture Recognizers
 extension ToursSectionStopView {
-    internal func playButtonTapped() {
+    @objc internal func playButtonTapped() {
         delegate?.stopViewWasSelected(stopView: self)
     }
 }

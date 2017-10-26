@@ -141,11 +141,11 @@ class MessageSmallView: BaseView {
 
 // MARK: Gesture Recognizers
 extension MessageSmallView {
-    func actionButtonTapped() {
+    @objc func actionButtonTapped() {
         delegate?.messageViewActionSelected(self)
     }
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         delegate?.messageViewCancelSelected?(self)
     }
 }

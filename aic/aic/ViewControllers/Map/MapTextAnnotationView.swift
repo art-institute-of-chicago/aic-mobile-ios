@@ -52,8 +52,8 @@ class MapTextAnnotationView: MapAnnotationView {
         
         let attrString = NSMutableAttributedString(string: annotation.labelText)
         let range = NSMakeRange(0, attrString.length)
-        attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range: range)
-        attrString.addAttribute(NSFontAttributeName, value:font, range: range)
+        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range: range)
+        attrString.addAttribute(NSAttributedStringKey.font, value:font, range: range)
         
         label.attributedText = attrString
         label.numberOfLines = 0

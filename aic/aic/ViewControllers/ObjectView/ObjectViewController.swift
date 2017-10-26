@@ -326,7 +326,7 @@ class ObjectViewController: UIViewController {
     }
     
     // MARK: Audio Playback
-    internal func configureAVAudioSession() {
+    @objc internal func configureAVAudioSession() {
         do {
             // Determine playback category based on bluetooth connection to avoid HFP playback through A2DP headphones
             let bluetoothConnected = (AVAudioSession.sharedInstance().currentRoute.outputs.filter({$0.portType == AVAudioSessionPortBluetoothA2DP || $0.portType == AVAudioSessionPortBluetoothHFP }).first != nil)
@@ -365,7 +365,7 @@ class ObjectViewController: UIViewController {
         MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget(self, action: #selector(ObjectViewController.skipBackward))
     }
     
-    internal func play() {
+    @objc internal func play() {
         if let currentItem = avPlayer.currentItem {
             // If we are at the end, start from the beginning
             let currentTime = floor(CMTimeGetSeconds(currentItem.currentTime()))
@@ -390,7 +390,7 @@ class ObjectViewController: UIViewController {
         }
     }
     
-    internal func pause() {
+    @objc internal func pause() {
         if avPlayer.currentItem != nil {
             self.avPlayer.pause()
             synchronizePlayPauseButtons(forMode: PlayPauseButton.Mode.paused)
@@ -412,7 +412,7 @@ class ObjectViewController: UIViewController {
         }
     }
     
-    internal func skipForward() {
+    @objc internal func skipForward() {
         if let currentItem = avPlayer.currentItem {
             let duration = CMTimeGetSeconds(currentItem.duration)
             let currentTime = CMTimeGetSeconds(avPlayer.currentTime())
@@ -426,7 +426,7 @@ class ObjectViewController: UIViewController {
         }
     }
     
-    internal func skipBackward() {
+    @objc internal func skipBackward() {
         if avPlayer.currentItem != nil {
             let currentTime = CMTimeGetSeconds(avPlayer.currentTime())
             var skipTime = currentTime - Double(remoteSkipTime)
@@ -504,7 +504,7 @@ class ObjectViewController: UIViewController {
 
 // MARK: Gesture Handlers
 extension ObjectViewController : UIGestureRecognizerDelegate {
-    internal func handleObjectVCPanGesture(_ sender: UIPanGestureRecognizer) {
+    @objc internal func handleObjectVCPanGesture(_ sender: UIPanGestureRecognizer) {
         if !shouldSnapView {
             return
         }
@@ -634,7 +634,7 @@ extension ObjectViewController {
     
     // Update the progress for the mini and regular audio players
     // every frame
-    internal func updateAudioPlayerProgress() {
+    @objc internal func updateAudioPlayerProgress() {
         
         if avPlayer.currentItem != nil && avPlayer.currentItem!.status == AVPlayerItemStatus.readyToPlay {
             let progress = CMTimeGetSeconds(avPlayer.currentTime())
@@ -660,19 +660,19 @@ extension ObjectViewController {
         }
     }
     
-    internal func audioPlayerDidFinishPlaying(_ notification:Notification) {
+    @objc internal func audioPlayerDidFinishPlaying(_ notification:Notification) {
         synchronizePlayPauseButtons(forMode: .paused)
     }
     
     // Audio player Slider Events
     
-    internal func audioPlayerSliderStartedSliding(_ slider:UISlider) {
+    @objc internal func audioPlayerSliderStartedSliding(_ slider:UISlider) {
         // Stop the progress from updating, otherwise the two funcs fight
         isUpdatingObjectViewProgressSlider = true
     }
     
     
-    internal func audioPlayerSliderValueChanged(_ slider:UISlider) {
+    @objc internal func audioPlayerSliderValueChanged(_ slider:UISlider) {
         if let currentItem = avPlayer.currentItem {
             let newTime = CMTimeGetSeconds(currentItem.asset.duration) * Double(objectView.audioPlayerView.slider.value)
             seekToTime(newTime)
@@ -680,20 +680,20 @@ extension ObjectViewController {
         }
     }
     
-    internal func audioPlayerSliderFinishedSliding(_ slider:UISlider) {
+    @objc internal func audioPlayerSliderFinishedSliding(_ slider:UISlider) {
         isUpdatingObjectViewProgressSlider = false
         updateAudioPlayerProgress()
     }
     
-    internal func fullscreenButtonTapped(_ sender:UIButton!) {
+    @objc internal func fullscreenButtonTapped(_ sender:UIButton!) {
         self.showFullscreen()
     }
     
-    internal func miniAudioPlayerTapped() {
+    @objc internal func miniAudioPlayerTapped() {
         self.showFullscreen()
     }
     
-    internal func collapseButtonTapped(_ sender:UIButton!) {
+    @objc internal func collapseButtonTapped(_ sender:UIButton!) {
         objectView.scrollView.setContentOffset(CGPoint(x: 0, y: -objectView.scrollView.contentInset.top), animated: true)
         self.showMiniPlayer()
     }

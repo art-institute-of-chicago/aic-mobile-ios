@@ -360,7 +360,7 @@ class MapViewController: UIViewController {
     // Clears out all of the locations + tour objects
     // currently set for floors
     
-    internal func updateMapWithTimer() {
+    @objc internal func updateMapWithTimer() {
         updateAnnotations()
     }
     
@@ -617,7 +617,7 @@ extension MapViewController : MKMapViewDelegate {
             //let objectIdentifier = String(objectAnnotation.object.nid)
             let objectIdentifier = String(MapObjectAnnotationView.reuseIdentifier)
             
-            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier!) as? MapObjectAnnotationView else {
+            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier) as? MapObjectAnnotationView else {
                 let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: objectIdentifier)
                 view.delegate = self
                 return view
@@ -770,11 +770,11 @@ extension MapViewController : UIGestureRecognizerDelegate {
         return true
     }
     
-    func mapViewWasPinched(_ gesture:UIPinchGestureRecognizer) {
+    @objc func mapViewWasPinched(_ gesture:UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
     }
     
-    func mapViewWasPanned(_ gesture:UIPanGestureRecognizer) {
+    @objc func mapViewWasPanned(_ gesture:UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
         mapView.keepMapInView()
     }

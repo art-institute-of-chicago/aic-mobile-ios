@@ -59,11 +59,11 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
     }
     
     //FIXME: Check if these button arguments are needed
-    internal func wasPressed(_ button:UIButton) {
+    @objc internal func wasPressed(_ button:UIButton) {
         setButtonPressedState()
     }
 
-    internal func wasReleased(_ button:UIButton) {
+    @objc internal func wasReleased(_ button:UIButton) {
         setButtonNormalState()
     }
 }

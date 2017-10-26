@@ -252,7 +252,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 
 // MARK: Gesture Recognizers
 extension MapObjectAnnotationView {
-    internal func playButtonWasTapped(_ gesture:UIGestureRecognizer) {
+    @objc internal func playButtonWasTapped(_ gesture:UIGestureRecognizer) {
         if isSelected {
             delegate?.mapObjectAnnotationViewPlayPressed(self)
         }

@@ -109,7 +109,7 @@ extension AudioGuideSectionViewController : UICollectionViewDataSource {
 
 // MARK: Gesture handlers
 extension AudioGuideSectionViewController {
-    internal func buttonPressed(_ button:UIButton) {
+    @objc internal func buttonPressed(_ button:UIButton) {
         let view = self.view as! AudioGuideSectionView
         
         let strVal = buttonValueMap[button.tag]!

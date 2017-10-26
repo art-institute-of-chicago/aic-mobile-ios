@@ -9,7 +9,7 @@ import UIKit
 extension UITextView {
     
     func setDefaultsForAICAttributedTextView() {
-        linkTextAttributes = [NSForegroundColorAttributeName : UIColor.aicButtonsColor()]
+        linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicButtonsColor()]
         backgroundColor = UIColor.clear
         isScrollEnabled = false
         isEditable = false

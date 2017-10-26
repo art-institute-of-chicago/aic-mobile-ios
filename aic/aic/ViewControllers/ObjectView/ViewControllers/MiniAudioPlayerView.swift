@@ -139,7 +139,7 @@ class MiniAudioPlayerView : BaseView {
                 make.right.equalTo(fullscreenButton.snp.left)
                 make.centerY.equalTo(titleLabel.superview!)
                 
-                titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: UILayoutConstraintAxis.horizontal)
+                titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: UILayoutConstraintAxis.horizontal)
             }
             
             fullscreenButton.snp.makeConstraints { (make) -> Void in

@@ -109,13 +109,13 @@ class MapFloorSelectorViewController: UIViewController {
 
 // MARK: Gesture Recognizers
 extension MapFloorSelectorViewController {
-    func floorButtonWasTapped(_ gesture:UITapGestureRecognizer) {
+    @objc func floorButtonWasTapped(_ gesture:UITapGestureRecognizer) {
         if let button = gesture.view {
             delegate?.floorSelectorDidSelectFloor(button.tag)
         }
     }
     
-    func locationButtonWasTapped() {
+    @objc func locationButtonWasTapped() {
         delegate?.floorSelectorLocationButtonTapped()
     }
 }

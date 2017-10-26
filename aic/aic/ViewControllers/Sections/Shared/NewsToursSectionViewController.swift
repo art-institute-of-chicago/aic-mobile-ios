@@ -187,7 +187,7 @@ extension NewsToursSectionViewController : CLLocationManagerDelegate {
 
 // Reveal view gestures
 extension NewsToursSectionViewController {
-    func revealViewCloseButtonTapped() {
+    @objc func revealViewCloseButtonTapped() {
         let sectionView = self.sectionView as! NewsToursSectionView
         sectionView.mode = .list
         

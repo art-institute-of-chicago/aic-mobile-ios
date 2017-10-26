@@ -48,7 +48,7 @@ class InfoSectionMemberCardViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func hideKeyboard() {
+    @objc func hideKeyboard() {
         self.view.endEditing(true)
     }
     
@@ -119,7 +119,7 @@ class InfoSectionMemberCardViewController: UIViewController {
         
         let barcodeCIImage = filter!.outputImage!
         
-        let barcodeImage = UIImage(ciImage: barcodeCIImage.applying(CGAffineTransform(scaleX: 5,y: 3)))
+        let barcodeImage = UIImage(ciImage: barcodeCIImage.transformed(by: CGAffineTransform(scaleX: 5,y: 3)))
         
         // Set barcode view
         memberCardView.barcodeMemberName.text = apiData.memberNames[currentlySelectedMember]
@@ -220,7 +220,7 @@ class InfoSectionMemberCardViewController: UIViewController {
 }
 
 extension InfoSectionMemberCardViewController {
-    func signInUpdateButtonTapped(_ gesture:UITapGestureRecognizer) {
+    @objc func signInUpdateButtonTapped(_ gesture:UITapGestureRecognizer) {
         view.endEditing(true)
         
         if isShowingBarcode {
@@ -230,7 +230,7 @@ extension InfoSectionMemberCardViewController {
         }
     }
     
-    func switchMemberCardHolderButtonTapped(_ gesture:UITapGestureRecognizer) {
+    @objc func switchMemberCardHolderButtonTapped(_ gesture:UITapGestureRecognizer) {
         view.endEditing(true)
         
         if let apiData = self.currentMemberAPIData {

@@ -65,7 +65,7 @@ class LoadingViewController: UIViewController {
         loadingView.setProgressBarPct(pctComplete)
     }
     
-    internal func videoFinishedPlaying() {
+    @objc internal func videoFinishedPlaying() {
         delegate?.loadingViewControllerDidFinishPlayingIntroVideo()
     }
 }

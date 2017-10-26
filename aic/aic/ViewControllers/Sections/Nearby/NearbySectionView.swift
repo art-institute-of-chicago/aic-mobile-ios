@@ -69,7 +69,7 @@ class NearbySectionView: SectionView {
 
 // Gesture Recognizers
 extension NearbySectionView {
-    func titleViewTapped(_ recognizer: UITapGestureRecognizer) {
+    @objc func titleViewTapped(_ recognizer: UITapGestureRecognizer) {
         delegate?.shouldMaximizeTopNavigation()
     }
 }
