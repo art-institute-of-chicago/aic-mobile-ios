@@ -98,7 +98,7 @@ class MapSVGParser {
         
         // Lions
         do {
-            let lionsGroup = try root["g"].withAttr("id", lionsID)
+            let lionsGroup = try root["g"].withAttribute("id", lionsID)
             self.lions = parseLionsForGroup(lionsGroup)
         }
         catch {
@@ -107,7 +107,7 @@ class MapSVGParser {
         
         // Landmarks
         do {
-            let landmarksGroup = try root["g"].withAttr("id", landmarksID)
+            let landmarksGroup = try root["g"].withAttribute("id", landmarksID)
             self.landmarks = parseTextLabels(forGroup: landmarksGroup)
         }
         catch {
@@ -116,7 +116,7 @@ class MapSVGParser {
         
         // Gardens
         do {
-            let gardensGroup = try root["g"].withAttr("id", gardensID)
+            let gardensGroup = try root["g"].withAttribute("id", gardensID)
             self.gardens = parseTextLabels(forGroup: gardensGroup)
         }
         catch {
@@ -126,7 +126,7 @@ class MapSVGParser {
         // Parse FLoors
         for floorNumber in 0..<totalFloors {
             do {
-                let floorGroup = try root["g"].withAttr("id", floorIDPrefix + String(floorNumber))
+                let floorGroup = try root["g"].withAttribute("id", floorIDPrefix + String(floorNumber))
                 
                 guard let departmentsGroup = getGroup(inGroup: floorGroup, forId: departmentsID) else {
                     print("Could not get departments for floor \(floorNumber)")
@@ -153,7 +153,7 @@ class MapSVGParser {
     }
     
     private func getGroup(inGroup group:XMLIndexer, forId id:String) -> XMLIndexer? {
-        return group["g"].filter({ ($0.element!.allAttributes["id"]?.text.contains(id))! }).first
+        return group["g"].all.filter({ ($0.element!.allAttributes["id"]?.text.contains(id))! }).first
     }
     
     
@@ -239,7 +239,7 @@ class MapSVGParser {
     private func parseFloorAmenities(forFloor floor:XMLIndexer) -> [SVGAmenity] {
         var parsedAmenities:[SVGAmenity] = []
         
-        let amenityGroup = floor["g"].filter({ ($0.element!.allAttributes["id"]?.text.contains(amenitiesID))! })
+        let amenityGroup = floor["g"].all.filter({ ($0.element!.allAttributes["id"]?.text.contains(amenitiesID))! })
         
         if amenityGroup.first != nil {
             // Filter out amenity groups with IDs
@@ -330,7 +330,7 @@ class MapSVGParser {
         if textIndexer.children.count > 1 {
             text = getText(forSVGIndexerWithSpanTags: textIndexer)
         } else {
-            text = textIndexer.element!.text!
+            text = textIndexer.element!.text
         }
         
         return text
@@ -384,7 +384,7 @@ class MapSVGParser {
                 continue
             }
             
-            text.append(span.text!)
+            text.append(span.text)
             if index != textIndexer.children.count-1 {
                 text += "\n"
             }
