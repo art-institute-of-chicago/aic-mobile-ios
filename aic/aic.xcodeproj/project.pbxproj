@@ -10,6 +10,7 @@
 		0E2D15591DA8134200D06A4A /* AICMemberAPIDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */; };
 		1370EED7178BE85DDE6304C6 /* Pods_aicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */; };
 		28F7980E1E7B40E600D22E0E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F7980D1E7B40E600D22E0E /* Common.swift */; };
+		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
 		E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */; };
@@ -185,6 +186,7 @@
 		223EFA1418FE36F1D127D26D /* Pods-aicTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicTests/Pods-aicTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		27EC410D74F8C78F01DA4A38 /* Pods_aicRental.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicRental.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F7980D1E7B40E600D22E0E /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		34A42DED784747728FEECA5D /* Pods_aicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,6 +570,7 @@
 			isa = PBXGroup;
 			children = (
 				E4E108E11C98F23200385842 /* TestModels.swift */,
+				E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */,
 				E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */,
 				E4D159381CBAE8C100536B4D /* AICCoordinateWithFloor.swift */,
 				E411DE7E1CCD37A800E22047 /* AICGalleryModel.swift */,
@@ -578,6 +581,7 @@
 				0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */,
 				E4FFC6EB1D00B7FD0082818D /* AICMessageLargeModel.swift */,
 				E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */,
+				2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */,
 				E497FA5D1CFF397D007FA272 /* AICNewsModel.swift */,
 				E458502E1CAC8C1A00131A66 /* AICNewsItemModel.swift */,
 				E4DDE3DA1CDA9E9C009399E2 /* AICNewsTourItemProtocol.swift */,
@@ -585,7 +589,6 @@
 				E4D159341CBAE3E900536B4D /* AICTourModel.swift */,
 				E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */,
 				E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */,
-				E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */,
 				E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */,
 			);
 			path = Models;
@@ -1341,6 +1344,7 @@
 				E4FFC6F01D00C87B0082818D /* MessageLargeButton.swift in Sources */,
 				E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */,
 				E4D790D41C8E1E580033EE0A /* MapAmenityAnnotation.swift in Sources */,
+				2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */,
 				E4F37CB91D36C77700BFB7E8 /* MapAnnotationView.swift in Sources */,
 				E4F37CBB1D36EB2A00BFB7E8 /* MapDepartmentHUDView.swift in Sources */,
 			);

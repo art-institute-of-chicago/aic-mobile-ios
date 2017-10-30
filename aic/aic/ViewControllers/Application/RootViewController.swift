@@ -21,7 +21,7 @@ class RootViewController: UIViewController {
     
     var loadingVC:LoadingViewController? = nil
     var instructionsVC:InstructionsPageViewController? = nil
-    var sectionsVC = SectionsViewController()
+	var sectionsVC:SectionsViewController? = nil
     
     var shouldShowInstructions:Bool = false
     
@@ -46,7 +46,6 @@ class RootViewController: UIViewController {
         
         // Set delegates
         AppDataManager.sharedInstance.delegate = self
-        sectionsVC.delegate = self
         
         startLoading()
     }
@@ -99,7 +98,7 @@ class RootViewController: UIViewController {
     // Show a tour, called from deep link handling in app delegate
     func startTour(tour:AICTourModel) {
         // If we haven't loaded yet we should save the tour here
-        sectionsVC.startTour(tour: tour)
+        sectionsVC?.startTour(tour: tour)
     }
     
     private func modeDidChange() {
@@ -134,9 +133,13 @@ class RootViewController: UIViewController {
     
     // Remove the intro and show the main app
     private func showMainApp() {
-        view.addSubview(sectionsVC.view)
-        sectionsVC.setSelectedSection(sectionVC: sectionsVC.toursVC)
-        sectionsVC.animateInInitialView()
+		if sectionsVC == nil {
+			sectionsVC = SectionsViewController()
+			sectionsVC?.delegate = self
+		}
+        view.addSubview(sectionsVC!.view)
+        sectionsVC!.setSelectedSection(sectionVC: sectionsVC!.toursVC)
+        sectionsVC!.animateInInitialView()
     }
     
     fileprivate func cleanUpViews() {

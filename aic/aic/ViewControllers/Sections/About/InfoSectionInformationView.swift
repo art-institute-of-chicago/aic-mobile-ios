@@ -32,15 +32,16 @@ class InfoSectionInformationView: BaseView {
         
         infoContentViewHolder.backgroundColor = UIColor.white
         
-        titleLabel.text = Common.Info.museumInformationTitle
+        titleLabel.text = AppDataManager.sharedInstance.app.museumInfo.title
         titleLabel.textColor = UIColor.black
         titleLabel.font = UIFont.aicTitleFont()
-        
-        museumHoursTextView.text = Common.Info.museumInformationHours
-        museumHoursTextView.font = UIFont.aicTextFont()
-        museumHoursTextView.textColor = UIColor.black
-        museumHoursTextView.setDefaultsForAICAttributedTextView()
-        
+		
+		museumHoursTextView.frame = UIScreen.main.bounds.insetBy(dx: contentMargins.left + contentMargins.right, dy: 0)
+		museumHoursTextView.text = AppDataManager.sharedInstance.app.museumInfo.museumHours
+		museumHoursTextView.textColor = UIColor.black
+		museumHoursTextView.font = UIFont.aicTextFont()
+		museumHoursTextView.setDefaultsForAICAttributedTextView()
+		
         locationLabel.text = "Location"
         locationLabel.textColor = UIColor.black
         locationLabel.font = UIFont.aicTitleFont()
@@ -53,7 +54,7 @@ class InfoSectionInformationView: BaseView {
         let ticketsAttrString = NSMutableAttributedString(string: Common.Info.museumInformationGetTicketsTitle)
         let ticketsURL = URL(string: Common.Info.museumInformationGetTicketsURL)!
         ticketsAttrString.addAttributes([NSAttributedStringKey.link : ticketsURL.absoluteString], range: NSMakeRange(0, ticketsAttrString.string.characters.count))
-        
+		
         getTicketsTextView.attributedText = ticketsAttrString
         getTicketsTextView.font = UIFont.aicTitleFont()
         getTicketsTextView.setDefaultsForAICAttributedTextView()
@@ -100,7 +101,8 @@ class InfoSectionInformationView: BaseView {
     
     override func updateConstraints() {
         if !didSetupConstraints {
-            infoView.snp.makeConstraints({ (make) in
+			
+			infoView.snp.makeConstraints({ (make) in
                 make.edges.equalTo(infoView.superview!).priority(Common.Layout.Priority.required.rawValue)
             })
             
@@ -116,10 +118,13 @@ class InfoSectionInformationView: BaseView {
             titleLabel.snp.makeConstraints({ (make) in
                 make.top.left.right.equalTo(titleLabel.superview!)
             })
-            
-            museumHoursTextView.snp.makeConstraints({ (make) in
+			
+			let museumHoursSize = museumHoursTextView.sizeThatFits(CGSize(width: museumHoursTextView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+			museumHoursTextView.snp.makeConstraints({ (make) in
                 make.top.equalTo(titleLabel.snp.bottom).offset(sectionContentMarginTop)
-                make.left.right.equalTo(museumHoursTextView.superview!)
+				make.left.equalTo(museumHoursTextView.superview!)
+				make.width.equalTo(museumHoursTextView.frame.width)
+				make.height.equalTo(museumHoursSize.height)
             })
             
             locationLabel.snp.makeConstraints({ (make) in
