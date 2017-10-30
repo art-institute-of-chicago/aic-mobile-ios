@@ -84,7 +84,7 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         
         label.text = annotation.title
         label.font = UIFont.aicSystemTextFont()
-        label.textColor = UIColor.white
+        label.textColor = .white
         label.sizeToFit()
         label.frame.origin.x = image.frame.maxX + labelMargin
         holderView.addSubview(label)

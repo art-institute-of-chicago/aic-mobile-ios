@@ -19,7 +19,7 @@ class AudioGuideSectionView: SectionView {
         
         super.init(section:section)
         
-        titleView.backgroundColor = UIColor.clear
+        titleView.backgroundColor = .clear
         backgroundColor = section.color.withAlphaComponent(0.8)
         
         // Add Subviews

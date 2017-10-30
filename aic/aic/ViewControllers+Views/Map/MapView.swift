@@ -66,7 +66,7 @@ class MapView: MKMapView {
         showsPointsOfInterest = false
         showsUserLocation = true
         
-        tintColor = UIColor.white
+        tintColor = .white
         
         addSubview(departmentHud)
     }

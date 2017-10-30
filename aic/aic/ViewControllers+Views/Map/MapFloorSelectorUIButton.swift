@@ -12,9 +12,9 @@ class MapFloorSelectorUIButton: UIButton {
         let selectedColor:UIColor
     }
     
-    private let defaultColorScheme = ColorScheme(labelColor: UIColor.black, deselectedColor: UIColor.white, selectedColor: UIColor.lightGray)
+    private let defaultColorScheme = ColorScheme(labelColor: .black, deselectedColor: .white, selectedColor: .lightGray)
     
-    private let userLocationColorScheme = ColorScheme(labelColor: UIColor.white, deselectedColor: UIColor.aicBluedotColor(), selectedColor: UIColor.aicBluedotColor())
+    private let userLocationColorScheme = ColorScheme(labelColor: .white, deselectedColor: UIColor.aicBluedotColor(), selectedColor: UIColor.aicBluedotColor())
 
     var isUserLocationFloor = false {
         didSet {
@@ -33,10 +33,10 @@ class MapFloorSelectorUIButton: UIButton {
         super.init(frame: frame)
         
         setTitle(floorLabel, for: UIControlState())
-        setTitleColor(UIColor.black, for: UIControlState())
-        setTitleColor(UIColor.blue, for: UIControlState.highlighted)
+        setTitleColor(.black, for: UIControlState())
+        setTitleColor(.blue, for: UIControlState.highlighted)
         
-        backgroundColor = UIColor.white
+        backgroundColor = .white
         tag = floorNum
     }
 

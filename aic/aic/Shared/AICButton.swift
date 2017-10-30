@@ -22,7 +22,7 @@ class AICButton: UIButton {
         super.init(frame:CGRect.zero)
         
         backgroundColor = UIColor.aicButtonsColor()
-        setTitleColor(UIColor.white, for: UIControlState())
+        setTitleColor(.white, for: UIControlState())
         titleLabel!.font = UIFont.aicTitleFont()
         contentEdgeInsets = insets
     }

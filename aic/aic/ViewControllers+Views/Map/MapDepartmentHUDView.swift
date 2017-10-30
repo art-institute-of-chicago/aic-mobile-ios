@@ -19,7 +19,7 @@ class MapDepartmentHUDView: UIView {
         
         label.frame = self.frame
         label.font = UIFont.aicSystemTextFont()
-        label.textColor = UIColor.white
+        label.textColor = .white
         label.textAlignment = NSTextAlignment.center
         label.text = "Testing 1...2....3"
         

@@ -57,9 +57,9 @@ class InstructionsPageViewController: UIPageViewController {
     
         // Set page control styles
         let pageControl = UIPageControl.appearance()
-        pageControl.backgroundColor = UIColor.clear
-        pageControl.pageIndicatorTintColor = UIColor.clear
-        pageControl.currentPageIndicatorTintColor = UIColor.white
+        pageControl.backgroundColor = .clear
+        pageControl.pageIndicatorTintColor = .clear
+        pageControl.currentPageIndicatorTintColor = .white
         pageControl.layer.borderColor = UIColor.white.cgColor
         pageControl.layer.borderWidth = 1
         

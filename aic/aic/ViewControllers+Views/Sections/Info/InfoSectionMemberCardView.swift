@@ -75,23 +75,23 @@ class InfoSectionMemberCardView: BaseView {
         // Configure
         backgroundColor = UIColor.aicInfoColor()
         
-        contentView.backgroundColor = UIColor.darkGray
+        contentView.backgroundColor = .darkGray
         
         backgroundImageViewBack.image = Common.Info.memberCardImages[currentBackgroundImageIndex]
         
         titleLabel.text = Common.Info.memberCardTitle
         titleLabel.font = UIFont.aicHeaderSmallFont()
-        titleLabel.textColor = UIColor.white
+        titleLabel.textColor = .white
         titleLabel.textAlignment = NSTextAlignment.center
         
         closeButton.setImage(#imageLiteral(resourceName: "iconClose"), for: UIControlState())
         
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
-        loadingIndicator.color = UIColor.darkGray
+        loadingIndicator.color = .darkGray
         
         barcodeContentView.isHidden = true
         
-        memberInputBarcodeView.backgroundColor = UIColor.white
+        memberInputBarcodeView.backgroundColor = .white
         
         memberIDTitleLabel.text = Common.Info.memberIDTitle
         memberIDTitleLabel.font = UIFont.aicTitleFont()

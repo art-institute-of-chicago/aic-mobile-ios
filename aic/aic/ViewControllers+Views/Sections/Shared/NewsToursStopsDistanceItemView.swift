@@ -28,7 +28,7 @@ class NewsToursStopsDistanceItemView: BaseView {
         
         textLabel.numberOfLines = 1
         textLabel.font = UIFont.aicSystemTextFont()
-        textLabel.textColor = UIColor.white
+        textLabel.textColor = .white
         textLabel.sizeToFit()
         
         // Add Subviews

@@ -10,7 +10,7 @@ class MapAmenityAnnotationView: MapAnnotationView {
     
     var baseImage:UIImage? = nil
     
-    var color:UIColor = UIColor.white {
+    var color:UIColor = .white {
         didSet {
             if oldValue != color {
                 setImageColorized()

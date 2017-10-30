@@ -30,20 +30,20 @@ class InfoSectionInformationView: BaseView {
     init() {
         super.init(frame:CGRect.zero)
         
-        infoContentViewHolder.backgroundColor = UIColor.white
+        infoContentViewHolder.backgroundColor = .white
         
         titleLabel.text = AppDataManager.sharedInstance.app.museumInfo.title
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = .black
         titleLabel.font = UIFont.aicTitleFont()
 		
 		museumHoursTextView.frame = UIScreen.main.bounds.insetBy(dx: contentMargins.left + contentMargins.right, dy: 0)
 		museumHoursTextView.text = AppDataManager.sharedInstance.app.museumInfo.museumHours
-		museumHoursTextView.textColor = UIColor.black
+		museumHoursTextView.textColor = .black
 		museumHoursTextView.font = UIFont.aicTextFont()
 		museumHoursTextView.setDefaultsForAICAttributedTextView()
 		
         locationLabel.text = "Location"
-        locationLabel.textColor = UIColor.black
+        locationLabel.textColor = .black
         locationLabel.font = UIFont.aicTitleFont()
         
         locationTextView.text = Common.Info.museumInformationAddress + "\n\n" + Common.Info.museumInformationPhoneNumber

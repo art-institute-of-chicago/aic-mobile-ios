@@ -39,16 +39,16 @@ class ObjectView: UIView {
     
     init() {
         super.init(frame:CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + miniAudioPlayerViewHeight))
-        backgroundColor = UIColor.white
+        backgroundColor = .white
         
         //Configure
-        collapseButton.backgroundColor = UIColor.clear
+        collapseButton.backgroundColor = .clear
         collapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: UIControlState())
         
         scrollView.frame = UIScreen.main.bounds
         scrollView.frame.origin.y = miniAudioPlayerView.frame.height
         
-        imageView.backgroundColor = UIColor.clear
+        imageView.backgroundColor = .clear
         imageView.contentMode = UIViewContentMode.scaleAspectFit
         imageView.clipsToBounds = true
         
@@ -61,12 +61,12 @@ class ObjectView: UIView {
         imageViewGradientLayer.locations = [0.0, 1.0]
         imageViewHolder.layer.addSublayer(imageViewGradientLayer)
         
-        collapseButton.backgroundColor = UIColor.clear
+        collapseButton.backgroundColor = .clear
         collapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: UIControlState())
         collapseButton.contentMode = UIViewContentMode.center
         collapseButton.frame.size = CGSize(width: 44, height: 44)
         
-        contentViewHolder.backgroundColor = UIColor.white
+        contentViewHolder.backgroundColor = .white
         
         transcriptContentView.enableCollapsing()
         

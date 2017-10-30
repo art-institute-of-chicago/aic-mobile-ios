@@ -36,13 +36,13 @@ class MessageLargeView: BaseView {
         
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = NSTextAlignment.center
-        titleLabel.textColor = UIColor.white
+        titleLabel.textColor = .white
         titleLabel.font = UIFont.aicInstructionsTitleFont()
         titleLabel.text = model.title
         
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = NSTextAlignment.center
-        messageLabel.textColor = UIColor.white
+        messageLabel.textColor = .white
         messageLabel.font = UIFont.aicInstructionsSubtitleFont()
         messageLabel.text = model.message
         

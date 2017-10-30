@@ -45,7 +45,7 @@ class AudioGuideSectionViewController : SectionViewController {
         let height = CGFloat((buttonSize * numRows) + buttonSpacing * (numRows-1))
         
         collectionView = UICollectionView(frame: CGRect(x: 0,y: 0, width: width, height: height), collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.clear
+        collectionView.backgroundColor = .clear
         
         // Create our view
         audioGuideView = AudioGuideSectionView(section: section, numberPadView: collectionView)

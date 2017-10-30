@@ -21,10 +21,10 @@ class InstructionsItemView: UIView {
         super.init(frame:UIScreen.main.bounds)
         
         // Configure
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         
         titleLabel.numberOfLines = 0
-        titleLabel.textColor = UIColor.white
+        titleLabel.textColor = .white
         titleLabel.font = UIFont.aicInstructionsTitleFont()
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.preferredMaxLayoutWidth = 300
@@ -32,7 +32,7 @@ class InstructionsItemView: UIView {
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = UIFont.aicInstructionsSubtitleFont()
         subtitleLabel.textAlignment = NSTextAlignment.center
-        subtitleLabel.textColor = UIColor.white
+        subtitleLabel.textColor = .white
         
         // Add Subviews
         contentView.addSubview(iconImage)

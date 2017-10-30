@@ -11,7 +11,7 @@ class InstructionsGetStartedButton: UIButton {
             if isHighlighted {
                 backgroundColor = UIColor.white.withAlphaComponent(0.5)
             } else {
-                backgroundColor = UIColor.clear
+                backgroundColor = .clear
             }
         }
     }
@@ -19,7 +19,7 @@ class InstructionsGetStartedButton: UIButton {
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 325, height: 50))
         
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         layer.borderColor = UIColor.white.cgColor
         layer.borderWidth = 2
         

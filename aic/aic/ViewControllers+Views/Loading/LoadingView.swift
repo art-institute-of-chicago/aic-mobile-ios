@@ -23,8 +23,8 @@ class LoadingView: UIView {
         }
         
         //progressHighlightView.layer.cornerRadius = progressSize.height
-        progressBackgroundView.backgroundColor = UIColor.lightGray
-        progressHighlightView.backgroundColor = UIColor.white
+        progressBackgroundView.backgroundColor = .lightGray
+        progressHighlightView.backgroundColor = .white
         
         // Add Subviews
         progressView.addSubview(progressBackgroundView)

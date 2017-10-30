@@ -18,7 +18,7 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
         button.alpha = 0.5
         
         button.frame.size = frame.size
-        button.setTitleColor(UIColor.white, for: UIControlState())
+        button.setTitleColor(.white, for: UIControlState())
         button.titleLabel?.font = UIFont.aicNumberPadFont()
         
         setButtonNormalState()
@@ -46,7 +46,7 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
         if let _ = button.currentImage {
             button.alpha = 0.5
         } else {
-            button.backgroundColor = UIColor.clear
+            button.backgroundColor = .clear
         }
     }
     
@@ -54,7 +54,7 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
         if let _ = button.currentImage {
             button.alpha = 1.0
         } else {
-            button.backgroundColor = UIColor.white
+            button.backgroundColor = .white
         }
     }
     

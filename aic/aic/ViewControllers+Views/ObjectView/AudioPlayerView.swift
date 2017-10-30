@@ -39,22 +39,22 @@ class AudioPlayerView : BaseView {
         slider.minimumValue = 0
         slider.maximumValue = 1
         slider.isContinuous = true
-        slider.tintColor = UIColor.red
+        slider.tintColor = .red
         slider.value = 0
         
         titleLabel.numberOfLines = 0
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = .black
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.font = UIFont.aicTitleFont()
         titleLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - (margins.left + margins.right)
         
         timeRemainingLabel.numberOfLines = 1
-        timeRemainingLabel.textColor = UIColor.black
+        timeRemainingLabel.textColor = .black
         timeRemainingLabel.textAlignment = NSTextAlignment.center
         timeRemainingLabel.font = UIFont.aicShortTextFont()
         timeRemainingLabel.text = " "
         
-        playPauseButton.tintColor = UIColor.black
+        playPauseButton.tintColor = .black
         
         // Add Subviews
         controlView.addSubview(playPauseButton)

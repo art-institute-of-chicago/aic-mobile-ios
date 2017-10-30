@@ -43,7 +43,7 @@ class PlayPauseButton : UIButton {
         super.init(frame: CGRect(x: 0, y: 0,width: 0,height: 0))
         
         // Configure
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         
         playButtonImage = #imageLiteral(resourceName: "playSm").withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         pauseButtonImage = #imageLiteral(resourceName: "pauseSm").withRenderingMode(UIImageRenderingMode.alwaysTemplate)

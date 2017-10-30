@@ -31,10 +31,10 @@ class ObjectContentSectionView: BaseView {
         topLine.backgroundColor = UIColor.aicGrayColor()
         
         titleLabel.numberOfLines = 1
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = .black
         titleLabel.font = UIFont.aicTitleFont()
         
-        bodyTextView.textColor = UIColor.black
+        bodyTextView.textColor = .black
         bodyTextView.font = UIFont.aicTextFont()
         bodyTextView.setDefaultsForAICAttributedTextView()
         

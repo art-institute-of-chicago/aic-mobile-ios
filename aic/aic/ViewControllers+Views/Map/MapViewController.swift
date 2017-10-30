@@ -812,7 +812,7 @@ extension MapViewController : CLLocationManagerDelegate {
                 floorSelectorVC.setUserLocation(forFloorNum: userFloor)
                 
                 if currentFloor == userFloor {
-                    mapView.tintColor = UIColor.white
+                    mapView.tintColor = .white
                 } else {
                     mapView.tintColor = UIColor.aicGrayColor()
                 }

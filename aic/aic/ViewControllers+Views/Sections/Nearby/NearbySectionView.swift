@@ -19,7 +19,7 @@ class NearbySectionView: SectionView {
     override init(section:AICSectionModel) {
         super.init(section:section)
         
-        passThroughView.backgroundColor = UIColor.clear
+        passThroughView.backgroundColor = .clear
     
         scrollView.isScrollEnabled = false
         

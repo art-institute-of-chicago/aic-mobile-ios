@@ -45,7 +45,7 @@ class SectionView: BaseView {
         
         
         // Clear background so the map shows through
-        backgroundColor=UIColor.clear
+        backgroundColor = .clear
         
         // All section views have a scroll view with a title view
         scrollViewContentView.addSubview(titleView)

@@ -88,19 +88,19 @@ class NewsToursTableViewCell: UITableViewCell {
         // Title
         titleLabel.attributedText = getAttributedStringWithLineHeight(text: model.title.stringByDecodingHTMLEntities, font: UIFont.aicTitleFont()!, lineHeight: titleLineHeight)
         titleLabel.numberOfLines = 0
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = .black
         
         // Description
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.aicShortTextFont()
-        descriptionLabel.textColor = UIColor.black
+        descriptionLabel.textColor = .black
         
         // Additional Info
         if let additionalInfo = model.additionalInformation {
             additionalInformationLabel = UILabel()
             additionalInformationLabel?.numberOfLines = 1
             additionalInformationLabel?.font = UIFont.aicItalicTextFont()
-            additionalInformationLabel?.textColor = UIColor.black
+            additionalInformationLabel?.textColor = .black
             additionalInformationLabel?.text = additionalInfo
         }
         
@@ -119,7 +119,7 @@ class NewsToursTableViewCell: UITableViewCell {
         revealContentButton.setTitle(model.revealTitle, for: UIControlState())
         revealContentButton.isHidden = true
         
-        contentView.backgroundColor = UIColor.white
+        contentView.backgroundColor = .white
         
         //New Banner Flag
         if model.bannerString != nil {

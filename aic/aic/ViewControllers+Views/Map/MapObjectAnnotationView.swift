@@ -67,7 +67,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         super.init(annotation:annotation, reuseIdentifier:reuseIdentifier)
         
         // Configure
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.object.location.floor)
         
 //        self.layer.masksToBounds = false
@@ -79,7 +79,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         
         thumbHolderView.frame = CGRect(x: 0, y: 0, width: thumbHolderShrunkWidth, height: thumbHolderHeight)
         thumbHolderView.layer.cornerRadius = thumbHolderShrunkWidth/2
-        thumbHolderView.backgroundColor = UIColor.white
+        thumbHolderView.backgroundColor = .white
         
         thumbHolderTailView.image = #imageLiteral(resourceName: "calloutTail")
         thumbHolderTailView.sizeToFit()

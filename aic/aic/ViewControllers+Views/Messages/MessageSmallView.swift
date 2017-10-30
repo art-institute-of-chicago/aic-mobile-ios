@@ -33,13 +33,13 @@ class MessageSmallView: BaseView {
         
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont.aicTitleFont()
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = .black
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.text = model.title
         
         messageLabel.numberOfLines = 0
         messageLabel.font = UIFont.aicShortTextFont()
-        messageLabel.textColor = UIColor.black
+        messageLabel.textColor = .black
         messageLabel.textAlignment = NSTextAlignment.center
         messageLabel.text = model.message
         
@@ -53,7 +53,7 @@ class MessageSmallView: BaseView {
             cancelButton!.setTitle(model.cancelButtonTitle, for: UIControlState())
         }
         
-        contentBackgroundView.backgroundColor = UIColor.white
+        contentBackgroundView.backgroundColor = .white
         
         // Add Subviews
         blurBGHolderView.addSubview(blurBGView)

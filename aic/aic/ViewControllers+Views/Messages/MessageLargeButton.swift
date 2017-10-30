@@ -11,7 +11,7 @@ class MessageLargeButton: UIButton {
             if isHighlighted {
                 backgroundColor = UIColor.white.withAlphaComponent(0.5)
             } else {
-                backgroundColor = UIColor.clear
+                backgroundColor = .clear
             }
         }
     }
@@ -19,7 +19,7 @@ class MessageLargeButton: UIButton {
     init() {
         super.init(frame: CGRect(x: 0,y: 0, width: 325, height: 50))
         layer.borderColor = UIColor.white.cgColor
-        setTitleColor( UIColor.white, for: UIControlState())
+        setTitleColor( .white, for: UIControlState())
     }
     
     required init?(coder aDecoder: NSCoder) {
