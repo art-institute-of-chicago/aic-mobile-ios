@@ -42,9 +42,9 @@ class MiniAudioPlayerView : BaseView {
         titleLabel.font = UIFont.aicSystemTextFont()
         
         fullscreenButton.backgroundColor = UIColor.clear
-        let expandImage = UIImage(named: "expand")
-        fullscreenButton.setImage(expandImage!, for: UIControlState())
-        fullscreenButton.frame = CGRect(x: 0,y: 0, width: expandImage!.size.width, height: expandImage!.size.height)
+        let expandImage = #imageLiteral(resourceName: "expand")
+        fullscreenButton.setImage(expandImage, for: UIControlState())
+        fullscreenButton.frame = CGRect(x: 0,y: 0, width: expandImage.size.width, height: expandImage.size.height)
         
         progressBar.backgroundColor = UIColor.aicMapColor()
         

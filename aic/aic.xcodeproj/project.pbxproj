@@ -419,8 +419,7 @@
 				293D00A71FA7C82200BF2C26 /* map */,
 				293D00AB1FA7CA6600BF2C26 /* video */,
 			);
-			name = Assets;
-			path = "New Group";
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		293D00741FA7C80D00BF2C26 /* fonts */ = {

@@ -25,7 +25,7 @@ class MapLocationAnnotationView : MapAnnotationView {
         layer.drawsAsynchronously = true
         isEnabled = false
         
-        pinImageView.image = UIImage(named:"mapPin")
+        pinImageView.image = #imageLiteral(resourceName: "mapPin")
         pinImageView.sizeToFit()
         
         // Offset to bottom

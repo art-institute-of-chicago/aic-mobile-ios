@@ -45,8 +45,8 @@ class PlayPauseButton : UIButton {
         // Configure
         backgroundColor = UIColor.clear
         
-        playButtonImage = UIImage(named: "playSm")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        pauseButtonImage = UIImage(named: "pauseSm")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        playButtonImage = #imageLiteral(resourceName: "playSm").withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        pauseButtonImage = #imageLiteral(resourceName: "pauseSm").withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         
         imageView?.contentMode = UIViewContentMode.center
         

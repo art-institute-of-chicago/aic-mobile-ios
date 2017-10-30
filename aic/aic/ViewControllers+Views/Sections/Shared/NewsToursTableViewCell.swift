@@ -109,7 +109,7 @@ class NewsToursTableViewCell: UITableViewCell {
             revealContentButton = AICButton()
         } else {
             revealContentButton = UIButton()
-            revealContentButton.setImage(UIImage(named:"buttonPin"), for: UIControlState())
+            revealContentButton.setImage(#imageLiteral(resourceName: "buttonPin"), for: UIControlState())
             revealContentButton.setTitleColor(UIColor.aicButtonsColor(), for: UIControlState())
             revealContentButton.titleLabel!.font = UIFont.aicTitleFont()
             revealContentButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left;

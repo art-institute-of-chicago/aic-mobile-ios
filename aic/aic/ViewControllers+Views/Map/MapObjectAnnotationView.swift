@@ -81,7 +81,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         thumbHolderView.layer.cornerRadius = thumbHolderShrunkWidth/2
         thumbHolderView.backgroundColor = UIColor.white
         
-        thumbHolderTailView.image = UIImage(named:"calloutTail")
+        thumbHolderTailView.image = #imageLiteral(resourceName: "calloutTail")
         thumbHolderTailView.sizeToFit()
         
         thumbImageView.contentMode = .scaleAspectFill
@@ -91,7 +91,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         thumbImageView.frame.size = CGSize(width: Common.Map.thumbSize, height: Common.Map.thumbSize)
         thumbImageView.isUserInteractionEnabled = true
         
-        headphonesIcon.image = UIImage(named:"headphonesSm")
+        headphonesIcon.image = #imageLiteral(resourceName: "headphonesSm")
         headphonesIcon.sizeToFit()
         headphonesIcon.frame.origin = CGPoint(x: thumbHolderExpandedWidth - headphonesIcon.frame.width - headphonesMarginRight, y: thumbHolderHeight/2 - headphonesIcon.frame.height/2)
         

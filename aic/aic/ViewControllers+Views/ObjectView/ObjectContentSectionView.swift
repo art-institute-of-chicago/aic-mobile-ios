@@ -56,7 +56,7 @@ class ObjectContentSectionView: BaseView {
         bodyTextView.removeFromSuperview()
         
         // Create button
-        let expandImage = UIImage(named: "expandSm")
+        let expandImage = #imageLiteral(resourceName: "expandSm")
         
         collapseExpandButton = UIButton()
         collapseExpandButton?.setImage(expandImage, for: UIControlState())

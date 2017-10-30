@@ -60,7 +60,7 @@ class InfoSectionInformationView: BaseView {
         getTicketsTextView.setDefaultsForAICAttributedTextView()
         getTicketsTextView.delegate = self
         
-        bloombergCreditsImageView.image = UIImage(named:"bloombergLogo")
+        bloombergCreditsImageView.image = #imageLiteral(resourceName: "bloombergLogo")
         
         let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject?
         let version = nsObject as! String

@@ -11,8 +11,8 @@ class NewsToursStopsDistanceView : BaseView {
     let margins = UIEdgeInsetsMake(10, 25, 10, 25)
     
     let contentView = UIView()
-    let stopsView = NewsToursStopsDistanceItemView(icon: UIImage(named: "iconStops")!)
-    let distanceView = NewsToursStopsDistanceItemView(icon: UIImage(named:"iconDistance")!)
+    let stopsView = NewsToursStopsDistanceItemView(icon: #imageLiteral(resourceName: "iconStops"))
+    let distanceView = NewsToursStopsDistanceItemView(icon: #imageLiteral(resourceName: "iconDistance"))
     let distanceMarginLeft = 10
     
     init() {

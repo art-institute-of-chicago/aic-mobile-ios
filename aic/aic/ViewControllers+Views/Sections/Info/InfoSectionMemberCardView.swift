@@ -84,7 +84,7 @@ class InfoSectionMemberCardView: BaseView {
         titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = NSTextAlignment.center
         
-        closeButton.setImage(UIImage(named:"iconClose"), for: UIControlState())
+        closeButton.setImage(#imageLiteral(resourceName: "iconClose"), for: UIControlState())
         
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
         loadingIndicator.color = UIColor.darkGray

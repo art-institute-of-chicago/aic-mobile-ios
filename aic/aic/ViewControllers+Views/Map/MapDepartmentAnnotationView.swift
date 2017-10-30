@@ -39,7 +39,7 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         holderView.backgroundColor = UIColor.aicMapColor().darker()
         holderView.isUserInteractionEnabled = true
         
-        let holderTailImage = UIImage(named:"calloutTail")!.withRenderingMode(.alwaysTemplate)
+        let holderTailImage = #imageLiteral(resourceName: "calloutTail").withRenderingMode(.alwaysTemplate)
         
         holderTailImageView.image = holderTailImage
         holderTailImageView.sizeToFit()

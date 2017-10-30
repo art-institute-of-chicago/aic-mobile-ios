@@ -21,7 +21,7 @@ class NewsToursRevealView: BaseView {
         
         // Configure
         
-        closeButton.setImage(UIImage(named:"iconClose")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: UIControlState())
+        closeButton.setImage(#imageLiteral(resourceName: "iconClose").withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: UIControlState())
         closeButton.tintColor = UIColor.black
         closeButton.frame.size = closeButton.currentImage!.size
         

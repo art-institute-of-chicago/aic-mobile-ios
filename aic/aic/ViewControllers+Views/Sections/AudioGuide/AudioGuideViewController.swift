@@ -79,7 +79,7 @@ extension AudioGuideSectionViewController : UICollectionViewDataSource {
         let titleLabel = buttonValueMap[((indexPath as NSIndexPath).section * numCols) + (indexPath as NSIndexPath).row]
         switch titleLabel! {
         case "<":
-            cell.button.setImage(UIImage(named:"deleteButton"), for: UIControlState())
+            cell.button.setImage(#imageLiteral(resourceName: "deleteButton"), for: UIControlState())
         default:
             cell.button.setTitle(titleLabel, for: UIControlState())
         }

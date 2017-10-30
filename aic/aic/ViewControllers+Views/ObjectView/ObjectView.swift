@@ -43,7 +43,7 @@ class ObjectView: UIView {
         
         //Configure
         collapseButton.backgroundColor = UIColor.clear
-        collapseButton.setImage(UIImage(named:"collapse"), for: UIControlState())
+        collapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: UIControlState())
         
         scrollView.frame = UIScreen.main.bounds
         scrollView.frame.origin.y = miniAudioPlayerView.frame.height
@@ -62,7 +62,7 @@ class ObjectView: UIView {
         imageViewHolder.layer.addSublayer(imageViewGradientLayer)
         
         collapseButton.backgroundColor = UIColor.clear
-        collapseButton.setImage(UIImage(named:"collapse"), for: UIControlState())
+        collapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: UIControlState())
         collapseButton.contentMode = UIViewContentMode.center
         collapseButton.frame.size = CGSize(width: 44, height: 44)
         
