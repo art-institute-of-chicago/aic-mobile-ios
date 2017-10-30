@@ -333,7 +333,7 @@ struct Common {
         static let startFloor = 1
 
         // File directories
-        static let mapsDirectory = "Assets/map"
+        static let mapsDirectory = "map"
         static let floorplanFileNamePrefix = "map_floor"
         static let amenityLandmarkSVGFileName = "map_amenities_landmarks"
 

@@ -28,7 +28,7 @@ class LoadingViewController: UIViewController {
         
         // Video Player
         // Load the URL
-        let loadingVideoURL = Bundle.main.url(forResource: "loadingVideo", withExtension: "mp4", subdirectory:"Assets/video")
+        let loadingVideoURL = Bundle.main.url(forResource: "loadingVideo", withExtension: "mp4", subdirectory:"/video")
         
         // Create player item with the video, add callback for finished
         let playerItem = AVPlayerItem(url: loadingVideoURL!)
