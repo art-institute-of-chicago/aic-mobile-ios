@@ -39,7 +39,7 @@ class LoadingView: UIView {
     }
     
     func setProgressBarPct(_ pct:Float) {
-        progressHighlightView.snp.updateConstraints { (make) in
+        progressHighlightView.snp.updateConstraints { (make) -> Void in
             make.width.equalTo((progressSize.width * CGFloat(pct)))
         }
         
@@ -47,23 +47,23 @@ class LoadingView: UIView {
     }
     
     override func updateConstraints() {
-        loadingImage.snp.makeConstraints { (make) in
+        loadingImage.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(superview!)
         }
         
-        progressView.snp.remakeConstraints { (make) in
+        progressView.snp.remakeConstraints { (make) -> Void in
             make.top.equalTo(progressMarginTop)
             make.centerX.equalTo(progressView.superview!)
             make.width.equalTo(progressSize.width)
             make.height.equalTo(progressSize.height)
         }
         
-        progressBackgroundView.snp.makeConstraints { (make) in
+        progressBackgroundView.snp.makeConstraints { (make) -> Void in
             make.top.left.equalTo(progressBackgroundView.superview!)
             make.size.equalTo(progressSize)
         }
         
-        progressHighlightView.snp.makeConstraints { (make) in
+        progressHighlightView.snp.makeConstraints { (make) -> Void in
             make.top.left.equalTo(progressHighlightView.superview!)
             make.width.equalTo(0)
             make.height.equalTo(progressSize.height)

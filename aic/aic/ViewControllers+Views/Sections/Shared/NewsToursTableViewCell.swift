@@ -278,11 +278,11 @@ class NewsToursTableViewCell: UITableViewCell {
         
         // Header
         // Don't remake this one, it breaks things. Need to figure out why in future.
-        headerView.snp.makeConstraints { (make) in
+        headerView.snp.makeConstraints { (make) -> Void in
             make.top.left.right.equalTo(headerView.superview!)
         }
         
-        headerImageView.snp.remakeConstraints({ (make) in
+        headerImageView.snp.remakeConstraints({ (make) -> Void in
             if mode == .closed {
                 make.top.left.right.equalTo(headerImageView.superview!).inset(headerImageMarginsClosed)
                 make.height.equalTo((UIScreen.main.bounds.width - headerImageMarginsClosed.left - headerImageMarginsClosed.right) *  CGFloat(headerImageViewDetailRatio))
@@ -296,12 +296,12 @@ class NewsToursTableViewCell: UITableViewCell {
         })
         
         if model.bannerString != nil{
-            newBannerView.snp.remakeConstraints { (make) in
+            newBannerView.snp.remakeConstraints { (make) -> Void in
                 make.top.right.equalTo(headerView).inset(newBannerMargins)
                 make.width.equalTo(newBannerLabel.frame.size.width + 40)
                 make.height.equalTo(40)
             }
-            newBannerLabel.snp.remakeConstraints({ (make) in
+            newBannerLabel.snp.remakeConstraints({ (make) -> Void in
                 make.right.equalTo(newBannerView.snp.right).inset(newBannerLabelMargins)
                 make.top.bottom.equalTo(newBannerView)
                 make.height.equalTo(newBannerView)
@@ -321,27 +321,27 @@ class NewsToursTableViewCell: UITableViewCell {
         
         // Details
         if stopsDistanceItemView.superview != nil {
-            stopsDistanceItemView.snp.remakeConstraints { (make) in
+            stopsDistanceItemView.snp.remakeConstraints { (make) -> Void in
                 make.left.right.bottom.equalTo(headerImageView)
             }
         }
         
         // Title
-        titleLabel.snp.remakeConstraints({ (make) in
+        titleLabel.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(headerView.snp.bottom).offset(titleMargins.top)
             make.left.right.equalTo(titleLabel.superview!).inset(titleMargins)
             make.height.greaterThanOrEqualTo(1).priority(Common.Layout.Priority.low.rawValue)
         })
         
         // Reveal Button
-        revealContentButton.snp.remakeConstraints({ (make) in
+        revealContentButton.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(titleLabel.snp.bottom).offset(revealContentButtonMargins.top)
             make.left.right.equalTo(revealContentButton.superview!).inset(revealContentButtonMargins)
             make.height.equalTo(revealContentButtonHeight)
         })
         
         // Description Label
-        descriptionLabel.snp.remakeConstraints({ (make) in
+        descriptionLabel.snp.remakeConstraints({ (make) -> Void in
             if mode == .closed {
                 make.top.equalTo(titleLabel.snp.bottom).offset(descriptionMargins.top)
             } else {
@@ -355,7 +355,7 @@ class NewsToursTableViewCell: UITableViewCell {
         
         // Additional Info (News only)
         if model.type == .news {
-            additionalInformationLabel!.snp.remakeConstraints({ (make) in
+            additionalInformationLabel!.snp.remakeConstraints({ (make) -> Void in
                 if mode == .open {
                     make.top.equalTo(descriptionLabel.snp.bottom)
                 } else {

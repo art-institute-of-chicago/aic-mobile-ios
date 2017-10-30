@@ -92,12 +92,12 @@ class NewsToursSectionView: SectionView {
         })
         
         if mode == .reveal {
-            revealView.snp.remakeConstraints { (make) in
+            revealView.snp.remakeConstraints { (make) -> Void in
                 make.left.right.equalTo(revealView.superview!)
             }
             
             if revealShown == false {
-                revealView.snp.makeConstraints({ (make) in
+                revealView.snp.makeConstraints({ (make) -> Void in
                     make.top.equalTo(self.snp.bottom)
                 })
                 
@@ -107,7 +107,7 @@ class NewsToursSectionView: SectionView {
             
             revealView.setNeedsLayout()
             revealView.layoutIfNeeded()
-            revealView.snp.remakeConstraints { (make) in
+            revealView.snp.remakeConstraints { (make) -> Void in
                 make.left.right.equalTo(revealView.superview!)
                 make.top.equalTo(self.snp.bottom).offset(-revealView.frame.height)
             }

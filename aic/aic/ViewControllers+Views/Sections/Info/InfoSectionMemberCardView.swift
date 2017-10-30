@@ -162,107 +162,107 @@ class InfoSectionMemberCardView: BaseView {
     }
     
     override func updateConstraints() {
-        snp.remakeConstraints({ (make) in
+        snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(superview!)
             make.left.right.bottom.equalTo(superview!).priority(Common.Layout.Priority.required.rawValue)
         })
         
-        titleLabel.snp.remakeConstraints({ (make) in
+        titleLabel.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(titleLabel.superview!).offset(titleLabelMarginTop)
             make.centerX.equalTo(titleLabel.superview!).priority(Common.Layout.Priority.high.rawValue)
         })
         
-        closeButton.snp.remakeConstraints({ (make) in
+        closeButton.snp.remakeConstraints({ (make) -> Void in
             make.right.equalTo(closeButton.superview!)
             make.centerY.equalTo(titleLabel)
             make.size.equalTo(CGSize(width: 44,height: 44))
         })
         
-        contentView.snp.remakeConstraints({ (make) in
+        contentView.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(titleLabel.snp.bottom).offset(contentMarginTop)
             make.left.right.bottom.equalTo(contentView.superview!)
         })
         
-        backgroundImageViewFront.snp.makeConstraints { (make) in
+        backgroundImageViewFront.snp.makeConstraints { (make) -> Void in
             make.top.left.right.equalTo(backgroundImageViewFront.superview!)
         }
         
-        backgroundImageViewBack.snp.makeConstraints { (make) in
+        backgroundImageViewBack.snp.makeConstraints { (make) -> Void in
             make.top.left.right.equalTo(backgroundImageViewBack.superview!)
         }
         
-        memberInputBarcodeView.snp.remakeConstraints({ (make) in
+        memberInputBarcodeView.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(titleLabel.snp.bottom).offset(inputInfoDetailTopMargin)
             make.left.right.equalTo(memberInputBarcodeView.superview!)
         })
         
-        loadingIndicator.snp.remakeConstraints({ (make) in
+        loadingIndicator.snp.remakeConstraints({ (make) -> Void in
             make.center.equalTo(loadingIndicator.superview!)
         })
         
-        memberInputContentView.snp.remakeConstraints({ (make) in
+        memberInputContentView.snp.remakeConstraints({ (make) -> Void in
             make.edges.equalTo(memberInputContentView.superview!).inset(inputInfoDetailInsets).priority(Common.Layout.Priority.high.rawValue)
         })
         
-        memberIDTitleLabel.snp.remakeConstraints({ (make) in
+        memberIDTitleLabel.snp.remakeConstraints({ (make) -> Void in
             make.top.left.right.equalTo(memberIDTitleLabel.superview!)
         })
         
-        memberIDTextField.snp.remakeConstraints({ (make) in
+        memberIDTextField.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(memberIDTitleLabel.snp.bottom).offset(inputTextFieldTopMargin)
             make.left.right.equalTo(memberIDTextField.superview!)
         })
         
-        memberZipCodeTitleLabel.snp.remakeConstraints({ (make) in
+        memberZipCodeTitleLabel.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(memberIDTextField.snp.bottom).offset(memberZipCodeTitleMarginTop)
             make.left.right.equalTo(memberZipCodeTitleLabel.superview!)
         })
         
-        memberZipCodeTextField.snp.remakeConstraints({ (make) in
+        memberZipCodeTextField.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(memberZipCodeTitleLabel.snp.bottom).offset(inputTextFieldTopMargin)
             make.left.right.bottom.equalTo(memberZipCodeTextField.superview!)
         })
         
-        barcodeContentView.snp.remakeConstraints({ (make) in
+        barcodeContentView.snp.remakeConstraints({ (make) -> Void in
             make.top.left.right.equalTo(barcodeContentView.superview!).inset(inputInfoDetailInsets)
             make.bottom.equalTo(barcodeContentView.superview!)
         })
         
-        barcodeReciprocalBadgeImageView.snp.remakeConstraints { (make) in
+        barcodeReciprocalBadgeImageView.snp.remakeConstraints { (make) -> Void in
             make.top.equalTo(barcodeContentView.snp.top)
             make.right.equalTo(barcodeContentView.snp.right)
             make.width.equalTo(40)
             make.height.equalTo(40)
         }
         
-        barcodeMemberName.snp.remakeConstraints({ (make) in
+        barcodeMemberName.snp.remakeConstraints({ (make) -> Void in
             make.top.left.equalTo(barcodeMemberName.superview!)
             make.right.equalTo(barcodeReciprocalBadgeImageView.snp.left)
         })
         
-        barcodeMemberLevel.snp.remakeConstraints({ (make) in
+        barcodeMemberLevel.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(barcodeMemberName.snp.bottom)
             make.left.equalTo(barcodeMemberLevel.superview!)
             make.right.equalTo(barcodeReciprocalBadgeImageView.snp.left)
         })
         
-        barcodeExpirationDate.snp.remakeConstraints({ (make) in
+        barcodeExpirationDate.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(barcodeMemberLevel.snp.bottom)
             make.left.equalTo(barcodeExpirationDate.superview!)
             make.right.equalTo(barcodeReciprocalBadgeImageView.snp.left)
         })
         
-        barcodeImageView.snp.remakeConstraints({ (make) in
+        barcodeImageView.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(barcodeExpirationDate.snp.bottom)
             make.left.right.equalTo(barcodeImageView.superview!)
         })
         
-        signInUpdateButton.snp.remakeConstraints({ (make) in
+        signInUpdateButton.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(memberInputBarcodeView.snp.bottom).offset(signInUpdateButtonTopMargin).priority(Common.Layout.Priority.high.rawValue)
             make.left.right.equalTo(signInUpdateButton.superview!).inset(UIEdgeInsetsMake(0, sideMargin, 0, sideMargin))
         })
         
-        switchMemberCardHolderButton.snp.remakeConstraints({ (make) in
+        switchMemberCardHolderButton.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(signInUpdateButton.snp.bottom).offset(switchMemberCardHolderButtonTopMargin).priority(Common.Layout.Priority.high.rawValue)
             make.left.right.equalTo(switchMemberCardHolderButton.superview!).inset(UIEdgeInsetsMake(0, sideMargin, 0, sideMargin))
         })

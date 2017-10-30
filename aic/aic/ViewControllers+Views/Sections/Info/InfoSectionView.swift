@@ -44,19 +44,19 @@ class InfoSectionView: SectionView {
     
     override func updateConstraints() {
         if !didSetupConstraints {
-            scrollViewContentView.snp.makeConstraints({ (make) in
+            scrollViewContentView.snp.makeConstraints({ (make) -> Void in
                 make.bottom.equalTo(informationView)
             })
             
             if showMemberCardView {
-                becomeMemberView.snp.makeConstraints({ (make) in
+                becomeMemberView.snp.makeConstraints({ (make) -> Void in
                     make.top.lessThanOrEqualTo(titleView.snp.bottom).priority(Common.Layout.Priority.high.rawValue)
                     make.top.equalTo(scrollViewContentView).offset(titleViewHeight)
                     make.left.right.equalTo(becomeMemberView.superview!)
                 })
             }
             
-            informationView.snp.makeConstraints({ (make) in
+            informationView.snp.makeConstraints({ (make) -> Void in
                 if showMemberCardView {
                     make.top.equalTo(becomeMemberView.snp.bottom)
                 } else {

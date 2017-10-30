@@ -105,7 +105,7 @@ class MiniAudioPlayerView : BaseView {
             constraint.deactivate()
         }
         
-        progressBar.snp.makeConstraints { (make) in
+        progressBar.snp.makeConstraints { (make) -> Void in
             progressBarWidthConstraint = make.width.equalTo(progressBar.superview!).multipliedBy(pct).priority(Common.Layout.Priority.high.rawValue).constraint
         }
     }
@@ -123,12 +123,12 @@ class MiniAudioPlayerView : BaseView {
                 make.centerY.equalTo(playPauseActivityHolderView.superview!)
             }
             
-            playPauseButton.snp.makeConstraints({ (make) in
+            playPauseButton.snp.makeConstraints({ (make) -> Void in
                 make.size.equalTo(playPauseButton.frame.size)
                 make.centerY.equalTo(playPauseButton.superview!)
             })
             
-            activityIndicator.snp.makeConstraints({ (make) in
+            activityIndicator.snp.makeConstraints({ (make) -> Void in
                 //make.center.equalTo(activityIndicator.superview!)
                 make.size.equalTo(playPauseButton.frame.size)
                 make.centerY.equalTo(playPauseButton.superview!)
@@ -148,7 +148,7 @@ class MiniAudioPlayerView : BaseView {
                 make.centerY.equalTo(fullscreenButton.superview!)
             }
             
-            progressBar.snp.makeConstraints({ (make) in
+            progressBar.snp.makeConstraints({ (make) -> Void in
                 make.height.equalTo(progressBarHeight)
                 make.left.equalTo(progressBar.superview!).priority(Common.Layout.Priority.low.rawValue)
                 make.bottom.equalTo(progressBar.superview!)

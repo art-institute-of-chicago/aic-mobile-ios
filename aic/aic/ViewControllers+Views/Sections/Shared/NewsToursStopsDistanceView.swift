@@ -48,19 +48,19 @@ class NewsToursStopsDistanceView : BaseView {
     }
     
     override func updateConstraints() {
-        contentView.snp.remakeConstraints({ (make) in
+        contentView.snp.remakeConstraints({ (make) -> Void in
             make.edges.equalTo(contentView.superview!).inset(margins)
         })
         
         if stopsView.superview != nil {
-            stopsView.snp.remakeConstraints({ (make) in
+            stopsView.snp.remakeConstraints({ (make) -> Void in
                 make.top.left.equalTo(stopsView.superview!)
                 make.bottom.equalTo(contentView)
             })
         }
         
         if distanceView.superview != nil {
-            distanceView.snp.remakeConstraints({ (make) in
+            distanceView.snp.remakeConstraints({ (make) -> Void in
                 if stopsView.superview != nil {
                     make.left.equalTo(stopsView.snp.right).offset(distanceMarginLeft)
                 } else {

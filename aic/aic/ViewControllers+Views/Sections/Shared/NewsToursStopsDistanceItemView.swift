@@ -43,17 +43,17 @@ class NewsToursStopsDistanceItemView: BaseView {
     }
     
     override func updateConstraints() {
-        self.contentView.snp.remakeConstraints({ (make) in
+        self.contentView.snp.remakeConstraints({ (make) -> Void in
             make.top.left.right.equalTo(contentView.superview!)
             make.bottom.equalTo(contentView.superview!)
         })
         
-        self.iconImageView.snp.remakeConstraints({ (make) in
+        self.iconImageView.snp.remakeConstraints({ (make) -> Void in
             make.top.left.equalTo(iconImageView.superview!)
             make.bottom.equalTo(iconImageView.superview!)
         })
         
-        self.textLabel.snp.remakeConstraints({ (make) in
+        self.textLabel.snp.remakeConstraints({ (make) -> Void in
             make.centerY.equalTo(iconImageView)
             make.left.equalTo(iconImageView.snp.right).offset(textLabelPaddingLeft)
             make.right.equalTo(textLabel.superview!).priority(Common.Layout.Priority.low.rawValue)

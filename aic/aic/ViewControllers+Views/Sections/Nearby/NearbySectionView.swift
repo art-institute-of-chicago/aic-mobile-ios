@@ -49,14 +49,14 @@ class NearbySectionView: SectionView {
     override func updateConstraints() {
         if !didSetupConstraints {
             
-            passThroughView.snp.makeConstraints({ (make) in
+            passThroughView.snp.makeConstraints({ (make) -> Void in
                 make.top.lessThanOrEqualTo(titleView.snp.bottom).priority(Common.Layout.Priority.high.rawValue)
                 make.top.equalTo(scrollViewContentView).offset(titleViewHeight)
                 make.left.right.equalTo(passThroughView.superview!)
                 make.height.equalTo(1000)
             })
             
-            scrollViewContentView.snp.makeConstraints({ (make) in
+            scrollViewContentView.snp.makeConstraints({ (make) -> Void in
                 make.bottom.equalTo(passThroughView)
             })
             

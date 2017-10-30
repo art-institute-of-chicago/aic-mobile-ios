@@ -57,16 +57,16 @@ class ToursSectionStopView: BaseView {
     
     override func updateConstraints() {
         if !didSetupConstraints {
-            contentView.snp.makeConstraints({ (make) in
+            contentView.snp.makeConstraints({ (make) -> Void in
                 make.edges.equalTo(contentView.superview!)
             })
             
-            thumbnailImageView.snp.makeConstraints({ (make) in
+            thumbnailImageView.snp.makeConstraints({ (make) -> Void in
                 make.edges.equalTo(thumbnailImageView.superview!).priority(Common.Layout.Priority.low.rawValue)
                 make.size.equalTo(thumbnailSize)
             })
             
-            playButton.snp.makeConstraints({ (make) in
+            playButton.snp.makeConstraints({ (make) -> Void in
                 make.edges.equalTo(thumbnailImageView)
             })
             

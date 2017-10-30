@@ -97,25 +97,25 @@ class MessageSmallView: BaseView {
     
     override func updateConstraints() {
         if !didSetupConstraints {
-            contentBackgroundView.snp.makeConstraints { (make) in
+            contentBackgroundView.snp.makeConstraints { (make) -> Void in
                 make.left.right.equalTo(contentBackgroundView.superview!)
                 make.centerY.equalTo(contentBackgroundView.superview!)
             }
             
-            contentView.snp.makeConstraints { (make) in
+            contentView.snp.makeConstraints { (make) -> Void in
                 make.edges.equalTo(contentView.superview!).inset(contentMargins)
             }
             
-            titleLabel.snp.makeConstraints { (make) in
+            titleLabel.snp.makeConstraints { (make) -> Void in
                 make.top.left.right.equalTo(titleLabel.superview!)
             }
             
-            messageLabel.snp.makeConstraints { (make) in
+            messageLabel.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(titleLabel.snp.bottom).offset(messageLabelMarginTop)
                 make.left.right.equalTo(messageLabel.superview!)
             }
             
-            actionButton.snp.makeConstraints { (make) in
+            actionButton.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(messageLabel.snp.bottom).offset(actionButtonMarginTop)
                 make.left.right.equalTo(actionButton.superview!)
                 
@@ -125,7 +125,7 @@ class MessageSmallView: BaseView {
             }
             
             if let cancelButton = self.cancelButton {
-                cancelButton.snp.makeConstraints { (make) in
+                cancelButton.snp.makeConstraints { (make) -> Void in
                     make.top.equalTo(actionButton.snp.bottom).offset(cancelButtonMarginTop)
                     make.left.right.equalTo(cancelButton.superview!)
                     make.bottom.equalTo(cancelButton.superview!)

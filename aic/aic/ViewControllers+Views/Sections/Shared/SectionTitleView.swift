@@ -67,24 +67,24 @@ class SectionTitleView: BaseView {
     
     override func updateConstraints() {
         if(!didSetupConstraints) {
-            contentView.snp.makeConstraints({ (make) in
+            contentView.snp.makeConstraints({ (make) -> Void in
                 make.top.right.left.equalTo(contentView.superview!).inset(margins)
                 make.bottom.greaterThanOrEqualTo(titleLabel).offset(titleBottomMargin).priority(Common.Layout.Priority.high.rawValue)
                 make.bottom.equalTo(contentView.superview!)
             })
             
-            iconImage.snp.makeConstraints({ (make) in
+            iconImage.snp.makeConstraints({ (make) -> Void in
                 make.centerX.equalTo(iconImage.superview!)
                 make.top.equalTo(iconImage.superview!).priority(Common.Layout.Priority.high.rawValue)
                 make.height.equalTo(iconImage.image!.size.height)
             })
             
-            titleLabel.snp.makeConstraints({ (make) in
+            titleLabel.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(titleLabel.superview!).offset(titleTopMargin).priority(Common.Layout.Priority.low.rawValue)
                 make.left.right.equalTo(titleLabel.superview!)
             })
             
-            descriptionLabel.snp.makeConstraints({ (make) in
+            descriptionLabel.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(iconImage.snp.bottom).offset(descriptionTopMargin)
                 make.left.right.equalTo(descriptionLabel.superview!)
                 

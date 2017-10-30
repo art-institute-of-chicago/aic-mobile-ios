@@ -98,38 +98,38 @@ class MessageLargeView: BaseView {
 
     override func updateConstraints() {
         if !didSetupConstraints {
-            contentView.snp.makeConstraints({ (make) in
+            contentView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(contentView.superview!).offset(UIScreen.main.bounds.height * contentViewMarginTopRatio)
                 make.left.right.equalTo(contentView.superview!).inset(contentViewMargins)
             })
             
-            iconImageView.snp.makeConstraints({ (make) in
+            iconImageView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(iconImageView.superview!)
                 make.centerX.equalTo(iconImageView.superview!)
             })
             
-            titleLabel.snp.makeConstraints({ (make) in
+            titleLabel.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(iconImageView.snp.bottom).offset(titleLabelMarginTop)
                 make.left.right.equalTo(titleLabel.superview!)
             })
             
-            messageLabel.snp.makeConstraints({ (make) in
+            messageLabel.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(titleLabel.snp.bottom).offset(messageLabelMarginTop)
                 make.left.right.bottom.equalTo(messageLabel.superview!)
             })
             
-            buttonsView.snp.makeConstraints({ (make) in
+            buttonsView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(contentView.snp.bottom).inset(buttonsViewMargins).offset(buttonsViewMargins.top)
                 make.left.right.equalTo(buttonsView.superview!).inset(buttonsViewMargins)
             })
             
-            actionButton.snp.makeConstraints({ (make) in
+            actionButton.snp.makeConstraints({ (make) -> Void in
                 make.top.left.right.equalTo(actionButton.superview!)
                 make.bottom.equalTo(actionButton.superview!).priority(Common.Layout.Priority.low.rawValue)
             })
 
             if let cancelButton = cancelButton {
-                cancelButton.snp.makeConstraints({ (make) in
+                cancelButton.snp.makeConstraints({ (make) -> Void in
                     make.top.equalTo(actionButton.snp.bottom).offset(cancelButtonMarginTop)
                     make.left.right.equalTo(cancelButton.superview!)
                     make.bottom.equalTo(cancelButton.superview!)

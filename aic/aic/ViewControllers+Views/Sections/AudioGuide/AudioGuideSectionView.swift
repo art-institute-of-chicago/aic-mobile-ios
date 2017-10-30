@@ -32,14 +32,14 @@ class AudioGuideSectionView: SectionView {
     
     override func updateConstraints() {
         if(!didSetupConstraints) {
-            scrollViewContentView.snp.makeConstraints({ (make) in
+            scrollViewContentView.snp.makeConstraints({ (make) -> Void in
                 make.bottom.equalTo(numberPadView)
             })
             
             didSetupConstraints = true
         }
         
-        numberPadView.snp.remakeConstraints({ (make) in
+        numberPadView.snp.remakeConstraints({ (make) -> Void in
             make.width.equalTo(numberPadView.frame.width)
             make.height.equalTo(numberPadView.frame.height)
             make.centerX.equalTo(numberPadView.superview!)

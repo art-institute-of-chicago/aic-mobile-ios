@@ -75,7 +75,7 @@ class SectionView: BaseView {
                 make.left.right.equalTo(titleView.superview!)
             })
             
-            titleView.titleLabel.snp.makeConstraints({ (make) in
+            titleView.titleLabel.snp.makeConstraints({ (make) -> Void in
                 make.top.greaterThanOrEqualTo(self).offset(titleScrolledTopMargin).priority(Common.Layout.Priority.high.rawValue)
             })
             

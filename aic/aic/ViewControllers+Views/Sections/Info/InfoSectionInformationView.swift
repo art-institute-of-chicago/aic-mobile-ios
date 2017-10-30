@@ -102,60 +102,60 @@ class InfoSectionInformationView: BaseView {
     override func updateConstraints() {
         if !didSetupConstraints {
 			
-			infoView.snp.makeConstraints({ (make) in
+			infoView.snp.makeConstraints({ (make) -> Void in
                 make.edges.equalTo(infoView.superview!).priority(Common.Layout.Priority.required.rawValue)
             })
             
-            infoContentViewHolder.snp.makeConstraints({ (make) in
+            infoContentViewHolder.snp.makeConstraints({ (make) -> Void in
                 make.top.left.right.equalTo(infoContentViewHolder.superview!).priority(Common.Layout.Priority.high.rawValue)
             })
             
-            infoContentView.snp.makeConstraints({ (make) in
+            infoContentView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(infoContentView.superview!).inset(contentMargins)
                 make.left.right.bottom.equalTo(infoContentView.superview!).inset(contentMargins).priority(Common.Layout.Priority.high.rawValue)
             })
             
-            titleLabel.snp.makeConstraints({ (make) in
+            titleLabel.snp.makeConstraints({ (make) -> Void in
                 make.top.left.right.equalTo(titleLabel.superview!)
             })
 			
 			let museumHoursSize = museumHoursTextView.sizeThatFits(CGSize(width: museumHoursTextView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-			museumHoursTextView.snp.makeConstraints({ (make) in
+			museumHoursTextView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(titleLabel.snp.bottom).offset(sectionContentMarginTop)
 				make.left.equalTo(museumHoursTextView.superview!)
 				make.width.equalTo(museumHoursTextView.frame.width)
 				make.height.equalTo(museumHoursSize.height)
             })
             
-            locationLabel.snp.makeConstraints({ (make) in
+            locationLabel.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(museumHoursTextView.snp.bottom).offset(sectionMarginTop)
                 make.left.right.equalTo(locationLabel.superview!)
             })
             
-            locationTextView.snp.makeConstraints({ (make) in
+            locationTextView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(locationLabel.snp.bottom).offset(sectionContentMarginTop)
                 make.left.right.equalTo(locationTextView.superview!)
             })
             
-            getTicketsTextView.snp.makeConstraints({ (make) in
+            getTicketsTextView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(locationTextView.snp.bottom).offset(sectionMarginTop)
                 make.right.left.equalTo(getTicketsTextView.superview!)
                 make.bottom.equalTo(getTicketsTextView.superview!).inset(contentMargins.bottom)
             })
             
-            infoCreditsView.snp.makeConstraints({ (make) in
+            infoCreditsView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(infoContentViewHolder.snp.bottom).offset(sectionContentMarginTop)
                 make.left.right.equalTo(infoCreditsView.superview!).inset(contentMargins)
                 make.bottom.equalTo(infoCreditsView.superview!)
             })
             
-            bloombergCreditsImageView.snp.makeConstraints({ (make) in
+            bloombergCreditsImageView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(bloombergCreditsImageView.superview!)
                 make.left.equalTo(bloombergCreditsImageView.superview!)
                 make.size.equalTo(bloombergCreditsImageView.image!.size)
             })
             
-            potionCreditsTextView.snp.makeConstraints({ (make) in
+            potionCreditsTextView.snp.makeConstraints({ (make) -> Void in
                 make.top.equalTo(bloombergCreditsImageView.snp.bottom).offset(sectionMarginTop)
                 make.left.right.equalTo(potionCreditsTextView.superview!)
                 make.bottom.equalTo(bloombergCreditsImageView.superview!).inset(contentMargins)

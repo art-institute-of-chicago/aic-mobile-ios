@@ -105,39 +105,39 @@ class InfoSectionBecomeMemberView: BaseView {
     }
     
     override func updateConstraints() {
-            contentView.snp.remakeConstraints({ (make) in
+            contentView.snp.remakeConstraints({ (make) -> Void in
                 make.edges.equalTo(contentView.superview!).inset(contentMargins).priority(Common.Layout.Priority.high.rawValue)
             })
             
-            titleLabel.snp.remakeConstraints({ (make) in
+            titleLabel.snp.remakeConstraints({ (make) -> Void in
                 make.top.left.right.equalTo(titleLabel.superview!)
             })
             
             //Only setup constraints if a member has not been saved
             if savedMember == nil {
                 
-                supportMessageLabel.snp.remakeConstraints({ (make) in
+                supportMessageLabel.snp.remakeConstraints({ (make) -> Void in
                     make.top.equalTo(titleLabel.snp.bottom).offset(supportMarginTop)
                     make.left.right.equalTo(supportMessageLabel.superview!)
                 })
                 
-                joinTextView.snp.remakeConstraints({ (make) in
+                joinTextView.snp.remakeConstraints({ (make) -> Void in
                     make.top.equalTo(supportMessageLabel.snp.bottom).offset(joinMessageMarginTop)
                     make.left.right.equalTo(joinTextView.superview!)
                 })
                 
-                accessPromptLabel.snp.remakeConstraints({ (make) in
+                accessPromptLabel.snp.remakeConstraints({ (make) -> Void in
                     make.top.equalTo(joinTextView.snp.bottom).offset(accessPromptMarginTop)
                     make.left.right.equalTo(accessPromptLabel.superview!)
                 })
                 
-                accessButton.snp.remakeConstraints({ (make) in
+                accessButton.snp.remakeConstraints({ (make) -> Void in
                     make.top.equalTo(accessPromptLabel.snp.bottom).offset(accessButtonMarginTop)
                     make.left.right.bottom.equalTo(accessButton.superview!)
                 })
                 
             } else {
-                accessButton.snp.remakeConstraints({ (make) in
+                accessButton.snp.remakeConstraints({ (make) -> Void in
                     make.top.equalTo(titleLabel.snp.bottom).offset(accessButtonMarginTop)
                     make.left.right.bottom.equalTo(accessButton.superview!)
                 })

@@ -113,7 +113,7 @@ class ToursSectionStopsScrollerView: NewsToursRevealView {
     }
     
     override func updateConstraints() {
-        focusedStopLabel.snp.remakeConstraints({ (make) in
+        focusedStopLabel.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(titleLabel.snp.bottom)
             
             make.left.right.equalTo(focusedStopLabel.superview!).inset(focusedStopLabelMargins).priority(Common.Layout.Priority.high.rawValue)
@@ -122,13 +122,13 @@ class ToursSectionStopsScrollerView: NewsToursRevealView {
             focusedStopLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: UILayoutConstraintAxis.horizontal)
         })
         
-        stopsScrollView.snp.remakeConstraints { (make) in
+        stopsScrollView.snp.remakeConstraints { (make) -> Void in
             make.top.equalTo(titleContentView.snp.bottom).offset(stopsMargins.top).priority(Common.Layout.Priority.high.rawValue)
             make.left.right.equalTo(stopsScrollView.superview!).priority(Common.Layout.Priority.high.rawValue)
             make.bottom.equalTo(stopsScrollView.superview!).priority(Common.Layout.Priority.high.rawValue)
         }
         
-        stopsScrollViewContentView.snp.remakeConstraints({ (make) in
+        stopsScrollViewContentView.snp.remakeConstraints({ (make) -> Void in
             make.top.equalTo(stopsScrollViewContentView.superview!)
             make.left.right.bottom.equalTo(stopsScrollViewContentView.superview!)
             if stopsScrollViewContentView.subviews.count != 0 {
@@ -138,7 +138,7 @@ class ToursSectionStopsScrollerView: NewsToursRevealView {
         })
         
         for (i,stop) in stopsScrollViewContentView.subviews.enumerated() {
-            stop.snp.remakeConstraints({ (make) in
+            stop.snp.remakeConstraints({ (make) -> Void in
                 make.top.equalTo(stop.superview!)
                 make.bottom.equalTo(stop.superview!).inset(stopsMargins.bottom)
                 

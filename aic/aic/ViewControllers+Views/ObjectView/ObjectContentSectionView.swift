@@ -94,7 +94,7 @@ class ObjectContentSectionView: BaseView {
         }
         
         if collapseExpandButton != nil {
-            collapseExpandButton!.snp.makeConstraints({ (make) in
+            collapseExpandButton!.snp.makeConstraints({ (make) -> Void in
                 make.centerY.equalTo(titleLabel)
                 make.right.equalTo((collapseExpandButton?.superview!)!)
                 make.width.height.equalTo(collapseButtonSize)
@@ -108,7 +108,7 @@ class ObjectContentSectionView: BaseView {
                 make.bottom.equalTo(bodyTextView.superview!)
             }
         } else {
-            titleLabel.snp.makeConstraints({ (make) in
+            titleLabel.snp.makeConstraints({ (make) -> Void in
                 make.bottom.equalTo(titleLabel.superview!)
             })
         }

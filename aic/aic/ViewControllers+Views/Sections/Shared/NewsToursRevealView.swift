@@ -46,12 +46,12 @@ class NewsToursRevealView: BaseView {
     }
     
     override func updateConstraints() {
-        titleContentView.snp.remakeConstraints { (make) in
+        titleContentView.snp.remakeConstraints { (make) -> Void in
             make.top.bottom.equalTo(titleContentView.superview!).inset(titleContentInsets).priority(Common.Layout.Priority.low.rawValue)
             make.left.right.equalTo(titleContentView.superview!)
         }
         
-        titleLabel.snp.remakeConstraints { (make) in
+        titleLabel.snp.remakeConstraints { (make) -> Void in
             make.top.equalTo(titleLabel.superview!)
             make.left.equalTo(titleLabel.superview!).offset(titleContentInsets.left)
             make.right.equalTo(closeButton.snp.left).priority(Common.Layout.Priority.low.rawValue)
@@ -59,7 +59,7 @@ class NewsToursRevealView: BaseView {
             make.height.greaterThanOrEqualTo(1)
         }
         
-        closeButton.snp.remakeConstraints({ (make) in
+        closeButton.snp.remakeConstraints({ (make) -> Void in
             make.centerY.equalTo(titleLabel)
             make.right.equalTo(closeButton.superview!).inset(titleContentInsets.right)
         })

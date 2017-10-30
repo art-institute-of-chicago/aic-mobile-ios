@@ -189,7 +189,7 @@ class ObjectView: UIView {
             
             // Set the constraint
             self.heightConstraint?.deactivate()
-            self.imageViewHolder.snp.makeConstraints({ (make) in
+            self.imageViewHolder.snp.makeConstraints({ (make) -> Void in
                 self.heightConstraint = make.height.equalTo(self.imageView.snp.width).multipliedBy(imageHeightRatio).constraint
             })
             
@@ -226,7 +226,7 @@ class ObjectView: UIView {
                 make.edges.equalTo(imageView.superview!).inset(imageInsets)
             }
             
-            imageViewHolder.snp.makeConstraints({ (make) in
+            imageViewHolder.snp.makeConstraints({ (make) -> Void in
                 make.left.right.equalTo(scrollView)
                 make.top.equalTo(scrollViewContentView)
                 self.heightConstraint = make.height.equalTo(imageView.snp.width).multipliedBy(imageMaxHeightRatio).constraint

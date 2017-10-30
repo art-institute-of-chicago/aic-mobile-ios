@@ -47,22 +47,22 @@ class InstructionsItemView: UIView {
     }
     
     override func updateConstraints() {
-        contentView.snp.makeConstraints { (make) in
+        contentView.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(contentView.superview!)
         }
         
-        iconImage.snp.makeConstraints { (make) in
+        iconImage.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(iconImage.superview!)
             make.top.equalTo(iconImage.superview!).offset(iconMarginTop)
         }
         
-        titleLabel.snp.makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(iconImage.snp.bottom).offset(titleMargins.top)
             make.left.right.equalTo(titleLabel.superview!).inset(titleMargins)
             make.height.greaterThanOrEqualTo(1)
         }
         
-        subtitleLabel.snp.makeConstraints { (make) in
+        subtitleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(titleLabel.snp.bottom).offset(subtitleMargins.top)
             make.left.right.equalTo(titleLabel.superview!).inset(subtitleMargins)
         }
