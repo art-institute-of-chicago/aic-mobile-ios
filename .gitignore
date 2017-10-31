@@ -46,3 +46,6 @@ aic/aic/GoogleService-Info.plist
 
 # Local temporary files
 tmp/
+
+#Member Card assets
+aic/aic/Assets.xcassets/InfoView/
