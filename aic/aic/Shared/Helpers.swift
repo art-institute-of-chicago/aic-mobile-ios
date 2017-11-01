@@ -47,7 +47,7 @@ class Wrapper<T> {
 */
 func getOffsetRect(forText text:String, forFont font:UIFont) -> CGRect {
     let textString = text as NSString
-    let textAttributes = [NSFontAttributeName: font]
+    let textAttributes = [NSAttributedStringKey.font: font]
     
     return textString.boundingRect(with: CGSize(width: 2000, height: 2000), options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil)
 }
@@ -70,7 +70,7 @@ func getAttributedString(forHTMLText text:String, font:UIFont) -> NSAttributedSt
     
     let attrStr = try! NSAttributedString(
         data: data,
-        options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue],
+        options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html, NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue],
         documentAttributes: nil)
     
     return attrStr
@@ -87,9 +87,9 @@ func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFl
     
     let attrString = NSMutableAttributedString(string: text)
     let range = NSMakeRange(0, attrString.length)
-    attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range: range)
-    attrString.addAttribute(NSBaselineOffsetAttributeName, value:baselineOffset, range: range)
-    attrString.addAttribute(NSFontAttributeName, value:font, range: range)
+    attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range: range)
+    attrString.addAttribute(NSAttributedStringKey.baselineOffset, value:baselineOffset, range: range)
+    attrString.addAttribute(NSAttributedStringKey.font, value:font, range: range)
     
     return attrString
 }

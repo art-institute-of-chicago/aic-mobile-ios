@@ -69,20 +69,20 @@ struct Common {
     static let Sections:[Section:AICSectionModel] = [
         Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
             color: UIColor.aicAudioGuideColor(),
-            icon: #imageLiteral(resourceName: "iconNumPad"),
+			icon: #imageLiteral(resourceName: "iconNumPad"),
             title: "Look It Up",
             description: "Find an artwork you like? Enter the artwork number to learn more.",
             tabBarTitle: "Audio",
-            tabBarIcon: UIImage(named: "navNumPad")!
+            tabBarIcon: #imageLiteral(resourceName: "navNumPad")
         ),
 
         Section.whatsOn: AICSectionModel(nid:Section.whatsOn.rawValue,
             color: UIColor.aicWhatsonColor(),
-            icon: #imageLiteral(resourceName: "iconWhatsOn"),
+			icon: #imageLiteral(resourceName: "iconWhatsOn"),
             title: "On View Now",
             description: "Preview the latest exhibitions at the Art Institute.",
             tabBarTitle: "On View",
-            tabBarIcon: UIImage(named: "navWhatsOn")!
+            tabBarIcon: #imageLiteral(resourceName: "navWhatsOn")
         ),
         Section.tours: AICSectionModel(nid:Section.tours.rawValue,
             color: UIColor.aicToursColor(),
@@ -90,7 +90,7 @@ struct Common {
             title: "Take an Audio Tour",
             description: "Listen to the latest stories from our ever-expanding repertoire of mobile tours.",
             tabBarTitle: "Tours",
-            tabBarIcon: UIImage(named: "navTours")!
+            tabBarIcon: #imageLiteral(resourceName: "navTours")
         ),
         Section.map: AICSectionModel(nid:Section.map.rawValue,
             color: UIColor.aicNearbyColor(),
@@ -98,15 +98,15 @@ struct Common {
             title: "Find Your Way",
             description: "Use the map to explore the museum and find audio-enhanced artworks near you.",
             tabBarTitle: "Map",
-            tabBarIcon: UIImage(named: "navMap")!
+            tabBarIcon: #imageLiteral(resourceName: "navMap")
         ),
         Section.info: AICSectionModel(nid:Section.info.rawValue,
             color: UIColor.aicInfoColor(),
-            icon: UIImage(named:"iconInfo")!,
+            icon: #imageLiteral(resourceName: "iconInfo"),
             title: "Need Information?",
             description: "Here’s everything you need to visit us and keep in touch.",
             tabBarTitle: "Info",
-            tabBarIcon: UIImage(named: "navInfo")!
+            tabBarIcon: #imageLiteral(resourceName: "navInfo")
         )
     ]
 
@@ -218,14 +218,14 @@ struct Common {
         )
 
         // Large
-        static let useHeadphones = AICMessageLargeModel(iconImage: UIImage(named: "messageHeadphones")!,
+        static let useHeadphones = AICMessageLargeModel(iconImage: #imageLiteral(resourceName: "messageHeadphones"),
                                                         title: "Listen in.",
                                                         message: "Use your headphones to listen.\n\nDon’t have headphones?\nHold the phone close to your ear.",
                                                         actionButtonTitle: "OK",
                                                         cancelButtonTitle: nil
         )
 
-        static let enableLocation = AICMessageLargeModel(iconImage: UIImage(named: "messageLocation")!,
+        static let enableLocation = AICMessageLargeModel(iconImage: #imageLiteral(resourceName: "messageLocation"),
                                                          title: "Where are you?",
                                                          message: "We’d like to use your location to help you navigate the museum.",
                                                          actionButtonTitle: "OK",
@@ -290,34 +290,34 @@ struct Common {
     // Content for each screen
     struct Instructions {
         static let screens = [
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconMapLarge")!,
+            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconMapLarge"),
                 title:"Find Your Way",
                 subtitle: "Use the map to explore the museum and find audio-enhanced artworks near you.",
                 color: UIColor.aicMapColor()
             ),
 
 
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconWhatsOnLarge")!,
+            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconWhatsOnLarge"),
                 title:"On View Now",
                 subtitle: "Preview the latest exhibitions at the Art Institute.",
                 color: UIColor.aicWhatsonColor()
             ),
 
 
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconNumPadLarge")!,
+            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconNumPadLarge"),
                 title:"Look It Up",
                 subtitle: "Find an artwork you like? Use the keypad to access audio-enhanced stories.",
                 color: UIColor.aicAudioGuideColor()
             ),
 
 
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconInfoLarge")!,
+            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconInfoLarge"),
                 title:"Member’s Access",
                 subtitle: "Enter your membership ID for easy access to the museum.",
                 color: UIColor.aicInfoColor()
             ),
 
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconToursLarge")!,
+            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
                 title:"Go on a Tour",
                 subtitle: "Find a story that suits your interests in our ever-expanding portfolio of audio tours.",
                 color:UIColor.aicToursColor()
@@ -333,7 +333,7 @@ struct Common {
         static let startFloor = 1
 
         // File directories
-        static let mapsDirectory = "Assets/map"
+        static let mapsDirectory = "map"
         static let floorplanFileNamePrefix = "map_floor"
         static let amenityLandmarkSVGFileName = "map_amenities_landmarks"
 

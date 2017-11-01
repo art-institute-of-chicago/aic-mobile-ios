@@ -24,8 +24,10 @@ class AppDataParser {
         case jsonObjectNotFoundForKey(key:String)
         case noValidTourStops
     }
-    
-    private var appDataModel = AICAppDataModel()
+	
+	private var galleries = [AICGalleryModel]()
+	private var audioFiles = [AICAudioFileModel]()
+	private var objects = [AICObjectModel]()
     
     // MARK: News
     func parse(newsItemsData itemsData:Data) -> [AICNewsItemModel] {
@@ -39,7 +41,6 @@ class AppDataParser {
                     newsItems.append(newsItem)
                 })
             }
-                
             catch {
                 if Common.Testing.printDataErrors {
                     print("could not parse AIC News Item Data:\n\(newsItem.1)\n")
@@ -111,25 +112,50 @@ class AppDataParser {
     // MARK: App Data
     func parse(appData data:Data) -> AICAppDataModel {
         let appDataJson = JSON(data: data)
-        
-        appDataModel = AICAppDataModel()
-        
-        parse(galleriesJSON: appDataJson["galleries"])
-        parse(audioFilesJSON: appDataJson["audio_files"])
-        parse(objectsJSON: appDataJson["objects"])
-        parse(toursJSON: appDataJson["tours"])
-        
-        return appDataModel
+		
+		let museumInfo: AICMuseumInfoModel	= parse(museumInfoJSON: appDataJson["general_info"])
+		self.galleries	= parse(galleriesJSON: appDataJson["galleries"])
+		self.audioFiles = parse(audioFilesJSON: appDataJson["audio_files"])
+        self.objects 	= parse(objectsJSON: appDataJson["objects"])
+		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
+		
+		let appData = AICAppDataModel(museumInfo: museumInfo,
+							   galleries: self.galleries,
+							   objects: self.objects,
+							   audioFiles: self.audioFiles,
+							   tours: tours)
+		
+		return appData
     }
+	
+	// Museum Info
+	func parse(museumInfoJSON: JSON) -> AICMuseumInfoModel {
+		do {
+			let nid         = try getInt(fromJSON: museumInfoJSON, forKey: "nid")
+			let title       = try getString(fromJSON: museumInfoJSON, forKey: "title")
+			let museumHours	= try getString(fromJSON: museumInfoJSON, forKey: "museum_hours")
+			
+			return AICMuseumInfoModel(nid: nid,
+									  title: title,
+									  museumHours: museumHours
+			)
+		}
+		catch {
+			print("Could not parse AIC Museum Info Data:\n\(museumInfoJSON)\n")
+		}
+		
+		return AICMuseumInfoModel(nid: 0, title: Common.Info.museumInformationTitle, museumHours: Common.Info.museumInformationHours)
+	}
     
     // Galleries
-    private func parse(galleriesJSON galleries:JSON) {
-        print(galleries.dictionaryValue.count)
-        for (_, galleryJSON):(String, JSON) in galleries.dictionaryValue {
+    private func parse(galleriesJSON: JSON) -> [AICGalleryModel] {
+        print(galleriesJSON.dictionaryValue.count)
+		var galleries = [AICGalleryModel]()
+        for (_, galleryJSON):(String, JSON) in galleriesJSON.dictionaryValue {
             do {
                 try handleParseError({ [unowned self] in
-                    let gallery = try self.parse(gallery: galleryJSON)
-                    self.appDataModel.galleries.append(gallery)
+                    let gallery = try self.parse(galleryJSON: galleryJSON)
+                    galleries.append(gallery)
                     })
             }
                 
@@ -139,10 +165,11 @@ class AppDataParser {
                 }
             }
         }
+		return galleries
     }
     
-    func parse(gallery galleryJSON: JSON?) throws -> AICGalleryModel {
-        let nid         = try getInt(fromJSON:galleryJSON!, forKey: "nid")
+    func parse(galleryJSON: JSON?) throws -> AICGalleryModel {
+        let nid         = try getInt(fromJSON: galleryJSON!, forKey: "nid")
         let title       = try getString(fromJSON: galleryJSON!, forKey: "title")
         
         var displayTitle = title.replacingOccurrences(of: "Gallery ", with: "")
@@ -168,13 +195,14 @@ class AppDataParser {
     }
     
     // Objects
-    fileprivate func parse(objectsJSON objectsData:JSON) {
-        for (_,objectData):(String, JSON) in objectsData.dictionaryValue {
+    fileprivate func parse(objectsJSON: JSON) -> [AICObjectModel] {
+		var objects = [AICObjectModel]()
+        for (_,objectData):(String, JSON) in objectsJSON.dictionaryValue {
             do {
                 try handleParseError({ [unowned self] in
                     let object = try self.parse(objectJSON: objectData)
-                    self.appDataModel.objects.append(object)
-                    })
+                    objects.append(object)
+				})
             }
                 
             catch {
@@ -183,34 +211,35 @@ class AppDataParser {
                 }
             }
         }
+		return objects
     }
     
-    fileprivate func parse(objectJSON objectData:JSON) throws -> AICObjectModel {
-        let nid             = try getInt(fromJSON:objectData, forKey: "nid")
-        let location        = try getCLLocation2d(fromJSON: objectData, forKey:"location")
+    fileprivate func parse(objectJSON: JSON) throws -> AICObjectModel {
+        let nid             = try getInt(fromJSON:objectJSON, forKey: "nid")
+        let location        = try getCLLocation2d(fromJSON: objectJSON, forKey:"location")
         
-        let galleryName     = try getString(fromJSON: objectData, forKey: "gallery_location")
+        let galleryName     = try getString(fromJSON: objectJSON, forKey: "gallery_location")
         let floorNumber     = try getGallery(forGalleryName: galleryName).location.floor
         
-        let title           = try getString(fromJSON: objectData, forKey: "title")
+        let title           = try getString(fromJSON: objectJSON, forKey: "title")
         
         // Optional Fields
         var tombstone:String?  = nil
         do {
-            tombstone = try getString(fromJSON: objectData, forKey: "artist_culture_place_delim").replacingOccurrences(of: "|", with: "\r")
+            tombstone = try getString(fromJSON: objectJSON, forKey: "artist_culture_place_delim").replacingOccurrences(of: "|", with: "\r")
         } catch {}
         
         var credits:String? = nil
         do {
-            credits = try getString(fromJSON: objectData, forKey: "credit_line")
+            credits = try getString(fromJSON: objectJSON, forKey: "credit_line")
         } catch {}
         
         var audioGuideID:Int? = nil
         do {
-            audioGuideID = try getInt(fromJSON:objectData, forKey: "object_selector_number")
+            audioGuideID = try getInt(fromJSON: objectJSON, forKey: "object_selector_number")
         } catch {}
         
-        var audioGuideIDs = try? getIntArray(fromJSON: objectData, forArrayKey: "object_selector_numbers")
+        var audioGuideIDs = try? getIntArray(fromJSON: objectJSON, forArrayKey: "object_selector_numbers")
         
         //While migrating data move single audioGuideID ints into the array if the array is nil. This can be removed later. [JB]
         if audioGuideIDs == nil && audioGuideID != nil{
@@ -219,7 +248,7 @@ class AppDataParser {
         
         var imageCopyright:String? = nil
         do {
-            imageCopyright = try getString(fromJSON: objectData, forKey: "copyright_notice")
+            imageCopyright = try getString(fromJSON: objectJSON, forKey: "copyright_notice")
         } catch {}
         
         // Get images
@@ -229,18 +258,18 @@ class AppDataParser {
         
         do {
             // Try to load override images
-            image           = try getURL(fromJSON: objectData, forKey: "image_url")
+            image           = try getURL(fromJSON: objectJSON, forKey: "image_url")
             thumbnail       = image
             imageHasBeenOverridden = true
         } catch {
             // Try loading from cms default images
-            image           = try getURL(fromJSON: objectData, forKey: "large_image_full_path")
-            thumbnail       = try getURL(fromJSON: objectData, forKey: "thumbnail_full_path")
+            image           = try getURL(fromJSON: objectJSON, forKey: "large_image_full_path")
+            thumbnail       = try getURL(fromJSON: objectJSON, forKey: "thumbnail_full_path")
         }
         
         // Get Image Crop Rects if they exist
-        var thumbnailCropRect: CGRect? = try? getRect(fromJSON: objectData, forKey: "thumbnail_crop_rect")
-        var imageCropRect: CGRect? = try? getRect(fromJSON: objectData, forKey: "large_image_crop_rect")
+        var thumbnailCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "thumbnail_crop_rect")
+        var imageCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "large_image_crop_rect")
         
         if imageHasBeenOverridden || !Common.DataConstants.ignoreOverrideImageCrop {
             //Feature #886 - Ignore / Allow crops for overriden images
@@ -250,7 +279,7 @@ class AppDataParser {
         
         // Ingest all audio IDs
         var audioFiles = [AICAudioFileModel]()
-        let audioIDs  = try getIntArray(fromJSON: objectData, forArrayKey: "audio")
+        let audioIDs  = try getIntArray(fromJSON: objectJSON, forArrayKey: "audio")
         for audioID in audioIDs {
             let audioFile = try getAudioFile(forNID:audioID)
             audioFiles.append(audioFile)
@@ -272,12 +301,13 @@ class AppDataParser {
     }
     
     // Audio Files
-    fileprivate func parse(audioFilesJSON audioFilesData:JSON) {
-        for (_,audioFileData):(String, JSON) in audioFilesData.dictionaryValue {
+	fileprivate func parse(audioFilesJSON: JSON) -> [AICAudioFileModel] {
+		var audioFiles = [AICAudioFileModel]()
+		for (_,audioFileData):(String, JSON) in audioFilesJSON.dictionaryValue {
             do {
                 try handleParseError({
                     let audioFile = try self.parse(audioFileJSON: audioFileData)
-                    self.appDataModel.audioFiles.append(audioFile)
+                    audioFiles.append(audioFile)
                 })
             }
                 
@@ -287,13 +317,14 @@ class AppDataParser {
                 }
             }
         }
+		return audioFiles
     }
     
-    fileprivate func parse(audioFileJSON audioFileData:JSON) throws -> AICAudioFileModel {
-        let nid         = try getInt(fromJSON: audioFileData, forKey: "nid")
-        let title       = try getString(fromJSON: audioFileData, forKey: "title")
-        let url         = try getURL(fromJSON: audioFileData, forKey: "audio_file_url")
-        let transcript  = try getString(fromJSON: audioFileData, forKey: "audio_transcript")
+    fileprivate func parse(audioFileJSON: JSON) throws -> AICAudioFileModel {
+        let nid         = try getInt(fromJSON: audioFileJSON, forKey: "nid")
+        let title       = try getString(fromJSON: audioFileJSON, forKey: "title")
+        let url         = try getURL(fromJSON: audioFileJSON, forKey: "audio_file_url")
+        let transcript  = try getString(fromJSON: audioFileJSON, forKey: "audio_transcript")
         
         return AICAudioFileModel(nid:nid,
                                  title:title,
@@ -304,34 +335,36 @@ class AppDataParser {
     
     
     // Parse tours
-    fileprivate func parse(toursJSON toursData:JSON) {
-        print(toursData.arrayValue.count)
-        for tourData in toursData.arrayValue {
+	fileprivate func parse(toursJSON:JSON) -> [AICTourModel] {
+		var tours = [AICTourModel]()
+        print(toursJSON.arrayValue.count)
+        for tourJSON in toursJSON.arrayValue {
             do {
                 try handleParseError({
-                    let tour = try self.parse(tourJSON: tourData)
-                    self.appDataModel.tours.append(tour)
+                    let tour = try self.parse(tourJSON: tourJSON)
+                    tours.append(tour)
                 })
             }
                 
             catch {
                 if Common.Testing.printDataErrors {
-                    print("Could not parse Tour Data:\n\(tourData)\n")
+                    print("Could not parse Tour Data:\n\(tourJSON)\n")
                 }
             }
         }
+		return tours
     }
     
-    fileprivate func parse(tourJSON tourData:JSON) throws -> AICTourModel {
-        let nid                 = try getInt(fromJSON:tourData, forKey: "nid")
-        let title               = try getString(fromJSON: tourData, forKey: "title")
-        let imageUrl            = try getURL(fromJSON: tourData, forKey: "image_url")
-        let shortDescription        = try getString(fromJSON: tourData, forKey: "description")
+    fileprivate func parse(tourJSON: JSON) throws -> AICTourModel {
+        let nid                 = try getInt(fromJSON: tourJSON, forKey: "nid")
+        let title               = try getString(fromJSON: tourJSON, forKey: "title")
+        let imageUrl            = try getURL(fromJSON: tourJSON, forKey: "image_url")
+        let shortDescription        = try getString(fromJSON: tourJSON, forKey: "description")
         
-        var longDescription     = try getString(fromJSON: tourData, forKey: "intro")
+        var longDescription     = try getString(fromJSON: tourJSON, forKey: "intro")
         longDescription = "\(shortDescription)\r\r\(longDescription)"
         
-        let audioFileID         = try getInt(fromJSON:tourData, forKey: "tour_audio")
+        let audioFileID         = try getInt(fromJSON: tourJSON, forKey: "tour_audio")
         let audioFile           = try getAudioFile(forNID:audioFileID)
         
         // Create overview
@@ -344,7 +377,7 @@ class AppDataParser {
         
         // Create Stops
         var stops:[AICTourStopModel] = []
-        guard let stopsData = tourData["stops"].array else {
+        guard let stopsData = tourJSON["stops"].array else {
             throw ParseError.tourStopsNotFound
         }
         
@@ -381,7 +414,7 @@ class AppDataParser {
         }
         
 
-        let bannerString = try? getString(fromJSON: tourData, forKey: "tour_banner")
+        let bannerString = try? getString(fromJSON: tourJSON, forKey: "tour_banner")
         
         return AICTourModel(nid:nid,
                             title: title,
@@ -558,7 +591,7 @@ class AppDataParser {
     }
     
     private func getAudioFile(forNID nid:Int) throws -> AICAudioFileModel {
-        for audioFile in appDataModel.audioFiles {
+        for audioFile in self.audioFiles {
             if audioFile.nid == nid {
                 return audioFile
             }
@@ -568,7 +601,7 @@ class AppDataParser {
     }
     
     private func getObject(forNID nid:Int) throws -> AICObjectModel {
-        guard let object = appDataModel.objects.filter({ $0.nid == nid}).first else {
+        guard let object = self.objects.filter({ $0.nid == nid}).first else {
             throw ParseError.objectNotFound(nid: nid)
         }
         
@@ -576,9 +609,9 @@ class AppDataParser {
     }
     
     private func getGallery(forGalleryName galleryName:String) throws -> AICGalleryModel {
-        guard let gallery = appDataModel.galleries.filter({$0.title == galleryName && $0.isOpen == true}).first else {
-            throw ParseError.galleryNotFound(galleryName: galleryName)
-        }
+		guard let gallery = self.galleries.filter({$0.title == galleryName && $0.isOpen == true}).first else {
+			throw ParseError.galleryNotFound(galleryName: galleryName)
+		}
         
         return gallery
     }
