@@ -109,7 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Resume data loading if necessary
-        let rootVC = window?.rootViewController as! RootViewController
+        guard let rootVC = window?.rootViewController as? RootViewController else {
+            return
+        }
+        
         rootVC.resumeLoadingIfNotComplete()
         
         // Log analytics

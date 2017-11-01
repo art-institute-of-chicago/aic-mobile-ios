@@ -8,6 +8,14 @@ class AICAnalytics {
     // Analytics tracker
     static fileprivate let tracker = GAI.sharedInstance().defaultTracker
     
+    enum AppEvents:String {
+        case appCategory = "app"
+        case appOpenAction = "open"
+        case appBackgroundAction = "background"
+        case appForegroundAction = "foreground"
+        case appIsMemberLabel = "is_member"
+    }
+    
     // App Events
     static fileprivate let appCategory = "app"
     static fileprivate let appOpenAction = "open"
@@ -54,7 +62,9 @@ class AICAnalytics {
         // Configure tracker from GoogleService-Info.plist.
         var configureError:NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
-        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+        if let error = configureError {
+            assert(configureError == nil, "Error configuring Google services: \(error)")
+        }
         
         // Optional: configure GAI options.
         let gai = GAI.sharedInstance()
@@ -184,9 +194,10 @@ class AICAnalytics {
     }
     
     private static func sendAnalyticEvent(category:String, action:String, label:String="", value:NSNumber = 0) {
-        let event = GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as NSDictionary?
-        if event != nil {
-            AICAnalytics.tracker?.send(event as? [AnyHashable: Any])
+        guard let event = GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as? [AnyHashable: Any] else {
+            return
         }
+        
+        AICAnalytics.tracker?.send(event)
     }
 }

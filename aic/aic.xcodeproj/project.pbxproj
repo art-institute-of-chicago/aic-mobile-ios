@@ -438,10 +438,10 @@
 		E40D41CB1C6CEBB700A57AF4 /* aic */ = {
 			isa = PBXGroup;
 			children = (
+				E43F36891D2B2F8200DA4DA6 /* Analytics */,
 				0E3350C21DA6C7A500CE3612 /* aic.entitlements */,
 				E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */,
 				E4DF50AD1CEB8ACB0071345E /* ThirdParty */,
-				E43F36891D2B2F8200DA4DA6 /* Analytics */,
 				E4223CE61CC7FE6D00503D43 /* Data */,
 				E415AB9A1C7297E60093B719 /* Shared */,
 				E415ABBD1C7298420093B719 /* Models */,

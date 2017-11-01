@@ -68,9 +68,11 @@ class MemberCardDataValidator {
             do {
                 let mainXML = try response.byKey("Envelope").byKey("Body").byKey("member_soap_retrieveResponse").byKey("response_object")
                 
-                let resultCode = try mainXML.byKey("ResultCode").element?.text
+                guard let resultCode = try mainXML.byKey("ResultCode").element?.text else {
+                    return
+                }
                 
-                if Int(resultCode!) == 0 {
+                if Int(resultCode) == 0 {
                     let memberships = try mainXML.byKey("Memberships")
                     
                     if memberships.children.count != 0 {

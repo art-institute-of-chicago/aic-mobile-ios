@@ -194,7 +194,7 @@ class MapSVGParser {
         })
         
         for department in departmentRects {
-            guard let id = department.element!.allAttributes["id"] else {
+            guard let id = department.element?.allAttributes["id"] else {
                 print("Could not get ID for SVG Department")
                 continue
             }
@@ -379,8 +379,8 @@ class MapSVGParser {
         var text = ""
         
         for (index, child) in textIndexer.children.enumerated() {
-            guard let span = child.element , child.element!.name == "tspan" else {
-                print(child.element!.name)
+            guard let span = child.element , child.element?.name == "tspan" else {
+                print(child.element?.name ?? "")
                 continue
             }
             
