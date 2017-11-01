@@ -58,7 +58,7 @@ class InfoSectionBecomeMemberView: BaseView {
             //Welcome back existing members
             titleLabel.text = Common.Info.becomeMemberExistingMemberTitle
         }
-        titleLabel.font = UIFont.aicTitleFont()
+        titleLabel.font = UIFont.aicTitleFont
         titleLabel.textAlignment = NSTextAlignment.center
         
         supportMessageLabel.numberOfLines = 0

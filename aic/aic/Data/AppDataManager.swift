@@ -35,7 +35,9 @@ class AppDataManager {
         if let url = Bundle.main.url(forResource:"Config", withExtension: "plist") {
             do {
                 let data = try Data(contentsOf:url)
-                let config = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! [String:Any]
+                guard let config = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String:Any] else {
+                    return
+                }
                 
                 if let Testing = config["Testing"] as! [String : Any]? {
                     
@@ -63,8 +65,8 @@ class AppDataManager {
                         Common.DataConstants.appDataInternalPrefix = appDataInternalPrefix as! String
                     }
                     
-                    if let memberCardSOAPRequestURL = DataConstants["memberCardSOAPRequestURL"] {
-                        Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL as! String
+                    if let memberCardSOAPRequestURL = DataConstants["memberCardSOAPRequestURL"] as? String {
+                        Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
                     }
                     
                     if let ignoreOverrideImageCrop = DataConstants["ignoreOverrideImageCrop"] {
@@ -241,11 +243,12 @@ class AppDataManager {
     
     func getObject(forAudioGuideID id:Int) -> AICObjectModel? {
         let objectsWithAudioIDs = app.objects.filter({ $0.audioGuideIDs != nil })
-        if objectsWithAudioIDs.count == 0 {
+        
+        guard objectsWithAudioIDs.count > 0 else {
             return nil
-        }else{
-            return objectsWithAudioIDs.filter({ $0.audioGuideIDs!.contains(id) }).first
         }
+        
+        return objectsWithAudioIDs.filter({ $0.audioGuideIDs!.contains(id) }).first
     }
     
     func getObject(forID id:Int) -> AICObjectModel? {
@@ -336,8 +339,4 @@ class AppDataManager {
         guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         return directory.appendingPathComponent(fileName)
     }
-    
-    
-    
-    
 }

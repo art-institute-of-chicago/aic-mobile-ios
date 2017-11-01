@@ -209,8 +209,7 @@ class SectionsViewController : UIViewController {
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
         })
         Common.DeepLinks.loadedEnoughToLink = true
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.triggerDeepLinkIfPresent()
+        (UIApplication.shared.delegate as? AppDelegate)?.triggerDeepLinkIfPresent()
     }
     
     func startTour(tour:AICTourModel) {
@@ -310,10 +309,7 @@ class SectionsViewController : UIViewController {
         // If we do show it
         if showEnableLocationMessageValue {
             showEnableLocationMessage()
-        }
-        
-        // Otherwise try to start the location manager
-        else {
+        } else {  // Otherwise try to start the location manager
             // Init location manager
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()

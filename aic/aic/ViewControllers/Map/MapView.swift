@@ -62,11 +62,15 @@ class MapView: MKMapView {
             showsTraffic = false
         }
         
+        if #available(iOS 11.0, *) {
+            mapType = .mutedStandard
+        }
+        
         showsBuildings = false
         showsPointsOfInterest = false
         showsUserLocation = true
         
-        tintColor = UIColor.white
+        tintColor = .white
         
         addSubview(departmentHud)
     }

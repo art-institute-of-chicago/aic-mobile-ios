@@ -21,13 +21,13 @@ class NewsToursRevealView: BaseView {
         
         // Configure
         
-        closeButton.setImage(UIImage(named:"iconClose")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: UIControlState())
+        closeButton.setImage(UIImage(named:"iconClose")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
         closeButton.tintColor = UIColor.black
         closeButton.frame.size = closeButton.currentImage!.size
         
         titleLabel.numberOfLines = 0
         titleLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - titleContentInsets.left - titleContentInsets.right - closeButton.bounds.width
-        titleLabel.font = UIFont.aicTitleFont()
+        titleLabel.font = UIFont.aicTitleFont
         titleLabel.textColor = UIColor.black
         
         // Add Subviews

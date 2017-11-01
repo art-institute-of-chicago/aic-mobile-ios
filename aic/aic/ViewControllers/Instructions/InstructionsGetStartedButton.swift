@@ -23,7 +23,7 @@ class InstructionsGetStartedButton: UIButton {
         layer.borderColor = UIColor.white.cgColor
         layer.borderWidth = 2
         
-        titleLabel?.font = UIFont.aicTitleFont()
+        titleLabel?.font = UIFont.aicTitleFont
         setTitle("Get Started", for: UIControlState())
     }
     
