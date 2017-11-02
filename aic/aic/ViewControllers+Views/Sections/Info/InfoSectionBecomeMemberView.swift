@@ -58,12 +58,12 @@ class InfoSectionBecomeMemberView: BaseView {
             //Welcome back existing members
             titleLabel.text = Common.Info.becomeMemberExistingMemberTitle
         }
-        titleLabel.font = UIFont.aicTitleFont
+        titleLabel.font = .aicTitleFont
         titleLabel.textAlignment = NSTextAlignment.center
         
         supportMessageLabel.numberOfLines = 0
         supportMessageLabel.text = Common.Info.becomeMemberSupportMessage
-        supportMessageLabel.font = UIFont.aicShortTextFont()
+        supportMessageLabel.font = .aicShortTextFont
         supportMessageLabel.textAlignment = NSTextAlignment.center
         
         let joinAttrText = NSMutableAttributedString(string: Common.Info.becomeMemberJoinMessage)
@@ -73,10 +73,10 @@ class InfoSectionBecomeMemberView: BaseView {
         joinTextView.setDefaultsForAICAttributedTextView()
         joinTextView.attributedText = joinAttrText
         joinTextView.textAlignment = NSTextAlignment.center
-        joinTextView.font = UIFont.aicTextFont()
+        joinTextView.font = .aicTextFont
         
         accessPromptLabel.text = Common.Info.becomeMemberAccessPrompt
-        accessPromptLabel.font = UIFont.aicShortTextFont()
+        accessPromptLabel.font = .aicShortTextFont
         accessPromptLabel.textAlignment = NSTextAlignment.center
         
         accessButton.setTitle(Common.Info.becomeMemberAccessButtonTitle, for: UIControlState())

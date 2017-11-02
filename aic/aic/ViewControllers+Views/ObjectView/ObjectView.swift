@@ -57,7 +57,7 @@ class ObjectView: UIView {
         imageView.layer.shadowRadius = 5;
         imageView.layer.shadowOpacity = 0.5;
         
-        imageViewGradientLayer.colors = [UIColor.aicAudiobarColor().cgColor, UIColor.aicLightGrayColor().cgColor]
+        imageViewGradientLayer.colors = [UIColor.aicAudiobarColor.cgColor, UIColor.aicLightGrayColor.cgColor]
         imageViewGradientLayer.locations = [0.0, 1.0]
         imageViewHolder.layer.addSublayer(imageViewGradientLayer)
         
@@ -193,7 +193,7 @@ class ObjectView: UIView {
                 self.heightConstraint = make.height.equalTo(self.imageView.snp.width).multipliedBy(imageHeightRatio).constraint
             })
             
-            self.imageViewGradientLayer.colors = [colors.backgroundColor.cgColor, UIColor.aicLightGrayColor().cgColor]
+            self.imageViewGradientLayer.colors = [colors.backgroundColor.cgColor, UIColor.aicLightGrayColor.cgColor]
             self.imageViewGradientLayer.setNeedsDisplay()
             
             UIView.animate(withDuration: 0.5, animations: {

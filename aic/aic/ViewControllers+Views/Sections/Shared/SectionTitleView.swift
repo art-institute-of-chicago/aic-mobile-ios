@@ -39,14 +39,14 @@ class SectionTitleView: BaseView {
         let preferredLabelWidth = UIScreen.main.bounds.width - margins.right - margins.left
         
         titleLabel.numberOfLines = 0
-        titleLabel.font = UIFont.aicHeaderFont()
+        titleLabel.font = .aicHeaderFont
         titleLabel.textColor = .white
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.text = title
         titleLabel.preferredMaxLayoutWidth = preferredLabelWidth
         
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = UIFont.aicSystemTextFont()
+        descriptionLabel.font = .aicSystemTextFont
         descriptionLabel.textColor = .white
         descriptionLabel.textAlignment = NSTextAlignment.center
         descriptionLabel.text = description

@@ -19,7 +19,7 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
         
         button.frame.size = frame.size
         button.setTitleColor(.white, for: UIControlState())
-        button.titleLabel?.font = UIFont.aicNumberPadFont()
+        button.titleLabel?.font = .aicNumberPadFont
         
         setButtonNormalState()
         

@@ -18,61 +18,33 @@ import UIKit
 #endif
 
 extension UIColor {
-    class func aicAudioGuideColor() -> UIColor {
-        return UIColor(red: 50.0 / 255.0, green: 152.0 / 255.0, blue: 96.0 / 255.0, alpha: 1.0)
-    }
+	static let aicAudioGuideColor: UIColor = UIColor(red: 50.0 / 255.0, green: 152.0 / 255.0, blue: 96.0 / 255.0, alpha: 1.0)
 
-    class func aicWhatsonColor() -> UIColor {
-        return UIColor(red: 111.0 / 255.0, green: 102.0 / 255.0, blue: 208.0 / 255.0, alpha: 1.0)
-    }
+	static let aicWhatsonColor: UIColor = UIColor(red: 111.0 / 255.0, green: 102.0 / 255.0, blue: 208.0 / 255.0, alpha: 1.0)
 
-    class func aicToursColor() -> UIColor {
-        return UIColor(red: 46.0 / 255.0, green: 160.0 / 255.0, blue: 162.0 / 255.0, alpha: 1.0)
-    }
+	static let aicToursColor: UIColor =  UIColor(red: 46.0 / 255.0, green: 160.0 / 255.0, blue: 162.0 / 255.0, alpha: 1.0)
 
-    class func aicInfoColor() -> UIColor {
-        return UIColor(red: 176.0 / 255.0, green: 83.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
-    }
+	static let aicInfoColor: UIColor = UIColor(red: 176.0 / 255.0, green: 83.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
 
-    class func aicMapColor() -> UIColor {
-        return UIColor(red: 51.0 / 255.0, green: 123.0 / 255.0, blue: 178.0 / 255.0, alpha: 1.0)
-    }
+	static let aicMapColor: UIColor = UIColor(red: 51.0 / 255.0, green: 123.0 / 255.0, blue: 178.0 / 255.0, alpha: 1.0)
 
-    class func aicButtonsColor() -> UIColor {
-        return UIColor(red: 236.0 / 255.0, green: 101.0 / 255.0, blue: 101.0 / 255.0, alpha: 1.0)
-    }
+	static let aicButtonsColor: UIColor = UIColor(red: 236.0 / 255.0, green: 101.0 / 255.0, blue: 101.0 / 255.0, alpha: 1.0)
 
-    class func aicBluedotColor() -> UIColor {
-        return UIColor(red: 0.0, green: 174.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
-    }
+	static let aicBluedotColor: UIColor = UIColor(red: 0.0, green: 174.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
 
-    class func aicGrayColor() -> UIColor {
-        return UIColor(white: 216.0 / 255.0, alpha: 1.0)
-    }
+	static let aicGrayColor: UIColor = UIColor(white: 216.0 / 255.0, alpha: 1.0)
 
-    class func aicTabbarColor() -> UIColor {
-        return UIColor(white: 26.0 / 255.0, alpha: 1.0)
-    }
+	static let aicTabbarColor: UIColor = UIColor(white: 26.0 / 255.0, alpha: 1.0)
 
-    class func aicInactiveiconsColor() -> UIColor {
-        return UIColor(white: 110.0 / 255.0, alpha: 1.0)
-    }
+	static let aicInactiveiconsColor: UIColor = UIColor(white: 110.0 / 255.0, alpha: 1.0)
 
-    class func aicAudiobarColor() -> UIColor {
-        return UIColor(white: 34.0 / 255.0, alpha: 0.9)
-    }
+	static let aicAudiobarColor: UIColor = UIColor(white: 34.0 / 255.0, alpha: 0.9)
     
-    class func aicNearbyColor() -> UIColor {
-        return UIColor(red: 25.0 / 255.0, green: 67.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)
-    }
+	static let aicNearbyColor: UIColor = UIColor(red: 25.0 / 255.0, green: 67.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)
     
-    class func aicDarkBlueColor() -> UIColor {
-        return UIColor(red: 9.0 / 255.0, green: 44.0 / 255.0, blue: 87.0 / 255.0, alpha: 1.0)
-    }
+	static let aicDarkBlueColor: UIColor = UIColor(red: 9.0 / 255.0, green: 44.0 / 255.0, blue: 87.0 / 255.0, alpha: 1.0)
     
-    class func aicLightGrayColor() -> UIColor {
-        return UIColor(white: 241.0 / 255.0, alpha: 1.0)
-    }
+	static let aicLightGrayColor: UIColor = UIColor(white: 241.0 / 255.0, alpha: 1.0)
         
     func lighter(_ amount : CGFloat = 0.25) -> PXColor {
         return hueColorWithBrightnessAmount(1 + amount)

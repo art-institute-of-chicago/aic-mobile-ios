@@ -36,14 +36,14 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         self.isEnabled = true
         self.canShowCallout = false
         
-        holderView.backgroundColor = UIColor.aicMapColor().darker()
+        holderView.backgroundColor = UIColor.aicMapColor.darker()
         holderView.isUserInteractionEnabled = true
         
         let holderTailImage = #imageLiteral(resourceName: "calloutTail").withRenderingMode(.alwaysTemplate)
         
         holderTailImageView.image = holderTailImage
         holderTailImageView.sizeToFit()
-        holderTailImageView.tintColor = UIColor.aicMapColor().darker()
+        holderTailImageView.tintColor = UIColor.aicMapColor.darker()
         
         addSubview(holderTailImageView)
         addSubview(holderView)
@@ -83,7 +83,7 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         label.numberOfLines = 0
         
         label.text = annotation.title
-        label.font = UIFont.aicSystemTextFont()
+        label.font = .aicSystemTextFont
         label.textColor = .white
         label.sizeToFit()
         label.frame.origin.x = image.frame.maxX + labelMargin

@@ -95,8 +95,8 @@ class MapObjectAnnotationView: MapAnnotationView {
         headphonesIcon.sizeToFit()
         headphonesIcon.frame.origin = CGPoint(x: thumbHolderExpandedWidth - headphonesIcon.frame.width - headphonesMarginRight, y: thumbHolderHeight/2 - headphonesIcon.frame.height/2)
         
-        titleLabel.font = UIFont.aicShortTextFont()
-        titleLabel.textColor = UIColor.aicNearbyColor()
+        titleLabel.font = .aicShortTextFont
+        titleLabel.textColor = .aicNearbyColor
         titleLabel.numberOfLines = 2
         titleLabel.frame = CGRect(x: thumbImageView.frame.width + Common.Map.thumbHolderMargin + titleLabelMarginLeft, y: thumbHolderHeight/2, width: titleLabelWidth, height: titleLabelHeight)
         

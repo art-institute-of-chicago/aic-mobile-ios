@@ -16,7 +16,7 @@ class ObjectInfoView: ObjectContentSectionView {
     }
     
     func set(info:String) {
-        let attrString = getAttributedString(forHTMLText: info, font: UIFont.aicTextFont()!)
+        let attrString = getAttributedString(forHTMLText: info, font: .aicTextFont)
         bodyTextView.attributedText = attrString
     }
 }

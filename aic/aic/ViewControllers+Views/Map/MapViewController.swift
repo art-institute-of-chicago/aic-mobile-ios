@@ -36,7 +36,7 @@ class MapViewController: UIViewController {
     weak var delegate:MapViewControllerDelegate?
     
     // Map + Text Colors
-    var color:UIColor = UIColor.aicToursColor() {
+    var color:UIColor = .aicToursColor {
         didSet {
             updateColors()
         }
@@ -814,7 +814,7 @@ extension MapViewController : CLLocationManagerDelegate {
                 if currentFloor == userFloor {
                     mapView.tintColor = .white
                 } else {
-                    mapView.tintColor = UIColor.aicGrayColor()
+                    mapView.tintColor = .aicGrayColor
                 }
             }
             

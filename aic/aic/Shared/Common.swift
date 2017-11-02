@@ -68,7 +68,7 @@ struct Common {
     // MARK: Sections
     static let Sections:[Section:AICSectionModel] = [
         Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
-            color: UIColor.aicAudioGuideColor(),
+            color: .aicAudioGuideColor,
 			icon: #imageLiteral(resourceName: "iconNumPad"),
             title: "Look It Up",
             description: "Find an artwork you like? Enter the artwork number to learn more.",
@@ -77,7 +77,7 @@ struct Common {
         ),
 
         Section.whatsOn: AICSectionModel(nid:Section.whatsOn.rawValue,
-            color: UIColor.aicWhatsonColor(),
+            color: .aicWhatsonColor,
 			icon: #imageLiteral(resourceName: "iconWhatsOn"),
             title: "On View Now",
             description: "Preview the latest exhibitions at the Art Institute.",
@@ -85,7 +85,7 @@ struct Common {
             tabBarIcon: #imageLiteral(resourceName: "navWhatsOn")
         ),
         Section.tours: AICSectionModel(nid:Section.tours.rawValue,
-            color: UIColor.aicToursColor(),
+            color: .aicToursColor,
             icon: #imageLiteral(resourceName: "iconTours"),
             title: "Take an Audio Tour",
             description: "Listen to the latest stories from our ever-expanding repertoire of mobile tours.",
@@ -93,7 +93,7 @@ struct Common {
             tabBarIcon: #imageLiteral(resourceName: "navTours")
         ),
         Section.map: AICSectionModel(nid:Section.map.rawValue,
-            color: UIColor.aicNearbyColor(),
+            color: .aicNearbyColor,
             icon: #imageLiteral(resourceName: "iconMap"),
             title: "Find Your Way",
             description: "Use the map to explore the museum and find audio-enhanced artworks near you.",
@@ -101,7 +101,7 @@ struct Common {
             tabBarIcon: #imageLiteral(resourceName: "navMap")
         ),
         Section.info: AICSectionModel(nid:Section.info.rawValue,
-            color: UIColor.aicInfoColor(),
+            color: .aicInfoColor,
             icon: #imageLiteral(resourceName: "iconInfo"),
             title: "Need Information?",
             description: "Here’s everything you need to visit us and keep in touch.",
@@ -298,34 +298,34 @@ struct Common {
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconMapLarge"),
                 title:"Find Your Way",
                 subtitle: "Use the map to explore the museum and find audio-enhanced artworks near you.",
-                color: UIColor.aicMapColor()
+                color: .aicMapColor
             ),
 
 
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconWhatsOnLarge"),
                 title:"On View Now",
                 subtitle: "Preview the latest exhibitions at the Art Institute.",
-                color: UIColor.aicWhatsonColor()
+                color: .aicWhatsonColor
             ),
 
 
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconNumPadLarge"),
                 title:"Look It Up",
                 subtitle: "Find an artwork you like? Use the keypad to access audio-enhanced stories.",
-                color: UIColor.aicAudioGuideColor()
+                color: .aicAudioGuideColor
             ),
 
 
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconInfoLarge"),
                 title:"Member’s Access",
                 subtitle: "Enter your membership ID for easy access to the museum.",
-                color: UIColor.aicInfoColor()
+                color: .aicInfoColor
             ),
 
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
                 title:"Go on a Tour",
                 subtitle: "Find a story that suits your interests in our ever-expanding portfolio of audio tours.",
-                color:UIColor.aicToursColor()
+                color: .aicToursColor
             )
         ]
     }

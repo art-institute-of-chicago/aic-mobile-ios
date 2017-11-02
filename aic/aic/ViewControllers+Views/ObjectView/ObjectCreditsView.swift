@@ -12,7 +12,7 @@ class ObjectCreditsView: ObjectContentSectionView {
         super.init()
         
         self.titleLabel.text = "Credits"
-        self.bodyTextView.font = UIFont.aicItalicTextFont()
+        self.bodyTextView.font = .aicItalicTextFont
     }
 
     required init?(coder aDecoder: NSCoder) {

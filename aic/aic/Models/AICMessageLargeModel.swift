@@ -6,7 +6,7 @@
 import UIKit
 
 struct AICMessageLargeModel {
-    let backgroundColor = UIColor.aicButtonsColor()
+    let backgroundColor = UIColor.aicButtonsColor
     let iconImage:UIImage
     let title:String
     let message:String

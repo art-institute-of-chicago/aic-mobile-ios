@@ -30,7 +30,7 @@ class MiniAudioPlayerView : BaseView {
     init() {
         super.init(frame:CGRect.zero)
         
-        self.backgroundColor = UIColor.aicAudiobarColor()
+        self.backgroundColor = .aicAudiobarColor
         
         // Configure
         playPauseButton.tintColor = .white
@@ -39,14 +39,14 @@ class MiniAudioPlayerView : BaseView {
         titleLabel.numberOfLines = 1
         titleLabel.textColor = .white
         titleLabel.textAlignment = NSTextAlignment.center
-        titleLabel.font = UIFont.aicSystemTextFont()
+        titleLabel.font = .aicSystemTextFont
         
         fullscreenButton.backgroundColor = .clear
         let expandImage = #imageLiteral(resourceName: "expand")
         fullscreenButton.setImage(expandImage, for: UIControlState())
         fullscreenButton.frame = CGRect(x: 0,y: 0, width: expandImage.size.width, height: expandImage.size.height)
         
-        progressBar.backgroundColor = UIColor.aicMapColor()
+        progressBar.backgroundColor = .aicMapColor
         
         // Add Subviews
         playPauseActivityHolderView.addSubview(playPauseButton)

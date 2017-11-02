@@ -35,13 +35,13 @@ class MapTextAnnotationView: MapAnnotationView {
         
         switch annotation.type {
         case .Space:
-            font = UIFont.aicSpacesFont()
+            font = .aicSpacesFont
             
         case .LandmarkGarden:
-            font = UIFont.aicSystemTextFont()
+            font = .aicSystemTextFont
             
         case .Gallery:
-            font = UIFont.aicSystemTextFont()
+            font = .aicSystemTextFont
         }
         
         self.annotation = annotation

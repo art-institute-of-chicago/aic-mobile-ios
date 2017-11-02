@@ -86,20 +86,20 @@ class NewsToursTableViewCell: UITableViewCell {
         headerImageView.isUserInteractionEnabled = true
         
         // Title
-        titleLabel.attributedText = getAttributedStringWithLineHeight(text: model.title.stringByDecodingHTMLEntities, font: UIFont.aicTitleFont, lineHeight: titleLineHeight)
+        titleLabel.attributedText = getAttributedStringWithLineHeight(text: model.title.stringByDecodingHTMLEntities, font: .aicTitleFont, lineHeight: titleLineHeight)
         titleLabel.numberOfLines = 0
         titleLabel.textColor = .black
         
         // Description
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = UIFont.aicShortTextFont()
+        descriptionLabel.font = .aicShortTextFont
         descriptionLabel.textColor = .black
         
         // Additional Info
         if let additionalInfo = model.additionalInformation {
             additionalInformationLabel = UILabel()
             additionalInformationLabel?.numberOfLines = 1
-            additionalInformationLabel?.font = UIFont.aicItalicTextFont()
+            additionalInformationLabel?.font = .aicItalicTextFont
             additionalInformationLabel?.textColor = .black
             additionalInformationLabel?.text = additionalInfo
         }
@@ -110,7 +110,7 @@ class NewsToursTableViewCell: UITableViewCell {
         } else {
             revealContentButton = UIButton()
             revealContentButton.setImage(#imageLiteral(resourceName: "buttonPin"), for: UIControlState())
-            revealContentButton.setTitleColor(UIColor.aicButtonsColor(), for: UIControlState())
+            revealContentButton.setTitleColor(.aicButtonsColor, for: UIControlState())
             revealContentButton.titleLabel?.font = UIFont.aicTitleFont
             revealContentButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left;
             revealContentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0)
@@ -200,7 +200,7 @@ class NewsToursTableViewCell: UITableViewCell {
             if model.type == .tour {
                 descriptionLabel.numberOfLines = 2
                 descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: model.shortDescription.stringByDecodingHTMLEntities,
-                                                                                    font:UIFont.aicShortTextFont()!,
+                                                                                    font: .aicShortTextFont,
                                                                                     lineHeight:descriptionLineHeight)
                 
                 descriptionLabel.lineBreakMode = .byTruncatingTail
@@ -234,7 +234,7 @@ class NewsToursTableViewCell: UITableViewCell {
         case .open:
             descriptionLabel.numberOfLines = 0
             descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: model.longDescription.stringByDecodingHTMLEntities,
-                                                                                font:UIFont.aicShortTextFont()!,
+                                                                                font: .aicShortTextFont,
                                                                                 lineHeight:descriptionLineHeight)
             revealContentButton.isHidden = false
             descriptionLabel.isHidden = false

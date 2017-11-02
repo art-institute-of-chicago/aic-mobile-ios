@@ -16,7 +16,7 @@ class NearbySectionViewController : SectionViewController {
         super.init(section:section, sectionView: nearbyView)
         
         // Switch our BG Color out to provide contrast between the map and the title view
-        color = UIColor.aicMapColor()
+        color = .aicMapColor
         
         nearbyView.delegate = self
     }

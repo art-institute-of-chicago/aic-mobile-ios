@@ -34,20 +34,20 @@ class InfoSectionInformationView: BaseView {
         
         titleLabel.text = AppDataManager.sharedInstance.app.museumInfo.title
         titleLabel.textColor = .black
-        titleLabel.font = UIFont.aicTitleFont
+        titleLabel.font = .aicTitleFont
 		
 		museumHoursTextView.frame = UIScreen.main.bounds.insetBy(dx: contentMargins.left + contentMargins.right, dy: 0)
 		museumHoursTextView.text = AppDataManager.sharedInstance.app.museumInfo.museumHours
 		museumHoursTextView.textColor = .black
-		museumHoursTextView.font = UIFont.aicTextFont()
+		museumHoursTextView.font = .aicTextFont
 		museumHoursTextView.setDefaultsForAICAttributedTextView()
 		
         locationLabel.text = "Location"
         locationLabel.textColor = .black
-        locationLabel.font = UIFont.aicTitleFont
+        locationLabel.font = .aicTitleFont
         
         locationTextView.text = Common.Info.museumInformationAddress + "\n\n" + Common.Info.museumInformationPhoneNumber
-        locationTextView.font = UIFont.aicTextFont()
+        locationTextView.font = .aicTextFont
         locationTextView.dataDetectorTypes = [.address, .phoneNumber]
         locationTextView.setDefaultsForAICAttributedTextView()
         
@@ -56,7 +56,7 @@ class InfoSectionInformationView: BaseView {
         ticketsAttrString.addAttributes([NSAttributedStringKey.link : ticketsURL.absoluteString], range: NSMakeRange(0, ticketsAttrString.string.characters.count))
 		
         getTicketsTextView.attributedText = ticketsAttrString
-        getTicketsTextView.font = UIFont.aicTitleFont
+        getTicketsTextView.font = .aicTitleFont
         getTicketsTextView.setDefaultsForAICAttributedTextView()
         getTicketsTextView.delegate = self
         
@@ -72,7 +72,7 @@ class InfoSectionInformationView: BaseView {
         
         
         potionCreditsTextView.attributedText = potionCreditsAttrString
-        potionCreditsTextView.font = UIFont.aicTextFont()
+        potionCreditsTextView.font = .aicTextFont
         potionCreditsTextView.setDefaultsForAICAttributedTextView()
         potionCreditsTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.white]
         

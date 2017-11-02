@@ -20,7 +20,7 @@ class InfoSectionView: SectionView {
         
         super.init(section:section)
         
-        scrollView.backgroundColor = UIColor.aicInfoColor().withAlphaComponent(0.9)
+        scrollView.backgroundColor = UIColor.aicInfoColor.withAlphaComponent(0.9)
         
         // Add subviews
         

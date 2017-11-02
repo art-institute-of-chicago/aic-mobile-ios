@@ -25,12 +25,12 @@ class InstructionsItemView: UIView {
         
         titleLabel.numberOfLines = 0
         titleLabel.textColor = .white
-        titleLabel.font = UIFont.aicInstructionsTitleFont()
+		titleLabel.font = .aicInstructionsTitleFont
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.preferredMaxLayoutWidth = 300
         
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.font = UIFont.aicInstructionsSubtitleFont()
+        subtitleLabel.font = .aicInstructionsSubtitleFont
         subtitleLabel.textAlignment = NSTextAlignment.center
         subtitleLabel.textColor = .white
         

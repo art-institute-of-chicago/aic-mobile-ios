@@ -27,7 +27,7 @@ class NewsToursStopsDistanceItemView: BaseView {
         iconImageView.sizeToFit()
         
         textLabel.numberOfLines = 1
-        textLabel.font = UIFont.aicSystemTextFont()
+        textLabel.font = .aicSystemTextFont
         textLabel.textColor = .white
         textLabel.sizeToFit()
         

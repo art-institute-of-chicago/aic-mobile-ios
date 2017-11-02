@@ -50,7 +50,7 @@ class MapSVGParser {
     private let departmentsID = "Departments"
     private let spacesID = "Spaces"
     
-    private let textFont = UIFont.aicSystemTextFont()
+	private let textFont: UIFont = .aicSystemTextFont
     
     var svgDimensions:CGRect? = nil
     
@@ -223,7 +223,7 @@ class MapSVGParser {
         
         for child in filteredLabels {
             let text = getText(forSVGTextIndexer: child)
-            let position = getCenteredPosition(forSVGTextIndexer: child, text: text, fontSize: UIFont.aicMapSVGTextFont()!.pointSize)
+            let position = getCenteredPosition(forSVGTextIndexer: child, text: text, fontSize: UIFont.aicMapSVGTextFont.pointSize)
             
             labels.append(SVGTextLabel(positionInSVG: position, text: text))
         }
@@ -356,10 +356,10 @@ class MapSVGParser {
         // First flip coords into top-left space
         y = svgDimensions!.origin.y + svgDimensions!.height - y
         // Then offset by 1 line height since SVG TextBoxes measure from first baseline
-        y += getOffsetRect(forText: "T", forFont: UIFont.aicMapSVGTextFont()!).height
+        y += getOffsetRect(forText: "T", forFont: .aicMapSVGTextFont).height
         
         // Find the center point of the text box
-        let offsetRect = getOffsetRect(forText: text, forFont: UIFont.aicMapSVGTextFont()!)
+        let offsetRect = getOffsetRect(forText: text, forFont: .aicMapSVGTextFont)
         let centerX = x + offsetRect.width/2.0
         let centerY = y - offsetRect.height/2.0
         

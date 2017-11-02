@@ -73,14 +73,14 @@ class InfoSectionMemberCardView: BaseView {
         
         
         // Configure
-        backgroundColor = UIColor.aicInfoColor()
+        backgroundColor = .aicInfoColor
         
         contentView.backgroundColor = .darkGray
         
         backgroundImageViewBack.image = Common.Info.memberCardImages[currentBackgroundImageIndex]
         
         titleLabel.text = Common.Info.memberCardTitle
-        titleLabel.font = UIFont.aicHeaderSmallFont()
+        titleLabel.font = .aicHeaderSmallFont
         titleLabel.textColor = .white
         titleLabel.textAlignment = NSTextAlignment.center
         
@@ -94,24 +94,24 @@ class InfoSectionMemberCardView: BaseView {
         memberInputBarcodeView.backgroundColor = .white
         
         memberIDTitleLabel.text = Common.Info.memberIDTitle
-        memberIDTitleLabel.font = UIFont.aicTitleFont
+        memberIDTitleLabel.font = .aicTitleFont
         
         memberIDTextField.placeholder = Common.Info.memberIDPlaceholder
-        memberIDTextField.backgroundColor = UIColor.aicGrayColor()
-        memberIDTextField.font = UIFont.aicTextFont()
+        memberIDTextField.backgroundColor = .aicGrayColor
+        memberIDTextField.font = .aicTextFont
         memberIDTextField.keyboardType = UIKeyboardType.numberPad
         
         memberZipCodeTitleLabel.text = Common.Info.memberZipTitle
         memberZipCodeTitleLabel.font = UIFont.aicTitleFont
         
         memberZipCodeTextField.placeholder = Common.Info.memberZipPlaceholder
-        memberZipCodeTextField.backgroundColor = UIColor.aicGrayColor()
-        memberZipCodeTextField.font = UIFont.aicTextFont()
+        memberZipCodeTextField.backgroundColor = .aicGrayColor
+        memberZipCodeTextField.font = .aicTextFont
         memberZipCodeTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         
-        barcodeMemberName.font = UIFont.aicTitleFont
-        barcodeMemberLevel.font = UIFont.aicTextFont()
-        barcodeExpirationDate.font = UIFont.aicTextFont()
+        barcodeMemberName.font = .aicTitleFont
+        barcodeMemberLevel.font = .aicTextFont
+        barcodeExpirationDate.font = .aicTextFont
         
         barcodeReciprocalBadgeImageView.contentMode = .scaleAspectFill
         barcodeReciprocalBadgeImageView.image = #imageLiteral(resourceName: "reciprocal_logo")

@@ -32,13 +32,13 @@ class MessageSmallView: BaseView {
         blurBGHolderView.alpha = 0.95
         
         titleLabel.numberOfLines = 0
-        titleLabel.font = UIFont.aicTitleFont
+        titleLabel.font = .aicTitleFont
         titleLabel.textColor = .black
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.text = model.title
         
         messageLabel.numberOfLines = 0
-        messageLabel.font = UIFont.aicShortTextFont()
+        messageLabel.font = .aicShortTextFont
         messageLabel.textColor = .black
         messageLabel.textAlignment = NSTextAlignment.center
         messageLabel.text = model.message
@@ -47,8 +47,8 @@ class MessageSmallView: BaseView {
         
         if model.cancelButtonTitle != nil {
             cancelButton = UIButton()
-            cancelButton!.setTitleColor(UIColor.aicButtonsColor(), for: UIControlState())
-            cancelButton!.setTitleColor(UIColor.aicButtonsColor().darker(), for: UIControlState.highlighted)
+            cancelButton!.setTitleColor(.aicButtonsColor, for: UIControlState())
+            cancelButton!.setTitleColor(UIColor.aicButtonsColor.darker(), for: UIControlState.highlighted)
             cancelButton!.titleLabel?.font = UIFont.aicTitleFont
             cancelButton!.setTitle(model.cancelButtonTitle, for: UIControlState())
         }

@@ -37,13 +37,13 @@ class MessageLargeView: BaseView {
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.textColor = .white
-        titleLabel.font = UIFont.aicInstructionsTitleFont()
+        titleLabel.font = .aicInstructionsTitleFont
         titleLabel.text = model.title
         
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = NSTextAlignment.center
         messageLabel.textColor = .white
-        messageLabel.font = UIFont.aicInstructionsSubtitleFont()
+        messageLabel.font = .aicInstructionsSubtitleFont
         messageLabel.text = model.message
         
         actionButton.layer.borderWidth = 1
@@ -53,7 +53,7 @@ class MessageLargeView: BaseView {
         if let cancelButtonTitle = model.cancelButtonTitle {
             let cancelButton = MessageLargeButton()
             
-            cancelButton.titleLabel?.font = UIFont.aicTitleFont
+            cancelButton.titleLabel?.font = .aicTitleFont
             cancelButton.setTitle(cancelButtonTitle, for: UIControlState())
             
             self.cancelButton = cancelButton

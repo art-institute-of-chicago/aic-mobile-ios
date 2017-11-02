@@ -51,7 +51,7 @@ class ToursSectionStopsScrollerView: NewsToursRevealView {
         backgroundColor = .white
         
         focusedStopLabel.numberOfLines = 1
-        focusedStopLabel.font = UIFont.aicTextFont()
+        focusedStopLabel.font = .aicTextFont
         focusedStopLabel.textColor = .black
         
         // Add Subviews

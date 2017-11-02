@@ -15,10 +15,10 @@ class MapDepartmentHUDView: UIView {
     init() {
         super.init(frame:CGRect(x: 0,y: 0, width: UIScreen.main.bounds.width, height: height))
         
-        backgroundColor = UIColor.aicNearbyColor().withAlphaComponent(0.5)
+        backgroundColor = UIColor.aicNearbyColor.withAlphaComponent(0.5)
         
         label.frame = self.frame
-        label.font = UIFont.aicSystemTextFont()
+        label.font = .aicSystemTextFont
         label.textColor = .white
         label.textAlignment = NSTextAlignment.center
         label.text = "Testing 1...2....3"

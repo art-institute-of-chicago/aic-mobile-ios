@@ -82,7 +82,7 @@ class SectionsViewController : UIViewController {
         }
         
         // Setup and add the tabbar
-        tabBar.backgroundColor = UIColor.aicTabbarColor()
+        tabBar.backgroundColor = .aicTabbarColor
         tabBar.backgroundImage = UIImage()
         tabBar.barStyle = UIBarStyle.black
         tabBar.setItems(tabBarItems, animated: false)

@@ -33,7 +33,7 @@ class AudioPlayerView : BaseView {
         super.init(frame:CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: height))
         
         // Configure
-        backgroundColor = UIColor.aicLightGrayColor()
+        backgroundColor = .aicLightGrayColor
         
         slider.isUserInteractionEnabled = true
         slider.minimumValue = 0
@@ -51,7 +51,7 @@ class AudioPlayerView : BaseView {
         timeRemainingLabel.numberOfLines = 1
         timeRemainingLabel.textColor = .black
         timeRemainingLabel.textAlignment = NSTextAlignment.center
-        timeRemainingLabel.font = UIFont.aicShortTextFont()
+        timeRemainingLabel.font = .aicShortTextFont
         timeRemainingLabel.text = " "
         
         playPauseButton.tintColor = .black

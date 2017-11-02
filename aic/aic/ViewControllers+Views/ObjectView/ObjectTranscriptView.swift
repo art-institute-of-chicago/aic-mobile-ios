@@ -19,7 +19,7 @@ class ObjectTranscriptView: ObjectContentSectionView {
     
     // TODO: This text comes through HTML encoded, need to display it correctly
     func set(transcript:String) {
-        let attrString = getAttributedString(forHTMLText: transcript, font: UIFont.aicTextFont()!)
+        let attrString = getAttributedString(forHTMLText: transcript, font: .aicTextFont)
         bodyTextView.attributedText = attrString
     }
 }

@@ -11,9 +11,9 @@ class AICButton: UIButton {
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
-                backgroundColor = UIColor.aicButtonsColor().darker()
+                backgroundColor = UIColor.aicButtonsColor.darker()
             } else {
-                backgroundColor = UIColor.aicButtonsColor()
+                backgroundColor = .aicButtonsColor
             }
         }
     }
@@ -21,9 +21,9 @@ class AICButton: UIButton {
     init() {
         super.init(frame:CGRect.zero)
         
-        backgroundColor = UIColor.aicButtonsColor()
+        backgroundColor = .aicButtonsColor
         setTitleColor(UIColor.white, for: UIControlState())
-        titleLabel!.font = UIFont.aicTitleFont
+        titleLabel!.font = .aicTitleFont
         contentEdgeInsets = insets
     }
     

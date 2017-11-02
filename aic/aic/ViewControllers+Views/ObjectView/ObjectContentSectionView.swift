@@ -28,14 +28,14 @@ class ObjectContentSectionView: BaseView {
         self.translatesAutoresizingMaskIntoConstraints = false
         
         // Configure
-        topLine.backgroundColor = UIColor.aicGrayColor()
+        topLine.backgroundColor = .aicGrayColor
         
         titleLabel.numberOfLines = 1
         titleLabel.textColor = .black
-        titleLabel.font = UIFont.aicTitleFont
+        titleLabel.font = .aicTitleFont
         
         bodyTextView.textColor = .black
-        bodyTextView.font = UIFont.aicTextFont()
+        bodyTextView.font = .aicTextFont
         bodyTextView.setDefaultsForAICAttributedTextView()
         
         // Add Subviews
