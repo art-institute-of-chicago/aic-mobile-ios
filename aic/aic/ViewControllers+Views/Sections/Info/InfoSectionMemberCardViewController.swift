@@ -251,7 +251,7 @@ extension InfoSectionMemberCardViewController : UITextFieldDelegate {
         // as moving the insertion point.
         //
         // We still return true to allow the change to take place.
-        if string.characters.count == 0 {
+        if string.count == 0 {
             return true
         }
         

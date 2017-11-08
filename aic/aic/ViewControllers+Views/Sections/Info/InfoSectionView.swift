@@ -13,7 +13,7 @@ class InfoSectionView: SectionView {
     
     let memberCardView:InfoSectionMemberCardView
     
-    var showMemberCardView = false
+    var showMemberCardView = true
     
     init(section:AICSectionModel, memberCardView:InfoSectionMemberCardView) {
         self.memberCardView = memberCardView
@@ -25,7 +25,7 @@ class InfoSectionView: SectionView {
         // Add subviews
         
             // Member card view disabled by default
-            showMemberCardView = false
+            showMemberCardView = true
         
         if (Common.Testing.printDataErrors) {
             print("Member card view disabled by default")

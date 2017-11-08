@@ -37,6 +37,7 @@
 		293D00A81FA7C82200BF2C26 /* map in Resources */ = {isa = PBXBuildFile; fileRef = 293D00A71FA7C82200BF2C26 /* map */; };
 		293D00AC1FA7CA6700BF2C26 /* video in Resources */ = {isa = PBXBuildFile; fileRef = 293D00AB1FA7CA6600BF2C26 /* video */; };
 		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
+		29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */; };
 		29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
@@ -223,6 +224,7 @@
 		293D00A71FA7C82200BF2C26 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; name = map; path = aic/Assets/map; sourceTree = SOURCE_ROOT; };
 		293D00AB1FA7CA6600BF2C26 /* video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = video; path = aic/Assets/video; sourceTree = SOURCE_ROOT; };
 		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
+		29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedTextView.swift; sourceTree = "<group>"; };
 		29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 				E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */,
 				E42677E21CC558060046BB27 /* AICButton.swift */,
 				E4F518FA1D2586B0004BFB44 /* AICImageView.swift */,
+				29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
 				E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */,
 				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
@@ -1306,6 +1309,7 @@
 				E4923FE31C9F36C800AB255C /* ObjectContentSectionView.swift in Sources */,
 				E4F7C14B1CA200EF005976D1 /* ObjectCreditsView.swift in Sources */,
 				E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */,
+				29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */,
 				E415ABD91C7298420093B719 /* SectionsViewController.swift in Sources */,
 				E447397D1CAE01AC0011F059 /* NewsToursSectionViewController.swift in Sources */,
 				E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */,

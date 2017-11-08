@@ -21,11 +21,11 @@ class InfoSectionInformationView: BaseView {
     let titleLabel = UILabel()
     let museumHoursTextView = UITextView()
     let locationLabel = UILabel()
-    let locationTextView = UITextView()
-    let getTicketsTextView = UITextView()
+    let locationTextView = LinkedTextView()
+    let getTicketsTextView = LinkedTextView()
     
     let bloombergCreditsImageView = UIImageView()
-    let potionCreditsTextView = UITextView()
+    let potionCreditsTextView = LinkedTextView()
     
     init() {
         super.init(frame:CGRect.zero)
@@ -53,7 +53,7 @@ class InfoSectionInformationView: BaseView {
         
         let ticketsAttrString = NSMutableAttributedString(string: Common.Info.museumInformationGetTicketsTitle)
         let ticketsURL = URL(string: Common.Info.museumInformationGetTicketsURL)!
-        ticketsAttrString.addAttributes([NSAttributedStringKey.link : ticketsURL.absoluteString], range: NSMakeRange(0, ticketsAttrString.string.characters.count))
+        ticketsAttrString.addAttributes([NSAttributedStringKey.link : ticketsURL.absoluteString], range: NSMakeRange(0, ticketsAttrString.string.count))
 		
         getTicketsTextView.attributedText = ticketsAttrString
         getTicketsTextView.font = .aicTitleFont
@@ -68,13 +68,14 @@ class InfoSectionInformationView: BaseView {
         let versionPlusPotionLink = "Version \(version) \(Common.Info.creditsPotion)"
         let potionCreditsAttrString = NSMutableAttributedString(string: versionPlusPotionLink)
         let potionUrl = URL(string: Common.Info.potionURL)!
-        potionCreditsAttrString.addAttributes([NSAttributedStringKey.link : potionUrl], range: NSMakeRange(0, potionCreditsAttrString.string.characters.count))
+        potionCreditsAttrString.addAttributes([NSAttributedStringKey.link : potionUrl], range: NSMakeRange(0, potionCreditsAttrString.string.count))
         
         
         potionCreditsTextView.attributedText = potionCreditsAttrString
         potionCreditsTextView.font = .aicTextFont
         potionCreditsTextView.setDefaultsForAICAttributedTextView()
         potionCreditsTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.white]
+		potionCreditsTextView.delegate = self
         
         // Add Subviews
         infoContentView.addSubview(titleLabel)

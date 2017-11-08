@@ -30,7 +30,7 @@ class ObjectRelatedToursView: ObjectContentSectionView {
             let url = Common.DeepLinks.getURL(forTour: tour)
             let linkAttrString = NSMutableAttributedString(string: linkText)
             
-            let range = NSMakeRange(0, linkAttrString.string.characters.count)
+            let range = NSMakeRange(0, linkAttrString.string.count)
             linkAttrString.addAttributes([NSAttributedStringKey.link : url], range: range)
             
             links.append(linkAttrString)
