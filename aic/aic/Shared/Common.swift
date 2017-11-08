@@ -153,9 +153,14 @@ struct Common {
     struct Layout {
         static var appFrame:CGRect = CGRect.zero
 
-        static let tabBarHeight:CGFloat = 49
+		static var tabBarHeight:CGFloat {
+			if UIDevice().type == .iPhoneX {
+				return 83
+			}
+			return 49
+		}
 
-        static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat = 49 {
+        static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat = tabBarHeight {
             didSet {
                 if tabBarHeightWithMiniAudioPlayerHeight != oldValue {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.tabBarHeightDidChangeNotification), object: nil)
