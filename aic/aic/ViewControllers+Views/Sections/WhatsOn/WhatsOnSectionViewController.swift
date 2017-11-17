@@ -19,9 +19,10 @@ class WhatsOnSectionViewController : NewsToursSectionViewController {
     
     weak var delegate:WhatsOnSectionViewControllerDelegate?
     
-    init(section:AICSectionModel) {
+    override init(section:AICSectionModel) {
         let whatsOnView = WhatsOnSectionView(section: section, revealView: NewsToursRevealView())
-        super.init(section:section, sectionView: whatsOnView)
+        super.init(section:section)
+		self.view = whatsOnView
     }
     
     required init?(coder aDecoder: NSCoder) {

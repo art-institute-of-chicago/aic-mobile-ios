@@ -33,9 +33,10 @@ class ToursSectionViewController : NewsToursSectionViewController {
     
     fileprivate (set) var currentTour:AICTourModel? = nil
     
-    init(section:AICSectionModel) {
+    override init(section:AICSectionModel) {
         let toursView = ToursSectionView(section: section, revealView: tourScrollView)
-        super.init(section:section, sectionView: toursView)
+        super.init(section:section)
+		self.view = toursView
     }
     
     required init?(coder aDecoder: NSCoder) {

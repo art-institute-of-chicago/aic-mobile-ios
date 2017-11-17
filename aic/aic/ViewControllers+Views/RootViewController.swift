@@ -138,7 +138,7 @@ class RootViewController: UIViewController {
 			sectionsVC?.delegate = self
 		}
         view.addSubview(sectionsVC!.view)
-        sectionsVC!.setSelectedSection(sectionVC: sectionsVC!.toursVC)
+//        sectionsVC!.setSelectedSection(sectionVC: sectionsVC!.toursVC)
         sectionsVC!.animateInInitialView()
     }
     

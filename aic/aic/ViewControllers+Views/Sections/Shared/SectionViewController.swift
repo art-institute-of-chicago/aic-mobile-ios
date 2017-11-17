@@ -5,36 +5,21 @@
 
 import UIKit
 
-protocol SectionViewControllerDelegate : class {
-    func sectionViewController(_ sectionViewController:SectionViewController, viewableMapAreaDidChange viewableArea:CGRect)
+protocol SectionViewControllerScrollDelegate : class {
+	func sectionViewControllerWillAppearWithScrollView(scrollView: UIScrollView)
+	func sectionViewControllerDidScroll(scrollView: UIScrollView)
 }
 
 class SectionViewController : UIViewController {
     var color:UIColor
     let sectionModel:AICSectionModel
-    let sectionView:SectionView!
+	weak var scrollDelegate: SectionViewControllerScrollDelegate? = nil
     
-    // Listen to changes in viewable map area and report to delegate
-    var viewableMapArea:CGRect = CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight) {
-        didSet {
-            if sectionView.superview != nil {
-                viewableAreaDelegate?.sectionViewController(self, viewableMapAreaDidChange: viewableMapArea)
-            }
-        }
-    }
-    
-    weak var viewableAreaDelegate:SectionViewControllerDelegate?
-    
-    init(section:AICSectionModel, sectionView:SectionView) {
+    init(section:AICSectionModel) {
         self.sectionModel = section
-        self.sectionView = sectionView
         self.color = section.color
-        
         super.init(nibName: nil, bundle: nil)
-        
-        // Set up delegate for scrolling
-        self.sectionView.scrollView.delegate = self
-        
+		
         // Set the tab bar item with universal insets
         self.tabBarItem = UITabBarItem(title: section.tabBarTitle, image: section.tabBarIcon, tag: section.nid)
         
@@ -52,7 +37,6 @@ class SectionViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -60,30 +44,12 @@ class SectionViewController : UIViewController {
         AICAnalytics.trackScreen(named: sectionModel.title)
     }
     
-    override func loadView() {
-        self.view = sectionView
-    }
-    
-    func recalculateViewableMapArea() {
-        viewableMapArea = CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
-    }
-    
+//    override func loadView() {
+//        self.view = sectionView
+//    }
+	
     internal func reset() {
         // Override this to reset view when going back
-    }
-}
-
-extension SectionViewController : UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let v = self.view as! SectionView
-        
-        let descriptionLabel = v.titleView.descriptionLabel
-        if scrollView.contentOffset.y > 0 {
-            let alpha = map(val: Double(scrollView.contentOffset.y), oldRange1: 50.0, oldRange2: 0.0, newRange1: 0.0, newRange2: 1.0)
-            descriptionLabel.alpha = CGFloat(alpha)
-        } else {
-            descriptionLabel.alpha = 1.0
-        }
     }
 }
 
@@ -91,8 +57,8 @@ extension SectionViewController {
     // When the tab bar height changes, change the size of our view so anything bottom aligned
     // does not get hidden by the mini player
     @objc func tabBarHeightDidChange() {
-        self.sectionView.frame.size.height = UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
-        viewableMapArea = CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
-        recalculateViewableMapArea()
+//        self.sectionView.frame.size.height = UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
+//        viewableMapArea = CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
+//        recalculateViewableMapArea()
     }
 }

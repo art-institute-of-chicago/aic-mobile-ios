@@ -150,9 +150,7 @@ struct Common {
     }
 
     // MARK: Layout
-    struct Layout {
-        static var appFrame:CGRect = CGRect.zero
-
+	struct Layout {
 		static var tabBarHeight:CGFloat {
 			if UIDevice().type == .iPhoneX {
 				return 83

@@ -9,9 +9,10 @@ class InfoSectionViewController : SectionViewController {
     let infoView:InfoSectionView
     let memberCardVC = InfoSectionMemberCardViewController()
     
-    init(section: AICSectionModel) {
+    override init(section: AICSectionModel) {
         infoView = InfoSectionView(section: section, memberCardView:  memberCardVC.view as! InfoSectionMemberCardView)
-        super.init(section:section, sectionView: infoView)
+        super.init(section:section)
+		self.view = infoView
         
         // Add gestures
         let accessButtonTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(InfoSectionViewController.accessButtonPressed(_:)))

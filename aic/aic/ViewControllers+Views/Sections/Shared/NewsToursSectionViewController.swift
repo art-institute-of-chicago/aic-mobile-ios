@@ -17,8 +17,12 @@ class NewsToursSectionViewController : SectionViewController {
     
     var cells:[NewsToursTableViewCell] = []
     
-    override init(section:AICSectionModel, sectionView: SectionView) {
-        super.init(section:section, sectionView: sectionView)
+    override init(section:AICSectionModel) {
+		let sectionView = NewsToursSectionView(section:section, revealView: NewsToursRevealView())
+		// Store a reference to the table view for convenience
+		listTableView = sectionView.listView
+		super.init(section:section)
+		self.view = sectionView
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -28,18 +32,14 @@ class NewsToursSectionViewController : SectionViewController {
     override func loadView() {
         super.loadView()
         
-        // Store a reference to the table view for convenience
-        let sectionView = self.sectionView as! NewsToursSectionView
-        listTableView = sectionView.listView
-        
         // Set ourself to delegate and datasource for table view
         listTableView.delegate = self
         listTableView.dataSource = self
         
         listTableView.register(NewsToursTableViewCell.self, forCellReuseIdentifier: "cell")
         
-        let revealCloseTap = UITapGestureRecognizer(target: self, action: #selector(NewsToursSectionViewController.revealViewCloseButtonTapped))
-        sectionView.revealView.closeButton.addGestureRecognizer(revealCloseTap)
+//        let revealCloseTap = UITapGestureRecognizer(target: self, action: #selector(NewsToursSectionViewController.revealViewCloseButtonTapped))
+//        sectionView.revealView.closeButton.addGestureRecognizer(revealCloseTap)
     }
     
     /**
@@ -59,26 +59,13 @@ class NewsToursSectionViewController : SectionViewController {
      */
     internal func setDistances(fromUserLocation userLocation:CLLocation) {}
     
-    
-    override internal func recalculateViewableMapArea() {
-        let sectionView = self.sectionView as! NewsToursSectionView
-        
-        if sectionView.mode == .reveal {
-            self.viewableMapArea = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width,
-                                              height: UIScreen.main.bounds.height - sectionView.revealView.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
-            )
-        } else {
-            self.viewableMapArea = self.view.frame
-        }
-    }
-    
     internal func showReveal(forModel model:AICNewsTourItemProtocol) {
-        let sectionView = self.sectionView as! NewsToursSectionView
+        let sectionView = self.view as! NewsToursSectionView
         
         sectionView.setReveal(forModel: model)
         sectionView.mode = .reveal
         
-        recalculateViewableMapArea()
+        //recalculateViewableMapArea()
     }
     
     internal func closeAllListCells(withAnimation animated:Bool, andUpdateTable:Bool = true) {
@@ -101,7 +88,7 @@ class NewsToursSectionViewController : SectionViewController {
     }
     
     override func reset() {
-        let sectionView = self.sectionView as! NewsToursSectionView
+        let sectionView = self.view as! NewsToursSectionView
         sectionView.mode = .list
         
         closeAllListCells(withAnimation: false)
@@ -153,22 +140,7 @@ extension NewsToursSectionViewController : NewsToursTableViewCellDelegate {
             self.closeAllListCells(withAnimation: false)
         }
         
-        self.sectionView.updateConstraints()
-        
-        self.sectionView.scrollView.setNeedsLayout()
-        self.sectionView.scrollView.layoutIfNeeded()
-        self.sectionView.scrollView.setNeedsDisplay()
-        
-        // Scroll to the top of this item, making sure it doesn't end up above the bottom
-        let maxYOffset = sectionView.scrollView.contentSize.height - sectionView.scrollView.bounds.size.height
-        
-        var yOffset = self.listTableView.frame.origin.y + self.listTableView.rectForRow(at: IndexPath(item: cell.tag, section: 0)).origin.y - self.sectionView.titleView.minimizedHeight
-        
-        if yOffset > maxYOffset {
-            yOffset = maxYOffset
-        }
-        
-        self.sectionView.scrollView.setContentOffset(CGPoint(x: 0, y: yOffset), animated: false)
+        self.view.updateConstraints()
     }
     
     func newsToursTableViewCellRevealContentTapped(_ cell: NewsToursTableViewCell) {
@@ -188,13 +160,13 @@ extension NewsToursSectionViewController : CLLocationManagerDelegate {
 // Reveal view gestures
 extension NewsToursSectionViewController {
     @objc func revealViewCloseButtonTapped() {
-        let sectionView = self.sectionView as! NewsToursSectionView
+        let sectionView = self.view as! NewsToursSectionView
         sectionView.mode = .list
         
         closeAllListCells(withAnimation: false)
         sectionView.updateConstraints()
         
-        recalculateViewableMapArea()
+        //recalculateViewableMapArea()
         newsToursDelegate?.newsToursSectionViewController(self, didCloseReveal:sectionView.revealView)
     }
 }

@@ -29,7 +29,7 @@ class AudioGuideSectionViewController : SectionViewController {
     // Collection view that holds the buttons
     var collectionView:UICollectionView
     
-    init(section:AICSectionModel) {
+    override init(section:AICSectionModel) {
         // Create collection view
         let buttonSize = Int(buttonSizeRatio * UIScreen.main.bounds.width)
         let buttonSpacing = Int(colSpacingRatio * UIScreen.main.bounds.width)
@@ -54,7 +54,8 @@ class AudioGuideSectionViewController : SectionViewController {
         collectionView.register(AudioGuideCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         // Init SectionViewController
-        super.init(section: section, sectionView: audioGuideView)
+        super.init(section: section)
+		self.view = audioGuideView
         
         // Set delegate for Collection view
         collectionView.delegate = self

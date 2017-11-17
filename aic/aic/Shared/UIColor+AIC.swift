@@ -22,7 +22,7 @@ extension UIColor {
 
 	static let aicWhatsonColor: UIColor = UIColor(red: 111.0 / 255.0, green: 102.0 / 255.0, blue: 208.0 / 255.0, alpha: 1.0)
 
-	static let aicToursColor: UIColor =  UIColor(red: 46.0 / 255.0, green: 160.0 / 255.0, blue: 162.0 / 255.0, alpha: 1.0)
+	static let aicToursColor: UIColor =  UIColor(red: 22.0 / 255.0, green: 151.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
 
 	static let aicInfoColor: UIColor = UIColor(red: 176.0 / 255.0, green: 83.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
 

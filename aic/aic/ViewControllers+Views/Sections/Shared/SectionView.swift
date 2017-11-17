@@ -41,7 +41,7 @@ class SectionView: BaseView {
                                          backgroundColor:section.color
         )
         
-        super.init(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
+        super.init(frame:UIScreen.main.bounds)//CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
         
         
         // Clear background so the map shows through
