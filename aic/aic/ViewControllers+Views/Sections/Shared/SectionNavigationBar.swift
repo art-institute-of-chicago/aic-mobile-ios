@@ -37,12 +37,12 @@ class SectionNavigationBar : UIView {
 		
 		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: maximizedHeight))
 		
-//		self.autoresizingMask = .flexibleHeight
-		//self.translatesAutoresizingMaskIntoConstraints = true
 		self.clipsToBounds = true
 		self.backgroundColor = section.color
 		
-		self.backdropImage.image = #imageLiteral(resourceName: "home_backdrop")
+		if let _ = section.background {
+			self.backdropImage.image = section.background
+		}
 		
 		self.iconImage.image = section.icon
 		
@@ -81,6 +81,7 @@ class SectionNavigationBar : UIView {
 			self.iconImage.alpha = 0.0
 			self.descriptionLabel.alpha = 0.0
 			self.titleLabel.transform = CGAffineTransform(scaleX: CGFloat(self.titleMinimumScale), y: CGFloat(self.titleMinimumScale))
+			self.layoutIfNeeded()
 		}
 	}
 	
@@ -102,11 +103,13 @@ class SectionNavigationBar : UIView {
 	}
 	
 	override func updateConstraints() {
-		backdropImage.snp.makeConstraints({ (make) -> Void in
-			make.top.equalTo(self)
-			make.left.right.equalTo(self)
-			make.height.equalTo(backdropImage.snp.width).multipliedBy(backdropImage.image!.size.height / backdropImage.image!.size.width)
-		})
+		if let _ = self.backdropImage.image {
+			backdropImage.snp.makeConstraints({ (make) -> Void in
+				make.top.equalTo(self)
+				make.left.right.equalTo(self)
+				make.height.equalTo(backdropImage.snp.width).multipliedBy(backdropImage.image!.size.height / backdropImage.image!.size.width)
+			})
+		}
 		
 		iconImage.snp.makeConstraints({ (make) -> Void in
 			make.centerX.equalTo(iconImage.superview!)
@@ -131,6 +134,7 @@ extension SectionNavigationBar : SectionViewControllerScrollDelegate {
 	func sectionViewControllerWillAppearWithScrollView(scrollView: UIScrollView) {
 		UIView.animate(withDuration: 0.5) {
 			self.updateHeight(contentOffset: scrollView.contentOffset)
+			self.layoutIfNeeded()
 		}
 	}
 }

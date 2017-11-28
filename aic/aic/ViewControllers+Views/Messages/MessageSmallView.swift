@@ -20,7 +20,7 @@ class MessageSmallView: BaseView {
     
     let titleLabel = UILabel()
     let messageLabel = UILabel()
-    let actionButton = AICButton()
+	let actionButton = AICButton(color: .aicInfoColor, isSmall: false)
     var cancelButton:UIButton? = nil
     let contentBackgroundView = UIView()
     let contentView  = UIView()

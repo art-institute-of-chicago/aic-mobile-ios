@@ -7,24 +7,34 @@ import UIKit
 
 class AICButton: UIButton {
     let insets = UIEdgeInsetsMake(10, 10, 10, 10)
+	let buttonColor: UIColor
+	let mediumSize: CGSize = CGSize(width: 190, height: 50)
+	let smallSize: CGSize = CGSize(width: 140, height: 50)
+	let borderWidth: CGFloat = 2.0
     
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
-                backgroundColor = UIColor.aicButtonsColor.darker()
+                backgroundColor = .white
             } else {
-                backgroundColor = .aicButtonsColor
+                backgroundColor = buttonColor
             }
         }
     }
 
-    init() {
-        super.init(frame:CGRect.zero)
-        
-        backgroundColor = .aicButtonsColor
-        setTitleColor(UIColor.white, for: UIControlState())
-        titleLabel!.font = .aicTitleFont
-        contentEdgeInsets = insets
+	init(color: UIColor, isSmall: Bool) {
+		buttonColor = color
+		super.init(frame:CGRect.zero)
+		
+        backgroundColor = buttonColor
+        setTitleColor(.white, for: .normal)
+		setTitleColor(.aicInfoColor, for: .highlighted)
+        titleLabel!.font = .aicButtonFont
+		layer.borderWidth = borderWidth
+		layer.borderColor = buttonColor.cgColor
+		
+		let frameSize = isSmall ? smallSize : mediumSize
+		self.autoSetDimensions(to: CGSize(width: frameSize.width - (borderWidth * 2.0), height: frameSize.height - (borderWidth * 2.0)))
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -29,11 +29,19 @@ class AICImageView : UIImageView {
             AICImageView.manager = Alamofire.SessionManager(configuration: configuration)
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		self.backgroundColor = .gray
+		
+		if AICImageView.manager == nil {
+			let configuration = URLSessionConfiguration.default
+			configuration.httpMaximumConnectionsPerHost =  5
+			configuration.timeoutIntervalForRequest = 30
+			AICImageView.manager = Alamofire.SessionManager(configuration: configuration)
+		}
+	}
+	
     override func layoutSubviews() {
         if self.image == nil {
             let centeredX = frame.size.width/2 - loadingIndicatorView.frame.size.width/2

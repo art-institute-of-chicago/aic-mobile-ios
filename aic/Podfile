@@ -7,6 +7,7 @@ target 'aic' do
 
   # Pods for aic
   pod 'Google/Analytics'
+  pod 'PureLayout'
 
   target 'aicTests' do
     inherit! :search_paths

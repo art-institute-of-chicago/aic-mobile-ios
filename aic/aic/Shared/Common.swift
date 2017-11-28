@@ -67,34 +67,28 @@ struct Common {
 
     // MARK: Sections
     static let Sections:[Section:AICSectionModel] = [
-        Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
+		Section.home: AICSectionModel(nid:Section.home.rawValue,
+										 color: .aicHomeColor,
+										 background: #imageLiteral(resourceName: "home_backdrop"),
+										 icon: #imageLiteral(resourceName: "iconTours"),
+										 title: "Welcome",
+										 description: "Preview the latest exhibitions at the Art Institute.",
+										 tabBarTitle: "Home",
+										 tabBarIcon: #imageLiteral(resourceName: "navTours")
+		),
+		Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
             color: .aicAudioGuideColor,
+			background: nil,
 			icon: #imageLiteral(resourceName: "iconNumPad"),
             title: "Look It Up",
             description: "Find an artwork you like? Enter the artwork number to learn more.",
             tabBarTitle: "Audio",
             tabBarIcon: #imageLiteral(resourceName: "navNumPad")
         ),
-
-        Section.whatsOn: AICSectionModel(nid:Section.whatsOn.rawValue,
-            color: .aicWhatsonColor,
-			icon: #imageLiteral(resourceName: "iconWhatsOn"),
-            title: "On View Now",
-            description: "Preview the latest exhibitions at the Art Institute.",
-            tabBarTitle: "On View",
-            tabBarIcon: #imageLiteral(resourceName: "navWhatsOn")
-        ),
-        Section.tours: AICSectionModel(nid:Section.tours.rawValue,
-            color: .aicToursColor,
-            icon: #imageLiteral(resourceName: "iconTours"),
-            title: "Take an Audio Tour",
-            description: "Listen to the latest stories from our ever-expanding repertoire of mobile tours.",
-            tabBarTitle: "Tours",
-            tabBarIcon: #imageLiteral(resourceName: "navTours")
-        ),
         Section.map: AICSectionModel(nid:Section.map.rawValue,
             color: .aicNearbyColor,
-            icon: #imageLiteral(resourceName: "iconMap"),
+			background: nil,
+			icon: #imageLiteral(resourceName: "iconMap"),
             title: "Find Your Way",
             description: "Use the map to explore the museum and find audio-enhanced artworks near you.",
             tabBarTitle: "Map",
@@ -102,8 +96,9 @@ struct Common {
         ),
         Section.info: AICSectionModel(nid:Section.info.rawValue,
             color: .aicInfoColor,
+			background: nil,
             icon: #imageLiteral(resourceName: "iconInfo"),
-            title: "Need Information?",
+            title: "Information",
             description: "Here’s everything you need to visit us and keep in touch.",
             tabBarTitle: "Info",
             tabBarIcon: #imageLiteral(resourceName: "navInfo")
@@ -303,7 +298,7 @@ struct Common {
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconWhatsOnLarge"),
                 title:"On View Now",
                 subtitle: "Preview the latest exhibitions at the Art Institute.",
-                color: .aicWhatsonColor
+                color: .aicHomeColor
             ),
 
 
@@ -323,7 +318,7 @@ struct Common {
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
                 title:"Go on a Tour",
                 subtitle: "Find a story that suits your interests in our ever-expanding portfolio of audio tours.",
-                color: .aicToursColor
+                color: .aicHomeColor
             )
         ]
     }
@@ -446,9 +441,9 @@ struct Common {
     struct Info {
 
         // Text and URL constants
-        static let becomeMemberTitle = "Become a member"
-        static let becomeMemberSupportMessage = "Enjoy free, yearlong admission."
-        static let becomeMemberJoinMessage = "Join now."
+        static let becomeMemberTitle = "Become a Member"
+        static let becomeMemberJoinPromptMessage = "Enjoy free, yearlong admission."
+        static let becomeMemberJoinMessage = "Join now"
         static let becomeMemberJoinURL = "https://sales.artic.edu/memberships"
         static let becomeMemberAccessPrompt = "Already a member?"
         static let becomeMemberAccessButtonTitle = "Access Member Card"

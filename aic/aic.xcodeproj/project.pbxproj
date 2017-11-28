@@ -10,6 +10,7 @@
 		0E2D15591DA8134200D06A4A /* AICMemberAPIDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */; };
 		1370EED7178BE85DDE6304C6 /* Pods_aicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */; };
 		28F7980E1E7B40E600D22E0E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F7980D1E7B40E600D22E0E /* Common.swift */; };
+		2902E0B01FC47FF60070C78C /* InfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902E0AF1FC47FF60070C78C /* InfoButton.swift */; };
 		293D008F1FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */ = {isa = PBXBuildFile; fileRef = 293D00761FA7C80D00BF2C26 /* DESCRIPTION.en_us.html */; };
 		293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 293D00771FA7C80D00BF2C26 /* FONTLOG.txt */; };
 		293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 293D00781FA7C80D00BF2C26 /* Lora-Bold.ttf */; };
@@ -41,8 +42,28 @@
 		2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */; };
 		2986A58C1FBCD38C00029E74 /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */; };
 		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
+		29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A27A071FCC769B007CEE1D /* HomeTourCell.xib */; };
+		29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */; };
+		29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */; };
+		29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */; };
+		29A7BCF31FBF85DB00FD8639 /* IdealSans-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE41FBF85DB00FD8639 /* IdealSans-BookItalic.otf */; };
+		29A7BCF41FBF85DB00FD8639 /* IdealSans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE51FBF85DB00FD8639 /* IdealSans-Light.otf */; };
+		29A7BCF51FBF85DB00FD8639 /* IdealSans-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE61FBF85DB00FD8639 /* IdealSans-LightItalic.otf */; };
+		29A7BCF61FBF85DB00FD8639 /* IdealSans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE71FBF85DB00FD8639 /* IdealSans-Medium.otf */; };
+		29A7BCF71FBF85DB00FD8639 /* IdealSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE81FBF85DB00FD8639 /* IdealSans-MediumItalic.otf */; };
+		29A7BCF81FBF85DB00FD8639 /* IdealSans-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE91FBF85DB00FD8639 /* IdealSans-Semibold.otf */; };
+		29A7BCF91FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEA1FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf */; };
+		29A7BCFA1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf */; };
+		29A7BCFB1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCED1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf */; };
+		29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEE1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf */; };
+		29A7BCFD1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEF1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf */; };
+		29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */; };
+		29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7BD001FBF87D900FD8639 /* InfoViewController.swift */; };
 		29A7CCFB1FBE3E0500814362 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A7CCFA1FBE3E0500814362 /* View.xib */; };
 		29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */; };
+		29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */; };
+		29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */; };
+		29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */; };
 		29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */; };
 		29E6DD651FB9ED8A00C3303D /* MapSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6DD641FB9ED8A00C3303D /* MapSectionViewController.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
@@ -67,7 +88,7 @@
 		E417B52D1CA3236600C362A1 /* NearbySectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52C1CA3236600C362A1 /* NearbySectionView.swift */; };
 		E417B52F1CA324E000C362A1 /* InfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52E1CA324E000C362A1 /* InfoSectionView.swift */; };
 		E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E421782F1CC57BE200815B41 /* UITextView+AIC.swift */; };
-		E42178321CC68A7300815B41 /* InfoSectionBecomeMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178311CC68A7300815B41 /* InfoSectionBecomeMemberView.swift */; };
+		E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */; };
 		E42178341CC6A2CA00815B41 /* InfoSectionMemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178331CC6A2CA00815B41 /* InfoSectionMemberCardView.swift */; };
 		E42178361CC6B80200815B41 /* InfoSectionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178351CC6B80200815B41 /* InfoSectionTextField.swift */; };
 		E42178391CC6BB6300815B41 /* InfoSectionMemberCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178381CC6BB6300815B41 /* InfoSectionMemberCardViewController.swift */; };
@@ -202,6 +223,7 @@
 		223EFA1418FE36F1D127D26D /* Pods-aicTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicTests/Pods-aicTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		27EC410D74F8C78F01DA4A38 /* Pods_aicRental.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicRental.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F7980D1E7B40E600D22E0E /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		2902E0AF1FC47FF60070C78C /* InfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoButton.swift; sourceTree = "<group>"; };
 		293D00761FA7C80D00BF2C26 /* DESCRIPTION.en_us.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DESCRIPTION.en_us.html; sourceTree = "<group>"; };
 		293D00771FA7C80D00BF2C26 /* FONTLOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
 		293D00781FA7C80D00BF2C26 /* Lora-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lora-Bold.ttf"; sourceTree = "<group>"; };
@@ -233,8 +255,28 @@
 		2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationController.swift; sourceTree = "<group>"; };
 		2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
+		29A27A071FCC769B007CEE1D /* HomeTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTourCell.xib; sourceTree = "<group>"; };
+		29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Bold.otf"; sourceTree = "<group>"; };
+		29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BoldItalic.otf"; sourceTree = "<group>"; };
+		29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Book.otf"; sourceTree = "<group>"; };
+		29A7BCE41FBF85DB00FD8639 /* IdealSans-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BookItalic.otf"; sourceTree = "<group>"; };
+		29A7BCE51FBF85DB00FD8639 /* IdealSans-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Light.otf"; sourceTree = "<group>"; };
+		29A7BCE61FBF85DB00FD8639 /* IdealSans-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-LightItalic.otf"; sourceTree = "<group>"; };
+		29A7BCE71FBF85DB00FD8639 /* IdealSans-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Medium.otf"; sourceTree = "<group>"; };
+		29A7BCE81FBF85DB00FD8639 /* IdealSans-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-MediumItalic.otf"; sourceTree = "<group>"; };
+		29A7BCE91FBF85DB00FD8639 /* IdealSans-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Semibold.otf"; sourceTree = "<group>"; };
+		29A7BCEA1FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		29A7BCEC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-Bold.otf"; sourceTree = "<group>"; };
+		29A7BCED1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-BoldItalic.otf"; sourceTree = "<group>"; };
+		29A7BCEE1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-Italic.otf"; sourceTree = "<group>"; };
+		29A7BCEF1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-Regular.otf"; sourceTree = "<group>"; };
+		29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNavigationController.swift; sourceTree = "<group>"; };
+		29A7BD001FBF87D900FD8639 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		29A7CCFA1FBE3E0500814362 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
+		29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFooterView.swift; sourceTree = "<group>"; };
+		29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMemberPromptView.swift; sourceTree = "<group>"; };
+		29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTourCell.swift; sourceTree = "<group>"; };
 		29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedTextView.swift; sourceTree = "<group>"; };
 		29E6DD641FB9ED8A00C3303D /* MapSectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSectionViewController.swift; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -276,7 +318,7 @@
 		E417B52C1CA3236600C362A1 /* NearbySectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySectionView.swift; sourceTree = "<group>"; };
 		E417B52E1CA324E000C362A1 /* InfoSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSectionView.swift; sourceTree = "<group>"; };
 		E421782F1CC57BE200815B41 /* UITextView+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+AIC.swift"; sourceTree = "<group>"; };
-		E42178311CC68A7300815B41 /* InfoSectionBecomeMemberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSectionBecomeMemberView.swift; sourceTree = "<group>"; };
+		E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBecomeMemberView.swift; sourceTree = "<group>"; };
 		E42178331CC6A2CA00815B41 /* InfoSectionMemberCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSectionMemberCardView.swift; sourceTree = "<group>"; };
 		E42178351CC6B80200815B41 /* InfoSectionTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSectionTextField.swift; sourceTree = "<group>"; };
 		E42178381CC6BB6300815B41 /* InfoSectionMemberCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSectionMemberCardViewController.swift; sourceTree = "<group>"; };
@@ -439,6 +481,8 @@
 		293D00741FA7C80D00BF2C26 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				29A7BCE01FBF85DB00FD8639 /* idealsans */,
+				29A7BCEB1FBF85DB00FD8639 /* sabon */,
 				293D00751FA7C80D00BF2C26 /* lora */,
 				293D007E1FA7C80D00BF2C26 /* sourcesanspro */,
 			);
@@ -484,11 +528,42 @@
 			path = sourcesanspro;
 			sourceTree = "<group>";
 		};
+		29A7BCE01FBF85DB00FD8639 /* idealsans */ = {
+			isa = PBXGroup;
+			children = (
+				29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */,
+				29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */,
+				29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */,
+				29A7BCE41FBF85DB00FD8639 /* IdealSans-BookItalic.otf */,
+				29A7BCE51FBF85DB00FD8639 /* IdealSans-Light.otf */,
+				29A7BCE61FBF85DB00FD8639 /* IdealSans-LightItalic.otf */,
+				29A7BCE71FBF85DB00FD8639 /* IdealSans-Medium.otf */,
+				29A7BCE81FBF85DB00FD8639 /* IdealSans-MediumItalic.otf */,
+				29A7BCE91FBF85DB00FD8639 /* IdealSans-Semibold.otf */,
+				29A7BCEA1FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf */,
+			);
+			path = idealsans;
+			sourceTree = "<group>";
+		};
+		29A7BCEB1FBF85DB00FD8639 /* sabon */ = {
+			isa = PBXGroup;
+			children = (
+				29A7BCEC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf */,
+				29A7BCED1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf */,
+				29A7BCEE1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf */,
+				29A7BCEF1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf */,
+			);
+			path = sabon;
+			sourceTree = "<group>";
+		};
 		29DAF0621FB3C69E002ED862 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */,
 				2986A5871FBCBD5B00029E74 /* HomeViewController.swift */,
+				29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */,
+				29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */,
+				29A27A071FCC769B007CEE1D /* HomeTourCell.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -709,10 +784,14 @@
 		E415ABC71C7298420093B719 /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */,
+				2902E0AF1FC47FF60070C78C /* InfoButton.swift */,
+				29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */,
+				29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */,
+				29A7BD001FBF87D900FD8639 /* InfoViewController.swift */,
 				E415ABC81C7298420093B719 /* InfoSectionViewController.swift */,
 				E42178381CC6BB6300815B41 /* InfoSectionMemberCardViewController.swift */,
 				E417B52E1CA324E000C362A1 /* InfoSectionView.swift */,
-				E42178311CC68A7300815B41 /* InfoSectionBecomeMemberView.swift */,
 				E42677E41CC5677A0046BB27 /* InfoSectionInformationView.swift */,
 				E42178331CC6A2CA00815B41 /* InfoSectionMemberCardView.swift */,
 				E42178351CC6B80200815B41 /* InfoSectionTextField.swift */,
@@ -1059,11 +1138,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				293D009A1FA7C80D00BF2C26 /* README in Resources */,
+				29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */,
 				293D00991FA7C80D00BF2C26 /* OFL.txt in Resources */,
 				293D00961FA7C80D00BF2C26 /* OFL.txt in Resources */,
 				293D00A41FA7C80D00BF2C26 /* SourceSansPro-Regular.ttf in Resources */,
 				293D009E1FA7C80D00BF2C26 /* SourceSansPro-BoldItalic.ttf in Resources */,
 				293D00A81FA7C82200BF2C26 /* map in Resources */,
+				29A7BCFB1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf in Resources */,
+				29A7BCFA1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf in Resources */,
+				29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */,
 				E497FA601D009B13007FA272 /* Assets.xcassets in Resources */,
 				293D00A61FA7C80D00BF2C26 /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				293D00A51FA7C80D00BF2C26 /* SourceSansPro-Semibold.ttf in Resources */,
@@ -1072,6 +1155,7 @@
 				293D009D1FA7C80D00BF2C26 /* SourceSansPro-Bold.ttf in Resources */,
 				293D00941FA7C80D00BF2C26 /* Lora-Regular.ttf in Resources */,
 				293D009B1FA7C80D00BF2C26 /* SourceSansPro-Black.ttf in Resources */,
+				29A7BCF41FBF85DB00FD8639 /* IdealSans-Light.otf in Resources */,
 				293D00921FA7C80D00BF2C26 /* Lora-BoldItalic.ttf in Resources */,
 				32A2A7101E8079610025186F /* Config.plist in Resources */,
 				293D00981FA7C80D00BF2C26 /* METADATA.json in Resources */,
@@ -1079,17 +1163,27 @@
 				293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */,
 				293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */,
 				293D009C1FA7C80D00BF2C26 /* SourceSansPro-BlackItalic.ttf in Resources */,
+				29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */,
+				29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */,
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
 				29A7CCFB1FBE3E0500814362 /* View.xib in Resources */,
+				29A7BCF51FBF85DB00FD8639 /* IdealSans-LightItalic.otf in Resources */,
 				E47A97381CF607990041D0A6 /* Settings.bundle in Resources */,
+				29A7BCF31FBF85DB00FD8639 /* IdealSans-BookItalic.otf in Resources */,
+				29A7BCF71FBF85DB00FD8639 /* IdealSans-MediumItalic.otf in Resources */,
+				29A7BCF61FBF85DB00FD8639 /* IdealSans-Medium.otf in Resources */,
 				E415ABB01C7297E60093B719 /* LaunchScreen.storyboard in Resources */,
+				29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */,
 				293D00A31FA7C80D00BF2C26 /* SourceSansPro-LightItalic.ttf in Resources */,
+				29A7BCF91FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf in Resources */,
 				293D00A11FA7C80D00BF2C26 /* SourceSansPro-Italic.ttf in Resources */,
+				29A7BCF81FBF85DB00FD8639 /* IdealSans-Semibold.otf in Resources */,
 				E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */,
 				293D00A01FA7C80D00BF2C26 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
 				293D00AC1FA7CA6700BF2C26 /* video in Resources */,
 				293D008F1FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */,
 				293D00971FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */,
+				29A7BCFD1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf in Resources */,
 				293D00931FA7C80D00BF2C26 /* Lora-Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1200,10 +1294,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-aic/Pods-aic-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1320,6 +1416,7 @@
 				E4D1593D1CBC259900536B4D /* MapLocationAnnotationView.swift in Sources */,
 				E4F82F6D1CA45F3400E4224B /* SectionView.swift in Sources */,
 				E4D790E41C90CEC10033EE0A /* MapTextAnnotation.swift in Sources */,
+				29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */,
 				E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */,
 				E47306F01D23076900A77254 /* InstructionsPageViewController.swift in Sources */,
 				E48816E01C8A2BC600A40E84 /* MapObjectAnnotationView.swift in Sources */,
@@ -1348,11 +1445,13 @@
 				E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */,
 				E415ABD71C7298420093B719 /* AudioGuideViewController.swift in Sources */,
 				E447397F1CAE02870011F059 /* NewsToursSectionView.swift in Sources */,
+				29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */,
 				E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */,
 				E415ABDB1C7298420093B719 /* WhatsOnSectionViewController.swift in Sources */,
 				E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */,
 				E47A971A1CF262760041D0A6 /* AICInstructionsScreenModel.swift in Sources */,
 				E42677E51CC5677A0046BB27 /* InfoSectionInformationView.swift in Sources */,
+				29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */,
 				E497FA621D00ABAD007FA272 /* AICMessageSmallModel.swift in Sources */,
 				E4E108E21C98F23200385842 /* TestModels.swift in Sources */,
 				E4F519D51C88BD4900226188 /* CoordinateConverter.swift in Sources */,
@@ -1366,9 +1465,10 @@
 				E4E861021CDBE46B006D07FD /* NewsToursRevealView.swift in Sources */,
 				E4DF50B01CEB8AFB0071345E /* UIImageColors.swift in Sources */,
 				E439FD011CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift in Sources */,
+				29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */,
 				E4D1592D1CB6A10500536B4D /* NewsToursStopsDistanceItemView.swift in Sources */,
 				E4CD3FD31CA9CDB200013E75 /* NewsToursTableViewCell.swift in Sources */,
-				E42178321CC68A7300815B41 /* InfoSectionBecomeMemberView.swift in Sources */,
+				E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */,
 				E425B3CE1C97649300A19F6F /* AICObjectModel.swift in Sources */,
 				E4FFC6EC1D00B7FD0082818D /* AICMessageLargeModel.swift in Sources */,
 				E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */,
@@ -1394,6 +1494,7 @@
 				2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */,
 				E42677E31CC558060046BB27 /* AICButton.swift in Sources */,
 				E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */,
+				29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */,
 				E47A972F1CF3EE140041D0A6 /* LoadingViewController.swift in Sources */,
 				E47306E31D21DF5000A77254 /* MapState.swift in Sources */,
 				E4D1593B1CBC244900536B4D /* MapLocationAnnotation.swift in Sources */,
@@ -1405,6 +1506,7 @@
 				E458502F1CAC8C1A00131A66 /* AICNewsItemModel.swift in Sources */,
 				E47A97151CEFBC150041D0A6 /* AppDataManager.swift in Sources */,
 				0E2D15591DA8134200D06A4A /* AICMemberAPIDataModel.swift in Sources */,
+				2902E0B01FC47FF60070C78C /* InfoButton.swift in Sources */,
 				29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */,
 				E4C4FEE81C890D63000CD44C /* MapFloorSelectorView.swift in Sources */,
 				E4D790E61C90CED40033EE0A /* MapTextAnnotationView.swift in Sources */,

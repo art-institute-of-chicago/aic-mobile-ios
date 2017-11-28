@@ -18,21 +18,25 @@ import UIKit
 #endif
 
 extension UIColor {
+	static let aicHomeColor: UIColor =  UIColor(red: 22.0 / 255.0, green: 151.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
+	
 	static let aicAudioGuideColor: UIColor = UIColor(red: 50.0 / 255.0, green: 152.0 / 255.0, blue: 96.0 / 255.0, alpha: 1.0)
 
-	static let aicWhatsonColor: UIColor = UIColor(red: 111.0 / 255.0, green: 102.0 / 255.0, blue: 208.0 / 255.0, alpha: 1.0)
-
-	static let aicToursColor: UIColor =  UIColor(red: 22.0 / 255.0, green: 151.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
-
-	static let aicInfoColor: UIColor = UIColor(red: 176.0 / 255.0, green: 83.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
-
-	static let aicMapColor: UIColor = UIColor(red: 51.0 / 255.0, green: 123.0 / 255.0, blue: 178.0 / 255.0, alpha: 1.0)
+	static let aicMapColor: UIColor = UIColor(red: 6.0 / 255.0, green: 50.0 / 255.0, blue: 88.0 / 255.0, alpha: 1.0)
+	
+	static let aicInfoColor: UIColor = UIColor(red: 206.0 / 255.0, green: 107.0 / 255.0, blue: 39.0 / 255.0, alpha: 1.0)
 
 	static let aicButtonsColor: UIColor = UIColor(red: 236.0 / 255.0, green: 101.0 / 255.0, blue: 101.0 / 255.0, alpha: 1.0)
 
 	static let aicBluedotColor: UIColor = UIColor(red: 0.0, green: 174.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
 
 	static let aicGrayColor: UIColor = UIColor(white: 216.0 / 255.0, alpha: 1.0)
+	
+	static let aicLightGrayColor: UIColor = UIColor(white: 241.0 / 255.0, alpha: 1.0)
+	
+	static let aicMediumGrayColor: UIColor = UIColor(white: 161.0 / 255.0, alpha: 1.0)
+	
+	static let aicDarkGrayColor: UIColor = UIColor(white: 51.0 / 255.0, alpha: 1.0)
 
 	static let aicTabbarColor: UIColor = UIColor(white: 26.0 / 255.0, alpha: 1.0)
 
@@ -43,8 +47,10 @@ extension UIColor {
 	static let aicNearbyColor: UIColor = UIColor(red: 25.0 / 255.0, green: 67.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)
     
 	static let aicDarkBlueColor: UIColor = UIColor(red: 9.0 / 255.0, green: 44.0 / 255.0, blue: 87.0 / 255.0, alpha: 1.0)
-    
-	static let aicLightGrayColor: UIColor = UIColor(white: 241.0 / 255.0, alpha: 1.0)
+	
+	static let aicDividerLineColor: UIColor = UIColor(white: 216.0 / 255.0, alpha: 1.0)
+	
+	static let aicHomeMemberPromptBackgroundColor: UIColor = UIColor(red: 199.0 / 255.0, green: 226.0 / 255.0, blue: 227.0 / 255.0, alpha: 1.0)
         
     func lighter(_ amount : CGFloat = 0.25) -> PXColor {
         return hueColorWithBrightnessAmount(1 + amount)

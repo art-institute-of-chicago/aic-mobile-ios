@@ -36,7 +36,7 @@ class MapViewController: UIViewController {
     weak var delegate:MapViewControllerDelegate?
     
     // Map + Text Colors
-    var color:UIColor = .aicToursColor {
+    var color:UIColor = .aicHomeColor {
         didSet {
             updateColors()
         }
