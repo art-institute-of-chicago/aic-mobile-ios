@@ -16,7 +16,7 @@ class HomeViewController : SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
 	let memberPromptView: HomeMemberPromptView = HomeMemberPromptView()
 	let toursCollectionView: UICollectionView = createToursCollectionView()
-	let exhibitionsCollectionView: UICollectionView = createToursCollectionView()
+	let exhibitionsCollectionView: UICollectionView = createExhibitionsCollectionView()
 	let eventsCollectionView: UICollectionView = createToursCollectionView()
 	
 	weak var delegate: HomeViewControllerDelegate? = nil
@@ -38,11 +38,11 @@ class HomeViewController : SectionViewController {
 		toursCollectionView.dataSource = self
 		toursCollectionView.backgroundColor = .white
 		
-		exhibitionsCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
+		exhibitionsCollectionView.register(UINib(nibName: "HomeExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeExhibitionCell.reuseIdentifier)
 		exhibitionsCollectionView.dataSource = self
 		exhibitionsCollectionView.backgroundColor = .white
 		
-		eventsCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
+		eventsCollectionView.register(UINib(nibName: "HomeEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeEventCell.reuseIdentifier)
 		eventsCollectionView.dataSource = self
 		eventsCollectionView.backgroundColor = .white
 		
@@ -75,6 +75,16 @@ class HomeViewController : SectionViewController {
 		return collectionView
 	}
 	
+	static func createExhibitionsCollectionView() -> UICollectionView {
+		let layout = UICollectionViewFlowLayout()
+		layout.itemSize = CGSize(width: 240, height: 373)
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+		layout.scrollDirection = .horizontal
+		let collectionView = UICollectionView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: 373), collectionViewLayout: layout)
+		collectionView.showsHorizontalScrollIndicator = false
+		return collectionView
+	}
+	
 	override func updateViewConstraints() {
 		scrollView.autoPinEdge(.top, to: .top, of: self.view)
 		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
@@ -93,7 +103,7 @@ class HomeViewController : SectionViewController {
 		exhibitionsCollectionView.autoPinEdge(.top, to: .bottom, of: toursCollectionView)
 		exhibitionsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		exhibitionsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		exhibitionsCollectionView.autoSetDimension(.height, toSize: 300)
+		exhibitionsCollectionView.autoSetDimension(.height, toSize: 373)
 		
 		eventsCollectionView.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView)
 		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
@@ -137,9 +147,22 @@ extension HomeViewController : UICollectionViewDataSource {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTourCell.reuseIdentifier, for: indexPath) as! HomeTourCell
-		cell.tourModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
-		return cell
+		if collectionView == toursCollectionView {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTourCell.reuseIdentifier, for: indexPath) as! HomeTourCell
+			cell.tourModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			return cell
+		}
+		else if collectionView == exhibitionsCollectionView {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeExhibitionCell.reuseIdentifier, for: indexPath) as! HomeExhibitionCell
+			cell.exhibitionModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			return cell
+		}
+		else if collectionView == eventsCollectionView {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEventCell.reuseIdentifier, for: indexPath) as! HomeEventCell
+			cell.eventModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			return cell
+		}
+		return UICollectionViewCell()
 	}
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {

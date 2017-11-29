@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="IdealSans-Medium.otf">
+            <string>IdealSans-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="homeExhibitionCell" id="Mh7-ot-6Ds" customClass="HomeExhibitionCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="373"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="240" height="373"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pcY-nl-CJd" customClass="AICImageView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="pcY-nl-CJd" secondAttribute="height" multiplier="1:1" id="mf3-Pc-mVU"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exhibition Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAr-h5-ebE">
+                        <rect key="frame" x="0.0" y="255" width="240" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="n06-fY-znx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="kAr-h5-ebE" firstAttribute="leading" secondItem="Ia9-1X-HV2" secondAttribute="leading" id="0nV-EE-Bu7"/>
+                <constraint firstItem="Ia9-1X-HV2" firstAttribute="trailing" secondItem="pcY-nl-CJd" secondAttribute="trailing" id="NJc-Xg-d7r"/>
+                <constraint firstItem="kAr-h5-ebE" firstAttribute="top" secondItem="pcY-nl-CJd" secondAttribute="bottom" constant="15" id="PAe-0x-PJ1"/>
+                <constraint firstItem="pcY-nl-CJd" firstAttribute="leading" secondItem="Ia9-1X-HV2" secondAttribute="leading" id="oxx-vR-jad"/>
+                <constraint firstItem="Ia9-1X-HV2" firstAttribute="trailing" secondItem="kAr-h5-ebE" secondAttribute="trailing" id="vFo-ia-j2d"/>
+                <constraint firstItem="pcY-nl-CJd" firstAttribute="top" secondItem="Ia9-1X-HV2" secondAttribute="top" id="zSW-Lb-qHC"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Ia9-1X-HV2"/>
+            <size key="customSize" width="342" height="339"/>
+            <connections>
+                <outlet property="exhibitionImageView" destination="pcY-nl-CJd" id="aID-8h-gCc"/>
+                <outlet property="exhibitionTitleLabel" destination="kAr-h5-ebE" id="k3n-Dk-bIf"/>
+            </connections>
+            <point key="canvasLocation" x="39" y="70.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

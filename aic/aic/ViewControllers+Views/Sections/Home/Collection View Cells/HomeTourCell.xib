@@ -10,6 +10,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="IdealSans-Medium.otf">
+            <string>IdealSans-Medium</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -31,10 +36,17 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="y17-zw-1PU"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="21"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfs-fw-j1y">
+                        <rect key="frame" x="0.0" y="143" width="285" height="34"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="34" id="EaZ-5z-CCI"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,15 +54,18 @@
                 <constraint firstItem="5vP-fR-5j5" firstAttribute="trailing" secondItem="d78-wj-ThX" secondAttribute="trailing" id="41e-dn-lV7"/>
                 <constraint firstItem="d78-wj-ThX" firstAttribute="top" secondItem="5vP-fR-5j5" secondAttribute="top" id="9Gf-f2-kBM"/>
                 <constraint firstItem="4c9-Os-Dao" firstAttribute="leading" secondItem="5vP-fR-5j5" secondAttribute="leading" id="KaN-kg-exJ"/>
+                <constraint firstItem="bfs-fw-j1y" firstAttribute="bottom" secondItem="d78-wj-ThX" secondAttribute="bottom" symbolic="YES" id="QWB-hO-Ftk"/>
                 <constraint firstItem="5vP-fR-5j5" firstAttribute="trailing" secondItem="4c9-Os-Dao" secondAttribute="trailing" id="W6C-15-TPF"/>
+                <constraint firstItem="5vP-fR-5j5" firstAttribute="trailing" secondItem="bfs-fw-j1y" secondAttribute="trailing" id="e5K-kZ-eqj"/>
                 <constraint firstItem="4c9-Os-Dao" firstAttribute="top" secondItem="d78-wj-ThX" secondAttribute="bottom" constant="22" id="evp-cA-XAZ"/>
                 <constraint firstItem="d78-wj-ThX" firstAttribute="leading" secondItem="5vP-fR-5j5" secondAttribute="leading" id="hPH-te-I0g"/>
+                <constraint firstItem="bfs-fw-j1y" firstAttribute="leading" secondItem="5vP-fR-5j5" secondAttribute="leading" id="xb2-gc-TZy"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="5vP-fR-5j5"/>
             <size key="customSize" width="285" height="300"/>
             <connections>
-                <outlet property="tourImage" destination="d78-wj-ThX" id="bhb-Z2-a5T"/>
-                <outlet property="tourTitle" destination="4c9-Os-Dao" id="ImP-w1-WHx"/>
+                <outlet property="tourImageView" destination="d78-wj-ThX" id="bhb-Z2-a5T"/>
+                <outlet property="tourTitleLabel" destination="4c9-Os-Dao" id="ImP-w1-WHx"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54"/>
         </collectionViewCell>

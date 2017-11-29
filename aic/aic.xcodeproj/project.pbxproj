@@ -10,6 +10,8 @@
 		0E2D15591DA8134200D06A4A /* AICMemberAPIDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */; };
 		1370EED7178BE85DDE6304C6 /* Pods_aicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */; };
 		28F7980E1E7B40E600D22E0E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F7980D1E7B40E600D22E0E /* Common.swift */; };
+		2902198E1FCE2ABA006CFA9E /* HomeEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */; };
+		290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */; };
 		2902E0B01FC47FF60070C78C /* InfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902E0AF1FC47FF60070C78C /* InfoButton.swift */; };
 		293D008F1FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */ = {isa = PBXBuildFile; fileRef = 293D00761FA7C80D00BF2C26 /* DESCRIPTION.en_us.html */; };
 		293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 293D00771FA7C80D00BF2C26 /* FONTLOG.txt */; };
@@ -37,6 +39,8 @@
 		293D00A61FA7C80D00BF2C26 /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 293D008E1FA7C80D00BF2C26 /* SourceSansPro-SemiboldItalic.ttf */; };
 		293D00A81FA7C82200BF2C26 /* map in Resources */ = {isa = PBXBuildFile; fileRef = 293D00A71FA7C82200BF2C26 /* map */; };
 		293D00AC1FA7CA6700BF2C26 /* video in Resources */ = {isa = PBXBuildFile; fileRef = 293D00AB1FA7CA6600BF2C26 /* video */; };
+		29412AEC1FCE1F44005A7172 /* HomeExhibitionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */; };
+		29412AEE1FCE1F7A005A7172 /* HomeExhibitionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */; };
 		295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */; };
 		2986A5881FBCBD5B00029E74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5871FBCBD5B00029E74 /* HomeViewController.swift */; };
 		2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */; };
@@ -223,6 +227,8 @@
 		223EFA1418FE36F1D127D26D /* Pods-aicTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicTests/Pods-aicTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		27EC410D74F8C78F01DA4A38 /* Pods_aicRental.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicRental.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F7980D1E7B40E600D22E0E /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeEventCell.xib; sourceTree = "<group>"; };
+		2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCell.swift; sourceTree = "<group>"; };
 		2902E0AF1FC47FF60070C78C /* InfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoButton.swift; sourceTree = "<group>"; };
 		293D00761FA7C80D00BF2C26 /* DESCRIPTION.en_us.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DESCRIPTION.en_us.html; sourceTree = "<group>"; };
 		293D00771FA7C80D00BF2C26 /* FONTLOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
@@ -250,6 +256,8 @@
 		293D008E1FA7C80D00BF2C26 /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		293D00A71FA7C82200BF2C26 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; name = map; path = aic/Assets/map; sourceTree = SOURCE_ROOT; };
 		293D00AB1FA7CA6600BF2C26 /* video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = video; path = aic/Assets/video; sourceTree = SOURCE_ROOT; };
+		29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeExhibitionCell.xib; sourceTree = "<group>"; };
+		29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeExhibitionCell.swift; path = "/repos/AIC/aic-mobile-ios/aic/aic/ViewControllers+Views/Sections/Home/Collection View Cells/HomeExhibitionCell.swift"; sourceTree = "<absolute>"; };
 		295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationBar.swift; sourceTree = "<group>"; };
 		2986A5871FBCBD5B00029E74 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationController.swift; sourceTree = "<group>"; };
@@ -528,6 +536,19 @@
 			path = sourcesanspro;
 			sourceTree = "<group>";
 		};
+		29412AEA1FCE174C005A7172 /* Collection View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */,
+				29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */,
+				2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */,
+				2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */,
+				29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */,
+				29A27A071FCC769B007CEE1D /* HomeTourCell.xib */,
+			);
+			path = "Collection View Cells";
+			sourceTree = "<group>";
+		};
 		29A7BCE01FBF85DB00FD8639 /* idealsans */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,11 +580,10 @@
 		29DAF0621FB3C69E002ED862 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				29412AEA1FCE174C005A7172 /* Collection View Cells */,
 				2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */,
 				2986A5871FBCBD5B00029E74 /* HomeViewController.swift */,
 				29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */,
-				29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */,
-				29A27A071FCC769B007CEE1D /* HomeTourCell.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1156,6 +1176,7 @@
 				293D00941FA7C80D00BF2C26 /* Lora-Regular.ttf in Resources */,
 				293D009B1FA7C80D00BF2C26 /* SourceSansPro-Black.ttf in Resources */,
 				29A7BCF41FBF85DB00FD8639 /* IdealSans-Light.otf in Resources */,
+				2902198E1FCE2ABA006CFA9E /* HomeEventCell.xib in Resources */,
 				293D00921FA7C80D00BF2C26 /* Lora-BoldItalic.ttf in Resources */,
 				32A2A7101E8079610025186F /* Config.plist in Resources */,
 				293D00981FA7C80D00BF2C26 /* METADATA.json in Resources */,
@@ -1177,6 +1198,7 @@
 				293D00A31FA7C80D00BF2C26 /* SourceSansPro-LightItalic.ttf in Resources */,
 				29A7BCF91FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf in Resources */,
 				293D00A11FA7C80D00BF2C26 /* SourceSansPro-Italic.ttf in Resources */,
+				29412AEC1FCE1F44005A7172 /* HomeExhibitionCell.xib in Resources */,
 				29A7BCF81FBF85DB00FD8639 /* IdealSans-Semibold.otf in Resources */,
 				E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */,
 				293D00A01FA7C80D00BF2C26 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
@@ -1406,7 +1428,9 @@
 				E47A97351CF4D68B0041D0A6 /* LoadingView.swift in Sources */,
 				E43F368B1D2B2F9900DA4DA6 /* AICAnalytics.swift in Sources */,
 				E47306EC1D23076900A77254 /* InstructionsGetStartedButton.swift in Sources */,
+				29412AEE1FCE1F7A005A7172 /* HomeExhibitionCell.swift in Sources */,
 				E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */,
+				290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */,
 				E42178341CC6A2CA00815B41 /* InfoSectionMemberCardView.swift in Sources */,
 				E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */,
 				E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */,

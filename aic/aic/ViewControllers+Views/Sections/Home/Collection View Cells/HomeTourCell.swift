@@ -14,11 +14,14 @@ import UIKit
 class HomeTourCell : UICollectionViewCell {
 	static let reuseIdentifier = "homeTourCell"
 	
-	@IBOutlet var tourImage: AICImageView!
-	@IBOutlet var tourTitle: UILabel!
+	@IBOutlet var tourImageView: AICImageView!
+	@IBOutlet var tourTitleLabel: UILabel!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
+		
+		self.tourImageView.contentMode = .scaleAspectFill
+		self.tourImageView.clipsToBounds = true
 	}
 	
 	var tourModel: AICTourModel? {
@@ -28,8 +31,8 @@ class HomeTourCell : UICollectionViewCell {
 			}
 			
 			// set up UI
-			self.tourImage.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
-			self.tourTitle.text = tourModel.title
+			self.tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
+			self.tourTitleLabel.text = tourModel.title
 		}
 	}
 }
