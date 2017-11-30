@@ -16,6 +16,7 @@ class HomeTourCell : UICollectionViewCell {
 	
 	@IBOutlet var tourImageView: AICImageView!
 	@IBOutlet var tourTitleLabel: UILabel!
+	@IBOutlet var shortDescriptionTextView: UITextView!
 	@IBOutlet var stopsNumberLabel: UILabel!
 	@IBOutlet var durationLabel: UILabel!
 	
@@ -24,6 +25,8 @@ class HomeTourCell : UICollectionViewCell {
 		
 		self.tourImageView.contentMode = .scaleAspectFill
 		self.tourImageView.clipsToBounds = true
+		self.tourTitleLabel.textColor = .aicDarkGrayColor
+		self.shortDescriptionTextView.textColor = .aicDarkGrayColor
 	}
 	
 	var tourModel: AICTourModel? {
@@ -37,6 +40,7 @@ class HomeTourCell : UICollectionViewCell {
 			self.tourTitleLabel.text = tourModel.title
 			self.stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
 			self.durationLabel.text = tourModel.durationInMinutes
+			self.shortDescriptionTextView.text = tourModel.shortDescription
 		}
 	}
 }

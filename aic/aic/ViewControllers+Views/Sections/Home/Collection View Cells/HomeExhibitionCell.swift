@@ -21,6 +21,7 @@ class HomeExhibitionCell : UICollectionViewCell {
 		
 		self.exhibitionImageView.contentMode = .scaleAspectFill
 		self.exhibitionImageView.clipsToBounds = true
+		self.exhibitionTitleLabel.textColor = .aicDarkGrayColor
 	}
 	
 	var exhibitionModel: AICTourModel? {

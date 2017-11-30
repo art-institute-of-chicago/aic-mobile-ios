@@ -17,6 +17,9 @@
         <array key="IdealSans-Medium.otf">
             <string>IdealSans-Medium</string>
         </array>
+        <array key="Linotype - SabonNextLTPro-Regular.otf">
+            <string>SabonNextLTPro-Regular</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -34,15 +37,6 @@
                             <constraint firstAttribute="width" secondItem="d78-wj-ThX" secondAttribute="height" multiplier="95:59" id="GQ7-yf-l3j"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4c9-Os-Dao">
-                        <rect key="frame" x="0.0" y="199" width="285" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="y17-zw-1PU"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="21"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfs-fw-j1y">
                         <rect key="frame" x="0.0" y="143" width="285" height="34"/>
                         <subviews>
@@ -54,14 +48,14 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTourClockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="7Ze-lR-92o">
-                                <rect key="frame" x="89.5" y="5" width="24" height="24"/>
+                                <rect key="frame" x="85" y="5" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="2wL-f5-YuA"/>
                                     <constraint firstAttribute="height" constant="24" id="bTq-1K-6kA"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n Stops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuT-CY-308">
-                                <rect key="frame" x="32" y="9.5" width="45.5" height="16"/>
+                                <rect key="frame" x="32" y="9.5" width="41" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="cuB-AY-Ugx"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="dGU-Ty-5r2"/>
@@ -94,24 +88,45 @@
                             <constraint firstItem="0Mq-aw-klq" firstAttribute="leading" secondItem="7Ze-lR-92o" secondAttribute="trailing" id="zpM-Cr-Xri"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4c9-Os-Dao">
+                        <rect key="frame" x="0.0" y="199" width="285" height="25.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25.5" id="Yqg-vg-r2O"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="21"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XEv-K2-evg">
+                        <rect key="frame" x="0.0" y="228" width="245" height="72"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="72" id="JUT-Vc-re1"/>
+                            <constraint firstAttribute="width" constant="245" id="RxD-6w-XwB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                 </subviews>
             </view>
             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="5vP-fR-5j5" firstAttribute="trailing" secondItem="d78-wj-ThX" secondAttribute="trailing" id="41e-dn-lV7"/>
                 <constraint firstItem="d78-wj-ThX" firstAttribute="top" secondItem="5vP-fR-5j5" secondAttribute="top" id="9Gf-f2-kBM"/>
+                <constraint firstItem="XEv-K2-evg" firstAttribute="top" secondItem="4c9-Os-Dao" secondAttribute="bottom" constant="3.5" id="BTE-5k-quP"/>
                 <constraint firstItem="4c9-Os-Dao" firstAttribute="leading" secondItem="5vP-fR-5j5" secondAttribute="leading" id="KaN-kg-exJ"/>
                 <constraint firstItem="bfs-fw-j1y" firstAttribute="bottom" secondItem="d78-wj-ThX" secondAttribute="bottom" symbolic="YES" id="QWB-hO-Ftk"/>
                 <constraint firstItem="5vP-fR-5j5" firstAttribute="trailing" secondItem="4c9-Os-Dao" secondAttribute="trailing" id="W6C-15-TPF"/>
                 <constraint firstItem="5vP-fR-5j5" firstAttribute="trailing" secondItem="bfs-fw-j1y" secondAttribute="trailing" id="e5K-kZ-eqj"/>
                 <constraint firstItem="4c9-Os-Dao" firstAttribute="top" secondItem="d78-wj-ThX" secondAttribute="bottom" constant="22" id="evp-cA-XAZ"/>
                 <constraint firstItem="d78-wj-ThX" firstAttribute="leading" secondItem="5vP-fR-5j5" secondAttribute="leading" id="hPH-te-I0g"/>
+                <constraint firstItem="XEv-K2-evg" firstAttribute="leading" secondItem="5vP-fR-5j5" secondAttribute="leading" id="qkG-hY-FHr"/>
                 <constraint firstItem="bfs-fw-j1y" firstAttribute="leading" secondItem="5vP-fR-5j5" secondAttribute="leading" id="xb2-gc-TZy"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="5vP-fR-5j5"/>
             <size key="customSize" width="285" height="300"/>
             <connections>
                 <outlet property="durationLabel" destination="0Mq-aw-klq" id="KvD-UF-DXh"/>
+                <outlet property="shortDescriptionTextView" destination="XEv-K2-evg" id="rzx-Go-AIo"/>
                 <outlet property="stopsNumberLabel" destination="fuT-CY-308" id="QX0-9i-MsP"/>
                 <outlet property="tourImageView" destination="d78-wj-ThX" id="bhb-Z2-a5T"/>
                 <outlet property="tourTitleLabel" destination="4c9-Os-Dao" id="ImP-w1-WHx"/>
