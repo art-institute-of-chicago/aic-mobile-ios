@@ -44,12 +44,24 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 }
 
 extension HomeNavigationController : HomeViewControllerDelegate {
-	func buttonPressed() {
+	func showSeeAllTours() {
 		self.sectionNavigationBar.collapse()
-		let vc = UIViewController()
-		vc.view = UIView(frame: UIScreen.main.bounds)
-		vc.view.backgroundColor = .purple
-		self.pushViewController(vc, animated: true)
+		self.sectionNavigationBar.titleLabel.text = "Tours"
+		self.sectionNavigationBar.setBackButtonHidden(false)
+		
+		let seeAllVC = SeeAllViewController()
+		seeAllVC.contentItems = AppDataManager.sharedInstance.app.tours
+		self.pushViewController(seeAllVC, animated: true)
+	}
+	
+	func showSeeAllExhibitions() {
+//		self.sectionNavigationBar.collapse()
+//		self.sectionNavigationBar.titleLabel.text = "On View"
+	}
+	
+	func showSeeAllEvents() {
+//		self.sectionNavigationBar.collapse()
+//		self.sectionNavigationBar.titleLabel.text = "Events"
 	}
 }
 

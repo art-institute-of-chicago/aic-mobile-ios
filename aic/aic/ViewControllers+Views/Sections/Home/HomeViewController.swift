@@ -9,7 +9,9 @@
 import UIKit
 
 protocol HomeViewControllerDelegate : class {
-	func buttonPressed()
+	func showSeeAllTours()
+	func showSeeAllExhibitions()
+	func showSeeAllEvents()
 }
 
 class HomeViewController : SectionViewController {
@@ -50,6 +52,10 @@ class HomeViewController : SectionViewController {
 		eventsCollectionView.register(UINib(nibName: "HomeEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeEventCell.reuseIdentifier)
 		eventsCollectionView.dataSource = self
 		
+		toursTitleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
+		
+		exhibitionsTitleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
+		
 		self.view.addSubview(scrollView)
 		scrollView.addSubview(memberPromptView)
 		scrollView.addSubview(toursTitleView)
@@ -74,7 +80,7 @@ class HomeViewController : SectionViewController {
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: scrollView)
 	}
 	
-	static func createToursEventsCollectionView() -> UICollectionView {
+	private static func createToursEventsCollectionView() -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 285, height: 300)
 		layout.minimumLineSpacing = 20
@@ -86,7 +92,7 @@ class HomeViewController : SectionViewController {
 		return collectionView
 	}
 	
-	static func createExhibitionsCollectionView() -> UICollectionView {
+	private static func createExhibitionsCollectionView() -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 240, height: 373)
 		layout.minimumLineSpacing = 20
@@ -98,7 +104,7 @@ class HomeViewController : SectionViewController {
 		return collectionView
 	}
 	
-	static func createDividerLine() -> UIView {
+	private static func createDividerLine() -> UIView {
 		let view = UIView()
 		view.backgroundColor = .aicDividerLineColor
 		return view
@@ -156,6 +162,18 @@ class HomeViewController : SectionViewController {
 		
 		super.updateViewConstraints()
 	}
+	
+	@objc private func seeAllToursButtonPressed(button: UIButton) {
+		self.delegate?.showSeeAllTours()
+	}
+	
+	@objc private func seeAllExhibitionsButtonPressed(button: UIButton) {
+		self.delegate?.showSeeAllTours()
+	}
+	
+	@objc private func seeAllEventsButtonPressed(button: UIButton) {
+		self.delegate?.showSeeAllTours()
+	}
 }
 
 extension HomeViewController : UIScrollViewDelegate {
@@ -201,9 +219,5 @@ extension HomeViewController : UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, viewForHeaderInSection section: Int) -> UIView {
-		return UIView()
 	}
 }

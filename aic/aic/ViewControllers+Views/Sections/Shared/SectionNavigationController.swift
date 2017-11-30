@@ -19,6 +19,7 @@ class SectionNavigationController : UINavigationController {
 		self.color = section.color
 		self.sectionNavigationBar = SectionNavigationBar(section: section)
 		super.init(nibName: nil, bundle: nil)
+		self.sectionNavigationBar.backButton.addTarget(self, action: #selector(backButtonPressed(button:)), for: .touchUpInside)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -46,6 +47,11 @@ class SectionNavigationController : UINavigationController {
 		
 		// Subscribe to tab bar height changes
 		NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
+	}
+	
+	@objc func backButtonPressed(button: UIButton) {
+		self.popViewController(animated: true)
+		sectionNavigationBar.setBackButtonHidden(true)
 	}
 }
 

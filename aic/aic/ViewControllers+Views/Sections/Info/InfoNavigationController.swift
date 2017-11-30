@@ -46,6 +46,7 @@ extension InfoNavigationController : UINavigationControllerDelegate {
 extension InfoNavigationController : InfoViewControllerDelegate {
 	func museumInfoButtonPressed() {
 		self.sectionNavigationBar.collapse()
+		self.sectionNavigationBar.setBackButtonHidden(false)
 		let vc = UIViewController()
 		vc.view = UIView(frame: UIScreen.main.bounds)
 		vc.view.backgroundColor = .white
@@ -60,6 +61,7 @@ extension InfoNavigationController : InfoViewControllerDelegate {
 	
 	func languageButtonPressed() {
 		self.sectionNavigationBar.collapse()
+		self.sectionNavigationBar.setBackButtonHidden(false)
 		let vc = UIViewController()
 		vc.view = UIView(frame: UIScreen.main.bounds)
 		vc.view.backgroundColor = .white
@@ -74,6 +76,7 @@ extension InfoNavigationController : InfoViewControllerDelegate {
 	
 	func locationButtonPressed() {
 		self.sectionNavigationBar.collapse()
+		self.sectionNavigationBar.setBackButtonHidden(false)
 		let vc = UIViewController()
 		vc.view = UIView(frame: UIScreen.main.bounds)
 		vc.view.backgroundColor = .white

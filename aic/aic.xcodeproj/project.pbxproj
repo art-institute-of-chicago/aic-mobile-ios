@@ -65,6 +65,9 @@
 		29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7BD001FBF87D900FD8639 /* InfoViewController.swift */; };
 		29A7CCFB1FBE3E0500814362 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A7CCFA1FBE3E0500814362 /* View.xib */; };
 		29B9B58B1FCFC5660095FE52 /* HomeCollectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B58A1FCFC5660095FE52 /* HomeCollectionTitleView.swift */; };
+		29B9B58F1FD0A3FF0095FE52 /* SeeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */; };
+		29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */; };
+		29B9B5931FD0A7670095FE52 /* SeeAllTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */; };
 		29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */; };
 		29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */; };
 		29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */; };
@@ -283,6 +286,9 @@
 		29A7BD001FBF87D900FD8639 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		29A7CCFA1FBE3E0500814362 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		29B9B58A1FCFC5660095FE52 /* HomeCollectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionTitleView.swift; sourceTree = "<group>"; };
+		29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewController.swift; sourceTree = "<group>"; };
+		29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllTourCell.xib; sourceTree = "<group>"; };
+		29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllTourCell.swift; sourceTree = "<group>"; };
 		29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFooterView.swift; sourceTree = "<group>"; };
 		29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMemberPromptView.swift; sourceTree = "<group>"; };
@@ -547,6 +553,8 @@
 				2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */,
 				29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */,
 				29A27A071FCC769B007CEE1D /* HomeTourCell.xib */,
+				29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */,
+				29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */,
 			);
 			path = "Collection View Cells";
 			sourceTree = "<group>";
@@ -587,6 +595,7 @@
 				29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */,
 				2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */,
 				2986A5871FBCBD5B00029E74 /* HomeViewController.swift */,
+				29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1187,6 +1196,7 @@
 				293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */,
 				293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */,
 				293D009C1FA7C80D00BF2C26 /* SourceSansPro-BlackItalic.ttf in Resources */,
+				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
 				29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */,
 				29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */,
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
@@ -1477,6 +1487,7 @@
 				E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */,
 				E415ABDB1C7298420093B719 /* WhatsOnSectionViewController.swift in Sources */,
 				E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */,
+				29B9B58F1FD0A3FF0095FE52 /* SeeAllViewController.swift in Sources */,
 				E47A971A1CF262760041D0A6 /* AICInstructionsScreenModel.swift in Sources */,
 				E42677E51CC5677A0046BB27 /* InfoSectionInformationView.swift in Sources */,
 				29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */,
@@ -1522,6 +1533,7 @@
 				2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */,
 				E42677E31CC558060046BB27 /* AICButton.swift in Sources */,
 				E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */,
+				29B9B5931FD0A7670095FE52 /* SeeAllTourCell.swift in Sources */,
 				29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */,
 				E47A972F1CF3EE140041D0A6 /* LoadingViewController.swift in Sources */,
 				E47306E31D21DF5000A77254 /* MapState.swift in Sources */,

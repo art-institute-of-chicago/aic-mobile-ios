@@ -9,25 +9,25 @@
 import UIKit
 
 class SectionNavigationBar : UIView {
+	let backdropImage:UIImageView = UIImageView()
+	let backButton: UIButton = UIButton()
+	let iconImage:UIImageView = UIImageView()
+	let titleLabel:UILabel = UILabel()
+	let descriptionLabel:UILabel = UILabel()
+	
 	let minimizedHeight: CGFloat = 73
 	let maximizedHeight: CGFloat = 240
 	
 	private let margins = UIEdgeInsetsMake(40, 30, 30, 30)
 	
-	private let iconTopMargin = 40
-	private let titleHeight = 40
-	private let titleTopMargin = 95
-	private let titleBottomMargin = 5
-	private let titleMinimumScale = 0.7
-	private let descriptionTopMargin = 65
-	
-	private let backgroundColorAlpha = 0.8
-	
-	let contentView:UIView = UIView()
-	let backdropImage:UIImageView = UIImageView()
-	let iconImage:UIImageView = UIImageView()
-	let titleLabel:UILabel = UILabel()
-	let descriptionLabel:UILabel = UILabel()
+	private let backButtonBottomMargin: CGFloat = 11
+	private let backButtonLeftMargin: CGFloat = 13
+	private let iconTopMargin: CGFloat = 40
+	private let titleHeight: CGFloat = 40
+	private let titleTopMargin: CGFloat = 95
+	private let titleBottomMargin: CGFloat = 5
+	private let titleMinimumScale: CGFloat = 0.7
+	private let descriptionTopMargin: CGFloat = 65
 	
 	internal let titleString:String
 	
@@ -44,7 +44,10 @@ class SectionNavigationBar : UIView {
 			self.backdropImage.image = section.background
 		}
 		
-		self.iconImage.image = section.icon
+		backButton.setImage(#imageLiteral(resourceName: "backButton"), for: .normal)
+		setBackButtonHidden(true)
+		
+		iconImage.image = section.icon
 		
 		let preferredLabelWidth = UIScreen.main.bounds.width - margins.right - margins.left
 		
@@ -68,6 +71,7 @@ class SectionNavigationBar : UIView {
 		addSubview(iconImage)
 		addSubview(titleLabel)
 		addSubview(descriptionLabel)
+		addSubview(backButton)
 		
 		self.updateConstraints()
 		self.layoutIfNeeded()
@@ -88,6 +92,11 @@ class SectionNavigationBar : UIView {
 		}
 	}
 	
+	func setBackButtonHidden(_ hidden: Bool) {
+		backButton.isHidden = hidden
+		backButton.isEnabled = !hidden
+	}
+	
 	func updateHeight(contentOffset: CGPoint) {
 		let value = maximizedHeight + (contentOffset.y * -1.0 - 44.0)
 		let h = clamp(val: value, minVal: minimizedHeight, maxVal: 99999.0)
@@ -95,8 +104,8 @@ class SectionNavigationBar : UIView {
 		progress = clamp(val: progress, minVal: 1.0, maxVal: 0.0)
 		var alphaVal = CGFloat(map(val: Double(h), oldRange1: Double(minimizedHeight), oldRange2: Double(maximizedHeight), newRange1: 0.0, newRange2: 1.0))
 		alphaVal = clamp(val: alphaVal, minVal: 0.0, maxVal: 1.0)
-		var titleScale = CGFloat(map(val: Double(h), oldRange1: Double(minimizedHeight), oldRange2: Double(maximizedHeight), newRange1: titleMinimumScale, newRange2: 1.0))
-		titleScale = clamp(val: titleScale, minVal: CGFloat(titleMinimumScale), maxVal: 1.0)
+		var titleScale = CGFloat(map(val: Double(h), oldRange1: Double(minimizedHeight), oldRange2: Double(maximizedHeight), newRange1: Double(titleMinimumScale), newRange2: 1.0))
+		titleScale = clamp(val: titleScale, minVal: titleMinimumScale, maxVal: 1.0)
 		
 		self.frame.size.height = h
 		self.backdropImage.alpha = alphaVal
@@ -106,6 +115,9 @@ class SectionNavigationBar : UIView {
 	}
 	
 	override func updateConstraints() {
+		backButton.autoPinEdge(.bottom, to: .top, of: self, withOffset: minimizedHeight - backButtonBottomMargin)
+		backButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: backButtonLeftMargin)
+		
 		if let _ = self.backdropImage.image {
 			backdropImage.snp.makeConstraints({ (make) -> Void in
 				make.top.equalTo(self)
