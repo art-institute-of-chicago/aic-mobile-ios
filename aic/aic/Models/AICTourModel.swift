@@ -23,6 +23,8 @@ struct AICTourModel : AICNewsTourItemProtocol {
     let stops:[AICTourStopModel]
     
     let bannerString: String?
+	
+	let durationInMinutes: String?
     
     func getObjectsForStops() -> [AICObjectModel] {
         var objects:[AICObjectModel] = []

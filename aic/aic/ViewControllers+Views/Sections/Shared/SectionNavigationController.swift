@@ -18,8 +18,15 @@ class SectionNavigationController : UINavigationController {
 		self.sectionModel = section
 		self.color = section.color
 		self.sectionNavigationBar = SectionNavigationBar(section: section)
-		
 		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		
 		// Hide Navigation Bar
 		self.navigationBar.isTranslucent = false
@@ -29,7 +36,7 @@ class SectionNavigationController : UINavigationController {
 		self.view.addSubview(sectionNavigationBar)
 		
 		// Set the tab bar item with universal insets
-		self.tabBarItem = UITabBarItem(title: section.tabBarTitle, image: section.tabBarIcon, tag: section.nid)
+		self.tabBarItem = UITabBarItem(title: sectionModel.tabBarTitle, image: sectionModel.tabBarIcon, tag: sectionModel.nid)
 		
 		// Hide title and inset (center) images if not showing titles
 		if Common.Layout.showTabBarTitles == false {
@@ -39,10 +46,6 @@ class SectionNavigationController : UINavigationController {
 		
 		// Subscribe to tab bar height changes
 		NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
-	}
-	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
 	}
 }
 

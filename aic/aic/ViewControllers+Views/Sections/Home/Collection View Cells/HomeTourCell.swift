@@ -16,6 +16,8 @@ class HomeTourCell : UICollectionViewCell {
 	
 	@IBOutlet var tourImageView: AICImageView!
 	@IBOutlet var tourTitleLabel: UILabel!
+	@IBOutlet var stopsNumberLabel: UILabel!
+	@IBOutlet var durationLabel: UILabel!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -33,6 +35,8 @@ class HomeTourCell : UICollectionViewCell {
 			// set up UI
 			self.tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
 			self.tourTitleLabel.text = tourModel.title
+			self.stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
+			self.durationLabel.text = tourModel.durationInMinutes
 		}
 	}
 }

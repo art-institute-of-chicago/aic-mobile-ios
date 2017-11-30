@@ -415,6 +415,8 @@ class AppDataParser {
         
 
         let bannerString = try? getString(fromJSON: tourJSON, forKey: "tour_banner")
+		
+		let durationInMinutes = try? getString(fromJSON: tourJSON, forKey: "tour_duration")
         
         return AICTourModel(nid:nid,
                             title: title,
@@ -423,7 +425,8 @@ class AppDataParser {
                             imageUrl: imageUrl,
                             overview: overview,
                             stops: stops,
-                            bannerString: bannerString
+                            bannerString: bannerString,
+							durationInMinutes: durationInMinutes
         )
     }
     

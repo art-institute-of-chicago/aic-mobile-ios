@@ -68,6 +68,9 @@ class SectionNavigationBar : UIView {
 		addSubview(iconImage)
 		addSubview(titleLabel)
 		addSubview(descriptionLabel)
+		
+		self.updateConstraints()
+		self.layoutIfNeeded()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

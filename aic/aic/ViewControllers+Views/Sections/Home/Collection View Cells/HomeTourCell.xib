@@ -11,6 +11,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="IdealSans-Book.otf">
+            <string>IdealSans-Book</string>
+        </array>
         <array key="IdealSans-Medium.otf">
             <string>IdealSans-Medium</string>
         </array>
@@ -42,9 +45,53 @@
                     </label>
                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfs-fw-j1y">
                         <rect key="frame" x="0.0" y="143" width="285" height="34"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTourStopIcon" translatesAutoresizingMaskIntoConstraints="NO" id="f41-vg-e96">
+                                <rect key="frame" x="8" y="5" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="RI9-zV-gq3"/>
+                                    <constraint firstAttribute="height" constant="24" id="gMm-a9-7lM"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTourClockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="7Ze-lR-92o">
+                                <rect key="frame" x="89.5" y="5" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="2wL-f5-YuA"/>
+                                    <constraint firstAttribute="height" constant="24" id="bTq-1K-6kA"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n Stops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuT-CY-308">
+                                <rect key="frame" x="32" y="9.5" width="45.5" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="cuB-AY-Ugx"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="dGU-Ty-5r2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Mq-aw-klq">
+                                <rect key="frame" x="109" y="7" width="48" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="2zf-rG-6bb"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="uZQ-dX-WvR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="0Mq-aw-klq" firstAttribute="centerY" secondItem="bfs-fw-j1y" secondAttribute="centerY" id="0ya-ci-wSO"/>
+                            <constraint firstItem="fuT-CY-308" firstAttribute="leading" secondItem="f41-vg-e96" secondAttribute="trailing" id="5nR-WE-dJf"/>
                             <constraint firstAttribute="height" constant="34" id="EaZ-5z-CCI"/>
+                            <constraint firstItem="fuT-CY-308" firstAttribute="centerY" secondItem="bfs-fw-j1y" secondAttribute="centerY" id="JJ5-VM-lsM"/>
+                            <constraint firstItem="7Ze-lR-92o" firstAttribute="centerY" secondItem="bfs-fw-j1y" secondAttribute="centerY" id="KQF-rc-Z5N"/>
+                            <constraint firstItem="f41-vg-e96" firstAttribute="leading" secondItem="bfs-fw-j1y" secondAttribute="leading" constant="8" id="Zpo-PM-Wk9"/>
+                            <constraint firstItem="f41-vg-e96" firstAttribute="centerY" secondItem="bfs-fw-j1y" secondAttribute="centerY" id="qaQ-GN-ON4"/>
+                            <constraint firstItem="7Ze-lR-92o" firstAttribute="leading" secondItem="fuT-CY-308" secondAttribute="trailing" constant="12" id="wom-aY-P1t"/>
+                            <constraint firstItem="0Mq-aw-klq" firstAttribute="leading" secondItem="7Ze-lR-92o" secondAttribute="trailing" id="zpM-Cr-Xri"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -64,10 +111,16 @@
             <viewLayoutGuide key="safeArea" id="5vP-fR-5j5"/>
             <size key="customSize" width="285" height="300"/>
             <connections>
+                <outlet property="durationLabel" destination="0Mq-aw-klq" id="KvD-UF-DXh"/>
+                <outlet property="stopsNumberLabel" destination="fuT-CY-308" id="QX0-9i-MsP"/>
                 <outlet property="tourImageView" destination="d78-wj-ThX" id="bhb-Z2-a5T"/>
                 <outlet property="tourTitleLabel" destination="4c9-Os-Dao" id="ImP-w1-WHx"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="homeTourClockIcon" width="24" height="24"/>
+        <image name="homeTourStopIcon" width="24" height="24"/>
+    </resources>
 </document>

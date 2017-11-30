@@ -138,10 +138,10 @@ extension HomeViewController : UICollectionViewDataSource {
 			return AppDataManager.sharedInstance.app.tours.count
 		}
 		else if collectionView == exhibitionsCollectionView {
-			return 5
+			return AppDataManager.sharedInstance.app.tours.count
 		}
 		else if collectionView == eventsCollectionView {
-			return 5
+			return AppDataManager.sharedInstance.app.tours.count
 		}
 		return 0
 	}

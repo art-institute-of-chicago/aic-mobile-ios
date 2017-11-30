@@ -11,6 +11,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="IdealSans-Book.otf">
+            <string>IdealSans-Book</string>
+        </array>
         <array key="IdealSans-Medium.otf">
             <string>IdealSans-Medium</string>
         </array>
@@ -42,9 +45,35 @@
                     </label>
                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-hU-KYM">
                         <rect key="frame" x="0.0" y="143" width="285" height="34"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtZ-TP-xMf">
+                                <rect key="frame" x="13" y="7" width="59.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="DpU-fH-Axh"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="120" id="yFd-0i-K7h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00am" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CfP-SB-7CD">
+                                <rect key="frame" x="84.5" y="7" width="43.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="TdC-BA-tNo"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="XCi-nT-EoE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="0IX-Rr-ygo"/>
+                            <constraint firstItem="qtZ-TP-xMf" firstAttribute="centerY" secondItem="v7a-hU-KYM" secondAttribute="centerY" id="6D6-D8-Z5z"/>
+                            <constraint firstItem="qtZ-TP-xMf" firstAttribute="leading" secondItem="v7a-hU-KYM" secondAttribute="leading" constant="13" id="Xae-eH-iv0"/>
+                            <constraint firstItem="CfP-SB-7CD" firstAttribute="centerY" secondItem="v7a-hU-KYM" secondAttribute="centerY" id="bTq-RC-Wrx"/>
+                            <constraint firstItem="CfP-SB-7CD" firstAttribute="leading" secondItem="qtZ-TP-xMf" secondAttribute="trailing" constant="12" id="fYJ-BK-VTk"/>
                         </constraints>
                     </view>
                 </subviews>
