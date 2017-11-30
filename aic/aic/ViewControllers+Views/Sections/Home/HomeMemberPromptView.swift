@@ -34,7 +34,7 @@ class HomeMemberPromptView: BaseView {
 		
 		accessMemberCardTextView.setDefaultsForAICAttributedTextView()
 		accessMemberCardTextView.attributedText = accessMemberCardAttrText
-		accessMemberCardTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicMapColor]
+		accessMemberCardTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeMemberPromptLinkColor]
 		accessMemberCardTextView.textAlignment = NSTextAlignment.center
 		accessMemberCardTextView.font = .aicTextFont
 		

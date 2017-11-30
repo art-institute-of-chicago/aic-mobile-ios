@@ -15,9 +15,16 @@ protocol HomeViewControllerDelegate : class {
 class HomeViewController : SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
 	let memberPromptView: HomeMemberPromptView = HomeMemberPromptView()
-	let toursCollectionView: UICollectionView = createToursCollectionView()
+	let toursTitleView: HomeCollectionTitleView = HomeCollectionTitleView(title: "Tours")
+	let toursCollectionView: UICollectionView = createToursEventsCollectionView()
+	let exhibitionsDividerLine: UIView = createDividerLine()
+	let exhibitionsTitleView: HomeCollectionTitleView = HomeCollectionTitleView(title: "On View")
 	let exhibitionsCollectionView: UICollectionView = createExhibitionsCollectionView()
-	let eventsCollectionView: UICollectionView = createToursCollectionView()
+	let eventsDividerLine: UIView = createDividerLine()
+	let eventsTitleView: HomeCollectionTitleView = HomeCollectionTitleView(title: "Events")
+	let eventsCollectionView: UICollectionView = createToursEventsCollectionView()
+	
+	let bottomMargin: CGFloat = 100
 	
 	weak var delegate: HomeViewControllerDelegate? = nil
 	
@@ -36,20 +43,22 @@ class HomeViewController : SectionViewController {
 		
 		toursCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
 		toursCollectionView.dataSource = self
-		toursCollectionView.backgroundColor = .white
 		
 		exhibitionsCollectionView.register(UINib(nibName: "HomeExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeExhibitionCell.reuseIdentifier)
 		exhibitionsCollectionView.dataSource = self
-		exhibitionsCollectionView.backgroundColor = .white
 		
 		eventsCollectionView.register(UINib(nibName: "HomeEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeEventCell.reuseIdentifier)
 		eventsCollectionView.dataSource = self
-		eventsCollectionView.backgroundColor = .white
 		
 		self.view.addSubview(scrollView)
 		scrollView.addSubview(memberPromptView)
+		scrollView.addSubview(toursTitleView)
 		scrollView.addSubview(toursCollectionView)
+		scrollView.addSubview(exhibitionsDividerLine)
+		scrollView.addSubview(exhibitionsTitleView)
 		scrollView.addSubview(exhibitionsCollectionView)
+		scrollView.addSubview(eventsDividerLine)
+		scrollView.addSubview(eventsTitleView)
 		scrollView.addSubview(eventsCollectionView)
 		
 		self.updateViewConstraints()
@@ -60,29 +69,39 @@ class HomeViewController : SectionViewController {
 		
 		self.view.layoutIfNeeded()
 		self.scrollView.contentSize.width = self.view.frame.width
-		self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height
+		self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height + bottomMargin
 		
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: scrollView)
 	}
 	
-	static func createToursCollectionView() -> UICollectionView {
+	static func createToursEventsCollectionView() -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 285, height: 300)
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+		layout.minimumLineSpacing = 20
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 74) // TODO: change 74 to calculation based on screen width
 		layout.scrollDirection = .horizontal
-		let collectionView = UICollectionView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: 300), collectionViewLayout: layout)
+		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsHorizontalScrollIndicator = false
+		collectionView.backgroundColor = .white
 		return collectionView
 	}
 	
 	static func createExhibitionsCollectionView() -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 240, height: 373)
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+		layout.minimumLineSpacing = 20
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 119) // TODO: change 119 to calculation based on screen width
 		layout.scrollDirection = .horizontal
-		let collectionView = UICollectionView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: 373), collectionViewLayout: layout)
+		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsHorizontalScrollIndicator = false
+		collectionView.backgroundColor = .white
 		return collectionView
+	}
+	
+	static func createDividerLine() -> UIView {
+		let view = UIView()
+		view.backgroundColor = .aicDividerLineColor
+		return view
 	}
 	
 	override func updateViewConstraints() {
@@ -95,17 +114,42 @@ class HomeViewController : SectionViewController {
 		memberPromptView.autoPinEdge(.leading, to: .leading, of: self.view)
 		memberPromptView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		
-		toursCollectionView.autoPinEdge(.top, to: .bottom, of: memberPromptView, withOffset: 50)
+		toursTitleView.autoPinEdge(.top, to: .bottom, of: memberPromptView)
+		toursTitleView.autoPinEdge(.leading, to: .leading, of: self.view)
+		toursTitleView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		toursTitleView.autoSetDimension(.height, toSize: 65)
+		
+		toursCollectionView.autoPinEdge(.top, to: .bottom, of: toursTitleView)
 		toursCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		toursCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		toursCollectionView.autoSetDimension(.height, toSize: 300)
 		
-		exhibitionsCollectionView.autoPinEdge(.top, to: .bottom, of: toursCollectionView)
+		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView)
+		exhibitionsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
+		exhibitionsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
+		exhibitionsDividerLine.autoSetDimension(.height, toSize: 1)
+		
+		exhibitionsTitleView.autoPinEdge(.top, to: .bottom, of: exhibitionsDividerLine)
+		exhibitionsTitleView.autoPinEdge(.leading, to: .leading, of: self.view)
+		exhibitionsTitleView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		exhibitionsTitleView.autoSetDimension(.height, toSize: 65)
+		
+		exhibitionsCollectionView.autoPinEdge(.top, to: .bottom, of: exhibitionsTitleView)
 		exhibitionsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		exhibitionsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		exhibitionsCollectionView.autoSetDimension(.height, toSize: 373)
 		
-		eventsCollectionView.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView)
+		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView)
+		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
+		eventsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
+		eventsDividerLine.autoSetDimension(.height, toSize: 1)
+		
+		eventsTitleView.autoPinEdge(.top, to: .bottom, of: eventsDividerLine)
+		eventsTitleView.autoPinEdge(.leading, to: .leading, of: self.view)
+		eventsTitleView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		eventsTitleView.autoSetDimension(.height, toSize: 65)
+		
+		eventsCollectionView.autoPinEdge(.top, to: .bottom, of: eventsTitleView)
 		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		eventsCollectionView.autoSetDimension(.height, toSize: 300)
@@ -116,20 +160,10 @@ class HomeViewController : SectionViewController {
 
 extension HomeViewController : UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		self.scrollDelegate?.sectionViewControllerDidScroll(scrollView: scrollView)
+		if scrollView == self.scrollView {
+			self.scrollDelegate?.sectionViewControllerDidScroll(scrollView: scrollView)
+		}
 	}
-}
-
-extension HomeViewController : UICollectionViewDelegate {
-//	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//		if kind == UICollectionElementKindSectionHeader {
-//			let reusableview = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HCollectionReusableView", for: indexPath) as! HomeSectionHeaderView
-//
-//			reusableview.frame = CGRect(0 , 0, self.view.frame.width, 60)
-//			//do other header related calls or settups
-//			return reusableview
-//		}
-//	}
 }
 
 extension HomeViewController : UICollectionViewDataSource {
@@ -173,4 +207,3 @@ extension HomeViewController : UICollectionViewDataSource {
 		return UIView()
 	}
 }
-

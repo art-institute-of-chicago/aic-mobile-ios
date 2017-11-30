@@ -19,9 +19,9 @@ class HomeExhibitionCell : UICollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		self.exhibitionImageView.contentMode = .scaleAspectFill
-		self.exhibitionImageView.clipsToBounds = true
-		self.exhibitionTitleLabel.textColor = .aicDarkGrayColor
+		exhibitionImageView.contentMode = .scaleAspectFill
+		exhibitionImageView.clipsToBounds = true
+		exhibitionTitleLabel.textColor = .aicDarkGrayColor
 	}
 	
 	var exhibitionModel: AICTourModel? {
@@ -31,8 +31,8 @@ class HomeExhibitionCell : UICollectionViewCell {
 			}
 			
 			// set up UI
-			self.exhibitionImageView.loadImageAsynchronously(fromUrl: exhibitionModel.imageUrl, withCropRect: nil)
-			self.exhibitionTitleLabel.text = exhibitionModel.title
+			exhibitionImageView.loadImageAsynchronously(fromUrl: exhibitionModel.imageUrl, withCropRect: nil)
+			exhibitionTitleLabel.text = exhibitionModel.title
 		}
 	}
 }

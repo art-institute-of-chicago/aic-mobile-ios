@@ -44,9 +44,13 @@ extension UIFont {
 	
 	static let aicPotionCreditsFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
 	
-	static let aicHomeTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!
+	static let aicHomeCollectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!
 	
 	static let aicHomeSeeAllFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
+	
+	static let aicHomeTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!
+	
+	static let aicHomeSmallTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!
 	
 	static let aicHomeShortTextFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 14)!
 }

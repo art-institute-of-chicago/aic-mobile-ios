@@ -48,14 +48,14 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTourClockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="7Ze-lR-92o">
-                                <rect key="frame" x="85" y="5" width="24" height="24"/>
+                                <rect key="frame" x="89.5" y="5" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="2wL-f5-YuA"/>
                                     <constraint firstAttribute="height" constant="24" id="bTq-1K-6kA"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n Stops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuT-CY-308">
-                                <rect key="frame" x="32" y="9.5" width="41" height="16"/>
+                                <rect key="frame" x="32" y="9.5" width="45.5" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="cuB-AY-Ugx"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="dGU-Ty-5r2"/>
@@ -125,6 +125,7 @@
             <viewLayoutGuide key="safeArea" id="5vP-fR-5j5"/>
             <size key="customSize" width="285" height="300"/>
             <connections>
+                <outlet property="clockImageView" destination="7Ze-lR-92o" id="cUX-BL-wJy"/>
                 <outlet property="durationLabel" destination="0Mq-aw-klq" id="KvD-UF-DXh"/>
                 <outlet property="shortDescriptionTextView" destination="XEv-K2-evg" id="rzx-Go-AIo"/>
                 <outlet property="stopsNumberLabel" destination="fuT-CY-308" id="QX0-9i-MsP"/>

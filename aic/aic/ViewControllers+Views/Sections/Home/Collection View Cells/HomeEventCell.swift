@@ -21,10 +21,11 @@ class HomeEventCell : UICollectionViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		self.eventImageView.contentMode = .scaleAspectFill
-		self.eventImageView.clipsToBounds = true
-		self.eventTitleLabel.textColor = .aicDarkGrayColor
-		self.shortDescriptionTextView.textColor = .aicDarkGrayColor
+		eventImageView.contentMode = .scaleAspectFill
+		eventImageView.clipsToBounds = true
+		eventTitleLabel.textColor = .aicDarkGrayColor
+		shortDescriptionTextView.textColor = .aicDarkGrayColor
+		shortDescriptionTextView.textContainerInset.left = -4
 	}
 	
 	var eventModel: AICTourModel? {
@@ -34,9 +35,9 @@ class HomeEventCell : UICollectionViewCell {
 			}
 			
 			// set up UI
-			self.eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
-			self.eventTitleLabel.text = eventModel.title
-			self.shortDescriptionTextView.text = eventModel.shortDescription
+			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
+			eventTitleLabel.text = eventModel.title
+			shortDescriptionTextView.text = eventModel.shortDescription
 		}
 	}
 }
