@@ -13,6 +13,9 @@ class SeeAllViewController : UIViewController {
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)
+		
+		// Set the navigation item content
+		self.navigationItem.title = "Tours"
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -31,11 +34,12 @@ class SeeAllViewController : UIViewController {
 	private static func createCollectionView() -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 168, height: 257)
+		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 0
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		layout.sectionInset = UIEdgeInsets(top: 65, left: 0, bottom: 0, right: 0)
 		layout.scrollDirection = .vertical
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-		collectionView.showsHorizontalScrollIndicator = false
+		collectionView.showsVerticalScrollIndicator = false
 		collectionView.backgroundColor = .white
 		return collectionView
 	}
@@ -47,9 +51,9 @@ class SeeAllViewController : UIViewController {
 	}
 	
 	override func updateViewConstraints() {
-		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: 100)
+		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: 73) // TODO: change to minimizedHeight of SectionNavigationBar
 		collectionView.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 15)
-		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: 15)
+		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -15)
 		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view)
 		
 		super.updateViewConstraints()

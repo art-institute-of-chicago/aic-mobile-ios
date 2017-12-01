@@ -19,7 +19,6 @@ class SectionNavigationController : UINavigationController {
 		self.color = section.color
 		self.sectionNavigationBar = SectionNavigationBar(section: section)
 		super.init(nibName: nil, bundle: nil)
-		self.sectionNavigationBar.backButton.addTarget(self, action: #selector(backButtonPressed(button:)), for: .touchUpInside)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -33,11 +32,15 @@ class SectionNavigationController : UINavigationController {
 		self.navigationBar.isTranslucent = false
 		self.setNavigationBarHidden(true, animated: false)
 		
-		// Add Section Navigation Bar
+		// Add Section Navigation Bar and add Back Button target
+		self.sectionNavigationBar.backButton.addTarget(self, action: #selector(backButtonPressed(button:)), for: .touchUpInside)
 		self.view.addSubview(sectionNavigationBar)
 		
-		// Set the tab bar item with universal insets
+		// Set the tab bar item content
 		self.tabBarItem = UITabBarItem(title: sectionModel.tabBarTitle, image: sectionModel.tabBarIcon, tag: sectionModel.nid)
+		
+		// Set the navigation item content
+		self.navigationItem.title = sectionModel.title
 		
 		// Hide title and inset (center) images if not showing titles
 		if Common.Layout.showTabBarTitles == false {
@@ -49,9 +52,26 @@ class SectionNavigationController : UINavigationController {
 		NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
 	}
 	
-	@objc func backButtonPressed(button: UIButton) {
+	override func popViewController(animated: Bool) -> UIViewController? {
+		let vc: UIViewController? = super.popViewController(animated: animated)
+		updateSectionNavigationBar()
+		return vc
+	}
+	
+	
+	override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+		super.pushViewController(viewController, animated: animated)
+		updateSectionNavigationBar()
+	}
+	
+	private func updateSectionNavigationBar() {
+		let backButtonHidden = self.viewControllers.count <= 1
+		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
+		sectionNavigationBar.titleLabel.text = self.topViewController?.navigationItem.title
+	}
+	
+	@objc private func backButtonPressed(button: UIButton) {
 		self.popViewController(animated: true)
-		sectionNavigationBar.setBackButtonHidden(true)
 	}
 }
 

@@ -15,12 +15,21 @@ class SeeAllTourCell : UICollectionViewCell {
 	static let reuseIdentifier = "seeAllTourCell"
 	
 	@IBOutlet var tourImageView: AICImageView!
+	@IBOutlet var tourTitleLabel: UILabel!
+	@IBOutlet var dividerLine: UIView!
+	@IBOutlet var shortDescriptionTextView: UITextView!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
+		tourTitleLabel.textColor = .aicDarkGrayColor
+//		tourTitleLabel.lineBreakMode = .byWordWrapping
+//		tourTitleLabel.numberOfLines = 0
+		dividerLine.backgroundColor = .aicDividerLineColor
+		shortDescriptionTextView.textColor = .aicDarkGrayColor
+		shortDescriptionTextView.textContainerInset.left = -4
 	}
 	
 	var tourModel: AICTourModel? = nil {
@@ -31,6 +40,8 @@ class SeeAllTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
+			tourTitleLabel.text = tourModel.title
+			shortDescriptionTextView.text = tourModel.shortDescription
 		}
 	}
 }

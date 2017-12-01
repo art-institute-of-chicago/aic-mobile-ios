@@ -50,6 +50,7 @@ extension InfoNavigationController : InfoViewControllerDelegate {
 		let vc = UIViewController()
 		vc.view = UIView(frame: UIScreen.main.bounds)
 		vc.view.backgroundColor = .white
+		vc.navigationItem.title = "Museum Information"
 		
 		let label = UILabel(frame: vc.view.bounds)
 		label.text = "Museum Information"
@@ -65,6 +66,7 @@ extension InfoNavigationController : InfoViewControllerDelegate {
 		let vc = UIViewController()
 		vc.view = UIView(frame: UIScreen.main.bounds)
 		vc.view.backgroundColor = .white
+		vc.navigationItem.title = "Language"
 		
 		let label = UILabel(frame: vc.view.bounds)
 		label.text = "Language"
@@ -80,6 +82,7 @@ extension InfoNavigationController : InfoViewControllerDelegate {
 		let vc = UIViewController()
 		vc.view = UIView(frame: UIScreen.main.bounds)
 		vc.view.backgroundColor = .white
+		vc.navigationItem.title = "Location Settings"
 		
 		let label = UILabel(frame: vc.view.bounds)
 		label.text = "Location"
