@@ -79,7 +79,7 @@ class InfoViewController : SectionViewController {
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
 		
-		becomeMemberView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: 240.0 - 44)
+		becomeMemberView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
 		becomeMemberView.autoPinEdge(.leading, to: .leading, of: self.view)
 		becomeMemberView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		

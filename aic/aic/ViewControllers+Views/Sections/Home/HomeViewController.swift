@@ -116,7 +116,7 @@ class HomeViewController : SectionViewController {
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
 		
-		memberPromptView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: 240.0 - 44)
+		memberPromptView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
 		memberPromptView.autoPinEdge(.leading, to: .leading, of: self.view)
 		memberPromptView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		

@@ -146,7 +146,26 @@ struct Common {
 
     // MARK: Layout
 	struct Layout {
-		static var tabBarHeight:CGFloat {
+		static var statusBarHeight: CGFloat {
+			if UIDevice().type == .iPhoneX {
+				return 44
+			}
+			return 20
+		}
+		
+		static var navigationBarHeight: CGFloat = 240
+		
+		static var navigationBarMinimizedHeight: CGFloat = 73
+		
+		static var navigationBarVerticalOffset: CGFloat {
+			return navigationBarHeight - statusBarHeight
+		}
+		
+		static var navigationBarMinimizedVerticalOffset: CGFloat {
+			return navigationBarMinimizedHeight - statusBarHeight
+		}
+		
+		static var tabBarHeight: CGFloat {
 			if UIDevice().type == .iPhoneX {
 				return 83
 			}

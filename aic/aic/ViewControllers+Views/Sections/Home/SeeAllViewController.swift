@@ -51,7 +51,7 @@ class SeeAllViewController : UIViewController {
 	}
 	
 	override func updateViewConstraints() {
-		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: 73) // TODO: change to minimizedHeight of SectionNavigationBar
+		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
 		collectionView.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 15)
 		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -15)
 		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view)

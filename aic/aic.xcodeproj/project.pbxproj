@@ -63,7 +63,6 @@
 		29A7BCFD1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEF1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf */; };
 		29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */; };
 		29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7BD001FBF87D900FD8639 /* InfoViewController.swift */; };
-		29A7CCFB1FBE3E0500814362 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A7CCFA1FBE3E0500814362 /* View.xib */; };
 		29B9B58B1FCFC5660095FE52 /* HomeCollectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B58A1FCFC5660095FE52 /* HomeCollectionTitleView.swift */; };
 		29B9B58F1FD0A3FF0095FE52 /* SeeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */; };
 		29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */; };
@@ -284,7 +283,6 @@
 		29A7BCEF1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-Regular.otf"; sourceTree = "<group>"; };
 		29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNavigationController.swift; sourceTree = "<group>"; };
 		29A7BD001FBF87D900FD8639 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		29A7CCFA1FBE3E0500814362 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		29B9B58A1FCFC5660095FE52 /* HomeCollectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionTitleView.swift; sourceTree = "<group>"; };
 		29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewController.swift; sourceTree = "<group>"; };
 		29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllTourCell.xib; sourceTree = "<group>"; };
@@ -757,7 +755,6 @@
 				E415ABC21C7298420093B719 /* ObjectView */,
 				E415ABC61C7298420093B719 /* Sections */,
 				E433BACE1CFDD64A0086F2ED /* RootViewController.swift */,
-				29A7CCFA1FBE3E0500814362 /* View.xib */,
 			);
 			path = "ViewControllers+Views";
 			sourceTree = "<group>";
@@ -1200,7 +1197,6 @@
 				29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */,
 				29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */,
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
-				29A7CCFB1FBE3E0500814362 /* View.xib in Resources */,
 				29A7BCF51FBF85DB00FD8639 /* IdealSans-LightItalic.otf in Resources */,
 				E47A97381CF607990041D0A6 /* Settings.bundle in Resources */,
 				29A7BCF31FBF85DB00FD8639 /* IdealSans-BookItalic.otf in Resources */,

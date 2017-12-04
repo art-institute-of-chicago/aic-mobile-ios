@@ -19,7 +19,6 @@ class HomeNavigationController : SectionNavigationController {
 		self.delegate = self
 		
 		homeVC.delegate = self
-		homeVC.scrollDelegate = sectionNavigationBar
 		
 		self.pushViewController(homeVC, animated: false)
 	}
@@ -39,7 +38,10 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 	}
 	
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-		
+		// set SectionNavigationBar as scrollDelegateon homeVC only after it appears for the first time
+		if viewController == homeVC && homeVC.delegate == nil {
+			homeVC.scrollDelegate = sectionNavigationBar
+		}
 	}
 }
 
