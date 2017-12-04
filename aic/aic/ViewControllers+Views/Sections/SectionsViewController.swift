@@ -164,11 +164,13 @@ class SectionsViewController : UIViewController {
     
     // Intro animation
     func animateInInitialView() {
-        //mapVC.view.alpha = 0.0
+		self.tabBar.view.alpha = 0.0
+        self.homeVC.view.alpha = 0.0
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
-                                    //self.mapVC.view.alpha = 1.0
+									self.tabBar.view.alpha = 1.0
+                                    self.homeVC.view.alpha = 1.0
             }, completion: { (value:Bool) in
 
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
