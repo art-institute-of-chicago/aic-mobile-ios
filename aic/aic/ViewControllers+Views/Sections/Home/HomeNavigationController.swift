@@ -19,7 +19,6 @@ class HomeNavigationController : SectionNavigationController {
 		self.delegate = self
 		
 		homeVC.delegate = self
-		homeVC.scrollDelegate = sectionNavigationBar
 		
 		self.pushViewController(homeVC, animated: false)
 	}
@@ -31,24 +30,6 @@ class HomeNavigationController : SectionNavigationController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 	}
-	
-	override func updateViewConstraints() {
-		//self.titleView.snp.makeConstraints({ (make) -> Void in
-//			make.top.lessThanOrEqualToSuperview().priority(Common.Layout.Priority.high.rawValue)
-			//make.top.equalToSuperview().priority(Common.Layout.Priority.medium.rawValue)
-			//make.left.right.equalToSuperview()
-//			make.top.equalToSuperview()
-//			make.left.right.equalToSuperview()
-			//make.bottom.equalTo(homeViewController.titleViewHeight)
-			//make.height.greaterThanOrEqualTo(80).priority(Common.Layout.Priority.high.rawValue)
-//		})
-		
-//		titleView.titleLabel.snp.makeConstraints({ (make) -> Void in
-//			make.top.greaterThanOrEqualTo(homeViewController.scrollView).offset(25).priority(Common.Layout.Priority.high.rawValue)
-//		})
-		
-		super.updateViewConstraints()
-	}
 }
 
 extension HomeNavigationController : UINavigationControllerDelegate {
@@ -57,17 +38,32 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 	}
 	
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-		
+		// set SectionNavigationBar as scrollDelegateon homeVC only after it appears for the first time
+		if viewController == homeVC && homeVC.scrollDelegate == nil {
+			homeVC.scrollDelegate = sectionNavigationBar
+		}
 	}
 }
 
 extension HomeNavigationController : HomeViewControllerDelegate {
-	func buttonPressed() {
+	func showSeeAllTours() {
 		self.sectionNavigationBar.collapse()
-		let vc = UIViewController()
-		vc.view = UIView(frame: UIScreen.main.bounds)
-		vc.view.backgroundColor = .purple
-		self.pushViewController(vc, animated: true)
+		self.sectionNavigationBar.titleLabel.text = "Tours"
+		self.sectionNavigationBar.setBackButtonHidden(false)
+		
+		let seeAllVC = SeeAllViewController()
+		seeAllVC.contentItems = AppDataManager.sharedInstance.app.tours
+		self.pushViewController(seeAllVC, animated: true)
+	}
+	
+	func showSeeAllExhibitions() {
+//		self.sectionNavigationBar.collapse()
+//		self.sectionNavigationBar.titleLabel.text = "On View"
+	}
+	
+	func showSeeAllEvents() {
+//		self.sectionNavigationBar.collapse()
+//		self.sectionNavigationBar.titleLabel.text = "Events"
 	}
 }
 

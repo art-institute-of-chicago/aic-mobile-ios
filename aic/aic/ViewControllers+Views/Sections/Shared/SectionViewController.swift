@@ -20,8 +20,11 @@ class SectionViewController : UIViewController {
         self.color = section.color
         super.init(nibName: nil, bundle: nil)
 		
-        // Set the tab bar item with universal insets
+        // Set the tab bar item content
         self.tabBarItem = UITabBarItem(title: section.tabBarTitle, image: section.tabBarIcon, tag: section.nid)
+		
+		// Set the navigation item content
+		self.navigationItem.title = sectionModel.title
         
         // Hide title and inset (center) images if not showing titles
         if Common.Layout.showTabBarTitles == false {

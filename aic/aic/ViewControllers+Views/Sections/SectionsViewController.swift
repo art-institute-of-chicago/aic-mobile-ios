@@ -29,13 +29,13 @@ class SectionsViewController : UIViewController {
     var viewControllersForTabBarItems: [UITabBarItem: UIViewController] = [:]
     var tabBarItemsForViewControllers: [UIViewController: UITabBarItem] = [:]
 	
-	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.tours]!)
+	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
     var audioGuideVC:AudioGuideSectionViewController = AudioGuideSectionViewController(section: Common.Sections[.audioGuide]!)
     //var whatsOnVC:WhatsOnSectionViewController = WhatsOnSectionViewController(section: Common.Sections[.whatsOn]!)
     //var toursVC:ToursSectionViewController = ToursSectionViewController(section: Common.Sections[.tours]!)
     //var nearbyVC:NearbySectionViewController = NearbySectionViewController(section: Common.Sections[.map]!)
 	var nearbyVC: MapSectionViewController = MapSectionViewController()
-	var infoVC:InfoSectionViewController = InfoSectionViewController(section: Common.Sections[.info]!)
+	var infoVC:InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
     
     // Messages
     fileprivate var requestedTour:AICTourModel? = nil
@@ -68,6 +68,7 @@ class SectionsViewController : UIViewController {
         
         // Setup and add the tabbar
 		tabBar.view.frame = UIScreen.main.bounds
+		tabBar.tabBar.tintColor = .aicHomeColor
         tabBar.tabBar.backgroundColor = .aicTabbarColor
         tabBar.tabBar.barStyle = UIBarStyle.black
 		tabBar.viewControllers = self.viewControllers
@@ -113,11 +114,14 @@ class SectionsViewController : UIViewController {
         
         // Update colors for this VC
 		if let sVC: SectionViewController = sectionVC as? SectionViewController {
-			//tabBar.tabBar.tintColor = sVC.color
+			tabBar.tabBar.tintColor = sVC.color
 			objectVC.setProgressBarColor(sVC.color)
 			//mapVC.color = sVC.color
 			// Tell the map what region this view shows
 			//mapVC.setViewableArea(frame: sVC.viewableMapArea)
+		}
+		else if let sNC: SectionNavigationController = sectionVC as? SectionNavigationController {
+			tabBar.tabBar.tintColor = sNC.color
 		}
         
         // Set the map mode
@@ -160,11 +164,13 @@ class SectionsViewController : UIViewController {
     
     // Intro animation
     func animateInInitialView() {
-        //mapVC.view.alpha = 0.0
+		self.tabBar.view.alpha = 0.0
+        self.homeVC.view.alpha = 0.0
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
-                                    //self.mapVC.view.alpha = 1.0
+									self.tabBar.view.alpha = 1.0
+                                    self.homeVC.view.alpha = 1.0
             }, completion: { (value:Bool) in
 
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()

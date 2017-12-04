@@ -83,6 +83,16 @@
 		<string>SourceSansPro-Regular.ttf</string>
 		<string>SourceSansPro-Semibold.ttf</string>
 		<string>SourceSansPro-SemiboldItalic.ttf</string>
+		<string>IdealSans-Bold.otf</string>
+		<string>IdealSans-BoldItalic.otf</string>
+		<string>IdealSans-Book.otf</string>
+		<string>IdealSans-BookItalic.otf</string>
+		<string>IdealSans-Light.otf</string>
+		<string>IdealSans-LightItalic.otf</string>
+		<string>IdealSans-Medium.otf</string>
+		<string>IdealSans-MediumItalic.otf</string>
+		<string>IdealSans-SemiBold.otf</string>
+		<string>IdealSans-SemiBoldItalic.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

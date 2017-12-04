@@ -124,7 +124,8 @@ class TestModels {
                                          imageUrl: imageUrl,
                                          overview: overview,
                                          stops: stops,
-                                         bannerString: nil
+                                         bannerString: nil,
+										 durationInMinutes: nil
             )
             
             testTours.append(tourModel)

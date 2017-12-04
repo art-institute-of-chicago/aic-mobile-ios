@@ -106,7 +106,7 @@ class NewsToursTableViewCell: UITableViewCell {
         
         // Reveal content Button
         if model.type == .tour {
-            revealContentButton = AICButton()
+            revealContentButton = AICButton(color: .aicInfoColor, isSmall: false)
         } else {
             revealContentButton = UIButton()
             revealContentButton.setImage(#imageLiteral(resourceName: "buttonPin"), for: UIControlState())

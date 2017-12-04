@@ -9,25 +9,23 @@
 import UIKit
 
 class SectionNavigationBar : UIView {
-	let minimizedHeight: CGFloat = 73
-	let maximizedHeight: CGFloat = 240
-	
-	private let margins = UIEdgeInsetsMake(40, 30, 30, 30)
-	
-	private let iconTopMargin = 40
-	private let titleHeight = 40
-	private let titleTopMargin = 95
-	private let titleBottomMargin = 5
-	private let titleMinimumScale = 0.7
-	private let descriptionTopMargin = 65
-	
-	private let backgroundColorAlpha = 0.8
-	
-	let contentView:UIView = UIView()
 	let backdropImage:UIImageView = UIImageView()
+	let backButton: UIButton = UIButton()
 	let iconImage:UIImageView = UIImageView()
 	let titleLabel:UILabel = UILabel()
 	let descriptionLabel:UILabel = UILabel()
+	
+	private let margins = UIEdgeInsetsMake(40, 30, 30, 30)
+	
+	private let backButtonBottomMargin: CGFloat = 1
+	private let backButtonLeftMargin: CGFloat = 3
+	private let backButtonContentInsets: UIEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+	private let iconTopMargin: CGFloat = 40
+	private let titleHeight: CGFloat = 40
+	private let titleTopMargin: CGFloat = 95
+	private let titleBottomMargin: CGFloat = 5
+	private let titleMinimumScale: CGFloat = 0.7
+	private let descriptionTopMargin: CGFloat = 65
 	
 	internal let titleString:String
 	
@@ -35,16 +33,20 @@ class SectionNavigationBar : UIView {
 		
 		self.titleString = section.title
 		
-		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: maximizedHeight))
+		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.navigationBarHeight))
 		
-//		self.autoresizingMask = .flexibleHeight
-		//self.translatesAutoresizingMaskIntoConstraints = true
 		self.clipsToBounds = true
 		self.backgroundColor = section.color
 		
-		self.backdropImage.image = #imageLiteral(resourceName: "home_backdrop")
+		if let _ = section.background {
+			self.backdropImage.image = section.background
+		}
 		
-		self.iconImage.image = section.icon
+		backButton.setImage(#imageLiteral(resourceName: "backButton"), for: .normal)
+		backButton.contentEdgeInsets = backButtonContentInsets
+		setBackButtonHidden(true)
+		
+		iconImage.image = section.icon
 		
 		let preferredLabelWidth = UIScreen.main.bounds.width - margins.right - margins.left
 		
@@ -68,6 +70,10 @@ class SectionNavigationBar : UIView {
 		addSubview(iconImage)
 		addSubview(titleLabel)
 		addSubview(descriptionLabel)
+		addSubview(backButton)
+		
+		self.updateConstraints()
+		self.layoutIfNeeded()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -76,25 +82,29 @@ class SectionNavigationBar : UIView {
 	
 	func collapse() {
 		UIView.animate(withDuration: 0.5) {
-			self.frame.size.height = self.minimizedHeight
+			self.frame.size.height = Common.Layout.navigationBarMinimizedHeight
 			self.backdropImage.alpha = 0.0
 			self.iconImage.alpha = 0.0
 			self.descriptionLabel.alpha = 0.0
 			self.titleLabel.transform = CGAffineTransform(scaleX: CGFloat(self.titleMinimumScale), y: CGFloat(self.titleMinimumScale))
+			self.layoutIfNeeded()
 		}
 	}
 	
+	func setBackButtonHidden(_ hidden: Bool) {
+		backButton.isHidden = hidden
+		backButton.isEnabled = !hidden
+	}
+	
 	func updateHeight(contentOffset: CGPoint) {
-		let value = maximizedHeight + (contentOffset.y * -1.0 - 44.0)
-		let h = clamp(val: value, minVal: minimizedHeight, maxVal: 99999.0)
-		var progress = CGFloat(map(val: Double(h), oldRange1: Double(minimizedHeight), oldRange2: Double(maximizedHeight), newRange1: 1.0, newRange2: 0.0))
-		progress = clamp(val: progress, minVal: 1.0, maxVal: 0.0)
-		var alphaVal = CGFloat(map(val: Double(h), oldRange1: Double(minimizedHeight), oldRange2: Double(maximizedHeight), newRange1: 0.0, newRange2: 1.0))
+		var frameHeight = Common.Layout.navigationBarVerticalOffset + (contentOffset.y * -1.0)
+		frameHeight = clamp(val: frameHeight, minVal: Common.Layout.navigationBarMinimizedHeight, maxVal: 99999.0)
+		var alphaVal = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: 0.0, newRange2: 1.0))
 		alphaVal = clamp(val: alphaVal, minVal: 0.0, maxVal: 1.0)
-		var titleScale = CGFloat(map(val: Double(h), oldRange1: Double(minimizedHeight), oldRange2: Double(maximizedHeight), newRange1: titleMinimumScale, newRange2: 1.0))
-		titleScale = clamp(val: titleScale, minVal: CGFloat(titleMinimumScale), maxVal: 1.0)
+		var titleScale = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: Double(titleMinimumScale), newRange2: 1.0))
+		titleScale = clamp(val: titleScale, minVal: titleMinimumScale, maxVal: 1.0)
 		
-		self.frame.size.height = h
+		self.frame.size.height = frameHeight
 		self.backdropImage.alpha = alphaVal
 		self.iconImage.alpha = alphaVal
 		self.descriptionLabel.alpha = alphaVal
@@ -102,23 +112,30 @@ class SectionNavigationBar : UIView {
 	}
 	
 	override func updateConstraints() {
-		backdropImage.snp.makeConstraints({ (make) -> Void in
-			make.top.equalTo(self)
-			make.left.right.equalTo(self)
-			make.height.equalTo(backdropImage.snp.width).multipliedBy(backdropImage.image!.size.height / backdropImage.image!.size.width)
-		})
+		backButton.autoPinEdge(.bottom, to: .top, of: self, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
+		backButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: backButtonLeftMargin)
 		
-		iconImage.snp.makeConstraints({ (make) -> Void in
-			make.centerX.equalTo(iconImage.superview!)
-			make.top.equalTo(iconTopMargin).priority(Common.Layout.Priority.high.rawValue)
-			make.height.equalTo(iconImage.image!.size.height)
-		})
+		if let _ = self.backdropImage.image {
+			backdropImage.autoPinEdge(.top, to: .top, of: self)
+			backdropImage.autoPinEdge(.leading, to: .leading, of: self)
+			backdropImage.autoPinEdge(.trailing, to: .trailing, of: self)
+			backdropImage.autoMatch(.height, to: .width, of: backdropImage, withMultiplier: backdropImage.image!.size.height / backdropImage.image!.size.width)
+		}
 		
-		titleLabel.snp.makeConstraints({ (make) -> Void in
-			make.top.equalTo(titleLabel.superview!).offset(titleTopMargin).priority(Common.Layout.Priority.low.rawValue)
-			make.bottom.lessThanOrEqualTo(titleLabel.superview!).offset(-titleBottomMargin).priority(Common.Layout.Priority.high.rawValue)
-			make.left.right.equalTo(titleLabel.superview!)
-		})
+		iconImage.autoAlignAxis(.vertical, toSameAxisOf: self)
+		iconImage.autoPinEdge(.top, to: .top, of: self, withOffset: iconTopMargin)
+		iconImage.autoSetDimension(.width, toSize: iconImage.image!.size.width)
+		iconImage.autoSetDimension(.height, toSize: iconImage.image!.size.height)
+		
+		NSLayoutConstraint.autoSetPriority(.defaultLow) {
+			titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: titleTopMargin)
+		}
+		titleLabel.autoPinEdge(.leading, to: .leading, of: self)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self)
+		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
+			titleLabel.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -titleBottomMargin, relation: .lessThanOrEqual)
+		}
+		
 		super.updateConstraints()
 	}
 }
@@ -131,6 +148,7 @@ extension SectionNavigationBar : SectionViewControllerScrollDelegate {
 	func sectionViewControllerWillAppearWithScrollView(scrollView: UIScrollView) {
 		UIView.animate(withDuration: 0.5) {
 			self.updateHeight(contentOffset: scrollView.contentOffset)
+			self.layoutIfNeeded()
 		}
 	}
 }

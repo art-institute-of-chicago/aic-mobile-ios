@@ -8,7 +8,7 @@ import Foundation
 
 class InfoSectionView: SectionView {
     
-    let becomeMemberView = InfoSectionBecomeMemberView()
+    let becomeMemberView = InfoBecomeMemberView()
     let informationView = InfoSectionInformationView()
     
     let memberCardView:InfoSectionMemberCardView

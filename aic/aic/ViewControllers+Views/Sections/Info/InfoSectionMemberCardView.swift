@@ -61,9 +61,9 @@ class InfoSectionMemberCardView: BaseView {
         }
     }
     
-    let signInUpdateButton = AICButton()
+    let signInUpdateButton = AICButton(color: .aicInfoColor, isSmall: false)
     
-    let switchMemberCardHolderButton = AICButton()
+    let switchMemberCardHolderButton = AICButton(color: .aicInfoColor, isSmall: false)
     
     init() {
         inputInfoDetailInsets = UIEdgeInsetsMake(25, sideMargin, 40, sideMargin)
