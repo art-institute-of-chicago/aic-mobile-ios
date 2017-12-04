@@ -39,7 +39,7 @@ extension InfoNavigationController : UINavigationControllerDelegate {
 	
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
 		// set SectionNavigationBar as scrollDelegateon homeVC only after it appears for the first time
-		if viewController == infoVC && infoVC.delegate == nil {
+		if viewController == infoVC && infoVC.scrollDelegate == nil {
 			infoVC.scrollDelegate = sectionNavigationBar
 		}
 	}
