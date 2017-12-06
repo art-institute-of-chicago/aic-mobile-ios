@@ -25,6 +25,8 @@ class SeeAllViewController : UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		self.view.backgroundColor = .white
+		
 		collectionView.register(UINib(nibName: "SeeAllTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllTourCell.reuseIdentifier)
 		collectionView.dataSource = self
 		

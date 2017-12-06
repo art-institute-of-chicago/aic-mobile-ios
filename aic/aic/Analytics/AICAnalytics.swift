@@ -148,11 +148,11 @@ class AICAnalytics {
     }
     
     // News
-    static func sendNewsItemDidShowOnMapEvent(forNewsItem newsItem:AICNewsItemModel) {
+    static func sendNewsItemDidShowOnMapEvent(forNewsItem newsItem:AICExhibitionModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.news, action: Action.newsItemShownOnMap, label: newsItem.title)
     }
     
-    static func sendNewsItemExpandedEvent(forNewsItem newsItem:AICNewsItemModel) {
+    static func sendNewsItemExpandedEvent(forNewsItem newsItem:AICExhibitionModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.news, action: Action.expanded, label: newsItem.title)
     }
     

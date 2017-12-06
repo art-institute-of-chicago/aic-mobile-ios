@@ -30,10 +30,10 @@ class AppDataParser {
 	private var objects = [AICObjectModel]()
     
     // MARK: News
-    func parse(newsItemsData itemsData:Data) -> [AICNewsItemModel] {
+    func parse(newsItemsData itemsData:Data) -> [AICExhibitionModel] {
         let json = JSON(data: itemsData)
         
-        var newsItems:[AICNewsItemModel] = []
+        var newsItems:[AICExhibitionModel] = []
         for newsItem in json {
             do {
                 try handleParseError({
@@ -51,13 +51,13 @@ class AppDataParser {
         return newsItems
     }
     
-    private func parse(newsItemData itemData:JSON) throws -> AICNewsItemModel {
+    private func parse(newsItemData itemData:JSON) throws -> AICExhibitionModel {
         let title = try getString(fromJSON: itemData, forKey: "title")
         var description = try getString(fromJSON: itemData, forKey: "body")
         
         // Remove any leading whitespace, currently a bug in JSON
-        if description.characters.count > 1 && description.characters.first == " " {
-            description = description.substring(from: description.characters.index(description.startIndex, offsetBy: 1))
+        if description.count > 1 && description.first == " " {
+			description = String(description[description.index(description.startIndex, offsetBy: 1)...])
         }
         
         let thumbnailURL = try getURL(fromJSON: itemData, forKey: "thumbnail")
@@ -78,31 +78,35 @@ class AppDataParser {
         }
         
         // Get date exibition ends
-        let date = try getString(fromJSON: itemData, forKey: "date")
-        guard let endDate = date.components(separatedBy: "to ").last else {
-            throw ParseError.newsBadDateString(dateString: date)
+        let dateString = try getString(fromJSON: itemData, forKey: "date")
+		guard let startDateString = dateString.components(separatedBy: " to ").first else {
+			throw ParseError.newsBadDateString(dateString: dateString)
+		}
+		guard let endDateString = dateString.components(separatedBy: " to ").last else {
+            throw ParseError.newsBadDateString(dateString: dateString)
         }
         
-        // Format as "July 2nd, 2016"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-d h:m:s"
-        let dateObj = dateFormatter.date(from: endDate)
-        dateFormatter.dateFormat = "MMMM d, yyyy"
-        let endDateFormatted = dateFormatter.string(from: dateObj!)
-        
-        // Create full string
-        let dateString = "Through \(endDateFormatted)"
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-d h:m:s"
+		
+		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
+			throw ParseError.newsBadDateString(dateString: dateString)
+		}
+		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
+			throw ParseError.newsBadDateString(dateString: dateString)
+		}
         
         //Don't throw if the isFeatured flag isn't set, it is only set for new items
         let bannerString = try? getString(fromJSON: itemData, forKey: "tour_banner")
 
         // Return news item
-        return AICNewsItemModel(title: title,
+        return AICExhibitionModel(title: title,
                                 shortDescription: description,
                                 longDescription: description,
-                                additionalInformation: dateString,
                                 imageUrl: imageURL,
                                 imageCropRect: imageCropRect,
+								startDate: startDate,
+								endDate: endDate,
                                 thumbnailUrl: thumbnailURL,
                                 location: location!,
                                 bannerString: bannerString
@@ -516,6 +520,7 @@ class AppDataParser {
         // Get string val and replace URL with public URL (needs to be fixed in data)
         var stringVal   = try getString(fromJSON: json, forKey: key)
         stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataInternalPrefix, with: Common.DataConstants.appDataExternalPrefix)
+		stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataLocalPrefix, with: Common.DataConstants.appDataExternalPrefix)
         
         var url = URL(string: stringVal)
         
@@ -524,7 +529,7 @@ class AppDataParser {
         if url == nil {
             // Find URL in string
             let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            let matches = detector.matches(in: stringVal, options: [], range: NSMakeRange(0, stringVal.characters.count))
+            let matches = detector.matches(in: stringVal, options: [], range: NSMakeRange(0, stringVal.count))
             
             if matches.count != 1 {
                 throw ParseError.badURLString(string: stringVal)

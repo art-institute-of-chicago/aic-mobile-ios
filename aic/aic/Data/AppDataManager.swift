@@ -18,7 +18,8 @@ class AppDataManager {
     weak var delegate:AppDataManagerDelegate?
     
     private (set) var app:AICAppDataModel! = nil
-    private (set) var news:AICNewsModel = AICNewsModel()
+	var exhibitions: [AICExhibitionModel] = []
+	//private var events: [AICEventModel] = []
     
     private let dataParser = AppDataParser()
     
@@ -52,6 +53,10 @@ class AppDataManager {
                     if let feedFeaturedExhibitions = DataConstants["feedFeaturedExhibitions"] {
                         Common.DataConstants.NewsFeed.Featured = feedFeaturedExhibitions as! String
                     }
+					
+					if let dataHubURL = DataConstants["dataHubURL"] {
+						Common.DataConstants.dataHubURL = dataHubURL as! String
+					}
                     
                     if let appDataJSON = DataConstants["appDataJSON"] {
                         Common.DataConstants.appDataJSON = appDataJSON as! String
@@ -64,6 +69,10 @@ class AppDataManager {
                     if let appDataInternalPrefix = DataConstants["appDataInternalPrefix"] {
                         Common.DataConstants.appDataInternalPrefix = appDataInternalPrefix as! String
                     }
+					
+					if let appDataLocalPrefix = DataConstants["appDataLocalPrefix"] {
+						Common.DataConstants.appDataLocalPrefix = appDataLocalPrefix as! String
+					}
                     
                     if let memberCardSOAPRequestURL = DataConstants["memberCardSOAPRequestURL"] as? String {
                         Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
@@ -161,7 +170,7 @@ class AppDataManager {
                     return
                 }
                 let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
-                self.news.featured = newsItems
+                self.exhibitions = newsItems // TODO: create exhibitions array and save newsItems there
                 self.updateDownloadProgress()
             }
         }
@@ -181,9 +190,7 @@ class AppDataManager {
                         self.writeDataToDisk(data: value,
                                              fileName: Common.DataConstants.localNewsFeedFilename)
                         
-                        if feed == Common.DataConstants.NewsFeed.Featured {
-                            self.news.featured = newsItems
-                        }
+						self.exhibitions = newsItems // TODO: create exhibitions array and save newsItems there
                         
                     case .failure(let error):
                         guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
@@ -195,9 +202,7 @@ class AppDataManager {
                         //We have a good cache of the news feed, continue on
                         let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
                     
-                        if feed == Common.DataConstants.NewsFeed.Featured {
-                            self.news.featured = newsItems
-                        }
+						self.exhibitions = newsItems // TODO: create exhibitions array and save newsItems there
                     
                     }
                     
@@ -225,17 +230,6 @@ class AppDataManager {
             self.loadFailure = true
         }
     }
-    
-    func getAllNewsItems() -> [AICNewsItemModel] {
-        var newsItems:[AICNewsItemModel] = []
-        
-        newsItems.append(contentsOf: news.upcoming)
-        newsItems.append(contentsOf: news.current)
-        newsItems.append(contentsOf: news.featured)
-        
-        return newsItems
-    }
-    
     
     func getObjects(forFloor floor:Int) -> [AICObjectModel] {
         return app.objects.filter( { $0.location.floor == floor })

@@ -14,7 +14,7 @@ class TestModels {
     
     var allObjects:[AICObjectModel] = []
     
-    var testNewsItems:[AICNewsItemModel] = []
+    var testNewsItems:[AICExhibitionModel] = []
     var testTours:[AICTourModel] = []
     
     static let sharedInstance = TestModels()
@@ -61,12 +61,13 @@ class TestModels {
             let imageUrl = Bundle.main.url(forResource: "news" + String(i+1), withExtension: "jpg", subdirectory:"Assets/placeholder/images")!
             let location = getRandomLocation()
             
-            let newsItem = AICNewsItemModel(title:titles[i],
+            let newsItem = AICExhibitionModel(title:titles[i],
                                             shortDescription:descriptions[i],
                                             longDescription:descriptions[i],
-                                            additionalInformation: "Through May 20th, 2017",
                                             imageUrl: imageUrl,
                                             imageCropRect: nil,
+											startDate: Date(),
+											endDate: Date(),
                                             thumbnailUrl: thumbUrl,
                                             location: location,
                                             bannerString: nil

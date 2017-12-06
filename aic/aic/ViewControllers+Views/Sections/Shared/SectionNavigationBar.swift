@@ -20,11 +20,11 @@ class SectionNavigationBar : UIView {
 	private let backButtonBottomMargin: CGFloat = 1
 	private let backButtonLeftMargin: CGFloat = 3
 	private let backButtonContentInsets: UIEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
-	private let iconTopMargin: CGFloat = 40
+	private let iconBottomMargin: CGFloat = 10
 	private let titleHeight: CGFloat = 40
-	private let titleTopMargin: CGFloat = 95
+	private var titleTopMargin: CGFloat = 95
 	private let titleBottomMargin: CGFloat = 5
-	private let titleMinimumScale: CGFloat = 0.7
+	private var titleMinimumScale: CGFloat = 0.7
 	private let descriptionTopMargin: CGFloat = 65
 	
 	internal let titleString:String
@@ -51,25 +51,39 @@ class SectionNavigationBar : UIView {
 		let preferredLabelWidth = UIScreen.main.bounds.width - margins.right - margins.left
 		
 		titleLabel.numberOfLines = 0
-		titleLabel.font = .aicHeaderFont
+		if section.nid == Section.home.rawValue {
+			titleLabel.font = .aicSectionBigTitleFont
+		}
+		else {
+			titleLabel.font = .aicSectionTitleFont
+		}
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = NSTextAlignment.center
 		titleLabel.text = section.title
 		titleLabel.preferredMaxLayoutWidth = preferredLabelWidth
 		
-		descriptionLabel.numberOfLines = 0
-		descriptionLabel.font = .aicSystemTextFont
-		descriptionLabel.textColor = .white
-		descriptionLabel.textAlignment = NSTextAlignment.center
-		descriptionLabel.text = section.description
-		descriptionLabel.preferredMaxLayoutWidth = preferredLabelWidth
-		descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+		if section.nid == Section.home.rawValue {
+			titleTopMargin = 176
+			titleMinimumScale = 0.5
+		}
+		
+		if section.nid != Section.home.rawValue {
+			descriptionLabel.numberOfLines = 2
+			descriptionLabel.font = .aicSectionDescriptionFont
+			descriptionLabel.textColor = .white
+			descriptionLabel.textAlignment = NSTextAlignment.center
+			descriptionLabel.text = section.description
+			descriptionLabel.preferredMaxLayoutWidth = preferredLabelWidth
+			descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+		}
 		
 		// Add Subviews
 		addSubview(backdropImage)
 		addSubview(iconImage)
 		addSubview(titleLabel)
-		addSubview(descriptionLabel)
+		if section.nid != Section.home.rawValue {
+			addSubview(descriptionLabel)
+		}
 		addSubview(backButton)
 		
 		self.updateConstraints()
@@ -99,7 +113,7 @@ class SectionNavigationBar : UIView {
 	func updateHeight(contentOffset: CGPoint) {
 		var frameHeight = Common.Layout.navigationBarVerticalOffset + (contentOffset.y * -1.0)
 		frameHeight = clamp(val: frameHeight, minVal: Common.Layout.navigationBarMinimizedHeight, maxVal: 99999.0)
-		var alphaVal = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: 0.0, newRange2: 1.0))
+		var alphaVal = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight + 50), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: 0.0, newRange2: 1.0))
 		alphaVal = clamp(val: alphaVal, minVal: 0.0, maxVal: 1.0)
 		var titleScale = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: Double(titleMinimumScale), newRange2: 1.0))
 		titleScale = clamp(val: titleScale, minVal: titleMinimumScale, maxVal: 1.0)
@@ -123,7 +137,7 @@ class SectionNavigationBar : UIView {
 		}
 		
 		iconImage.autoAlignAxis(.vertical, toSameAxisOf: self)
-		iconImage.autoPinEdge(.top, to: .top, of: self, withOffset: iconTopMargin)
+		iconImage.autoPinEdge(.bottom, to: .top, of: titleLabel, withOffset: -iconBottomMargin)
 		iconImage.autoSetDimension(.width, toSize: iconImage.image!.size.width)
 		iconImage.autoSetDimension(.height, toSize: iconImage.image!.size.height)
 		
@@ -134,6 +148,12 @@ class SectionNavigationBar : UIView {
 		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self)
 		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
 			titleLabel.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -titleBottomMargin, relation: .lessThanOrEqual)
+		}
+		
+		if descriptionLabel.superview != nil {
+			descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel)
+			descriptionLabel.autoSetDimensions(to: CGSize(width: 300.0, height: 60.0))
+			descriptionLabel.autoAlignAxis(.vertical, toSameAxisOf: self)
 		}
 		
 		super.updateConstraints()

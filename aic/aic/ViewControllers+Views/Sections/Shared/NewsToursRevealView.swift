@@ -41,7 +41,7 @@ class NewsToursRevealView: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setContent(forModel model:AICNewsTourItemProtocol) {
+    func setContent(forModel model:AICTourModel) {
         titleLabel.text = model.title.stringByDecodingHTMLEntities
     }
     

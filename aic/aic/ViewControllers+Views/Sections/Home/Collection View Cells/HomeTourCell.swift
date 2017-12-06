@@ -39,13 +39,15 @@ class HomeTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
-			tourTitleLabel.text = tourModel.title
-			shortDescriptionTextView.text = tourModel.shortDescription
+			tourTitleLabel.text = tourModel.title.stringByDecodingHTMLEntities
+			shortDescriptionTextView.text = tourModel.shortDescription.stringByDecodingHTMLEntities
 			stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
-			durationLabel.text = tourModel.durationInMinutes
-			if (durationLabel.text ?? "").isEmpty {
+			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true
 				durationLabel.isHidden = true
+			}
+			else if let duration: String = tourModel.durationInMinutes {
+				durationLabel.text = "\(duration)min"
 			}
 		}
 	}

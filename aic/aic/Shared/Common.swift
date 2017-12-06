@@ -42,6 +42,9 @@ struct Common {
 
         static var appDataExternalPrefix = "http://localhost:8888/"
         static var appDataInternalPrefix = "http://localhost:8888/"
+		static var appDataLocalPrefix = "http://localhost:9000/"
+		
+		static var dataHubURL = "http://localhost:8888/"
 
         // This URL is the link for requests to validate member card data. The member card feature is disabled by default
         // in the open source version of this application
@@ -70,18 +73,18 @@ struct Common {
 		Section.home: AICSectionModel(nid:Section.home.rawValue,
 										 color: .aicHomeColor,
 										 background: #imageLiteral(resourceName: "home_backdrop"),
-										 icon: #imageLiteral(resourceName: "iconTours"),
+										 icon: #imageLiteral(resourceName: "iconHome"),
 										 title: "Welcome",
 										 description: "Preview the latest exhibitions at the Art Institute.",
 										 tabBarTitle: "Home",
-										 tabBarIcon: #imageLiteral(resourceName: "navTours")
+										 tabBarIcon: #imageLiteral(resourceName: "navHome")
 		),
 		Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
             color: .aicAudioGuideColor,
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconNumPad"),
             title: "Look It Up",
-            description: "Find an artwork you like? Enter the artwork number to learn more.",
+            description: "Find an artwork you like?\nEnter the artwork number to learn more.",
             tabBarTitle: "Audio",
             tabBarIcon: #imageLiteral(resourceName: "navNumPad")
         ),
@@ -90,7 +93,7 @@ struct Common {
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconMap"),
             title: "Find Your Way",
-            description: "Use the map to explore the museum and find audio-enhanced artworks near you.",
+			description: "Use the map to find food, facilities, and\naudio-enhanced artworks.",
             tabBarTitle: "Map",
             tabBarIcon: #imageLiteral(resourceName: "navMap")
         ),
@@ -99,7 +102,7 @@ struct Common {
 			background: nil,
             icon: #imageLiteral(resourceName: "iconInfo"),
             title: "Information",
-            description: "Here’s everything you need to visit us and keep in touch.",
+			description: "Stay on top of the latest exhibitions\nhappening at the museum.",
             tabBarTitle: "Info",
             tabBarIcon: #imageLiteral(resourceName: "navInfo")
         )
@@ -146,7 +149,7 @@ struct Common {
 
     // MARK: Layout
 	struct Layout {
-		static var statusBarHeight: CGFloat {
+		static var safeAreaTopMargin: CGFloat {
 			if UIDevice().type == .iPhoneX {
 				return 44
 			}
@@ -155,14 +158,19 @@ struct Common {
 		
 		static var navigationBarHeight: CGFloat = 240
 		
-		static var navigationBarMinimizedHeight: CGFloat = 73
+		static var navigationBarMinimizedHeight: CGFloat {
+			if UIDevice().type == .iPhoneX {
+				return 73
+			}
+			return 64
+		}
 		
 		static var navigationBarVerticalOffset: CGFloat {
-			return navigationBarHeight - statusBarHeight
+			return navigationBarHeight - safeAreaTopMargin
 		}
 		
 		static var navigationBarMinimizedVerticalOffset: CGFloat {
-			return navigationBarMinimizedHeight - statusBarHeight
+			return navigationBarMinimizedHeight - safeAreaTopMargin
 		}
 		
 		static var tabBarHeight: CGFloat {
@@ -314,7 +322,7 @@ struct Common {
             ),
 
 
-            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconWhatsOnLarge"),
+            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
                 title:"On View Now",
                 subtitle: "Preview the latest exhibitions at the Art Institute.",
                 color: .aicHomeColor
@@ -490,6 +498,14 @@ struct Common {
         static let alertMessageNotFound = "Could not find Member Information"
         static let alertMessageParseError = "Member Card data parse error"
         static let alertMessageCancelButtonTitle = "OK"
+		
+		// Date formats
+		static func throughDateString(endDate: Date) -> String {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "MMMM d, yyyy"
+			let endDateFormatted = dateFormatter.string(from: endDate)
+			return "Through \(endDateFormatted)"
+		}
 
         // Background images
         static let backgroundAnimationTime = 3.0

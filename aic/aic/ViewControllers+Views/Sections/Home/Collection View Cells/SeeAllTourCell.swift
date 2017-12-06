@@ -18,6 +18,8 @@ class SeeAllTourCell : UICollectionViewCell {
 	@IBOutlet var tourTitleLabel: UILabel!
 	@IBOutlet var dividerLine: UIView!
 	@IBOutlet var shortDescriptionTextView: UITextView!
+	@IBOutlet var stopsNumberLabel: UILabel!
+	@IBOutlet var durationLabel: UILabel!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -30,6 +32,8 @@ class SeeAllTourCell : UICollectionViewCell {
 		dividerLine.backgroundColor = .aicDividerLineColor
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
+		stopsNumberLabel.textColor = .aicMediumGrayColor
+		durationLabel.textColor = .aicMediumGrayColor
 	}
 	
 	var tourModel: AICTourModel? = nil {
@@ -40,8 +44,16 @@ class SeeAllTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
-			tourTitleLabel.text = tourModel.title
-			shortDescriptionTextView.text = tourModel.shortDescription
+			tourTitleLabel.text = tourModel.title.stringByDecodingHTMLEntities
+			shortDescriptionTextView.text = tourModel.shortDescription.stringByDecodingHTMLEntities
+			stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
+			
+			if (tourModel.durationInMinutes ?? "").isEmpty {
+				durationLabel.isHidden = true
+			}
+			else if let duration: String = tourModel.durationInMinutes {
+				durationLabel.text = "\(duration)min"
+			}
 		}
 	}
 }

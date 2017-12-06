@@ -55,7 +55,7 @@ class NewsToursTableViewCell: UITableViewCell {
     let stopsDistanceItemView = NewsToursStopsDistanceView()
     
     // Model for appropriate content
-    var model:AICNewsTourItemProtocol {
+    var model:AICTourModel {
         didSet {
             updateLayoutForCurrentMode()
         }
@@ -67,7 +67,7 @@ class NewsToursTableViewCell: UITableViewCell {
     let descriptionLabel = UILabel()
     var additionalInformationLabel:UILabel? = nil
     
-    init(model:AICNewsTourItemProtocol) {
+    init(model:AICTourModel) {
         self.model = model
         
         // TODO: TItle may not be the best reuse identifier
@@ -105,16 +105,8 @@ class NewsToursTableViewCell: UITableViewCell {
         }
         
         // Reveal content Button
-        if model.type == .tour {
-            revealContentButton = AICButton(color: .aicInfoColor, isSmall: false)
-        } else {
-            revealContentButton = UIButton()
-            revealContentButton.setImage(#imageLiteral(resourceName: "buttonPin"), for: UIControlState())
-            revealContentButton.setTitleColor(.aicButtonsColor, for: UIControlState())
-            revealContentButton.titleLabel?.font = UIFont.aicTitleFont
-            revealContentButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left;
-            revealContentButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0)
-        }
+        revealContentButton = AICButton(color: .aicInfoColor, isSmall: false)
+		
         
         revealContentButton.setTitle(model.revealTitle, for: UIControlState())
         revealContentButton.isHidden = true
@@ -197,14 +189,12 @@ class NewsToursTableViewCell: UITableViewCell {
         
         switch mode! {
         case .closed:
-            if model.type == .tour {
-                descriptionLabel.numberOfLines = 2
-                descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: model.shortDescription.stringByDecodingHTMLEntities,
+			descriptionLabel.numberOfLines = 2
+            descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: model.shortDescription.stringByDecodingHTMLEntities,
                                                                                     font: .aicShortTextFont,
                                                                                     lineHeight:descriptionLineHeight)
-                
-                descriptionLabel.lineBreakMode = .byTruncatingTail
-            }
+            descriptionLabel.lineBreakMode = .byTruncatingTail
+			
             
             if shouldAnimateModeChange {
                 UIView.animate(withDuration: animationDuration, animations: {
@@ -212,17 +202,11 @@ class NewsToursTableViewCell: UITableViewCell {
                         self.newBannerView.alpha = 1.0
                     }
                     self.revealContentButton.alpha = 0.0
-                    if self.model.type == .news {
-                        self.descriptionLabel.alpha = 0.0
-                    }
                     }, completion: {(value:Bool) in
                         if self.imageIsLoaded{
                             self.newBannerView.isHidden = false
                         }
                         self.revealContentButton.isHidden = true
-                        if self.model.type == .news {
-                            self.descriptionLabel.isHidden = true
-                        }
                 })
             }
             else {
@@ -245,9 +229,6 @@ class NewsToursTableViewCell: UITableViewCell {
                     newBannerView.alpha = 1.0
                 }
                 revealContentButton.alpha = 0.0
-                if model.type == .news {
-                    descriptionLabel.alpha = 0.0
-                }
                 UIView.animate(withDuration: animationDuration, animations: {
                     self.newBannerView.alpha = 0.0
                     self.revealContentButton.alpha = 1.0
@@ -269,11 +250,7 @@ class NewsToursTableViewCell: UITableViewCell {
         contentView.snp.remakeConstraints({ (make) -> Void in
             make.edges.equalTo(contentView.superview!)
             
-            if model.type == .tour {
-                make.bottom.equalTo(descriptionLabel).offset(descriptionMargins.bottom).priority(Common.Layout.Priority.high.rawValue)
-            } else {
-                make.bottom.equalTo(additionalInformationLabel!).offset(descriptionMargins.bottom).priority(Common.Layout.Priority.high.rawValue)
-            }
+            make.bottom.equalTo(descriptionLabel).offset(descriptionMargins.bottom).priority(Common.Layout.Priority.high.rawValue)
         })
         
         // Header
@@ -351,20 +328,6 @@ class NewsToursTableViewCell: UITableViewCell {
             make.left.right.equalTo(descriptionLabel.superview!).inset(descriptionMargins)
             make.height.greaterThanOrEqualTo(1)
         })
-        
-        
-        // Additional Info (News only)
-        if model.type == .news {
-            additionalInformationLabel!.snp.remakeConstraints({ (make) -> Void in
-                if mode == .open {
-                    make.top.equalTo(descriptionLabel.snp.bottom)
-                } else {
-                    make.top.equalTo(titleLabel.snp.bottom)
-                }
-                
-                make.left.right.equalTo(additionalInformationLabel!.superview!).inset(descriptionMargins)
-            })
-        }
         
         super.updateConstraints()
     }
