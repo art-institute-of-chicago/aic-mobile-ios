@@ -60,7 +60,7 @@ extension SectionViewController {
     // When the tab bar height changes, change the size of our view so anything bottom aligned
     // does not get hidden by the mini player
     @objc func tabBarHeightDidChange() {
-//        self.sectionView.frame.size.height = UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
+        self.view.frame.size.height = UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
 //        viewableMapArea = CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
 //        recalculateViewableMapArea()
     }

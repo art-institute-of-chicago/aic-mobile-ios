@@ -365,7 +365,7 @@ class SectionsViewController : UIViewController {
 		searchVC.modalTransitionStyle = UIModalTransitionStyle.coverVertical
 		searchVC.interactor = CardInteractor()
 		searchVC.transitioningDelegate = searchVC
-		sectionTabBarController.present(searchVC, animated: true)
+//		sectionTabBarController.present(searchVC, animated: true)
 //		homeVC.pushViewController(searchVC, animated: true)
 	}
 }

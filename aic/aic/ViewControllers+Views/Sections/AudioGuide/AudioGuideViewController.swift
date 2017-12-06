@@ -123,13 +123,14 @@ class AudioGuideSectionViewController : SectionViewController {
 	}
 	
 	override func updateViewConstraints() {
-		collectionView.snp.remakeConstraints({ (make) -> Void in
-			make.width.equalTo(collectionView.frame.width)
-			make.height.equalTo(collectionView.frame.height)
-			make.centerX.equalTo(collectionView.superview!)
-			make.top.greaterThanOrEqualTo(sectionNavigationBar.snp.bottom).offset(numberPadTopMargin).priority(Common.Layout.Priority.high.rawValue)
-			//make.top.equalTo(scrollViewContentView).offset(titleView.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height)
-		})
+		collectionView.autoSetDimensions(to: collectionView.frame.size)
+		collectionView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		NSLayoutConstraint.autoSetPriority(.defaultLow) {
+			collectionView.autoAlignAxis(.horizontal, toSameAxisOf: self.view, withOffset: 50.0)
+		}
+		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
+			collectionView.autoPinEdge(.top, to: .bottom, of: sectionNavigationBar, withOffset: -25.0, relation: .greaterThanOrEqual)
+		}
 		
 		super.updateViewConstraints()
 	}
