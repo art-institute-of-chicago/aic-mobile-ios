@@ -64,9 +64,10 @@ class TestModels {
             let newsItem = AICExhibitionModel(title:titles[i],
                                             shortDescription:descriptions[i],
                                             longDescription:descriptions[i],
-                                            additionalInformation: "Through May 20th, 2017",
                                             imageUrl: imageUrl,
                                             imageCropRect: nil,
+											startDate: Date(),
+											endDate: Date(),
                                             thumbnailUrl: thumbUrl,
                                             location: location,
                                             bannerString: nil

@@ -78,20 +78,23 @@ class AppDataParser {
         }
         
         // Get date exibition ends
-        let date = try getString(fromJSON: itemData, forKey: "date")
-        guard let endDate = date.components(separatedBy: "to ").last else {
-            throw ParseError.newsBadDateString(dateString: date)
+        let dateString = try getString(fromJSON: itemData, forKey: "date")
+		guard let startDateString = dateString.components(separatedBy: " to ").first else {
+			throw ParseError.newsBadDateString(dateString: dateString)
+		}
+		guard let endDateString = dateString.components(separatedBy: " to ").last else {
+            throw ParseError.newsBadDateString(dateString: dateString)
         }
         
-        // Format as "July 2nd, 2016"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-d h:m:s"
-        let dateObj = dateFormatter.date(from: endDate)
-        dateFormatter.dateFormat = "MMMM d, yyyy"
-        let endDateFormatted = dateFormatter.string(from: dateObj!)
-        
-        // Create full string
-        let dateString = "Through \(endDateFormatted)"
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-d h:m:s"
+		
+		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
+			throw ParseError.newsBadDateString(dateString: dateString)
+		}
+		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
+			throw ParseError.newsBadDateString(dateString: dateString)
+		}
         
         //Don't throw if the isFeatured flag isn't set, it is only set for new items
         let bannerString = try? getString(fromJSON: itemData, forKey: "tour_banner")
@@ -100,9 +103,10 @@ class AppDataParser {
         return AICExhibitionModel(title: title,
                                 shortDescription: description,
                                 longDescription: description,
-                                additionalInformation: dateString,
                                 imageUrl: imageURL,
                                 imageCropRect: imageCropRect,
+								startDate: startDate,
+								endDate: endDate,
                                 thumbnailUrl: thumbnailURL,
                                 location: location!,
                                 bannerString: bannerString

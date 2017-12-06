@@ -11,6 +11,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="IdealSans-Book.otf">
+            <string>IdealSans-Book</string>
+        </array>
         <array key="IdealSans-Medium.otf">
             <string>IdealSans-Medium</string>
         </array>
@@ -57,27 +60,53 @@
                         <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n Stops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drA-BM-hOJ">
+                        <rect key="frame" x="0.0" y="136" width="38" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="MhZ-a1-bvd"/>
+                            <constraint firstAttribute="height" constant="21" id="eCc-9W-ZrA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WK2-kg-LLr">
+                        <rect key="frame" x="50" y="136" width="50.5" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="TmS-Zy-dm3"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="wah-cM-A2B"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="gCZ-Xa-DWm" firstAttribute="top" secondItem="EHR-m7-DDq" secondAttribute="bottom" constant="32" id="1Ar-Vc-hJc"/>
+                <constraint firstItem="WK2-kg-LLr" firstAttribute="centerY" secondItem="drA-BM-hOJ" secondAttribute="centerY" id="9ew-YI-Bam"/>
                 <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="EHR-m7-DDq" secondAttribute="trailing" id="Ftx-1M-WK6"/>
                 <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="5sJ-ss-p3W" secondAttribute="trailing" id="KxE-It-hcT"/>
                 <constraint firstItem="5sJ-ss-p3W" firstAttribute="top" secondItem="gCZ-Xa-DWm" secondAttribute="bottom" constant="-1" id="L48-pu-eUU"/>
                 <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="MR4-Rr-yxf" secondAttribute="trailing" id="T0x-4l-b02"/>
                 <constraint firstItem="gCZ-Xa-DWm" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="XPe-f2-tOg"/>
+                <constraint firstItem="gCZ-Xa-DWm" firstAttribute="top" secondItem="drA-BM-hOJ" secondAttribute="bottom" constant="7" id="Xcj-re-rRR"/>
                 <constraint firstItem="EHR-m7-DDq" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="bAi-zx-TrD"/>
                 <constraint firstItem="MR4-Rr-yxf" firstAttribute="top" secondItem="ayj-Yn-QHM" secondAttribute="top" id="eCW-FV-ZLJ"/>
                 <constraint firstItem="MR4-Rr-yxf" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="qj7-XO-Hw2"/>
                 <constraint firstItem="EHR-m7-DDq" firstAttribute="top" secondItem="MR4-Rr-yxf" secondAttribute="bottom" constant="6" id="tvZ-U9-qHR"/>
                 <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="gCZ-Xa-DWm" secondAttribute="trailing" id="uAz-Yh-VNS"/>
                 <constraint firstItem="5sJ-ss-p3W" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="xgA-iV-TLu"/>
+                <constraint firstItem="WK2-kg-LLr" firstAttribute="leading" secondItem="drA-BM-hOJ" secondAttribute="trailing" constant="12" id="y5c-Ri-Q9y"/>
+                <constraint firstItem="drA-BM-hOJ" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="yk7-we-l2U"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ayj-Yn-QHM"/>
             <size key="customSize" width="168" height="257"/>
             <connections>
                 <outlet property="dividerLine" destination="gCZ-Xa-DWm" id="kMG-Xe-JHA"/>
+                <outlet property="durationLabel" destination="WK2-kg-LLr" id="Ig4-f3-Zc1"/>
                 <outlet property="shortDescriptionTextView" destination="5sJ-ss-p3W" id="xlf-sa-iBB"/>
+                <outlet property="stopsNumberLabel" destination="drA-BM-hOJ" id="joJ-Ng-mfU"/>
                 <outlet property="tourImageView" destination="MR4-Rr-yxf" id="StP-Kr-oDq"/>
                 <outlet property="tourTitleLabel" destination="EHR-m7-DDq" id="7oZ-bV-Kl0"/>
             </connections>

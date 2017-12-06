@@ -15,6 +15,7 @@ class HomeExhibitionCell : UICollectionViewCell {
 	
 	@IBOutlet var exhibitionImageView: AICImageView!
 	@IBOutlet var exhibitionTitleLabel: UILabel!
+	@IBOutlet var throughDateTextView: UITextView!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -22,6 +23,8 @@ class HomeExhibitionCell : UICollectionViewCell {
 		exhibitionImageView.contentMode = .scaleAspectFill
 		exhibitionImageView.clipsToBounds = true
 		exhibitionTitleLabel.textColor = .aicDarkGrayColor
+		throughDateTextView.textColor = .aicDarkGrayColor
+		throughDateTextView.textContainerInset.left = -4
 	}
 	
 	var exhibitionModel: AICExhibitionModel? {
@@ -33,6 +36,7 @@ class HomeExhibitionCell : UICollectionViewCell {
 			// set up UI
 			exhibitionImageView.loadImageAsynchronously(fromUrl: exhibitionModel.imageUrl, withCropRect: nil)
 			exhibitionTitleLabel.text = exhibitionModel.title
+			throughDateTextView.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
 		}
 	}
 }

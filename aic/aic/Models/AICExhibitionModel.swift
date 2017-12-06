@@ -9,9 +9,11 @@ struct AICExhibitionModel {
     let title:String
     let shortDescription:String
     let longDescription:String
-    let additionalInformation: String?
     let imageUrl:URL
     let imageCropRect: CGRect?
+	
+	let startDate: Date
+	let endDate: Date
     
     let revealTitle: String = "Show On Map"
     

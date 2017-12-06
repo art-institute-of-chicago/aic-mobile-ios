@@ -6,7 +6,11 @@
 import UIKit
 
 extension UIFont {
-	static let aicHeaderFont: UIFont = UIFont(name: "IdealSans-Medium", size: 30.0)!
+	static let aicSectionBigTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 40.0)!
+	
+	static let aicSectionTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 30.0)!
+	
+	static let aicSectionDescriptionFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 16.0)!
 
 	static let aicNumberPadFont: UIFont = UIFont(name: "SourceSansPro-Regular", size: 30.0)!
 
