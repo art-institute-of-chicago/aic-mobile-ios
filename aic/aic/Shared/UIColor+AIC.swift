@@ -20,7 +20,7 @@ import UIKit
 extension UIColor {
 	static let aicHomeColor: UIColor =  UIColor(red: 22.0 / 255.0, green: 151.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
 	
-	static let aicAudioGuideColor: UIColor = UIColor(red: 50.0 / 255.0, green: 152.0 / 255.0, blue: 96.0 / 255.0, alpha: 1.0)
+	static let aicAudioGuideColor: UIColor = UIColor(red: 109.0 / 255.0, green: 40.0 / 255.0, blue: 97.0 / 255.0, alpha: 1.0)
 
 	static let aicMapColor: UIColor = UIColor(red: 6.0 / 255.0, green: 50.0 / 255.0, blue: 88.0 / 255.0, alpha: 1.0)
 	

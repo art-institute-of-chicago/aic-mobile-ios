@@ -9,66 +9,130 @@ protocol AudioGuideSectionViewControllerDelegate : class {
 }
 
 class AudioGuideSectionViewController : SectionViewController {
-    private let buttonSizeRatio:CGFloat = 0.1725 // Ratio of preferred button size to screen width
-    private let colSpacingRatio:CGFloat = 0.04
-    
-    let numCols = 3
-    let numRows = 4
-    
+	
+	let sectionNavigationBar: SectionNavigationBar = SectionNavigationBar(section: Common.Sections[Section.audioGuide]!)
+	
+    static let buttonSizeRatio:CGFloat = 0.1946 // Ratio of preferred button size to screen width
+    static let colSpacingRatio:CGFloat = 0.048
+	// No top margin on iPhone 5, should define this width somewhere this is gross
+	let numberPadTopMargin = UIScreen.main.bounds.width > 320 ? 30 : 0
+	
+	static let numCols = 3
+    static let numRows = 4
     let buttonValueMap = [0:"1", 1:"2", 2:"3",
                           3:"4", 4:"5", 5:"6",
                           6:"7", 7:"8", 8:"9",
-                          9:"<", 10:"0", 11:"GO"
-    ]
-    
-    let audioGuideView:AudioGuideSectionView
+                          9:"<", 10:"0", 11:"GO"]
+	private let maxInputCharacters = 5
+	private(set) var curInputValue = "";
     
     // Delegate
-    weak var delegate:AudioGuideSectionViewControllerDelegate?
+    weak var delegate: AudioGuideSectionViewControllerDelegate?
     
     // Collection view that holds the buttons
-    var collectionView:UICollectionView
+    var collectionView: UICollectionView = createCollectionView()
     
     override init(section:AICSectionModel) {
-        // Create collection view
-        let buttonSize = Int(buttonSizeRatio * UIScreen.main.bounds.width)
-        let buttonSpacing = Int(colSpacingRatio * UIScreen.main.bounds.width)
-        
-        // Create collection view
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: buttonSize, height: buttonSize)
-        layout.minimumInteritemSpacing = CGFloat(buttonSpacing);
-        layout.minimumLineSpacing = CGFloat(buttonSpacing);
-        
-        let width = CGFloat((buttonSize * numCols) + buttonSpacing * (numCols-1))
-        let height = CGFloat((buttonSize * numRows) + buttonSpacing * (numRows-1))
-        
-        collectionView = UICollectionView(frame: CGRect(x: 0,y: 0, width: width, height: height), collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        
-        // Create our view
-        audioGuideView = AudioGuideSectionView(section: section, numberPadView: collectionView)
-        
-        // Register cell classes
-        collectionView.register(AudioGuideCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        
-        // Init SectionViewController
-        super.init(section: section)
-		self.view = audioGuideView
-        
-        // Set delegate for Collection view
-        collectionView.delegate = self
-        collectionView.dataSource = self
+		super.init(section: section)
+		
+        // Setup Collection view
+		collectionView.register(AudioGuideCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+		collectionView.dataSource = self
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
+	static func createCollectionView() -> UICollectionView {
+		let buttonSize = Int(buttonSizeRatio * UIScreen.main.bounds.width)
+		let buttonSpacing = Int(colSpacingRatio * UIScreen.main.bounds.width)
+		let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		layout.itemSize = CGSize(width: buttonSize, height: buttonSize)
+		layout.minimumInteritemSpacing = CGFloat(buttonSpacing);
+		layout.minimumLineSpacing = CGFloat(buttonSpacing);
+		
+		let width = CGFloat((buttonSize * numCols) + buttonSpacing * (numCols-1))
+		let height = CGFloat((buttonSize * numRows) + buttonSpacing * (numRows-1))
+		
+		let collectionView = UICollectionView(frame: CGRect(x: 0,y: 0, width: width, height: height), collectionViewLayout: layout)
+		collectionView.backgroundColor = .clear
+		return collectionView
+	}
+	
+	override func viewDidLoad() {
+		self.view.backgroundColor = sectionModel.color
+		sectionNavigationBar.backgroundColor = .clear
+		
+		self.view.addSubview(collectionView)
+		self.view.addSubview(sectionNavigationBar)
+	}
     
     override func reset() {
-        audioGuideView.clearInput()
+        clearInput()
     }
+	
+	private func clearInput() {
+		curInputValue = ""
+		setTitleForCurInputValue()
+	}
+	
+	private func setTitleForCurInputValue() {
+		let curNumInputChars = curInputValue.count
+		
+		if curNumInputChars == 0 {
+			sectionNavigationBar.titleLabel.text = sectionNavigationBar.titleString
+		} else {
+			sectionNavigationBar.titleLabel.text = curInputValue
+		}
+	}
+	
+	private func addNumberPadInput(value:String) {
+		if curInputValue.count < maxInputCharacters {
+			curInputValue.append(value)
+		}
+		
+		setTitleForCurInputValue()
+	}
+	
+	private func removeLastNumberPadInput() {
+		let curNumInputChars = curInputValue.count
+		if curNumInputChars > 0 {
+			if curNumInputChars == 1 {
+				curInputValue = ""
+			} else {
+				let index = curInputValue.index(curInputValue.endIndex, offsetBy: -1)
+				curInputValue = String(curInputValue[..<index])
+			}
+		}
+		
+		setTitleForCurInputValue()
+	}
+	
+	// Simple shake animation
+	// from http://stackoverflow.com/questions/27987048/shake-animation-for-uitextfield-uiview-in-swift
+	private func shakeForIncorrect() {
+		let animation = CABasicAnimation(keyPath: "position")
+		animation.duration = 0.07
+		animation.repeatCount = 4
+		animation.autoreverses = true
+		animation.fromValue = NSValue(cgPoint: CGPoint(x: sectionNavigationBar.titleLabel.center.x - 10, y: sectionNavigationBar.titleLabel.center.y))
+		animation.toValue = NSValue(cgPoint: CGPoint(x: sectionNavigationBar.titleLabel.center.x + 10, y: sectionNavigationBar.titleLabel.center.y))
+		sectionNavigationBar.titleLabel.layer.add(animation, forKey: "position")
+	}
+	
+	override func updateViewConstraints() {
+		collectionView.snp.remakeConstraints({ (make) -> Void in
+			make.width.equalTo(collectionView.frame.width)
+			make.height.equalTo(collectionView.frame.height)
+			make.centerX.equalTo(collectionView.superview!)
+			make.top.greaterThanOrEqualTo(sectionNavigationBar.snp.bottom).offset(numberPadTopMargin).priority(Common.Layout.Priority.high.rawValue)
+			//make.top.equalTo(scrollViewContentView).offset(titleView.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height)
+		})
+		
+		super.updateViewConstraints()
+	}
 }
 
 // MARK: UICollectionViewDataSource
@@ -77,7 +141,7 @@ extension AudioGuideSectionViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AudioGuideCollectionViewCell
         
         //TODO: Not sure that NSIndexPath conversion is necessary, may be auto converted with swift 3
-        let titleLabel = buttonValueMap[((indexPath as NSIndexPath).section * numCols) + (indexPath as NSIndexPath).row]
+		let titleLabel = buttonValueMap[((indexPath as NSIndexPath).section * AudioGuideSectionViewController.numCols) + (indexPath as NSIndexPath).row]
         switch titleLabel! {
         case "<":
             cell.button.setImage(#imageLiteral(resourceName: "deleteButton"), for: UIControlState())
@@ -104,42 +168,34 @@ extension AudioGuideSectionViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return numRows * numCols
+		return AudioGuideSectionViewController.numRows * AudioGuideSectionViewController.numCols
     }
 }
 
 // MARK: Gesture handlers
 extension AudioGuideSectionViewController {
     @objc internal func buttonPressed(_ button:UIButton) {
-        let view = self.view as! AudioGuideSectionView
-        
         let strVal = buttonValueMap[button.tag]!
         switch strVal {
         case "GO":
-            guard let id:Int = Int(view.curInputValue) else {
-                view.shakeForIncorrect()
+            guard let id:Int = Int(curInputValue) else {
+                shakeForIncorrect()
                 return
             }
             
             guard let object = AppDataManager.sharedInstance.getObject(forAudioGuideID: id) else {
-                view.shakeForIncorrect()
+                shakeForIncorrect()
                 return
             }
                 
             delegate?.audioGuideDidSelectObject(object: object, audioGuideID: id)
-            audioGuideView.clearInput()
+            clearInput()
             
         case "<":
-            view.removeLastNumberPadInput()
+            removeLastNumberPadInput()
             
         default:
-            view.addNumberPadInput(value: button.titleLabel!.text!)
+            addNumberPadInput(value: button.titleLabel!.text!)
         }
-        
-        
     }
-}
-
-extension AudioGuideSectionViewController : UICollectionViewDelegateFlowLayout {
-    
 }

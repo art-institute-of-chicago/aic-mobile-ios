@@ -91,7 +91,6 @@
 		E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCC1C7298420093B719 /* NearbySectionViewController.swift */; };
 		E415ABD91C7298420093B719 /* SectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCD1C7298420093B719 /* SectionsViewController.swift */; };
 		E415ABDA1C7298420093B719 /* ToursSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCF1C7298420093B719 /* ToursSectionViewController.swift */; };
-		E417B5271CA3200300C362A1 /* AudioGuideSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B5261CA3200300C362A1 /* AudioGuideSectionView.swift */; };
 		E417B52B1CA322C200C362A1 /* ToursSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52A1CA322C200C362A1 /* ToursSectionView.swift */; };
 		E417B52D1CA3236600C362A1 /* NearbySectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52C1CA3236600C362A1 /* NearbySectionView.swift */; };
 		E417B52F1CA324E000C362A1 /* InfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52E1CA324E000C362A1 /* InfoSectionView.swift */; };
@@ -326,7 +325,6 @@
 		E415ABCC1C7298420093B719 /* NearbySectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySectionViewController.swift; sourceTree = "<group>"; };
 		E415ABCD1C7298420093B719 /* SectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsViewController.swift; sourceTree = "<group>"; };
 		E415ABCF1C7298420093B719 /* ToursSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToursSectionViewController.swift; sourceTree = "<group>"; };
-		E417B5261CA3200300C362A1 /* AudioGuideSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AudioGuideSectionView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E417B52A1CA322C200C362A1 /* ToursSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToursSectionView.swift; sourceTree = "<group>"; };
 		E417B52C1CA3236600C362A1 /* NearbySectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySectionView.swift; sourceTree = "<group>"; };
 		E417B52E1CA324E000C362A1 /* InfoSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSectionView.swift; sourceTree = "<group>"; };
@@ -826,7 +824,6 @@
 			isa = PBXGroup;
 			children = (
 				E415ABCA1C7298420093B719 /* AudioGuideViewController.swift */,
-				E417B5261CA3200300C362A1 /* AudioGuideSectionView.swift */,
 				E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */,
 			);
 			path = AudioGuide;
@@ -1475,7 +1472,6 @@
 				E4E108E21C98F23200385842 /* TestModels.swift in Sources */,
 				E4F519D51C88BD4900226188 /* CoordinateConverter.swift in Sources */,
 				E4923FC11C9E00B500AB255C /* UIView+AIC.swift in Sources */,
-				E417B5271CA3200300C362A1 /* AudioGuideSectionView.swift in Sources */,
 				E4F519D91C88BD4900226188 /* MKMapRectRotated.swift in Sources */,
 				E45C2A1A1D3437C600B9E958 /* MapImageAnnotation.swift in Sources */,
 				E42178361CC6B80200815B41 /* InfoSectionTextField.swift in Sources */,
