@@ -40,8 +40,8 @@ class SeeAllTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
-			tourTitleLabel.text = tourModel.title
-			shortDescriptionTextView.text = tourModel.shortDescription
+			tourTitleLabel.text = tourModel.title.stringByDecodingHTMLEntities
+			shortDescriptionTextView.text = tourModel.shortDescription.stringByDecodingHTMLEntities
 		}
 	}
 }

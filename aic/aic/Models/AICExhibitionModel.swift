@@ -1,13 +1,11 @@
 /*
  Abstract:
- Defines a data structure for AIC News Items
+ Defines a data structure for AIC Exhibition Model
 */
 
 import CoreLocation
 
-struct AICNewsItemModel : AICNewsTourItemProtocol {
-    let type:NewsTourItemType = .news
-    
+struct AICExhibitionModel {
     let title:String
     let shortDescription:String
     let longDescription:String

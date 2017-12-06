@@ -45,7 +45,7 @@ class NewsToursSectionViewController : SectionViewController {
     /**
      Override this method in your inheriting class to set up custom models
     */
-    internal func getModel(forRow row:Int) -> AICNewsTourItemProtocol? {
+    internal func getModel(forRow row:Int) -> AICTourModel? {
         return nil
     }
     
@@ -59,7 +59,7 @@ class NewsToursSectionViewController : SectionViewController {
      */
     internal func setDistances(fromUserLocation userLocation:CLLocation) {}
     
-    internal func showReveal(forModel model:AICNewsTourItemProtocol) {
+    internal func showReveal(forModel model:AICTourModel) {
         let sectionView = self.view as! NewsToursSectionView
         
         sectionView.setReveal(forModel: model)

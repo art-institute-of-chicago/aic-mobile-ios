@@ -16,9 +16,12 @@ class SectionsViewController : UIViewController {
     //let locationManager: CLLocationManager = CLLocationManager()
     
     var objectVC:ObjectViewController = ObjectViewController();
+	
+	// Search Button
+	let searchButton: UIButton = UIButton()
     
     // TabBar
-    var tabBar: UITabBarController = UITabBarController()
+    var sectionTabBarController: UITabBarController = UITabBarController()
     
     // Sections
     var viewControllers: [UIViewController] = []
@@ -53,10 +56,6 @@ class SectionsViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        self.view = UIView(frame:UIScreen.main.bounds)
-    }
-    
     override func viewDidLoad() {
         // Set the view controllers for the tab bar
         self.viewControllers = [
@@ -65,26 +64,33 @@ class SectionsViewController : UIViewController {
             nearbyVC,
             infoVC
         ]
+		
+		// Setup Search button
+		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
+		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
         
         // Setup and add the tabbar
-		tabBar.view.frame = UIScreen.main.bounds
-		tabBar.tabBar.tintColor = .aicHomeColor
-        tabBar.tabBar.backgroundColor = .aicTabbarColor
-        tabBar.tabBar.barStyle = UIBarStyle.black
-		tabBar.viewControllers = self.viewControllers
+		sectionTabBarController.view.frame = UIScreen.main.bounds
+		sectionTabBarController.tabBar.tintColor = .aicHomeColor
+        sectionTabBarController.tabBar.backgroundColor = .aicTabbarColor
+        sectionTabBarController.tabBar.barStyle = UIBarStyle.black
+		sectionTabBarController.viewControllers = self.viewControllers
 		
         // Setup and add contentView
         //mapVC.view.alpha = 0.0
         
         // Add Views
         //view.addSubview(mapVC.view)
-        view.addSubview(objectVC.view)
-		self.tabBar.willMove(toParentViewController: self)
-        view.addSubview(self.tabBar.view)
-		self.tabBar.didMove(toParentViewController: self)
+		self.sectionTabBarController.willMove(toParentViewController: self)
+        view.addSubview(self.sectionTabBarController.view)
+		self.sectionTabBarController.didMove(toParentViewController: self)
+		view.addSubview(searchButton)
+//		view.addSubview(objectVC.view)
+		self.sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: self.sectionTabBarController.tabBar)
         
         // Set delegates
-        tabBar.delegate         = self
+        sectionTabBarController.delegate         = self
         //mapVC.delegate          = self
         objectVC.delegate       = self
         audioGuideVC.delegate   = self
@@ -99,6 +105,13 @@ class SectionsViewController : UIViewController {
         
         //startLocationManager()
     }
+	
+	override func updateViewConstraints() {
+		searchButton.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -6)
+		searchButton.autoPinEdge(.bottom, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight - 3)
+		
+		super.updateViewConstraints()
+	}
     
     func setSelectedSection(sectionVC:UIViewController) {
         // If tours tab was pressed when on a tour
@@ -114,14 +127,14 @@ class SectionsViewController : UIViewController {
         
         // Update colors for this VC
 		if let sVC: SectionViewController = sectionVC as? SectionViewController {
-			tabBar.tabBar.tintColor = sVC.color
+			sectionTabBarController.tabBar.tintColor = sVC.color
 			objectVC.setProgressBarColor(sVC.color)
 			//mapVC.color = sVC.color
 			// Tell the map what region this view shows
 			//mapVC.setViewableArea(frame: sVC.viewableMapArea)
 		}
 		else if let sNC: SectionNavigationController = sectionVC as? SectionNavigationController {
-			tabBar.tabBar.tintColor = sNC.color
+			sectionTabBarController.tabBar.tintColor = sNC.color
 		}
         
         // Set the map mode
@@ -164,12 +177,12 @@ class SectionsViewController : UIViewController {
     
     // Intro animation
     func animateInInitialView() {
-		self.tabBar.view.alpha = 0.0
+		self.sectionTabBarController.view.alpha = 0.0
         self.homeVC.view.alpha = 0.0
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
-									self.tabBar.view.alpha = 1.0
+									self.sectionTabBarController.view.alpha = 1.0
                                     self.homeVC.view.alpha = 1.0
             }, completion: { (value:Bool) in
 
@@ -346,6 +359,15 @@ class SectionsViewController : UIViewController {
             self.headphonesMessageView = nil
         }
     }
+	
+	@objc func searchButtonPressed(button: UIButton) {
+		let searchVC = CardViewController()
+		searchVC.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+		searchVC.interactor = CardInteractor()
+		searchVC.transitioningDelegate = searchVC
+		sectionTabBarController.present(searchVC, animated: true)
+//		homeVC.pushViewController(searchVC, animated: true)
+	}
 }
 
 // MARK: SectionsTabBar Delegate Methods
@@ -361,10 +383,10 @@ extension SectionsViewController : ObjectViewControllerDelegate {
     // We hide the bottom navigation
     func objectViewController(controller:ObjectViewController, didUpdateYPosition position:CGFloat) {
         let screenHeight = UIScreen.main.bounds.height
-        let yPct:CGFloat = (position) / (screenHeight - self.tabBar.tabBar.frame.height - objectVC.getMiniPlayerHeight())
+        let yPct:CGFloat = (position) / (screenHeight - self.sectionTabBarController.tabBar.frame.height - objectVC.getMiniPlayerHeight())
         
         // Set the sectionVC tab bar to hide as we show objectVC
-        self.tabBar.tabBar.frame.origin.y = screenHeight - (tabBar.tabBar.bounds.height * yPct)
+        self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * yPct)
     }
     
     func objectViewControllerDidShowMiniPlayer(controller: ObjectViewController) {
@@ -386,17 +408,6 @@ extension SectionsViewController : AudioGuideSectionViewControllerDelegate {
 extension SectionsViewController : NewsToursSectionViewControllerDelegate {
     func newsToursSectionViewController(_ controller: NewsToursSectionViewController, didCloseReveal reveal: NewsToursRevealView) {
         //mapVC.showDisabled()
-    }
-}
-
-// WhatsOn Delegate Methods
-extension SectionsViewController : WhatsOnSectionViewControllerDelegate {
-    func whatsOnSectionViewController(_ whatsOnSectionViewController: WhatsOnSectionViewController, shouldShowNewsItemOnMap item: AICNewsItemModel) {
-        //locationManager.delegate = mapVC
-        
-        //mapVC.showNews(forNewsItem: item)
-        
-        AICAnalytics.sendNewsItemDidShowOnMapEvent(forNewsItem: item)
     }
 }
 

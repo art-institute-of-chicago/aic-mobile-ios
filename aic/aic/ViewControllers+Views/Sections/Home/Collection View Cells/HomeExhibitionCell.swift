@@ -24,7 +24,7 @@ class HomeExhibitionCell : UICollectionViewCell {
 		exhibitionTitleLabel.textColor = .aicDarkGrayColor
 	}
 	
-	var exhibitionModel: AICTourModel? {
+	var exhibitionModel: AICExhibitionModel? {
 		didSet {
 			guard let exhibitionModel = self.exhibitionModel else {
 				return

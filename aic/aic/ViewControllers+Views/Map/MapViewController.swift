@@ -151,7 +151,7 @@ class MapViewController: UIViewController {
     
     // Show a news item (location) on the map
     // Shows only that item and hides all other floor level info
-    func showNews(forNewsItem item:AICNewsItemModel) {
+    func showNews(forNewsItem item:AICExhibitionModel) {
         mode = .newsLocation
         
         // Add location annotation the floor model

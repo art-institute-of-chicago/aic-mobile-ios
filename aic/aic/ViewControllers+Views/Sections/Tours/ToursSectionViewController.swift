@@ -48,16 +48,14 @@ class ToursSectionViewController : NewsToursSectionViewController {
         tourScrollView.delegate = self.delegate
     }
     
-    override func getModel(forRow row: Int) -> AICNewsTourItemProtocol? {
+    override func getModel(forRow row: Int) -> AICTourModel? {
         return items[row]
     }
     
     override func setAdditionalInformation(forCell cell: NewsToursTableViewCell) {
-        if let model = cell.model as? AICTourModel {
-            cell.setStops(toValue: model.stops.count)
+            cell.setStops(toValue: cell.model.stops.count)
             listTableView.beginUpdates()
             listTableView.endUpdates()
-        }
     }
     
     override func setDistances(fromUserLocation userLocation: CLLocation) {
@@ -66,11 +64,9 @@ class ToursSectionViewController : NewsToursSectionViewController {
             
             for cell in listTableView.visibleCells  {
                 if let cell = cell as? NewsToursTableViewCell {
-                    if let model = cell.model as? AICTourModel {
-                        let closestObject = Common.Location.getClosestObject(toUserLocation: userLocation, forObjects: model.getObjectsForStops())
-                        let distance = Common.Location.getTime(fromUserLocation: userLocation, toObjectLocation: closestObject.location)
-                        cell.setDistance(toValue: Int(distance))
-                    }
+					let closestObject = Common.Location.getClosestObject(toUserLocation: userLocation, forObjects: cell.model.getObjectsForStops())
+					let distance = Common.Location.getTime(fromUserLocation: userLocation, toObjectLocation: closestObject.location)
+					cell.setDistance(toValue: Int(distance))
                 }
             }
             
@@ -79,17 +75,13 @@ class ToursSectionViewController : NewsToursSectionViewController {
         
     }
     
-    override func showReveal(forModel model: AICNewsTourItemProtocol) {
-        if let tour = model as? AICTourModel {
-            tourScrollView.setTour(forTourModel: tour)
-            super.showReveal(forModel: model)
-            
-            if let tour = model as? AICTourModel {
-                currentTour = tour
-            }
-            
-            delegate?.toursSectionDidShowTour(tour: tour)
-        }
+    override func showReveal(forModel model: AICTourModel) {
+		tourScrollView.setTour(forTourModel: model)
+		super.showReveal(forModel: model)
+		
+		currentTour = model
+		
+		delegate?.toursSectionDidShowTour(tour: model)
     }
     
     func showTourStop(forStopObjectModel stopObject:AICObjectModel) {

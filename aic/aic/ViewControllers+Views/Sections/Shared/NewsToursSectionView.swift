@@ -68,7 +68,7 @@ class NewsToursSectionView: SectionView {
         self.updateConstraints()
     }
     
-    func setReveal(forModel model:AICNewsTourItemProtocol) {
+    func setReveal(forModel model:AICTourModel) {
         revealView.setContent(forModel: model)
     }
     

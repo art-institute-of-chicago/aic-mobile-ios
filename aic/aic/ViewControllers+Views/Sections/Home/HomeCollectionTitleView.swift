@@ -15,6 +15,8 @@ class HomeCollectionTitleView : UIView {
 	init(title: String) {
 		super.init(frame: CGRect.zero)
 		
+		self.backgroundColor = .white
+		
 		titleLabel.text = title
 		titleLabel.font = .aicHomeCollectionTitleFont
 		titleLabel.textColor = .aicDarkGrayColor

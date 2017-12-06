@@ -30,10 +30,10 @@ class AppDataParser {
 	private var objects = [AICObjectModel]()
     
     // MARK: News
-    func parse(newsItemsData itemsData:Data) -> [AICNewsItemModel] {
+    func parse(newsItemsData itemsData:Data) -> [AICExhibitionModel] {
         let json = JSON(data: itemsData)
         
-        var newsItems:[AICNewsItemModel] = []
+        var newsItems:[AICExhibitionModel] = []
         for newsItem in json {
             do {
                 try handleParseError({
@@ -51,13 +51,13 @@ class AppDataParser {
         return newsItems
     }
     
-    private func parse(newsItemData itemData:JSON) throws -> AICNewsItemModel {
+    private func parse(newsItemData itemData:JSON) throws -> AICExhibitionModel {
         let title = try getString(fromJSON: itemData, forKey: "title")
         var description = try getString(fromJSON: itemData, forKey: "body")
         
         // Remove any leading whitespace, currently a bug in JSON
-        if description.characters.count > 1 && description.characters.first == " " {
-            description = description.substring(from: description.characters.index(description.startIndex, offsetBy: 1))
+        if description.count > 1 && description.first == " " {
+			description = String(description[description.index(description.startIndex, offsetBy: 1)...])
         }
         
         let thumbnailURL = try getURL(fromJSON: itemData, forKey: "thumbnail")
@@ -97,7 +97,7 @@ class AppDataParser {
         let bannerString = try? getString(fromJSON: itemData, forKey: "tour_banner")
 
         // Return news item
-        return AICNewsItemModel(title: title,
+        return AICExhibitionModel(title: title,
                                 shortDescription: description,
                                 longDescription: description,
                                 additionalInformation: dateString,
@@ -516,6 +516,7 @@ class AppDataParser {
         // Get string val and replace URL with public URL (needs to be fixed in data)
         var stringVal   = try getString(fromJSON: json, forKey: key)
         stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataInternalPrefix, with: Common.DataConstants.appDataExternalPrefix)
+		stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataLocalPrefix, with: Common.DataConstants.appDataExternalPrefix)
         
         var url = URL(string: stringVal)
         
@@ -524,7 +525,7 @@ class AppDataParser {
         if url == nil {
             // Find URL in string
             let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            let matches = detector.matches(in: stringVal, options: [], range: NSMakeRange(0, stringVal.characters.count))
+            let matches = detector.matches(in: stringVal, options: [], range: NSMakeRange(0, stringVal.count))
             
             if matches.count != 1 {
                 throw ParseError.badURLString(string: stringVal)

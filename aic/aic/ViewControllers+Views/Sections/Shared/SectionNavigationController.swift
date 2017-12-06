@@ -49,7 +49,7 @@ class SectionNavigationController : UINavigationController {
 		}
 		
 		// Subscribe to tab bar height changes
-		NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
+		//NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
 	}
 	
 	override func popViewController(animated: Bool) -> UIViewController? {

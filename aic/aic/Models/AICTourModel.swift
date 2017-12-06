@@ -5,11 +5,9 @@
 
 import Foundation
 
-struct AICTourModel : AICNewsTourItemProtocol {
-    let type:NewsTourItemType = .tour
-    
+struct AICTourModel {
     let nid:Int
-    
+	
     let title:String
     let shortDescription:String
     let longDescription:String
