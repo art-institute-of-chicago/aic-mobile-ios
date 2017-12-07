@@ -48,7 +48,7 @@
 		2988B1871FD6282500270F38 /* CardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988B1861FD6282500270F38 /* CardAnimator.swift */; };
 		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
 		29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A27A071FCC769B007CEE1D /* HomeTourCell.xib */; };
-		29A62D421FD5C90F0054BE56 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A62D411FD5C90F0054BE56 /* CardViewController.swift */; };
+		29A62D421FD5C90F0054BE56 /* CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */; };
 		29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */; };
 		29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */; };
 		29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */; };
@@ -87,7 +87,7 @@
 		E415ABD41C7298420093B719 /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC31C7298420093B719 /* ObjectViewController.swift */; };
 		E415ABD51C7298420093B719 /* MiniAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */; };
 		E415ABD61C7298420093B719 /* InfoSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC81C7298420093B719 /* InfoSectionViewController.swift */; };
-		E415ABD71C7298420093B719 /* AudioGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCA1C7298420093B719 /* AudioGuideViewController.swift */; };
+		E415ABD71C7298420093B719 /* AudioGuideNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */; };
 		E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCC1C7298420093B719 /* NearbySectionViewController.swift */; };
 		E415ABD91C7298420093B719 /* SectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCD1C7298420093B719 /* SectionsViewController.swift */; };
 		E415ABDA1C7298420093B719 /* ToursSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCF1C7298420093B719 /* ToursSectionViewController.swift */; };
@@ -265,7 +265,7 @@
 		2988B1861FD6282500270F38 /* CardAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAnimator.swift; sourceTree = "<group>"; };
 		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
 		29A27A071FCC769B007CEE1D /* HomeTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTourCell.xib; sourceTree = "<group>"; };
-		29A62D411FD5C90F0054BE56 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNavigationController.swift; sourceTree = "<group>"; };
 		29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Bold.otf"; sourceTree = "<group>"; };
 		29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BoldItalic.otf"; sourceTree = "<group>"; };
 		29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Book.otf"; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		E415ABC31C7298420093B719 /* ObjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
 		E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAudioPlayerView.swift; sourceTree = "<group>"; };
 		E415ABC81C7298420093B719 /* InfoSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoSectionViewController.swift; sourceTree = "<group>"; };
-		E415ABCA1C7298420093B719 /* AudioGuideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AudioGuideViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AudioGuideNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E415ABCC1C7298420093B719 /* NearbySectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySectionViewController.swift; sourceTree = "<group>"; };
 		E415ABCD1C7298420093B719 /* SectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsViewController.swift; sourceTree = "<group>"; };
 		E415ABCF1C7298420093B719 /* ToursSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToursSectionViewController.swift; sourceTree = "<group>"; };
@@ -823,7 +823,7 @@
 		E415ABC91C7298420093B719 /* AudioGuide */ = {
 			isa = PBXGroup;
 			children = (
-				E415ABCA1C7298420093B719 /* AudioGuideViewController.swift */,
+				E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */,
 				E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */,
 			);
 			path = AudioGuide;
@@ -1001,7 +1001,7 @@
 			isa = PBXGroup;
 			children = (
 				2988B1861FD6282500270F38 /* CardAnimator.swift */,
-				29A62D411FD5C90F0054BE56 /* CardViewController.swift */,
+				29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */,
 				295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */,
 				2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */,
 				E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */,
@@ -1425,7 +1425,7 @@
 				E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */,
 				E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */,
 				E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */,
-				29A62D421FD5C90F0054BE56 /* CardViewController.swift in Sources */,
+				29A62D421FD5C90F0054BE56 /* CardNavigationController.swift in Sources */,
 				E4F519DA1C88BD4900226188 /* Utilities.swift in Sources */,
 				E4875B3F1CE7CC3E000F0E6E /* MapViewController.swift in Sources */,
 				E4D1593D1CBC259900536B4D /* MapLocationAnnotationView.swift in Sources */,
@@ -1459,7 +1459,7 @@
 				E415ABD91C7298420093B719 /* SectionsViewController.swift in Sources */,
 				E447397D1CAE01AC0011F059 /* NewsToursSectionViewController.swift in Sources */,
 				E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */,
-				E415ABD71C7298420093B719 /* AudioGuideViewController.swift in Sources */,
+				E415ABD71C7298420093B719 /* AudioGuideNavigationController.swift in Sources */,
 				E447397F1CAE02870011F059 /* NewsToursSectionView.swift in Sources */,
 				29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */,
 				E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */,
@@ -1694,7 +1694,7 @@
 				);
 				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = aic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -1732,7 +1732,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = aic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -1880,7 +1880,7 @@
 				);
 				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = aic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (

@@ -13,22 +13,20 @@ class HomeNavigationController : SectionNavigationController {
 	
 	override init(section: AICSectionModel) {
 		homeVC = HomeViewController(section: section)
-		
 		super.init(section: section)
-		
-		self.delegate = self
-		
-		homeVC.delegate = self
-		
-		self.pushViewController(homeVC, animated: false)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		self.delegate = self
+		homeVC.delegate = self
+		
+		self.pushViewController(homeVC, animated: false)
 	}
 }
 

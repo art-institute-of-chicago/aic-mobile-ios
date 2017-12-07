@@ -20,7 +20,7 @@ class SectionViewController : UIViewController {
         self.color = section.color
         super.init(nibName: nil, bundle: nil)
 		
-        // Set the tab bar item content
+		// Set the tab bar item content // TODO: No need to set tabBarItem since SectionVC is never the tabBar viewcontroller
         self.tabBarItem = UITabBarItem(title: section.tabBarTitle, image: section.tabBarIcon, tag: section.nid)
 		
 		// Set the navigation item content
