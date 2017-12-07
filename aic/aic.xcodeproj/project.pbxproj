@@ -45,7 +45,6 @@
 		2986A5881FBCBD5B00029E74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5871FBCBD5B00029E74 /* HomeViewController.swift */; };
 		2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */; };
 		2986A58C1FBCD38C00029E74 /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */; };
-		2988B1871FD6282500270F38 /* CardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988B1861FD6282500270F38 /* CardAnimator.swift */; };
 		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
 		29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A27A071FCC769B007CEE1D /* HomeTourCell.xib */; };
 		29A62D421FD5C90F0054BE56 /* CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */; };
@@ -262,7 +261,6 @@
 		2986A5871FBCBD5B00029E74 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationController.swift; sourceTree = "<group>"; };
 		2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
-		2988B1861FD6282500270F38 /* CardAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAnimator.swift; sourceTree = "<group>"; };
 		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
 		29A27A071FCC769B007CEE1D /* HomeTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTourCell.xib; sourceTree = "<group>"; };
 		29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNavigationController.swift; sourceTree = "<group>"; };
@@ -1000,7 +998,6 @@
 		E4F82F681CA45EF000E4224B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				2988B1861FD6282500270F38 /* CardAnimator.swift */,
 				29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */,
 				295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */,
 				2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */,
@@ -1497,7 +1494,6 @@
 				E4D790CB1C8E0AC10033EE0A /* MapView.swift in Sources */,
 				E4923FE71C9F53BE00AB255C /* ObjectView.swift in Sources */,
 				E47A97161CEFBC150041D0A6 /* AppDataParser.swift in Sources */,
-				2988B1871FD6282500270F38 /* CardAnimator.swift in Sources */,
 				E4F7C14D1CA201B6005976D1 /* ObjectTranscriptView.swift in Sources */,
 				E415ABDA1C7298420093B719 /* ToursSectionViewController.swift in Sources */,
 				E4F82F6C1CA45F3400E4224B /* SectionTitleView.swift in Sources */,

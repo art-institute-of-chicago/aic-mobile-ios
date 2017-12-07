@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UIKit.UIGestureRecognizerSubclass
 
 class CardNavigationController : UINavigationController {
 	
@@ -18,10 +17,13 @@ class CardNavigationController : UINavigationController {
 	var currentState: State = .hidden
 	
 	let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "downArrow"))
+	
+	// Root view controller
+	// If it's a single view card (i.e. Tour Card), simply add your views to rootVC
+	let rootVC: UIViewController = UIViewController()
+	
 	private var transitionAnimator: UIViewPropertyAnimator? = nil
 	private var animationProgress: CGFloat = 0.0
-	
-	private var topConstraint: NSLayoutConstraint? = nil
 	
 	private var downArrowTopMargin: CGFloat = 11.0
 	private static var topPosition: CGFloat {
@@ -56,7 +58,12 @@ class CardNavigationController : UINavigationController {
 		// Add subviews
 		self.view.addSubview(downArrowImageView)
 		
-		let panGesture = InstantPanGestureRecognizer(target: self, action: #selector(handlePanGesture(recognizer:)))
+		// Root view controller
+		rootVC.view.backgroundColor = .clear
+		self.pushViewController(rootVC, animated: false)
+		
+		// Pan Gesture
+		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(recognizer:)))
 		self.view.addGestureRecognizer(panGesture)
 	}
 	
@@ -70,9 +77,6 @@ class CardNavigationController : UINavigationController {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
-		// block click through
-		self.view.isUserInteractionEnabled = true
 		
 		// Important: this is the magic that makes gestures work on this view
 		self.becomeFirstResponder()
@@ -102,11 +106,9 @@ class CardNavigationController : UINavigationController {
 		transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
 			switch state {
 			case .fullscreen:
-//				self.topConstraint?.constant = Common.Layout.safeAreaTopMargin
 				self.view.frame.origin = CGPoint(x: 0, y: CardNavigationController.topPosition)
 				self.view.layer.cornerRadius = 10
 			case .hidden:
-//				self.topConstraint?.constant = UIScreen.main.bounds.height - Common.Layout.tabBarHeight
 				self.view.frame.origin = CGPoint(x: 0, y: CardNavigationController.bottomPosition)
 				self.view.layer.cornerRadius = 15
 				self.view.layer.cornerRadius = 0
@@ -213,18 +215,5 @@ class CardNavigationController : UINavigationController {
 			animateTransitionIfNeeded(to: .hidden, duration: 1.0)
 		}
 	}
-}
-
-// MARK: - InstantPanGestureRecognizer
-
-/// A pan gesture that enters into the `began` state on touch down instead of waiting for a touches moved event.
-class InstantPanGestureRecognizer: UIPanGestureRecognizer {
-	
-	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-		if (self.state == UIGestureRecognizerState.began) { return }
-		super.touchesBegan(touches, with: event)
-		self.state = UIGestureRecognizerState.began
-	}
-	
 }
 
