@@ -18,7 +18,7 @@ class AppDataManager {
     weak var delegate:AppDataManagerDelegate?
     
     private (set) var app:AICAppDataModel! = nil
-	var exhibitions: [AICExhibitionModel] = []
+	private (set) var exhibitions: [AICExhibitionModel] = []
 	//private var events: [AICEventModel] = []
     
     private let dataParser = AppDataParser()

@@ -19,6 +19,18 @@ class SectionNavigationController : UINavigationController {
 		self.color = section.color
 		self.sectionNavigationBar = SectionNavigationBar(section: section)
 		super.init(nibName: nil, bundle: nil)
+		
+		// Set the tab bar item content
+		self.tabBarItem = UITabBarItem(title: sectionModel.tabBarTitle, image: sectionModel.tabBarIcon, tag: sectionModel.nid)
+		
+		// Hide title and inset (center) images if not showing titles
+		if Common.Layout.showTabBarTitles == false {
+			self.tabBarItem.title = ""
+			self.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
+		}
+		
+		// Set the navigation item content
+		self.navigationItem.title = sectionModel.title
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -28,28 +40,20 @@ class SectionNavigationController : UINavigationController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		// Hide Navigation Bar
-		self.navigationBar.isTranslucent = false
-		self.setNavigationBarHidden(true, animated: false)
-		
 		// Add Section Navigation Bar and add Back Button target
 		self.sectionNavigationBar.backButton.addTarget(self, action: #selector(backButtonPressed(button:)), for: .touchUpInside)
 		self.view.addSubview(sectionNavigationBar)
 		
-		// Set the tab bar item content
-		self.tabBarItem = UITabBarItem(title: sectionModel.tabBarTitle, image: sectionModel.tabBarIcon, tag: sectionModel.nid)
-		
-		// Set the navigation item content
-		self.navigationItem.title = sectionModel.title
-		
-		// Hide title and inset (center) images if not showing titles
-		if Common.Layout.showTabBarTitles == false {
-			self.tabBarItem.title = ""
-			self.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
-		}
-		
 		// Subscribe to tab bar height changes
 		//NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		// Hide Navigation Bar
+		self.navigationBar.isTranslucent = false
+		self.setNavigationBarHidden(true, animated: false)
 	}
 	
 	override func popViewController(animated: Bool) -> UIViewController? {

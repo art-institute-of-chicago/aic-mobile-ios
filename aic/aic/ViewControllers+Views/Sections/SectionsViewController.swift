@@ -14,11 +14,12 @@ class SectionsViewController : UIViewController {
     weak var delegate:SectionsViewControllerDelegate? = nil
     
     //let locationManager: CLLocationManager = CLLocationManager()
-    
-    var objectVC:ObjectViewController = ObjectViewController();
 	
-	// Search Button
-	let searchButton: UIButton = UIButton()
+	// Object Audio Card
+    let objectVC: ObjectViewController = ObjectViewController();
+	
+	// Search Card
+	let searchVC: CardNavigationController = CardNavigationController()
     
     // TabBar
     var sectionTabBarController: UITabBarController = UITabBarController()
@@ -33,7 +34,7 @@ class SectionsViewController : UIViewController {
     var tabBarItemsForViewControllers: [UIViewController: UITabBarItem] = [:]
 	
 	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
-    var audioGuideVC:AudioGuideSectionViewController = AudioGuideSectionViewController(section: Common.Sections[.audioGuide]!)
+    var audioGuideVC:AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
     //var whatsOnVC:WhatsOnSectionViewController = WhatsOnSectionViewController(section: Common.Sections[.whatsOn]!)
     //var toursVC:ToursSectionViewController = ToursSectionViewController(section: Common.Sections[.tours]!)
     //var nearbyVC:NearbySectionViewController = NearbySectionViewController(section: Common.Sections[.map]!)
@@ -64,11 +65,6 @@ class SectionsViewController : UIViewController {
             nearbyVC,
             infoVC
         ]
-		
-		// Setup Search button
-		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
-		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
-		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
         
         // Setup and add the tabbar
 		sectionTabBarController.view.frame = UIScreen.main.bounds
@@ -81,19 +77,25 @@ class SectionsViewController : UIViewController {
         //mapVC.view.alpha = 0.0
         
         // Add Views
-        //view.addSubview(mapVC.view)
-		self.sectionTabBarController.willMove(toParentViewController: self)
-        view.addSubview(self.sectionTabBarController.view)
-		self.sectionTabBarController.didMove(toParentViewController: self)
-		view.addSubview(searchButton)
-//		view.addSubview(objectVC.view)
-		self.sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: self.sectionTabBarController.tabBar)
-        
-        // Set delegates
-        sectionTabBarController.delegate         = self
-        //mapVC.delegate          = self
-        objectVC.delegate       = self
-        audioGuideVC.delegate   = self
+		sectionTabBarController.willMove(toParentViewController: self)
+        view.addSubview(sectionTabBarController.view)
+		sectionTabBarController.didMove(toParentViewController: self)
+		
+		objectVC.willMove(toParentViewController: sectionTabBarController)
+		sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: sectionTabBarController.tabBar)
+		objectVC.willMove(toParentViewController: sectionTabBarController)
+		
+		searchVC.willMove(toParentViewController: self.sectionTabBarController)
+		sectionTabBarController.view.insertSubview(searchVC.view, belowSubview:self.objectVC.view)
+		searchVC.didMove(toParentViewController: self.sectionTabBarController)
+		
+		// Set delegates
+		sectionTabBarController.delegate = self
+		objectVC.delegate = self
+		homeVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
+		audioGuideVC.audioGuideDelegate = self
+		audioGuideVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
+		infoVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
         
         //whatsOnVC.newsToursDelegate = self
         //whatsOnVC.delegate          = self
@@ -105,13 +107,6 @@ class SectionsViewController : UIViewController {
         
         //startLocationManager()
     }
-	
-	override func updateViewConstraints() {
-		searchButton.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -6)
-		searchButton.autoPinEdge(.bottom, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight - 3)
-		
-		super.updateViewConstraints()
-	}
     
     func setSelectedSection(sectionVC:UIViewController) {
         // If tours tab was pressed when on a tour
@@ -126,15 +121,24 @@ class SectionsViewController : UIViewController {
         currentViewController = sectionVC
         
         // Update colors for this VC
-		if let sVC: SectionViewController = sectionVC as? SectionViewController {
+		if let sVC = sectionVC as? SectionNavigationController {
 			sectionTabBarController.tabBar.tintColor = sVC.color
 			objectVC.setProgressBarColor(sVC.color)
 			//mapVC.color = sVC.color
 			// Tell the map what region this view shows
 			//mapVC.setViewableArea(frame: sVC.viewableMapArea)
 		}
-		else if let sNC: SectionNavigationController = sectionVC as? SectionNavigationController {
-			sectionTabBarController.tabBar.tintColor = sNC.color
+			// TODO: instead of checking for mapVC, make mapVC a SectionNavigationController
+		else if let sVC = sectionVC as? MapSectionViewController {
+			sectionTabBarController.tabBar.tintColor = .aicMapColor
+			objectVC.setProgressBarColor(.aicMapColor)
+		}
+		
+		// Card operations
+		if currentViewController != previousViewController {
+			if searchVC.currentState == .fullscreen {
+				searchVC.hide()
+			}
 		}
         
         // Set the map mode
@@ -361,23 +365,18 @@ class SectionsViewController : UIViewController {
     }
 	
 	@objc func searchButtonPressed(button: UIButton) {
-		let searchVC = CardViewController()
-		searchVC.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-		searchVC.interactor = CardInteractor()
-		searchVC.transitioningDelegate = searchVC
-//		sectionTabBarController.present(searchVC, animated: true)
-//		homeVC.pushViewController(searchVC, animated: true)
+		searchVC.showFullscreen()
 	}
 }
 
-// MARK: SectionsTabBar Delegate Methods
+// MARK: SectionTabBarController Delegate Methods
 extension SectionsViewController : UITabBarControllerDelegate {
 	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
 		setSelectedSection(sectionVC: viewController)
 	}
 }
 
-// ObjectViewController Delegate
+// MARK: ObjectViewController Delegate
 extension SectionsViewController : ObjectViewControllerDelegate {
     // When the Object View Controller Moves up (out of mini player mode)
     // We hide the bottom navigation
@@ -392,8 +391,6 @@ extension SectionsViewController : ObjectViewControllerDelegate {
     func objectViewControllerDidShowMiniPlayer(controller: ObjectViewController) {
 	}
 }
-
-
 
 // MARK: Section view controller delegates
 
