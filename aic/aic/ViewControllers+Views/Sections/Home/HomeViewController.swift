@@ -17,13 +17,13 @@ protocol HomeViewControllerDelegate : class {
 class HomeViewController : SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
 	let memberPromptView: HomeMemberPromptView = HomeMemberPromptView()
-	let toursTitleView: HomeCollectionTitleView = HomeCollectionTitleView(title: "Tours")
+	let toursTitleView: ContentTitleView = ContentTitleView(title: "Tours")
 	let toursCollectionView: UICollectionView = createToursEventsCollectionView()
 	let exhibitionsDividerLine: UIView = createDividerLine()
-	let exhibitionsTitleView: HomeCollectionTitleView = HomeCollectionTitleView(title: "On View")
+	let exhibitionsTitleView: ContentTitleView = ContentTitleView(title: "On View")
 	let exhibitionsCollectionView: UICollectionView = createExhibitionsCollectionView()
 	let eventsDividerLine: UIView = createDividerLine()
-	let eventsTitleView: HomeCollectionTitleView = HomeCollectionTitleView(title: "Events")
+	let eventsTitleView: ContentTitleView = ContentTitleView(title: "Events")
 	let eventsCollectionView: UICollectionView = createToursEventsCollectionView()
 	
 	let bottomMargin: CGFloat = 100

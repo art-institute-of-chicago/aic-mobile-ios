@@ -90,7 +90,7 @@ class CardNavigationController : UINavigationController {
 		super.updateViewConstraints()
 	}
 	
-	// MARK: - Animation
+	// MARK: Animation
 	
 	/// Animates the transition, if the animation is not already running.
 	private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
@@ -124,6 +124,9 @@ class CardNavigationController : UINavigationController {
 			case .start:
 				self.currentState = state == .fullscreen ? .hidden : .fullscreen
 			case .end:
+				if self.currentState != .fullscreen && state == .fullscreen {
+					self.cardDidShowFullscreen()
+				}
 				self.currentState = state
 				if self.currentState == .hidden {
 					self.view.isHidden = true
@@ -165,7 +168,7 @@ class CardNavigationController : UINavigationController {
 			
 			// variable setup
 			let translation = recognizer.translation(in: self.view)
-			var fraction = translation.y / 800
+			var fraction = translation.y / (CardNavigationController.bottomPosition - CardNavigationController.topPosition)
 			
 			// adjust the fraction for the current state and reversed state
 			if currentState == .hidden { fraction *= -1 }
@@ -204,7 +207,10 @@ class CardNavigationController : UINavigationController {
 		}
 	}
 	
+	// MARK: Show/Hide
+	
 	func showFullscreen() {
+		cardWillShowFullscreen()
 		if self.currentState != .fullscreen {
 			animateTransitionIfNeeded(to: .fullscreen, duration: 1.0)
 		}
@@ -214,6 +220,16 @@ class CardNavigationController : UINavigationController {
 		if self.currentState != .hidden {
 			animateTransitionIfNeeded(to: .hidden, duration: 1.0)
 		}
+	}
+	
+	// MARK: Animation Callbacks
+	
+	func cardWillShowFullscreen() {
+		
+	}
+	
+	func cardDidShowFullscreen() {
+		
 	}
 }
 

@@ -57,4 +57,8 @@ extension UIFont {
 	static let aicHomeSmallTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!
 	
 	static let aicHomeShortTextFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 14)!
+	
+	static let aicSearchBarFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!
+	
+	static let aicSearchResultsSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
 }

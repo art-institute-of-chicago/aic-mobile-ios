@@ -524,4 +524,17 @@ struct Common {
         }()
 
     }
+	
+	// MARK: Search
+	struct Search {
+		static let  searchBarPlaceholder = "  Looking for an artwork?"
+		
+		enum Filter {
+			case empty
+			case suggested
+			case artworks
+			case tours
+			case exhibitions
+		}
+	}
 }
