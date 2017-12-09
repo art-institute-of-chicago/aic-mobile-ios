@@ -31,10 +31,10 @@ class ResultsSectionTitleView : UIView {
 	}
 	
 	override func updateConstraints() {
-		titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 17)
+		titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 5)
 		titleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
-		titleLabel.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: 17)
+		titleLabel.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: 10, relation: .greaterThanOrEqual)
 		
 		super.updateConstraints()
 	}

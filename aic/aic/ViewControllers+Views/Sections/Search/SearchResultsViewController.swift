@@ -48,7 +48,6 @@ extension SearchResultsViewController {
 			if section > 0 {
 			let titleView = ContentTitleView(title: "Artworks")
 				titleView.setDarkStyle(true)
-				titleView.backgroundColor = .yellow
 				return titleView
 			}
 			return nil
