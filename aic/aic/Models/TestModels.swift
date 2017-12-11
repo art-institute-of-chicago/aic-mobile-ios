@@ -29,6 +29,7 @@ class TestModels {
         
         let testObjectLocation = CoordinateWithFloor(coordinate: CLLocationCoordinate2DMake(41.878000,-87.623988), floor:1)
         testObject = AICObjectModel(nid:123,
+									objectId: 123,
                                     thumbnailUrl: testObjectThumbnailurl,
                                     thumbnailCropRect: nil,
                                     imageUrl:testObjectImageUrl,
@@ -98,6 +99,7 @@ class TestModels {
                 let object = AICTourStopModel(order: j,
                                               object:AICObjectModel(
                                                     nid: j,
+													objectId: j,
                                                     thumbnailUrl: objectThumbUrl,
                                                     thumbnailCropRect: nil,
                                                     imageUrl:objectImageUrl,

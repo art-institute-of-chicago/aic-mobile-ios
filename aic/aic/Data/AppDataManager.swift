@@ -17,7 +17,7 @@ class AppDataManager {
     
     weak var delegate:AppDataManagerDelegate?
     
-    private (set) var app:AICAppDataModel! = nil
+    private (set) var app: AICAppDataModel! = nil
 	private (set) var exhibitions: [AICExhibitionModel] = []
 	//private var events: [AICEventModel] = []
     
@@ -248,6 +248,10 @@ class AppDataManager {
     func getObject(forID id:Int) -> AICObjectModel? {
         return app.objects.filter({ $0.nid == id }).first
     }
+	
+	func getObject(forObjectID id:Int) -> AICObjectModel? {
+		return app.objects.filter({ $0.objectId == id }).first
+	}
     
     func getTour(forID id:Int) -> AICTourModel? {
         return app.tours.filter({ $0.nid == id }).first

@@ -8,10 +8,12 @@
 
 import UIKit
 
-/// Cell of SearchResults TableView to show suggested search text
+/// Cell of ResultsTableViewController to show suggested search text
 /// Example: 'On the map' section
 class SuggestedSearchCell : UITableViewCell {
 	static let reuseIdentifier = "suggestedSearchCell"
+	
+	static let cellHeight: CGFloat = 40.0
 	
 	@IBOutlet var suggestedSearchLabel: UILabel!
 	
@@ -20,7 +22,6 @@ class SuggestedSearchCell : UITableViewCell {
 		
 		selectionStyle = UITableViewCellSelectionStyle.none
 		layoutMargins = UIEdgeInsets.zero
-		preservesSuperviewLayoutMargins = false
 		
 		self.backgroundColor = .aicDarkGrayColor
 		

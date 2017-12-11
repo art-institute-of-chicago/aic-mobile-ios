@@ -9,8 +9,7 @@ class SectionView: BaseView {
     var didSetupBaseConstraints = false
     
     let titleScrolledTopMargin = 25
-    
-    var titleView:SectionTitleView
+	
     var scrollView = UIScrollView()
     var scrollViewContentView = UIView()
     
@@ -23,10 +22,8 @@ class SectionView: BaseView {
             // stretches with the top of the scroll view
             let scrollOffsetY = self.scrollView.contentOffset.y
             self.scrollView.contentOffset.y = 0
-            self.titleView.setNeedsLayout()
-            self.titleView.layoutIfNeeded()
             
-            let height = self.titleView.frame.height
+			let height: CGFloat = 240.0
             self.scrollView.contentOffset.y = scrollOffsetY
             
             return height
@@ -34,13 +31,6 @@ class SectionView: BaseView {
     }
     
     init(section:AICSectionModel) {
-        // Create title and tab bar item
-        titleView = SectionTitleView(icon: section.icon,
-                                         title: section.title,
-                                         description: section.description,
-                                         backgroundColor:section.color
-        )
-        
         super.init(frame:UIScreen.main.bounds)//CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
         
         
@@ -48,7 +38,6 @@ class SectionView: BaseView {
         backgroundColor = .clear
         
         // All section views have a scroll view with a title view
-        scrollViewContentView.addSubview(titleView)
         scrollView.addSubview(scrollViewContentView)
         addSubview(scrollView)
         
@@ -67,16 +56,6 @@ class SectionView: BaseView {
             scrollViewContentView.snp.makeConstraints({ (make) -> Void in
                 make.edges.equalTo(scrollView)
                 make.width.equalTo(scrollView)
-            })
-            
-            titleView.snp.makeConstraints({ (make) -> Void in
-                make.top.lessThanOrEqualTo(self).priority(Common.Layout.Priority.high.rawValue)
-                make.top.equalTo(titleView.superview!).priority(Common.Layout.Priority.medium.rawValue)
-                make.left.right.equalTo(titleView.superview!)
-            })
-            
-            titleView.titleLabel.snp.makeConstraints({ (make) -> Void in
-                make.top.greaterThanOrEqualTo(self).offset(titleScrolledTopMargin).priority(Common.Layout.Priority.high.rawValue)
             })
             
             didSetupBaseConstraints = true

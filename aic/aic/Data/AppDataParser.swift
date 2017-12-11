@@ -13,6 +13,7 @@ class AppDataParser {
         case objectParseFailure
         case missingKey(key:String)
         case badURLString(string:String)
+		case badFloatString(string:String)
         case badIntString(string:String)
         case badCLLocationString(string:String)
         case newsBadDateString(dateString:String)
@@ -23,6 +24,7 @@ class AppDataParser {
         case tourStopsNotFound
         case jsonObjectNotFoundForKey(key:String)
         case noValidTourStops
+		case searchAutocompleteFailure
     }
 	
 	private var galleries = [AICGalleryModel]()
@@ -220,6 +222,7 @@ class AppDataParser {
     
     fileprivate func parse(objectJSON: JSON) throws -> AICObjectModel {
         let nid             = try getInt(fromJSON:objectJSON, forKey: "nid")
+		let objectId        = try getInt(fromJSON:objectJSON, forKey: "object_id")
         let location        = try getCLLocation2d(fromJSON: objectJSON, forKey:"location")
         
         let galleryName     = try getString(fromJSON: objectJSON, forKey: "gallery_location")
@@ -290,6 +293,7 @@ class AppDataParser {
         }
         
         return AICObjectModel(nid: nid,
+							  objectId: objectId,
                               thumbnailUrl: thumbnail,
                               thumbnailCropRect: thumbnailCropRect,
                               imageUrl: image,
@@ -433,7 +437,67 @@ class AppDataParser {
 							durationInMinutes: durationInMinutes
         )
     }
-    
+	
+	// MARK: Search data
+	
+	func parse(autocompleteData: Data) -> [String] {
+		var autocompleteStrings = [String]() // TODO: create model for autocomplete and add score
+		
+		let json = JSON(data: autocompleteData)
+		
+		do {
+			try handleParseError({ [unowned self] in
+				
+				let optionsJson: JSON = json["suggest"]["autocomplete"][0]["options"]
+				
+				for optionJson: JSON in optionsJson.arrayValue {
+					let text = try self.getString(fromJSON: optionJson, forKey: "text")
+					autocompleteStrings.append(text)
+				}
+			})
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse AIC Search Autocomplete:\n\(json)\n")
+			}
+		}
+		
+		// TODO: sort results by score and return only the first 3
+		
+		return autocompleteStrings
+	}
+	
+	func parse(searchedArtworksData: Data) -> [AICSearchedArtworkModel] {
+		var searchedArtworks = [AICSearchedArtworkModel]()
+		
+		let json = JSON(data: searchedArtworksData)
+		
+		do {
+			try handleParseError({ [unowned self] in
+				
+				let dataJson: JSON = json["data"]
+				
+				for artworkJson: JSON in dataJson.arrayValue {
+					let objectId = try self.getInt(fromJSON: artworkJson, forKey: "id")
+					let artworkUrl = try self.getURL(fromJSON: artworkJson, forKey: "api_link")
+					let score = try getFloat(fromJSON: artworkJson, forKey: "_score")
+					let searchArtwork = AICSearchedArtworkModel(objectId: objectId, artworkUrl: artworkUrl, score: score)
+					searchedArtworks.append(searchArtwork)
+				}
+			})
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse AIC Search Autocomplete:\n\(json)\n")
+			}
+		}
+		
+		return searchedArtworks
+	}
+	
+//	func parse(searchedArtworkData: Data) -> AICSearchedArtworkModel {
+//		
+//	}
     
     // MARK: Error-Throwing data parsing functions
     
@@ -459,6 +523,23 @@ class AppDataParser {
         return bool
         
     }
+	
+	// Try to parse an float from a JSON string
+	private func getFloat(fromJSON json:JSON, forKey key:String) throws -> CGFloat {
+		guard let float = json[key].float else {
+			
+			let str = try getString(fromJSON: json, forKey: key)
+			let float = Float(str)
+			
+			if float == nil  {
+				throw ParseError.badFloatString(string: str)
+			}
+			
+			return CGFloat(float!)
+		}
+		
+		return CGFloat(float)
+	}
     
     // Try to parse an int from a JSON string
     private func getInt(fromJSON json:JSON, forKey key:String) throws -> Int {

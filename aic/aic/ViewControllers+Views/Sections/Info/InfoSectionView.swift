@@ -32,10 +32,10 @@ class InfoSectionView: SectionView {
         }
         
         if showMemberCardView {
-            scrollViewContentView.insertSubview(becomeMemberView, belowSubview: titleView)
+            scrollViewContentView.addSubview(becomeMemberView)
         }
         
-        scrollViewContentView.insertSubview(informationView, belowSubview: titleView)
+        scrollViewContentView.addSubview(informationView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +50,6 @@ class InfoSectionView: SectionView {
             
             if showMemberCardView {
                 becomeMemberView.snp.makeConstraints({ (make) -> Void in
-                    make.top.lessThanOrEqualTo(titleView.snp.bottom).priority(Common.Layout.Priority.high.rawValue)
                     make.top.equalTo(scrollViewContentView).offset(titleViewHeight)
                     make.left.right.equalTo(becomeMemberView.superview!)
                 })
@@ -60,7 +59,7 @@ class InfoSectionView: SectionView {
                 if showMemberCardView {
                     make.top.equalTo(becomeMemberView.snp.bottom)
                 } else {
-                    make.top.lessThanOrEqualTo(titleView.snp.bottom).priority(Common.Layout.Priority.high.rawValue)
+                    
                     make.top.equalTo(scrollViewContentView).offset(titleViewHeight)
                 }
                 make.left.right.equalTo(informationView.superview!)

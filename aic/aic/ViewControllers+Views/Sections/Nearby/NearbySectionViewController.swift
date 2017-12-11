@@ -46,7 +46,7 @@ class NearbySectionViewController : SectionViewController {
     
     fileprivate func hideTitle() {
         if !titleIsHidden {
-            self.nearbyView.scrollView.contentOffset.y = self.nearbyView.titleView.descriptionLabel.frame.origin.y + self.nearbyView.titleView.descriptionLabel.frame.height
+            self.nearbyView.scrollView.contentOffset.y = 240
             //recalculateViewableMapArea()
             titleIsHidden = true
         }

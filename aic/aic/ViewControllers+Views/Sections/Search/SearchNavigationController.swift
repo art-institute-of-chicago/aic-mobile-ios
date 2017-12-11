@@ -12,11 +12,9 @@ class SearchNavigationController : CardNavigationController {
 	let searchBar: UISearchBar = UISearchBar()
 	let searchButton: UIButton = UIButton()
 	let dividerLine: UIView = UIView()
-	let searchResultsVC: SearchResultsViewController = SearchResultsViewController()
+	let resultsVC: ResultsTableViewController = ResultsTableViewController()
 	
-	var searchResultsTopConstraint: NSLayoutConstraint? = nil
-	let searchResultsTopMargin: CGFloat = 90
-	let searchResultsLowerTopMargin: CGFloat = 90
+	let searchResultsTopMargin: CGFloat = 80
 	
 	override init() {
 		super.init()
@@ -29,6 +27,8 @@ class SearchNavigationController : CardNavigationController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		SearchDataManager.sharedInstance.delegate = self
+		
 		searchBar.barTintColor = .aicDarkGrayColor
 		searchBar.tintColor = .white
 		searchBar.showsBookmarkButton = false
@@ -38,6 +38,7 @@ class SearchNavigationController : CardNavigationController {
 		searchBar.isTranslucent = false
 		searchBar.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
 		searchBar.placeholder = Common.Search.searchBarPlaceholder
+		searchBar.delegate = self
 		
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.backgroundColor = .aicDarkGrayColor
@@ -50,11 +51,13 @@ class SearchNavigationController : CardNavigationController {
 		
 		dividerLine.backgroundColor = .white
 		
+		resultsVC.scrollDelegate = self
+		
 		// Add subviews
 		self.view.addSubview(searchBar)
 		self.view.addSubview(searchButton)
 		self.view.addSubview(dividerLine)
-		self.rootVC.view.addSubview(searchResultsVC.view)
+		self.rootVC.view.addSubview(resultsVC.view)
 	}
 	
 	override func updateViewConstraints() {
@@ -71,10 +74,10 @@ class SearchNavigationController : CardNavigationController {
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
 		
-		searchResultsTopConstraint = searchResultsVC.view.autoPinEdge(.top, to: .top, of: self.rootVC.view, withOffset: searchResultsTopMargin)
-		searchResultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
-		searchResultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-		searchResultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view)
+		resultsVC.view.autoPinEdge(.top, to: .top, of: self.rootVC.view, withOffset: searchResultsTopMargin)
+		resultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
+		resultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
+		resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view)
 		
 		super.updateViewConstraints()
 	}
@@ -89,6 +92,7 @@ class SearchNavigationController : CardNavigationController {
 		// dismiss the keyboard when the user taps to close the card
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
 		
 		super.handlePanGesture(recognizer: recognizer)
 	}
@@ -96,5 +100,53 @@ class SearchNavigationController : CardNavigationController {
 
 // MARK: UISearchBarDelegate
 extension SearchNavigationController : UISearchBarDelegate {
-	
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		if searchText.count > 0 {
+			SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
+			SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
+			if resultsVC.filter == .empty {
+				resultsVC.filter = .suggested
+			}
+		}
+		else {
+			resultsVC.filter = .empty
+		}
+	}
 }
+
+// MARK: SearchDataManagerDelegate
+extension SearchNavigationController : SearchDataManagerDelegate {
+	func searchDataDidFinishLoading(autocompleteStrings: [String]) {
+		resultsVC.autocompleteStringItems = autocompleteStrings
+		resultsVC.tableView.reloadData()
+	}
+	
+	func searchDataDidFinishLoading(artworks: [AICObjectModel]) {
+		resultsVC.artworkItems = artworks
+		resultsVC.tableView.reloadData()
+	}
+	
+	func searchDataDidFinishLoading(tours: [AICTourModel]) {
+		resultsVC.tourItems = tours
+		resultsVC.tableView.reloadData()
+	}
+	
+	func searchDataDidFinishLoading(exhibitions: [AICExhibitionModel]) {
+		resultsVC.exhibitionItems = exhibitions
+		resultsVC.tableView.reloadData()
+	}
+	
+	func searchDataFailure(withMessage: String) {
+		
+	}
+}
+
+extension SearchNavigationController : ResultsTableViewControllerDelegate {
+	func resultsTableViewWillScroll() {
+		// dismiss the keyboard when the user scrolls results
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
+	}
+}
+

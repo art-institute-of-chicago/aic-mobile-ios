@@ -16,11 +16,13 @@ class CardNavigationController : UINavigationController {
 	}
 	var currentState: State = .hidden
 	
-	let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "downArrow"))
+	let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "cardDownArrow"))
 	
 	// Root view controller
 	// If it's a single view card (i.e. Tour Card), simply add your views to rootVC
 	let rootVC: UIViewController = UIViewController()
+	
+	var rootViewHeightConstraint: NSLayoutConstraint? = nil
 	
 	private var transitionAnimator: UIViewPropertyAnimator? = nil
 	private var animationProgress: CGFloat = 0.0
@@ -86,6 +88,10 @@ class CardNavigationController : UINavigationController {
 		downArrowImageView.autoSetDimensions(to: downArrowImageView.image!.size)
 		downArrowImageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: downArrowTopMargin)
 		downArrowImageView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		
+		// TODO: makit it take into account tabBarHeight as well, then fix it also in resultsVC
+		rootVC.view.autoSetDimension(.width, toSize: UIScreen.main.bounds.width)
+		rootViewHeightConstraint = rootVC.view.autoSetDimension(.height, toSize: UIScreen.main.bounds.height - CardNavigationController.topPosition - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
 		
 		super.updateViewConstraints()
 	}

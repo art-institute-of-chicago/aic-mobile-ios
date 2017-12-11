@@ -24,11 +24,11 @@ class NearbySectionView: SectionView {
         scrollView.isScrollEnabled = false
         
         // Add Subviews
-        scrollViewContentView.insertSubview(passThroughView, belowSubview: titleView)
+        scrollViewContentView.addSubview(passThroughView)
         
         // Add Gesture Recognizers
-        let titleTap = UITapGestureRecognizer(target:self, action:#selector(NearbySectionView.titleViewTapped(_:)))
-        titleView.addGestureRecognizer(titleTap)
+//        let titleTap = UITapGestureRecognizer(target:self, action:#selector(NearbySectionView.titleViewTapped(_:)))
+//        titleView.addGestureRecognizer(titleTap)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +50,6 @@ class NearbySectionView: SectionView {
         if !didSetupConstraints {
             
             passThroughView.snp.makeConstraints({ (make) -> Void in
-                make.top.lessThanOrEqualTo(titleView.snp.bottom).priority(Common.Layout.Priority.high.rawValue)
                 make.top.equalTo(scrollViewContentView).offset(titleViewHeight)
                 make.left.right.equalTo(passThroughView.superview!)
                 make.height.equalTo(1000)
