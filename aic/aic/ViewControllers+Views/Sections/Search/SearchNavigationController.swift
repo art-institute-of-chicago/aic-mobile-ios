@@ -104,6 +104,7 @@ extension SearchNavigationController : UISearchBarDelegate {
 		if searchText.count > 0 {
 			SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
 			SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
+			SearchDataManager.sharedInstance.loadTours(searchText: searchText)
 			if resultsVC.filter == .empty {
 				resultsVC.filter = .suggested
 			}

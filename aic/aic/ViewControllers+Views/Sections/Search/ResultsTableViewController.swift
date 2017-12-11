@@ -131,6 +131,8 @@ extension ResultsTableViewController {
 			else if indexPath.section == 2 {
 				// tour cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+				let tour = tourItems[indexPath.row]
+				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "Gallery Name")
 				return cell
 			}
 			else if indexPath.section == 3 {

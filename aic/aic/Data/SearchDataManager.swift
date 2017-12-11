@@ -27,6 +27,7 @@ class SearchDataManager {
 	private var loadFailure: Bool = false
 	
 	func loadAutocompleteStrings(searchText: String) {
+		// TODO: fix blank space in url!
 		let url = Common.DataConstants.dataHubURL + "autocomplete?q=" + searchText
 		let request = URLRequest(url: URL(string: url)!)
 		
@@ -68,7 +69,27 @@ class SearchDataManager {
 		}
 	}
 	
-	func loadArtwork(searchText: String) {
+	func loadTours(searchText: String) {
+		let url = Common.DataConstants.dataHubURL + "tours/search?q=" + searchText + "&limit=20"
+		let request = URLRequest(url: URL(string: url)!)
 		
+		Alamofire.request(request as URLRequestConvertible)
+			.validate()
+			.responseData { response in
+				switch response.result {
+				case .success(let value):
+					var tours = [AICTourModel]()
+					let searchedTours = self.dataParser.parse(searchedToursData: value)
+					for searchedTour in searchedTours {
+						if let tour = AppDataManager.sharedInstance.getTour(forID: searchedTour.tourId) {
+							tours.append(tour)
+						}
+					}
+					self.delegate?.searchDataDidFinishLoading(tours: tours)
+				case .failure(let error):
+					//self.notifyLoadFailure(withMessage: "Failed to load search data.")
+					print(error)
+				}
+		}
 	}
 }

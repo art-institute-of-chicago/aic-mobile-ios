@@ -25,6 +25,8 @@ class ContentButtonCell : UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
+		selectionStyle = UITableViewCellSelectionStyle.none
+		
 		self.backgroundColor = .aicDarkGrayColor
 		
 		itemImageView.contentMode = .scaleAspectFill
@@ -34,11 +36,15 @@ class ContentButtonCell : UITableViewCell {
 	}
 	
 	func setContent(imageUrl: URL, title: String, subtitle: String) {
+		if contentLoaded == true {
+			return
+		}
+		
 		itemImageView.loadImageAsynchronously(fromUrl: imageUrl, withCropRect: nil)
 		itemTitleLabel.text = title
 		itemSubtitleLabel.text = subtitle
 		
-		self.contentLoaded = true
+		contentLoaded = true
 	}
 	
 //	var exhibitionModel: AICExhibitionModel? {

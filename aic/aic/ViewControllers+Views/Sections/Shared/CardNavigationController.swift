@@ -30,7 +30,7 @@ class CardNavigationController : UINavigationController {
 	private var downArrowTopMargin: CGFloat = 11.0
 	private static var topPosition: CGFloat {
 		if UIDevice().type == .iPhoneX {
-			return 30
+			return 40
 		}
 		return 20
 	}

@@ -469,20 +469,16 @@ class AppDataParser {
 	
 	func parse(searchedArtworksData: Data) -> [AICSearchedArtworkModel] {
 		var searchedArtworks = [AICSearchedArtworkModel]()
-		
 		let json = JSON(data: searchedArtworksData)
-		
 		do {
 			try handleParseError({ [unowned self] in
-				
 				let dataJson: JSON = json["data"]
-				
-				for artworkJson: JSON in dataJson.arrayValue {
-					let objectId = try self.getInt(fromJSON: artworkJson, forKey: "id")
-					let artworkUrl = try self.getURL(fromJSON: artworkJson, forKey: "api_link")
-					let score = try getFloat(fromJSON: artworkJson, forKey: "_score")
-					let searchArtwork = AICSearchedArtworkModel(objectId: objectId, artworkUrl: artworkUrl, score: score)
-					searchedArtworks.append(searchArtwork)
+				for resultson: JSON in dataJson.arrayValue {
+					let objectId = try self.getInt(fromJSON: resultson, forKey: "id")
+					let apiLink = try self.getURL(fromJSON: resultson, forKey: "api_link")
+					let score = try getFloat(fromJSON: resultson, forKey: "_score")
+					let searchedArtwork = AICSearchedArtworkModel(objectId: objectId, apiLink: apiLink, score: score)
+					searchedArtworks.append(searchedArtwork)
 				}
 			})
 		}
@@ -491,8 +487,30 @@ class AppDataParser {
 				print("Could not parse AIC Search Autocomplete:\n\(json)\n")
 			}
 		}
-		
 		return searchedArtworks
+	}
+	
+	func parse(searchedToursData: Data) -> [AICSearchedTourModel] {
+		var searchedTours = [AICSearchedTourModel]()
+		let json = JSON(data: searchedToursData)
+		do {
+			try handleParseError({ [unowned self] in
+				let dataJson: JSON = json["data"]
+				for resultson: JSON in dataJson.arrayValue {
+					let tourId = try self.getInt(fromJSON: resultson, forKey: "id")
+					let apiLink = try self.getURL(fromJSON: resultson, forKey: "api_link")
+					let score = try getFloat(fromJSON: resultson, forKey: "_score")
+					let searchedTour = AICSearchedTourModel(tourId: tourId, apiLink: apiLink, score: score)
+					searchedTours.append(searchedTour)
+				}
+			})
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse AIC Search Autocomplete:\n\(json)\n")
+			}
+		}
+		return searchedTours
 	}
 	
 //	func parse(searchedArtworkData: Data) -> AICSearchedArtworkModel {
