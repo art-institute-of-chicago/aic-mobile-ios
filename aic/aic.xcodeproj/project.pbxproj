@@ -97,6 +97,7 @@
 		29E6DD651FB9ED8A00C3303D /* MapSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6DD641FB9ED8A00C3303D /* MapSectionViewController.swift */; };
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
+		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
 		E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */; };
@@ -335,6 +336,7 @@
 		29E6DD641FB9ED8A00C3303D /* MapSectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSectionViewController.swift; sourceTree = "<group>"; };
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
+		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		34A42DED784747728FEECA5D /* Pods_aicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -684,6 +686,22 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		29EABE511FE07CDA0049E341 /* Card Content */ = {
+			isa = PBXGroup;
+			children = (
+				29EABE541FE080090049E341 /* Table View Cells */,
+				29EABE521FE07CF90049E341 /* TourTableViewController.swift */,
+			);
+			path = "Card Content";
+			sourceTree = "<group>";
+		};
+		29EABE541FE080090049E341 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Table View Cells";
+			sourceTree = "<group>";
+		};
 		B819E172870013E1F6D5EC3E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -877,6 +895,7 @@
 		E415ABC61C7298420093B719 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
+				29EABE511FE07CDA0049E341 /* Card Content */,
 				E4F82F681CA45EF000E4224B /* Shared */,
 				29DAF0621FB3C69E002ED862 /* Home */,
 				E415ABC91C7298420093B719 /* AudioGuide */,
@@ -1593,6 +1612,7 @@
 				291221991FDB359D0096BB75 /* ResultsSectionTitleView.swift in Sources */,
 				29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */,
 				293127871FDF3B23008BFAB1 /* AICSearchedTourModel.swift in Sources */,
+				29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */,
 				E4D1592D1CB6A10500536B4D /* NewsToursStopsDistanceItemView.swift in Sources */,
 				E4CD3FD31CA9CDB200013E75 /* NewsToursTableViewCell.swift in Sources */,
 				291221941FDB2BAD0096BB75 /* ResultsTableViewController.swift in Sources */,

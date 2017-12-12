@@ -61,6 +61,16 @@
                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                         <state key="normal" image="cardRightArrow"/>
                     </button>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="keQ-yX-WoR">
+                        <rect key="frame" x="16" y="0.0" width="343" height="1"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dpI-vP-IbP">
+                        <rect key="frame" x="16" y="71" width="343" height="1"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="KSQ-jq-bJZ" firstAttribute="top" secondItem="obB-RP-FmZ" secondAttribute="bottom" id="394-Yu-HNR"/>
@@ -75,6 +85,8 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="dividerLineBottom" destination="dpI-vP-IbP" id="jb9-Uo-psR"/>
+                <outlet property="dividerLineTop" destination="keQ-yX-WoR" id="JN1-fR-FaL"/>
                 <outlet property="itemImageView" destination="SQJ-b1-Of7" id="eor-8v-LMG"/>
                 <outlet property="itemSubtitleLabel" destination="KSQ-jq-bJZ" id="lri-8V-y3w"/>
                 <outlet property="itemTitleLabel" destination="obB-RP-FmZ" id="VR1-I0-7bb"/>

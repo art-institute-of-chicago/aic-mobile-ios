@@ -51,7 +51,7 @@ class SearchNavigationController : CardNavigationController {
 		
 		dividerLine.backgroundColor = .white
 		
-		resultsVC.scrollDelegate = self
+		resultsVC.searchDelegate = self
 		
 		// Add subviews
 		self.view.addSubview(searchBar)
@@ -96,18 +96,23 @@ class SearchNavigationController : CardNavigationController {
 		
 		super.handlePanGesture(recognizer: recognizer)
 	}
+	
+	// Start New Search
+	func loadSearch(searchText: String) {
+		SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
+		SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
+		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
+		if resultsVC.filter == .empty {
+			resultsVC.filter = .suggested
+		}
+	}
 }
 
 // MARK: UISearchBarDelegate
 extension SearchNavigationController : UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count > 0 {
-			SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
-			SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
-			SearchDataManager.sharedInstance.loadTours(searchText: searchText)
-			if resultsVC.filter == .empty {
-				resultsVC.filter = .suggested
-			}
+			loadSearch(searchText: searchText)
 		}
 		else {
 			resultsVC.filter = .empty
@@ -148,6 +153,15 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.resignFirstResponder()
 		searchTextField?.layoutIfNeeded()
+	}
+	
+	func resultsTableDidSelect(searchText: String) {
+		searchBar.text = searchText
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
+		
+		loadSearch(searchText: searchText)
 	}
 }
 

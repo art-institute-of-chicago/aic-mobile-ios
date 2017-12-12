@@ -33,4 +33,13 @@ class SuggestedSearchCell : UITableViewCell {
 			suggestedSearchLabel.text = suggestedText
 		}
 	}
+	
+	override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+		if highlighted == true {
+			self.alpha = 0.75
+		}
+		else {
+			self.alpha = 1.0
+		}
+	}
 }

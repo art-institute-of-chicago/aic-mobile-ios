@@ -239,6 +239,7 @@ class AppDataManager {
 				switch response.result {
 				case .success(let value):
 					self.events = self.dataParser.parse(eventsData: value)
+					print(value)
 				case .failure(let error):
 					print(error)
 				}

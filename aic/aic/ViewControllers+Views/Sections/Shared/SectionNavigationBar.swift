@@ -24,7 +24,7 @@ class SectionNavigationBar : UIView {
 	private let iconBottomMargin: CGFloat = 10
 	private let titleHeight: CGFloat = 40
 	private var titleTopMargin: CGFloat = 95
-	private let titleBottomMargin: CGFloat = 5
+	private var titleBottomMargin: CGFloat = 5
 	private var titleMinimumScale: CGFloat = 0.7
 	private let descriptionTopMargin: CGFloat = 65
 	
@@ -57,6 +57,7 @@ class SectionNavigationBar : UIView {
 		titleLabel.numberOfLines = 0
 		if section.nid == Section.home.rawValue {
 			titleLabel.font = .aicSectionBigTitleFont
+			titleBottomMargin = -1
 		}
 		else {
 			titleLabel.font = .aicSectionTitleFont

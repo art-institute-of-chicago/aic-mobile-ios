@@ -32,7 +32,10 @@ class HomeNavigationController : SectionNavigationController {
 
 extension HomeNavigationController : UINavigationControllerDelegate {
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-		
+		if viewController == homeVC {
+			self.sectionNavigationBar.titleLabel.text = homeVC.navigationItem.title
+			self.sectionNavigationBar.setBackButtonHidden(true)
+		}
 	}
 	
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
