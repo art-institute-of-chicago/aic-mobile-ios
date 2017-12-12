@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// ResultsSectionTitleView
+///
 /// View for TableView section title in the results page
 /// Example: 'On the map' section
 class ResultsSectionTitleView : UIView {

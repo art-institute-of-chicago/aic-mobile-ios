@@ -35,8 +35,8 @@ class ContentButtonCell : UITableViewCell {
 		itemImageView.clipsToBounds = true
 		itemTitleLabel.textColor = .white
 		itemSubtitleLabel.textColor = .aicCardDarkTextColor
-		dividerLineTop.backgroundColor = .aicMediumGrayColor
-		dividerLineBottom.backgroundColor = .aicMediumGrayColor
+		dividerLineTop.backgroundColor = .aicDividerLineDarkColor
+		dividerLineBottom.backgroundColor = .aicDividerLineDarkColor
 	}
 	
 	func setContent(imageUrl: URL, title: String, subtitle: String) {
