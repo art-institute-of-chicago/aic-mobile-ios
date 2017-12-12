@@ -19,7 +19,7 @@ class SectionsViewController : UIViewController {
     let objectVC: ObjectViewController = ObjectViewController();
 	
 	// Search Card
-	let searchVC: CardNavigationController = CardNavigationController()
+	let searchVC: SearchNavigationController = SearchNavigationController()
     
     // TabBar
     var sectionTabBarController: UITabBarController = UITabBarController()

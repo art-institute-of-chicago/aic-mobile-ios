@@ -55,7 +55,9 @@ extension UIColor {
 	static let aicHomeMemberPromptLinkColor: UIColor = UIColor(red: 48.0 / 255.0, green: 113.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)
 	
 	static let aicHomeLinkColor: UIColor = UIColor(red: 55.0 / 255.0, green: 162.0 / 255.0, blue: 165.0 / 255.0, alpha: 1.0)
-        
+	
+	static let aicCardDarkTextColor: UIColor = UIColor(white: 161.0 / 255.0, alpha: 1.0)
+	
     func lighter(_ amount : CGFloat = 0.25) -> PXColor {
         return hueColorWithBrightnessAmount(1 + amount)
     }

@@ -8,7 +8,7 @@ import UIKit
 class InfoBecomeMemberView: BaseView {
 	
 	let titleLabelHeight: CGFloat = 80
-    let joinPromptMarginTop: CGFloat = 15
+    let joinPromptMarginTop: CGFloat = 24
 	let joinTextMarginTop: CGFloat = 5
     let accessPromptMarginTop: CGFloat = 48
     let accessButtonMarginTop: CGFloat = 20

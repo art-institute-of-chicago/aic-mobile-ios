@@ -16,11 +16,13 @@ class CardNavigationController : UINavigationController {
 	}
 	var currentState: State = .hidden
 	
-	let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "downArrow"))
+	let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "cardDownArrow"))
 	
 	// Root view controller
 	// If it's a single view card (i.e. Tour Card), simply add your views to rootVC
 	let rootVC: UIViewController = UIViewController()
+	
+	var rootViewHeightConstraint: NSLayoutConstraint? = nil
 	
 	private var transitionAnimator: UIViewPropertyAnimator? = nil
 	private var animationProgress: CGFloat = 0.0
@@ -28,7 +30,7 @@ class CardNavigationController : UINavigationController {
 	private var downArrowTopMargin: CGFloat = 11.0
 	private static var topPosition: CGFloat {
 		if UIDevice().type == .iPhoneX {
-			return 30
+			return 40
 		}
 		return 20
 	}
@@ -87,10 +89,14 @@ class CardNavigationController : UINavigationController {
 		downArrowImageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: downArrowTopMargin)
 		downArrowImageView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 		
+		// TODO: makit it take into account tabBarHeight as well, then fix it also in resultsVC
+		rootVC.view.autoSetDimension(.width, toSize: UIScreen.main.bounds.width)
+		rootViewHeightConstraint = rootVC.view.autoSetDimension(.height, toSize: UIScreen.main.bounds.height - CardNavigationController.topPosition - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
+		
 		super.updateViewConstraints()
 	}
 	
-	// MARK: - Animation
+	// MARK: Animation
 	
 	/// Animates the transition, if the animation is not already running.
 	private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
@@ -124,6 +130,9 @@ class CardNavigationController : UINavigationController {
 			case .start:
 				self.currentState = state == .fullscreen ? .hidden : .fullscreen
 			case .end:
+				if self.currentState != .fullscreen && state == .fullscreen {
+					self.cardDidShowFullscreen()
+				}
 				self.currentState = state
 				if self.currentState == .hidden {
 					self.view.isHidden = true
@@ -165,7 +174,7 @@ class CardNavigationController : UINavigationController {
 			
 			// variable setup
 			let translation = recognizer.translation(in: self.view)
-			var fraction = translation.y / 800
+			var fraction = translation.y / (CardNavigationController.bottomPosition - CardNavigationController.topPosition)
 			
 			// adjust the fraction for the current state and reversed state
 			if currentState == .hidden { fraction *= -1 }
@@ -204,7 +213,10 @@ class CardNavigationController : UINavigationController {
 		}
 	}
 	
+	// MARK: Show/Hide
+	
 	func showFullscreen() {
+		cardWillShowFullscreen()
 		if self.currentState != .fullscreen {
 			animateTransitionIfNeeded(to: .fullscreen, duration: 1.0)
 		}
@@ -214,6 +226,16 @@ class CardNavigationController : UINavigationController {
 		if self.currentState != .hidden {
 			animateTransitionIfNeeded(to: .hidden, duration: 1.0)
 		}
+	}
+	
+	// MARK: Animation Callbacks
+	
+	func cardWillShowFullscreen() {
+		
+	}
+	
+	func cardDidShowFullscreen() {
+		
 	}
 }
 

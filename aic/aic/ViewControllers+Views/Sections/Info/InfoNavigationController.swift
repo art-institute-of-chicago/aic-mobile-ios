@@ -10,6 +10,9 @@ import UIKit
 
 class InfoNavigationController : SectionNavigationController {
 	let infoVC: InfoViewController
+	let museumInfoVC: MuseumInfoViewController = MuseumInfoViewController()
+	let languageVC: LanguageViewController = LanguageViewController()
+	let locationSettingsVC: LocationSettingsViewController = LocationSettingsViewController()
 	
 	override init(section: AICSectionModel) {
 		infoVC = InfoViewController(section: section)
@@ -49,48 +52,21 @@ extension InfoNavigationController : InfoViewControllerDelegate {
 	func museumInfoButtonPressed() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
-		let vc = UIViewController()
-		vc.view = UIView(frame: UIScreen.main.bounds)
-		vc.view.backgroundColor = .white
-		vc.navigationItem.title = "Museum Information"
 		
-		let label = UILabel(frame: vc.view.bounds)
-		label.text = "Museum Information"
-		label.textAlignment = .center
-		label.font = .aicTitleFont
-		vc.view.addSubview(label)
-		self.pushViewController(vc, animated: true)
+		self.pushViewController(museumInfoVC, animated: true)
 	}
 	
 	func languageButtonPressed() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
-		let vc = UIViewController()
-		vc.view = UIView(frame: UIScreen.main.bounds)
-		vc.view.backgroundColor = .white
-		vc.navigationItem.title = "Language"
 		
-		let label = UILabel(frame: vc.view.bounds)
-		label.text = "Language"
-		label.textAlignment = .center
-		label.font = .aicTitleFont
-		vc.view.addSubview(label)
-		self.pushViewController(vc, animated: true)
+		self.pushViewController(languageVC, animated: true)
 	}
 	
 	func locationButtonPressed() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
-		let vc = UIViewController()
-		vc.view = UIView(frame: UIScreen.main.bounds)
-		vc.view.backgroundColor = .white
-		vc.navigationItem.title = "Location Settings"
 		
-		let label = UILabel(frame: vc.view.bounds)
-		label.text = "Location"
-		label.textAlignment = .center
-		label.font = .aicTitleFont
-		vc.view.addSubview(label)
-		self.pushViewController(vc, animated: true)
+		self.pushViewController(locationSettingsVC, animated: true)
 	}
 }

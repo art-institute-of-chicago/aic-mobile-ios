@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="IdealSans-Book.otf">
+            <string>IdealSans-Book</string>
+        </array>
+        <array key="IdealSans-Medium.otf">
+            <string>IdealSans-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="contentButtonCell" rowHeight="72" id="8n7-xw-Jrk" customClass="ContentButtonCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8n7-xw-Jrk" id="9Ig-a1-t1e">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SQJ-b1-Of7" customClass="AICImageView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="16" y="14" width="72" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="SQJ-b1-Of7" secondAttribute="height" multiplier="8:5" id="JES-wW-2K3"/>
+                            <constraint firstAttribute="width" constant="72" id="sbs-7P-Ojq"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obB-RP-FmZ">
+                        <rect key="frame" x="103" y="16" width="92" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="230" id="KX4-UZ-1rd"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSQ-jq-bJZ">
+                        <rect key="frame" x="103" y="35" width="116.5" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="230" id="VDv-rE-q7B"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="16"/>
+                        <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmE-go-sZd">
+                        <rect key="frame" x="325" y="13" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="OIB-wh-Xe6"/>
+                            <constraint firstAttribute="width" constant="44" id="Qpf-5O-4aH"/>
+                        </constraints>
+                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                        <state key="normal" image="cardRightArrow"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KSQ-jq-bJZ" firstAttribute="top" secondItem="obB-RP-FmZ" secondAttribute="bottom" id="394-Yu-HNR"/>
+                    <constraint firstItem="KSQ-jq-bJZ" firstAttribute="leading" secondItem="obB-RP-FmZ" secondAttribute="leading" id="5gg-gw-KFl"/>
+                    <constraint firstItem="obB-RP-FmZ" firstAttribute="leading" secondItem="SQJ-b1-Of7" secondAttribute="trailing" constant="15" id="70p-Ve-48O"/>
+                    <constraint firstItem="obB-RP-FmZ" firstAttribute="top" secondItem="9Ig-a1-t1e" secondAttribute="top" constant="16" id="8B1-eI-X8o"/>
+                    <constraint firstItem="SQJ-b1-Of7" firstAttribute="leading" secondItem="9Ig-a1-t1e" secondAttribute="leading" constant="16" id="OR4-lU-Noo"/>
+                    <constraint firstItem="LmE-go-sZd" firstAttribute="centerY" secondItem="9Ig-a1-t1e" secondAttribute="centerY" id="YdW-si-PlJ"/>
+                    <constraint firstItem="SQJ-b1-Of7" firstAttribute="centerY" secondItem="9Ig-a1-t1e" secondAttribute="centerY" id="ZHG-58-Dbk"/>
+                    <constraint firstAttribute="trailing" secondItem="LmE-go-sZd" secondAttribute="trailing" constant="6" id="l6I-97-4FG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="itemImageView" destination="SQJ-b1-Of7" id="eor-8v-LMG"/>
+                <outlet property="itemSubtitleLabel" destination="KSQ-jq-bJZ" id="lri-8V-y3w"/>
+                <outlet property="itemTitleLabel" destination="obB-RP-FmZ" id="VR1-I0-7bb"/>
+            </connections>
+            <point key="canvasLocation" x="35.5" y="40"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="cardRightArrow" width="24" height="24"/>
+    </resources>
+</document>

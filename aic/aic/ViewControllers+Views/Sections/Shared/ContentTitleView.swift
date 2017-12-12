@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeCollectionTitleView : UIView {
+class ContentTitleView : UIView {
 	let titleLabel: UILabel = UILabel()
 	let seeAllButton: UIButton = UIButton()
 	
@@ -43,5 +43,20 @@ class HomeCollectionTitleView : UIView {
 		seeAllButton.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -8)
 		
 		super.updateConstraints()
+	}
+	
+	func setDarkStyle(_ enabled: Bool) {
+		if enabled == true {
+			self.backgroundColor = .aicDarkGrayColor
+			titleLabel.textColor = .white
+			seeAllButton.setTitleColor(.aicCardDarkTextColor, for: .normal)
+			seeAllButton.setImage(#imageLiteral(resourceName: "homeSeeAllArrow").colorized(.aicCardDarkTextColor), for: .normal)
+		}
+		else {
+			self.backgroundColor = .white
+			titleLabel.textColor = .aicDarkGrayColor
+			seeAllButton.setTitleColor(.aicHomeLinkColor, for: .normal)
+			seeAllButton.setImage(#imageLiteral(resourceName: "homeSeeAllArrow").colorized(.aicHomeLinkColor), for: .normal)
+		}
 	}
 }

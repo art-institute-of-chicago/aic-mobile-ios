@@ -41,7 +41,7 @@ class NewsToursSectionView: SectionView {
         listView.separatorInset = UIEdgeInsets.zero
         
         // Add Subviews
-        scrollViewContentView.insertSubview(listView, belowSubview: titleView)
+        scrollViewContentView.addSubview(listView)
         
         //addSubview(revealView)
         
@@ -83,7 +83,6 @@ class NewsToursSectionView: SectionView {
         
         listView.snp.remakeConstraints({ (make) -> Void in
             make.left.right.equalTo(listView.superview!)
-            make.top.lessThanOrEqualTo(titleView.snp.bottom).priority(Common.Layout.Priority.high.rawValue)
             make.top.equalTo(scrollViewContentView).offset(titleViewHeight).priority(Common.Layout.Priority.low.rawValue)
             
             make.height.equalTo(totalHeight).priority(Common.Layout.Priority.high.rawValue)
