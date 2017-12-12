@@ -11,13 +11,12 @@ struct AICExhibitionModel {
     let longDescription:String
     let imageUrl:URL
     let imageCropRect: CGRect?
+	let thumbnailUrl:URL
 	
 	let startDate: Date
 	let endDate: Date
     
     let revealTitle: String = "Show On Map"
-    
-    let thumbnailUrl:URL
     
     let location:CoordinateWithFloor
     

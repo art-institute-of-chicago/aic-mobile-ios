@@ -62,6 +62,7 @@
 		295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */; };
 		295AC0971FDF8FE5009A0FAF /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0961FDF8FE5009A0FAF /* LanguageViewController.swift */; };
 		295AC0991FDF923B009A0FAF /* InfoSectionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0981FDF923B009A0FAF /* InfoSectionPageView.swift */; };
+		295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */; };
 		2986A5881FBCBD5B00029E74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5871FBCBD5B00029E74 /* HomeViewController.swift */; };
 		2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */; };
 		2986A58C1FBCD38C00029E74 /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */; };
@@ -297,6 +298,7 @@
 		295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsViewController.swift; sourceTree = "<group>"; };
 		295AC0961FDF8FE5009A0FAF /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		295AC0981FDF923B009A0FAF /* InfoSectionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSectionPageView.swift; sourceTree = "<group>"; };
+		295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICEventModel.swift; sourceTree = "<group>"; };
 		2986A5871FBCBD5B00029E74 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationController.swift; sourceTree = "<group>"; };
 		2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
@@ -794,6 +796,8 @@
 				E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */,
 				E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */,
 				E4D159381CBAE8C100536B4D /* AICCoordinateWithFloor.swift */,
+				295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */,
+				E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */,
 				E411DE7E1CCD37A800E22047 /* AICGalleryModel.swift */,
 				E47A97191CF262760041D0A6 /* AICInstructionsScreenModel.swift */,
 				E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */,
@@ -803,7 +807,6 @@
 				E4FFC6EB1D00B7FD0082818D /* AICMessageLargeModel.swift */,
 				E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */,
 				2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */,
-				E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */,
 				E425B3CD1C97649300A19F6F /* AICObjectModel.swift */,
 				293127821FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift */,
 				293127841FDF3B0B008BFAB1 /* AICSearchedAutocompleteStringModel.swift */,
@@ -1525,6 +1528,7 @@
 				E4D790E41C90CEC10033EE0A /* MapTextAnnotation.swift in Sources */,
 				29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */,
 				E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */,
+				295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */,
 				E47306F01D23076900A77254 /* InstructionsPageViewController.swift in Sources */,
 				E48816E01C8A2BC600A40E84 /* MapObjectAnnotationView.swift in Sources */,
 				E415ABD61C7298420093B719 /* _InfoSectionViewController.swift in Sources */,

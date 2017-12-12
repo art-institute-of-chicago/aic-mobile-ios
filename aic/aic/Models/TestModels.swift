@@ -67,9 +67,9 @@ class TestModels {
                                             longDescription:descriptions[i],
                                             imageUrl: imageUrl,
                                             imageCropRect: nil,
+											thumbnailUrl: thumbUrl,
 											startDate: Date(),
 											endDate: Date(),
-                                            thumbnailUrl: thumbUrl,
                                             location: location,
                                             bannerString: nil
             )

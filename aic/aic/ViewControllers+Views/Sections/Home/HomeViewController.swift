@@ -192,7 +192,7 @@ extension HomeViewController : UICollectionViewDataSource {
 			return AppDataManager.sharedInstance.exhibitions.count
 		}
 		else if collectionView == eventsCollectionView {
-			return AppDataManager.sharedInstance.app.tours.count
+			return AppDataManager.sharedInstance.events.count
 		}
 		return 0
 	}
@@ -210,7 +210,7 @@ extension HomeViewController : UICollectionViewDataSource {
 		}
 		else if collectionView == eventsCollectionView {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEventCell.reuseIdentifier, for: indexPath) as! HomeEventCell
-			cell.eventModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			cell.eventModel = AppDataManager.sharedInstance.events[indexPath.row]
 			return cell
 		}
 		return UICollectionViewCell()

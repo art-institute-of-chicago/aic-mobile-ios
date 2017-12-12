@@ -32,7 +32,7 @@ struct Common {
 
     // MARK: Data
     struct DataConstants {
-        static let totalDataFeeds = 2
+        static let totalDataFeeds = 3
 
         struct NewsFeed {
             static var Featured = "http://www.artic.edu/exhibitions-json/featured-exhibitions"

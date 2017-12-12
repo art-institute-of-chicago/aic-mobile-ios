@@ -28,7 +28,7 @@ class HomeEventCell : UICollectionViewCell {
 		shortDescriptionTextView.textContainerInset.left = -4
 	}
 	
-	var eventModel: AICTourModel? {
+	var eventModel: AICEventModel? {
 		didSet {
 			guard let eventModel = self.eventModel else {
 				return
@@ -36,8 +36,8 @@ class HomeEventCell : UICollectionViewCell {
 			
 			// set up UI
 			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
-			eventTitleLabel.text = eventModel.title
-			shortDescriptionTextView.text = eventModel.shortDescription
+			eventTitleLabel.text = eventModel.title.stringByDecodingHTMLEntities
+			shortDescriptionTextView.text = eventModel.shortDescription.stringByDecodingHTMLEntities
 		}
 	}
 }

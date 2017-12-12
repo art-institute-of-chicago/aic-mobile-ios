@@ -150,7 +150,7 @@ extension AudioGuideNavigationController : UICollectionViewDataSource {
             cell.button.setTitle(titleLabel, for: UIControlState())
         }
         
-        if (indexPath as NSIndexPath).row == 9 || (indexPath as NSIndexPath).row == 11 {
+        if (indexPath as NSIndexPath).row == 9 {
             cell.hideBorder()
         }
         
