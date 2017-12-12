@@ -46,11 +46,10 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 extension HomeNavigationController : HomeViewControllerDelegate {
 	func showSeeAllTours() {
 		self.sectionNavigationBar.collapse()
-		self.sectionNavigationBar.titleLabel.text = "Tours"
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
-		let seeAllVC = SeeAllViewController()
-		seeAllVC.contentItems = AppDataManager.sharedInstance.app.tours
+		let seeAllVC = SeeAllViewController(contentType: .tours)
+		seeAllVC.tourItems = AppDataManager.sharedInstance.app.tours
 		self.pushViewController(seeAllVC, animated: true)
 	}
 	
@@ -60,8 +59,12 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 	}
 	
 	func showSeeAllEvents() {
-//		self.sectionNavigationBar.collapse()
-//		self.sectionNavigationBar.titleLabel.text = "Events"
+		self.sectionNavigationBar.collapse()
+		self.sectionNavigationBar.setBackButtonHidden(false)
+		
+		let seeAllVC = SeeAllViewController(contentType: .events)
+		seeAllVC.eventItems = AppDataManager.sharedInstance.events
+		self.pushViewController(seeAllVC, animated: true)
 	}
 }
 

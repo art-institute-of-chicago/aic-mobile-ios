@@ -171,7 +171,7 @@ class HomeViewController : SectionViewController {
 	}
 	
 	@objc private func seeAllEventsButtonPressed(button: UIButton) {
-		self.delegate?.showSeeAllTours()
+		self.delegate?.showSeeAllEvents()
 	}
 }
 
