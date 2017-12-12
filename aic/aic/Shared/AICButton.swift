@@ -34,7 +34,7 @@ class AICButton: UIButton {
 		layer.borderColor = buttonColor.cgColor
 		
 		let frameSize = isSmall ? smallSize : mediumSize
-		self.autoSetDimensions(to: CGSize(width: frameSize.width - (borderWidth * 2.0), height: frameSize.height - (borderWidth * 2.0)))
+		self.autoSetDimensions(to: CGSize(width: frameSize.width - (borderWidth), height: frameSize.height - (borderWidth)))
     }
     
     required init?(coder aDecoder: NSCoder) {

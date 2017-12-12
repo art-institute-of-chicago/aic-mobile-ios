@@ -36,9 +36,10 @@ class ContentButtonCell : UITableViewCell {
 	}
 	
 	func setContent(imageUrl: URL, title: String, subtitle: String) {
-		if contentLoaded == true {
-			return
-		}
+		// TODO: cache and don't load unless necessary
+//		if contentLoaded == true {
+//			return
+//		}
 		
 		itemImageView.loadImageAsynchronously(fromUrl: imageUrl, withCropRect: nil)
 		itemTitleLabel.text = title
@@ -46,18 +47,5 @@ class ContentButtonCell : UITableViewCell {
 		
 		contentLoaded = true
 	}
-	
-//	var exhibitionModel: AICExhibitionModel? {
-//		didSet {
-//			guard let exhibitionModel = self.exhibitionModel else {
-//				return
-//			}
-//			
-//			// set up UI
-//			exhibitionImageView.
-//			exhibitionTitleLabel.text = exhibitionModel.title
-//			throughDateTextView.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
-//		}
-//	}
 }
 

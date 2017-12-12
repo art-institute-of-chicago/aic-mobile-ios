@@ -27,8 +27,8 @@ class SearchDataManager {
 	private var loadFailure: Bool = false
 	
 	func loadAutocompleteStrings(searchText: String) {
-		// TODO: fix blank space in url!
-		let url = Common.DataConstants.dataHubURL + "autocomplete?q=" + searchText
+		var url = Common.DataConstants.dataHubURL + "autocomplete?q=" + searchText
+		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
 		Alamofire.request(request as URLRequestConvertible)
@@ -46,7 +46,8 @@ class SearchDataManager {
 	}
 	
 	func loadArtworks(searchText: String) {
-		let url = Common.DataConstants.dataHubURL + "artworks/search?q=" + searchText + "&limit=20"
+		var url = Common.DataConstants.dataHubURL + "artworks/search?q=" + searchText + "&limit=20"
+		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
 		Alamofire.request(request as URLRequestConvertible)
@@ -70,7 +71,8 @@ class SearchDataManager {
 	}
 	
 	func loadTours(searchText: String) {
-		let url = Common.DataConstants.dataHubURL + "tours/search?q=" + searchText + "&limit=20"
+		var url = Common.DataConstants.dataHubURL + "tours/search?q=" + searchText + "&limit=20"
+		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
 		Alamofire.request(request as URLRequestConvertible)
