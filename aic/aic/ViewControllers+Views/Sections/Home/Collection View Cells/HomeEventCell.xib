@@ -37,7 +37,7 @@
                             <constraint firstAttribute="width" secondItem="S93-uM-s5O" secondAttribute="height" multiplier="95:59" id="4Yt-36-izh"/>
                         </constraints>
                     </imageView>
-                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-hU-KYM">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-hU-KYM">
                         <rect key="frame" x="0.0" y="143" width="285" height="34"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qtZ-TP-xMf">
@@ -108,7 +108,10 @@
             <connections>
                 <outlet property="eventImageView" destination="S93-uM-s5O" id="3QZ-p0-uI2"/>
                 <outlet property="eventTitleLabel" destination="syi-Cq-fRC" id="ekY-u1-xdB"/>
+                <outlet property="hoursMinutesLabel" destination="CfP-SB-7CD" id="DSg-fc-fBA"/>
+                <outlet property="monthDayLabel" destination="qtZ-TP-xMf" id="nMI-it-eG5"/>
                 <outlet property="shortDescriptionTextView" destination="aes-vj-RjI" id="0Sx-5S-OH0"/>
+                <outlet property="transparentOverlayView" destination="v7a-hU-KYM" id="jxM-9p-YlB"/>
             </connections>
             <point key="canvasLocation" x="-33.5" y="-42"/>
         </collectionViewCell>

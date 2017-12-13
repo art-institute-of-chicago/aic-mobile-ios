@@ -17,6 +17,7 @@ class HomeTourCell : UICollectionViewCell {
 	@IBOutlet var tourImageView: AICImageView!
 	@IBOutlet var tourTitleLabel: UILabel!
 	@IBOutlet var shortDescriptionTextView: UITextView!
+	@IBOutlet var transparentOverlayView: UIView!
 	@IBOutlet var stopsNumberLabel: UILabel!
 	@IBOutlet var clockImageView: UIImageView!
 	@IBOutlet var durationLabel: UILabel!
@@ -29,6 +30,7 @@ class HomeTourCell : UICollectionViewCell {
 		tourTitleLabel.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
+		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 	}
 	
 	var tourModel: AICTourModel? = nil {

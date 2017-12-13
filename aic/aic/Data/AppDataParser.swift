@@ -49,6 +49,9 @@ class AppDataParser {
                 }
             }
         }
+		
+		// Order by recently opened
+		newsItems = newsItems.sorted(by: { $0.startDate.compare($1.startDate) == .orderedAscending })
         
         return newsItems
     }

@@ -112,7 +112,6 @@ class AppDataManager {
                 self.app = self.dataParser.parse(appData: cachedAppData)
                 self.updateDownloadProgress()
                 self.downloadNewsFeeds()
-				self.downloadEvents()
             }
             
         }
@@ -220,7 +219,7 @@ class AppDataManager {
 					"must": [
 						[
 							"range": [
-								"start_at": ["lte": "now+2d"]
+								"start_at": ["lte": "now+7d"]
 							]
 						],
 						[
@@ -239,7 +238,6 @@ class AppDataManager {
 				switch response.result {
 				case .success(let value):
 					self.events = self.dataParser.parse(eventsData: value)
-					print(value)
 				case .failure(let error):
 					print(error)
 				}
@@ -292,6 +290,23 @@ class AppDataManager {
     func getTour(forID id:Int) -> AICTourModel? {
         return app.tours.filter({ $0.nid == id }).first
     }
+	
+	func getEventsForEarliestDay() -> [AICEventModel] {
+		// set earliest day to 1 year in the future
+		var components = DateComponents()
+		components.setValue(1, for: .year)
+		let now: Date = Date()
+		var earliestDay = Calendar.current.date(byAdding: components, to: now)!
+		
+		// find earliest day
+		for event in self.events {
+			if event.startDate < earliestDay {
+				earliestDay = event.startDate
+			}
+		}
+		
+		return self.events.filter({ $0.startDate == earliestDay })
+	}
     
     // Find the tours this object is on, and filter out a tour if sepecified
     func getRelatedTours(forObject object:AICObjectModel, excludingTour:AICTourModel? = nil) -> [AICTourModel] {

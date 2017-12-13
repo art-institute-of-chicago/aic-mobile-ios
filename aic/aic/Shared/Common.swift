@@ -187,6 +187,17 @@ struct Common {
                 }
             }
         }
+		
+		static var cardTopPosition: CGFloat {
+			if UIDevice().type == .iPhoneX {
+				return 40
+			}
+			return 20
+		}
+		
+		static var cardContentHeight: CGFloat {
+			return UIScreen.main.bounds.height - cardTopPosition - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
+		}
 
         static let showTabBarTitles = true
 
@@ -512,7 +523,23 @@ struct Common {
 			let endDateFormatted = dateFormatter.string(from: endDate)
 			return "Through \(endDateFormatted)"
 		}
-
+		
+		static func monthDayString(date: Date) -> String {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "MMMM d"
+			let dateFormatted = dateFormatter.string(from: date)
+			return dateFormatted
+		}
+		
+		static func hoursMinutesString(date: Date) -> String {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "h:mma"
+			dateFormatter.amSymbol = "am"
+			dateFormatter.pmSymbol = "pm"
+			let dateFormatted = dateFormatter.string(from: date)
+			return dateFormatted
+		}
+		
         // Background images
         static let backgroundAnimationTime = 3.0
         static let memberCardImagesTotal = 3

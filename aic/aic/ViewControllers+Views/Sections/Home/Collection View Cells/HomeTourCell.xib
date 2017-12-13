@@ -37,7 +37,7 @@
                             <constraint firstAttribute="width" secondItem="d78-wj-ThX" secondAttribute="height" multiplier="95:59" id="GQ7-yf-l3j"/>
                         </constraints>
                     </imageView>
-                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfs-fw-j1y">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfs-fw-j1y">
                         <rect key="frame" x="0.0" y="143" width="285" height="34"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTourStopIcon" translatesAutoresizingMaskIntoConstraints="NO" id="f41-vg-e96">
@@ -131,6 +131,7 @@
                 <outlet property="stopsNumberLabel" destination="fuT-CY-308" id="QX0-9i-MsP"/>
                 <outlet property="tourImageView" destination="d78-wj-ThX" id="bhb-Z2-a5T"/>
                 <outlet property="tourTitleLabel" destination="4c9-Os-Dao" id="ImP-w1-WHx"/>
+                <outlet property="transparentOverlayView" destination="bfs-fw-j1y" id="nfx-vf-otH"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54"/>
         </collectionViewCell>

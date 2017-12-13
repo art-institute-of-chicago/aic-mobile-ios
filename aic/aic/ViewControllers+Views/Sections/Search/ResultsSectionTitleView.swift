@@ -12,21 +12,21 @@ import UIKit
 ///
 /// View for TableView section title in the results page
 /// Example: 'On the map' section
-class ResultsSectionTitleView : UIView {
+class ResultsSectionTitleView : UITableViewHeaderFooterView {
+	static let reuseIdentifier = "resultsSectionTitleView"
 	
 	let titleLabel: UILabel = UILabel()
-
-	init(title: String) {
-		super.init(frame: CGRect.zero)
+	
+	override init(reuseIdentifier: String?) {
+		super.init(reuseIdentifier: reuseIdentifier)
 		
-		self.backgroundColor = .aicDarkGrayColor
-
-		titleLabel.text = title
+		self.contentView.backgroundColor = .aicDarkGrayColor
+		
 		titleLabel.font = .aicSearchResultsSectionTitleFont
 		titleLabel.textColor = .aicCardDarkTextColor
 		titleLabel.numberOfLines = 0
 		
-		addSubview(titleLabel)
+		self.contentView.addSubview(titleLabel)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
