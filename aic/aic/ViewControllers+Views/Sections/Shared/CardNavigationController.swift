@@ -129,6 +129,9 @@ class CardNavigationController : UINavigationController {
 				if self.currentState != .fullscreen && state == .fullscreen {
 					self.cardDidShowFullscreen()
 				}
+				else if self.currentState != .hidden && state == .hidden {
+					self.cardDidHide()
+				}
 				self.currentState = state
 				if self.currentState == .hidden {
 					self.view.isHidden = true
@@ -219,6 +222,7 @@ class CardNavigationController : UINavigationController {
 	}
 	
 	func hide() {
+		cardWillHide()
 		if self.currentState != .hidden {
 			animateTransitionIfNeeded(to: .hidden, duration: 0.5)
 		}
@@ -231,6 +235,14 @@ class CardNavigationController : UINavigationController {
 	}
 	
 	func cardDidShowFullscreen() {
+		
+	}
+	
+	func cardWillHide() {
+		
+	}
+	
+	func cardDidHide() {
 		
 	}
 }

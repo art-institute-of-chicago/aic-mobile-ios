@@ -125,12 +125,12 @@ class AudioGuideNavigationController : SectionNavigationController {
 		if collectionView.superview != nil {
 			collectionView.autoSetDimensions(to: collectionView.frame.size)
 			collectionView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
-			NSLayoutConstraint.autoSetPriority(.defaultLow) {
-				collectionView.autoAlignAxis(.horizontal, toSameAxisOf: self.view, withOffset: 50.0)
+			
+			var collectionViewTopOffset: CGFloat = -25
+			if UIDevice().type == .iPhoneX {
+				collectionViewTopOffset = 15
 			}
-			NSLayoutConstraint.autoSetPriority(.defaultHigh) {
-				collectionView.autoPinEdge(.top, to: .bottom, of: sectionNavigationBar, withOffset: -25.0, relation: .greaterThanOrEqual)
-			}
+			collectionView.autoPinEdge(.top, to: .bottom, of: sectionNavigationBar, withOffset: collectionViewTopOffset, relation: .greaterThanOrEqual)
 		}
 		super.updateViewConstraints()
 	}

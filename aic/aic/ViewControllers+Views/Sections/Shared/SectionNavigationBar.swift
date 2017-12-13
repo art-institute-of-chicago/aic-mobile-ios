@@ -11,7 +11,6 @@ import UIKit
 class SectionNavigationBar : UIView {
 	let backdropImage:UIImageView = UIImageView()
 	let backButton: UIButton = UIButton()
-	let searchButton: UIButton = UIButton()
 	let iconImage:UIImageView = UIImageView()
 	let titleLabel:UILabel = UILabel()
 	let descriptionLabel:UILabel = UILabel()
@@ -46,9 +45,6 @@ class SectionNavigationBar : UIView {
 		backButton.setImage(#imageLiteral(resourceName: "backButton"), for: .normal)
 		backButton.contentEdgeInsets = backButtonContentInsets
 		setBackButtonHidden(true)
-		
-		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
-		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
 		
 		iconImage.image = section.icon
 		
@@ -95,7 +91,6 @@ class SectionNavigationBar : UIView {
 			addSubview(descriptionLabel)
 		}
 		addSubview(backButton)
-		addSubview(searchButton)
 		
 		self.updateConstraints()
 		self.layoutIfNeeded()
@@ -139,9 +134,6 @@ class SectionNavigationBar : UIView {
 	override func updateConstraints() {
 		backButton.autoPinEdge(.bottom, to: .top, of: self, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
 		backButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: backButtonLeftMargin)
-		
-		searchButton.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -6)
-		searchButton.autoPinEdge(.bottom, to: .top, of: self, withOffset: Common.Layout.navigationBarMinimizedHeight - 3)
 		
 		if let _ = self.backdropImage.image {
 			backdropImage.autoPinEdge(.top, to: .top, of: self)

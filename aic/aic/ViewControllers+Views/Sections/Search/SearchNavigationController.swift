@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SearchCardDelegate : class {
+	func searchCardDidHide()
+}
+
 class SearchNavigationController : CardNavigationController {
 	let backButton: UIButton = UIButton()
 	let searchBar: UISearchBar = UISearchBar()
@@ -20,6 +24,8 @@ class SearchNavigationController : CardNavigationController {
 	var searchBarLeadingConstraint: NSLayoutConstraint? = nil
 	var searchBarActiveLeading: CGFloat = 2
 	var searchBarInactiveLeading: CGFloat = 32
+	
+	weak var searchCardDelegate: SearchCardDelegate? = nil
 	
 	override init() {
 		super.init()
@@ -101,9 +107,15 @@ class SearchNavigationController : CardNavigationController {
 	}
 	
 	override func cardWillShowFullscreen() {
-		// show keyboard when the card shows
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.becomeFirstResponder()
+		if viewControllers.count < 2 {
+			// show keyboard when the card shows
+			let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+			searchTextField?.becomeFirstResponder()
+		}
+	}
+	
+	override func cardDidHide() {
+		self.searchCardDelegate?.searchCardDidHide()
 	}
 	
 	override func handlePanGesture(recognizer: UIPanGestureRecognizer) {

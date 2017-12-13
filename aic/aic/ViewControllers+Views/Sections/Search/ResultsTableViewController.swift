@@ -131,12 +131,7 @@ extension ResultsTableViewController {
 				// artwork cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
-				if indexPath.row == 0  {
-					cell.dividerLineTop.isHidden = true
-				}
-				else if indexPath.row == artworkItems.count-1 || indexPath.row == 2 {
-					cell.dividerLineBottom.isHidden = true
-				}
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
 				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: "Gallery Name")
 				return cell
 			}
@@ -144,24 +139,14 @@ extension ResultsTableViewController {
 				// tour cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let tour = tourItems[indexPath.row]
-				if indexPath.row == 0  {
-					cell.dividerLineTop.isHidden = true
-				}
-				else if indexPath.row == tourItems.count-1 || indexPath.row == 2 {
-					cell.dividerLineBottom.isHidden = true
-				}
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
 				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "Gallery Name")
 				return cell
 			}
 			else if indexPath.section == 3 {
 				// exhibition cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-				if indexPath.row == 0  {
-					cell.dividerLineTop.isHidden = true
-				}
-				else if indexPath.row == artworkItems.count-1 || indexPath.row == 2 {
-					cell.dividerLineBottom.isHidden = true
-				}
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
 				return cell
 			}
 			else if indexPath.section == 4 {
@@ -171,6 +156,22 @@ extension ResultsTableViewController {
 			}
 		}
 		return UITableViewCell()
+	}
+	
+	func setupDividerLines(_ cell: ContentButtonCell, indexPath: IndexPath, itemsCount: Int) {
+		if itemsCount == 1 {
+			cell.dividerLineTop.isHidden = true
+			cell.dividerLineBottom.isHidden = true
+		}
+		else if itemsCount == 2 {
+			if indexPath.row == 0 { cell.dividerLineTop.isHidden = true }
+			if indexPath.row == 1 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = true }
+		}
+		else if itemsCount >= 3 {
+			if indexPath.row == 0 { cell.dividerLineTop.isHidden = true }
+			if indexPath.row == 1 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = true }
+			if indexPath.row == 2 { cell.dividerLineBottom.isHidden = true }
+		}
 	}
 }
 
