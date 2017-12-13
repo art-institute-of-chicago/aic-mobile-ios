@@ -50,6 +50,8 @@ extension UIColor {
 	
 	static let aicDividerLineColor: UIColor = UIColor(white: 216.0 / 255.0, alpha: 1.0)
 	
+	static let aicDividerLineDarkColor: UIColor = UIColor(white: 64.0 / 255.0, alpha: 1.0)
+	
 	static let aicHomeMemberPromptBackgroundColor: UIColor = UIColor(red: 199.0 / 255.0, green: 226.0 / 255.0, blue: 227.0 / 255.0, alpha: 1.0)
 	
 	static let aicHomeMemberPromptLinkColor: UIColor = UIColor(red: 48.0 / 255.0, green: 113.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)

@@ -31,7 +31,7 @@ class AppDataParser {
 	private var audioFiles = [AICAudioFileModel]()
 	private var objects = [AICObjectModel]()
     
-    // MARK: News
+    // MARK: Exhibitions
     func parse(newsItemsData itemsData:Data) -> [AICExhibitionModel] {
         let json = JSON(data: itemsData)
         
@@ -49,6 +49,9 @@ class AppDataParser {
                 }
             }
         }
+		
+		// Order by recently opened
+		newsItems = newsItems.sorted(by: { $0.startDate.compare($1.startDate) == .orderedAscending })
         
         return newsItems
     }
@@ -107,13 +110,73 @@ class AppDataParser {
                                 longDescription: description,
                                 imageUrl: imageURL,
                                 imageCropRect: imageCropRect,
+								thumbnailUrl: thumbnailURL,
 								startDate: startDate,
 								endDate: endDate,
-                                thumbnailUrl: thumbnailURL,
                                 location: location!,
                                 bannerString: bannerString
         )
     }
+	
+	// MARK: Events
+	
+	func parse(eventsData data: Data) -> [AICEventModel] {
+		var eventItems:[AICEventModel] = []
+		
+		let json = JSON(data: data)
+		
+		do {
+			try handleParseError({ [unowned self] in
+				
+				let dataJson: JSON = json["data"]
+				for eventJson: JSON in dataJson.arrayValue {
+					let eventItem = try self.parse(eventJson: eventJson)
+					eventItems.append(eventItem)
+				}
+			})
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse AIC Event Items:\n\(json)\n")
+			}
+		}
+		
+		return eventItems
+	}
+	
+	func parse(eventJson: JSON) throws -> AICEventModel {
+		let title = try getString(fromJSON: eventJson, forKey: "title")
+		let longDescription = try getString(fromJSON: eventJson, forKey: "description")
+		let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description")
+		let imageURL = try getURL(fromJSON: eventJson, forKey: "image")
+		
+		// Get date exibition ends
+		let startDateString = try getString(fromJSON: eventJson, forKey: "start_at")
+		let endDateString = try getString(fromJSON: eventJson, forKey: "end_at")
+		
+		let dateFormatter = DateFormatter()
+		dateFormatter.locale = Locale(identifier: "en_US")
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+		
+		// TODO: fix the timezone
+		
+		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
+			throw ParseError.newsBadDateString(dateString: startDateString)
+		}
+		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
+			throw ParseError.newsBadDateString(dateString: endDateString)
+		}
+		
+		// Return news item
+		return AICEventModel(title: title,
+							 shortDescription: shortDescription,
+							 longDescription: longDescription,
+							 imageUrl: imageURL,
+							 startDate: startDate,
+							 endDate: endDate
+		)
+	}
     
     // MARK: App Data
     func parse(appData data:Data) -> AICAppDataModel {
@@ -678,7 +741,7 @@ class AppDataParser {
         
         let array = json[arrayKey]
         
-        if array != nil {
+        if array != JSON.null {
             
             if let int = array[index].int {
                 return int

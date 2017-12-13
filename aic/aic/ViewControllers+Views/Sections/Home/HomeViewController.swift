@@ -17,16 +17,18 @@ protocol HomeViewControllerDelegate : class {
 class HomeViewController : SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
 	let memberPromptView: HomeMemberPromptView = HomeMemberPromptView()
-	let toursTitleView: ContentTitleView = ContentTitleView(title: "Tours")
+	let toursTitleView: HomeContentTitleView = HomeContentTitleView(title: "Tours")
 	let toursCollectionView: UICollectionView = createToursEventsCollectionView()
 	let exhibitionsDividerLine: UIView = createDividerLine()
-	let exhibitionsTitleView: ContentTitleView = ContentTitleView(title: "On View")
+	let exhibitionsTitleView: HomeContentTitleView = HomeContentTitleView(title: "On View")
 	let exhibitionsCollectionView: UICollectionView = createExhibitionsCollectionView()
 	let eventsDividerLine: UIView = createDividerLine()
-	let eventsTitleView: ContentTitleView = ContentTitleView(title: "Events")
+	let eventsTitleView: HomeContentTitleView = HomeContentTitleView(title: "Events")
 	let eventsCollectionView: UICollectionView = createToursEventsCollectionView()
 	
-	let bottomMargin: CGFloat = 100
+	let eventItems: [AICEventModel] = AppDataManager.sharedInstance.getEventsForEarliestDay()
+	
+	let bottomMargin: CGFloat = 40
 	
 	weak var delegate: HomeViewControllerDelegate? = nil
 	
@@ -167,11 +169,11 @@ class HomeViewController : SectionViewController {
 	}
 	
 	@objc private func seeAllExhibitionsButtonPressed(button: UIButton) {
-		self.delegate?.showSeeAllTours()
+		self.delegate?.showSeeAllExhibitions()
 	}
 	
 	@objc private func seeAllEventsButtonPressed(button: UIButton) {
-		self.delegate?.showSeeAllTours()
+		self.delegate?.showSeeAllEvents()
 	}
 }
 
@@ -192,7 +194,7 @@ extension HomeViewController : UICollectionViewDataSource {
 			return AppDataManager.sharedInstance.exhibitions.count
 		}
 		else if collectionView == eventsCollectionView {
-			return AppDataManager.sharedInstance.app.tours.count
+			return eventItems.count
 		}
 		return 0
 	}
@@ -210,7 +212,7 @@ extension HomeViewController : UICollectionViewDataSource {
 		}
 		else if collectionView == eventsCollectionView {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeEventCell.reuseIdentifier, for: indexPath) as! HomeEventCell
-			cell.eventModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			cell.eventModel = eventItems[indexPath.row]
 			return cell
 		}
 		return UICollectionViewCell()

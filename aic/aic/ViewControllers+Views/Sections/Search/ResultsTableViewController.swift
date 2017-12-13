@@ -9,6 +9,8 @@
 import UIKit
 
 protocol ResultsTableViewControllerDelegate : class {
+	func resultsTableDidSelect(searchText: String)
+	func resultsTableDidSelect(tour: AICTourModel)
 	func resultsTableViewWillScroll()
 }
 
@@ -28,7 +30,7 @@ class ResultsTableViewController : UITableViewController {
 	let contentTitleHeight: CGFloat = 65
 	let resultsSectionTitleHeight: CGFloat = 50
 	
-	weak var scrollDelegate: ResultsTableViewControllerDelegate? = nil
+	weak var searchDelegate: ResultsTableViewControllerDelegate? = nil
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -51,13 +53,15 @@ class ResultsTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "SuggestedSearchCell", bundle: Bundle.main), forCellReuseIdentifier: SuggestedSearchCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "MapItemsCollectionContainerCell", bundle: Bundle.main), forCellReuseIdentifier: MapItemsCollectionContainerCell.reuseIdentifier)
+		self.tableView.register(ResultsSectionTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsSectionTitleView.reuseIdentifier)
+		self.tableView.register(ResultsContentTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsContentTitleView.reuseIdentifier)
 	}
 }
 
 // MARK: Scroll events
 extension ResultsTableViewController {
 	override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-		self.scrollDelegate?.resultsTableViewWillScroll()
+		self.searchDelegate?.resultsTableViewWillScroll()
 	}
 }
 
@@ -106,6 +110,7 @@ extension ResultsTableViewController {
 		if filter == .empty {
 			if indexPath.section == 0 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: SuggestedSearchCell.reuseIdentifier, for: indexPath) as! SuggestedSearchCell
+				cell.suggestedSearchLabel.textColor = .white
 				cell.suggestedSearchLabel.text = promotedSearchStringItems[indexPath.row]
 				return cell
 			}
@@ -118,6 +123,7 @@ extension ResultsTableViewController {
 		else if filter == .suggested {
 			if indexPath.section == 0 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: SuggestedSearchCell.reuseIdentifier, for: indexPath) as! SuggestedSearchCell
+				cell.suggestedSearchLabel.textColor = .aicCardDarkTextColor
 				cell.suggestedSearchLabel.text = autocompleteStringItems[indexPath.row]
 				return cell
 			}
@@ -125,6 +131,12 @@ extension ResultsTableViewController {
 				// artwork cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
+				if indexPath.row == 0  {
+					cell.dividerLineTop.isHidden = true
+				}
+				else if indexPath.row == artworkItems.count-1 || indexPath.row == 2 {
+					cell.dividerLineBottom.isHidden = true
+				}
 				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: "Gallery Name")
 				return cell
 			}
@@ -132,12 +144,24 @@ extension ResultsTableViewController {
 				// tour cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let tour = tourItems[indexPath.row]
+				if indexPath.row == 0  {
+					cell.dividerLineTop.isHidden = true
+				}
+				else if indexPath.row == tourItems.count-1 || indexPath.row == 2 {
+					cell.dividerLineBottom.isHidden = true
+				}
 				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "Gallery Name")
 				return cell
 			}
 			else if indexPath.section == 3 {
 				// exhibition cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+				if indexPath.row == 0  {
+					cell.dividerLineTop.isHidden = true
+				}
+				else if indexPath.row == artworkItems.count-1 || indexPath.row == 2 {
+					cell.dividerLineBottom.isHidden = true
+				}
 				return cell
 			}
 			else if indexPath.section == 4 {
@@ -148,45 +172,63 @@ extension ResultsTableViewController {
 		}
 		return UITableViewCell()
 	}
-	
+}
+
+// MARK: Layout
+extension ResultsTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		if filter == .empty {
 			if section <= 1 {
 				let titles = ["Search Content", "On the Map"]
-				let titleView = ResultsSectionTitleView(title: titles[section])
+				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
+				titleView.titleLabel.text = titles[section]
 				return titleView
 			}
 		}
 		if filter == .suggested {
-			if section > 0 && section <= 3 {
-				let titles = ["Artworks", "Tours", "Exhibitions"]
-				let titleString = titles[section-1]
-				let titleView = ContentTitleView(title: titleString)
-				titleView.setDarkStyle(true)
+			if section == 1 && artworkItems.count > 0 {
+				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
+				titleView.contentTitleLabel.text = "Artworks"
+				return titleView
+			}
+			else if section == 2 && tourItems.count > 0 {
+				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
+				titleView.contentTitleLabel.text = "Tours"
+				return titleView
+			}
+			else if section == 3 && exhibitionItems.count > 0 {
+				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
+				titleView.contentTitleLabel.text = "Exhibitions"
 				return titleView
 			}
 			else if section == 4 {
-				let titleView = ResultsSectionTitleView(title: "On the Map")
+				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
+				titleView.titleLabel.text = "On the Map"
 				return titleView
 			}
 		}
 		return nil
 	}
-}
-
-// MARK: Layout
-extension ResultsTableViewController {
+	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		if filter == .empty {
+			return resultsSectionTitleHeight
+		}
 		if filter == .suggested {
-			if section > 0 && section <= 3 {
+			if section == 1 && artworkItems.count > 0 {
+				return contentTitleHeight
+			}
+			else if section == 2 && tourItems.count > 0 {
+				return contentTitleHeight
+			}
+			else if section == 3 && exhibitionItems.count > 0 {
 				return contentTitleHeight
 			}
 			else if section == 4 {
 				return resultsSectionTitleHeight
 			}
-			return 0
 		}
-		return resultsSectionTitleHeight
+		return 0
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -216,5 +258,30 @@ extension ResultsTableViewController {
 			}
 		}
 		return ContentButtonCell.cellHeight
+	}
+}
+
+// MARK: Interaction
+extension ResultsTableViewController {
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if filter == .empty {
+			if indexPath.section == 0 {
+				let searchText = promotedSearchStringItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(searchText: searchText)
+			}
+		}
+		else if filter == .suggested {
+			if indexPath.section == 0 {
+				let searchText = autocompleteStringItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(searchText: searchText)
+			}
+			else if indexPath.section == 1 {
+				// select artwork
+			}
+			else if indexPath.section == 2 {
+				let tour = tourItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(tour: tour)
+			}
+		}
 	}
 }

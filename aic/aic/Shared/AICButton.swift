@@ -38,6 +38,14 @@ class AICButton: UIButton {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+		buttonColor = .aicHomeColor
+		super.init(coder: aDecoder)
+		
+		backgroundColor = buttonColor
+		setTitleColor(.white, for: .normal)
+		setTitleColor(.aicInfoColor, for: .highlighted)
+		titleLabel!.font = .aicButtonFont
+		layer.borderWidth = borderWidth
+		layer.borderColor = buttonColor.cgColor
     }
 }

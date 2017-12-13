@@ -66,10 +66,10 @@ extension MapItemsCollectionContainerCell : UICollectionViewDelegate {
 extension MapItemsCollectionContainerCell : UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section == 0 {
-			return 5
+			return 3
 		}
 		else {
-			return min(objectModels.count, 5)
+			return 5 //min(objectModels.count, 5)
 		}
 	}
 	

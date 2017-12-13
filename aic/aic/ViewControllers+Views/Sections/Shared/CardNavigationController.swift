@@ -28,13 +28,9 @@ class CardNavigationController : UINavigationController {
 	private var animationProgress: CGFloat = 0.0
 	
 	private var downArrowTopMargin: CGFloat = 11.0
-	private static var topPosition: CGFloat {
-		if UIDevice().type == .iPhoneX {
-			return 40
-		}
-		return 20
-	}
-	private static let bottomPosition: CGFloat = UIScreen.main.bounds.height - Common.Layout.tabBarHeight
+	
+	private let topPosition: CGFloat = Common.Layout.cardTopPosition
+	private let bottomPosition: CGFloat = UIScreen.main.bounds.height - Common.Layout.tabBarHeight
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -53,7 +49,7 @@ class CardNavigationController : UINavigationController {
 		super.viewDidLoad()
 		
 		self.view.isHidden = true
-		self.view.frame.origin = CGPoint(x: 0.0, y: CardNavigationController.bottomPosition)
+		self.view.frame.origin = CGPoint(x: 0.0, y: bottomPosition)
 		
 		self.view.backgroundColor = .aicDarkGrayColor
 		
@@ -89,9 +85,9 @@ class CardNavigationController : UINavigationController {
 		downArrowImageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: downArrowTopMargin)
 		downArrowImageView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 		
-		// TODO: makit it take into account tabBarHeight as well, then fix it also in resultsVC
+		// TODO: make it take into account tabBarHeight as well, then fix it also in resultsVC
 		rootVC.view.autoSetDimension(.width, toSize: UIScreen.main.bounds.width)
-		rootViewHeightConstraint = rootVC.view.autoSetDimension(.height, toSize: UIScreen.main.bounds.height - CardNavigationController.topPosition - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
+		rootViewHeightConstraint = rootVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight)
 		
 		super.updateViewConstraints()
 	}
@@ -112,10 +108,10 @@ class CardNavigationController : UINavigationController {
 		transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
 			switch state {
 			case .fullscreen:
-				self.view.frame.origin = CGPoint(x: 0, y: CardNavigationController.topPosition)
+				self.view.frame.origin = CGPoint(x: 0, y: self.topPosition)
 				self.view.layer.cornerRadius = 10
 			case .hidden:
-				self.view.frame.origin = CGPoint(x: 0, y: CardNavigationController.bottomPosition)
+				self.view.frame.origin = CGPoint(x: 0, y: self.bottomPosition)
 				self.view.layer.cornerRadius = 15
 				self.view.layer.cornerRadius = 0
 			}
@@ -174,7 +170,7 @@ class CardNavigationController : UINavigationController {
 			
 			// variable setup
 			let translation = recognizer.translation(in: self.view)
-			var fraction = translation.y / (CardNavigationController.bottomPosition - CardNavigationController.topPosition)
+			var fraction = translation.y / (bottomPosition - topPosition)
 			
 			// adjust the fraction for the current state and reversed state
 			if currentState == .hidden { fraction *= -1 }

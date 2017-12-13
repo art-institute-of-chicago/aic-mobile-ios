@@ -14,7 +14,7 @@ class HomeMemberPromptView: BaseView {
 	let accessMemberCardTextView: LinkedTextView = LinkedTextView()
 	
 	let topMargin: CGFloat = 32.0
-	let accessMemberCardTopMargin: CGFloat = 15.0
+	let accessMemberCardTopMargin: CGFloat = 18.0
 	let bottomMargin: CGFloat = 32.0
 	
 	init() {
@@ -22,12 +22,19 @@ class HomeMemberPromptView: BaseView {
 		
 		backgroundColor = .aicHomeMemberPromptBackgroundColor
 		
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineSpacing = 6
+		let promptTextAttrString = NSMutableAttributedString(string: "The Museum is a dynamic place. Let’s Explore!\nIf you’re a member, sign-in for enhanced access.")
+		promptTextAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, promptTextAttrString.length))
+		
 		promptTextView.setDefaultsForAICAttributedTextView()
-		promptTextView.text = "The Museum is a dynamic place. Let’s Explore!\nIf you’re a member, sign-in for enhanced access."
+		promptTextView.attributedText = promptTextAttrString
 		promptTextView.font = .aicTextFont
 		promptTextView.textColor = .aicDarkGrayColor
 		promptTextView.textAlignment = .center
+		promptTextView.delegate = self
 		
+		// TODO: make link to open your member card
 		let accessMemberCardAttrText = NSMutableAttributedString(string: "Access your member card.")
 		let accessMemberCardURL = URL(string: Common.Info.becomeMemberJoinURL)!
 		accessMemberCardAttrText.addAttributes([NSAttributedStringKey.link : accessMemberCardURL], range: NSMakeRange(0, accessMemberCardAttrText.string.count))
@@ -65,3 +72,9 @@ class HomeMemberPromptView: BaseView {
 	}
 }
 
+extension HomeMemberPromptView : UITextViewDelegate {
+	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+		// TODO: open member card if available
+		return false
+	}
+}

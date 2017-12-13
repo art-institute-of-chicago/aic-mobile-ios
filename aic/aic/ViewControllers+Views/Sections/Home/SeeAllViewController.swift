@@ -9,13 +9,28 @@
 import UIKit
 
 class SeeAllViewController : UIViewController {
-	let collectionView: UICollectionView = createCollectionView()
+	let collectionView: UICollectionView
 	
-	init() {
+	enum ContentType {
+		case tours
+		case exhibitions
+		case events
+	}
+	let content: ContentType
+	
+	let titles = [ContentType.tours:"Tours", ContentType.exhibitions:"On View", ContentType.events:"Events"]
+	
+	var tourItems: [AICTourModel] = []
+	var exhibitionItems: [AICExhibitionModel] = []
+	var eventItems: [AICEventModel] = []
+	
+	init(contentType: ContentType) {
+		self.content = contentType
+		collectionView = SeeAllViewController.createCollectionView(for: content)
 		super.init(nibName: nil, bundle: nil)
 		
 		// Set the navigation item content
-		self.navigationItem.title = "Tours"
+		self.navigationItem.title = titles[contentType]
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -28,34 +43,46 @@ class SeeAllViewController : UIViewController {
 		self.view.backgroundColor = .white
 		
 		collectionView.register(UINib(nibName: "SeeAllTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllTourCell.reuseIdentifier)
+		collectionView.register(UINib(nibName: "SeeAllEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllEventCell.reuseIdentifier)
+		collectionView.register(UINib(nibName: "SeeAllExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier)
 		collectionView.dataSource = self
 		
 		self.view.addSubview(collectionView)
 	}
 	
-	private static func createCollectionView() -> UICollectionView {
+	private static func createCollectionView(for content: ContentType) -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = CGSize(width: 168, height: 257)
+		
+		if content == .exhibitions {
+			let sideMargin: CGFloat = 16
+			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0))
+			
+			layout.itemSize = CGSize(width: itemWidth, height: 361)
+			layout.sectionInset = UIEdgeInsets(top: 48, left: sideMargin, bottom: 0, right: sideMargin)
+		}
+		else {
+			let sideMargin: CGFloat = 15
+			let middleMargin: CGFloat = 7
+			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0) - middleMargin) / 2.0
+			
+			layout.itemSize = CGSize(width: itemWidth, height: 257)
+			layout.sectionInset = UIEdgeInsets(top: 65, left: sideMargin, bottom: 0, right: sideMargin)
+		}
+		
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 0
-		layout.sectionInset = UIEdgeInsets(top: 65, left: 0, bottom: 0, right: 0)
 		layout.scrollDirection = .vertical
+		
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsVerticalScrollIndicator = false
 		collectionView.backgroundColor = .white
 		return collectionView
 	}
 	
-	var contentItems: [AICTourModel]? {
-		didSet {
-			collectionView.reloadData()
-		}
-	}
-	
 	override func updateViewConstraints() {
 		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
-		collectionView.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 15)
-		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -15)
+		collectionView.autoPinEdge(.leading, to: .leading, of: self.view)
+		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view)
 		
 		super.updateViewConstraints()
@@ -64,16 +91,35 @@ class SeeAllViewController : UIViewController {
 
 extension SeeAllViewController : UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let _: [AICTourModel] = contentItems else {
-			return 0
+		if content == .tours {
+			return tourItems.count
 		}
-		return contentItems!.count
+		else if content == .exhibitions {
+			return exhibitionItems.count
+		}
+		else if content == .events {
+			return eventItems.count
+		}
+		return 0
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllTourCell.reuseIdentifier, for: indexPath) as! SeeAllTourCell
-		cell.tourModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
-		return cell
+		if content == .tours {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllTourCell.reuseIdentifier, for: indexPath) as! SeeAllTourCell
+			cell.tourModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			return cell
+		}
+		else if content == .exhibitions {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier, for: indexPath) as! SeeAllExhibitionCell
+			cell.exhibitionModel = AppDataManager.sharedInstance.exhibitions[indexPath.row]
+			return cell
+		}
+		else if content == .events {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllEventCell.reuseIdentifier, for: indexPath) as! SeeAllEventCell
+			cell.eventModel = AppDataManager.sharedInstance.events[indexPath.row]
+			return cell
+		}
+		return UICollectionViewCell()
 	}
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {

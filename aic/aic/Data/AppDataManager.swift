@@ -19,8 +19,8 @@ class AppDataManager {
     
     private (set) var app: AICAppDataModel! = nil
 	private (set) var exhibitions: [AICExhibitionModel] = []
-	//private var events: [AICEventModel] = []
-    
+	private (set) var events: [AICEventModel] = []
+	
     private let dataParser = AppDataParser()
     
     private var dataFilesRetrieved = 0
@@ -127,9 +127,7 @@ class AppDataManager {
                     switch response.result {
                     case .success(let value):
                         self.app = self.dataParser.parse(appData: value)
-                        self.updateDownloadProgress()
-                        
-                        
+						
                         //Save the data to disk incase the server is down at some point in the future [JB]
                         let headersDictionary = response.response?.allHeaderFields
                         if let lastModifiedString = headersDictionary?["Last-Modified"] as? String {
@@ -138,10 +136,6 @@ class AppDataManager {
                                                  lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedString,
                                                  fileName: Common.DataConstants.localAppDataFilename)
                         }
-                        
-                        
-                        // Get the news feeds
-                        self.downloadNewsFeeds()
                     case .failure(let error):
                         //Attempt to fall back to cached data
                         guard let cachedAppData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename) else {
@@ -152,9 +146,9 @@ class AppDataManager {
                         }
                         //We have good cached app data, continue on
                         self.app = self.dataParser.parse(appData: cachedAppData)
-                        self.updateDownloadProgress()
-                        self.downloadNewsFeeds()
                     }
+					self.updateDownloadProgress()
+					self.downloadNewsFeeds()
                 }
         }
     }
@@ -170,17 +164,19 @@ class AppDataManager {
                     return
                 }
                 let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
-                self.exhibitions = newsItems // TODO: create exhibitions array and save newsItems there
+                self.exhibitions = newsItems
+				
                 self.updateDownloadProgress()
+				self.downloadEvents()
             }
         }
     }
     
     private func parseNews(fromFeed feed:String) {
         
-        let request = URLRequest(url: URL(string: feed)!)
+        let request = URLRequest(url: URL(string: feed)!) as URLRequestConvertible
         
-        Alamofire.request(request as URLRequestConvertible)
+        Alamofire.request(request)
             .validate()
             .responseData { response in
                 if self.loadFailure == false {
@@ -190,7 +186,7 @@ class AppDataManager {
                         self.writeDataToDisk(data: value,
                                              fileName: Common.DataConstants.localNewsFeedFilename)
                         
-						self.exhibitions = newsItems // TODO: create exhibitions array and save newsItems there
+						self.exhibitions = newsItems
                         
                     case .failure(let error):
                         guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
@@ -202,14 +198,52 @@ class AppDataManager {
                         //We have a good cache of the news feed, continue on
                         let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
                     
-						self.exhibitions = newsItems // TODO: create exhibitions array and save newsItems there
+						self.exhibitions = newsItems
                     
                     }
                     
                     self.updateDownloadProgress()
+					self.downloadEvents()
                 }
         }
     }
+	
+	func downloadEvents() {
+		let urlRequest = URLRequest(url: URL(string: Common.DataConstants.dataHubURL + "events/search?limit=99")!)
+		let urlString = urlRequest.url?.absoluteString
+		let parameters: [String: Any] = [
+			"_source": true,
+			"sort": ["start_at", "end_at"],
+			"query": [
+				"bool": [
+					"must": [
+						[
+							"range": [
+								"start_at": ["lte": "now+7d"]
+							]
+						],
+						[
+							"range": [
+								"end_at": ["gte": "now"]
+							]
+						]
+					]
+				]
+			]
+		]
+		
+		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+			.validate()
+			.responseData { response in
+				switch response.result {
+				case .success(let value):
+					self.events = self.dataParser.parse(eventsData: value)
+				case .failure(let error):
+					print(error)
+				}
+				self.updateDownloadProgress()
+		}
+	}
     
     private func updateDownloadProgress() {
         DispatchQueue.main.async {
@@ -217,7 +251,7 @@ class AppDataManager {
             self.pctComplete = Float(self.dataFilesRetrieved) / Float(Common.DataConstants.totalDataFeeds)
             self.delegate?.downloadProgress(withPctCompleted: self.pctComplete)
             
-            if self.pctComplete == 1 {
+            if self.dataFilesRetrieved == Common.DataConstants.totalDataFeeds {
                 // We're finished
                 self.delegate?.didFinishLoadingData?()
             }
@@ -256,6 +290,23 @@ class AppDataManager {
     func getTour(forID id:Int) -> AICTourModel? {
         return app.tours.filter({ $0.nid == id }).first
     }
+	
+	func getEventsForEarliestDay() -> [AICEventModel] {
+		// set earliest day to 1 year in the future
+		var components = DateComponents()
+		components.setValue(1, for: .year)
+		let now: Date = Date()
+		var earliestDay = Calendar.current.date(byAdding: components, to: now)!
+		
+		// find earliest day
+		for event in self.events {
+			if event.startDate < earliestDay {
+				earliestDay = event.startDate
+			}
+		}
+		
+		return self.events.filter({ $0.startDate == earliestDay })
+	}
     
     // Find the tours this object is on, and filter out a tour if sepecified
     func getRelatedTours(forObject object:AICObjectModel, excludingTour:AICTourModel? = nil) -> [AICTourModel] {
