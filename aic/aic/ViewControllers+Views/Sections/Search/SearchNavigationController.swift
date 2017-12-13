@@ -70,6 +70,7 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.searchDelegate = self
 		
 		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
+		self.rootVC.view.clipsToBounds = false
 		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
 		
 		// Add subviews
@@ -112,6 +113,16 @@ class SearchNavigationController : CardNavigationController {
 			let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 			searchTextField?.becomeFirstResponder()
 		}
+		
+		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
+		resultsVC.view.setNeedsLayout()
+		resultsVC.view.layoutIfNeeded()
+	}
+	
+	override func cardDidShowFullscreen() {
+		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
+		resultsVC.view.setNeedsLayout()
+		resultsVC.view.layoutIfNeeded()
 	}
 	
 	override func cardDidHide() {
@@ -233,6 +244,10 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		loadSearch(searchText: searchText)
 	}
 	
+	func resultsTableDidSelect(artwork: AICObjectModel) {
+		
+	}
+	
 	func resultsTableDidSelect(tour: AICTourModel) {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.resignFirstResponder()
@@ -243,6 +258,14 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let tourVC = TourTableViewController(tour: tour)
 		let contentVC = SearchContentViewController(tableVC: tourVC)
 		self.pushViewController(contentVC, animated: true)
+	}
+	
+	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
+		
+	}
+	
+	func resultsTableDidSelect(filter: Common.Search.Filter) {
+		resultsVC.filter = filter
 	}
 }
 

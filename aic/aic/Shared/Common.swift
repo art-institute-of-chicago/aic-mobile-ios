@@ -99,7 +99,7 @@ struct Common {
         ),
         Section.info: AICSectionModel(nid:Section.info.rawValue,
             color: .aicInfoColor,
-			background: nil,
+			background: #imageLiteral(resourceName: "backgroundInfo"),
             icon: #imageLiteral(resourceName: "iconInfo"),
             title: "Information",
 			description: "Stay on top of the latest exhibitions\nhappening at the museum.",

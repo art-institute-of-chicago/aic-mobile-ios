@@ -131,7 +131,7 @@ class HomeViewController : SectionViewController {
 		toursCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		toursCollectionView.autoSetDimension(.height, toSize: 300)
 		
-		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView)
+		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView, withOffset: 30)
 		exhibitionsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
 		exhibitionsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		exhibitionsDividerLine.autoSetDimension(.height, toSize: 1)
@@ -146,7 +146,7 @@ class HomeViewController : SectionViewController {
 		exhibitionsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		exhibitionsCollectionView.autoSetDimension(.height, toSize: 373)
 		
-		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView)
+		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView, withOffset: 30)
 		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
 		eventsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		eventsDividerLine.autoSetDimension(.height, toSize: 1)

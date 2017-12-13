@@ -45,6 +45,7 @@ class AudioGuideNavigationController : SectionNavigationController {
 		sectionNavigationBar.backgroundColor = .clear
 		
 		// Setup Collection view
+		collectionView.delaysContentTouches = false
 		collectionView.register(AudioGuideCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
 		collectionView.dataSource = self
 		

@@ -197,15 +197,19 @@ class SectionsViewController : UIViewController {
     
     // Intro animation
     func animateInInitialView() {
-		self.sectionTabBarController.view.alpha = 0.0
-        self.homeVC.view.alpha = 0.0
+		sectionTabBarController.view.alpha = 0.0
+        homeVC.view.alpha = 0.0
+		searchButton.isHidden = true
+		searchButton.isEnabled = false
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
 									self.sectionTabBarController.view.alpha = 1.0
                                     self.homeVC.view.alpha = 1.0
             }, completion: { (value:Bool) in
-
+				self.searchButton.isHidden = false
+				self.searchButton.isEnabled = true
+				
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
         })
         Common.DeepLinks.loadedEnoughToLink = true

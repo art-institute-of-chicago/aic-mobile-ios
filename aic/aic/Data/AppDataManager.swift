@@ -296,16 +296,16 @@ class AppDataManager {
 		var components = DateComponents()
 		components.setValue(1, for: .year)
 		let now: Date = Date()
-		var earliestDay = Calendar.current.date(byAdding: components, to: now)!
+		var earliestDate = Calendar.current.date(byAdding: components, to: now)!
 		
 		// find earliest day
 		for event in self.events {
-			if event.startDate < earliestDay {
-				earliestDay = event.startDate
+			if event.startDate < earliestDate {
+				earliestDate = event.startDate
 			}
 		}
 		
-		return self.events.filter({ $0.startDate == earliestDay })
+		return events.filter({ Calendar.current.compare($0.startDate, to: earliestDate, toGranularity: .day) == .orderedSame })
 	}
     
     // Find the tours this object is on, and filter out a tour if sepecified

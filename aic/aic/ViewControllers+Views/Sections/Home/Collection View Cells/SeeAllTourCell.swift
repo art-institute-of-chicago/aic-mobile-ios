@@ -27,8 +27,8 @@ class SeeAllTourCell : UICollectionViewCell {
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
 		tourTitleLabel.textColor = .aicDarkGrayColor
-		tourTitleLabel.numberOfLines = 0
-		tourTitleLabel.lineBreakMode = .byWordWrapping
+		tourTitleLabel.numberOfLines = 2
+		tourTitleLabel.lineBreakMode = .byTruncatingTail
 		dividerLine.backgroundColor = .aicDividerLineColor
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
@@ -44,7 +44,7 @@ class SeeAllTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
-			tourTitleLabel.text = tourModel.title.stringByDecodingHTMLEntities
+			tourTitleLabel.text = tourModel.title.stringByDecodingHTMLEntities + " making this longer on purpose"
 			shortDescriptionTextView.text = tourModel.shortDescription.stringByDecodingHTMLEntities
 			stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
 			

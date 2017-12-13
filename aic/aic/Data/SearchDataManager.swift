@@ -46,7 +46,7 @@ class SearchDataManager {
 	}
 	
 	func loadArtworks(searchText: String) {
-		var url = Common.DataConstants.dataHubURL + "artworks/search?q=" + searchText + "&limit=20"
+		var url = Common.DataConstants.dataHubURL + "artworks/search?q=" + searchText + "&limit=99"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
@@ -71,7 +71,7 @@ class SearchDataManager {
 	}
 	
 	func loadTours(searchText: String) {
-		var url = Common.DataConstants.dataHubURL + "tours/search?q=" + searchText + "&limit=20"
+		var url = Common.DataConstants.dataHubURL + "tours/search?q=" + searchText + "&limit=99"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
