@@ -12,13 +12,14 @@ class TourContentCell : UITableViewCell {
 	static let reuseIdentifier = "tourContentCell"
 	
 	@IBOutlet var tourImageView: AICImageView!
+	@IBOutlet var longDescriptionTextView: UITextView!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		selectionStyle = UITableViewCellSelectionStyle.none
 		layoutMargins = UIEdgeInsets.zero
-		clipsToBounds = false
+		clipsToBounds = true
 		
 		self.backgroundColor = .aicDarkGrayColor
 		
@@ -33,7 +34,8 @@ class TourContentCell : UITableViewCell {
 			}
 			
 			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
-			
+			longDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
+			longDescriptionTextView.textColor = .white
 		}
 	}
 }

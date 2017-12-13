@@ -66,7 +66,7 @@ class SeeAllViewController : UIViewController {
 			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0) - middleMargin) / 2.0
 			
 			layout.itemSize = CGSize(width: itemWidth, height: 257)
-			layout.sectionInset = UIEdgeInsets(top: 65, left: sideMargin, bottom: 0, right: sideMargin)
+			layout.sectionInset = UIEdgeInsets(top: 65, left: sideMargin, bottom: 60, right: sideMargin)
 		}
 		
 		layout.minimumInteritemSpacing = 0

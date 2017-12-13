@@ -917,8 +917,8 @@
 		E415ABC61C7298420093B719 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				29EABE511FE07CDA0049E341 /* Card Content */,
 				E4F82F681CA45EF000E4224B /* Shared */,
+				29EABE511FE07CDA0049E341 /* Card Content */,
 				29DAF0621FB3C69E002ED862 /* Home */,
 				E415ABC91C7298420093B719 /* AudioGuide */,
 				E415ABCE1C7298420093B719 /* _Tours */,

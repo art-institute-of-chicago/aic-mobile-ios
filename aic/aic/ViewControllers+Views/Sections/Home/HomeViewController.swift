@@ -85,7 +85,7 @@ class HomeViewController : SectionViewController {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 285, height: 300)
 		layout.minimumLineSpacing = 20
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 74) // TODO: change 74 to calculation based on screen width
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 74 to calculation based on screen width
 		layout.scrollDirection = .horizontal
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsHorizontalScrollIndicator = false
@@ -97,7 +97,7 @@ class HomeViewController : SectionViewController {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 240, height: 373)
 		layout.minimumLineSpacing = 20
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 119) // TODO: change 119 to calculation based on screen width
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 119 to calculation based on screen width
 		layout.scrollDirection = .horizontal
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsHorizontalScrollIndicator = false

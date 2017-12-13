@@ -214,13 +214,13 @@ class CardNavigationController : UINavigationController {
 	func showFullscreen() {
 		cardWillShowFullscreen()
 		if self.currentState != .fullscreen {
-			animateTransitionIfNeeded(to: .fullscreen, duration: 1.0)
+			animateTransitionIfNeeded(to: .fullscreen, duration: 0.5)
 		}
 	}
 	
 	func hide() {
 		if self.currentState != .hidden {
-			animateTransitionIfNeeded(to: .hidden, duration: 1.0)
+			animateTransitionIfNeeded(to: .hidden, duration: 0.5)
 		}
 	}
 	
