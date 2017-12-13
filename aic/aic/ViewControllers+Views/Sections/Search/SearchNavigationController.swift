@@ -54,6 +54,7 @@ class SearchNavigationController : CardNavigationController {
 		searchBar.isTranslucent = false
 		searchBar.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
 		searchBar.placeholder = Common.Search.searchBarPlaceholder
+		searchBar.keyboardAppearance = .dark
 		searchBar.delegate = self
 		
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
@@ -64,6 +65,7 @@ class SearchNavigationController : CardNavigationController {
 		
 		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
 		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
 		
 		dividerLine.backgroundColor = .white
 		
@@ -139,12 +141,35 @@ class SearchNavigationController : CardNavigationController {
 	}
 	
 	// Start New Search
-	func loadSearch(searchText: String) {
-		SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
+	func loadSearch(searchText: String, showAutocomplete: Bool) {
+		resultsVC.autocompleteStringItems.removeAll()
+		resultsVC.artworkItems.removeAll()
+		resultsVC.tourItems.removeAll()
+		resultsVC.exhibitionItems.removeAll()
+		if showAutocomplete == true {
+			SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
+		}
 		SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
 		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
 		if resultsVC.filter == .empty {
 			resultsVC.filter = .suggested
+		}
+		else {
+			resultsVC.tableView.reloadData()
+		}
+	}
+	
+	// Search Button Pressed
+	@objc func searchButtonPressed(button: UIButton) {
+		if let searchText = searchBar.text {
+			if searchText.isEmpty == false {
+				// dismiss the keyboard when the user taps to close the card
+				let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+				searchTextField?.resignFirstResponder()
+				searchTextField?.layoutIfNeeded()
+				
+				loadSearch(searchText: searchText, showAutocomplete: false)
+			}
 		}
 	}
 	
@@ -188,10 +213,23 @@ class SearchNavigationController : CardNavigationController {
 extension SearchNavigationController : UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count > 0 {
-			loadSearch(searchText: searchText)
+			loadSearch(searchText: searchText, showAutocomplete: true)
 		}
 		else {
 			resultsVC.filter = .empty
+		}
+	}
+	
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		if let searchText = searchBar.text {
+			if searchText.isEmpty == false {
+				// dismiss the keyboard when the user taps to close the card
+				let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+				searchTextField?.resignFirstResponder()
+				searchTextField?.layoutIfNeeded()
+				
+				loadSearch(searchText: searchText, showAutocomplete: false)
+			}
 		}
 	}
 }
@@ -241,7 +279,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		searchTextField?.resignFirstResponder()
 		searchTextField?.layoutIfNeeded()
 		
-		loadSearch(searchText: searchText)
+		loadSearch(searchText: searchText, showAutocomplete: false)
 	}
 	
 	func resultsTableDidSelect(artwork: AICObjectModel) {

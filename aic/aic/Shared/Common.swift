@@ -72,7 +72,7 @@ struct Common {
     static let Sections:[Section:AICSectionModel] = [
 		Section.home: AICSectionModel(nid:Section.home.rawValue,
 										 color: .aicHomeColor,
-										 background: #imageLiteral(resourceName: "home_backdrop"),
+										 background: #imageLiteral(resourceName: "backgroundHome"),
 										 icon: #imageLiteral(resourceName: "iconHome"),
 										 title: "Welcome",
 										 description: "Preview the latest exhibitions at the Art Institute.",

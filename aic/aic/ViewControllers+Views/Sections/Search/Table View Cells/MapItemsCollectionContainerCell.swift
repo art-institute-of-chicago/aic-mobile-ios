@@ -75,6 +75,18 @@ extension MapItemsCollectionContainerCell : UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapItemCell.reuseIdentifier, for: indexPath) as! MapItemCell
+		if indexPath.section == 0 {
+			if indexPath.row == 0 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchRestaurantIcon")) }
+			if indexPath.row == 1 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchShopIcon")) }
+			if indexPath.row == 2 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchRestroomIcon")) }
+		}
+		else {
+			if indexPath.row == 0 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork1")) }
+			if indexPath.row == 1 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork2")) }
+			if indexPath.row == 2 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork3")) }
+			if indexPath.row == 3 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork4")) }
+			if indexPath.row == 4 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork5")) }
+		}
 		return cell
 	}
 	

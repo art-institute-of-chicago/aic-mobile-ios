@@ -89,8 +89,6 @@ class SectionsViewController : UIViewController {
         view.addSubview(sectionTabBarController.view)
 		sectionTabBarController.didMove(toParentViewController: self)
 		
-		view.addSubview(searchButton)
-		
 		objectVC.willMove(toParentViewController: sectionTabBarController)
 		sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: sectionTabBarController.tabBar)
 		objectVC.willMove(toParentViewController: sectionTabBarController)
@@ -98,6 +96,8 @@ class SectionsViewController : UIViewController {
 		searchVC.willMove(toParentViewController: self.sectionTabBarController)
 		sectionTabBarController.view.insertSubview(searchVC.view, belowSubview:self.objectVC.view)
 		searchVC.didMove(toParentViewController: self.sectionTabBarController)
+		
+		sectionTabBarController.view.insertSubview(searchButton, belowSubview: searchVC.view)
 		
 		// Set delegates
 		sectionTabBarController.delegate = self
