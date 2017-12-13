@@ -53,7 +53,7 @@
                         </constraints>
                     </view>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt." translatesAutoresizingMaskIntoConstraints="NO" id="5sJ-ss-p3W">
-                        <rect key="frame" x="0.0" y="164" width="168" height="100"/>
+                        <rect key="frame" x="0.0" y="164" width="168" height="83"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="rsO-q5-t2H"/>
                         </constraints>
@@ -93,6 +93,7 @@
                 <constraint firstItem="gCZ-Xa-DWm" firstAttribute="top" secondItem="drA-BM-hOJ" secondAttribute="bottom" constant="7" id="Xcj-re-rRR"/>
                 <constraint firstItem="EHR-m7-DDq" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="bAi-zx-TrD"/>
                 <constraint firstItem="MR4-Rr-yxf" firstAttribute="top" secondItem="ayj-Yn-QHM" secondAttribute="top" id="eCW-FV-ZLJ"/>
+                <constraint firstItem="5sJ-ss-p3W" firstAttribute="bottom" secondItem="ayj-Yn-QHM" secondAttribute="bottom" constant="-10" id="kyo-HJ-PO3"/>
                 <constraint firstItem="MR4-Rr-yxf" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="qj7-XO-Hw2"/>
                 <constraint firstItem="EHR-m7-DDq" firstAttribute="top" secondItem="MR4-Rr-yxf" secondAttribute="bottom" constant="6" id="tvZ-U9-qHR"/>
                 <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="gCZ-Xa-DWm" secondAttribute="trailing" id="uAz-Yh-VNS"/>

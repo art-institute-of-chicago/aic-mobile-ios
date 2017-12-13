@@ -27,8 +27,8 @@ class SeeAllTourCell : UICollectionViewCell {
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
 		tourTitleLabel.textColor = .aicDarkGrayColor
-//		tourTitleLabel.lineBreakMode = .byWordWrapping
-//		tourTitleLabel.numberOfLines = 0
+		tourTitleLabel.numberOfLines = 0
+		tourTitleLabel.lineBreakMode = .byWordWrapping
 		dividerLine.backgroundColor = .aicDividerLineColor
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4

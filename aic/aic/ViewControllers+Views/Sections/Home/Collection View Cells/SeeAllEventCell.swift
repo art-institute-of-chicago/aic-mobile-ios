@@ -15,25 +15,25 @@ class SeeAllEventCell : UICollectionViewCell {
 	static let reuseIdentifier = "seeAllEventCell"
 	
 	@IBOutlet var eventImageView: AICImageView!
-//	@IBOutlet var tourTitleLabel: UILabel!
-//	@IBOutlet var dividerLine: UIView!
-//	@IBOutlet var shortDescriptionTextView: UITextView!
-//	@IBOutlet var stopsNumberLabel: UILabel!
-//	@IBOutlet var durationLabel: UILabel!
+	@IBOutlet var eventTitleLabel: UILabel!
+	@IBOutlet var dividerLine: UIView!
+	@IBOutlet var shortDescriptionTextView: UITextView!
+	@IBOutlet var monthDayLabel: UILabel!
+	@IBOutlet var hoursMinutesLabel: UILabel!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
-//		tourTitleLabel.textColor = .aicDarkGrayColor
-//	//		tourTitleLabel.lineBreakMode = .byWordWrapping
-//	//		tourTitleLabel.numberOfLines = 0
-//		dividerLine.backgroundColor = .aicDividerLineColor
-//		shortDescriptionTextView.textColor = .aicDarkGrayColor
-//		shortDescriptionTextView.textContainerInset.left = -4
-//		stopsNumberLabel.textColor = .aicMediumGrayColor
-//		durationLabel.textColor = .aicMediumGrayColor
+		eventTitleLabel.textColor = .aicDarkGrayColor
+		eventTitleLabel.numberOfLines = 0
+		eventTitleLabel.lineBreakMode = .byWordWrapping
+		dividerLine.backgroundColor = .aicDividerLineColor
+		shortDescriptionTextView.textColor = .aicDarkGrayColor
+		shortDescriptionTextView.textContainerInset.left = -4
+		monthDayLabel.textColor = .aicMediumGrayColor
+		hoursMinutesLabel.textColor = .aicMediumGrayColor
 	}
 	
 	var eventModel: AICEventModel? = nil {
@@ -44,16 +44,10 @@ class SeeAllEventCell : UICollectionViewCell {
 			
 			// set up UI
 			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
-//			tourTitleLabel.text = tourModel.title.stringByDecodingHTMLEntities
-//			shortDescriptionTextView.text = tourModel.shortDescription.stringByDecodingHTMLEntities
-//			stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
-//
-//			if (tourModel.durationInMinutes ?? "").isEmpty {
-//				durationLabel.isHidden = true
-//			}
-//			else if let duration: String = tourModel.durationInMinutes {
-//				durationLabel.text = "\(duration)min"
-//			}
+			eventTitleLabel.text = eventModel.title.stringByDecodingHTMLEntities
+			shortDescriptionTextView.text = eventModel.shortDescription.stringByDecodingHTMLEntities
+			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
+			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
 		}
 	}
 }
