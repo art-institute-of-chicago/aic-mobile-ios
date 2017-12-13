@@ -9,7 +9,7 @@
 import UIKit
 
 class SeeAllViewController : UIViewController {
-	let collectionView: UICollectionView = createCollectionView()
+	let collectionView: UICollectionView
 	
 	enum ContentType {
 		case tours
@@ -26,6 +26,7 @@ class SeeAllViewController : UIViewController {
 	
 	init(contentType: ContentType) {
 		self.content = contentType
+		collectionView = SeeAllViewController.createCollectionView(for: content)
 		super.init(nibName: nil, bundle: nil)
 		
 		// Set the navigation item content
@@ -43,18 +44,35 @@ class SeeAllViewController : UIViewController {
 		
 		collectionView.register(UINib(nibName: "SeeAllTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllTourCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllEventCell.reuseIdentifier)
+		collectionView.register(UINib(nibName: "SeeAllExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier)
 		collectionView.dataSource = self
 		
 		self.view.addSubview(collectionView)
 	}
 	
-	private static func createCollectionView() -> UICollectionView {
+	private static func createCollectionView(for content: ContentType) -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = CGSize(width: 168, height: 257)
+		
+		if content == .exhibitions {
+			let sideMargin: CGFloat = 16
+			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0))
+			
+			layout.itemSize = CGSize(width: itemWidth, height: 361)
+			layout.sectionInset = UIEdgeInsets(top: 48, left: sideMargin, bottom: 0, right: sideMargin)
+		}
+		else {
+			let sideMargin: CGFloat = 15
+			let middleMargin: CGFloat = 7
+			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0) - middleMargin) / 2.0
+			
+			layout.itemSize = CGSize(width: itemWidth, height: 257)
+			layout.sectionInset = UIEdgeInsets(top: 65, left: sideMargin, bottom: 0, right: sideMargin)
+		}
+		
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 0
-		layout.sectionInset = UIEdgeInsets(top: 65, left: 0, bottom: 0, right: 0)
 		layout.scrollDirection = .vertical
+		
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsVerticalScrollIndicator = false
 		collectionView.backgroundColor = .white
@@ -63,8 +81,8 @@ class SeeAllViewController : UIViewController {
 	
 	override func updateViewConstraints() {
 		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
-		collectionView.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 15)
-		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -15)
+		collectionView.autoPinEdge(.leading, to: .leading, of: self.view)
+		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view)
 		
 		super.updateViewConstraints()
@@ -92,8 +110,8 @@ extension SeeAllViewController : UICollectionViewDataSource {
 			return cell
 		}
 		else if content == .exhibitions {
-			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllTourCell.reuseIdentifier, for: indexPath) as! SeeAllTourCell
-			cell.tourModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier, for: indexPath) as! SeeAllExhibitionCell
+			cell.exhibitionModel = AppDataManager.sharedInstance.exhibitions[indexPath.row]
 			return cell
 		}
 		else if content == .events {

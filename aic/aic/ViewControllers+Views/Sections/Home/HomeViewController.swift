@@ -169,7 +169,7 @@ class HomeViewController : SectionViewController {
 	}
 	
 	@objc private func seeAllExhibitionsButtonPressed(button: UIButton) {
-		self.delegate?.showSeeAllTours()
+		self.delegate?.showSeeAllExhibitions()
 	}
 	
 	@objc private func seeAllEventsButtonPressed(button: UIButton) {

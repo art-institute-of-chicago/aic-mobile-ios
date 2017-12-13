@@ -57,8 +57,12 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 	}
 	
 	func showSeeAllExhibitions() {
-//		self.sectionNavigationBar.collapse()
-//		self.sectionNavigationBar.titleLabel.text = "On View"
+		self.sectionNavigationBar.collapse()
+		self.sectionNavigationBar.setBackButtonHidden(false)
+		
+		let seeAllVC = SeeAllViewController(contentType: .exhibitions)
+		seeAllVC.exhibitionItems = AppDataManager.sharedInstance.exhibitions
+		self.pushViewController(seeAllVC, animated: true)
 	}
 	
 	func showSeeAllEvents() {

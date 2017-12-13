@@ -98,6 +98,8 @@
 		29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */; };
 		29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */; };
 		29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */; };
+		29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */; };
+		29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29D6921B1FE0E92E00B61286 /* SeeAllExhibitionCell.xib */; };
 		29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */; };
 		29E6DD651FB9ED8A00C3303D /* MapSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6DD641FB9ED8A00C3303D /* MapSectionViewController.swift */; };
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
@@ -342,6 +344,8 @@
 		29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFooterView.swift; sourceTree = "<group>"; };
 		29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMemberPromptView.swift; sourceTree = "<group>"; };
 		29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTourCell.swift; sourceTree = "<group>"; };
+		29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllExhibitionCell.swift; sourceTree = "<group>"; };
+		29D6921B1FE0E92E00B61286 /* SeeAllExhibitionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllExhibitionCell.xib; sourceTree = "<group>"; };
 		29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedTextView.swift; sourceTree = "<group>"; };
 		29E6DD641FB9ED8A00C3303D /* MapSectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSectionViewController.swift; sourceTree = "<group>"; };
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
@@ -636,14 +640,16 @@
 		29412AEA1FCE174C005A7172 /* Collection View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */,
-				29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */,
 				2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */,
 				2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */,
+				29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */,
+				29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */,
 				29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */,
 				29A27A071FCC769B007CEE1D /* HomeTourCell.xib */,
 				29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */,
 				29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */,
+				29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */,
+				29D6921B1FE0E92E00B61286 /* SeeAllExhibitionCell.xib */,
 				29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */,
 				29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */,
 			);
@@ -1284,6 +1290,7 @@
 				293D00961FA7C80D00BF2C26 /* OFL.txt in Resources */,
 				293D00A41FA7C80D00BF2C26 /* SourceSansPro-Regular.ttf in Resources */,
 				293D009E1FA7C80D00BF2C26 /* SourceSansPro-BoldItalic.ttf in Resources */,
+				29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */,
 				293D00A81FA7C82200BF2C26 /* map in Resources */,
 				29A7BCFB1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf in Resources */,
 				29A7BCFA1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf in Resources */,
@@ -1659,6 +1666,7 @@
 				E47306ED1D23076900A77254 /* InstructionsItemView.swift in Sources */,
 				E4F519DB1C88BD4900226188 /* VisibleMapRegionDelegate.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,
+				29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */,
 				E415ABD51C7298420093B719 /* MiniAudioPlayerView.swift in Sources */,
 				2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */,
 				E42677E31CC558060046BB27 /* AICButton.swift in Sources */,
