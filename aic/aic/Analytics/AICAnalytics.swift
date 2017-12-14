@@ -193,6 +193,7 @@ class AICAnalytics {
     private static func sendAnalyticEvent(category:Category, action:Action, label:String="", value:NSNumber = 0) {
         let event = GAIDictionaryBuilder.createEvent(withCategory: category.rawValue, action: action.rawValue, label: label, value: value).build() as NSDictionary?
         if event != nil {
+			// TODO: remember to enable analytics when we go live
             //AICAnalytics.tracker?.send(event as? [AnyHashable: Any])
         }
     }
