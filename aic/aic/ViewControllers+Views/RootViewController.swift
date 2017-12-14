@@ -185,11 +185,13 @@ extension RootViewController : AppDataManagerDelegate{
 // Loading VC delegate
 extension RootViewController : LoadingViewControllerDelegate {
     func loadingViewControllerDidFinishPlayingIntroVideo() {
-        if shouldShowInstructions {
-            self.mode = .instructions
-        } else {
-            self.mode = .mainApp
-        }
+		// TODO: re-enable instructions when 2.0 instructions are ready
+//        if shouldShowInstructions {
+//            self.mode = .instructions
+//        } else {
+//            self.mode = .mainApp
+//        }
+		self.mode = .mainApp
     }
 }
 
