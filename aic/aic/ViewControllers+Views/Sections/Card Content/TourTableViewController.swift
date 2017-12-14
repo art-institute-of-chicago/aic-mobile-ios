@@ -33,6 +33,8 @@ class TourTableViewController : UITableViewController {
 		//self.tableView.bounces = false
 		self.tableView.register(UINib(nibName: "TourContentCell", bundle: Bundle.main), forCellReuseIdentifier: TourContentCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
+		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
+		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 	}
 }
 
@@ -43,7 +45,8 @@ extension TourTableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 5
+		// tour intro + first stop (overview) + list of stops
+		return 1 + 1 + tourModel.stops.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,32 +55,43 @@ extension TourTableViewController {
 			cell.tourModel = tourModel
 			return cell
 		}
-		else {
+		else if indexPath.row == 1 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+			cell.setContent(imageUrl: tourModel.imageUrl, title: tourModel.title, subtitle: "Tour Overview")
+			cell.dividerLineBottom.isHidden = true
 			return cell
 		}
-		return UITableViewCell()
+		else {
+			let object = tourModel.stops[indexPath.row - 2].object
+			let title = "\(indexPath.row - 1). \(object.title)"
+			
+			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+			cell.setContent(imageUrl: object.imageUrl, title: title, subtitle: "Floor")
+			cell.dividerLineBottom.isHidden = true
+			return cell
+		}
 	}
 }
 
 // MARK: Layout
 extension TourTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		if section == 0 {
-			return nil
-		}
-		return nil
+		let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CardTitleView.reuseIdentifier) as! CardTitleView
+		titleView.titleLabel.text = tourModel.title
+		return titleView
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		if section == 0 {
-			return 0
-		}
-		return 0
+		return 80
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 40
+		if indexPath.row == 0 {
+			return 800
+		}
+		else {
+			return ContentButtonCell.cellHeight
+		}
 	}
 }
 

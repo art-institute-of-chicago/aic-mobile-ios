@@ -17,6 +17,7 @@
 		291221971FDB35650096BB75 /* SuggestedSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291221961FDB35650096BB75 /* SuggestedSearchCell.swift */; };
 		291221991FDB359D0096BB75 /* ResultsSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */; };
 		2912219B1FDB43040096BB75 /* SuggestedSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */; };
+		291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */; };
 		291FB71F1FDA0905007794E0 /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */; };
 		2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127791FDEF2C5008BFAB1 /* MapItemCell.swift */; };
 		2931277C1FDEF327008BFAB1 /* MapItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2931277B1FDEF327008BFAB1 /* MapItemCell.xib */; };
@@ -263,6 +264,7 @@
 		291221961FDB35650096BB75 /* SuggestedSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedSearchCell.swift; sourceTree = "<group>"; };
 		291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsSectionTitleView.swift; sourceTree = "<group>"; };
 		2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestedSearchCell.xib; sourceTree = "<group>"; };
+		291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsFilterMenuView.swift; sourceTree = "<group>"; };
 		291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationController.swift; sourceTree = "<group>"; };
 		293127791FDEF2C5008BFAB1 /* MapItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemCell.swift; sourceTree = "<group>"; };
 		2931277B1FDEF327008BFAB1 /* MapItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapItemCell.xib; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 				2941CE7F1FE09F6000B7CCEE /* SearchContentViewController.swift */,
 				2941CE811FE0D62E00B7CCEE /* ResultsContentTitleView.swift */,
 				291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */,
+				291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -917,8 +920,8 @@
 		E415ABC61C7298420093B719 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				29EABE511FE07CDA0049E341 /* Card Content */,
 				E4F82F681CA45EF000E4224B /* Shared */,
+				29EABE511FE07CDA0049E341 /* Card Content */,
 				29DAF0621FB3C69E002ED862 /* Home */,
 				E415ABC91C7298420093B719 /* AudioGuide */,
 				E415ABCE1C7298420093B719 /* _Tours */,
@@ -1561,6 +1564,7 @@
 				E47A97351CF4D68B0041D0A6 /* LoadingView.swift in Sources */,
 				E43F368B1D2B2F9900DA4DA6 /* AICAnalytics.swift in Sources */,
 				E47306EC1D23076900A77254 /* InstructionsGetStartedButton.swift in Sources */,
+				291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */,
 				29412AEE1FCE1F7A005A7172 /* HomeExhibitionCell.swift in Sources */,
 				E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */,
 				290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */,

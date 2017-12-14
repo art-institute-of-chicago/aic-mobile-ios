@@ -85,7 +85,7 @@ class HomeViewController : SectionViewController {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 285, height: 300)
 		layout.minimumLineSpacing = 20
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 74) // TODO: change 74 to calculation based on screen width
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 74 to calculation based on screen width
 		layout.scrollDirection = .horizontal
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsHorizontalScrollIndicator = false
@@ -97,7 +97,7 @@ class HomeViewController : SectionViewController {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = CGSize(width: 240, height: 373)
 		layout.minimumLineSpacing = 20
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 119) // TODO: change 119 to calculation based on screen width
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 119 to calculation based on screen width
 		layout.scrollDirection = .horizontal
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsHorizontalScrollIndicator = false
@@ -131,7 +131,7 @@ class HomeViewController : SectionViewController {
 		toursCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		toursCollectionView.autoSetDimension(.height, toSize: 300)
 		
-		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView)
+		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView, withOffset: 30)
 		exhibitionsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
 		exhibitionsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		exhibitionsDividerLine.autoSetDimension(.height, toSize: 1)
@@ -146,7 +146,7 @@ class HomeViewController : SectionViewController {
 		exhibitionsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		exhibitionsCollectionView.autoSetDimension(.height, toSize: 373)
 		
-		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView)
+		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView, withOffset: 30)
 		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
 		eventsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		eventsDividerLine.autoSetDimension(.height, toSize: 1)

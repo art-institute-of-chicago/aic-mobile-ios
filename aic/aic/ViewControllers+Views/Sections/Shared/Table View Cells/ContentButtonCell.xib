@@ -59,7 +59,7 @@
                             <constraint firstAttribute="width" constant="44" id="Qpf-5O-4aH"/>
                         </constraints>
                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                        <state key="normal" image="cardRightArrow"/>
+                        <state key="normal" image="rightArrow"/>
                     </button>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="keQ-yX-WoR">
                         <rect key="frame" x="16" y="0.0" width="343" height="1"/>
@@ -95,6 +95,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cardRightArrow" width="24" height="24"/>
+        <image name="rightArrow" width="24" height="24"/>
     </resources>
 </document>

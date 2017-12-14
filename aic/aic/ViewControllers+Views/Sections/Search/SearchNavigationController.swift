@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SearchCardDelegate : class {
+	func searchCardDidHide()
+}
+
 class SearchNavigationController : CardNavigationController {
 	let backButton: UIButton = UIButton()
 	let searchBar: UISearchBar = UISearchBar()
@@ -20,6 +24,8 @@ class SearchNavigationController : CardNavigationController {
 	var searchBarLeadingConstraint: NSLayoutConstraint? = nil
 	var searchBarActiveLeading: CGFloat = 2
 	var searchBarInactiveLeading: CGFloat = 32
+	
+	weak var searchCardDelegate: SearchCardDelegate? = nil
 	
 	override init() {
 		super.init()
@@ -48,6 +54,7 @@ class SearchNavigationController : CardNavigationController {
 		searchBar.isTranslucent = false
 		searchBar.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
 		searchBar.placeholder = Common.Search.searchBarPlaceholder
+		searchBar.keyboardAppearance = .dark
 		searchBar.delegate = self
 		
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
@@ -58,12 +65,14 @@ class SearchNavigationController : CardNavigationController {
 		
 		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
 		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
 		
 		dividerLine.backgroundColor = .white
 		
 		resultsVC.searchDelegate = self
 		
 		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
+		self.rootVC.view.clipsToBounds = false
 		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
 		
 		// Add subviews
@@ -101,9 +110,25 @@ class SearchNavigationController : CardNavigationController {
 	}
 	
 	override func cardWillShowFullscreen() {
-		// show keyboard when the card shows
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.becomeFirstResponder()
+		if viewControllers.count < 2 {
+			// show keyboard when the card shows
+			let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+			searchTextField?.becomeFirstResponder()
+		}
+		
+		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
+		resultsVC.view.setNeedsLayout()
+		resultsVC.view.layoutIfNeeded()
+	}
+	
+	override func cardDidShowFullscreen() {
+		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
+		resultsVC.view.setNeedsLayout()
+		resultsVC.view.layoutIfNeeded()
+	}
+	
+	override func cardDidHide() {
+		self.searchCardDelegate?.searchCardDidHide()
 	}
 	
 	override func handlePanGesture(recognizer: UIPanGestureRecognizer) {
@@ -116,12 +141,35 @@ class SearchNavigationController : CardNavigationController {
 	}
 	
 	// Start New Search
-	func loadSearch(searchText: String) {
-		SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
+	func loadSearch(searchText: String, showAutocomplete: Bool) {
+		resultsVC.autocompleteStringItems.removeAll()
+		resultsVC.artworkItems.removeAll()
+		resultsVC.tourItems.removeAll()
+		resultsVC.exhibitionItems.removeAll()
+		if showAutocomplete == true {
+			SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
+		}
 		SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
 		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
 		if resultsVC.filter == .empty {
 			resultsVC.filter = .suggested
+		}
+		else {
+			resultsVC.tableView.reloadData()
+		}
+	}
+	
+	// Search Button Pressed
+	@objc func searchButtonPressed(button: UIButton) {
+		if let searchText = searchBar.text {
+			if searchText.isEmpty == false {
+				// dismiss the keyboard when the user taps to close the card
+				let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+				searchTextField?.resignFirstResponder()
+				searchTextField?.layoutIfNeeded()
+				
+				loadSearch(searchText: searchText, showAutocomplete: false)
+			}
 		}
 	}
 	
@@ -165,10 +213,23 @@ class SearchNavigationController : CardNavigationController {
 extension SearchNavigationController : UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count > 0 {
-			loadSearch(searchText: searchText)
+			loadSearch(searchText: searchText, showAutocomplete: true)
 		}
 		else {
 			resultsVC.filter = .empty
+		}
+	}
+	
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		if let searchText = searchBar.text {
+			if searchText.isEmpty == false {
+				// dismiss the keyboard when the user taps to close the card
+				let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+				searchTextField?.resignFirstResponder()
+				searchTextField?.layoutIfNeeded()
+				
+				loadSearch(searchText: searchText, showAutocomplete: false)
+			}
 		}
 	}
 }
@@ -218,7 +279,11 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		searchTextField?.resignFirstResponder()
 		searchTextField?.layoutIfNeeded()
 		
-		loadSearch(searchText: searchText)
+		loadSearch(searchText: searchText, showAutocomplete: false)
+	}
+	
+	func resultsTableDidSelect(artwork: AICObjectModel) {
+		
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
@@ -231,6 +296,14 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let tourVC = TourTableViewController(tour: tour)
 		let contentVC = SearchContentViewController(tableVC: tourVC)
 		self.pushViewController(contentVC, animated: true)
+	}
+	
+	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
+		
+	}
+	
+	func resultsTableDidSelect(filter: Common.Search.Filter) {
+		resultsVC.filter = filter
 	}
 }
 

@@ -30,7 +30,6 @@ class InfoViewController : SectionViewController {
 	
 	override init(section: AICSectionModel) {
 		super.init(section: section)
-		self.view = UIView(frame: UIScreen.main.bounds)
 		
 		scrollView.backgroundColor = .aicInfoColor
 		scrollView.delegate = self

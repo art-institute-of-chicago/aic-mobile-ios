@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchRestroomIcon" translatesAutoresizingMaskIntoConstraints="NO" id="J0V-MG-DHG">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J0V-MG-DHG" customClass="AICImageView" customModule="aic" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                     </imageView>
                 </subviews>
@@ -37,7 +37,4 @@
             <point key="canvasLocation" x="-43" y="55"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="searchRestroomIcon" width="48" height="48"/>
-    </resources>
 </document>

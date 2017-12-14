@@ -20,6 +20,9 @@ class SectionsViewController : UIViewController {
 	
 	// Search Card
 	let searchVC: SearchNavigationController = SearchNavigationController()
+	
+	// Search Button
+	let searchButton: UIButton = UIButton()
     
     // TabBar
     var sectionTabBarController: UITabBarController = UITabBarController()
@@ -73,6 +76,11 @@ class SectionsViewController : UIViewController {
         sectionTabBarController.tabBar.barStyle = UIBarStyle.black
 		sectionTabBarController.viewControllers = self.viewControllers
 		
+		// Setup Search Button
+		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
+		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
+		
         // Setup and add contentView
         //mapVC.view.alpha = 0.0
         
@@ -89,13 +97,13 @@ class SectionsViewController : UIViewController {
 		sectionTabBarController.view.insertSubview(searchVC.view, belowSubview:self.objectVC.view)
 		searchVC.didMove(toParentViewController: self.sectionTabBarController)
 		
+		sectionTabBarController.view.insertSubview(searchButton, belowSubview: searchVC.view)
+		
 		// Set delegates
 		sectionTabBarController.delegate = self
 		objectVC.delegate = self
-		homeVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
 		audioGuideVC.audioGuideDelegate = self
-		audioGuideVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
-		infoVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
+		searchVC.searchCardDelegate = self
         
         //whatsOnVC.newsToursDelegate = self
         //whatsOnVC.delegate          = self
@@ -106,7 +114,15 @@ class SectionsViewController : UIViewController {
         //locationManager.delegate = mapVC
         
         //startLocationManager()
+		
+		createViewConstraints()
     }
+	
+	func createViewConstraints() {
+		searchButton.autoSetDimensions(to: CGSize(width: 44, height: 44))
+		searchButton.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -6)
+		searchButton.autoPinEdge(.bottom, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight - 3)
+	}
     
     func setSelectedSection(sectionVC:UIViewController) {
         // If tours tab was pressed when on a tour
@@ -181,15 +197,19 @@ class SectionsViewController : UIViewController {
     
     // Intro animation
     func animateInInitialView() {
-		self.sectionTabBarController.view.alpha = 0.0
-        self.homeVC.view.alpha = 0.0
+		sectionTabBarController.view.alpha = 0.0
+        homeVC.view.alpha = 0.0
+		searchButton.isHidden = true
+		searchButton.isEnabled = false
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
 									self.sectionTabBarController.view.alpha = 1.0
                                     self.homeVC.view.alpha = 1.0
             }, completion: { (value:Bool) in
-
+				self.searchButton.isHidden = false
+				self.searchButton.isEnabled = true
+				
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
         })
         Common.DeepLinks.loadedEnoughToLink = true
@@ -365,6 +385,8 @@ class SectionsViewController : UIViewController {
     }
 	
 	@objc func searchButtonPressed(button: UIButton) {
+		searchButton.isHidden = true
+		searchButton.isEnabled = false
 		searchVC.showFullscreen()
 	}
 }
@@ -492,4 +514,12 @@ extension SectionsViewController : MessageViewDelegate {
             hideEnableLocationMessage()
         }*/
     }
+}
+
+// MARK: Search Card Delegate
+extension SectionsViewController : SearchCardDelegate {
+	func searchCardDidHide() {
+		searchButton.isHidden = false
+		searchButton.isEnabled = true
+	}
 }

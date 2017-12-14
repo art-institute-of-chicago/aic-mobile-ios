@@ -14,9 +14,21 @@ import UIKit
 class MapItemCell : UICollectionViewCell {
 	static let reuseIdentifier = "mapItemCell"
 	
-	@IBOutlet var iconImageView: UIImageView!
+	@IBOutlet var iconImageView: AICImageView!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
+		
+		self.backgroundColor = .aicDarkGrayColor
+		
+		self.contentView.backgroundColor = .aicDarkGrayColor
+		
+		iconImageView.backgroundColor = .clear
+		iconImageView.contentMode = .scaleAspectFill
+		iconImageView.clipsToBounds = true
+	}
+	
+	func setItemIcon(image: UIImage) {
+		iconImageView.image = image
 	}
 }

@@ -10,7 +10,10 @@ import UIKit
 
 protocol ResultsTableViewControllerDelegate : class {
 	func resultsTableDidSelect(searchText: String)
+	func resultsTableDidSelect(artwork: AICObjectModel)
 	func resultsTableDidSelect(tour: AICTourModel)
+	func resultsTableDidSelect(exhibition: AICExhibitionModel)
+	func resultsTableDidSelect(filter: Common.Search.Filter)
 	func resultsTableViewWillScroll()
 }
 
@@ -50,9 +53,11 @@ class ResultsTableViewController : UITableViewController {
 //		self.tableView.estimatedRowHeight = 30
 		self.tableView.alwaysBounceVertical = false
 		//self.tableView.bounces = false
+		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "SuggestedSearchCell", bundle: Bundle.main), forCellReuseIdentifier: SuggestedSearchCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "MapItemsCollectionContainerCell", bundle: Bundle.main), forCellReuseIdentifier: MapItemsCollectionContainerCell.reuseIdentifier)
+		self.tableView.register(ResultsFilterMenuView.self, forHeaderFooterViewReuseIdentifier: ResultsFilterMenuView.reuseIdentifier)
 		self.tableView.register(ResultsSectionTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsSectionTitleView.reuseIdentifier)
 		self.tableView.register(ResultsContentTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsContentTitleView.reuseIdentifier)
 	}
@@ -74,7 +79,10 @@ extension ResultsTableViewController {
 		else if filter == .suggested {
 			return 5
 		}
-		return 1
+		else if filter == .artworks || filter == .tours || filter == .exhibitions {
+			return 1
+		}
+		return 0
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,6 +110,15 @@ extension ResultsTableViewController {
 			else if section == 4 {
 				return 1
 			}
+		}
+		else if filter == .artworks {
+			return artworkItems.count
+		}
+		else if filter == .tours {
+			return tourItems.count
+		}
+		else if filter == .exhibitions {
+			return exhibitionItems.count
 		}
 		return 0
 	}
@@ -131,12 +148,7 @@ extension ResultsTableViewController {
 				// artwork cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
-				if indexPath.row == 0  {
-					cell.dividerLineTop.isHidden = true
-				}
-				else if indexPath.row == artworkItems.count-1 || indexPath.row == 2 {
-					cell.dividerLineBottom.isHidden = true
-				}
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
 				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: "Gallery Name")
 				return cell
 			}
@@ -144,24 +156,14 @@ extension ResultsTableViewController {
 				// tour cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let tour = tourItems[indexPath.row]
-				if indexPath.row == 0  {
-					cell.dividerLineTop.isHidden = true
-				}
-				else if indexPath.row == tourItems.count-1 || indexPath.row == 2 {
-					cell.dividerLineBottom.isHidden = true
-				}
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
 				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "Gallery Name")
 				return cell
 			}
 			else if indexPath.section == 3 {
 				// exhibition cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-				if indexPath.row == 0  {
-					cell.dividerLineTop.isHidden = true
-				}
-				else if indexPath.row == artworkItems.count-1 || indexPath.row == 2 {
-					cell.dividerLineBottom.isHidden = true
-				}
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
 				return cell
 			}
 			else if indexPath.section == 4 {
@@ -170,7 +172,47 @@ extension ResultsTableViewController {
 				return cell
 			}
 		}
+		else if filter == .artworks {
+			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+			let artwork = artworkItems[indexPath.row]
+			setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
+			cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: "Gallery Name")
+			return cell
+		}
+		else if filter == .tours {
+			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+			let tour = tourItems[indexPath.row]
+			setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
+			cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "Gallery Name")
+			return cell
+		}
+		else if filter == .exhibitions {
+			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+			setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
+			return cell
+		}
 		return UITableViewCell()
+	}
+	
+	func setupDividerLines(_ cell: ContentButtonCell, indexPath: IndexPath, itemsCount: Int) {
+		if filter == .suggested {
+			if itemsCount == 1 {
+				cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = true
+			}
+			else if itemsCount == 2 {
+				if indexPath.row == 0 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = false }
+				if indexPath.row == 1 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = true }
+			}
+			else if itemsCount >= 3 {
+				if indexPath.row == 0 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = false }
+				if indexPath.row == 1 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = false }
+				if indexPath.row == 2 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = true }
+			}
+		}
+		else if filter == .artworks || filter == .tours || filter == .exhibitions {
+			if indexPath.row == 0 { cell.dividerLineTop.isHidden = true; cell.dividerLineBottom.isHidden = true }
+			else { cell.dividerLineTop.isHidden = false; cell.dividerLineBottom.isHidden = true }
+		}
 	}
 }
 
@@ -186,25 +228,45 @@ extension ResultsTableViewController {
 			}
 		}
 		if filter == .suggested {
-			if section == 1 && artworkItems.count > 0 {
+			if section == 0 {
+				let filterMenuView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsFilterMenuView.reuseIdentifier) as! ResultsFilterMenuView
+				filterMenuView.delegate = self
+				filterMenuView.setSelected(filter: self.filter)
+				return filterMenuView
+			}
+			else if section == 1 && artworkItems.count > 0 {
+				// artworks header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Artworks"
+				titleView.seeAllButton.addTarget(self, action: #selector(seeAllArtworksButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
 			else if section == 2 && tourItems.count > 0 {
+				// tours header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Tours"
+				titleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
 			else if section == 3 && exhibitionItems.count > 0 {
+				// exhibitions header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Exhibitions"
+				titleView.seeAllButton.addTarget(self, action: #selector(seeAllExhibitionsButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
 			else if section == 4 {
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
 				titleView.titleLabel.text = "On the Map"
 				return titleView
+			}
+		}
+		else {
+			if section == 0 {
+				let filterMenuView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsFilterMenuView.reuseIdentifier) as! ResultsFilterMenuView
+				filterMenuView.delegate = self
+				filterMenuView.setSelected(filter: self.filter)
+				return filterMenuView
 			}
 		}
 		return nil
@@ -215,7 +277,10 @@ extension ResultsTableViewController {
 			return resultsSectionTitleHeight
 		}
 		if filter == .suggested {
-			if section == 1 && artworkItems.count > 0 {
+			if section == 0 {
+				return ResultsFilterMenuView.cellHeight
+			}
+			else if section == 1 && artworkItems.count > 0 {
 				return contentTitleHeight
 			}
 			else if section == 2 && tourItems.count > 0 {
@@ -227,6 +292,9 @@ extension ResultsTableViewController {
 			else if section == 4 {
 				return resultsSectionTitleHeight
 			}
+		}
+		else if filter == .artworks || filter == .tours || filter == .exhibitions {
+			return ResultsFilterMenuView.cellHeight
 		}
 		return 0
 	}
@@ -257,7 +325,10 @@ extension ResultsTableViewController {
 				return MapItemsCollectionContainerCell.cellHeight
 			}
 		}
-		return ContentButtonCell.cellHeight
+		else if filter == .artworks || filter == .tours || filter == .exhibitions {
+			return ContentButtonCell.cellHeight
+		}
+		return 0
 	}
 }
 
@@ -276,12 +347,62 @@ extension ResultsTableViewController {
 				self.searchDelegate?.resultsTableDidSelect(searchText: searchText)
 			}
 			else if indexPath.section == 1 {
-				// select artwork
+				let artwork = artworkItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(artwork: artwork)
 			}
 			else if indexPath.section == 2 {
 				let tour = tourItems[indexPath.row]
 				self.searchDelegate?.resultsTableDidSelect(tour: tour)
 			}
+			else if indexPath.section == 3 {
+				let exhibition = exhibitionItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(exhibition: exhibition)
+			}
+		}
+		else if filter == .artworks {
+			let artwork = artworkItems[indexPath.row]
+			self.searchDelegate?.resultsTableDidSelect(artwork: artwork)
+		}
+		else if filter == .tours {
+			let tour = tourItems[indexPath.row]
+			self.searchDelegate?.resultsTableDidSelect(tour: tour)
+		}
+		else if filter == .exhibitions {
+			let exhibition = exhibitionItems[indexPath.row]
+			self.searchDelegate?.resultsTableDidSelect(exhibition: exhibition)
+		}
+	}
+}
+
+// MARK: See All Buttons Events
+extension ResultsTableViewController {
+	@objc func seeAllArtworksButtonPressed(button: UIButton) {
+		filterMenuSelected(filter: .artworks)
+	}
+	
+	@objc func seeAllToursButtonPressed(button: UIButton) {
+		filterMenuSelected(filter: .tours)
+	}
+	
+	@objc func seeAllExhibitionsButtonPressed(button: UIButton) {
+		filterMenuSelected(filter: .exhibitions)
+	}
+}
+
+// MARK: Filter Menu Delegate
+extension ResultsTableViewController : FilterMenuDelegate {
+	func filterMenuSelected(filter: Common.Search.Filter) {
+		if filter == .suggested {
+			self.searchDelegate?.resultsTableDidSelect(filter: .suggested)
+		}
+		else if filter == .artworks {
+			self.searchDelegate?.resultsTableDidSelect(filter: .artworks)
+		}
+		else if filter == .tours {
+			self.searchDelegate?.resultsTableDidSelect(filter: .tours)
+		}
+		else if filter == .exhibitions {
+			self.searchDelegate?.resultsTableDidSelect(filter: .exhibitions)
 		}
 	}
 }

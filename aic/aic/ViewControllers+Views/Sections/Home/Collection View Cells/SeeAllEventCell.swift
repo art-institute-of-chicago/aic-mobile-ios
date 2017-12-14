@@ -27,8 +27,8 @@ class SeeAllEventCell : UICollectionViewCell {
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
 		eventTitleLabel.textColor = .aicDarkGrayColor
-		eventTitleLabel.numberOfLines = 0
-		eventTitleLabel.lineBreakMode = .byWordWrapping
+		eventTitleLabel.numberOfLines = 2
+		eventTitleLabel.lineBreakMode = .byTruncatingTail
 		dividerLine.backgroundColor = .aicDividerLineColor
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
