@@ -60,6 +60,8 @@ extension UIFont {
 	
 	static let aicSearchBarFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!
 	
+	static let aicSearchResultsFilterFont: UIFont = UIFont(name: "IdealSans-Book", size: 18.0)!
+	
 	static let aicSearchResultsSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
 	
 	static let aicInfoSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 28.0)!

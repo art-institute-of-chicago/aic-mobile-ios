@@ -57,6 +57,7 @@ class ResultsTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "SuggestedSearchCell", bundle: Bundle.main), forCellReuseIdentifier: SuggestedSearchCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "MapItemsCollectionContainerCell", bundle: Bundle.main), forCellReuseIdentifier: MapItemsCollectionContainerCell.reuseIdentifier)
+		self.tableView.register(ResultsFilterMenuView.self, forHeaderFooterViewReuseIdentifier: ResultsFilterMenuView.reuseIdentifier)
 		self.tableView.register(ResultsSectionTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsSectionTitleView.reuseIdentifier)
 		self.tableView.register(ResultsContentTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsContentTitleView.reuseIdentifier)
 	}
@@ -78,7 +79,10 @@ extension ResultsTableViewController {
 		else if filter == .suggested {
 			return 5
 		}
-		return 1
+		else if filter == .artworks || filter == .tours || filter == .exhibitions {
+			return 1
+		}
+		return 0
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -224,7 +228,13 @@ extension ResultsTableViewController {
 			}
 		}
 		if filter == .suggested {
-			if section == 1 && artworkItems.count > 0 {
+			if section == 0 {
+				let filterMenuView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsFilterMenuView.reuseIdentifier) as! ResultsFilterMenuView
+				filterMenuView.delegate = self
+				filterMenuView.setSelected(filter: self.filter)
+				return filterMenuView
+			}
+			else if section == 1 && artworkItems.count > 0 {
 				// artworks header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Artworks"
@@ -251,6 +261,14 @@ extension ResultsTableViewController {
 				return titleView
 			}
 		}
+		else {
+			if section == 0 {
+				let filterMenuView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsFilterMenuView.reuseIdentifier) as! ResultsFilterMenuView
+				filterMenuView.delegate = self
+				filterMenuView.setSelected(filter: self.filter)
+				return filterMenuView
+			}
+		}
 		return nil
 	}
 	
@@ -259,7 +277,10 @@ extension ResultsTableViewController {
 			return resultsSectionTitleHeight
 		}
 		if filter == .suggested {
-			if section == 1 && artworkItems.count > 0 {
+			if section == 0 {
+				return ResultsFilterMenuView.cellHeight
+			}
+			else if section == 1 && artworkItems.count > 0 {
 				return contentTitleHeight
 			}
 			else if section == 2 && tourItems.count > 0 {
@@ -273,7 +294,7 @@ extension ResultsTableViewController {
 			}
 		}
 		else if filter == .artworks || filter == .tours || filter == .exhibitions {
-			return 0
+			return ResultsFilterMenuView.cellHeight
 		}
 		return 0
 	}
@@ -338,20 +359,50 @@ extension ResultsTableViewController {
 				self.searchDelegate?.resultsTableDidSelect(exhibition: exhibition)
 			}
 		}
+		else if filter == .artworks {
+			let artwork = artworkItems[indexPath.row]
+			self.searchDelegate?.resultsTableDidSelect(artwork: artwork)
+		}
+		else if filter == .tours {
+			let tour = tourItems[indexPath.row]
+			self.searchDelegate?.resultsTableDidSelect(tour: tour)
+		}
+		else if filter == .exhibitions {
+			let exhibition = exhibitionItems[indexPath.row]
+			self.searchDelegate?.resultsTableDidSelect(exhibition: exhibition)
+		}
 	}
 }
 
 // MARK: See All Buttons Events
 extension ResultsTableViewController {
 	@objc func seeAllArtworksButtonPressed(button: UIButton) {
-		self.searchDelegate?.resultsTableDidSelect(filter: .artworks)
+		filterMenuSelected(filter: .artworks)
 	}
 	
 	@objc func seeAllToursButtonPressed(button: UIButton) {
-		self.searchDelegate?.resultsTableDidSelect(filter: .tours)
+		filterMenuSelected(filter: .tours)
 	}
 	
 	@objc func seeAllExhibitionsButtonPressed(button: UIButton) {
-		self.searchDelegate?.resultsTableDidSelect(filter: .exhibitions)
+		filterMenuSelected(filter: .exhibitions)
+	}
+}
+
+// MARK: Filter Menu Delegate
+extension ResultsTableViewController : FilterMenuDelegate {
+	func filterMenuSelected(filter: Common.Search.Filter) {
+		if filter == .suggested {
+			self.searchDelegate?.resultsTableDidSelect(filter: .suggested)
+		}
+		else if filter == .artworks {
+			self.searchDelegate?.resultsTableDidSelect(filter: .artworks)
+		}
+		else if filter == .tours {
+			self.searchDelegate?.resultsTableDidSelect(filter: .tours)
+		}
+		else if filter == .exhibitions {
+			self.searchDelegate?.resultsTableDidSelect(filter: .exhibitions)
+		}
 	}
 }
