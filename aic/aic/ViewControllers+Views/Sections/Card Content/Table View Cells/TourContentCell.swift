@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class TourContentCell : UITableViewCell {
 	static let reuseIdentifier = "tourContentCell"
@@ -33,7 +34,8 @@ class TourContentCell : UITableViewCell {
 				return
 			}
 			
-			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
+			tourImageView.kf.setImage(with: tourModel.imageUrl)
+			//tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
 			longDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			longDescriptionTextView.textColor = .white
 		}

@@ -44,7 +44,8 @@ class SeeAllEventCell : UICollectionViewCell {
 			}
 			
 			// set up UI
-			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
+			eventImageView.kf.setImage(with: eventModel.imageUrl)
+//			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
 			eventTitleLabel.text = eventModel.title.stringByDecodingHTMLEntities
 			shortDescriptionTextView.text = eventModel.shortDescription.stringByDecodingHTMLEntities
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)

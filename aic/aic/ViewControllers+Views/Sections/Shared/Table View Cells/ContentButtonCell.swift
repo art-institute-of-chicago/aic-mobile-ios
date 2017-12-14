@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 /// ContentButtonCell
 ///
@@ -45,7 +46,8 @@ class ContentButtonCell : UITableViewCell {
 //			return
 //		}
 		
-		itemImageView.loadImageAsynchronously(fromUrl: imageUrl, withCropRect: nil)
+		itemImageView.kf.setImage(with: imageUrl)
+		//itemImageView.loadImageAsynchronously(fromUrl: imageUrl, withCropRect: nil)
 		itemTitleLabel.text = title
 		itemSubtitleLabel.text = subtitle
 		
