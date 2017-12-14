@@ -23,6 +23,8 @@ class HomeExhibitionCell : UICollectionViewCell {
 		exhibitionImageView.contentMode = .scaleAspectFill
 		exhibitionImageView.clipsToBounds = true
 		exhibitionTitleLabel.textColor = .aicDarkGrayColor
+		exhibitionTitleLabel.numberOfLines = 0
+		exhibitionTitleLabel.lineBreakMode = .byTruncatingTail
 		throughDateTextView.textColor = .aicDarkGrayColor
 		throughDateTextView.textContainerInset.left = -4
 	}

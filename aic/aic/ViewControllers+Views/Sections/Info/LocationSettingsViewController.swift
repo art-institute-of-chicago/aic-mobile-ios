@@ -9,7 +9,7 @@
 import UIKit
 
 class LocationSettingsViewController : UIViewController {
-	let pageView: InfoSectionPageView = InfoSectionPageView(title: Common.Info.locationTitle, text: Common.Info.locationText)
+	let pageView: InfoPageView = InfoPageView(title: Common.Info.locationTitle, text: Common.Info.locationText)
 	let locationButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	
 	init() {
@@ -32,6 +32,11 @@ class LocationSettingsViewController : UIViewController {
 		
 		self.view.addSubview(pageView)
 		self.view.addSubview(locationButton)
+		
+		// TODO: move this and InfoPageView into InfoPageViewController base class
+		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
+		swipeRightGesture.direction = .right
+		self.view.addGestureRecognizer(swipeRightGesture)
 	}
 	
 	override func updateViewConstraints() {
@@ -47,5 +52,11 @@ class LocationSettingsViewController : UIViewController {
 	
 	@objc func locationButtonPressed(button: UIButton) {
 		
+	}
+}
+
+extension LocationSettingsViewController : UIGestureRecognizerDelegate {
+	@objc private func swipeRight(recognizer: UIGestureRecognizer) {
+		self.navigationController?.popViewController(animated: true)
 	}
 }

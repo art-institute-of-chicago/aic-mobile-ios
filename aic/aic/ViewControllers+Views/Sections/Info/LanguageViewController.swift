@@ -9,7 +9,7 @@
 import UIKit
 
 class LanguageViewController : UIViewController {
-	let pageView: InfoSectionPageView = InfoSectionPageView(title: Common.Info.languageTitle, text: Common.Info.languageText)
+	let pageView: InfoPageView = InfoPageView(title: Common.Info.languageTitle, text: Common.Info.languageText)
 	let englishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	let spanishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	let chineseButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
@@ -43,6 +43,10 @@ class LanguageViewController : UIViewController {
 		self.view.addSubview(englishButton)
 		self.view.addSubview(spanishButton)
 		self.view.addSubview(chineseButton)
+		
+		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
+		swipeRightGesture.direction = .right
+		self.view.addGestureRecognizer(swipeRightGesture)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -75,5 +79,11 @@ class LanguageViewController : UIViewController {
 		spanishButton.isHighlighted = button != spanishButton
 		chineseButton.isHighlighted = button != chineseButton
 		
+	}
+}
+
+extension LanguageViewController : UIGestureRecognizerDelegate {
+	@objc private func swipeRight(recognizer: UIGestureRecognizer) {
+		self.navigationController?.popViewController(animated: true)
 	}
 }

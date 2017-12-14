@@ -32,6 +32,7 @@ class SeeAllEventCell : UICollectionViewCell {
 		dividerLine.backgroundColor = .aicDividerLineColor
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
+		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
 		monthDayLabel.textColor = .aicMediumGrayColor
 		hoursMinutesLabel.textColor = .aicMediumGrayColor
 	}

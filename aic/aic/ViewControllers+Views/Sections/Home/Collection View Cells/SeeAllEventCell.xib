@@ -59,7 +59,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt." translatesAutoresizingMaskIntoConstraints="NO" id="B9C-KI-LLc">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt." translatesAutoresizingMaskIntoConstraints="NO" id="B9C-KI-LLc">
                         <rect key="frame" x="0.0" y="182" width="168" height="98"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="160" id="wCS-78-PFs"/>

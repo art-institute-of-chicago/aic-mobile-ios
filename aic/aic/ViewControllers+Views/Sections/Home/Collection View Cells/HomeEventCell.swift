@@ -27,8 +27,11 @@ class HomeEventCell : UICollectionViewCell {
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
 		eventTitleLabel.textColor = .aicDarkGrayColor
+		eventTitleLabel.numberOfLines = 0
+		eventTitleLabel.lineBreakMode = .byTruncatingTail
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
+		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 	}
 	

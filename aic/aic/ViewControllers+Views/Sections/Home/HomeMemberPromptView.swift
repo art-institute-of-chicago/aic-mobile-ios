@@ -32,18 +32,19 @@ class HomeMemberPromptView: BaseView {
 		promptTextView.font = .aicTextFont
 		promptTextView.textColor = .aicDarkGrayColor
 		promptTextView.textAlignment = .center
-		promptTextView.delegate = self
 		
 		// TODO: make link to open your member card
 		let accessMemberCardAttrText = NSMutableAttributedString(string: "Access your member card.")
-		let accessMemberCardURL = URL(string: Common.Info.becomeMemberJoinURL)!
-		accessMemberCardAttrText.addAttributes([NSAttributedStringKey.link : accessMemberCardURL], range: NSMakeRange(0, accessMemberCardAttrText.string.count))
+//		let accessMemberCardURL = URL(string: Common.Info.becomeMemberJoinURL)!
+//		accessMemberCardAttrText.addAttributes([NSAttributedStringKey.link : accessMemberCardURL], range: NSMakeRange(0, accessMemberCardAttrText.string.count))
 		
 		accessMemberCardTextView.setDefaultsForAICAttributedTextView()
 		accessMemberCardTextView.attributedText = accessMemberCardAttrText
-		accessMemberCardTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeMemberPromptLinkColor]
+//		accessMemberCardTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeMemberPromptLinkColor]
+		accessMemberCardTextView.textColor = UIColor.aicHomeMemberPromptLinkColor
 		accessMemberCardTextView.textAlignment = NSTextAlignment.center
 		accessMemberCardTextView.font = .aicTextFont
+		accessMemberCardTextView.delegate = self
 		
 		self.addSubview(promptTextView)
 		self.addSubview(accessMemberCardTextView)

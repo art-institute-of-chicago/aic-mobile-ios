@@ -9,13 +9,13 @@
 import UIKit
 
 class MuseumInfoViewController : UIViewController {
-	let pageView: InfoSectionPageView
+	let pageView: InfoPageView
 	
 	init() {
 		var text = Common.Info.museumInformationHours
 		text += "\n\n" + Common.Info.museumInformationAddress
 		text += "\n\n" + Common.Info.museumInformationPhoneNumber
-		pageView = InfoSectionPageView(title: Common.Info.museumInformationTitle, text: text)
+		pageView = InfoPageView(title: Common.Info.museumInformationTitle, text: text)
 		super.init(nibName: nil, bundle: nil)
 		
 		self.navigationItem.title = "Museum Information"
@@ -39,5 +39,15 @@ class MuseumInfoViewController : UIViewController {
 		self.view.backgroundColor = .white
 		
 		self.view.addSubview(pageView)
+		
+		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
+		swipeRightGesture.direction = .right
+		self.view.addGestureRecognizer(swipeRightGesture)
+	}
+}
+
+extension MuseumInfoViewController : UIGestureRecognizerDelegate {
+	@objc private func swipeRight(recognizer: UIGestureRecognizer) {
+		self.navigationController?.popViewController(animated: true)
 	}
 }

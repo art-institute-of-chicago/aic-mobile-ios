@@ -26,14 +26,50 @@ class HomeViewController : SectionViewController {
 	let eventsTitleView: HomeContentTitleView = HomeContentTitleView(title: "Events")
 	let eventsCollectionView: UICollectionView = createToursEventsCollectionView()
 	
-	let eventItems: [AICEventModel] = AppDataManager.sharedInstance.getEventsForEarliestDay()
+	var tourItems: [AICTourModel] = []
+	var exhibitionItems: [AICExhibitionModel] = []
+	var eventItems: [AICEventModel] = []
 	
-	let bottomMargin: CGFloat = 40
+	let bottomMargin: CGFloat = 60
+	static let toursAndEventsCollectionHeight: CGFloat = 340
+	static let exhibitionsCollectionHeight: CGFloat = 380
 	
 	weak var delegate: HomeViewControllerDelegate? = nil
 	
 	override init(section: AICSectionModel) {
 		super.init(section: section)
+		
+		// TODO: set max number of items in Common / Settings
+		for tour in AppDataManager.sharedInstance.app.tours {
+			tourItems.append(tour)
+			if tourItems.count == 6 {
+				break
+			}
+		}
+		
+		for exhibition in AppDataManager.sharedInstance.exhibitions {
+			exhibitionItems.append(exhibition)
+			if exhibitionItems.count == 6 {
+				break
+			}
+		}
+		
+		let earliestDayEvents = AppDataManager.sharedInstance.getEventsForEarliestDay()
+		for event in earliestDayEvents {
+			let now = Date()
+			if event.startDate > now {
+				eventItems.append(event)
+			}
+			if eventItems.count == 6 {
+				break
+			}
+		}
+		
+		if eventItems.isEmpty {
+			if let lastEventOfEarliestDay = earliestDayEvents.last {
+				eventItems.append(lastEventOfEarliestDay)
+			}
+		}
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -83,7 +119,7 @@ class HomeViewController : SectionViewController {
 	
 	private static func createToursEventsCollectionView() -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = CGSize(width: 285, height: 300)
+		layout.itemSize = CGSize(width: 285, height: HomeViewController.toursAndEventsCollectionHeight)
 		layout.minimumLineSpacing = 20
 		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 74 to calculation based on screen width
 		layout.scrollDirection = .horizontal
@@ -95,7 +131,7 @@ class HomeViewController : SectionViewController {
 	
 	private static func createExhibitionsCollectionView() -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = CGSize(width: 240, height: 373)
+		layout.itemSize = CGSize(width: 240, height: HomeViewController.exhibitionsCollectionHeight)
 		layout.minimumLineSpacing = 20
 		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 119 to calculation based on screen width
 		layout.scrollDirection = .horizontal
@@ -129,7 +165,7 @@ class HomeViewController : SectionViewController {
 		toursCollectionView.autoPinEdge(.top, to: .bottom, of: toursTitleView)
 		toursCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		toursCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		toursCollectionView.autoSetDimension(.height, toSize: 300)
+		toursCollectionView.autoSetDimension(.height, toSize: HomeViewController.toursAndEventsCollectionHeight)
 		
 		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView, withOffset: 30)
 		exhibitionsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
@@ -144,7 +180,7 @@ class HomeViewController : SectionViewController {
 		exhibitionsCollectionView.autoPinEdge(.top, to: .bottom, of: exhibitionsTitleView)
 		exhibitionsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		exhibitionsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		exhibitionsCollectionView.autoSetDimension(.height, toSize: 373)
+		exhibitionsCollectionView.autoSetDimension(.height, toSize: HomeViewController.exhibitionsCollectionHeight)
 		
 		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView, withOffset: 30)
 		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
@@ -159,7 +195,7 @@ class HomeViewController : SectionViewController {
 		eventsCollectionView.autoPinEdge(.top, to: .bottom, of: eventsTitleView)
 		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		eventsCollectionView.autoSetDimension(.height, toSize: 300)
+		eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.toursAndEventsCollectionHeight)
 		
 		super.updateViewConstraints()
 	}
@@ -188,10 +224,10 @@ extension HomeViewController : UIScrollViewDelegate {
 extension HomeViewController : UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if collectionView == toursCollectionView {
-			return AppDataManager.sharedInstance.app.tours.count
+			return tourItems.count
 		}
 		else if collectionView == exhibitionsCollectionView {
-			return AppDataManager.sharedInstance.exhibitions.count
+			return exhibitionItems.count
 		}
 		else if collectionView == eventsCollectionView {
 			return eventItems.count
@@ -202,12 +238,12 @@ extension HomeViewController : UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if collectionView == toursCollectionView {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTourCell.reuseIdentifier, for: indexPath) as! HomeTourCell
-			cell.tourModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			cell.tourModel = tourItems[indexPath.row]
 			return cell
 		}
 		else if collectionView == exhibitionsCollectionView {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeExhibitionCell.reuseIdentifier, for: indexPath) as! HomeExhibitionCell
-			cell.exhibitionModel = AppDataManager.sharedInstance.exhibitions[indexPath.row]
+			cell.exhibitionModel = exhibitionItems[indexPath.row]
 			return cell
 		}
 		else if collectionView == eventsCollectionView {

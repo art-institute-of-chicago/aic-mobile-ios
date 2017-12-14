@@ -1,5 +1,5 @@
 //
-//  InfoSectionPageView.swift
+//  InfoPageView.swift
 //  aic
 //
 //  Created by Filippo Vanucci on 12/11/17.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-/// InfoSectionPageView
+/// InfoPageView
 ///
 /// Info page Title and Text
-class InfoSectionPageView : UIView {
+class InfoPageView : UIView {
 	let titleLabel: UILabel = UILabel()
 	let dividerLine: UIView = UIView()
 	let textView: UITextView = UITextView()

@@ -28,8 +28,11 @@ class HomeTourCell : UICollectionViewCell {
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
 		tourTitleLabel.textColor = .aicDarkGrayColor
+		tourTitleLabel.numberOfLines = 0
+		tourTitleLabel.lineBreakMode = .byTruncatingTail
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
+		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 	}
 	

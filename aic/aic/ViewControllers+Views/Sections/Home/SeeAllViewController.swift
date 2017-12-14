@@ -42,6 +42,11 @@ class SeeAllViewController : UIViewController {
 		
 		self.view.backgroundColor = .white
 		
+		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
+		swipeRightGesture.direction = .right
+		collectionView.addGestureRecognizer(swipeRightGesture)
+		
+		collectionView.panGestureRecognizer.require(toFail: swipeRightGesture)
 		collectionView.register(UINib(nibName: "SeeAllTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllTourCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllEventCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier)
@@ -58,7 +63,7 @@ class SeeAllViewController : UIViewController {
 			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0))
 			
 			layout.itemSize = CGSize(width: itemWidth, height: 361)
-			layout.sectionInset = UIEdgeInsets(top: 48, left: sideMargin, bottom: 0, right: sideMargin)
+			layout.sectionInset = UIEdgeInsets(top: 48, left: sideMargin, bottom: 60, right: sideMargin)
 		}
 		else {
 			let sideMargin: CGFloat = 15
@@ -124,6 +129,12 @@ extension SeeAllViewController : UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
+	}
+}
+
+extension SeeAllViewController : UIGestureRecognizerDelegate {
+	@objc private func swipeRight(recognizer: UIGestureRecognizer) {
+		self.navigationController?.popViewController(animated: true)
 	}
 }
 
