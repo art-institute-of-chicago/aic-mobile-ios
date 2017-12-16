@@ -76,7 +76,7 @@ class InfoViewController : SectionViewController {
 		scrollView.autoPinEdge(.top, to: .top, of: self.view)
 		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
+		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
 		
 		becomeMemberView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
 		becomeMemberView.autoPinEdge(.leading, to: .leading, of: self.view)
@@ -97,6 +97,7 @@ class InfoViewController : SectionViewController {
 		footerView.autoPinEdge(.top, to: .bottom, of: locationButton, withOffset: footerTopMargin)
 		footerView.autoPinEdge(.leading, to: .leading, of: self.view)
 		footerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		footerView.autoSetDimension(.height, toSize: 250)
 		
 		whiteBackgroundView.autoPinEdge(.top, to: .top, of: self.view)
 		whiteBackgroundView.autoPinEdge(.leading, to: .leading, of: self.view)

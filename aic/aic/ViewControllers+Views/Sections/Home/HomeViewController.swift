@@ -30,7 +30,6 @@ class HomeViewController : SectionViewController {
 	var exhibitionItems: [AICExhibitionModel] = []
 	var eventItems: [AICEventModel] = []
 	
-	let bottomMargin: CGFloat = 60
 	static let toursAndEventsCollectionHeight: CGFloat = 340
 	static let exhibitionsCollectionHeight: CGFloat = 380
 	
@@ -82,6 +81,7 @@ class HomeViewController : SectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
 		
 		toursCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
@@ -115,7 +115,7 @@ class HomeViewController : SectionViewController {
 		
 		self.view.layoutIfNeeded()
 		self.scrollView.contentSize.width = self.view.frame.width
-		self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height + bottomMargin
+		self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height + Common.Layout.miniAudioPlayerHeight
 		
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: scrollView)
 	}
@@ -154,7 +154,7 @@ class HomeViewController : SectionViewController {
 		scrollView.autoPinEdge(.top, to: .top, of: self.view)
 		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
+		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
 		
 		memberPromptView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
 		memberPromptView.autoPinEdge(.leading, to: .leading, of: self.view)

@@ -42,7 +42,7 @@ class SeeAllViewController : UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.view.backgroundColor = .red
+		self.view.backgroundColor = .white
 		
 		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
 		swipeRightGesture.direction = .right
@@ -102,6 +102,7 @@ class SeeAllViewController : UIViewController {
 		layout.scrollDirection = .vertical
 		
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Common.Layout.miniAudioPlayerHeight, right: 0)
 		collectionView.showsVerticalScrollIndicator = false
 		collectionView.backgroundColor = .white
 		if content == .events {
@@ -114,7 +115,7 @@ class SeeAllViewController : UIViewController {
 		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
 		collectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: Common.Layout.tabBarHeightWithMiniAudioPlayerHeight * -1)
+		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
 		
 		super.updateViewConstraints()
 	}

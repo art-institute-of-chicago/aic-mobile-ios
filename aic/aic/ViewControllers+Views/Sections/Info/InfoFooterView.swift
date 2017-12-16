@@ -13,8 +13,8 @@ class InfoFooterView: BaseView {
 	let bloombergCreditsImageView = UIImageView()
 	let potionCreditsTextView = LinkedTextView()
 	
-	let bloomberCreditsTopMargin: CGFloat = 72
-	let potionCreditsTopMargin: CGFloat = 48
+	let bloomberCreditsTopMargin: CGFloat = 62
+	let potionCreditsTopMargin: CGFloat = 38
 	let bottomMargin: CGFloat = 48
 	
 	init() {
@@ -54,8 +54,6 @@ class InfoFooterView: BaseView {
 			potionCreditsTextView.autoPinEdge(.top, to: .bottom, of: bloombergCreditsImageView, withOffset: potionCreditsTopMargin)
 			potionCreditsTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 			potionCreditsTextView.autoPinEdge(.trailing, to: .trailing, of: self)
-			
-			self.autoSetDimension(.height, toSize: 250) //autoPinEdge(.bottom, to: .bottom, of: potionCreditsTextView, withOffset: bottomMargin)
 			
 			didSetupConstraints = true
 		}

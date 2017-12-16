@@ -300,7 +300,7 @@ class AppDataManager {
 		
 		// find earliest day
 		for event in self.events {
-			if event.startDate < earliestDate {
+			if event.startDate < earliestDate && event.startDate > now {
 				earliestDate = event.startDate
 			}
 		}
