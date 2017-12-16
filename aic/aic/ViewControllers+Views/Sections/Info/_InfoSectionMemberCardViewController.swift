@@ -263,7 +263,7 @@ extension InfoSectionMemberCardViewController : UITextFieldDelegate {
             return true
         case memberCardView.memberZipCodeTextField:
             return prospectiveText.containsOnlyCharactersIn("0123456789") &&
-                prospectiveText.characters.count <= 5
+                prospectiveText.count <= 5
         default:
             return true
         }

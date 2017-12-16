@@ -70,7 +70,7 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
 		let seeAllVC = SeeAllViewController(contentType: .events)
-		seeAllVC.eventItems = AppDataManager.sharedInstance.events
+//		seeAllVC.eventItems = AppDataManager.sharedInstance.events
 		self.pushViewController(seeAllVC, animated: true)
 	}
 }

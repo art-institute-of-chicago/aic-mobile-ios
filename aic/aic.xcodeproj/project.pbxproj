@@ -106,6 +106,7 @@
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
+		29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
 		E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */; };
@@ -301,7 +302,7 @@
 		293D00A71FA7C82200BF2C26 /* map */ = {isa = PBXFileReference; lastKnownFileType = folder; name = map; path = aic/Assets/map; sourceTree = SOURCE_ROOT; };
 		293D00AB1FA7CA6600BF2C26 /* video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = video; path = aic/Assets/video; sourceTree = SOURCE_ROOT; };
 		29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeExhibitionCell.xib; sourceTree = "<group>"; };
-		29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeExhibitionCell.swift; path = "/repos/AIC/aic-mobile-ios/aic/aic/ViewControllers+Views/Sections/Home/Collection View Cells/HomeExhibitionCell.swift"; sourceTree = "<absolute>"; };
+		29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeExhibitionCell.swift; path = "/repos/AIC/aic-mobile-ios/aic/aic/ViewControllers+Views/Sections/Home/Home Cells/HomeExhibitionCell.swift"; sourceTree = "<absolute>"; };
 		2941CE791FE08EF400B7CCEE /* CardTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTitleView.swift; sourceTree = "<group>"; };
 		2941CE7B1FE0928D00B7CCEE /* TourContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourContentCell.swift; sourceTree = "<group>"; };
 		2941CE7D1FE092AC00B7CCEE /* TourContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourContentCell.xib; sourceTree = "<group>"; };
@@ -353,6 +354,7 @@
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
+		29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllHeaderView.swift; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		34A42DED784747728FEECA5D /* Pods_aicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -640,15 +642,9 @@
 			path = sourcesanspro;
 			sourceTree = "<group>";
 		};
-		29412AEA1FCE174C005A7172 /* Collection View Cells */ = {
+		29412AEA1FCE174C005A7172 /* See All Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */,
-				2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */,
-				29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */,
-				29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */,
-				29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */,
-				29A27A071FCC769B007CEE1D /* HomeTourCell.xib */,
 				29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */,
 				29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */,
 				29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */,
@@ -656,7 +652,7 @@
 				29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */,
 				29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */,
 			);
-			path = "Collection View Cells";
+			path = "See All Cells";
 			sourceTree = "<group>";
 		};
 		29A7BCE01FBF85DB00FD8639 /* idealsans */ = {
@@ -690,11 +686,12 @@
 		29DAF0621FB3C69E002ED862 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				29412AEA1FCE174C005A7172 /* Collection View Cells */,
+				29F3A9341FE5D27C000BCABE /* Header Views */,
+				29F3A9371FE5DF8F000BCABE /* Home Cells */,
+				29412AEA1FCE174C005A7172 /* See All Cells */,
 				2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */,
 				2986A5871FBCBD5B00029E74 /* HomeViewController.swift */,
 				29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */,
-				29B9B58A1FCFC5660095FE52 /* HomeContentTitleView.swift */,
 				29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */,
 			);
 			path = Home;
@@ -725,6 +722,28 @@
 				2941CE7D1FE092AC00B7CCEE /* TourContentCell.xib */,
 			);
 			path = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		29F3A9341FE5D27C000BCABE /* Header Views */ = {
+			isa = PBXGroup;
+			children = (
+				29B9B58A1FCFC5660095FE52 /* HomeContentTitleView.swift */,
+				29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */,
+			);
+			path = "Header Views";
+			sourceTree = "<group>";
+		};
+		29F3A9371FE5DF8F000BCABE /* Home Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */,
+				2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */,
+				29412AED1FCE1F7A005A7172 /* HomeExhibitionCell.swift */,
+				29412AEB1FCE1F44005A7172 /* HomeExhibitionCell.xib */,
+				29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */,
+				29A27A071FCC769B007CEE1D /* HomeTourCell.xib */,
+			);
+			path = "Home Cells";
 			sourceTree = "<group>";
 		};
 		B819E172870013E1F6D5EC3E /* Pods */ = {
@@ -1618,6 +1637,7 @@
 				E447397F1CAE02870011F059 /* _NewsToursSectionView.swift in Sources */,
 				29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */,
 				E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */,
+				29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */,
 				E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */,
 				29B9B58F1FD0A3FF0095FE52 /* SeeAllViewController.swift in Sources */,
 				2941CE7A1FE08EF400B7CCEE /* CardTitleView.swift in Sources */,

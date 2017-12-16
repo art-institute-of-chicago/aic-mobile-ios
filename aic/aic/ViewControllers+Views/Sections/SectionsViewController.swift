@@ -300,7 +300,7 @@ class SectionsViewController : UIViewController {
     // Update bottom margin for tab bar + audio player in case any views need to adjust
     private func updateTabBarHeightWithMiniPlayer() {
         if Common.Layout.tabBarHeight == Common.Layout.tabBarHeightWithMiniAudioPlayerHeight {
-            Common.Layout.tabBarHeightWithMiniAudioPlayerHeight = Common.Layout.tabBarHeight + objectVC.getMiniPlayerHeight()
+            Common.Layout.miniAudioPlayerHeight = objectVC.getMiniPlayerHeight()
         }
     }
     

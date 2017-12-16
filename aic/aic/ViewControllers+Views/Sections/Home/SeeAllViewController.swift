@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: change this to a collectionviewcontroller or subclass SectionViewController if needed for language inheritance
 class SeeAllViewController : UIViewController {
 	let collectionView: UICollectionView
 	
@@ -22,7 +23,8 @@ class SeeAllViewController : UIViewController {
 	
 	var tourItems: [AICTourModel] = []
 	var exhibitionItems: [AICExhibitionModel] = []
-	var eventItems: [AICEventModel] = []
+	var eventDates: [Date] = []
+	var eventItems: [[AICEventModel]] = []
 	
 	init(contentType: ContentType) {
 		self.content = contentType
@@ -40,7 +42,7 @@ class SeeAllViewController : UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.view.backgroundColor = .white
+		self.view.backgroundColor = .red
 		
 		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
 		swipeRightGesture.direction = .right
@@ -50,9 +52,30 @@ class SeeAllViewController : UIViewController {
 		collectionView.register(UINib(nibName: "SeeAllTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllTourCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllEventCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier)
+		collectionView.delegate = self
 		collectionView.dataSource = self
 		
 		self.view.addSubview(collectionView)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		eventDates.removeAll()
+		eventItems.removeAll()
+		for event in AppDataManager.sharedInstance.events {
+			var foundDate: Bool = false
+			for index in 0..<eventDates.count {
+				if Calendar.current.compare(eventDates[index], to: event.startDate, toGranularity: .day) == .orderedSame {
+					foundDate = true
+					eventItems[index].append(event)
+				}
+			}
+			if foundDate == false {
+				eventDates.append(event.startDate)
+				eventItems.append([event])
+			}
+		}
 	}
 	
 	private static func createCollectionView(for content: ContentType) -> UICollectionView {
@@ -63,7 +86,7 @@ class SeeAllViewController : UIViewController {
 			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0))
 			
 			layout.itemSize = CGSize(width: itemWidth, height: 361)
-			layout.sectionInset = UIEdgeInsets(top: 48, left: sideMargin, bottom: 60, right: sideMargin)
+			layout.sectionInset = UIEdgeInsets(top: 16, left: sideMargin, bottom: 60, right: sideMargin)
 		}
 		else {
 			let sideMargin: CGFloat = 15
@@ -71,7 +94,7 @@ class SeeAllViewController : UIViewController {
 			let itemWidth: CGFloat = CGFloat(UIScreen.main.bounds.width - (sideMargin * 2.0) - middleMargin) / 2.0
 			
 			layout.itemSize = CGSize(width: itemWidth, height: 285)
-			layout.sectionInset = UIEdgeInsets(top: 48, left: sideMargin, bottom: 60, right: sideMargin)
+			layout.sectionInset = UIEdgeInsets(top: 0, left: sideMargin, bottom: 0, right: sideMargin)
 		}
 		
 		layout.minimumInteritemSpacing = 0
@@ -81,6 +104,9 @@ class SeeAllViewController : UIViewController {
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsVerticalScrollIndicator = false
 		collectionView.backgroundColor = .white
+		if content == .events {
+			collectionView.register(SeeAllHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier)
+		}
 		return collectionView
 	}
 	
@@ -88,13 +114,20 @@ class SeeAllViewController : UIViewController {
 		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
 		collectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view)
+		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: Common.Layout.tabBarHeightWithMiniAudioPlayerHeight * -1)
 		
 		super.updateViewConstraints()
 	}
 }
 
 extension SeeAllViewController : UICollectionViewDataSource {
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
+		if content == .events {
+			return eventItems.count
+		}
+		return 1
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if content == .tours {
 			return tourItems.count
@@ -103,7 +136,7 @@ extension SeeAllViewController : UICollectionViewDataSource {
 			return exhibitionItems.count
 		}
 		else if content == .events {
-			return eventItems.count
+			return eventItems[section].count
 		}
 		return 0
 	}
@@ -121,14 +154,35 @@ extension SeeAllViewController : UICollectionViewDataSource {
 		}
 		else if content == .events {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllEventCell.reuseIdentifier, for: indexPath) as! SeeAllEventCell
-			cell.eventModel = AppDataManager.sharedInstance.events[indexPath.row]
+			cell.eventModel = eventItems[indexPath.section][indexPath.row]
 			return cell
 		}
 		return UICollectionViewCell()
 	}
-	
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 1
+}
+
+extension SeeAllViewController : UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		var reusableView: UICollectionReusableView? = nil
+		
+		if kind == UICollectionElementKindSectionHeader {
+			if content == .events {
+				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
+				sectionHeader.titleLabel.text = Common.Info.monthDayString(date: eventDates[indexPath.section])
+				return sectionHeader
+			}
+		}
+		
+		return reusableView!
+	}
+}
+
+extension SeeAllViewController : UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		if content == .events {
+			return CGSize(width: UIScreen.main.bounds.width, height: SeeAllHeaderView.headerHeight)
+		}
+		return CGSize.zero
 	}
 }
 

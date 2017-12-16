@@ -170,7 +170,7 @@ struct Common {
 		}
 		
 		static var navigationBarMinimizedVerticalOffset: CGFloat {
-			return navigationBarMinimizedHeight - safeAreaTopMargin
+			return navigationBarMinimizedHeight
 		}
 		
 		static var tabBarHeight: CGFloat {
@@ -179,13 +179,13 @@ struct Common {
 			}
 			return 49
 		}
+		
+		// TODO: use this variable to define miniplayer height
+		static var miniAudioPlayerHeight: CGFloat = 40.0
 
-        static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat = tabBarHeight {
-            didSet {
-                if tabBarHeightWithMiniAudioPlayerHeight != oldValue {
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.tabBarHeightDidChangeNotification), object: nil)
-                }
-            }
+		// TODO: remove this notification and calculation
+        static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat {
+			return tabBarHeight + miniAudioPlayerHeight
         }
 		
 		static var cardTopPosition: CGFloat {

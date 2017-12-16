@@ -71,4 +71,6 @@ extension UIFont {
 	static let aicCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
 	
 	static let aicCardDescriptionFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 16.0)!
+	
+	static let aicSeeAllHeaderFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
 }

@@ -39,6 +39,9 @@ class HomeViewController : SectionViewController {
 	override init(section: AICSectionModel) {
 		super.init(section: section)
 		
+		
+		// TODO: move these calculations to DataManager
+		// TODO: get this data from DataManager on viewWillAppear
 		// TODO: set max number of items in Common / Settings
 		for tour in AppDataManager.sharedInstance.app.tours {
 			tourItems.append(tour)
