@@ -53,6 +53,7 @@ class SearchNavigationController : CardNavigationController {
 		searchBar.backgroundColor = .aicDarkGrayColor
 		searchBar.isTranslucent = false
 		searchBar.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
+		searchBar.setImage(#imageLiteral(resourceName: "searchClear"), for: .clear, state: .normal)
 		searchBar.placeholder = Common.Search.searchBarPlaceholder
 		searchBar.keyboardAppearance = .dark
 		searchBar.delegate = self
