@@ -16,7 +16,7 @@ class ObjectContentSectionView: BaseView {
     internal let contentView = UIView()
     internal let topLine = UIView()
     internal let titleLabel = UILabel()
-    internal let bodyTextView = UITextView()
+    internal let bodyTextView = LinkedTextView()
     
     internal var collapseExpandButton:UIButton? = nil
     

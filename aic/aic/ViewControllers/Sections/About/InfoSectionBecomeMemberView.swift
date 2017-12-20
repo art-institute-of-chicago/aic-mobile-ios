@@ -18,7 +18,7 @@ class InfoSectionBecomeMemberView: BaseView {
     
     let titleLabel = UILabel()
     let supportMessageLabel = UILabel()
-    let joinTextView = UITextView()
+    let joinTextView = LinkedTextView()
     let accessPromptLabel = UILabel()
     let accessButton = AICButton()
     

@@ -21,11 +21,11 @@ class InfoSectionInformationView: BaseView {
     let titleLabel = UILabel()
     let museumHoursTextView = UITextView()
     let locationLabel = UILabel()
-    let locationTextView = UITextView()
-    let getTicketsTextView = UITextView()
+    let locationTextView = LinkedTextView()
+    let getTicketsTextView = LinkedTextView()
     
     let bloombergCreditsImageView = UIImageView()
-    let potionCreditsTextView = UITextView()
+    let potionCreditsTextView = LinkedTextView()
     
     init() {
         super.init(frame:CGRect.zero)
@@ -74,6 +74,7 @@ class InfoSectionInformationView: BaseView {
         potionCreditsTextView.font = UIFont.aicTextFont()
         potionCreditsTextView.setDefaultsForAICAttributedTextView()
         potionCreditsTextView.linkTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+		potionCreditsTextView.delegate = self
         
         // Add Subviews
         infoContentView.addSubview(titleLabel)
