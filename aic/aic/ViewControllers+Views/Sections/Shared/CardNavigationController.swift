@@ -32,6 +32,8 @@ class CardNavigationController : UINavigationController {
 	private let topPosition: CGFloat = Common.Layout.cardTopPosition
 	private let bottomPosition: CGFloat = UIScreen.main.bounds.height - Common.Layout.tabBarHeight
 	
+	let slideAnimator: CardSlideAnimator = CardSlideAnimator()
+	
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -45,7 +47,6 @@ class CardNavigationController : UINavigationController {
 	}
 	
 	override func viewDidLoad() {
-		self.becomeFirstResponder()
 		super.viewDidLoad()
 		
 		self.view.isHidden = true
@@ -63,6 +64,9 @@ class CardNavigationController : UINavigationController {
 		// Pan Gesture
 		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(recognizer:)))
 		self.view.addGestureRecognizer(panGesture)
+		
+		// NavigationController Delegate
+		self.delegate = self
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +82,11 @@ class CardNavigationController : UINavigationController {
 		
 		// Important: this is the magic that makes gestures work on this view
 		self.becomeFirstResponder()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		self.resignFirstResponder()
 	}
 	
 	override func updateViewConstraints() {
@@ -228,22 +237,65 @@ class CardNavigationController : UINavigationController {
 		}
 	}
 	
-	// MARK: Animation Callbacks
+	// MARK: Show/Hide Animation Callbacks
 	
-	func cardWillShowFullscreen() {
-		
+	func cardWillShowFullscreen() {}
+	
+	func cardDidShowFullscreen() {}
+	
+	func cardWillHide() {}
+	
+	func cardDidHide() {}
+}
+
+// MARK: UINavigationControllerDelegate
+
+extension CardNavigationController : UINavigationControllerDelegate {
+	func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		slideAnimator.isAnimatingIn = (operation == .push)
+		return slideAnimator
 	}
-	
-	func cardDidShowFullscreen() {
-		
+}
+
+// MARK: UIViewControllerAnimatedTransitioning
+
+class CardSlideAnimator : NSObject, UIViewControllerAnimatedTransitioning {
+	var isAnimatingIn: Bool = true
+
+	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+		return 0.3
 	}
-	
-	func cardWillHide() {
-		
-	}
-	
-	func cardDidHide() {
-		
+
+	func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+		let containerView = transitionContext.containerView
+		let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
+		let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
+
+		let toOrigin: CGFloat = (isAnimatingIn) ? UIScreen.main.bounds.width : -UIScreen.main.bounds.width
+//		let fromDestination: CGFloat = (isAnimatingIn) ? -UIScreen.main.bounds.width : UIScreen.main.bounds.width
+
+		containerView.addSubview(toVC!.view)
+		toVC!.view.frame.origin = CGPoint(x: toOrigin, y: toVC!.view.frame.origin.y)
+		//fromVC!.view.frame.origin = CGPoint(x: 0.0, y: fromVC!.view.frame.origin.y)
+
+		let duration = transitionDuration(using: transitionContext)
+		UIView.animate(withDuration: duration, animations: {
+			toVC!.view.frame.origin = CGPoint(x: 0, y: toVC!.view.frame.origin.y)
+			toVC!.view.alpha = 1.0
+			if (self.isAnimatingIn == true) {
+				fromVC!.view.alpha = 0.3
+				//fromVC!.view.frame.origin = CGPoint(x: -150.0, y: fromVC!.view.frame.origin.y)
+			}
+			else {
+				fromVC!.view.frame.origin = CGPoint(x: UIScreen.main.bounds.width, y: fromVC!.view.frame.origin.y)
+			}
+		}) { finished in
+			let cancelled = transitionContext.transitionWasCancelled
+			transitionContext.completeTransition(!cancelled)
+			if (self.isAnimatingIn == true) {
+				fromVC!.view.frame.origin = CGPoint(x:  -UIScreen.main.bounds.width * 0.5, y: fromVC!.view.frame.origin.y)
+			}
+		}
 	}
 }
 

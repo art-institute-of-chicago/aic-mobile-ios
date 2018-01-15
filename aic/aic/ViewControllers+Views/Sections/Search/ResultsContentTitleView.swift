@@ -17,7 +17,6 @@ class ResultsContentTitleView : UITableViewHeaderFooterView {
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 		
-		self.backgroundColor = .aicDarkGrayColor
 		self.contentView.backgroundColor = .aicDarkGrayColor
 		
 		contentTitleLabel.font = .aicHomeCollectionTitleFont

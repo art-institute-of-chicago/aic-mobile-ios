@@ -18,20 +18,21 @@ class HomeViewController : SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
 	let memberPromptView: HomeMemberPromptView = HomeMemberPromptView()
 	let toursTitleView: HomeContentTitleView = HomeContentTitleView(title: "Tours")
-	let toursCollectionView: UICollectionView = createToursEventsCollectionView()
+	let toursCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.tourCellSize)
 	let exhibitionsDividerLine: UIView = createDividerLine()
 	let exhibitionsTitleView: HomeContentTitleView = HomeContentTitleView(title: "On View")
-	let exhibitionsCollectionView: UICollectionView = createExhibitionsCollectionView()
+	let exhibitionsCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.exhibitionCellSize)
 	let eventsDividerLine: UIView = createDividerLine()
 	let eventsTitleView: HomeContentTitleView = HomeContentTitleView(title: "Events")
-	let eventsCollectionView: UICollectionView = createToursEventsCollectionView()
+	let eventsCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.eventCellSize)
 	
 	var tourItems: [AICTourModel] = []
 	var exhibitionItems: [AICExhibitionModel] = []
 	var eventItems: [AICEventModel] = []
 	
-	static let toursAndEventsCollectionHeight: CGFloat = 340
-	static let exhibitionsCollectionHeight: CGFloat = 380
+	static let tourCellSize: CGSize = CGSize(width: 285, height: 300)
+	static let eventCellSize: CGSize = CGSize(width: 285, height: 320)
+	static let exhibitionCellSize: CGSize = CGSize(width: 240, height: 380)
 	
 	weak var delegate: HomeViewControllerDelegate? = nil
 	
@@ -120,23 +121,11 @@ class HomeViewController : SectionViewController {
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: scrollView)
 	}
 	
-	private static func createToursEventsCollectionView() -> UICollectionView {
+	private static func createCollectionView(cellSize: CGSize) -> UICollectionView {
 		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = CGSize(width: 285, height: HomeViewController.toursAndEventsCollectionHeight)
+		layout.itemSize = CGSize(width: cellSize.width, height: cellSize.height)
 		layout.minimumLineSpacing = 20
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 74 to calculation based on screen width
-		layout.scrollDirection = .horizontal
-		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-		collectionView.showsHorizontalScrollIndicator = false
-		collectionView.backgroundColor = .white
-		return collectionView
-	}
-	
-	private static func createExhibitionsCollectionView() -> UICollectionView {
-		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = CGSize(width: 240, height: HomeViewController.exhibitionsCollectionHeight)
-		layout.minimumLineSpacing = 20
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // TODO: change 119 to calculation based on screen width
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 		layout.scrollDirection = .horizontal
 		let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
 		collectionView.showsHorizontalScrollIndicator = false
@@ -168,9 +157,9 @@ class HomeViewController : SectionViewController {
 		toursCollectionView.autoPinEdge(.top, to: .bottom, of: toursTitleView)
 		toursCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		toursCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		toursCollectionView.autoSetDimension(.height, toSize: HomeViewController.toursAndEventsCollectionHeight)
+		toursCollectionView.autoSetDimension(.height, toSize: HomeViewController.tourCellSize.height)
 		
-		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView, withOffset: 30)
+		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView, withOffset: 20)
 		exhibitionsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
 		exhibitionsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		exhibitionsDividerLine.autoSetDimension(.height, toSize: 1)
@@ -183,7 +172,7 @@ class HomeViewController : SectionViewController {
 		exhibitionsCollectionView.autoPinEdge(.top, to: .bottom, of: exhibitionsTitleView)
 		exhibitionsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		exhibitionsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		exhibitionsCollectionView.autoSetDimension(.height, toSize: HomeViewController.exhibitionsCollectionHeight)
+		exhibitionsCollectionView.autoSetDimension(.height, toSize: HomeViewController.exhibitionCellSize.height)
 		
 		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView, withOffset: 30)
 		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
@@ -198,7 +187,7 @@ class HomeViewController : SectionViewController {
 		eventsCollectionView.autoPinEdge(.top, to: .bottom, of: eventsTitleView)
 		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.toursAndEventsCollectionHeight)
+		eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.eventCellSize.height)
 		
 		super.updateViewConstraints()
 	}

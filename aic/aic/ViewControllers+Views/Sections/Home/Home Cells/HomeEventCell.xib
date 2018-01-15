@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -98,7 +98,7 @@
                 <constraint firstItem="hsR-wn-ymv" firstAttribute="trailing" secondItem="v7a-hU-KYM" secondAttribute="trailing" id="M4R-ur-lcD"/>
                 <constraint firstItem="syi-Cq-fRC" firstAttribute="top" secondItem="S93-uM-s5O" secondAttribute="bottom" constant="15" id="Tck-Op-HbD"/>
                 <constraint firstItem="hsR-wn-ymv" firstAttribute="bottom" secondItem="aes-vj-RjI" secondAttribute="bottom" id="fty-HJ-5rI"/>
-                <constraint firstItem="v7a-hU-KYM" firstAttribute="bottom" secondItem="S93-uM-s5O" secondAttribute="bottom" id="hUO-zy-3Ar"/>
+                <constraint firstItem="v7a-hU-KYM" firstAttribute="top" secondItem="S93-uM-s5O" secondAttribute="bottom" constant="-34" id="hUO-zy-3Ar"/>
                 <constraint firstItem="hsR-wn-ymv" firstAttribute="trailing" secondItem="syi-Cq-fRC" secondAttribute="trailing" id="n83-tS-HNC"/>
                 <constraint firstItem="syi-Cq-fRC" firstAttribute="leading" secondItem="hsR-wn-ymv" secondAttribute="leading" id="xSc-jn-rho"/>
                 <constraint firstItem="v7a-hU-KYM" firstAttribute="leading" secondItem="hsR-wn-ymv" secondAttribute="leading" id="yPU-0c-ja5"/>

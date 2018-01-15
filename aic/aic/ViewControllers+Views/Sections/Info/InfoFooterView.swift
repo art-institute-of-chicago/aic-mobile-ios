@@ -9,7 +9,7 @@
 import UIKit
 import PureLayout
 
-class InfoFooterView: BaseView {
+class InfoFooterView: UIView {
 	let bloombergCreditsImageView = UIImageView()
 	let potionCreditsTextView = LinkedTextView()
 	
@@ -47,16 +47,12 @@ class InfoFooterView: BaseView {
 	}
 	
 	override func updateConstraints() {
-		if didSetupConstraints == false {
-			bloombergCreditsImageView.autoPinEdge(.top, to: .top, of: self, withOffset: bloomberCreditsTopMargin)
-			bloombergCreditsImageView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
-			
-			potionCreditsTextView.autoPinEdge(.top, to: .bottom, of: bloombergCreditsImageView, withOffset: potionCreditsTopMargin)
-			potionCreditsTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
-			potionCreditsTextView.autoPinEdge(.trailing, to: .trailing, of: self)
-			
-			didSetupConstraints = true
-		}
+		bloombergCreditsImageView.autoPinEdge(.top, to: .top, of: self, withOffset: bloomberCreditsTopMargin)
+		bloombergCreditsImageView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		
+		potionCreditsTextView.autoPinEdge(.top, to: .bottom, of: bloombergCreditsImageView, withOffset: potionCreditsTopMargin)
+		potionCreditsTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		potionCreditsTextView.autoPinEdge(.trailing, to: .trailing, of: self)
 		
 		super.updateConstraints()
 	}

@@ -30,6 +30,14 @@ class InfoViewController : SectionViewController {
 	
 	override init(section: AICSectionModel) {
 		super.init(section: section)
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		
 		scrollView.backgroundColor = .aicInfoColor
 		scrollView.delegate = self
@@ -52,14 +60,8 @@ class InfoViewController : SectionViewController {
 		scrollView.addSubview(languageButton)
 		scrollView.addSubview(locationButton)
 		scrollView.addSubview(footerView)
-	}
-	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
+		
+		createViewConstraints()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +74,7 @@ class InfoViewController : SectionViewController {
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: self.scrollView)
 	}
 	
-	override func updateViewConstraints() {
+	func createViewConstraints() {
 		scrollView.autoPinEdge(.top, to: .top, of: self.view)
 		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
@@ -103,8 +105,6 @@ class InfoViewController : SectionViewController {
 		whiteBackgroundView.autoPinEdge(.leading, to: .leading, of: self.view)
 		whiteBackgroundView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		whiteBackgroundView.autoPinEdge(.bottom, to: .top, of: footerView)
-		
-		super.updateViewConstraints()
 	}
 	
 	@objc func infoButtonPressed(button: UIButton) {

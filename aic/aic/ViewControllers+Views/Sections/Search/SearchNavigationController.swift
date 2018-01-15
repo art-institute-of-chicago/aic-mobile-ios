@@ -113,8 +113,10 @@ class SearchNavigationController : CardNavigationController {
 	override func cardWillShowFullscreen() {
 		if viewControllers.count < 2 {
 			// show keyboard when the card shows
-			let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-			searchTextField?.becomeFirstResponder()
+			DispatchQueue.main.async {
+				let searchTextField = self.searchBar.value(forKey: "searchField") as? UITextField
+				searchTextField?.becomeFirstResponder()
+			}
 		}
 		
 		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)

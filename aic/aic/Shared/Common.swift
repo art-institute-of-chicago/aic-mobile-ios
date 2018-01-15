@@ -196,7 +196,7 @@ struct Common {
 		}
 		
 		static var cardContentHeight: CGFloat {
-			return UIScreen.main.bounds.height - cardTopPosition - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
+			return UIScreen.main.bounds.height - cardTopPosition - Common.Layout.tabBarHeight
 		}
 
         static let showTabBarTitles = true
