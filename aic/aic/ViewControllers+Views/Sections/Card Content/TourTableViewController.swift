@@ -25,10 +25,12 @@ class TourTableViewController : UITableViewController {
 		
 		self.view.backgroundColor = .clear
 		
+		self.tableView.translatesAutoresizingMaskIntoConstraints = false
+		
 		self.tableView.backgroundColor = .aicDarkGrayColor
 		self.tableView.separatorStyle = .none
 		self.tableView.rowHeight = UITableViewAutomaticDimension // Necessary for AutoLayout of cells
-//		self.tableView.estimatedRowHeight = 30
+		self.tableView.estimatedRowHeight = 200
 		self.tableView.alwaysBounceVertical = false
 		//self.tableView.bounces = false
 		self.tableView.register(UINib(nibName: "TourContentCell", bundle: Bundle.main), forCellReuseIdentifier: TourContentCell.reuseIdentifier)
@@ -83,15 +85,6 @@ extension TourTableViewController {
 	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 80
-	}
-	
-	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		if indexPath.row == 0 {
-			return 800
-		}
-		else {
-			return ContentButtonCell.cellHeight
-		}
 	}
 }
 

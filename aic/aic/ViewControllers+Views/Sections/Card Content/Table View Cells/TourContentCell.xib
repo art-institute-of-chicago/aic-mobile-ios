@@ -1,71 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Linotype - SabonNextLTPro-Regular.otf">
-            <string>SabonNextLTPro-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tourContentCell" rowHeight="570" id="zKN-be-rHb" customClass="TourContentCell" customModule="aic" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="570"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tourContentCell" rowHeight="365" id="zKN-be-rHb" customClass="TourContentCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="380"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zKN-be-rHb" id="ZAJ-5a-7Ql">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="569.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="379.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M4X-H7-qci" customClass="AICImageView" customModule="aic" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="220.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="M4X-H7-qci" secondAttribute="height" multiplier="75:44" id="FyR-2N-BN6"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oia-Gy-VmZ" customClass="AICButton" customModule="aic" customModuleProvider="target">
-                        <rect key="frame" x="117" y="236" width="140" height="50"/>
+                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oia-Gy-VmZ" customClass="AICButton" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="117" y="236.5" width="140" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="Ifd-E8-Hpc"/>
                             <constraint firstAttribute="width" constant="140" id="boE-4d-fRL"/>
                         </constraints>
                         <state key="normal" title="Start Tour"/>
                     </button>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vdj-FI-9La">
-                        <rect key="frame" x="16" y="308" width="343" height="262"/>
-                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-6p-yGa">
+                        <rect key="frame" x="16" y="313.5" width="343" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    </textView>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="vdj-FI-9La" firstAttribute="top" secondItem="Oia-Gy-VmZ" secondAttribute="bottom" constant="22" id="2cp-ev-3N2"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="7zJ-6p-yGa" secondAttribute="bottom" constant="35" id="14j-p5-THg"/>
                     <constraint firstItem="Oia-Gy-VmZ" firstAttribute="top" secondItem="M4X-H7-qci" secondAttribute="bottom" constant="16" id="2nj-cZ-KGL"/>
+                    <constraint firstItem="7zJ-6p-yGa" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leadingMargin" id="aUm-gW-fyd"/>
+                    <constraint firstItem="7zJ-6p-yGa" firstAttribute="top" secondItem="ZAJ-5a-7Ql" secondAttribute="top" constant="313.5" id="iwA-65-2za"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="7zJ-6p-yGa" secondAttribute="trailing" id="wWi-ij-Ppx"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Oia-Gy-VmZ" firstAttribute="centerX" secondItem="zKN-be-rHb" secondAttribute="centerX" id="Ewh-3f-zic"/>
                 <constraint firstItem="M4X-H7-qci" firstAttribute="top" secondItem="zKN-be-rHb" secondAttribute="top" id="Mru-JR-qkP"/>
-                <constraint firstAttribute="trailing" secondItem="vdj-FI-9La" secondAttribute="trailing" constant="16" id="aE2-fb-OEC"/>
-                <constraint firstItem="vdj-FI-9La" firstAttribute="leading" secondItem="zKN-be-rHb" secondAttribute="leading" constant="16" id="aIL-r3-81m"/>
                 <constraint firstAttribute="trailing" secondItem="M4X-H7-qci" secondAttribute="trailing" id="aoB-7z-42f"/>
-                <constraint firstAttribute="bottom" secondItem="vdj-FI-9La" secondAttribute="bottom" id="yuo-XS-Fri"/>
                 <constraint firstItem="M4X-H7-qci" firstAttribute="leading" secondItem="zKN-be-rHb" secondAttribute="leading" id="zCQ-0B-aE4"/>
             </constraints>
             <connections>
-                <outlet property="longDescriptionTextView" destination="vdj-FI-9La" id="NUc-H2-EZj"/>
+                <outlet property="descriptionLabel" destination="7zJ-6p-yGa" id="waH-aH-FnD"/>
                 <outlet property="tourImageView" destination="M4X-H7-qci" id="Rh1-Qx-d6o"/>
             </connections>
-            <point key="canvasLocation" x="9.5" y="135"/>
+            <point key="canvasLocation" x="9.5" y="31.5"/>
         </tableViewCell>
     </objects>
 </document>

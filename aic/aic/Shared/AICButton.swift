@@ -6,11 +6,11 @@
 import UIKit
 
 class AICButton: UIButton {
-    let insets = UIEdgeInsetsMake(10, 10, 10, 10)
-	let buttonColor: UIColor
-	let mediumSize: CGSize = CGSize(width: 190, height: 50)
-	let smallSize: CGSize = CGSize(width: 140, height: 50)
-	let borderWidth: CGFloat = 2.0
+    private let insets = UIEdgeInsetsMake(10, 10, 10, 10)
+	private let mediumSize: CGSize = CGSize(width: 190, height: 50)
+	private let smallSize: CGSize = CGSize(width: 140, height: 50)
+	private let borderWidth: CGFloat = 2.0
+	private var buttonColor: UIColor = .aicHomeColor
     
     override var isHighlighted: Bool {
         didSet {
@@ -23,29 +23,33 @@ class AICButton: UIButton {
     }
 
 	init(color: UIColor, isSmall: Bool) {
-		buttonColor = color
 		super.init(frame:CGRect.zero)
 		
-        backgroundColor = buttonColor
-        setTitleColor(.white, for: .normal)
-		setTitleColor(.aicInfoColor, for: .highlighted)
-        titleLabel!.font = .aicButtonFont
-		layer.borderWidth = borderWidth
-		layer.borderColor = buttonColor.cgColor
+		setButtonColor(color: color)
 		
 		let frameSize = isSmall ? smallSize : mediumSize
 		self.autoSetDimensions(to: CGSize(width: frameSize.width - (borderWidth), height: frameSize.height - (borderWidth)))
     }
     
     required init?(coder aDecoder: NSCoder) {
-		buttonColor = .aicHomeColor
 		super.init(coder: aDecoder)
-		
+		buttonColor = .aicHomeColor
+    }
+	
+	func setButtonColor(color: UIColor) {
+		buttonColor = color
 		backgroundColor = buttonColor
+		setBackgroundImage(nil, for: .normal)
+		setBackgroundImage(nil, for: .highlighted)
 		setTitleColor(.white, for: .normal)
-		setTitleColor(.aicInfoColor, for: .highlighted)
+		setTitleColor(buttonColor, for: .highlighted)
 		titleLabel!.font = .aicButtonFont
 		layer.borderWidth = borderWidth
 		layer.borderColor = buttonColor.cgColor
-    }
+		adjustsImageWhenHighlighted = false
+	}
+	
+	override func awakeFromNib() {
+		setButtonColor(color: buttonColor)
+	}
 }
