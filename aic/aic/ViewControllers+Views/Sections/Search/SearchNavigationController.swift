@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol SearchCardDelegate : class {
-	func searchCardDidHide()
-}
-
 class SearchNavigationController : CardNavigationController {
 	let backButton: UIButton = UIButton()
 	let searchBar: UISearchBar = UISearchBar()
@@ -24,8 +20,6 @@ class SearchNavigationController : CardNavigationController {
 	var searchBarLeadingConstraint: NSLayoutConstraint? = nil
 	var searchBarActiveLeading: CGFloat = 2
 	var searchBarInactiveLeading: CGFloat = 32
-	
-	weak var searchCardDelegate: SearchCardDelegate? = nil
 	
 	override init() {
 		super.init()
@@ -131,7 +125,7 @@ class SearchNavigationController : CardNavigationController {
 	}
 	
 	override func cardDidHide() {
-		self.searchCardDelegate?.searchCardDidHide()
+		self.cardDelegate?.cardDidHide(cardVC: self)
 	}
 	
 	override func handlePanGesture(recognizer: UIPanGestureRecognizer) {

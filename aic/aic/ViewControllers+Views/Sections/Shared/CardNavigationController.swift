@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CardNavigationControllerDelegate : class {
+	func cardDidHide(cardVC: CardNavigationController)
+}
+
 class CardNavigationController : UINavigationController {
 	
 	enum State {
@@ -33,6 +37,8 @@ class CardNavigationController : UINavigationController {
 	private let bottomPosition: CGFloat = UIScreen.main.bounds.height - Common.Layout.tabBarHeight
 	
 	let slideAnimator: CardSlideAnimator = CardSlideAnimator()
+	
+	weak var cardDelegate: CardNavigationControllerDelegate? = nil
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)

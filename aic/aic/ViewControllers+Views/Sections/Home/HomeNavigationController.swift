@@ -8,8 +8,16 @@
 
 import UIKit
 
+protocol HomeNavigationControllerDelegate : class {
+	func showTourCard(tour: AICTourModel)
+	func showExhibitionCard(exhibition: AICExhibitionModel)
+	func showEventCard(event: AICEventModel)
+}
+
 class HomeNavigationController : SectionNavigationController {
 	let homeVC: HomeViewController
+	
+	weak var sectionDelegate: HomeNavigationControllerDelegate? = nil
 	
 	override init(section: AICSectionModel) {
 		homeVC = HomeViewController(section: section)
@@ -47,7 +55,7 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 }
 
 extension HomeNavigationController : HomeViewControllerDelegate {
-	func showSeeAllTours() {
+	func homeDidSelectSeeAllTours() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
@@ -56,7 +64,7 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		self.pushViewController(seeAllVC, animated: true)
 	}
 	
-	func showSeeAllExhibitions() {
+	func homeDidSelectSeeAllExhibitions() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
@@ -65,13 +73,24 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		self.pushViewController(seeAllVC, animated: true)
 	}
 	
-	func showSeeAllEvents() {
+	func homeDidSelectSeeAllEvents() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
 		let seeAllVC = SeeAllViewController(contentType: .events)
-//		seeAllVC.eventItems = AppDataManager.sharedInstance.events
 		self.pushViewController(seeAllVC, animated: true)
+	}
+	
+	func homeDidSelectTour(tour: AICTourModel) {
+		self.sectionDelegate?.showTourCard(tour: tour)
+	}
+	
+	func homeDidSelectExhibition(exhibition: AICExhibitionModel) {
+		self.sectionDelegate?.showExhibitionCard(exhibition: exhibition)
+	}
+	
+	func homeDidSelectEvent(event: AICEventModel) {
+		self.sectionDelegate?.showEventCard(event: event)
 	}
 }
 

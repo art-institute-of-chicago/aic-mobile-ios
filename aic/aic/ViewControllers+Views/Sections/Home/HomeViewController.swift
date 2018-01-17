@@ -9,9 +9,12 @@
 import UIKit
 
 protocol HomeViewControllerDelegate : class {
-	func showSeeAllTours()
-	func showSeeAllExhibitions()
-	func showSeeAllEvents()
+	func homeDidSelectSeeAllTours()
+	func homeDidSelectSeeAllExhibitions()
+	func homeDidSelectSeeAllEvents()
+	func homeDidSelectTour(tour: AICTourModel)
+	func homeDidSelectExhibition(exhibition: AICExhibitionModel)
+	func homeDidSelectEvent(event: AICEventModel)
 }
 
 class HomeViewController : SectionViewController {
@@ -86,14 +89,17 @@ class HomeViewController : SectionViewController {
 		scrollView.delegate = self
 		
 		toursCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
+		toursCollectionView.delegate = self
 		toursCollectionView.dataSource = self
 		toursTitleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
 		
 		exhibitionsCollectionView.register(UINib(nibName: "HomeExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeExhibitionCell.reuseIdentifier)
+		exhibitionsCollectionView.delegate = self
 		exhibitionsCollectionView.dataSource = self
 		exhibitionsTitleView.seeAllButton.addTarget(self, action: #selector(seeAllExhibitionsButtonPressed(button:)), for: .touchUpInside)
 		
 		eventsCollectionView.register(UINib(nibName: "HomeEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeEventCell.reuseIdentifier)
+		eventsCollectionView.delegate = self
 		eventsCollectionView.dataSource = self
 		eventsTitleView.seeAllButton.addTarget(self, action: #selector(seeAllEventsButtonPressed(button:)), for: .touchUpInside)
 		
@@ -193,15 +199,15 @@ class HomeViewController : SectionViewController {
 	}
 	
 	@objc private func seeAllToursButtonPressed(button: UIButton) {
-		self.delegate?.showSeeAllTours()
+		self.delegate?.homeDidSelectSeeAllTours()
 	}
 	
 	@objc private func seeAllExhibitionsButtonPressed(button: UIButton) {
-		self.delegate?.showSeeAllExhibitions()
+		self.delegate?.homeDidSelectSeeAllExhibitions()
 	}
 	
 	@objc private func seeAllEventsButtonPressed(button: UIButton) {
-		self.delegate?.showSeeAllEvents()
+		self.delegate?.homeDidSelectSeeAllEvents()
 	}
 }
 
@@ -248,5 +254,19 @@ extension HomeViewController : UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		return 1
+	}
+}
+
+extension HomeViewController : UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if collectionView == toursCollectionView {
+			self.delegate?.homeDidSelectTour(tour: tourItems[indexPath.row])
+		}
+		else if collectionView == exhibitionsCollectionView {
+			self.delegate?.homeDidSelectExhibition(exhibition: exhibitionItems[indexPath.row])
+		}
+		else if collectionView == eventsCollectionView {
+			self.delegate?.homeDidSelectEvent(event: eventItems[indexPath.row])
+		}
 	}
 }

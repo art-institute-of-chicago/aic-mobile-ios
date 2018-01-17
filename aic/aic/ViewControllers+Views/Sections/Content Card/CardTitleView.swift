@@ -18,10 +18,12 @@ class CardTitleView : UITableViewHeaderFooterView {
 		
 		self.contentView.backgroundColor = .aicDarkGrayColor
 		
-		titleLabel.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 80)
+		titleLabel.frame = CGRect(x: 16, y: 0, width: UIScreen.main.bounds.width - 32, height: 80)
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = .center
 		titleLabel.font = .aicCardTitleFont
+		titleLabel.numberOfLines = 0
+		titleLabel.lineBreakMode = .byWordWrapping
 		
 		self.addSubview(titleLabel)
 	}

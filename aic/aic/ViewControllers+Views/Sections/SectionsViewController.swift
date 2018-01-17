@@ -38,10 +38,7 @@ class SectionsViewController : UIViewController {
 	
 	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
     var audioGuideVC:AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
-    //var whatsOnVC:WhatsOnSectionViewController = WhatsOnSectionViewController(section: Common.Sections[.whatsOn]!)
-    //var toursVC:ToursSectionViewController = ToursSectionViewController(section: Common.Sections[.tours]!)
-    //var nearbyVC:NearbySectionViewController = NearbySectionViewController(section: Common.Sections[.map]!)
-	var nearbyVC: MapSectionViewController = MapSectionViewController()
+	var mapVC: MapSectionViewController = MapSectionViewController()
 	var infoVC:InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
     
     // Messages
@@ -65,7 +62,7 @@ class SectionsViewController : UIViewController {
         self.viewControllers = [
 			homeVC,
             audioGuideVC,
-            nearbyVC,
+            mapVC,
             infoVC
         ]
         
@@ -91,7 +88,7 @@ class SectionsViewController : UIViewController {
 		
 		objectVC.willMove(toParentViewController: sectionTabBarController)
 		sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: sectionTabBarController.tabBar)
-		objectVC.willMove(toParentViewController: sectionTabBarController)
+		objectVC.didMove(toParentViewController: sectionTabBarController)
 		
 		searchVC.willMove(toParentViewController: self.sectionTabBarController)
 		sectionTabBarController.view.insertSubview(searchVC.view, belowSubview:self.objectVC.view)
@@ -100,10 +97,11 @@ class SectionsViewController : UIViewController {
 		sectionTabBarController.view.insertSubview(searchButton, belowSubview: searchVC.view)
 		
 		// Set delegates
+		homeVC.sectionDelegate = self
 		sectionTabBarController.delegate = self
 		objectVC.delegate = self
 		audioGuideVC.audioGuideDelegate = self
-		searchVC.searchCardDelegate = self
+		searchVC.cardDelegate = self
         
         //whatsOnVC.newsToursDelegate = self
         //whatsOnVC.delegate          = self
@@ -414,7 +412,33 @@ extension SectionsViewController : ObjectViewControllerDelegate {
 	}
 }
 
-// MARK: Section view controller delegates
+// MARK: Home Delegate
+
+extension SectionsViewController : HomeNavigationControllerDelegate {
+	func showTourCard(tour: AICTourModel) {
+		let contentCardVC = ContentCardNavigationController(tour: tour)
+		contentCardVC.cardDelegate = self
+		showContentCard(contentCardVC)
+	}
+	
+	func showExhibitionCard(exhibition: AICExhibitionModel) {
+		let contentCardVC = ContentCardNavigationController(exhibition: exhibition)
+		contentCardVC.cardDelegate = self
+		showContentCard(contentCardVC)
+	}
+	
+	func showEventCard(event: AICEventModel) {
+		
+	}
+	
+	func showContentCard(_ contentCardVC: ContentCardNavigationController) {
+		contentCardVC.willMove(toParentViewController: sectionTabBarController)
+		sectionTabBarController.view.insertSubview(contentCardVC.view, aboveSubview: searchVC.view)
+		contentCardVC.didMove(toParentViewController: sectionTabBarController)
+		
+		contentCardVC.showFullscreen()
+	}
+}
 
 // AudioGuide delegate
 extension SectionsViewController : AudioGuideSectionViewControllerDelegate {
@@ -517,9 +541,14 @@ extension SectionsViewController : MessageViewDelegate {
 }
 
 // MARK: Search Card Delegate
-extension SectionsViewController : SearchCardDelegate {
-	func searchCardDidHide() {
-		searchButton.isHidden = false
-		searchButton.isEnabled = true
+extension SectionsViewController : CardNavigationControllerDelegate {
+	func cardDidHide(cardVC: CardNavigationController) {
+		if cardVC == searchVC {
+			searchButton.isHidden = false
+			searchButton.isEnabled = true
+		}
+		else if cardVC.isKind(of: ContentCardNavigationController.self) {
+			cardVC.view.removeFromSuperview()
+		}
 	}
 }

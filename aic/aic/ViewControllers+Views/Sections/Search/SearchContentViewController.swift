@@ -32,8 +32,12 @@ class SearchContentViewController : UIViewController {
 		self.view.backgroundColor = .clear
 		cardBackgroundView.backgroundColor = .aicDarkGrayColor
 		
+		// Add subviews
 		self.view.addSubview(cardBackgroundView)
+		
+		tableVC.willMove(toParentViewController: self)
 		self.view.addSubview(tableVC.view)
+		tableVC.didMove(toParentViewController: self)
 		
 		createViewConstraints()
 	}
