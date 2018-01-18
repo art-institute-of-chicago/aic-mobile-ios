@@ -110,6 +110,10 @@
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
+		29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */; };
+		29F261FD200FE5C30000BF05 /* ExhibitionContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */; };
+		29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */; };
+		29F26201200FFADF0000BF05 /* ArtworkContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */; };
 		29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
@@ -362,6 +366,10 @@
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
+		29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionContentCell.xib; sourceTree = "<group>"; };
+		29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionContentCell.swift; sourceTree = "<group>"; };
+		29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkContentCell.swift; sourceTree = "<group>"; };
+		29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtworkContentCell.xib; sourceTree = "<group>"; };
 		29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllHeaderView.swift; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
@@ -738,6 +746,10 @@
 		29EABE541FE080090049E341 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */,
+				29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */,
+				29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */,
+				29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */,
 				2941CE7B1FE0928D00B7CCEE /* TourContentCell.swift */,
 				2941CE7D1FE092AC00B7CCEE /* TourContentCell.xib */,
 			);
@@ -1374,10 +1386,12 @@
 				293D00A11FA7C80D00BF2C26 /* SourceSansPro-Italic.ttf in Resources */,
 				29412AEC1FCE1F44005A7172 /* HomeExhibitionCell.xib in Resources */,
 				29A7BCF81FBF85DB00FD8639 /* IdealSans-Semibold.otf in Resources */,
+				29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */,
 				E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */,
 				293D00A01FA7C80D00BF2C26 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
 				293D00AC1FA7CA6700BF2C26 /* video in Resources */,
 				294338561FDD656500ECF321 /* MapItemsCollectionContainerCell.xib in Resources */,
+				29F26201200FFADF0000BF05 /* ArtworkContentCell.xib in Resources */,
 				293D008F1FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */,
 				29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */,
 				293D00971FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */,
@@ -1645,6 +1659,7 @@
 				E4F7C1491CA1FE3E005976D1 /* ObjectRelatedToursView.swift in Sources */,
 				29B9B58B1FCFC5660095FE52 /* HomeContentTitleView.swift in Sources */,
 				291221971FDB35650096BB75 /* SuggestedSearchCell.swift in Sources */,
+				29F261FD200FE5C30000BF05 /* ExhibitionContentCell.swift in Sources */,
 				E4923FE31C9F36C800AB255C /* ObjectContentSectionView.swift in Sources */,
 				295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */,
 				E4F7C14B1CA200EF005976D1 /* ObjectCreditsView.swift in Sources */,
@@ -1710,6 +1725,7 @@
 				E415ABDA1C7298420093B719 /* ToursSectionViewController.swift in Sources */,
 				E4BBB6771CA1A1FB00B8A37C /* BaseView.swift in Sources */,
 				E4F7C1471CA1F46B005976D1 /* ObjectInfoView.swift in Sources */,
+				29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */,
 				293127811FDF0EC5008BFAB1 /* ContentButtonCell.swift in Sources */,
 				E4223CE51CC7FE6600503D43 /* MemberCardDataLoader.swift in Sources */,
 				E47306ED1D23076900A77254 /* InstructionsItemView.swift in Sources */,

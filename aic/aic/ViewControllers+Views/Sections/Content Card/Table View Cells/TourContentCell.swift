@@ -14,6 +14,7 @@ class TourContentCell : UITableViewCell {
 	
 	@IBOutlet var tourImageView: AICImageView!
 	@IBOutlet var descriptionLabel: UILabel!
+	@IBOutlet var startTourButton: AICButton!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -33,7 +34,6 @@ class TourContentCell : UITableViewCell {
 			}
 			
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
-			//tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
 		}

@@ -10,6 +10,14 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="IdealSans-Medium.otf">
+            <string>IdealSans-Medium</string>
+        </array>
+        <array key="Linotype - SabonNextLTPro-Regular.otf">
+            <string>SabonNextLTPro-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -26,21 +34,25 @@
                             <constraint firstAttribute="width" secondItem="M4X-H7-qci" secondAttribute="height" multiplier="75:44" id="FyR-2N-BN6"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oia-Gy-VmZ" customClass="AICButton" customModule="aic" customModuleProvider="target">
-                        <rect key="frame" x="117" y="236.5" width="140" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="Ifd-E8-Hpc"/>
-                            <constraint firstAttribute="width" constant="140" id="boE-4d-fRL"/>
-                        </constraints>
-                        <state key="normal" title="Start Tour"/>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-6p-yGa">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-6p-yGa">
                         <rect key="frame" x="16" y="313.5" width="343" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                         <size key="shadowOffset" width="0.0" height="0.0"/>
                     </label>
+                    <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oia-Gy-VmZ" customClass="AICButton" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="117" y="236" width="140" height="50"/>
+                        <color key="backgroundColor" red="0.21568627450980393" green="0.63529411764705879" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Ifd-E8-Hpc"/>
+                            <constraint firstAttribute="width" constant="140" id="boE-4d-fRL"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="13"/>
+                        <state key="normal" title="Start Tour">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="7zJ-6p-yGa" secondAttribute="bottom" constant="35" id="14j-p5-THg"/>
@@ -59,9 +71,10 @@
             </constraints>
             <connections>
                 <outlet property="descriptionLabel" destination="7zJ-6p-yGa" id="waH-aH-FnD"/>
+                <outlet property="startTourButton" destination="Oia-Gy-VmZ" id="rM1-mS-1QX"/>
                 <outlet property="tourImageView" destination="M4X-H7-qci" id="Rh1-Qx-d6o"/>
             </connections>
-            <point key="canvasLocation" x="9.5" y="31.5"/>
+            <point key="canvasLocation" x="9.5" y="31"/>
         </tableViewCell>
     </objects>
 </document>

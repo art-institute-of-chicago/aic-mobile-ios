@@ -280,7 +280,15 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	}
 	
 	func resultsTableDidSelect(artwork: AICObjectModel) {
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
 		
+		showBackButton()
+		
+		let artworkVC = ArtworkTableViewController(artwork: artwork)
+		let contentVC = SearchContentViewController(tableVC: artworkVC)
+		self.pushViewController(contentVC, animated: true)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
