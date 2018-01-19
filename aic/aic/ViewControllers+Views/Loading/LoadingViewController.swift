@@ -107,12 +107,12 @@ class LoadingViewController: UIViewController {
 		// Cover up the splash image
 		let layer = AVPlayerLayer(player: avPlayer)
 		layer.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-//		if UIDevice().type != .iPhoneX {
-//			let videoToScreenRatio = self.view.frame.size.height / 812.0
-//			let videoSize = CGSize(width: self.view.frame.size.width * videoToScreenRatio, height: self.view.frame.size.height * videoToScreenRatio)
-//			let videoOrigin = CGPoint(x: (videoSize.width - self.view.frame.size.width) * -0.5, y: (videoSize.height - self.view.frame.size.height) * -0.5)
-//			layer.frame = CGRect(x: videoOrigin.x, y: videoOrigin.y, width: videoSize.width, height: videoSize.height)
-//		}
+		if UIDevice().type != .iPhoneX {
+			let videoToScreenRatio = 812.0 / self.view.frame.size.height
+			let videoSize = CGSize(width: self.view.frame.size.width * videoToScreenRatio, height: self.view.frame.size.height * videoToScreenRatio)
+			let videoOrigin = CGPoint(x: (videoSize.width - self.view.frame.size.width) * -0.5, y: (videoSize.height - self.view.frame.size.height) * -0.5)
+			layer.frame = CGRect(x: videoOrigin.x, y: videoOrigin.y, width: videoSize.width, height: videoSize.height)
+		}
 		videoView.layer.addSublayer(layer)
 		
 		// Play the video
