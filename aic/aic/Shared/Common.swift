@@ -326,6 +326,12 @@ struct Common {
     // Content for each screen
     struct Instructions {
         static let screens = [
+			AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
+									   title:"Please Choose Your Preferred Language",
+									   subtitle: "Some content may not be available in your selected language.",
+									   color: .aicHomeColor
+			),
+			
             AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconMapLarge"),
                 title:"Find Your Way",
                 subtitle: "Use the map to explore the museum and find audio-enhanced artworks near you.",

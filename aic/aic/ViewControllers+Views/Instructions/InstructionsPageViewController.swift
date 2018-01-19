@@ -20,6 +20,8 @@ class InstructionsPageViewController: UIPageViewController {
     
     let backgroundAlpha:CGFloat = 0.9
     let backgroundAnimationDuration = 0.25
+	
+	let blurBGView:UIView = getBlurEffectView(frame: UIScreen.main.bounds)
     
     let pageControlMarginBottom:CGFloat = 40
     
@@ -41,7 +43,7 @@ class InstructionsPageViewController: UIPageViewController {
         
         delegate = self
         dataSource = self
-        
+		
         // Init the first item view controller
         if let viewController = viewInstructionsItemController(currentPage) {
             let viewControllers = [viewController]
@@ -64,20 +66,19 @@ class InstructionsPageViewController: UIPageViewController {
         pageControl.layer.borderWidth = 1
         
         self.view.clipsToBounds = false
-        
+		
+		blurBGView.alpha = 0.8
+		self.view.insertSubview(blurBGView, at: 0)
+		
         // Create get started dbutton
         getStartedButton.frame.size = getStartedSize
         getStartedButton.frame.origin = CGPoint(x: UIScreen.main.bounds.size.width/2 - getStartedButton.frame.size.width/2,
                                                     y: UIScreen.main.bounds.height - getStartedButton.frame.height - getStartedMarginBottom)
-        getStartedButton.isHidden = true
+        getStartedButton.isHidden = false
         view.addSubview(getStartedButton)
         
-        // Add Gestures
-        let getStartedTapGesture = UITapGestureRecognizer(target: self, action: #selector(InstructionsPageViewController.getStartedButtonWasTapped(_:)))
-        getStartedButton.addGestureRecognizer(getStartedTapGesture)
-        
-        let lastScreenTapGesture = UITapGestureRecognizer(target: self, action: #selector(InstructionsPageViewController.getStartedButtonWasTapped(_:)))
-        view.addGestureRecognizer(lastScreenTapGesture)
+		// Add Gestures
+        getStartedButton.addTarget(self, action: #selector(getStartedButtonWasTapped(button:)), for: .touchUpInside)
         
         setBackgroundColor(forScreenIndex: 0)
         
@@ -132,15 +133,15 @@ class InstructionsPageViewController: UIPageViewController {
     }
     
     fileprivate func setBackgroundColor(forScreenIndex index:Int) {
-        UIView.animate(withDuration: backgroundAnimationDuration, animations: {
-            self.view.backgroundColor = Common.Instructions.screens[index].color.withAlphaComponent(self.backgroundAlpha)
-        }) 
+//        UIView.animate(withDuration: backgroundAnimationDuration, animations: {
+//            self.view.backgroundColor = Common.Instructions.screens[index].color.withAlphaComponent(self.backgroundAlpha)
+//        })
     }
 }
 
 // Gesture Handlers
 extension InstructionsPageViewController {
-    @objc func getStartedButtonWasTapped(_ gesture:UIGestureRecognizer) {
+    @objc func getStartedButtonWasTapped(button: UIButton) {
         instructionsDelegate?.introPageGetStartedButtonTapped()
     }
 }
@@ -168,8 +169,8 @@ extension InstructionsPageViewController: UIPageViewControllerDataSource {
             var index = viewController.index
             currentIndex = index
             guard index != NSNotFound else { return nil }
-            index = index + 1
-            guard index != Common.Instructions.screens.count else {return nil}
+            index = Common.Instructions.screens.count  //index + 1
+			guard index != Common.Instructions.screens.count else {return nil}
             return viewInstructionsItemController(index)
         }
         
@@ -180,7 +181,7 @@ extension InstructionsPageViewController: UIPageViewControllerDataSource {
     
     // MARK: UIPageControl
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return Common.Instructions.screens.count
+        return 1 //Common.Instructions.screens.count
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {

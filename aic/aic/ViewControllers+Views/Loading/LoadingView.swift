@@ -30,7 +30,7 @@ class LoadingView: UIView {
         progressView.addSubview(progressBackgroundView)
         progressView.addSubview(progressHighlightView)
         
-        addSubview(loadingImage)
+        //addSubview(loadingImage)
         addSubview(progressView)
     }
     
@@ -47,10 +47,10 @@ class LoadingView: UIView {
     }
     
     override func updateConstraints() {
-        loadingImage.snp.makeConstraints { (make) -> Void in
-            make.edges.equalTo(superview!)
-        }
-        
+//        loadingImage.snp.makeConstraints { (make) -> Void in
+//            make.edges.equalTo(superview!)
+//        }
+		
         progressView.snp.remakeConstraints { (make) -> Void in
             make.top.equalTo(progressMarginTop)
             make.centerX.equalTo(progressView.superview!)

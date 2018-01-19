@@ -165,7 +165,6 @@
 		E47306E11D20653E00A77254 /* MapFloorSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47306E01D20653E00A77254 /* MapFloorSelectorViewController.swift */; };
 		E47306E31D21DF5000A77254 /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47306E21D21DF5000A77254 /* MapState.swift */; };
 		E47306EC1D23076900A77254 /* InstructionsGetStartedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47306E71D23076900A77254 /* InstructionsGetStartedButton.swift */; };
-		E47306ED1D23076900A77254 /* InstructionsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47306E81D23076900A77254 /* InstructionsItemView.swift */; };
 		E47306EE1D23076900A77254 /* InstructionsItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47306E91D23076900A77254 /* InstructionsItemViewController.swift */; };
 		E47306F01D23076900A77254 /* InstructionsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47306EB1D23076900A77254 /* InstructionsPageViewController.swift */; };
 		E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */; };
@@ -439,7 +438,6 @@
 		E47306E01D20653E00A77254 /* MapFloorSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFloorSelectorViewController.swift; sourceTree = "<group>"; };
 		E47306E21D21DF5000A77254 /* MapState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
 		E47306E71D23076900A77254 /* InstructionsGetStartedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsGetStartedButton.swift; sourceTree = "<group>"; };
-		E47306E81D23076900A77254 /* InstructionsItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsItemView.swift; sourceTree = "<group>"; };
 		E47306E91D23076900A77254 /* InstructionsItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsItemViewController.swift; sourceTree = "<group>"; };
 		E47306EB1D23076900A77254 /* InstructionsPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsPageViewController.swift; sourceTree = "<group>"; };
 		E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberInfoModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1082,7 +1080,6 @@
 			isa = PBXGroup;
 			children = (
 				E47306E71D23076900A77254 /* InstructionsGetStartedButton.swift */,
-				E47306E81D23076900A77254 /* InstructionsItemView.swift */,
 				E47306E91D23076900A77254 /* InstructionsItemViewController.swift */,
 				E47306EB1D23076900A77254 /* InstructionsPageViewController.swift */,
 			);
@@ -1728,7 +1725,6 @@
 				29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */,
 				293127811FDF0EC5008BFAB1 /* ContentButtonCell.swift in Sources */,
 				E4223CE51CC7FE6600503D43 /* MemberCardDataLoader.swift in Sources */,
-				E47306ED1D23076900A77254 /* InstructionsItemView.swift in Sources */,
 				E4F519DB1C88BD4900226188 /* VisibleMapRegionDelegate.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,
 				29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */,

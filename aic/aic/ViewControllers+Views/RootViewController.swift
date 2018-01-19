@@ -8,7 +8,6 @@ import UIKit
 class RootViewController: UIViewController {
     enum Mode {
         case loading
-        case loaded
         case instructions
         case mainApp
     }
@@ -82,8 +81,6 @@ class RootViewController: UIViewController {
     private func startLoading() {
         cleanUpViews()
         showLoadingVC()
-        
-        AppDataManager.sharedInstance.load()
     }
     
     
@@ -105,8 +102,6 @@ class RootViewController: UIViewController {
         switch mode {
         case .loading:
             showLoadingVC()
-        case .loaded:
-            showLoadingVideo()
         case .instructions:
             showInstructionsVC()
         case .mainApp:
@@ -117,12 +112,13 @@ class RootViewController: UIViewController {
     private func showLoadingVC() {
         loadingVC = LoadingViewController()
         loadingVC?.delegate = self
-        
         view.addSubview(loadingVC!.view)
+		
+		loadingVC?.playIntroVideoA()
     }
     
     private func showLoadingVideo() {
-        loadingVC?.playIntroVideo()
+        loadingVC?.playIntroVideoA()
     }
     
     private func showInstructionsVC() {
@@ -137,9 +133,9 @@ class RootViewController: UIViewController {
 			sectionsVC = SectionsViewController()
 			sectionsVC?.delegate = self
 		}
-        view.addSubview(sectionsVC!.view)
+        view.insertSubview(sectionsVC!.view, belowSubview: loadingVC!.view) //addSubview(sectionsVC!.view)
 //        sectionsVC!.setSelectedSection(sectionVC: sectionsVC!.toursVC)
-        sectionsVC!.animateInInitialView()
+        //sectionsVC!.animateInInitialView()
     }
     
     fileprivate func cleanUpViews() {
@@ -160,7 +156,16 @@ extension RootViewController : AppDataManagerDelegate{
             self.loadingVC?.updateProgress(forPercentComplete: pct)
             }, completion:  { (value:Bool) in
                 if pct == 1.0 {
-                    self.mode = .loaded
+					// TODO: re-enable instructions when 2.0 instructions are ready
+					//        if shouldShowInstructions {
+					//            self.mode = .instructions
+					//        } else {
+					//            self.mode = .mainApp
+					//        }
+					
+					self.loadingVC?.hideProgressBar()
+					
+					self.mode = .instructions
                 }
             }
         )
@@ -184,15 +189,18 @@ extension RootViewController : AppDataManagerDelegate{
 
 // Loading VC delegate
 extension RootViewController : LoadingViewControllerDelegate {
-    func loadingViewControllerDidFinishPlayingIntroVideo() {
-		// TODO: re-enable instructions when 2.0 instructions are ready
-//        if shouldShowInstructions {
-//            self.mode = .instructions
-//        } else {
-//            self.mode = .mainApp
-//        }
-		self.mode = .mainApp
+    func loadingDidFinishPlayingIntroVideoA() {
+		AppDataManager.sharedInstance.load()
+		loadingVC?.showProgressBar()
     }
+	
+	func loadingDidFinishPlayingIntroVideoB() {
+		self.mode = .mainApp
+	}
+	
+	func loadingDidFinishFadeOutAnimation() {
+		cleanUpViews()
+	}
 }
 
 // Instructions Delegate
@@ -204,7 +212,11 @@ extension RootViewController : IntroPageViewControllerDelegate {
         defaults.synchronize()
         
         // Start the app
-        self.mode = .mainApp
+        //self.mode = .mainApp
+		instructionsVC?.view.removeFromSuperview()
+		instructionsVC = nil
+		
+		loadingVC?.playIntroVideoB()
     }
 }
 
