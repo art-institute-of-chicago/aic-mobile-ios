@@ -8,7 +8,7 @@ import UIKit
 class RootViewController: UIViewController {
     enum Mode {
         case loading
-        case instructions
+        case language
         case mainApp
     }
     
@@ -19,7 +19,8 @@ class RootViewController: UIViewController {
     }
     
     var loadingVC:LoadingViewController? = nil
-    var instructionsVC:InstructionsPageViewController? = nil
+//    var instructionsVC:InstructionsPageViewController? = nil
+	var languageVC: LanguageSelectionViewController? = nil
 	var sectionsVC:SectionsViewController? = nil
     
     var shouldShowInstructions:Bool = false
@@ -102,8 +103,8 @@ class RootViewController: UIViewController {
         switch mode {
         case .loading:
             showLoadingVC()
-        case .instructions:
-            showInstructionsVC()
+        case .language:
+            showLanguageVC()
         case .mainApp:
             showMainApp()
         }
@@ -121,10 +122,11 @@ class RootViewController: UIViewController {
         loadingVC?.playIntroVideoA()
     }
     
-    private func showInstructionsVC() {
-        instructionsVC = InstructionsPageViewController()
-        instructionsVC?.instructionsDelegate = self
-        self.view.addSubview(instructionsVC!.view)
+    private func showLanguageVC() {
+        languageVC = LanguageSelectionViewController()
+//        languageVC?.instructionsDelegate = self
+		languageVC?.delegate = self
+        self.view.addSubview(languageVC!.view)
     }
     
     // Remove the intro and show the main app
@@ -139,9 +141,9 @@ class RootViewController: UIViewController {
     }
     
     fileprivate func cleanUpViews() {
-        // Remove and clean up instructions + loading
-        instructionsVC?.view.removeFromSuperview()
-        instructionsVC = nil
+        // Remove and clean up language + loading
+        languageVC?.view.removeFromSuperview()
+        languageVC = nil
         
         loadingVC?.view.removeFromSuperview()
         loadingVC = nil
@@ -156,16 +158,16 @@ extension RootViewController : AppDataManagerDelegate{
             self.loadingVC?.updateProgress(forPercentComplete: pct)
             }, completion:  { (value:Bool) in
                 if pct == 1.0 {
-					// TODO: re-enable instructions when 2.0 instructions are ready
+					// TODO: re-enable language when 2.0 language are ready
 					//        if shouldShowInstructions {
-					//            self.mode = .instructions
+					//            self.mode = .language
 					//        } else {
 					//            self.mode = .mainApp
 					//        }
 					
 					self.loadingVC?.hideProgressBar()
 					
-					self.mode = .instructions
+					self.mode = .language
                 }
             }
         )
@@ -213,17 +215,34 @@ extension RootViewController : IntroPageViewControllerDelegate {
         
         // Start the app
         //self.mode = .mainApp
-		instructionsVC?.view.removeFromSuperview()
-		instructionsVC = nil
+		languageVC?.view.removeFromSuperview()
+		languageVC = nil
 		
 		loadingVC?.playIntroVideoB()
     }
 }
 
+// Language Selection Delegate
+extension RootViewController : LanguageSelectionViewControllerDelegate {
+	func languageSelected(language: Common.Language) {
+		// Record that we've got through the intro
+		let defaults = UserDefaults.standard
+		defaults.set(false, forKey: Common.UserDefaults.showInstructionsUserDefaultsKey)
+		defaults.synchronize()
+		
+		// Start the app
+		//self.mode = .mainApp
+		languageVC?.view.removeFromSuperview()
+		languageVC = nil
+		
+		loadingVC?.playIntroVideoB()
+	}
+}
+
 // Sections view controller Delegate
 extension RootViewController : SectionsViewControllerDelegate {
     func sectionsViewControllerDidFinishAnimatingIn() {
-        cleanUpViews()
+		
     }
 }
 

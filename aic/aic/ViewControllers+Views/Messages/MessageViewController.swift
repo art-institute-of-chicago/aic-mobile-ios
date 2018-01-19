@@ -1,0 +1,13 @@
+//
+//  MessageViewController.swift
+//  aic
+//
+//  Created by Filippo Vanucci on 1/19/18.
+//  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+//
+
+import UIKit
+
+class MessageViewController : UIViewController {
+	
+}

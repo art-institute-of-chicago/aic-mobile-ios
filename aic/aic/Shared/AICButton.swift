@@ -10,7 +10,7 @@ class AICButton: UIButton {
 	private let mediumSize: CGSize = CGSize(width: 190, height: 50)
 	private let smallSize: CGSize = CGSize(width: 140, height: 50)
 	private let borderWidth: CGFloat = 2.0
-	private var buttonColor: UIColor = .aicHomeColor
+	var buttonColor: UIColor = .aicHomeColor
     
     override var isHighlighted: Bool {
         didSet {

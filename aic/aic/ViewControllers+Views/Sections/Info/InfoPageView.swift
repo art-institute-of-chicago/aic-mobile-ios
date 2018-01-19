@@ -29,6 +29,8 @@ class InfoPageView : UIView {
 		
 		dividerLine.backgroundColor = .aicDividerLineColor
 		
+		
+		// TODO: change this to use getAttributedStringWithLineHeight
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.lineSpacing = 6
 		let textAttrString = NSMutableAttributedString(string: text)

@@ -15,6 +15,7 @@ protocol LoadingViewControllerDelegate: class {
 class LoadingViewController: UIViewController {
     weak var delegate:LoadingViewControllerDelegate? = nil
 	
+	let loadingImage = UIImageView()
 	let progressBackgroundView = UIView()
 	let progressHighlightView = UIView()
 	let progressView = UIView()
@@ -53,6 +54,11 @@ class LoadingViewController: UIViewController {
 		
 		self.view.backgroundColor = .aicHomeColor
 		
+		// Splash Image
+		if let image = splashImage(forOrientation: UIApplication.shared.statusBarOrientation, screenSize: UIScreen.main.bounds.size) {
+			loadingImage.image = UIImage(named: image)
+		}
+		
 		videoView.frame = UIScreen.main.bounds
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(videoFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer)
@@ -72,12 +78,15 @@ class LoadingViewController: UIViewController {
 		progressView.addSubview(progressBackgroundView)
 		progressView.addSubview(progressHighlightView)
 		self.view.addSubview(videoView)
+		self.view.addSubview(loadingImage)
 		self.view.addSubview(progressView)
 		
 		createViewConstraints()
     }
 	
 	func createViewConstraints() {
+		loadingImage.autoPinEdgesToSuperviewEdges()
+		
 		progressView.autoPinEdge(.top, to: .top, of: self.view, withOffset: self.view.bounds.height * 0.5)
 		progressView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 		progressView.autoSetDimensions(to: progressSize)
@@ -93,6 +102,8 @@ class LoadingViewController: UIViewController {
 	}
     
     func playIntroVideoA() {
+		loadingImage.removeFromSuperview()
+		
 		// Cover up the splash image
 		let layer = AVPlayerLayer(player: avPlayer)
 		layer.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)

@@ -69,6 +69,9 @@
 		295AC0971FDF8FE5009A0FAF /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0961FDF8FE5009A0FAF /* LanguageViewController.swift */; };
 		295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0981FDF923B009A0FAF /* InfoPageView.swift */; };
 		295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */; };
+		2968F67920125B5700638153 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67820125B5700638153 /* MessageViewController.swift */; };
+		2968F67C2012612E00638153 /* LanguageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */; };
+		2968F67E201272EA00638153 /* AICTransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67D201272EA00638153 /* AICTransparentButton.swift */; };
 		29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */; };
 		29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */; };
 		29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCF200D870C003B6DB5 /* EventTableViewController.swift */; };
@@ -174,7 +177,6 @@
 		E47A97161CEFBC150041D0A6 /* AppDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97141CEFBC150041D0A6 /* AppDataParser.swift */; };
 		E47A971A1CF262760041D0A6 /* AICInstructionsScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97191CF262760041D0A6 /* AICInstructionsScreenModel.swift */; };
 		E47A972F1CF3EE140041D0A6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A972E1CF3EE140041D0A6 /* LoadingViewController.swift */; };
-		E47A97351CF4D68B0041D0A6 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97341CF4D68B0041D0A6 /* LoadingView.swift */; };
 		E47A97381CF607990041D0A6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E47A97371CF607990041D0A6 /* Settings.bundle */; };
 		E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */; };
 		E4875B3F1CE7CC3E000F0E6E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4875B3E1CE7CC3E000F0E6E /* MapViewController.swift */; };
@@ -324,6 +326,9 @@
 		295AC0961FDF8FE5009A0FAF /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		295AC0981FDF923B009A0FAF /* InfoPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPageView.swift; sourceTree = "<group>"; };
 		295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICEventModel.swift; sourceTree = "<group>"; };
+		2968F67820125B5700638153 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionViewController.swift; sourceTree = "<group>"; };
+		2968F67D201272EA00638153 /* AICTransparentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICTransparentButton.swift; sourceTree = "<group>"; };
 		29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardNavigationController.swift; sourceTree = "<group>"; };
 		29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionTableViewController.swift; sourceTree = "<group>"; };
 		29824BCF200D870C003B6DB5 /* EventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
@@ -447,7 +452,6 @@
 		E47A97141CEFBC150041D0A6 /* AppDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDataParser.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A97191CF262760041D0A6 /* AICInstructionsScreenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICInstructionsScreenModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A972E1CF3EE140041D0A6 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
-		E47A97341CF4D68B0041D0A6 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E47A97371CF607990041D0A6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E4875B3E1CE7CC3E000F0E6E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -669,6 +673,14 @@
 			path = "See All Cells";
 			sourceTree = "<group>";
 		};
+		2968F67A2012607800638153 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		29824BCC200D86AD003B6DB5 /* Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -874,6 +886,7 @@
 				E4F519C61C87B2F200226188 /* Helpers.swift */,
 				E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */,
 				E42677E21CC558060046BB27 /* AICButton.swift */,
+				2968F67D201272EA00638153 /* AICTransparentButton.swift */,
 				E4F518FA1D2586B0004BFB44 /* AICImageView.swift */,
 				29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
@@ -922,7 +935,8 @@
 			isa = PBXGroup;
 			children = (
 				E47A97291CF3EDF10041D0A6 /* Loading */,
-				E47306E61D23076900A77254 /* Instructions */,
+				2968F67A2012607800638153 /* Language */,
+				E47306E61D23076900A77254 /* _Instructions */,
 				E433BAD11CFDD65B0086F2ED /* Messages */,
 				E415ABC01C7298420093B719 /* Map */,
 				E415ABC21C7298420093B719 /* ObjectView */,
@@ -1063,6 +1077,7 @@
 				E497FA631D00B1CE007FA272 /* MessageDelegateProtocol.swift */,
 				E4FFC6ED1D00BA5B0082818D /* MessageLargeView.swift */,
 				E4FFC6EF1D00C87B0082818D /* MessageLargeButton.swift */,
+				2968F67820125B5700638153 /* MessageViewController.swift */,
 			);
 			name = Messages;
 			path = "aic/ViewControllers+Views/Messages";
@@ -1076,22 +1091,21 @@
 			name = Analytics;
 			sourceTree = "<group>";
 		};
-		E47306E61D23076900A77254 /* Instructions */ = {
+		E47306E61D23076900A77254 /* _Instructions */ = {
 			isa = PBXGroup;
 			children = (
 				E47306E71D23076900A77254 /* InstructionsGetStartedButton.swift */,
 				E47306E91D23076900A77254 /* InstructionsItemViewController.swift */,
 				E47306EB1D23076900A77254 /* InstructionsPageViewController.swift */,
 			);
-			name = Instructions;
-			path = "aic/ViewControllers+Views/Instructions";
+			name = _Instructions;
+			path = "aic/ViewControllers+Views/_Instructions";
 			sourceTree = SOURCE_ROOT;
 		};
 		E47A97291CF3EDF10041D0A6 /* Loading */ = {
 			isa = PBXGroup;
 			children = (
 				E47A972E1CF3EE140041D0A6 /* LoadingViewController.swift */,
-				E47A97341CF4D68B0041D0A6 /* LoadingView.swift */,
 			);
 			name = Loading;
 			path = "../ViewControllers+Views/Loading";
@@ -1611,13 +1625,14 @@
 				E497FA641D00B1CE007FA272 /* MessageDelegateProtocol.swift in Sources */,
 				295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */,
 				E48816E21C8D138400A40E84 /* MapObjectAnnotation.swift in Sources */,
+				2968F67C2012612E00638153 /* LanguageSelectionViewController.swift in Sources */,
 				E4D159311CB9A61F00536B4D /* UIFont+AIC.swift in Sources */,
 				E45C2A1C1D344B5D00B9E958 /* MapDepartmentAnnotation.swift in Sources */,
-				E47A97351CF4D68B0041D0A6 /* LoadingView.swift in Sources */,
 				E43F368B1D2B2F9900DA4DA6 /* AICAnalytics.swift in Sources */,
 				E47306EC1D23076900A77254 /* InstructionsGetStartedButton.swift in Sources */,
 				291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */,
 				29412AEE1FCE1F7A005A7172 /* HomeExhibitionCell.swift in Sources */,
+				2968F67E201272EA00638153 /* AICTransparentButton.swift in Sources */,
 				E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */,
 				290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */,
 				E42178341CC6A2CA00815B41 /* _InfoSectionMemberCardView.swift in Sources */,
@@ -1735,6 +1750,7 @@
 				29B9B5931FD0A7670095FE52 /* SeeAllTourCell.swift in Sources */,
 				29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */,
 				E47A972F1CF3EE140041D0A6 /* LoadingViewController.swift in Sources */,
+				2968F67920125B5700638153 /* MessageViewController.swift in Sources */,
 				E47306E31D21DF5000A77254 /* MapState.swift in Sources */,
 				E4D1593B1CBC244900536B4D /* MapLocationAnnotation.swift in Sources */,
 				2941CE821FE0D62E00B7CCEE /* ResultsContentTitleView.swift in Sources */,

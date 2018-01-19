@@ -146,6 +146,13 @@ struct Common {
             }
         }
     }
+	
+	// MARK: Language
+	enum Language : String {
+		case english = "en"
+		case spanish = "es"
+		case chinese = "zh"
+	}
 
     // MARK: Layout
 	struct Layout {
