@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 /// InfoPageView
 ///
@@ -21,7 +22,7 @@ class InfoPageView : UIView {
 	init(title: String, text: String) {
 		super.init(frame: CGRect.zero)
 		
-		titleLabel.text = title
+		titleLabel.text = title.localized(using: "LanguageSelection")
 		titleLabel.textColor = .aicDarkGrayColor
 		titleLabel.textAlignment = .center
 		titleLabel.font = .aicInfoSectionTitleFont
@@ -33,7 +34,7 @@ class InfoPageView : UIView {
 		// TODO: change this to use getAttributedStringWithLineHeight
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.lineSpacing = 6
-		let textAttrString = NSMutableAttributedString(string: text)
+		let textAttrString = NSMutableAttributedString(string: text.localized(using: "LanguageSelection"))
 		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
 		
 		textView.setDefaultsForAICAttributedTextView()
@@ -63,8 +64,8 @@ class InfoPageView : UIView {
 		dividerLine.autoSetDimension(.height, toSize: 1.0)
 		
 		textView.autoPinEdge(.top, to: .top, of: dividerLine, withOffset: 24.0)
-		textView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 60.0)
-		textView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -60.0)
+		textView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 40.0)
+		textView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -40.0)
 		
 		autoPinEdge(.bottom, to: .bottom, of: textView, withOffset: 64.0)
 		

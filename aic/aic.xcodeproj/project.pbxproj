@@ -72,6 +72,8 @@
 		2968F67920125B5700638153 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67820125B5700638153 /* MessageViewController.swift */; };
 		2968F67C2012612E00638153 /* LanguageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */; };
 		2968F67E201272EA00638153 /* AICTransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67D201272EA00638153 /* AICTransparentButton.swift */; };
+		2968F68B2012942800638153 /* LanguageSelection.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F68D2012942800638153 /* LanguageSelection.strings */; };
+		2968F6932012B33000638153 /* TabMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F6952012B33000638153 /* TabMenu.strings */; };
 		29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */; };
 		29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */; };
 		29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCF200D870C003B6DB5 /* EventTableViewController.swift */; };
@@ -126,7 +128,6 @@
 		E40D41EF1C6CEBB700A57AF4 /* aicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D41EE1C6CEBB700A57AF4 /* aicUITests.swift */; };
 		E411DE7F1CCD37A800E22047 /* AICGalleryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E411DE7E1CCD37A800E22047 /* AICGalleryModel.swift */; };
 		E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */; };
-		E415ABB01C7297E60093B719 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E415AB8D1C7297E50093B719 /* LaunchScreen.storyboard */; };
 		E415ABD41C7298420093B719 /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC31C7298420093B719 /* ObjectViewController.swift */; };
 		E415ABD51C7298420093B719 /* MiniAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */; };
 		E415ABD61C7298420093B719 /* _InfoSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC81C7298420093B719 /* _InfoSectionViewController.swift */; };
@@ -329,6 +330,12 @@
 		2968F67820125B5700638153 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionViewController.swift; sourceTree = "<group>"; };
 		2968F67D201272EA00638153 /* AICTransparentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICTransparentButton.swift; sourceTree = "<group>"; };
+		2968F68C2012942800638153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LanguageSelection.strings; sourceTree = "<group>"; };
+		2968F68F2012944A00638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LanguageSelection.strings; sourceTree = "<group>"; };
+		2968F6902012945000638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LanguageSelection.strings"; sourceTree = "<group>"; };
+		2968F6942012B33000638153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TabMenu.strings; sourceTree = "<group>"; };
+		2968F6962012B36000638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TabMenu.strings; sourceTree = "<group>"; };
+		2968F6972012B36400638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabMenu.strings"; sourceTree = "<group>"; };
 		29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardNavigationController.swift; sourceTree = "<group>"; };
 		29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionTableViewController.swift; sourceTree = "<group>"; };
 		29824BCF200D870C003B6DB5 /* EventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
@@ -399,7 +406,6 @@
 		E40D41F01C6CEBB700A57AF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E411DE7E1CCD37A800E22047 /* AICGalleryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICGalleryModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTourStopModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E415AB8E1C7297E50093B719 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E415AB8F1C7297E60093B719 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E415ABC31C7298420093B719 /* ObjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
 		E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAudioPlayerView.swift; sourceTree = "<group>"; };
@@ -681,6 +687,15 @@
 			path = Language;
 			sourceTree = "<group>";
 		};
+		2968F683201292D100638153 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				2968F68D2012942800638153 /* LanguageSelection.strings */,
+				2968F6952012B33000638153 /* TabMenu.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		29824BCC200D86AD003B6DB5 /* Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -840,12 +855,12 @@
 				E43F36891D2B2F8200DA4DA6 /* Analytics */,
 				E433BACC1CFDD64A0086F2ED /* Application */,
 				E4223CE61CC7FE6D00503D43 /* Data */,
+				2968F683201292D100638153 /* Localization */,
 				E415ABBD1C7298420093B719 /* Models */,
 				E415AB9A1C7297E60093B719 /* Shared */,
 				E415ABBF1C7298420093B719 /* ViewControllers+Views */,
 				293D00731FA7C7EF00BF2C26 /* Assets */,
 				E497FA5F1D009B13007FA272 /* Assets.xcassets */,
-				E415AB8C1C7297E50093B719 /* Base.lproj */,
 				E415AB8F1C7297E60093B719 /* Info.plist */,
 				E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */,
 				32A2A70F1E8079610025186F /* Config.plist */,
@@ -869,14 +884,6 @@
 				E40D41F01C6CEBB700A57AF4 /* Info.plist */,
 			);
 			path = aicUITests;
-			sourceTree = "<group>";
-		};
-		E415AB8C1C7297E50093B719 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				E415AB8D1C7297E50093B719 /* LaunchScreen.storyboard */,
-			);
-			path = Base.lproj;
 			sourceTree = "<group>";
 		};
 		E415AB9A1C7297E60093B719 /* Shared */ = {
@@ -1331,6 +1338,8 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
+				"zh-Hans",
 			);
 			mainGroup = E40D41C01C6CEBB700A57AF4;
 			productRefGroup = E40D41CA1C6CEBB700A57AF4 /* Products */;
@@ -1380,6 +1389,7 @@
 				293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */,
 				293D009C1FA7C80D00BF2C26 /* SourceSansPro-BlackItalic.ttf in Resources */,
 				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
+				2968F6932012B33000638153 /* TabMenu.strings in Resources */,
 				29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */,
 				29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */,
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
@@ -1389,8 +1399,8 @@
 				29A7BCF71FBF85DB00FD8639 /* IdealSans-MediumItalic.otf in Resources */,
 				29A7BCF61FBF85DB00FD8639 /* IdealSans-Medium.otf in Resources */,
 				2931277C1FDEF327008BFAB1 /* MapItemCell.xib in Resources */,
-				E415ABB01C7297E60093B719 /* LaunchScreen.storyboard in Resources */,
 				29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */,
+				2968F68B2012942800638153 /* LanguageSelection.strings in Resources */,
 				2941CE7E1FE092AC00B7CCEE /* TourContentCell.xib in Resources */,
 				293D00A31FA7C80D00BF2C26 /* SourceSansPro-LightItalic.ttf in Resources */,
 				29A7BCF91FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf in Resources */,
@@ -1518,12 +1528,14 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-aic/Pods-aic-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1811,12 +1823,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E415AB8D1C7297E50093B719 /* LaunchScreen.storyboard */ = {
+		2968F68D2012942800638153 /* LanguageSelection.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E415AB8E1C7297E50093B719 /* Base */,
+				2968F68C2012942800638153 /* en */,
+				2968F68F2012944A00638153 /* es */,
+				2968F6902012945000638153 /* zh-Hans */,
 			);
-			name = LaunchScreen.storyboard;
+			name = LanguageSelection.strings;
+			sourceTree = "<group>";
+		};
+		2968F6952012B33000638153 /* TabMenu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2968F6942012B33000638153 /* en */,
+				2968F6962012B36000638153 /* es */,
+				2968F6972012B36400638153 /* zh-Hans */,
+			);
+			name = TabMenu.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1826,6 +1850,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1876,6 +1901,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2064,6 +2090,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

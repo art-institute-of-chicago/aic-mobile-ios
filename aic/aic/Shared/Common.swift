@@ -151,7 +151,7 @@ struct Common {
 	enum Language : String {
 		case english = "en"
 		case spanish = "es"
-		case chinese = "zh"
+		case chinese = "zh-Hans"
 	}
 
     // MARK: Layout
@@ -506,9 +506,6 @@ struct Common {
         static let museumInformationPhoneNumber = "+1 312 443 3600"
         static let museumInformationGetTicketsTitle = "Get Tickets"
         static let museumInformationGetTicketsURL = "https://sales.artic.edu/admissiondate"
-		
-		static let languageTitle = "Please Choose Your Preferred Language"
-		static let languageText = "Some content may not be available in your selected language."
 		
 		static let locationTitle = "Where Are You?"
 		static let locationText = "We’d like to use your location to help you navigate the museum."

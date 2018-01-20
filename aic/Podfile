@@ -9,6 +9,7 @@ target 'aic' do
   pod 'Google/Analytics'
   pod 'PureLayout'
   pod 'Kingfisher', '~> 4.0'
+  pod 'Localize-Swift', '~> 2.0'
 
   target 'aicTests' do
     inherit! :search_paths

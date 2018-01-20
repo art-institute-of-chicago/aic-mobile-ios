@@ -1,0 +1,11 @@
+/* 
+  LanguageSelection.strings
+  aic
+
+  Created by Filippo Vanucci on 1/19/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Language Selection Title" = "Elija su idioma de preferencia";
+
+"Language Selection Text" = "Es posible que cierta información no esté disponible en el idioma seleccionado.";

@@ -5,6 +5,7 @@
 
 import UIKit
 import MapKit
+import Localize_Swift
 
 protocol SectionsViewControllerDelegate : class {
     func sectionsViewControllerDidFinishAnimatingIn()
@@ -52,10 +53,13 @@ class SectionsViewController : UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 	
-	
-    required init?(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
     
     override func viewDidLoad() {
         // Set the view controllers for the tab bar
@@ -114,12 +118,21 @@ class SectionsViewController : UIViewController {
         //startLocationManager()
 		
 		createViewConstraints()
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
     }
 	
 	func createViewConstraints() {
 		searchButton.autoSetDimensions(to: CGSize(width: 44, height: 44))
 		searchButton.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -6)
 		searchButton.autoPinEdge(.bottom, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight - 3)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		updateLanguage()
 	}
     
     func setSelectedSection(sectionVC:UIViewController) {
@@ -386,6 +399,14 @@ class SectionsViewController : UIViewController {
 		searchButton.isHidden = true
 		searchButton.isEnabled = false
 		searchVC.showFullscreen()
+	}
+	
+	// MARK: Language
+	@objc func updateLanguage() {
+		sectionTabBarController.tabBar.items![0].title = "Home".localized(using: "TabMenu")
+		sectionTabBarController.tabBar.items![1].title = "Audio".localized(using: "TabMenu")
+		sectionTabBarController.tabBar.items![2].title = "Map".localized(using: "TabMenu")
+		sectionTabBarController.tabBar.items![3].title = "Info".localized(using: "TabMenu")
 	}
 }
 
