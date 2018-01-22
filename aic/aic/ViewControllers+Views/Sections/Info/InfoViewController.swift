@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PureLayout
+import Localize_Swift
 
 protocol InfoViewControllerDelegate : class {
 	func museumInfoButtonPressed()
@@ -36,6 +36,10 @@ class InfoViewController : SectionViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -47,7 +51,7 @@ class InfoViewController : SectionViewController {
 		museumInfoButton.setTitle("Museum Information", for: .normal)
 		museumInfoButton.addTarget(self, action: #selector(infoButtonPressed(button:)), for: .touchUpInside)
 		
-		languageButton.setTitle("Language", for: .normal)
+		languageButton.setTitle("Language Settings", for: .normal)
 		languageButton.addTarget(self, action: #selector(infoButtonPressed(button:)), for: .touchUpInside)
 		
 		locationButton.setTitle("Location Settings", for: .normal)
@@ -62,6 +66,9 @@ class InfoViewController : SectionViewController {
 		scrollView.addSubview(footerView)
 		
 		createViewConstraints()
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +79,8 @@ class InfoViewController : SectionViewController {
 		self.scrollView.contentSize.height = footerView.frame.origin.y + footerView.frame.height
 		
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: self.scrollView)
+		
+		updateLanguage()
 	}
 	
 	func createViewConstraints() {
@@ -105,6 +114,20 @@ class InfoViewController : SectionViewController {
 		whiteBackgroundView.autoPinEdge(.leading, to: .leading, of: self.view)
 		whiteBackgroundView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		whiteBackgroundView.autoPinEdge(.bottom, to: .top, of: footerView)
+	}
+	
+	@objc func updateLanguage() {
+		becomeMemberView.titleLabel.text = "Member Title".localized(using: "Info")
+		becomeMemberView.joinPromptLabel.text = "Member Join Prompt".localized(using: "Info")
+		becomeMemberView.joinTextView.text = "Member Join Text".localized(using: "Info")
+		becomeMemberView.accessPromptLabel.text = "Member Access Prompt".localized(using: "Info")
+		becomeMemberView.accessButton.setTitle("Member Access Button".localized(using: "Info"), for: .normal)
+		
+		museumInfoButton.setTitle("Museum Information".localized(using: "Sections"), for: .normal)
+		
+		languageButton.setTitle("Language Settings".localized(using: "Sections"), for: .normal)
+		
+		locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
 	}
 	
 	@objc func infoButtonPressed(button: UIButton) {

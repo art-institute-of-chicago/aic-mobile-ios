@@ -18,7 +18,7 @@ class LanguageViewController : UIViewController {
 	init() {
 		super.init(nibName: nil, bundle: nil)
 		
-		self.navigationItem.title = "Language"
+		self.navigationItem.title = "Language Settings"
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class SectionNavigationController : UINavigationController {
 	let color: UIColor
@@ -37,6 +38,10 @@ class SectionNavigationController : UINavigationController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -46,6 +51,9 @@ class SectionNavigationController : UINavigationController {
 		
 		// Subscribe to tab bar height changes
 		//NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -54,24 +62,27 @@ class SectionNavigationController : UINavigationController {
 		// Hide Navigation Bar
 		self.navigationBar.isTranslucent = false
 		self.setNavigationBarHidden(true, animated: false)
+		
+		updateLanguage()
 	}
 	
 	override func popViewController(animated: Bool) -> UIViewController? {
 		let vc: UIViewController? = super.popViewController(animated: animated)
-		updateSectionNavigationBar()
+		updateLanguage()
 		return vc
 	}
 	
 	
 	override func pushViewController(_ viewController: UIViewController, animated: Bool) {
 		super.pushViewController(viewController, animated: animated)
-		updateSectionNavigationBar()
+		updateLanguage()
 	}
 	
-	private func updateSectionNavigationBar() {
+	@objc func updateLanguage() {
 		let backButtonHidden = self.viewControllers.count <= 1
 		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
-		sectionNavigationBar.titleLabel.text = self.topViewController?.navigationItem.title
+		sectionNavigationBar.titleLabel.text = self.topViewController?.navigationItem.title?.localized(using: "Sections")
+		sectionNavigationBar.descriptionLabel.text = sectionModel.description.localized(using: "Sections")
 	}
 	
 	@objc private func backButtonPressed(button: UIButton) {

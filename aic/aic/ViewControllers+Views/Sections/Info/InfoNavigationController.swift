@@ -38,7 +38,6 @@ class InfoNavigationController : SectionNavigationController {
 extension InfoNavigationController : UINavigationControllerDelegate {
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
 		if viewController == infoVC {
-			self.sectionNavigationBar.titleLabel.text = infoVC.navigationItem.title
 			self.sectionNavigationBar.setBackButtonHidden(true)
 		}
 	}

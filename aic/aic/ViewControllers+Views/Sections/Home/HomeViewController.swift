@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 protocol HomeViewControllerDelegate : class {
 	func homeDidSelectSeeAllTours()
@@ -82,6 +83,10 @@ class HomeViewController : SectionViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -114,7 +119,10 @@ class HomeViewController : SectionViewController {
 		scrollView.addSubview(eventsTitleView)
 		scrollView.addSubview(eventsCollectionView)
 		
-		self.updateViewConstraints()
+		createViewConstraints()
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -125,6 +133,8 @@ class HomeViewController : SectionViewController {
 		self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height + Common.Layout.miniAudioPlayerHeight
 		
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: scrollView)
+		
+		updateLanguage()
 	}
 	
 	private static func createCollectionView(cellSize: CGSize) -> UICollectionView {
@@ -145,7 +155,7 @@ class HomeViewController : SectionViewController {
 		return view
 	}
 	
-	override func updateViewConstraints() {
+	func createViewConstraints() {
 		scrollView.autoPinEdge(.top, to: .top, of: self.view)
 		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
@@ -194,8 +204,20 @@ class HomeViewController : SectionViewController {
 		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.eventCellSize.height)
+	}
+	
+	@objc func updateLanguage() {
+		memberPromptView.promptTextView.text = "Member Card Prompt".localized(using: "Home")
+		memberPromptView.accessMemberCardTextView.text = "Member Card Button Title".localized(using: "Home")
 		
-		super.updateViewConstraints()
+		toursTitleView.contentTitleLabel.text = "Tours".localized(using: "Sections")
+		toursTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+		
+		exhibitionsTitleView.contentTitleLabel.text = "On View".localized(using: "Sections")
+		exhibitionsTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+		
+		eventsTitleView.contentTitleLabel.text = "Events".localized(using: "Sections")
+		eventsTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
 	}
 	
 	@objc private func seeAllToursButtonPressed(button: UIButton) {

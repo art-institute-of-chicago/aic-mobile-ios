@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 protocol LanguageSelectionViewControllerDelegate : class {
 	func languageSelected(language: Common.Language)
@@ -41,24 +42,13 @@ class LanguageSelectionViewController : UIViewController {
 		self.view.backgroundColor = .clear
 		
 //		titleLabel.attributedText = getAttributedStringWithLineHeight(text: "Please Choose Your Preferred Language", font: .aicLanguageSelectionTitleFont, lineHeight: 32)
-		titleLabel.text = "Please Choose Your Preferred Language"
+		titleLabel.text = "Language Selection Title".localized(using: "LanguageSelection")
 		titleLabel.font = .aicLanguageSelectionTitleFont
 		titleLabel.numberOfLines = 0
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = .center
 		
 		dividerLine.backgroundColor = .aicDividerLineTransparentColor
-		
-		let paragraphStyle = NSMutableParagraphStyle()
-		paragraphStyle.lineSpacing = 6
-		let textAttrString = NSMutableAttributedString(string: "Some content may not be available in your selected language.")
-		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
-		
-		subtitleLabel.font = .aicLanguageSelectionTextFont
-		subtitleLabel.attributedText = textAttrString
-		subtitleLabel.numberOfLines = 0
-		subtitleLabel.textColor = .white
-		subtitleLabel.textAlignment = .center
 		
 		englishButton.setTitle("English", for: .normal)
 		englishButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
@@ -68,9 +58,6 @@ class LanguageSelectionViewController : UIViewController {
 		
 		chineseButton.setTitle("中文", for: .normal)
 		chineseButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
-		
-		spanishButton.isHighlighted = true
-		chineseButton.isHighlighted = true
 		
 		// Add subviews
 		self.view.addSubview(blurBGView)
@@ -96,8 +83,8 @@ class LanguageSelectionViewController : UIViewController {
 		dividerLine.autoSetDimension(.height, toSize: 1)
 		
 		subtitleLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 30)
-		subtitleLabel.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 60)
-		subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -60)
+		subtitleLabel.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 40)
+		subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -40)
 		subtitleLabel.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 		
 		englishButton.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 64)
@@ -113,11 +100,46 @@ class LanguageSelectionViewController : UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
+		// Device language
+		let deviceLanguage = NSLocale.preferredLanguages.first!
+		if deviceLanguage.hasPrefix("es") {
+			Localize.setCurrentLanguage(Common.Language.spanish.rawValue)
+			englishButton.isHighlighted = true
+			chineseButton.isHighlighted = true
+		}
+		else if deviceLanguage.hasPrefix("zh") {
+			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
+			englishButton.isHighlighted = true
+			spanishButton.isHighlighted = true
+		}
+		else {
+			Localize.setCurrentLanguage(Common.Language.english.rawValue)
+			spanishButton.isHighlighted = true
+			chineseButton.isHighlighted = true
+		}
+		
+		updateLanguage()
+		
 		// Fade in
 		view.alpha = 0.0
 		UIView.animate(withDuration: fadeInAnimationDuration, animations: {
 			self.view.alpha = 1.0
 		})
+	}
+	
+	func updateLanguage() {
+		titleLabel.text = "Language Selection Title".localized(using: "LanguageSelection")
+		
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineSpacing = 6
+		let textAttrString = NSMutableAttributedString(string: "Language Selection Text".localized(using: "LanguageSelection"))
+		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
+		
+		subtitleLabel.attributedText = textAttrString
+		subtitleLabel.font = .aicLanguageSelectionTextFont
+		subtitleLabel.numberOfLines = 0
+		subtitleLabel.textColor = .white
+		subtitleLabel.textAlignment = .center
 	}
 	
 	@objc func languageButtonPressed(button: UIButton) {
@@ -126,12 +148,15 @@ class LanguageSelectionViewController : UIViewController {
 		chineseButton.isHighlighted = button != chineseButton
 		
 		if button == englishButton {
+			Localize.setCurrentLanguage(Common.Language.english.rawValue)
 			self.delegate?.languageSelected(language: .english)
 		}
 		else if button == spanishButton {
+			Localize.setCurrentLanguage(Common.Language.spanish.rawValue)
 			self.delegate?.languageSelected(language: .spanish)
 		}
 		else if button == chineseButton {
+			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
 			self.delegate?.languageSelected(language: .chinese)
 		}
 	}

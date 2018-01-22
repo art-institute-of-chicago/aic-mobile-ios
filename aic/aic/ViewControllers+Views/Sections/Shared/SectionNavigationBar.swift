@@ -92,8 +92,8 @@ class SectionNavigationBar : UIView {
 		}
 		addSubview(backButton)
 		
-		self.updateConstraints()
-		self.layoutIfNeeded()
+		createConstraints()
+		layoutIfNeeded()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -131,7 +131,7 @@ class SectionNavigationBar : UIView {
 		self.titleLabel.transform = CGAffineTransform(scaleX: titleScale, y: titleScale)
 	}
 	
-	override func updateConstraints() {
+	func createConstraints() {
 		backButton.autoPinEdge(.bottom, to: .top, of: self, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
 		backButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: backButtonLeftMargin)
 		
@@ -161,8 +161,6 @@ class SectionNavigationBar : UIView {
 			descriptionLabel.autoSetDimensions(to: CGSize(width: 300.0, height: 60.0))
 			descriptionLabel.autoAlignAxis(.vertical, toSameAxisOf: self)
 		}
-		
-		super.updateConstraints()
 	}
 }
 

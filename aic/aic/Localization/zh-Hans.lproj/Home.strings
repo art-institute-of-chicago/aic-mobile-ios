@@ -1,0 +1,11 @@
+/* 
+  Home.strings
+  aic
+
+  Created by Filippo Vanucci on 1/22/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Member Card Prompt" = "利用个人袖珍导游探索博物馆。如果您是会员，请登录以获得高级访问权限。";
+
+"Member Card Button Title" = "访问您的会员卡。";

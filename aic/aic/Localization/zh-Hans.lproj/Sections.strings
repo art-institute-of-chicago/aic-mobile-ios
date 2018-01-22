@@ -1,0 +1,31 @@
+/* 
+  Home.strings
+  aic
+
+  Created by Filippo Vanucci on 1/21/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Welcome" = "欢迎";
+
+"See All" = "查看全部";
+
+"Tours" = "游览";
+
+"On View" = "当前展览";
+
+"Events" = "活动";
+
+"Audio Title" = "查看";
+
+"Audio Subtitle" = "找到了您喜欢的艺术作品？\n输入耳机旁边的数字以了解更多信息。";
+
+"Information Title" = "信息";
+
+"Information Subtitle" = "访问您的会员卡，查看博物馆开放时间，或更新应用程序设置。";
+
+"Museum Information" = "博物馆信息";
+
+"Language Settings" = "语言设置";
+
+"Location Settings" = "地点设置";

@@ -75,7 +75,7 @@ struct Common {
 										 background: #imageLiteral(resourceName: "backgroundHome"),
 										 icon: #imageLiteral(resourceName: "iconHome"),
 										 title: "Welcome",
-										 description: "Preview the latest exhibitions at the Art Institute.",
+										 description: "",
 										 tabBarTitle: "Home",
 										 tabBarIcon: #imageLiteral(resourceName: "navHome")
 		),
@@ -83,8 +83,8 @@ struct Common {
             color: .aicAudioGuideColor,
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconNumPad"),
-            title: "Look It Up",
-            description: "Find an artwork you like?\nEnter the artwork number to learn more.",
+            title: "Audio Title",
+            description: "Audio Subtitle",
             tabBarTitle: "Audio",
             tabBarIcon: #imageLiteral(resourceName: "navNumPad")
         ),
@@ -92,8 +92,8 @@ struct Common {
             color: .aicNearbyColor,
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconMap"),
-            title: "Find Your Way",
-			description: "Use the map to find food, facilities, and\naudio-enhanced artworks.",
+            title: "Map Title",
+			description: "Map Subtitle",
             tabBarTitle: "Map",
             tabBarIcon: #imageLiteral(resourceName: "navMap")
         ),
@@ -101,8 +101,8 @@ struct Common {
             color: .aicInfoColor,
 			background: #imageLiteral(resourceName: "backgroundInfo"),
             icon: #imageLiteral(resourceName: "iconInfo"),
-            title: "Information",
-			description: "Stay on top of the latest exhibitions\nhappening at the museum.",
+            title: "Information Title",
+			description: "Information Subtitle",
             tabBarTitle: "Info",
             tabBarIcon: #imageLiteral(resourceName: "navInfo")
         )

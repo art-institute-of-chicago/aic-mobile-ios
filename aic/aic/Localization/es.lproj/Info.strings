@@ -1,0 +1,17 @@
+/* 
+  Info.strings
+  aic
+
+  Created by Filippo Vanucci on 1/22/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Member Title" = "Hágase miembro";
+
+"Member Join Prompt" = "Disfrute de admisión gratuita durante todo el año.";
+
+"Member Join Text" = "Unirse ahora mismo";
+
+"Member Access Prompt" = "¿Ya es miembro?";
+
+"Member Access Button" = "Tarjeta de acceso para miembros";

@@ -1,0 +1,31 @@
+/* 
+  Home.strings
+  aic
+
+  Created by Filippo Vanucci on 1/21/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Welcome" = "Welcome";
+
+"See All" = "See All";
+
+"Tours" = "Tours";
+
+"On View" = "On View";
+
+"Events" = "Events";
+
+"Audio Title" = "Look It Up";
+
+"Audio Subtitle" = "Find an artwork you like?\nEnter the number next to the headphones to learn more.";
+
+"Information Title" = "Information";
+
+"Information Subtitle" = "Access your member card, see museum hours, or update your app settings.";
+
+"Museum Information" = "Museum Information";
+
+"Language Settings" = "Language Settings";
+
+"Location Settings" = "Location Settings";

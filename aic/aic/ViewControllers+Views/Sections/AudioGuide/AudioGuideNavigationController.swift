@@ -4,11 +4,14 @@
 */
 
 import UIKit
+import Localize_Swift
+
 protocol AudioGuideSectionViewControllerDelegate : class {
     func audioGuideDidSelectObject(object:AICObjectModel, audioGuideID: Int)
 }
 
 class AudioGuideNavigationController : SectionNavigationController {
+	let rootViewController: UIViewController = UIViewController()
 	
     static let buttonSizeRatio:CGFloat = 0.1946 // Ratio of preferred button size to screen width
     static let colSpacingRatio:CGFloat = 0.048
@@ -49,7 +52,13 @@ class AudioGuideNavigationController : SectionNavigationController {
 		collectionView.register(AudioGuideCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
 		collectionView.dataSource = self
 		
-		self.view.addSubview(collectionView)
+		rootViewController.view.backgroundColor = .clear
+		rootViewController.navigationItem.title = sectionModel.title
+		rootViewController.view.addSubview(collectionView)
+		
+		self.pushViewController(rootViewController, animated: false)
+		
+		createViewConstraints()
 	}
 	
 	static func createCollectionView() -> UICollectionView {
@@ -68,6 +77,17 @@ class AudioGuideNavigationController : SectionNavigationController {
 		collectionView.backgroundColor = .clear
 		return collectionView
 	}
+	
+	func createViewConstraints() {
+		collectionView.autoSetDimensions(to: collectionView.frame.size)
+		collectionView.autoAlignAxis(.vertical, toSameAxisOf: rootViewController.view)
+		
+		var collectionViewTopOffset: CGFloat = -25
+		if UIDevice().type == .iPhoneX {
+			collectionViewTopOffset = 15
+		}
+		collectionView.autoPinEdge(.top, to: .top, of: rootViewController.view, withOffset: Common.Layout.navigationBarHeight + collectionViewTopOffset, relation: .greaterThanOrEqual)
+	}
     
     func reset() {
         clearInput()
@@ -82,7 +102,7 @@ class AudioGuideNavigationController : SectionNavigationController {
 		let curNumInputChars = curInputValue.count
 		
 		if curNumInputChars == 0 {
-			sectionNavigationBar.titleLabel.text = sectionNavigationBar.titleString
+			sectionNavigationBar.titleLabel.text = rootViewController.navigationItem.title?.localized(using: "Sections")
 		} else {
 			sectionNavigationBar.titleLabel.text = curInputValue
 		}
@@ -120,20 +140,6 @@ class AudioGuideNavigationController : SectionNavigationController {
 		animation.fromValue = NSValue(cgPoint: CGPoint(x: sectionNavigationBar.titleLabel.center.x - 10, y: sectionNavigationBar.titleLabel.center.y))
 		animation.toValue = NSValue(cgPoint: CGPoint(x: sectionNavigationBar.titleLabel.center.x + 10, y: sectionNavigationBar.titleLabel.center.y))
 		sectionNavigationBar.titleLabel.layer.add(animation, forKey: "position")
-	}
-	
-	override func updateViewConstraints() {
-		if collectionView.superview != nil {
-			collectionView.autoSetDimensions(to: collectionView.frame.size)
-			collectionView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
-			
-			var collectionViewTopOffset: CGFloat = -25
-			if UIDevice().type == .iPhoneX {
-				collectionViewTopOffset = 15
-			}
-			collectionView.autoPinEdge(.top, to: .bottom, of: sectionNavigationBar, withOffset: collectionViewTopOffset, relation: .greaterThanOrEqual)
-		}
-		super.updateViewConstraints()
 	}
 }
 

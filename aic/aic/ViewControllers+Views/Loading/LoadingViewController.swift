@@ -77,8 +77,8 @@ class LoadingViewController: UIViewController {
 		// Add Subviews
 		progressView.addSubview(progressBackgroundView)
 		progressView.addSubview(progressHighlightView)
-		self.view.addSubview(videoView)
 		self.view.addSubview(loadingImage)
+		self.view.addSubview(videoView)
 		self.view.addSubview(progressView)
 		
 		createViewConstraints()
@@ -102,17 +102,20 @@ class LoadingViewController: UIViewController {
 	}
     
     func playIntroVideoA() {
-		loadingImage.removeFromSuperview()
-		
 		// Cover up the splash image
 		let layer = AVPlayerLayer(player: avPlayer)
-		layer.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-		if UIDevice().type != .iPhoneX {
-			let videoToScreenRatio = 812.0 / self.view.frame.size.height
-			let videoSize = CGSize(width: self.view.frame.size.width * videoToScreenRatio, height: self.view.frame.size.height * videoToScreenRatio)
-			let videoOrigin = CGPoint(x: (videoSize.width - self.view.frame.size.width) * -0.5, y: (videoSize.height - self.view.frame.size.height) * -0.5)
-			layer.frame = CGRect(x: videoOrigin.x, y: videoOrigin.y, width: videoSize.width, height: videoSize.height)
+		layer.frame = self.view.frame
+		
+		// Fit video layer in screen frame
+		let videoSize: CGSize = CGSize(width: 375.0, height: 812.0)
+		let videoAspectRatio: CGFloat = videoSize.width / videoSize.height
+		let screenAspectRatio: CGFloat = self.view.frame.width / self.view.frame.height
+		if screenAspectRatio > videoAspectRatio {
+			layer.frame.size.width = self.view.frame.width
+			layer.frame.size.height = ceil(self.view.frame.width * (videoSize.height / videoSize.width))
+			layer.frame.origin = CGPoint(x: 0, y: (self.view.frame.height - layer.frame.size.height) * 0.5)
 		}
+		
 		videoView.layer.addSublayer(layer)
 		
 		// Play the video
@@ -142,6 +145,7 @@ class LoadingViewController: UIViewController {
     
     @objc internal func videoFinishedPlaying() {
 		if avPlayer.currentItem == playerItemA {
+			loadingImage.removeFromSuperview()
 			delegate?.loadingDidFinishPlayingIntroVideoA()
 		}
 		else {
