@@ -65,7 +65,7 @@ class InfoSectionInformationView: BaseView {
         let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject?
         let version = nsObject as! String
         
-        let versionPlusPotionLink = "Version \(version) \(Common.Info.creditsPotion)"
+        let versionPlusPotionLink = "Version \(version) Designed by Potion"
         let potionCreditsAttrString = NSMutableAttributedString(string: versionPlusPotionLink)
         let potionUrl = URL(string: Common.Info.potionURL)!
         potionCreditsAttrString.addAttributes([NSAttributedStringKey.link : potionUrl], range: NSMakeRange(0, potionCreditsAttrString.string.count))

@@ -510,7 +510,6 @@ struct Common {
 		static let locationTitle = "Where Are You?"
 		static let locationText = "We’d like to use your location to help you navigate the museum."
 
-        static let creditsPotion = "Designed by Potion"
         static let potionURL = "http://www.potiondesign.com"
 
         static let memberCardTitle = "Member Card"

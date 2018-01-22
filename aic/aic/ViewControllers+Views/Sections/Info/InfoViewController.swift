@@ -128,6 +128,10 @@ class InfoViewController : SectionViewController {
 		languageButton.setTitle("Language Settings".localized(using: "Sections"), for: .normal)
 		
 		locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
+		
+		let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject?
+		let version = nsObject as! String
+		footerView.potionCreditsTextView.text = "Version".localized(using: "Info") + " \(version) " + "Designed by".localized(using: "Info") + " Potion"
 	}
 	
 	@objc func infoButtonPressed(button: UIButton) {
