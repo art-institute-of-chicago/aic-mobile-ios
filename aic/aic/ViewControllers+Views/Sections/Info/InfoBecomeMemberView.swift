@@ -8,10 +8,11 @@ import UIKit
 class InfoBecomeMemberView: BaseView {
 	
 	let titleLabelHeight: CGFloat = 80
-    let joinPromptMarginTop: CGFloat = 24
+    let joinPromptMarginTop: CGFloat = 16
 	let joinTextMarginTop: CGFloat = 5
-    let accessPromptMarginTop: CGFloat = 48
+    let accessPromptMarginTop: CGFloat = 28
     let accessButtonMarginTop: CGFloat = 20
+	let accessButtonMarginBottom: CGFloat = 20
     
     let titleLabel = UILabel()
 	let titleDividerLine = UIView()
@@ -135,7 +136,7 @@ class InfoBecomeMemberView: BaseView {
 			accessButton.autoAlignAxis(.vertical, toSameAxisOf: self)
 			accessButton.autoPinEdge(.top, to: .bottom, of: accessPromptLabel, withOffset: accessButtonMarginTop)
 			
-			bottomDividerLine.autoPinEdge(.top, to: .bottom, of: accessButton, withOffset: 85)
+			bottomDividerLine.autoPinEdge(.top, to: .bottom, of: accessButton, withOffset: accessButtonMarginBottom)
 			bottomDividerLine.autoSetDimension(.height, toSize: 1)
 			bottomDividerLine.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 			bottomDividerLine.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)

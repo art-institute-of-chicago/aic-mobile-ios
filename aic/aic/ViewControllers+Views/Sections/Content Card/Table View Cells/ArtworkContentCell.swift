@@ -40,10 +40,10 @@ class ArtworkContentCell : UITableViewCell {
 				// calculate image dimension to adjust height of imageview
 				if let _ = image {
 					let imageAspectRatio = image!.size.width / image!.size.height
-					let viewAspectRatio = self.artworkImageWidth.constant / self.artworkImageHeight.constant
+					let viewAspectRatio = self.artworkImageView.frame.width / self.artworkImageHeight.constant
 					
 					if imageAspectRatio > viewAspectRatio {
-						self.artworkImageHeight.constant =  self.artworkImageWidth.constant * (image!.size.height / image!.size.width)
+						self.artworkImageHeight.constant =  self.artworkImageView.frame.width * (image!.size.height / image!.size.width)
 						self.setNeedsLayout()
 						self.layoutIfNeeded()
 					}

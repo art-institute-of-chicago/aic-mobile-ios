@@ -19,11 +19,14 @@ class LoadingViewController: UIViewController {
 	let progressBackgroundView = UIView()
 	let progressHighlightView = UIView()
 	let progressView = UIView()
+	let welcomeLabel = UILabel()
+	let buildingImageView = UIImageView(image: Common.Sections[.home]!.background)
 	
 	let progressMarginTop = UIScreen.main.bounds.height * CGFloat(0.42)
 	let progressSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(0.45), height: 1)
 	
 	var progressHighlightWidth: NSLayoutConstraint? = nil
+	var buildingImageTopMargin: NSLayoutConstraint? = nil
 	
 	let videoView: UIView = UIView()
 	var avPlayer : AVQueuePlayer!
@@ -69,10 +72,22 @@ class LoadingViewController: UIViewController {
         // No Looping
         avPlayer.actionAtItemEnd = AVPlayerActionAtItemEnd.none
 		
-		progressView.isHidden = true
+		// Progress Bar
 		//progressHighlightView.layer.cornerRadius = progressSize.height
 		progressBackgroundView.backgroundColor = .lightGray
 		progressHighlightView.backgroundColor = .white
+		progressView.isHidden = true
+		
+		// Welcome Label
+		welcomeLabel.font = .aicLoadingWelcomeFont
+		welcomeLabel.text = "Welcome".localized(using: "Sections")
+		welcomeLabel.numberOfLines = 1
+		welcomeLabel.textColor = .white
+		welcomeLabel.textAlignment = .center
+		welcomeLabel.isHidden = true
+		
+		// Building Image
+		buildingImageView.isHidden = true
 		
 		// Add Subviews
 		progressView.addSubview(progressBackgroundView)
@@ -80,6 +95,8 @@ class LoadingViewController: UIViewController {
 		self.view.addSubview(loadingImage)
 		self.view.addSubview(videoView)
 		self.view.addSubview(progressView)
+		self.view.addSubview(welcomeLabel)
+		self.view.addSubview(buildingImageView)
 		
 		createViewConstraints()
     }
@@ -87,7 +104,7 @@ class LoadingViewController: UIViewController {
 	func createViewConstraints() {
 		loadingImage.autoPinEdgesToSuperviewEdges()
 		
-		progressView.autoPinEdge(.top, to: .top, of: self.view, withOffset: self.view.bounds.height * 0.5)
+		progressView.autoPinEdge(.top, to: .top, of: self.view, withOffset: self.view.bounds.height * 0.5 + 35)
 		progressView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 		progressView.autoSetDimensions(to: progressSize)
 		
@@ -99,6 +116,15 @@ class LoadingViewController: UIViewController {
 		progressHighlightView.autoPinEdge(.leading, to: .leading, of: progressView)
 		progressHighlightWidth = progressHighlightView.autoSetDimension(.width, toSize: 0)
 		progressHighlightView.autoSetDimension(.height, toSize: progressSize.height)
+		
+		welcomeLabel.autoPinEdge(.bottom, to: .top, of: progressView, withOffset: -5)
+		welcomeLabel.autoPinEdge(.leading, to: .leading, of: self.view)
+		welcomeLabel.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		
+		buildingImageTopMargin = buildingImageView.autoPinEdge(.top, to: .top, of: self.view)
+		buildingImageView.autoPinEdge(.leading, to: .leading, of: self.view)
+		buildingImageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		buildingImageView.autoMatch(.height, to: .width, of: buildingImageView, withMultiplier: buildingImageView.image!.size.height / buildingImageView.image!.size.width)
 	}
     
     func playIntroVideoA() {
@@ -124,10 +150,16 @@ class LoadingViewController: UIViewController {
 	
 	func showProgressBar() {
 		progressView.isHidden = false
+		welcomeLabel.isHidden = false
+		welcomeLabel.alpha = 0.0
+		UIView.animate(withDuration: 0.3, animations: {
+			self.welcomeLabel.alpha = 1.0
+		})
 	}
 	
 	func hideProgressBar() {
 		progressView.isHidden = true
+		welcomeLabel.isHidden = true
 	}
 	
 	func playIntroVideoB() {
@@ -150,11 +182,27 @@ class LoadingViewController: UIViewController {
 		}
 		else {
 			delegate?.loadingDidFinishPlayingIntroVideoB()
-			UIView.animate(withDuration: 0.75, animations: {
-				self.videoView.frame.origin.y = -(UIScreen.main.bounds.height * 0.5) + 100
-				self.view.alpha = 0.0
+			
+			self.buildingImageTopMargin!.constant = 368.0 * (self.videoView.layer.sublayers!.first!.frame.height / 812.0) + self.videoView.layer.sublayers!.first!.frame.origin.y
+			self.view.layoutIfNeeded()
+			
+			buildingImageView.isHidden = false
+			buildingImageView.alpha = 0.0
+			
+			UIView.animate(withDuration: 2, animations: {
+				self.videoView.alpha = 0.0
+				self.buildingImageView.alpha = 1.0
 			}, completion: { (completed) in
-				self.delegate?.loadingDidFinishFadeOutAnimation()
+				UIView.animate(withDuration: 0.75, animations: {
+					self.buildingImageTopMargin!.constant = 0.0
+					self.view.layoutIfNeeded()
+				}, completion: { (completed) in
+					UIView.animate(withDuration: 0.2, animations: {
+						self.view.alpha = 0.0
+					}, completion: { (completed) in
+						self.delegate?.loadingDidFinishFadeOutAnimation()
+					})
+				})
 			})
 		}
     }

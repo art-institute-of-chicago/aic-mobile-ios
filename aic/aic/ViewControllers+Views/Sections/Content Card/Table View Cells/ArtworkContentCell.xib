@@ -30,7 +30,6 @@
                         <rect key="frame" x="16" y="0.0" width="343" height="344"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="344" id="SVl-du-zgM"/>
-                            <constraint firstAttribute="width" constant="343" id="nn5-jg-j9k"/>
                         </constraints>
                     </imageView>
                     <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DkG-Tn-HfR" customClass="AICButton" customModule="aic" customModuleProvider="target">
@@ -97,7 +96,9 @@
                     <constraint firstItem="yUV-LP-EGt" firstAttribute="centerX" secondItem="FZo-ir-nod" secondAttribute="centerX" constant="78" id="QSl-dl-oLF"/>
                     <constraint firstItem="jCz-Ae-RrX" firstAttribute="leading" secondItem="FZo-ir-nod" secondAttribute="leading" constant="16" id="UdF-si-Gak"/>
                     <constraint firstItem="yUV-LP-EGt" firstAttribute="top" secondItem="0gb-q7-Ckj" secondAttribute="bottom" constant="16" id="YPb-iW-WNw"/>
+                    <constraint firstAttribute="trailing" secondItem="0gb-q7-Ckj" secondAttribute="trailing" constant="16" id="ajs-IU-dpg"/>
                     <constraint firstAttribute="trailing" secondItem="4YE-QF-Wh9" secondAttribute="trailing" constant="16" id="c7n-1h-yjt"/>
+                    <constraint firstItem="0gb-q7-Ckj" firstAttribute="leading" secondItem="FZo-ir-nod" secondAttribute="leading" constant="16" id="fTX-iT-Has"/>
                     <constraint firstItem="DkG-Tn-HfR" firstAttribute="top" secondItem="0gb-q7-Ckj" secondAttribute="bottom" constant="16" id="j1L-eH-v2r"/>
                     <constraint firstItem="4YE-QF-Wh9" firstAttribute="top" secondItem="b7E-yS-5QK" secondAttribute="bottom" constant="25" id="nSn-Lu-o0D"/>
                     <constraint firstAttribute="trailing" secondItem="VuV-uX-a1H" secondAttribute="trailing" constant="16" id="oTF-5l-EbA"/>
@@ -112,7 +113,6 @@
             <connections>
                 <outlet property="artworkImageHeight" destination="SVl-du-zgM" id="zpg-CF-ADh"/>
                 <outlet property="artworkImageView" destination="0gb-q7-Ckj" id="nFR-QV-OWs"/>
-                <outlet property="artworkImageWidth" destination="nn5-jg-j9k" id="i1y-vP-2j1"/>
                 <outlet property="showOnMapButton" destination="DkG-Tn-HfR" id="ffm-8Y-dkk"/>
             </connections>
             <point key="canvasLocation" x="35.5" y="333"/>
