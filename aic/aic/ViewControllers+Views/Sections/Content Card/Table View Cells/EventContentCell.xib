@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Linotype - SabonNextLTPro-Regular.otf">
+            <string>SabonNextLTPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventContentCell" rowHeight="380" id="ySn-aN-PuL" customClass="EventContentCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="380"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ySn-aN-PuL" id="aia-Sy-xUb">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="379.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUa-bu-jTo">
+                        <rect key="frame" x="16" y="313" width="343" height="17"/>
+                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-W8-qEM" customClass="AICImageView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="220.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="3K1-W8-qEM" secondAttribute="height" multiplier="75:44" id="1JE-SD-tVz"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="top" secondItem="aia-Sy-xUb" secondAttribute="top" id="JV0-br-X5H"/>
+                    <constraint firstItem="qUa-bu-jTo" firstAttribute="leading" secondItem="aia-Sy-xUb" secondAttribute="leading" constant="16" id="PQh-JO-cZY"/>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="width" secondItem="3K1-W8-qEM" secondAttribute="height" multiplier="75:44" id="Q9g-yX-JyW"/>
+                    <constraint firstAttribute="trailing" secondItem="qUa-bu-jTo" secondAttribute="trailing" constant="16" id="Z69-MF-aYm"/>
+                    <constraint firstItem="qUa-bu-jTo" firstAttribute="top" secondItem="aia-Sy-xUb" secondAttribute="top" constant="313" id="b0q-fi-Yfe"/>
+                    <constraint firstAttribute="bottom" secondItem="qUa-bu-jTo" secondAttribute="bottom" constant="49.5" id="cYJ-IV-0KY"/>
+                    <constraint firstAttribute="trailing" secondItem="3K1-W8-qEM" secondAttribute="trailing" id="e6f-V1-I9H"/>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="leading" secondItem="aia-Sy-xUb" secondAttribute="leading" id="sIO-dI-xBe"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="qUa-bu-jTo" id="l9I-vZ-wPM"/>
+                <outlet property="eventImageView" destination="3K1-W8-qEM" id="eAK-Cn-BXK"/>
+            </connections>
+            <point key="canvasLocation" x="9.5" y="139.5"/>
+        </tableViewCell>
+    </objects>
+</document>

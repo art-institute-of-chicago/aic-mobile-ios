@@ -27,6 +27,12 @@ class ContentCardNavigationController : CardNavigationController {
 		super.init()
 	}
 	
+	// Event Card
+	init(event: AICEventModel) {
+		tableVC = EventTableViewController(event: event)
+		super.init()
+	}
+	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}

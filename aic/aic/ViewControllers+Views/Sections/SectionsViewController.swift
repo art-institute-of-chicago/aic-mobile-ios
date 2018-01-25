@@ -449,7 +449,9 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 	}
 	
 	func showEventCard(event: AICEventModel) {
-		
+		let contentCardVC = ContentCardNavigationController(event: event)
+		contentCardVC.cardDelegate = self
+		showContentCard(contentCardVC)
 	}
 	
 	func showContentCard(_ contentCardVC: ContentCardNavigationController) {

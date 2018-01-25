@@ -44,6 +44,7 @@ class InfoViewController : SectionViewController {
 		super.viewDidLoad()
 		
 		scrollView.backgroundColor = .aicInfoColor
+		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
 		
 		whiteBackgroundView.backgroundColor = .white

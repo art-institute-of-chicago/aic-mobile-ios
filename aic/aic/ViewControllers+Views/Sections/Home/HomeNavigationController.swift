@@ -60,6 +60,7 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
 		let seeAllVC = SeeAllViewController(contentType: .tours)
+		seeAllVC.delegate = self
 		seeAllVC.tourItems = AppDataManager.sharedInstance.app.tours
 		self.pushViewController(seeAllVC, animated: true)
 	}
@@ -69,6 +70,7 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
 		let seeAllVC = SeeAllViewController(contentType: .exhibitions)
+		seeAllVC.delegate = self
 		seeAllVC.exhibitionItems = AppDataManager.sharedInstance.exhibitions
 		self.pushViewController(seeAllVC, animated: true)
 	}
@@ -78,6 +80,7 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
 		let seeAllVC = SeeAllViewController(contentType: .events)
+		seeAllVC.delegate = self
 		self.pushViewController(seeAllVC, animated: true)
 	}
 	
@@ -94,3 +97,16 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 	}
 }
 
+extension HomeNavigationController : SeeAllViewControllerDelegate {
+	func seeAllDidSelectTour(tour: AICTourModel) {
+		self.sectionDelegate?.showTourCard(tour: tour)
+	}
+	
+	func seeAllDidSelectExhibition(exhibition: AICExhibitionModel) {
+		self.sectionDelegate?.showExhibitionCard(exhibition: exhibition)
+	}
+	
+	func seeAllDidSelectEvent(event: AICEventModel) {
+		self.sectionDelegate?.showEventCard(event: event)
+	}
+}

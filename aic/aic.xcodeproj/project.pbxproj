@@ -64,6 +64,8 @@
 		294338541FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */; };
 		294338561FDD656500ECF321 /* MapItemsCollectionContainerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */; };
 		294C0B1B20193AC800F2ABB1 /* LocationSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */; };
+		294C0B21201A52BC00F2ABB1 /* EventContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B20201A52BC00F2ABB1 /* EventContentCell.swift */; };
+		294C0B23201A52CB00F2ABB1 /* EventContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 294C0B22201A52CB00F2ABB1 /* EventContentCell.xib */; };
 		295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */; };
 		295AC0931FDF8FBA009A0FAF /* MuseumInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */; };
 		295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */; };
@@ -328,6 +330,8 @@
 		294C0B1C20193AC800F2ABB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LocationSettings.strings; sourceTree = "<group>"; };
 		294C0B1E20193AE400F2ABB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LocationSettings.strings; sourceTree = "<group>"; };
 		294C0B1F20193AE500F2ABB1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocationSettings.strings"; sourceTree = "<group>"; };
+		294C0B20201A52BC00F2ABB1 /* EventContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventContentCell.swift; sourceTree = "<group>"; };
+		294C0B22201A52CB00F2ABB1 /* EventContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventContentCell.xib; sourceTree = "<group>"; };
 		295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationBar.swift; sourceTree = "<group>"; };
 		295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumInfoViewController.swift; sourceTree = "<group>"; };
 		295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -793,6 +797,8 @@
 			children = (
 				29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */,
 				29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */,
+				294C0B20201A52BC00F2ABB1 /* EventContentCell.swift */,
+				294C0B22201A52CB00F2ABB1 /* EventContentCell.xib */,
 				29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */,
 				29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */,
 				2941CE7B1FE0928D00B7CCEE /* TourContentCell.swift */,
@@ -1408,6 +1414,7 @@
 				32A2A7101E8079610025186F /* Config.plist in Resources */,
 				293D00981FA7C80D00BF2C26 /* METADATA.json in Resources */,
 				293D00A21FA7C80D00BF2C26 /* SourceSansPro-Light.ttf in Resources */,
+				294C0B23201A52CB00F2ABB1 /* EventContentCell.xib in Resources */,
 				293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */,
 				293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */,
 				293D009C1FA7C80D00BF2C26 /* SourceSansPro-BlackItalic.ttf in Resources */,
@@ -1775,6 +1782,7 @@
 				E4F7C1471CA1F46B005976D1 /* ObjectInfoView.swift in Sources */,
 				29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */,
 				293127811FDF0EC5008BFAB1 /* ContentButtonCell.swift in Sources */,
+				294C0B21201A52BC00F2ABB1 /* EventContentCell.swift in Sources */,
 				E4223CE51CC7FE6600503D43 /* MemberCardDataLoader.swift in Sources */,
 				E4F519DB1C88BD4900226188 /* VisibleMapRegionDelegate.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,

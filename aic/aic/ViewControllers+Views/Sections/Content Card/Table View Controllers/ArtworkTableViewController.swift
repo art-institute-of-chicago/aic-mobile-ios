@@ -63,7 +63,7 @@ extension ArtworkTableViewController {
 extension ArtworkTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CardTitleView.reuseIdentifier) as! CardTitleView
-		titleView.titleLabel.text = objectModel.title
+		titleView.titleLabel.text = objectModel.title.stringByDecodingHTMLEntities
 		return titleView
 	}
 	

@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol SeeAllViewControllerDelegate : class {
+	func seeAllDidSelectTour(tour: AICTourModel)
+	func seeAllDidSelectExhibition(exhibition: AICExhibitionModel)
+	func seeAllDidSelectEvent(event: AICEventModel)
+}
+
 // TODO: change this to a collectionviewcontroller or subclass SectionViewController if needed for language inheritance
 class SeeAllViewController : UIViewController {
 	let collectionView: UICollectionView
@@ -25,6 +31,8 @@ class SeeAllViewController : UIViewController {
 	var exhibitionItems: [AICExhibitionModel] = []
 	var eventDates: [Date] = []
 	var eventItems: [[AICEventModel]] = []
+	
+	weak var delegate: SeeAllViewControllerDelegate? = nil
 	
 	init(contentType: ContentType) {
 		self.content = contentType
@@ -121,6 +129,7 @@ class SeeAllViewController : UIViewController {
 	}
 }
 
+// Layout
 extension SeeAllViewController : UICollectionViewDataSource {
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		if content == .events {
@@ -160,11 +169,8 @@ extension SeeAllViewController : UICollectionViewDataSource {
 		}
 		return UICollectionViewCell()
 	}
-}
-
-extension SeeAllViewController : UICollectionViewDelegate {
+	
 	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-		var reusableView: UICollectionReusableView? = nil
 		
 		if kind == UICollectionElementKindSectionHeader {
 			if content == .events {
@@ -174,7 +180,22 @@ extension SeeAllViewController : UICollectionViewDelegate {
 			}
 		}
 		
-		return reusableView!
+		return UICollectionReusableView()
+	}
+}
+
+// Interaction
+extension SeeAllViewController : UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if content == .tours {
+			self.delegate?.seeAllDidSelectTour(tour: tourItems[indexPath.row])
+		}
+		else if content == .exhibitions {
+			self.delegate?.seeAllDidSelectExhibition(exhibition: exhibitionItems[indexPath.row])
+		}
+		else if content == .events {
+			self.delegate?.seeAllDidSelectEvent(event: eventItems[indexPath.section][indexPath.row])
+		}
 	}
 }
 
