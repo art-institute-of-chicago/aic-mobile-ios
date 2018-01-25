@@ -1,0 +1,11 @@
+/* 
+  LanguageSettings.strings
+  aic
+
+  Created by Filippo Vanucci on 1/19/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Language Settings Title" = "Elija su idioma de preferencia";
+
+"Language Settings Text" = "Es posible que cierta información no esté disponible en el idioma seleccionado.";

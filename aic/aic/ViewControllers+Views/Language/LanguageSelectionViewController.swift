@@ -17,6 +17,7 @@ class LanguageSelectionViewController : UIViewController {
 	
 	let blurBGView:UIView = getBlurEffectView(frame: UIScreen.main.bounds)
 	
+	let contentView = UIView()
 	let titleLabel = UILabel()
 	let dividerLine = UIView()
 	let subtitleLabel = UILabel()
@@ -24,7 +25,10 @@ class LanguageSelectionViewController : UIViewController {
 	let spanishButton: AICTransparentButton = AICTransparentButton(color: .aicHomeColor, isSmall: true)
 	let chineseButton: AICTransparentButton = AICTransparentButton(color: .aicHomeColor, isSmall: true)
 	
-	let fadeInAnimationDuration = 0.25
+	let fadeInOutAnimationDuration = 0.4
+	let contentViewFadeInOutAnimationDuration = 0.4
+	
+	var selectedLanguage: Common.Language = .english
 	
 	weak var delegate: LanguageSelectionViewControllerDelegate? = nil
 	
@@ -41,8 +45,10 @@ class LanguageSelectionViewController : UIViewController {
 		
 		self.view.backgroundColor = .clear
 		
+		contentView.backgroundColor = .clear
+		
 //		titleLabel.attributedText = getAttributedStringWithLineHeight(text: "Please Choose Your Preferred Language", font: .aicLanguageSelectionTitleFont, lineHeight: 32)
-		titleLabel.text = "Language Selection Title".localized(using: "LanguageSelection")
+		titleLabel.text = "Language Settings Title"
 		titleLabel.font = .aicLanguageSelectionTitleFont
 		titleLabel.numberOfLines = 0
 		titleLabel.textColor = .white
@@ -61,40 +67,43 @@ class LanguageSelectionViewController : UIViewController {
 		
 		// Add subviews
 		self.view.addSubview(blurBGView)
-		self.view.addSubview(titleLabel)
-		self.view.addSubview(dividerLine)
-		self.view.addSubview(subtitleLabel)
-		self.view.addSubview(englishButton)
-		self.view.addSubview(spanishButton)
-		self.view.addSubview(chineseButton)
+		self.view.addSubview(contentView)
+		contentView.addSubview(titleLabel)
+		contentView.addSubview(dividerLine)
+		contentView.addSubview(subtitleLabel)
+		contentView.addSubview(englishButton)
+		contentView.addSubview(spanishButton)
+		contentView.addSubview(chineseButton)
 		
 		createViewConstraints()
 	}
 	
 	func createViewConstraints() {
-		titleLabel.autoAlignAxis(.vertical, toSameAxisOf: self.view)
-		titleLabel.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
-		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
-		titleLabel.autoPinEdge(.top, to: .top, of: self.view, withOffset: 90 + Common.Layout.safeAreaTopMargin)
+		contentView.autoPinEdgesToSuperviewEdges()
+		
+		titleLabel.autoAlignAxis(.vertical, toSameAxisOf: contentView)
+		titleLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
+		titleLabel.autoPinEdge(.top, to: .top, of: contentView, withOffset: 90 + Common.Layout.safeAreaTopMargin)
 		
 		dividerLine.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 30)
-		dividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
-		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
+		dividerLine.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
+		dividerLine.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
 		
 		subtitleLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 30)
-		subtitleLabel.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 40)
-		subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -40)
-		subtitleLabel.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		subtitleLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 40)
+		subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -40)
+		subtitleLabel.autoAlignAxis(.vertical, toSameAxisOf: contentView)
 		
 		englishButton.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 64)
-		englishButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		englishButton.autoAlignAxis(.vertical, toSameAxisOf: contentView)
 		
 		spanishButton.autoPinEdge(.top, to: .bottom, of: englishButton, withOffset: 16)
-		spanishButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		spanishButton.autoAlignAxis(.vertical, toSameAxisOf: contentView)
 		
 		chineseButton.autoPinEdge(.top, to: .bottom, of: spanishButton, withOffset: 16)
-		chineseButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		chineseButton.autoAlignAxis(.vertical, toSameAxisOf: contentView)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -122,17 +131,24 @@ class LanguageSelectionViewController : UIViewController {
 		
 		// Fade in
 		view.alpha = 0.0
-		UIView.animate(withDuration: fadeInAnimationDuration, animations: {
+		contentView.alpha = 0.0
+		UIView.animate(withDuration: fadeInOutAnimationDuration, animations: {
 			self.view.alpha = 1.0
-		})
+		}) { (completed) in
+			if completed == true {
+				UIView.animate(withDuration: self.contentViewFadeInOutAnimationDuration, animations: {
+					self.contentView.alpha = 1.0
+				})
+			}
+		}
 	}
 	
 	func updateLanguage() {
-		titleLabel.text = "Language Selection Title".localized(using: "LanguageSelection")
+		titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
 		
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.lineSpacing = 6
-		let textAttrString = NSMutableAttributedString(string: "Language Selection Text".localized(using: "LanguageSelection"))
+		let textAttrString = NSMutableAttributedString(string: "Language Settings Text".localized(using: "LanguageSettings"))
 		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
 		
 		subtitleLabel.attributedText = textAttrString
@@ -147,17 +163,42 @@ class LanguageSelectionViewController : UIViewController {
 		spanishButton.isHighlighted = button != spanishButton
 		chineseButton.isHighlighted = button != chineseButton
 		
+		englishButton.isEnabled = false
+		spanishButton.isEnabled = false
+		chineseButton.isEnabled = false
+		
 		if button == englishButton {
 			Localize.setCurrentLanguage(Common.Language.english.rawValue)
-			self.delegate?.languageSelected(language: .english)
+			selectedLanguage = .english
 		}
 		else if button == spanishButton {
 			Localize.setCurrentLanguage(Common.Language.spanish.rawValue)
-			self.delegate?.languageSelected(language: .spanish)
+			selectedLanguage = .spanish
 		}
 		else if button == chineseButton {
 			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
-			self.delegate?.languageSelected(language: .chinese)
+			selectedLanguage = .chinese
+		}
+		
+		updateLanguage()
+		
+		self.perform(#selector(hideLanguageSelection), with: nil, afterDelay: 1.0)
+	}
+	
+	@objc func hideLanguageSelection() {
+		//staticBlurImageView.removeFromSuperview()
+		UIView.animate(withDuration: contentViewFadeInOutAnimationDuration, animations: {
+			self.contentView.alpha = 0.0
+		}) { (firstCompleted) in
+			if firstCompleted == true {
+				UIView.animate(withDuration: self.fadeInOutAnimationDuration, animations: {
+					self.view.alpha = 0.0
+				}) { (secondCompleted) in
+					if secondCompleted == true {
+						self.delegate?.languageSelected(language: self.selectedLanguage)
+					}
+				}
+			}
 		}
 	}
 }

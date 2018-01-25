@@ -10,7 +10,7 @@ import UIKit
 import Localize_Swift
 
 class LanguageViewController : UIViewController {
-	let pageView: InfoPageView = InfoPageView(title: "Language Selection Title".localized(using: "LanguageSelection"), text: "Language Selection Text".localized(using: "LanguageSelection"))
+	let pageView: InfoPageView = InfoPageView(title: "Language Settings Title".localized(using: "LanguageSettings"), text: "Language Settings Text".localized(using: "LanguageSettings"))
 	let englishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	let spanishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	let chineseButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
@@ -53,6 +53,8 @@ class LanguageViewController : UIViewController {
 		swipeRightGesture.direction = .right
 		self.view.addGestureRecognizer(swipeRightGesture)
 		
+		createViewConstraints()
+		
 		// Language
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
 	}
@@ -63,7 +65,7 @@ class LanguageViewController : UIViewController {
 		updateLanguage()
 	}
 	
-	override func updateViewConstraints() {
+	func createViewConstraints() {
 		pageView.autoPinEdge(.top, to: .top, of: self.view)
 		pageView.autoPinEdge(.leading, to: .leading, of: self.view)
 		pageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
@@ -76,8 +78,6 @@ class LanguageViewController : UIViewController {
 		
 		chineseButton.autoPinEdge(.top, to: .bottom, of: spanishButton, withOffset: 16)
 		chineseButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
-		
-		super.updateViewConstraints()
 	}
 	
 	@objc func languageButtonPressed(button: UIButton) {
@@ -93,8 +93,8 @@ class LanguageViewController : UIViewController {
 	}
 	
 	@objc func updateLanguage() {
-		pageView.titleLabel.text = "Language Selection Title".localized(using: "LanguageSelection")
-		pageView.textView.text = "Language Selection Text".localized(using: "LanguageSelection")
+		pageView.titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
+		pageView.textView.text = "Language Settings Text".localized(using: "LanguageSettings")
 		
 		englishButton.isHighlighted = Localize.currentLanguage() != Common.Language.english.rawValue
 		spanishButton.isHighlighted = Localize.currentLanguage() != Common.Language.spanish.rawValue

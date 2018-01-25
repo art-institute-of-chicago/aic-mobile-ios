@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class LocationSettingsViewController : UIViewController {
 	let pageView: InfoPageView = InfoPageView(title: Common.Info.locationTitle, text: Common.Info.locationText)
@@ -37,21 +38,37 @@ class LocationSettingsViewController : UIViewController {
 		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
 		swipeRightGesture.direction = .right
 		self.view.addGestureRecognizer(swipeRightGesture)
+		
+		createViewConstraints()
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
 	}
 	
-	override func updateViewConstraints() {
+	func createViewConstraints() {
 		pageView.autoPinEdge(.top, to: .top, of: self.view)
 		pageView.autoPinEdge(.leading, to: .leading, of: self.view)
 		pageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		
 		locationButton.autoPinEdge(.top, to: .bottom, of: pageView)
 		locationButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		
-		super.updateViewConstraints()
+		updateLanguage()
+	}
+	
+	@objc func updateLanguage() {
+		pageView.titleLabel.text = "Location Settings Title".localized(using: "LocationSettings")
+		pageView.textView.text = "Location Settings Text".localized(using: "LocationSettings")
+		
+		locationButton.setTitle("Location Enabled".localized(using: "LocationSettings"), for: .normal)
 	}
 	
 	@objc func locationButtonPressed(button: UIButton) {
-		
+		// TODO: link to settings page to change location preferences
 	}
 }
 

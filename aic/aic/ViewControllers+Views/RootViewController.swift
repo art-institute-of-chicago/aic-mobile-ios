@@ -23,7 +23,8 @@ class RootViewController: UIViewController {
 	var languageVC: LanguageSelectionViewController? = nil
 	var sectionsVC:SectionsViewController? = nil
     
-    var shouldShowInstructions:Bool = false
+    var shouldShowInstructions: Bool = false
+	var loadingFadeOutAnimationStarted: Bool = false
     
     override var prefersStatusBarHidden: Bool {
         return !Common.Layout.showStatusBar
@@ -32,8 +33,7 @@ class RootViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
-    
-    
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         view.frame = UIScreen.main.bounds
@@ -118,16 +118,18 @@ class RootViewController: UIViewController {
 		loadingVC?.playIntroVideoA()
     }
     
-    private func showLoadingVideo() {
-        loadingVC?.playIntroVideoA()
-    }
-    
     private func showLanguageVC() {
         languageVC = LanguageSelectionViewController()
 //        languageVC?.instructionsDelegate = self
 		languageVC?.delegate = self
         self.view.addSubview(languageVC!.view)
+		
+		self.perform(#selector(preloadIntroVideoB), with: nil, afterDelay: languageVC!.fadeInOutAnimationDuration + languageVC!.contentViewFadeInOutAnimationDuration)
     }
+	
+	@objc func preloadIntroVideoB() {
+		loadingVC?.loadIntroVideoB()
+	}
     
     // Remove the intro and show the main app
     private func showMainApp() {
@@ -135,7 +137,8 @@ class RootViewController: UIViewController {
 			sectionsVC = SectionsViewController()
 			sectionsVC?.delegate = self
 		}
-        view.insertSubview(sectionsVC!.view, belowSubview: loadingVC!.view) //addSubview(sectionsVC!.view)
+        view.insertSubview(sectionsVC!.view, belowSubview: loadingVC!.view)
+		
 //        sectionsVC!.setSelectedSection(sectionVC: sectionsVC!.toursVC)
         //sectionsVC!.animateInInitialView()
     }
@@ -200,8 +203,19 @@ extension RootViewController : LoadingViewControllerDelegate {
 		self.mode = .mainApp
 	}
 	
-	func loadingDidFinishFadeOutAnimation() {
-		cleanUpViews()
+	func loadingDidFinishBuildingAnimation() {
+		if loadingFadeOutAnimationStarted == true {
+			return
+		}
+		loadingFadeOutAnimationStarted = true
+		
+		UIView.animate(withDuration: 0.5, delay: 0.6, options: .curveLinear, animations: {
+			self.loadingVC!.view.alpha = 0.0
+		}, completion: { (completed3) in
+			if completed3 == true {
+				self.cleanUpViews()
+			}
+		})
 	}
 }
 

@@ -63,6 +63,7 @@
 		294338521FDC849E00ECF321 /* SearchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294338511FDC849E00ECF321 /* SearchDataManager.swift */; };
 		294338541FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */; };
 		294338561FDD656500ECF321 /* MapItemsCollectionContainerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */; };
+		294C0B1B20193AC800F2ABB1 /* LocationSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */; };
 		295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */; };
 		295AC0931FDF8FBA009A0FAF /* MuseumInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */; };
 		295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */; };
@@ -72,7 +73,7 @@
 		2968F67920125B5700638153 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67820125B5700638153 /* MessageViewController.swift */; };
 		2968F67C2012612E00638153 /* LanguageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */; };
 		2968F67E201272EA00638153 /* AICTransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67D201272EA00638153 /* AICTransparentButton.swift */; };
-		2968F68B2012942800638153 /* LanguageSelection.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F68D2012942800638153 /* LanguageSelection.strings */; };
+		2968F68B2012942800638153 /* LanguageSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F68D2012942800638153 /* LanguageSettings.strings */; };
 		2968F6932012B33000638153 /* TabMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F6952012B33000638153 /* TabMenu.strings */; };
 		29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */; };
 		29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */; };
@@ -324,6 +325,9 @@
 		294338511FDC849E00ECF321 /* SearchDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataManager.swift; sourceTree = "<group>"; };
 		294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemsCollectionContainerCell.swift; sourceTree = "<group>"; };
 		294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapItemsCollectionContainerCell.xib; sourceTree = "<group>"; };
+		294C0B1C20193AC800F2ABB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LocationSettings.strings; sourceTree = "<group>"; };
+		294C0B1E20193AE400F2ABB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LocationSettings.strings; sourceTree = "<group>"; };
+		294C0B1F20193AE500F2ABB1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocationSettings.strings"; sourceTree = "<group>"; };
 		295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationBar.swift; sourceTree = "<group>"; };
 		295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumInfoViewController.swift; sourceTree = "<group>"; };
 		295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -333,9 +337,9 @@
 		2968F67820125B5700638153 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionViewController.swift; sourceTree = "<group>"; };
 		2968F67D201272EA00638153 /* AICTransparentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICTransparentButton.swift; sourceTree = "<group>"; };
-		2968F68C2012942800638153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LanguageSelection.strings; sourceTree = "<group>"; };
-		2968F68F2012944A00638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LanguageSelection.strings; sourceTree = "<group>"; };
-		2968F6902012945000638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LanguageSelection.strings"; sourceTree = "<group>"; };
+		2968F68C2012942800638153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LanguageSettings.strings; sourceTree = "<group>"; };
+		2968F68F2012944A00638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LanguageSettings.strings; sourceTree = "<group>"; };
+		2968F6902012945000638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LanguageSettings.strings"; sourceTree = "<group>"; };
 		2968F6942012B33000638153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TabMenu.strings; sourceTree = "<group>"; };
 		2968F6962012B36000638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TabMenu.strings; sourceTree = "<group>"; };
 		2968F6972012B36400638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabMenu.strings"; sourceTree = "<group>"; };
@@ -702,11 +706,12 @@
 		2968F683201292D100638153 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				2968F68D2012942800638153 /* LanguageSelection.strings */,
 				2968F6952012B33000638153 /* TabMenu.strings */,
 				298729F520155E2C00BB3B6A /* Sections.strings */,
 				298729FC2016378000BB3B6A /* Home.strings */,
 				29872A03201684CD00BB3B6A /* Info.strings */,
+				2968F68D2012942800638153 /* LanguageSettings.strings */,
+				294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -1399,6 +1404,7 @@
 				29A7BCF41FBF85DB00FD8639 /* IdealSans-Light.otf in Resources */,
 				2902198E1FCE2ABA006CFA9E /* HomeEventCell.xib in Resources */,
 				293D00921FA7C80D00BF2C26 /* Lora-BoldItalic.ttf in Resources */,
+				294C0B1B20193AC800F2ABB1 /* LocationSettings.strings in Resources */,
 				32A2A7101E8079610025186F /* Config.plist in Resources */,
 				293D00981FA7C80D00BF2C26 /* METADATA.json in Resources */,
 				293D00A21FA7C80D00BF2C26 /* SourceSansPro-Light.ttf in Resources */,
@@ -1417,7 +1423,7 @@
 				29A7BCF61FBF85DB00FD8639 /* IdealSans-Medium.otf in Resources */,
 				2931277C1FDEF327008BFAB1 /* MapItemCell.xib in Resources */,
 				29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */,
-				2968F68B2012942800638153 /* LanguageSelection.strings in Resources */,
+				2968F68B2012942800638153 /* LanguageSettings.strings in Resources */,
 				2941CE7E1FE092AC00B7CCEE /* TourContentCell.xib in Resources */,
 				293D00A31FA7C80D00BF2C26 /* SourceSansPro-LightItalic.ttf in Resources */,
 				29A7BCF91FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf in Resources */,
@@ -1841,14 +1847,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2968F68D2012942800638153 /* LanguageSelection.strings */ = {
+		294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				294C0B1C20193AC800F2ABB1 /* en */,
+				294C0B1E20193AE400F2ABB1 /* es */,
+				294C0B1F20193AE500F2ABB1 /* zh-Hans */,
+			);
+			name = LocationSettings.strings;
+			sourceTree = "<group>";
+		};
+		2968F68D2012942800638153 /* LanguageSettings.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2968F68C2012942800638153 /* en */,
 				2968F68F2012944A00638153 /* es */,
 				2968F6902012945000638153 /* zh-Hans */,
 			);
-			name = LanguageSelection.strings;
+			name = LanguageSettings.strings;
 			sourceTree = "<group>";
 		};
 		2968F6952012B33000638153 /* TabMenu.strings */ = {

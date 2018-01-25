@@ -78,5 +78,5 @@ extension UIFont {
 	
 	static let aicLanguageSelectionTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
 	
-	static let aicLoadingWelcomeFont: UIFont = UIFont(name: "IdealSans-Book", size: 47.0)!
+	static let aicLoadingWelcomeFont: UIFont = UIFont(name: "IdealSans-Book", size: 45.0)!
 }

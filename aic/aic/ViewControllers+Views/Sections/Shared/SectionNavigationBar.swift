@@ -48,8 +48,6 @@ class SectionNavigationBar : UIView {
 		
 		iconImage.image = section.icon
 		
-		let preferredLabelWidth = UIScreen.main.bounds.width - margins.right - margins.left
-		
 		titleLabel.numberOfLines = 0
 		if section.nid == Section.home.rawValue {
 			titleLabel.font = .aicSectionBigTitleFont
@@ -61,7 +59,6 @@ class SectionNavigationBar : UIView {
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = NSTextAlignment.center
 		titleLabel.text = section.title
-		titleLabel.preferredMaxLayoutWidth = preferredLabelWidth
 		
 		if section.nid == Section.home.rawValue {
 			titleTopMargin = 176
@@ -73,6 +70,8 @@ class SectionNavigationBar : UIView {
 			paragraphStyle.lineSpacing = 6
 			let descriptonAttrString = NSMutableAttributedString(string: section.description)
 			descriptonAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, descriptonAttrString.length))
+			
+			let preferredLabelWidth = UIScreen.main.bounds.width - margins.right - margins.left
 			
 			descriptionLabel.numberOfLines = 2
 			descriptionLabel.font = .aicSectionDescriptionFont
@@ -150,8 +149,8 @@ class SectionNavigationBar : UIView {
 		NSLayoutConstraint.autoSetPriority(.defaultLow) {
 			titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: titleTopMargin)
 		}
-		titleLabel.autoPinEdge(.leading, to: .leading, of: self)
-		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self)
+		titleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 0)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: 0)
 		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
 			titleLabel.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -titleBottomMargin, relation: .lessThanOrEqual)
 		}

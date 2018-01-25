@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class MuseumInfoViewController : UIViewController {
 	let pageView: InfoPageView
@@ -25,12 +26,10 @@ class MuseumInfoViewController : UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	override func updateViewConstraints() {
+	func createViewConstraints() {
 		pageView.autoPinEdge(.top, to: .top, of: self.view)
 		pageView.autoPinEdge(.leading, to: .leading, of: self.view)
 		pageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		
-		super.updateViewConstraints()
 	}
 	
 	override func viewDidLoad() {
@@ -43,6 +42,22 @@ class MuseumInfoViewController : UIViewController {
 		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
 		swipeRightGesture.direction = .right
 		self.view.addGestureRecognizer(swipeRightGesture)
+		
+		createViewConstraints()
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		updateLanguage()
+	}
+	
+	@objc func updateLanguage() {
+		pageView.titleLabel.text = "Museum Information".localized(using: "Sections")
+		//		pageView.textView.text = // TODO: add translation to MuseumInfo model
 	}
 }
 
