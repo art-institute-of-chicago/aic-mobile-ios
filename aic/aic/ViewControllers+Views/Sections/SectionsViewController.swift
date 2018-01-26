@@ -39,7 +39,7 @@ class SectionsViewController : UIViewController {
 	
 	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
     var audioGuideVC:AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
-	var mapVC: MapSectionViewController = MapSectionViewController()
+	var mapVC: MapNavigationController = MapNavigationController(section: Common.Sections[.map]!)
 	var infoVC:InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
     
     // Messages
@@ -154,11 +154,6 @@ class SectionsViewController : UIViewController {
 			//mapVC.color = sVC.color
 			// Tell the map what region this view shows
 			//mapVC.setViewableArea(frame: sVC.viewableMapArea)
-		}
-			// TODO: instead of checking for mapVC, make mapVC a SectionNavigationController
-		else if let sVC = sectionVC as? MapSectionViewController {
-			sectionTabBarController.tabBar.tintColor = .aicMapColor
-			objectVC.setProgressBarColor(.aicMapColor)
 		}
 		
 		// Card operations

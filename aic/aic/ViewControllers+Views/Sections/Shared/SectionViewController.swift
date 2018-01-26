@@ -46,10 +46,6 @@ class SectionViewController : UIViewController {
         // Track this screen
         AICAnalytics.trackScreen(named: sectionModel.title)
     }
-    
-//    override func loadView() {
-//        self.view = sectionView
-//    }
 	
     internal func reset() {
         // Override this to reset view when going back

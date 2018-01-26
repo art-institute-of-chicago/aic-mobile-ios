@@ -6,6 +6,7 @@
 
 import UIKit
 import MapKit
+import Localize_Swift
 
 protocol MapViewControllerDelegate : class {
     func mapViewControllerObjectPlayRequested(_ object:AICObjectModel)
@@ -68,7 +69,10 @@ class MapViewController: UIViewController {
     init() {
         self.mapView = MapView(frame: CGRect.zero)
         super.init(nibName: nil, bundle: nil)
-        
+		
+		// Navigation Item
+		self.navigationItem.title = Common.Sections[.map]!.title
+		
         // Update teh annotation views every frame
         //let displayLink = CADisplayLink(target: self, selector: #selector(MapViewController.setAnnotationViewPropertiesForCurrentMapAltitude))
         //displayLink.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
@@ -118,7 +122,20 @@ class MapViewController: UIViewController {
                                                selector: #selector(MapViewController.updateMapWithTimer),
                                                userInfo: nil,
                                                repeats: true)
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		updateLanguage()
+	}
+	
+	@objc func updateLanguage() {
+		
+	}
     
     //Set the color of the background overlay
     func updateColors() {
