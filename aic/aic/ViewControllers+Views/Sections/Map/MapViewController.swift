@@ -9,8 +9,8 @@ import MapKit
 import Localize_Swift
 
 protocol MapViewControllerDelegate : class {
-    func mapViewControllerObjectPlayRequested(_ object:AICObjectModel)
-    func mapViewControllerDidSelectTourStop(_ stopObject:AICObjectModel)
+    func mapDidPressArtworkPlayButton(artwork: AICObjectModel)
+    func mapDidSelectTourStop(artwork: AICObjectModel)
 }
 
 class MapViewController: UIViewController {
@@ -37,7 +37,7 @@ class MapViewController: UIViewController {
     weak var delegate:MapViewControllerDelegate?
     
     // Map + Text Colors
-    var color:UIColor = .aicHomeColor {
+    var color: UIColor = .aicHomeColor {
         didSet {
             updateColors()
         }
@@ -60,9 +60,10 @@ class MapViewController: UIViewController {
     
     fileprivate(set) var previousFloor:Int = Common.Map.startFloor
     fileprivate(set) var currentFloor:Int = Common.Map.startFloor
-    
-    var locationDisabledMessage:MessageSmallView? = nil
-    var locationOffsiteMessage:MessageSmallView? = nil
+	
+	// TODO: move these to SectionsViewController
+    var locationDisabledMessage: UIView? = nil
+    var locationOffsiteMessage: UIView? = nil
     
     var isSwitchingModes = false
     
@@ -210,8 +211,6 @@ class MapViewController: UIViewController {
         } else {
             showTourOverview(forTourModel: tourModel)
         }
-        
-        
     }
     
     private func updateMapForModeChange(andStorePreviousMode previousMode:Mode) {
@@ -675,7 +674,7 @@ extension MapViewController : MKMapViewDelegate {
             mapView.setCenter(annotation.coordinate, animated: true)
             
             if mode == .tour {
-                delegate?.mapViewControllerDidSelectTourStop(annotation.object)
+                delegate?.mapDidSelectTourStop(artwork: annotation.object)
             }
         }
         
@@ -720,20 +719,18 @@ extension MapViewController : MapFloorSelectorViewControllerDelegate {
     
     func floorSelectorLocationButtonTapped() {
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
-            // Show message to enable location
-            locationDisabledMessage = MessageSmallView(model: Common.Messages.locationDisabled)
-            locationDisabledMessage!.delegate = self
-            
-            self.view.window?.addSubview(locationDisabledMessage!)
+//            // Show message to enable location
+//            locationDisabledMessage = MessageSmallView(model: Common.Messages.locationDisabled)
+//            locationDisabledMessage!.delegate = self
+//
+//            self.view.window?.addSubview(locationDisabledMessage!)
         }
-            
         else if floorSelectorVC.locationMode == .Offsite {
-            // Show offsite message
-            locationOffsiteMessage = MessageSmallView(model: Common.Messages.locationOffsite)
-            locationOffsiteMessage?.delegate = self
-            self.view.window?.addSubview(locationOffsiteMessage!)
+//            // Show offsite message
+//            locationOffsiteMessage = MessageSmallView(model: Common.Messages.locationOffsite)
+//            locationOffsiteMessage?.delegate = self
+//            self.view.window?.addSubview(locationOffsiteMessage!)
         }
-        
         else {
             // Toggle heading
             if floorSelectorVC.userHeadingIsEnabled() {
@@ -750,12 +747,12 @@ extension MapViewController : MapFloorSelectorViewControllerDelegate {
 }
 
 // MARK: Enable location services message delegate
-extension MapViewController : MessageViewDelegate {
-    func messageViewActionSelected(_ messageView: UIView) {
+extension MapViewController : MessageViewControllerDelegate {
+    func messageViewActionSelected(messageVC: MessageViewController) {
         // Remove the message
-        messageView.removeFromSuperview()
+        messageVC.dismiss(animated: true, completion: nil)
         
-        if messageView == locationDisabledMessage {
+        if messageVC.view == locationDisabledMessage {
             // Go to settings
             if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
                 UIApplication.shared.openURL(appSettings)
@@ -766,8 +763,8 @@ extension MapViewController : MessageViewDelegate {
         locationOffsiteMessage = nil
     }
     
-    func messageViewCancelSelected(_ messageView: UIView) {
-        messageView.removeFromSuperview()
+    func messageViewCancelSelected(messageVC: MessageViewController) {
+        messageVC.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -775,7 +772,7 @@ extension MapViewController : MessageViewDelegate {
 extension MapViewController : MapObjectAnnotationViewDelegate {
     func mapObjectAnnotationViewPlayPressed(_ object: MapObjectAnnotationView) {
         if let annotation = object.annotation as? MapObjectAnnotation {
-            delegate?.mapViewControllerObjectPlayRequested(annotation.object)
+            delegate?.mapDidPressArtworkPlayButton(artwork: annotation.object)
         }
     }
 }

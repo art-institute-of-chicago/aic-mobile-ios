@@ -6,7 +6,7 @@
 import UIKit
 import Localize_Swift
 
-protocol AudioGuideSectionViewControllerDelegate : class {
+protocol AudioGuideNavigationControllerDelegate : class {
     func audioGuideDidSelectObject(object:AICObjectModel, audioGuideID: Int)
 }
 
@@ -28,7 +28,7 @@ class AudioGuideNavigationController : SectionNavigationController {
 	private(set) var curInputValue = "";
     
     // Delegate
-    weak var audioGuideDelegate: AudioGuideSectionViewControllerDelegate?
+    weak var sectionDelegate: AudioGuideNavigationControllerDelegate?
     
     // Collection view that holds the buttons
     var collectionView: UICollectionView = createCollectionView()
@@ -196,7 +196,7 @@ extension AudioGuideNavigationController {
                 return
             }
                 
-            audioGuideDelegate?.audioGuideDidSelectObject(object: object, audioGuideID: id)
+            sectionDelegate?.audioGuideDidSelectObject(object: object, audioGuideID: id)
             clearInput()
             
         case "<":

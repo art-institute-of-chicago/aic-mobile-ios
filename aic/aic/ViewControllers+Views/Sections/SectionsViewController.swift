@@ -102,9 +102,10 @@ class SectionsViewController : UIViewController {
 		
 		// Set delegates
 		homeVC.sectionDelegate = self
+		mapVC.sectionDelegate = self
 		sectionTabBarController.delegate = self
 		objectVC.delegate = self
-		audioGuideVC.audioGuideDelegate = self
+		audioGuideVC.sectionDelegate = self
 		searchVC.cardDelegate = self
         
         //whatsOnVC.newsToursDelegate = self
@@ -330,17 +331,17 @@ class SectionsViewController : UIViewController {
     
     // MARK: Messages
     fileprivate func showLeaveTourMessage() {
-        let leaveCurrentTourMessageView = MessageSmallView(model: Common.Messages.leaveTour)
-        leaveCurrentTourMessageView.delegate = self
-        
+		let leaveCurrentTourMessageView = UIView()
+//        leaveCurrentTourMessageView.delegate = self
+		
         view.addSubview(leaveCurrentTourMessageView)
-        self.leaveCurrentTourMessageView = leaveCurrentTourMessageView
+//        self.leaveCurrentTourMessageView = leaveCurrentTourMessageView
     }
     
     fileprivate func hideLeaveTourMessage() {
         if let leaveCurrentTourMessageView = leaveCurrentTourMessageView {
             leaveCurrentTourMessageView.removeFromSuperview()
-            self.leaveCurrentTourMessageView = nil
+//            self.leaveCurrentTourMessageView = nil
         }
     }
 	
@@ -369,10 +370,10 @@ class SectionsViewController : UIViewController {
         let showHeadphonesMessage = defaults.bool(forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
         
         if showHeadphonesMessage {
-            let headphonesMessageView = MessageLargeView(model: Common.Messages.useHeadphones)
-            headphonesMessageView.delegate = self
-            
-            self.headphonesMessageView = headphonesMessageView
+            let headphonesMessageView = UIView()
+//            headphonesMessageView.delegate = self
+			
+//            self.headphonesMessageView = headphonesMessageView
             view.addSubview(headphonesMessageView)
         }
     }
@@ -458,8 +459,8 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 	}
 }
 
-// AudioGuide delegate
-extension SectionsViewController : AudioGuideSectionViewControllerDelegate {
+// MARK: AudioGuide delegate
+extension SectionsViewController : AudioGuideNavigationControllerDelegate {
     func audioGuideDidSelectObject(object: AICObjectModel, audioGuideID: Int) {
         showAudioGuideObject(object: object, audioGuideID: audioGuideID)
     }
@@ -505,22 +506,16 @@ extension SectionsViewController : ToursSectionViewControllerDelegate {
 }
 
 // MARK: Map Delegate Methods
-extension SectionsViewController : MapViewControllerDelegate {
-    func mapViewControllerObjectPlayRequested(_ object: AICObjectModel) {
-        showMapObject(forObjectModel: object)
-    }
-    
-    func mapViewControllerDidSelectTourStop(_ stopObject: AICObjectModel) {
-//        if currentViewController == toursVC {
-//            toursVC.showTourStop(forStopObjectModel: stopObject)
-//        }
-    }
+extension SectionsViewController : MapNavigationControllerDelegate {
+	func playArtwork(artwork: AICObjectModel) {
+		showMapObject(forObjectModel: artwork)
+	}
 }
 
 // MARK: Message Delegate Methods
-extension SectionsViewController : MessageViewDelegate {
-    func messageViewActionSelected(_ messageView: UIView) {
-        if messageView == leaveCurrentTourMessageView {
+extension SectionsViewController : MessageViewControllerDelegate {
+    func messageViewActionSelected(messageVC: MessageViewController) {
+        if messageVC.view == leaveCurrentTourMessageView {
             hideLeaveTourMessage()
             
             if let requestedTour = self.requestedTour {
@@ -537,7 +532,7 @@ extension SectionsViewController : MessageViewDelegate {
             //startLocationManager()
         }*/
         
-        else if messageView == headphonesMessageView {
+        else if messageVC.view == headphonesMessageView {
             hideHeadphonesMessage()
         }
         
@@ -546,8 +541,8 @@ extension SectionsViewController : MessageViewDelegate {
         }
     }
     
-    func messageViewCancelSelected(_ messageView: UIView) {
-        if messageView == leaveCurrentTourMessageView {
+    func messageViewCancelSelected(messageVC: MessageViewController) {
+        if messageVC.view == leaveCurrentTourMessageView {
             hideLeaveTourMessage()
             requestedTour = nil
         }

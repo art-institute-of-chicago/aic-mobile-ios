@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import CoreLocation
 import Localize_Swift
 
 protocol MapNavigationControllerDelegate : class {
-	
+	func playArtwork(artwork: AICObjectModel)
 }
 
 class MapNavigationController : SectionNavigationController {
 	let mapVC: MapViewController = MapViewController()
+	
+	let locationManager: CLLocationManager = CLLocationManager()
+	fileprivate var enableLocationMessageView: EnableLocationMessageViewController? = nil
 	
 	weak var sectionDelegate: MapNavigationControllerDelegate? = nil
 	
@@ -29,9 +33,97 @@ class MapNavigationController : SectionNavigationController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-//		mapVC.delegate = self
+		// Setup delegates
+		mapVC.delegate = self
+		locationManager.delegate = self.mapVC
 		
+		// Add root viewcontroller
 		self.pushViewController(mapVC, animated: false)
+		
+		// Initial map state
+		self.mapVC.showAllInformation()
+		
+		// Location
+		startLocationManager()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight))
+	}
+	
+	// MARK: Location Manager
+	fileprivate func startLocationManager() {
+		//See if we need to prompt first
+		let defaults = UserDefaults.standard
+		let showEnableLocationMessageValue = defaults.bool(forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
+		
+		// If we do show it
+		if showEnableLocationMessageValue {
+			showEnableLocationMessage()
+		} else {  // Otherwise try to start the location manager
+			// Init location manager
+			locationManager.requestWhenInUseAuthorization()
+			locationManager.startUpdatingLocation()
+			locationManager.startUpdatingHeading()
+		}
+	}
+	
+	fileprivate func showEnableLocationMessage() {
+		let enableLocationVC = EnableLocationMessageViewController()
+		enableLocationVC.delegate = self
+		
+		self.definesPresentationContext = true
+		self.providesPresentationContextTransitionStyle = true
+		enableLocationVC.modalPresentationStyle = .overFullScreen
+		
+		let blurredBackgroundView = UIVisualEffectView()
+		
+		blurredBackgroundView.frame = view.frame
+		blurredBackgroundView.effect = UIBlurEffect(style: .dark)
+		
+		view.addSubview(blurredBackgroundView)
+		
+		self.present(enableLocationVC, animated: true, completion: nil)
+	}
+	
+	fileprivate func hideEnableLocationMessage() {
+		if let messageView = enableLocationMessageView {
+			// Update user defaults
+			let defaults = UserDefaults.standard
+			defaults.set(false, forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
+			defaults.synchronize()
+			
+			messageView.dismiss(animated: true, completion: nil)
+			enableLocationMessageView = nil
+		}
+	}
+}
+
+// MARK: Message Delegate Methods
+extension MapNavigationController : MessageViewControllerDelegate {
+	func messageViewActionSelected(messageVC: MessageViewController) {
+		if messageVC.view == enableLocationMessageView {
+			hideEnableLocationMessage()
+			startLocationManager()
+		}
+	}
+	
+	func messageViewCancelSelected(messageVC: MessageViewController) {
+		if messageVC == enableLocationMessageView {
+			hideEnableLocationMessage()
+		}
+	}
+}
+
+// MARK: Map Delegate Methods
+extension MapNavigationController : MapViewControllerDelegate {
+	func mapDidPressArtworkPlayButton(artwork: AICObjectModel) {
+		self.sectionDelegate?.playArtwork(artwork: artwork)
+	}
+	
+	func mapDidSelectTourStop(artwork: AICObjectModel) {
+		//showTourStop(forStopObjectModel: stopObject)
 	}
 }
 
