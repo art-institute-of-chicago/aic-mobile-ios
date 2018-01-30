@@ -49,7 +49,7 @@ class MapNavigationController : SectionNavigationController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight))
+		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
 	}
 	
 	// MARK: Location Manager
@@ -70,21 +70,16 @@ class MapNavigationController : SectionNavigationController {
 	}
 	
 	fileprivate func showEnableLocationMessage() {
-		let enableLocationVC = EnableLocationMessageViewController()
-		enableLocationVC.delegate = self
-		
-		self.definesPresentationContext = true
-		self.providesPresentationContextTransitionStyle = true
-		enableLocationVC.modalPresentationStyle = .overFullScreen
-		
-		let blurredBackgroundView = UIVisualEffectView()
-		
-		blurredBackgroundView.frame = view.frame
-		blurredBackgroundView.effect = UIBlurEffect(style: .dark)
-		
-		view.addSubview(blurredBackgroundView)
-		
-		self.present(enableLocationVC, animated: true, completion: nil)
+		enableLocationMessageView = EnableLocationMessageViewController()
+		enableLocationMessageView!.delegate = self
+        
+        // Modal presentation style
+        enableLocationMessageView!.definesPresentationContext = true
+        enableLocationMessageView!.providesPresentationContextTransitionStyle = true
+        enableLocationMessageView!.modalPresentationStyle = .overFullScreen
+        enableLocationMessageView!.modalTransitionStyle = .crossDissolve
+        
+		self.present(enableLocationMessageView!, animated: true, completion: nil)
 	}
 	
 	fileprivate func hideEnableLocationMessage() {
@@ -103,9 +98,9 @@ class MapNavigationController : SectionNavigationController {
 // MARK: Message Delegate Methods
 extension MapNavigationController : MessageViewControllerDelegate {
 	func messageViewActionSelected(messageVC: MessageViewController) {
-		if messageVC.view == enableLocationMessageView {
+		if messageVC == enableLocationMessageView {
 			hideEnableLocationMessage()
-			startLocationManager()
+			//startLocationManager()
 		}
 	}
 	

@@ -43,12 +43,10 @@ class MessageViewController : UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+        
+//        self.transitioningDelegate = self
+        
 		self.view.backgroundColor = .clear
-		
-		let blurEffect = UIBlurEffect(style: .dark)
-		let blurEffectView = UIVisualEffectView(effect: blurEffect)
-		blurEffectView.frame = self.view.frame
 		
 		contentView.backgroundColor = .clear
 		
@@ -65,7 +63,7 @@ class MessageViewController : UIViewController {
 		buttonsView.clipsToBounds = false
 		
 		// Add subviews
-		self.view.addSubview(blurBGView)
+        self.view.insertSubview(blurBGView, at: 0)
 		self.view.addSubview(contentView)
 		contentView.addSubview(titleLabel)
 		contentView.addSubview(dividerLine)
@@ -73,7 +71,7 @@ class MessageViewController : UIViewController {
 		contentView.addSubview(buttonsView)
 		
 		createViewConstraints()
-		
+        
 		// Language
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
 	}
@@ -106,20 +104,17 @@ class MessageViewController : UIViewController {
 		super.viewWillAppear(animated)
 		
 		updateLanguage()
-		
-		// Fade in
-		view.alpha = 0.0
-		contentView.alpha = 0.0
-		UIView.animate(withDuration: fadeInOutAnimationDuration, animations: {
-			self.view.alpha = 1.0
-		}) { (completed) in
-			if completed == true {
-				UIView.animate(withDuration: self.contentViewFadeInOutAnimationDuration, animations: {
-					self.contentView.alpha = 1.0
-				})
-			}
-		}
+        
+        contentView.alpha = 0.0
 	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animate(withDuration: self.contentViewFadeInOutAnimationDuration, animations: {
+            self.contentView.alpha = 1.0
+        })
+    }
 	
 	@objc func updateLanguage() {}
 }
