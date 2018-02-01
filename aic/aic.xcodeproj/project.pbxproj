@@ -94,7 +94,6 @@
 		294C0B69201A770E00F2ABB1 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B64201A770D00F2ABB1 /* MapView.swift */; };
 		294C0B6A201A770E00F2ABB1 /* MapFloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B65201A770D00F2ABB1 /* MapFloorModel.swift */; };
 		294C0B6B201A770E00F2ABB1 /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B66201A770E00F2ABB1 /* MapState.swift */; };
-		2953FA63201BE26200C4A7A6 /* EnableLocationMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2953FA62201BE26200C4A7A6 /* EnableLocationMessageViewController.swift */; };
 		295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */; };
 		295AC0931FDF8FBA009A0FAF /* MuseumInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */; };
 		295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */; };
@@ -143,6 +142,7 @@
 		29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */; };
 		29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */; };
 		29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */; };
+		29CDAF96202225D500D1A30D /* Messages.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29CDAF98202225D500D1A30D /* Messages.strings */; };
 		29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */; };
 		29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29D6921B1FE0E92E00B61286 /* SeeAllExhibitionCell.xib */; };
 		29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */; };
@@ -244,7 +244,7 @@
 		E4F82F6D1CA45F3400E4224B /* _SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F6A1CA45F3400E4224B /* _SectionView.swift */; };
 		E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */; };
 		E4F82F721CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F711CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift */; };
-		E4FFC6EC1D00B7FD0082818D /* AICMessageLargeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FFC6EB1D00B7FD0082818D /* AICMessageLargeModel.swift */; };
+		E4FFC6EC1D00B7FD0082818D /* AICMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */; };
 		F23801B72DA3B2C5C5B13960 /* Pods_aicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A42DED784747728FEECA5D /* Pods_aicTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -358,7 +358,6 @@
 		294C0B64201A770D00F2ABB1 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		294C0B65201A770D00F2ABB1 /* MapFloorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFloorModel.swift; sourceTree = "<group>"; };
 		294C0B66201A770E00F2ABB1 /* MapState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
-		2953FA62201BE26200C4A7A6 /* EnableLocationMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableLocationMessageViewController.swift; sourceTree = "<group>"; };
 		295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationBar.swift; sourceTree = "<group>"; };
 		295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumInfoViewController.swift; sourceTree = "<group>"; };
 		295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -417,6 +416,9 @@
 		29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFooterView.swift; sourceTree = "<group>"; };
 		29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMemberPromptView.swift; sourceTree = "<group>"; };
 		29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTourCell.swift; sourceTree = "<group>"; };
+		29CDAF97202225D500D1A30D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Messages.strings; sourceTree = "<group>"; };
+		29CDAF99202225DC00D1A30D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Messages.strings; sourceTree = "<group>"; };
+		29CDAF9A202225DD00D1A30D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Messages.strings"; sourceTree = "<group>"; };
 		29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllExhibitionCell.swift; sourceTree = "<group>"; };
 		29D6921B1FE0E92E00B61286 /* SeeAllExhibitionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllExhibitionCell.xib; sourceTree = "<group>"; };
 		29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedTextView.swift; sourceTree = "<group>"; };
@@ -536,7 +538,7 @@
 		E4F82F6A1CA45F3400E4224B /* _SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _SectionView.swift; sourceTree = "<group>"; };
 		E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
 		E4F82F711CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursStopsDistanceView.swift; sourceTree = "<group>"; };
-		E4FFC6EB1D00B7FD0082818D /* AICMessageLargeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageLargeModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EA1BA6C00D1BB7B67F144190 /* Pods-aic.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aic.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aic/Pods-aic.appstore.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -762,6 +764,7 @@
 				29872A03201684CD00BB3B6A /* Info.strings */,
 				2968F68D2012942800638153 /* LanguageSettings.strings */,
 				294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */,
+				29CDAF98202225D500D1A30D /* Messages.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -977,7 +980,6 @@
 				2968F67D201272EA00638153 /* AICTransparentButton.swift */,
 				E4F518FA1D2586B0004BFB44 /* AICImageView.swift */,
 				29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */,
-				2968F67820125B5700638153 /* MessageViewController.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
 				E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */,
 				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
@@ -1004,7 +1006,7 @@
 				E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */,
 				E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */,
 				0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */,
-				E4FFC6EB1D00B7FD0082818D /* AICMessageLargeModel.swift */,
+				E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */,
 				E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */,
 				2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */,
 				E425B3CD1C97649300A19F6F /* AICObjectModel.swift */,
@@ -1145,7 +1147,7 @@
 		E433BAD11CFDD65B0086F2ED /* Messages */ = {
 			isa = PBXGroup;
 			children = (
-				2953FA62201BE26200C4A7A6 /* EnableLocationMessageViewController.swift */,
+				2968F67820125B5700638153 /* MessageViewController.swift */,
 			);
 			name = Messages;
 			path = "aic/ViewControllers+Views/Messages";
@@ -1402,6 +1404,7 @@
 				293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */,
 				293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */,
 				293D009C1FA7C80D00BF2C26 /* SourceSansPro-BlackItalic.ttf in Resources */,
+				29CDAF96202225D500D1A30D /* Messages.strings in Resources */,
 				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
 				2968F6932012B33000638153 /* TabMenu.strings in Resources */,
 				29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */,
@@ -1739,8 +1742,7 @@
 				E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */,
 				E425B3CE1C97649300A19F6F /* AICObjectModel.swift in Sources */,
 				294C0B55201A76F700F2ABB1 /* MapTextAnnotation.swift in Sources */,
-				E4FFC6EC1D00B7FD0082818D /* AICMessageLargeModel.swift in Sources */,
-				2953FA63201BE26200C4A7A6 /* EnableLocationMessageViewController.swift in Sources */,
+				E4FFC6EC1D00B7FD0082818D /* AICMessageModel.swift in Sources */,
 				E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */,
 				E4F7AF951CFB64DE00524F87 /* AICMapModel.swift in Sources */,
 				E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */,
@@ -1886,6 +1888,16 @@
 				29872A05201684D300BB3B6A /* zh-Hans */,
 			);
 			name = Info.strings;
+			sourceTree = "<group>";
+		};
+		29CDAF98202225D500D1A30D /* Messages.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29CDAF97202225D500D1A30D /* en */,
+				29CDAF99202225DC00D1A30D /* es */,
+				29CDAF9A202225DD00D1A30D /* zh-Hans */,
+			);
+			name = Messages.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

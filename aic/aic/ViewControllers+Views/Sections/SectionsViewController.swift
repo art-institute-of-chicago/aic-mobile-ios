@@ -47,7 +47,7 @@ class SectionsViewController : UIViewController {
     fileprivate var leaveCurrentTourMessageView:UIView? = nil
 
     //fileprivate var enableLocationMessageView:UIView? = nil
-    fileprivate var headphonesMessageView:UIView? = nil
+    fileprivate var headphonesMessageView: MessageViewController? = nil
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
@@ -370,24 +370,28 @@ class SectionsViewController : UIViewController {
         let showHeadphonesMessage = defaults.bool(forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
         
         if showHeadphonesMessage {
-            let headphonesMessageView = UIView()
-//            headphonesMessageView.delegate = self
+            headphonesMessageView = MessageViewController(message: Common.Messages.useHeadphones)
+            headphonesMessageView!.delegate = self
 			
-//            self.headphonesMessageView = headphonesMessageView
-            view.addSubview(headphonesMessageView)
+            // Modal presentation style
+            headphonesMessageView!.definesPresentationContext = true
+            headphonesMessageView!.providesPresentationContextTransitionStyle = true
+            headphonesMessageView!.modalPresentationStyle = .overFullScreen
+            headphonesMessageView!.modalTransitionStyle = .crossDissolve
+            
+            self.present(headphonesMessageView!, animated: true, completion: nil)
         }
     }
     
     fileprivate func hideHeadphonesMessage() {
-        if let headphonesMessageView = self.headphonesMessageView {
+        if let messageView = headphonesMessageView {
             // Update user defaults
             let defaults = UserDefaults.standard
             defaults.set(false, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
             defaults.synchronize()
             
-            // Get rid of view
-            headphonesMessageView.removeFromSuperview()
-            self.headphonesMessageView = nil
+            messageView.dismiss(animated: true, completion: nil)
+            headphonesMessageView = nil
         }
     }
 	
@@ -532,7 +536,7 @@ extension SectionsViewController : MessageViewControllerDelegate {
             //startLocationManager()
         }*/
         
-        else if messageVC.view == headphonesMessageView {
+        else if messageVC == headphonesMessageView {
             hideHeadphonesMessage()
         }
         

@@ -18,7 +18,7 @@ class MapNavigationController : SectionNavigationController {
 	let mapVC: MapViewController = MapViewController()
 	
 	let locationManager: CLLocationManager = CLLocationManager()
-	fileprivate var enableLocationMessageView: EnableLocationMessageViewController? = nil
+	fileprivate var enableLocationMessageView: MessageViewController? = nil
 	
 	weak var sectionDelegate: MapNavigationControllerDelegate? = nil
 	
@@ -59,18 +59,18 @@ class MapNavigationController : SectionNavigationController {
 		let showEnableLocationMessageValue = defaults.bool(forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
 		
 		// If we do show it
-		if showEnableLocationMessageValue {
+        if showEnableLocationMessageValue {
 			showEnableLocationMessage()
-		} else {  // Otherwise try to start the location manager
-			// Init location manager
-			locationManager.requestWhenInUseAuthorization()
-			locationManager.startUpdatingLocation()
-			locationManager.startUpdatingHeading()
-		}
+        } else {  // Otherwise try to start the location manager
+            // Init location manager
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+            locationManager.startUpdatingHeading()
+        }
 	}
 	
 	fileprivate func showEnableLocationMessage() {
-		enableLocationMessageView = EnableLocationMessageViewController()
+        enableLocationMessageView = MessageViewController(message: Common.Messages.enableLocation)
 		enableLocationMessageView!.delegate = self
         
         // Modal presentation style
@@ -100,7 +100,7 @@ extension MapNavigationController : MessageViewControllerDelegate {
 	func messageViewActionSelected(messageVC: MessageViewController) {
 		if messageVC == enableLocationMessageView {
 			hideEnableLocationMessage()
-			//startLocationManager()
+			startLocationManager()
 		}
 	}
 	

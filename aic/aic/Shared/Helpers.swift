@@ -6,9 +6,8 @@
 import Foundation
 import UIKit
 
-/**
- Math
-*/
+// MARK: Math
+
 func clamp(val: Double, minVal: Double, maxVal: Double) -> Double {
     return max(min(maxVal, val), minVal)
 }
@@ -32,6 +31,7 @@ func convertToHoursMinutesSeconds(seconds : Int) -> (Int, Int, Int) {
     return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
 }
 
+// MARK: Data Structs
 /**
  Wrapper template for passing structs as NSObjects so they can work with dictionaries
  */
@@ -41,6 +41,8 @@ class Wrapper<T> {
         wrappedValue = theValue
     }
 }
+
+// MARK: Text
 
 /**
  Convenience method to measure text without having to create a UILabel
@@ -94,9 +96,10 @@ func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFl
     return attrString
 }
 
-/**
- View with a blur effect, should be uniform in app
-*/
+// MARK: Visual Effects
+
+
+/// View with a blur effect, should be uniform in app
 func getBlurEffectView(frame:CGRect) -> UIVisualEffectView {
     let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
     let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -106,7 +109,7 @@ func getBlurEffectView(frame:CGRect) -> UIVisualEffectView {
     return blurEffectView
 }
 
-// Great function to get the splash screen dynamically based on device size
+/// Great function to get the splash screen dynamically based on device size
 // from http://stackoverflow.com/a/29792747
 func splashImage(forOrientation orientation: UIInterfaceOrientation, screenSize: CGSize) -> String? {
     var viewSize        = screenSize
@@ -134,3 +137,19 @@ func splashImage(forOrientation orientation: UIInterfaceOrientation, screenSize:
     
     return nil
 }
+
+/// Add Parallex effect to UIView
+func addParallexEffect(toView view: UIView, left: CGFloat, right: CGFloat, top: CGFloat, bottom: CGFloat) {
+    let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+    horizontal.minimumRelativeValue = left
+    horizontal.maximumRelativeValue = right
+    
+    let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+    vertical.minimumRelativeValue = top
+    vertical.maximumRelativeValue = bottom
+    
+    let group = UIMotionEffectGroup()
+    group.motionEffects = [horizontal, vertical]
+    view.addMotionEffect(group)
+}
+

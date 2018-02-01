@@ -16,9 +16,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Show Instructions</string>
+			<string>Show Language Selection</string>
 			<key>Key</key>
-			<string>AICShowInstructions</string>
+			<string>AICShowLanguageSelection</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

@@ -9,9 +9,9 @@
 import UIKit
 
 class SectionNavigationBar : UIView {
-	let backdropImage:UIImageView = UIImageView()
+	let backdropImageView:UIImageView = UIImageView()
 	let backButton: UIButton = UIButton()
-	let iconImage:UIImageView = UIImageView()
+	let iconImageView:UIImageView = UIImageView()
 	let titleLabel:UILabel = UILabel()
 	let descriptionLabel:UILabel = UILabel()
 	
@@ -39,14 +39,16 @@ class SectionNavigationBar : UIView {
 		self.backgroundColor = section.color
 		
 		if let _ = section.background {
-			self.backdropImage.image = section.background
+			self.backdropImageView.image = section.background
 		}
 		
 		backButton.setImage(#imageLiteral(resourceName: "backButton"), for: .normal)
 		backButton.contentEdgeInsets = backButtonContentInsets
 		setBackButtonHidden(true)
 		
-		iconImage.image = section.icon
+		iconImageView.image = section.icon
+        
+        addParallexEffect(toView: backdropImageView, left: 0, right: 0, top: -30, bottom: 30)
 		
 		titleLabel.numberOfLines = 0
 		if section.nid == Section.home.rawValue {
@@ -83,8 +85,8 @@ class SectionNavigationBar : UIView {
 		}
 		
 		// Add Subviews
-		addSubview(backdropImage)
-		addSubview(iconImage)
+		addSubview(backdropImageView)
+		addSubview(iconImageView)
 		addSubview(titleLabel)
 		if section.nid != Section.home.rawValue {
 			addSubview(descriptionLabel)
@@ -102,8 +104,8 @@ class SectionNavigationBar : UIView {
 	func collapse() {
 		UIView.animate(withDuration: 0.5) {
 			self.frame.size.height = Common.Layout.navigationBarMinimizedHeight
-			self.backdropImage.alpha = 0.0
-			self.iconImage.alpha = 0.0
+			self.backdropImageView.alpha = 0.0
+			self.iconImageView.alpha = 0.0
 			self.descriptionLabel.alpha = 0.0
 			self.titleLabel.transform = CGAffineTransform(scaleX: CGFloat(self.titleMinimumScale), y: CGFloat(self.titleMinimumScale))
 			self.layoutIfNeeded()
@@ -124,8 +126,8 @@ class SectionNavigationBar : UIView {
 		titleScale = clamp(val: titleScale, minVal: titleMinimumScale, maxVal: 1.0)
 		
 		self.frame.size.height = frameHeight
-		self.backdropImage.alpha = alphaVal
-		self.iconImage.alpha = alphaVal
+		self.backdropImageView.alpha = alphaVal
+		self.iconImageView.alpha = alphaVal
 		self.descriptionLabel.alpha = alphaVal
 		self.titleLabel.transform = CGAffineTransform(scaleX: titleScale, y: titleScale)
 	}
@@ -134,17 +136,17 @@ class SectionNavigationBar : UIView {
 		backButton.autoPinEdge(.bottom, to: .top, of: self, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
 		backButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: backButtonLeftMargin)
 		
-		if let _ = self.backdropImage.image {
-			backdropImage.autoPinEdge(.top, to: .top, of: self)
-			backdropImage.autoPinEdge(.leading, to: .leading, of: self)
-			backdropImage.autoPinEdge(.trailing, to: .trailing, of: self)
-			backdropImage.autoMatch(.height, to: .width, of: backdropImage, withMultiplier: backdropImage.image!.size.height / backdropImage.image!.size.width)
+		if let _ = self.backdropImageView.image {
+			backdropImageView.autoPinEdge(.top, to: .top, of: self)
+			backdropImageView.autoPinEdge(.leading, to: .leading, of: self)
+			backdropImageView.autoPinEdge(.trailing, to: .trailing, of: self)
+			backdropImageView.autoMatch(.height, to: .width, of: backdropImageView, withMultiplier: backdropImageView.image!.size.height / backdropImageView.image!.size.width)
 		}
 		
-		iconImage.autoAlignAxis(.vertical, toSameAxisOf: self)
-		iconImage.autoPinEdge(.bottom, to: .top, of: titleLabel, withOffset: -iconBottomMargin)
-		iconImage.autoSetDimension(.width, toSize: iconImage.image!.size.width)
-		iconImage.autoSetDimension(.height, toSize: iconImage.image!.size.height)
+		iconImageView.autoAlignAxis(.vertical, toSameAxisOf: self)
+		iconImageView.autoPinEdge(.bottom, to: .top, of: titleLabel, withOffset: -iconBottomMargin)
+		iconImageView.autoSetDimension(.width, toSize: iconImageView.image!.size.width)
+		iconImageView.autoSetDimension(.height, toSize: iconImageView.image!.size.height)
 		
 		NSLayoutConstraint.autoSetPriority(.defaultLow) {
 			titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: titleTopMargin)

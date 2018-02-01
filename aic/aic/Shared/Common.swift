@@ -118,7 +118,7 @@ struct Common {
         static let rentalRestartMinuteUserDefaultKey = "AICRentalRestartMinute"
         static let rentalRestartDaysFromNowUserDefaultKey = "AICRentalRestartDaysFromNow"
 
-        static let showInstructionsUserDefaultsKey = "AICShowInstructions"
+        static let showLanguageSelectionUserDefaultsKey = "AICShowLanguageSelection"
         static let showHeadphonesUserDefaultsKey = "AICShowHeadphones"
         static let showEnableLocationUserDefaultsKey = "AICShowEnableLocation"
 
@@ -261,18 +261,25 @@ struct Common {
         )
 
         // Large
-        static let useHeadphones = AICMessageLargeModel(iconImage: #imageLiteral(resourceName: "messageHeadphones"),
-                                                        title: "Listen in.",
-                                                        message: "Use your headphones to listen.\n\nDon’t have headphones?\nHold the phone close to your ear.",
-                                                        actionButtonTitle: "OK",
+        static let useHeadphones = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageListenIn"),
+                                                        title: "Message Headphones Title",
+                                                        message: "Message Headphones Text",
+                                                        actionButtonTitle: "Message Headphones Action Button Title",
                                                         cancelButtonTitle: nil
         )
+        
+        static let leavingTour = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageListenIn"),
+                                                 title: "Message Leaving Tour Title",
+                                                 message: "Message Leaving Tour Text",
+                                                 actionButtonTitle: "Message Leaving Tour Action Button Title",
+                                                 cancelButtonTitle: "Message Leaving Tour Cancel Button Title"
+        )
 
-        static let enableLocation = AICMessageLargeModel(iconImage: #imageLiteral(resourceName: "messageLocation"),
-                                                         title: "Where are you?",
-                                                         message: "We’d like to use your location to help you navigate the museum.",
-                                                         actionButtonTitle: "OK",
-                                                         cancelButtonTitle: "Not Now"
+        static let enableLocation = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageMap"),
+                                                         title: "Message Location Title",
+                                                         message: "Message Location Text",
+                                                         actionButtonTitle: "Message Location Action Button Title",
+                                                         cancelButtonTitle: "Message Location Cancel Button Title"
         )
     }
 

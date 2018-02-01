@@ -1,0 +1,29 @@
+/* 
+  Messages.strings
+  aic
+
+  Created by Filippo Vanucci on 1/31/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Message Headphones Title" = "Missing Translation (Spanish)";
+
+"Message Headphones Text" = "Missing Translation (Spanish)";
+
+"Message Headphones Action Button Title" = "Missing Translation (Spanish)";
+
+"Message Leaving Tour Title" = "Missing Translation (Spanish)";
+
+"Message Leaving Tour Text" = "Missing Translation (Spanish)";
+
+"Message Leaving Tour Action Button Title" = "Missing Translation (Spanish)";
+
+"Message Leaving Tour Cancel Button Title" = "Missing Translation (Spanish)";
+
+"Message Location Title" = "¿Dónde está usted?";
+
+"Message Location Text" = "Nos gustaría usar su ubicación para ayudarle a navegar por el museo.";
+
+"Message Location Action Button Title" = "Missing Translation (Spanish)";
+
+"Message Location Cancel Button Title" = "Missing Translation (Spanish)";

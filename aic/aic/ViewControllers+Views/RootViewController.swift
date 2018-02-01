@@ -18,12 +18,12 @@ class RootViewController: UIViewController {
         }
     }
     
-    var loadingVC:LoadingViewController? = nil
+    var loadingVC: LoadingViewController? = nil
 //    var instructionsVC:InstructionsPageViewController? = nil
 	var languageVC: LanguageSelectionViewController? = nil
-	var sectionsVC:SectionsViewController? = nil
+	var sectionsVC: SectionsViewController? = nil
     
-    var shouldShowInstructions: Bool = false
+    var shouldShowLanguageSelection: Bool = false
 	var loadingFadeOutAnimationStarted: Bool = false
     
     override var prefersStatusBarHidden: Bool {
@@ -42,7 +42,7 @@ class RootViewController: UIViewController {
         
         // Check for first launch
         let defaults = UserDefaults.standard
-        shouldShowInstructions = defaults.bool(forKey: Common.UserDefaults.showInstructionsUserDefaultsKey)
+        shouldShowLanguageSelection = defaults.bool(forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
         
         // Set delegates
         AppDataManager.sharedInstance.delegate = self
@@ -63,7 +63,7 @@ class RootViewController: UIViewController {
     // Register the app defaults
     private func registerSettingsBundle(){
         let defaults = UserDefaults.standard
-        let appDefaults = [Common.UserDefaults.showInstructionsUserDefaultsKey: true,
+        let appDefaults = [Common.UserDefaults.showLanguageSelectionUserDefaultsKey: true,
                            Common.UserDefaults.showHeadphonesUserDefaultsKey:true,
                            Common.UserDefaults.showEnableLocationUserDefaultsKey:true]
         
@@ -72,7 +72,7 @@ class RootViewController: UIViewController {
         
         // Reset defaults if testing instructions
         if Common.Testing.alwaysShowInstructions {
-            defaults.set(true, forKey: Common.UserDefaults.showInstructionsUserDefaultsKey)
+            defaults.set(true, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
             defaults.set(true, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
             defaults.set(true, forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
             defaults.synchronize()
@@ -161,16 +161,14 @@ extension RootViewController : AppDataManagerDelegate{
             self.loadingVC?.updateProgress(forPercentComplete: pct)
             }, completion:  { (value:Bool) in
                 if pct == 1.0 {
-					// TODO: re-enable language when 2.0 language are ready
-					//        if shouldShowInstructions {
-					//            self.mode = .language
-					//        } else {
-					//            self.mode = .mainApp
-					//        }
-					
-					self.loadingVC?.hideProgressBar()
-					
-					self.mode = .language
+                    self.loadingVC?.hideProgressBar()
+                    
+                    if self.shouldShowLanguageSelection {
+                        self.mode = .language
+                    } else {
+                        self.loadingVC?.loadIntroVideoB()
+                        self.loadingVC?.playIntroVideoB()
+                    }
                 }
             }
         )
@@ -219,29 +217,12 @@ extension RootViewController : LoadingViewControllerDelegate {
 	}
 }
 
-// Instructions Delegate
-extension RootViewController : IntroPageViewControllerDelegate {
-    func introPageGetStartedButtonTapped() {
-        // Record that we've got through the intro
-        let defaults = UserDefaults.standard
-        defaults.set(false, forKey: Common.UserDefaults.showInstructionsUserDefaultsKey)
-        defaults.synchronize()
-        
-        // Start the app
-        //self.mode = .mainApp
-		languageVC?.view.removeFromSuperview()
-		languageVC = nil
-		
-		loadingVC?.playIntroVideoB()
-    }
-}
-
 // Language Selection Delegate
 extension RootViewController : LanguageSelectionViewControllerDelegate {
 	func languageSelected(language: Common.Language) {
 		// Record that we've got through the intro
 		let defaults = UserDefaults.standard
-		defaults.set(false, forKey: Common.UserDefaults.showInstructionsUserDefaultsKey)
+		defaults.set(false, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
 		defaults.synchronize()
 		
 		// Start the app
