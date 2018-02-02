@@ -12,7 +12,7 @@ protocol CardNavigationControllerDelegate : class {
     func cardDidHide(cardVC: CardNavigationController)
 }
 
-class NewCardNavigationController : UINavigationController {
+class CardNavigationController : UINavigationController {
     enum State {
         case hidden
         case minimized
@@ -20,12 +20,17 @@ class NewCardNavigationController : UINavigationController {
         case fullscreen
     }
     var currentState: State = .hidden
+    var openState: State = .fullscreen
+    var closedState: State = .hidden
     
     weak var cardDelegate: CardNavigationControllerDelegate? = nil
     
     // Root view controller
     // Add your main ViewController as a subview of rootVC
     let rootVC: UIViewController = UIViewController()
+    
+    // Card Pan Gesture Recognizer to show/hide/minimize
+    let cardPanGesture: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "cardDownArrow"))
     
@@ -46,13 +51,20 @@ class NewCardNavigationController : UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.isHidden = true
         self.view.frame.origin = CGPoint(x: 0.0, y: positionForState[.hidden]!)
-        
         self.view.backgroundColor = .aicDarkGrayColor
+        
+        // Hide Navigation Bar
+        self.navigationBar.isTranslucent = false
+        self.setNavigationBarHidden(true, animated: false)
         
         // Add subviews
         self.view.addSubview(downArrowImageView)
+        
+        // Arrow constraints
+        downArrowImageView.autoSetDimensions(to: downArrowImageView.image!.size)
+        downArrowImageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: downArrowTopMargin)
+        downArrowImageView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
         
         // Root view controller
         rootVC.view.backgroundColor = .clear
@@ -62,20 +74,164 @@ class NewCardNavigationController : UINavigationController {
         self.view.layoutIfNeeded()
         
         // Pan Gesture
-//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(recognizer:)))
-//        self.view.addGestureRecognizer(panGesture)
-        
-        // NavigationController Delegate
-        //self.delegate = self
+        cardPanGesture.addTarget(self, action: #selector(handlePanGesture(recognizer:)))
+        cardPanGesture.delegate = self
+        self.view.addGestureRecognizer(cardPanGesture)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Important: this is the magic that makes gestures work on this view
+        self.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.resignFirstResponder()
+    }
+    
+    // MARK: Position
+    
+    fileprivate func setCardPosition(_ positionY: CGFloat) {
+        let yPosition = clamp(val: positionY, minVal: positionForState[.fullscreen]!, maxVal: positionForState[.hidden]!)
+        self.view.frame.origin = CGPoint(x: 0, y: yPosition)
+    }
+    
+    // MARK: Show/Hide
+    
+    func showFullscreen() {
+        cardWillShowFullscreen()
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+            self.setCardPosition(self.positionForState[.fullscreen]!)
+            self.view.layer.cornerRadius = 10
+        }, completion: { (completed) in
+            self.currentState = .fullscreen
+            self.cardDidShowFullscreen()
+        })
+    }
+    
+    func showMinimized() {
+        cardWillShowMinimized()
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+            self.setCardPosition(self.positionForState[.minimized]!)
+            self.view.layer.cornerRadius = 10
+        }, completion: { (completed) in
+            self.currentState = .minimized
+            self.cardDidShowMinimized()
+        })
+    }
+    
+    func showMiniPlayer() {
+        cardWillShowMiniPlayer()
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+            self.setCardPosition(self.positionForState[.mini_player]!)
+            self.view.layer.cornerRadius = 0
+        }, completion: { (completed) in
+            self.currentState = .mini_player
+            self.cardDidShowMiniPlayer()
+        })
+    }
+    
+    func hide() {
+        cardWillHide()
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+            self.setCardPosition(self.positionForState[.hidden]!)
+            self.view.layer.cornerRadius = 0
+        }, completion: { (completed) in
+            self.currentState = .hidden
+            self.cardDidHide()
+            self.cardDelegate?.cardDidHide(cardVC: self)
+        })
+    }
+    
+    // MARK: Show/Hide Animation Callbacks
+    
+    func cardWillShowFullscreen() {}
+    
+    func cardDidShowFullscreen() {}
+    
+    func cardWillShowMinimized() {}
+    
+    func cardDidShowMinimized() {}
+    
+    func cardWillShowMiniPlayer() {}
+    
+    func cardDidShowMiniPlayer() {}
+    
+    func cardWillHide() {}
+    
+    func cardDidHide() {}
 }
 
-// MARK: UINavigationControllerDelegate
+// MARK: Gesture Handlers
 
-//extension NewCardNavigationController : UINavigationControllerDelegate {
-//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        slideAnimator.isAnimatingIn = (operation == .push)
-//        return slideAnimator
-//    }
-//}
+extension CardNavigationController : UIGestureRecognizerDelegate {
+    @objc internal func handlePanGesture(recognizer: UIPanGestureRecognizer) {
+        guard let view = recognizer.view else {
+            return
+        }
+        
+        let viewSnapRegion: CGFloat = 0.25
+        
+        // Calculate the new position
+        let translation = recognizer.translation(in: view)
+        let newY: CGFloat = view.frame.origin.y + translation.y
+        
+        // If we've ended, snap to top or bottom
+        if recognizer.state == UIGestureRecognizerState.ended {
+            // Calculate whee we are between top and bottom
+            let pctInScreenArea: CGFloat = CGFloat(map(val: Double(newY), oldRange1: Double(positionForState[openState]!), oldRange2: Double(positionForState[closedState]!), newRange1: 0.0, newRange2: 1.0))
+            
+            var snapToState: State = .fullscreen
+            
+            // If we're close to top or bottom just snap
+            if pctInScreenArea > 1.0 - viewSnapRegion {
+                snapToState = closedState
+            }
+            else if pctInScreenArea < viewSnapRegion {
+                snapToState = openState
+            }
+            // Otherwise, snap based on velocity (direction)
+            else {
+                if(recognizer.velocity(in: view).y > 0) {
+                    snapToState = closedState
+                } else {
+                    snapToState = openState
+                }
+            }
+            
+            // Snap
+            if snapToState == .hidden {
+                hide()
+            }
+            else if snapToState == .mini_player {
+                showMiniPlayer()
+            }
+            else if snapToState == .minimized {
+                showMinimized()
+            }
+            else if snapToState == .fullscreen {
+                showFullscreen()
+            }
+        }
+        else {
+            setCardPosition(newY)
+        }
+        
+        // Clean up gesture
+        recognizer.setTranslation(CGPoint.zero, in: view)
+    }
+    
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view is UISlider {
+            return false
+        }
+        return true
+    }
+    
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
 

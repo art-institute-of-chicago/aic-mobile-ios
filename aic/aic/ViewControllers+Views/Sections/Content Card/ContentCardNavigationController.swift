@@ -52,14 +52,17 @@ class ContentCardNavigationController : CardNavigationController {
         tableVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
         tableViewHeightConstraint = tableVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight - contentTopMargin)
 	}
-	
-	override func cardWillShowFullscreen() {
-	}
-	
-	override func cardDidShowFullscreen() {
-	}
-	
-	override func cardDidHide() {
-		self.cardDelegate?.cardDidHide(cardVC: self)
-	}
 }
+
+// Pan Gesture
+extension ContentCardNavigationController {
+    override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == cardPanGesture {
+            if tableVC.tableView.contentOffset.y <= 0 {
+                return true
+            }
+        }
+        return false
+    }
+}
+

@@ -14,6 +14,8 @@ class SearchNavigationController : CardNavigationController {
 	let searchButton: UIButton = UIButton()
 	let dividerLine: UIView = UIView()
 	let resultsVC: ResultsTableViewController = ResultsTableViewController()
+    
+    let slideAnimator: SearchSlideAnimator = SearchSlideAnimator()
 	
 	let searchResultsTopMargin: CGFloat = 80
 	
@@ -83,7 +85,8 @@ class SearchNavigationController : CardNavigationController {
         
         createViewConstraints()
         
-        //self.present(resultsVC, animated: false, completion: nil)
+        // NavigationController Delegate
+        self.delegate = self
 	}
 	
 	func createViewConstraints() {
@@ -126,10 +129,6 @@ class SearchNavigationController : CardNavigationController {
 	override func cardDidShowFullscreen() {
 		resultsVC.view.setNeedsLayout()
 		resultsVC.view.layoutIfNeeded()
-	}
-	
-	override func cardDidHide() {
-		self.cardDelegate?.cardDidHide(cardVC: self)
 	}
 	
 	override func handlePanGesture(recognizer: UIPanGestureRecognizer) {
@@ -236,6 +235,7 @@ extension SearchNavigationController : UISearchBarDelegate {
 }
 
 // MARK: SearchDataManagerDelegate
+
 extension SearchNavigationController : SearchDataManagerDelegate {
 	func searchDataDidFinishLoading(autocompleteStrings: [String]) {
 		resultsVC.autocompleteStringItems = autocompleteStrings
@@ -265,6 +265,8 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 		
 	}
 }
+
+// MARK: ResultsTableViewControllerDelegate
 
 extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	func resultsTableViewWillScroll() {
@@ -314,5 +316,14 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	func resultsTableDidSelect(filter: Common.Search.Filter) {
 		resultsVC.filter = filter
 	}
+}
+
+// MARK: UINavigationControllerDelegate
+
+extension SearchNavigationController : UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        slideAnimator.isAnimatingIn = (operation == .push)
+        return slideAnimator
+    }
 }
 

@@ -31,8 +31,7 @@ class TourTableViewController : UITableViewController {
 		self.tableView.separatorStyle = .none
 		self.tableView.rowHeight = UITableViewAutomaticDimension // Necessary for AutoLayout of cells
 		self.tableView.estimatedRowHeight = 200
-		self.tableView.alwaysBounceVertical = false
-		//self.tableView.bounces = false
+        self.tableView.showsVerticalScrollIndicator = false
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "TourContentCell", bundle: Bundle.main), forCellReuseIdentifier: TourContentCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
@@ -86,6 +85,17 @@ extension TourTableViewController {
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 80
 	}
+    
+}
+
+// MARK: Scroll Delegate
+extension TourTableViewController {
+    /// Avoid bouncing at the top of the TableView
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y <= 0) {
+            scrollView.contentOffset = CGPoint.zero
+        }
+    }
 }
 
 // MARK: Interaction
