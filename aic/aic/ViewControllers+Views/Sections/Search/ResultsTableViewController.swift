@@ -60,6 +60,8 @@ class ResultsTableViewController : UITableViewController {
 		self.tableView.register(ResultsFilterMenuView.self, forHeaderFooterViewReuseIdentifier: ResultsFilterMenuView.reuseIdentifier)
 		self.tableView.register(ResultsSectionTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsSectionTitleView.reuseIdentifier)
 		self.tableView.register(ResultsContentTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsContentTitleView.reuseIdentifier)
+        
+        self.filter = .empty
 	}
 }
 

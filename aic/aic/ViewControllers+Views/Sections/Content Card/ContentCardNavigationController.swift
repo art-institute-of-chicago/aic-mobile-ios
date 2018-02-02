@@ -9,28 +9,26 @@
 import UIKit
 
 class ContentCardNavigationController : CardNavigationController {
-	let tableVC: UITableViewController
+	var tableVC: UITableViewController
 	
 	var tableViewHeightConstraint: NSLayoutConstraint? = nil
-	
-	let searchContentTopMargin: CGFloat = 30
 	
 	// Tour Card
 	init(tour: AICTourModel) {
 		tableVC = TourTableViewController(tour: tour)
-		super.init()
+		super.init(nibName: nil, bundle: nil)
 	}
 	
 	// Exhibition Card
 	init(exhibition: AICExhibitionModel) {
 		tableVC = ExhibitionTableViewController(exhibition: exhibition)
-		super.init()
+		super.init(nibName: nil, bundle: nil)
 	}
 	
 	// Event Card
 	init(event: AICEventModel) {
 		tableVC = EventTableViewController(event: event)
-		super.init()
+        super.init(nibName: nil, bundle: nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -39,20 +37,20 @@ class ContentCardNavigationController : CardNavigationController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		// Add subviews
-		tableVC.willMove(toParentViewController: self)
-		self.view.addSubview(tableVC.view)
-		tableVC.didMove(toParentViewController: self)
+        
+        // Add main VC as subview to rootVC
+        tableVC.willMove(toParentViewController: rootVC)
+        rootVC.view.addSubview(tableVC.view)
+        tableVC.didMove(toParentViewController: rootVC)
 		
 		createViewConstraints()
 	}
 	
 	func createViewConstraints() {
-		tableVC.view.autoPinEdge(.top, to: .top, of: self.view, withOffset: searchContentTopMargin)
-		tableVC.view.autoPinEdge(.leading, to: .leading, of: self.view)
-		tableVC.view.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		tableViewHeightConstraint = tableVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight - searchContentTopMargin)
+        tableVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: contentTopMargin)
+        tableVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
+        tableVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
+        tableViewHeightConstraint = tableVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight - contentTopMargin)
 	}
 	
 	override func cardWillShowFullscreen() {

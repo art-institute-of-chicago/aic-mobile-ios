@@ -21,8 +21,8 @@ class SearchNavigationController : CardNavigationController {
 	var searchBarActiveLeading: CGFloat = 2
 	var searchBarInactiveLeading: CGFloat = 32
 	
-	override init() {
-		super.init()
+	init() {
+        super.init(nibName: nil, bundle: nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -67,17 +67,23 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.searchDelegate = self
 		
 		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
-		self.rootVC.view.clipsToBounds = false
-		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
+		//self.rootVC.view.clipsToBounds = false
+//        resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardFullscreenPositionY - searchResultsTopMargin - Common.Layout.tabBarHeight)
 		
 		// Add subviews
 		self.view.addSubview(searchBar)
 		self.view.addSubview(searchButton)
 		self.view.addSubview(backButton)
 		self.view.addSubview(dividerLine)
-		self.rootVC.view.addSubview(resultsVC.view)
-		
-		createViewConstraints()
+        
+        // Add main VC as subview to rootVC
+        resultsVC.willMove(toParentViewController: rootVC)
+        rootVC.view.addSubview(resultsVC.view)
+        resultsVC.didMove(toParentViewController: rootVC)
+        
+        createViewConstraints()
+        
+        //self.present(resultsVC, animated: false, completion: nil)
 	}
 	
 	func createViewConstraints() {
@@ -98,10 +104,10 @@ class SearchNavigationController : CardNavigationController {
 		dividerLine.autoSetDimension(.height, toSize: 1)
 
 		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
-//		resultsVC.view.autoPinEdge(.top, to: .top, of: self.rootVC.view, withOffset: searchResultsTopMargin)
-//		resultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
-//		resultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-//		resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view)
+        resultsVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: searchResultsTopMargin)
+        resultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
+        resultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
+        resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view, withOffset: -Common.Layout.tabBarHeight)
 	}
 	
 	override func cardWillShowFullscreen() {
@@ -113,13 +119,11 @@ class SearchNavigationController : CardNavigationController {
 			}
 		}
 		
-		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
 		resultsVC.view.setNeedsLayout()
 		resultsVC.view.layoutIfNeeded()
 	}
 	
 	override func cardDidShowFullscreen() {
-		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
 		resultsVC.view.setNeedsLayout()
 		resultsVC.view.layoutIfNeeded()
 	}
@@ -178,7 +182,7 @@ class SearchNavigationController : CardNavigationController {
 		
 		// TEMPORARY FIX!
 		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
-		resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardTopPosition - searchResultsTopMargin - Common.Layout.tabBarHeight)
+//        resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardFullscreenPositionY - searchResultsTopMargin - Common.Layout.tabBarHeight)
 	}
 	
 	func showBackButton() {

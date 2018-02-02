@@ -33,9 +33,9 @@ class ArtworkTableViewController : UITableViewController {
 		self.tableView.estimatedRowHeight = 200
 		self.tableView.alwaysBounceVertical = false
 		//self.tableView.bounces = false
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "ArtworkContentCell", bundle: Bundle.main), forCellReuseIdentifier: ArtworkContentCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
-		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 	}
 }
 

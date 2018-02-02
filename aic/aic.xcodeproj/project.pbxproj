@@ -105,6 +105,7 @@
 		2968F67E201272EA00638153 /* AICTransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67D201272EA00638153 /* AICTransparentButton.swift */; };
 		2968F68B2012942800638153 /* LanguageSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F68D2012942800638153 /* LanguageSettings.strings */; };
 		2968F6932012B33000638153 /* TabMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F6952012B33000638153 /* TabMenu.strings */; };
+		296D559520239F3E00442A60 /* CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D559420239F3E00442A60 /* CardNavigationController.swift */; };
 		29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */; };
 		29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */; };
 		29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCF200D870C003B6DB5 /* EventTableViewController.swift */; };
@@ -117,7 +118,7 @@
 		29872A01201684CD00BB3B6A /* Info.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29872A03201684CD00BB3B6A /* Info.strings */; };
 		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
 		29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A27A071FCC769B007CEE1D /* HomeTourCell.xib */; };
-		29A62D421FD5C90F0054BE56 /* CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */; };
+		29A62D421FD5C90F0054BE56 /* _CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A62D411FD5C90F0054BE56 /* _CardNavigationController.swift */; };
 		29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */; };
 		29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */; };
 		29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */; };
@@ -373,6 +374,7 @@
 		2968F6942012B33000638153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TabMenu.strings; sourceTree = "<group>"; };
 		2968F6962012B36000638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TabMenu.strings; sourceTree = "<group>"; };
 		2968F6972012B36400638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabMenu.strings"; sourceTree = "<group>"; };
+		296D559420239F3E00442A60 /* CardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNavigationController.swift; sourceTree = "<group>"; };
 		29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardNavigationController.swift; sourceTree = "<group>"; };
 		29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionTableViewController.swift; sourceTree = "<group>"; };
 		29824BCF200D870C003B6DB5 /* EventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
@@ -391,7 +393,7 @@
 		29872A05201684D300BB3B6A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Info.strings"; sourceTree = "<group>"; };
 		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
 		29A27A071FCC769B007CEE1D /* HomeTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTourCell.xib; sourceTree = "<group>"; };
-		29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNavigationController.swift; sourceTree = "<group>"; };
+		29A62D411FD5C90F0054BE56 /* _CardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _CardNavigationController.swift; sourceTree = "<group>"; };
 		29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Bold.otf"; sourceTree = "<group>"; };
 		29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BoldItalic.otf"; sourceTree = "<group>"; };
 		29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Book.otf"; sourceTree = "<group>"; };
@@ -1222,7 +1224,8 @@
 			isa = PBXGroup;
 			children = (
 				2931277D1FDF0E71008BFAB1 /* Table View Cells */,
-				29A62D411FD5C90F0054BE56 /* CardNavigationController.swift */,
+				29A62D411FD5C90F0054BE56 /* _CardNavigationController.swift */,
+				296D559420239F3E00442A60 /* CardNavigationController.swift */,
 				295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */,
 				2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */,
 				E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */,
@@ -1661,7 +1664,7 @@
 				293127891FDF3B3E008BFAB1 /* AICSearchedExhibitionModel.swift in Sources */,
 				E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */,
 				E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */,
-				29A62D421FD5C90F0054BE56 /* CardNavigationController.swift in Sources */,
+				29A62D421FD5C90F0054BE56 /* _CardNavigationController.swift in Sources */,
 				E4F82F6D1CA45F3400E4224B /* _SectionView.swift in Sources */,
 				294C0B57201A76F700F2ABB1 /* MapImageAnnotation.swift in Sources */,
 				29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */,
@@ -1756,6 +1759,7 @@
 				295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */,
 				E4923FE71C9F53BE00AB255C /* ObjectView.swift in Sources */,
 				E47A97161CEFBC150041D0A6 /* AppDataParser.swift in Sources */,
+				296D559520239F3E00442A60 /* CardNavigationController.swift in Sources */,
 				294C0B61201A76F700F2ABB1 /* MKMapRectRotated.swift in Sources */,
 				2941CE801FE09F6000B7CCEE /* SearchContentViewController.swift in Sources */,
 				294C0B6B201A770E00F2ABB1 /* MapState.swift in Sources */,

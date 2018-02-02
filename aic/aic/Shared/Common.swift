@@ -195,7 +195,7 @@ struct Common {
 			return tabBarHeight + miniAudioPlayerHeight
         }
 		
-		static var cardTopPosition: CGFloat {
+		static var cardFullscreenPositionY: CGFloat {
 			if UIDevice().type == .iPhoneX {
 				return 40
 			}
@@ -203,8 +203,10 @@ struct Common {
 		}
 		
 		static var cardContentHeight: CGFloat {
-			return UIScreen.main.bounds.height - cardTopPosition - Common.Layout.tabBarHeight
+			return UIScreen.main.bounds.height - cardFullscreenPositionY - Common.Layout.tabBarHeight
 		}
+        
+        static var cardMinimizedContentHeight: CGFloat = 170.0
 
         static let showTabBarTitles = true
 
