@@ -27,8 +27,6 @@ class ObjectView: UIView {
     
     let audioPlayerView = AudioPlayerView()
     
-    let collapseButton = UIButton()
-    
     private let contentViewHolder = UIView()
     private let objectInfoContentView = ObjectInfoView()
     private let relatedToursContentView = ObjectRelatedToursView()
@@ -40,10 +38,6 @@ class ObjectView: UIView {
     init() {
         super.init(frame:CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + miniAudioPlayerViewHeight))
         backgroundColor = .white
-        
-        //Configure
-        collapseButton.backgroundColor = .clear
-        collapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: UIControlState())
         
         scrollView.frame = UIScreen.main.bounds
         scrollView.frame.origin.y = miniAudioPlayerView.frame.height
@@ -61,11 +55,6 @@ class ObjectView: UIView {
         imageViewGradientLayer.locations = [0.0, 1.0]
         imageViewHolder.layer.addSublayer(imageViewGradientLayer)
         
-        collapseButton.backgroundColor = .clear
-        collapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: UIControlState())
-        collapseButton.contentMode = UIViewContentMode.center
-        collapseButton.frame.size = CGSize(width: 44, height: 44)
-        
         contentViewHolder.backgroundColor = .white
         
         transcriptContentView.enableCollapsing()
@@ -81,7 +70,6 @@ class ObjectView: UIView {
         
         addSubview(miniAudioPlayerView)
         addSubview(scrollView)
-        addSubview(collapseButton)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -265,13 +253,6 @@ class ObjectView: UIView {
                 
                 make.left.right.equalTo(view.superview!)
             })
-        }
-    
-        // Collapse button
-        collapseButton.snp.remakeConstraints { (make) -> Void in
-            make.right.equalTo(self.snp.right)
-            make.top.equalTo(miniAudioPlayerView.snp.bottom)
-            make.size.equalTo(collapseButton.frame.size)
         }
     
         super.updateConstraints()

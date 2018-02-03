@@ -8,8 +8,9 @@
 
 import UIKit
 
-protocol CardNavigationControllerDelegate : class {
-    func cardDidHide(cardVC: CardNavigationController)
+@objc protocol CardNavigationControllerDelegate : class {
+    @objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)
+    @objc optional func cardDidHide(cardVC: CardNavigationController)
 }
 
 class CardNavigationController : UINavigationController {
@@ -96,6 +97,8 @@ class CardNavigationController : UINavigationController {
     fileprivate func setCardPosition(_ positionY: CGFloat) {
         let yPosition = clamp(val: positionY, minVal: positionForState[.fullscreen]!, maxVal: positionForState[.hidden]!)
         self.view.frame.origin = CGPoint(x: 0, y: yPosition)
+        
+        self.cardDelegate?.cardDidUpdatePosition?(cardVC: self, position: self.view.frame.origin)
     }
     
     // MARK: Show/Hide
@@ -141,7 +144,7 @@ class CardNavigationController : UINavigationController {
         }, completion: { (completed) in
             self.currentState = .hidden
             self.cardDidHide()
-            self.cardDelegate?.cardDidHide(cardVC: self)
+            self.cardDelegate?.cardDidHide?(cardVC: self)
         })
     }
     
@@ -169,6 +172,11 @@ class CardNavigationController : UINavigationController {
 extension CardNavigationController : UIGestureRecognizerDelegate {
     @objc internal func handlePanGesture(recognizer: UIPanGestureRecognizer) {
         guard let view = recognizer.view else {
+            return
+        }
+        
+        // Pan Gesture disabled in MiniPlayer State
+        if currentState == .mini_player {
             return
         }
         

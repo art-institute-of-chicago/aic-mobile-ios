@@ -13,8 +13,7 @@ class ArtworkContentCell : UITableViewCell {
 	
 	@IBOutlet var artworkImageView: AICImageView!
 	@IBOutlet var showOnMapButton: AICButton!
-	
-	@IBOutlet var artworkImageWidth: NSLayoutConstraint!
+    
 	@IBOutlet var artworkImageHeight: NSLayoutConstraint!
 	
 	override func awakeFromNib() {

@@ -1,0 +1,17 @@
+/* 
+  AudioPlayer.strings
+  aic
+
+  Created by Filippo Vanucci on 2/2/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Loading Message" = "Missing Translation (Spanish)";
+
+"Load Failure Title" = "Missing Translation (Spanish)";
+
+"Load Failure Message" = "Missing Translation (Spanish)";
+
+"Load Failure Reload Button Title" = "Missing Translation (Spanish)";
+
+"Load Failure Cancel Button Title" = "Missing Translation (Spanish)";

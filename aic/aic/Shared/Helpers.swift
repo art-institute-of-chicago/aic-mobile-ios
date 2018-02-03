@@ -100,7 +100,7 @@ func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFl
 
 
 /// View with a blur effect, should be uniform in app
-func getBlurEffectView(frame:CGRect) -> UIVisualEffectView {
+func getBlurEffectView(frame: CGRect) -> UIVisualEffectView {
     let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
     let blurEffectView = UIVisualEffectView(effect: blurEffect)
     blurEffectView.frame = frame

@@ -187,10 +187,8 @@ struct Common {
 			return 49
 		}
 		
-		// TODO: use this variable to define miniplayer height
 		static var miniAudioPlayerHeight: CGFloat = 40.0
 
-		// TODO: remove this notification and calculation
         static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat {
 			return tabBarHeight + miniAudioPlayerHeight
         }

@@ -140,6 +140,9 @@
 		29B9B5931FD0A7670095FE52 /* SeeAllTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */; };
 		29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */; };
 		29C7D0C5202456100015984B /* SearchSlideAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C7D0C4202456100015984B /* SearchSlideAnimator.swift */; };
+		29C7D0C9202532930015984B /* AudioPlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C7D0C8202532930015984B /* AudioPlayerNavigationController.swift */; };
+		29C7D0CC202541E00015984B /* AudioPlayer.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29C7D0CE202541E00015984B /* AudioPlayer.strings */; };
+		29C7D0D220260AD50015984B /* AudioInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C7D0D120260AD50015984B /* AudioInfoViewController.swift */; };
 		29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */; };
 		29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */; };
 		29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */; };
@@ -415,6 +418,11 @@
 		29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllTourCell.swift; sourceTree = "<group>"; };
 		29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
 		29C7D0C4202456100015984B /* SearchSlideAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlideAnimator.swift; sourceTree = "<group>"; };
+		29C7D0C8202532930015984B /* AudioPlayerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerNavigationController.swift; sourceTree = "<group>"; };
+		29C7D0CD202541E00015984B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AudioPlayer.strings; sourceTree = "<group>"; };
+		29C7D0CF202541E10015984B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AudioPlayer.strings; sourceTree = "<group>"; };
+		29C7D0D0202541E20015984B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AudioPlayer.strings"; sourceTree = "<group>"; };
+		29C7D0D120260AD50015984B /* AudioInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInfoViewController.swift; sourceTree = "<group>"; };
 		29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFooterView.swift; sourceTree = "<group>"; };
 		29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMemberPromptView.swift; sourceTree = "<group>"; };
 		29C91B101FC4E5D8008C3E9E /* HomeTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTourCell.swift; sourceTree = "<group>"; };
@@ -593,7 +601,7 @@
 			path = "Table View Cells";
 			sourceTree = "<group>";
 		};
-		291FB71D1FDA08DD007794E0 /* Search */ = {
+		291FB71D1FDA08DD007794E0 /* Search Card */ = {
 			isa = PBXGroup;
 			children = (
 				29C7D0C3202455F10015984B /* Slide Animator */,
@@ -606,7 +614,7 @@
 				2941CE7F1FE09F6000B7CCEE /* SearchContentViewController.swift */,
 				291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */,
 			);
-			path = Search;
+			path = "Search Card";
 			sourceTree = "<group>";
 		};
 		293127781FDEF0E7008BFAB1 /* Map Item Cell */ = {
@@ -768,6 +776,7 @@
 				2968F68D2012942800638153 /* LanguageSettings.strings */,
 				294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */,
 				29CDAF98202225D500D1A30D /* Messages.strings */,
+				29C7D0CE202541E00015984B /* AudioPlayer.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -817,6 +826,25 @@
 				29C7D0C4202456100015984B /* SearchSlideAnimator.swift */,
 			);
 			path = "Slide Animator";
+			sourceTree = "<group>";
+		};
+		29C7D0C72025324F0015984B /* Audio Player Card */ = {
+			isa = PBXGroup;
+			children = (
+				29C7D0D420260E390015984B /* Views */,
+				29C7D0D120260AD50015984B /* AudioInfoViewController.swift */,
+				29C7D0C8202532930015984B /* AudioPlayerNavigationController.swift */,
+			);
+			path = "Audio Player Card";
+			sourceTree = "<group>";
+		};
+		29C7D0D420260E390015984B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */,
+				E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		29DAF0621FB3C69E002ED862 /* Home */ = {
@@ -1052,8 +1080,6 @@
 			children = (
 				E415ABC31C7298420093B719 /* ObjectViewController.swift */,
 				E4923FE61C9F53BE00AB255C /* ObjectView.swift */,
-				E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */,
-				E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */,
 				E4E108E51C99EC4C00385842 /* PlayPauseButton.swift */,
 				E4923FE21C9F36C700AB255C /* ObjectContentSectionView.swift */,
 				E4F7C1461CA1F46B005976D1 /* ObjectInfoView.swift */,
@@ -1069,14 +1095,15 @@
 			isa = PBXGroup;
 			children = (
 				E4F82F681CA45EF000E4224B /* Shared */,
-				29EABE511FE07CDA0049E341 /* Content Card */,
 				29DAF0621FB3C69E002ED862 /* Home */,
 				E415ABC91C7298420093B719 /* AudioGuide */,
 				E415ABCE1C7298420093B719 /* _Tours */,
 				29E6DD631FB9ED6300C3303D /* Map */,
 				E415ABCB1C7298420093B719 /* _Nearby */,
 				E415ABC71C7298420093B719 /* Info */,
-				291FB71D1FDA08DD007794E0 /* Search */,
+				29C7D0C72025324F0015984B /* Audio Player Card */,
+				29EABE511FE07CDA0049E341 /* Content Card */,
+				291FB71D1FDA08DD007794E0 /* Search Card */,
 				E415ABCD1C7298420093B719 /* SectionsViewController.swift */,
 			);
 			name = Sections;
@@ -1437,6 +1464,7 @@
 				29A7BCF81FBF85DB00FD8639 /* IdealSans-Semibold.otf in Resources */,
 				29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */,
 				E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */,
+				29C7D0CC202541E00015984B /* AudioPlayer.strings in Resources */,
 				298729F320155E2C00BB3B6A /* Sections.strings in Resources */,
 				293D00A01FA7C80D00BF2C26 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
 				293D00AC1FA7CA6700BF2C26 /* video in Resources */,
@@ -1731,6 +1759,7 @@
 				E4923FC11C9E00B500AB255C /* UIView+AIC.swift in Sources */,
 				2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */,
 				293127831FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift in Sources */,
+				29C7D0C9202532930015984B /* AudioPlayerNavigationController.swift in Sources */,
 				294C0B5F201A76F700F2ABB1 /* VisibleMapRegionDelegate.swift in Sources */,
 				E42178361CC6B80200815B41 /* _InfoSectionTextField.swift in Sources */,
 				294C0B4D201A76F700F2ABB1 /* MapTextAnnotationView.swift in Sources */,
@@ -1781,6 +1810,7 @@
 				294C0B21201A52BC00F2ABB1 /* EventContentCell.swift in Sources */,
 				E4223CE51CC7FE6600503D43 /* MemberCardDataLoader.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,
+				29C7D0D220260AD50015984B /* AudioInfoViewController.swift in Sources */,
 				29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */,
 				294C0B5B201A76F700F2ABB1 /* FloorplanOverlayRenderer.swift in Sources */,
 				E415ABD51C7298420093B719 /* MiniAudioPlayerView.swift in Sources */,
@@ -1900,6 +1930,16 @@
 				29872A05201684D300BB3B6A /* zh-Hans */,
 			);
 			name = Info.strings;
+			sourceTree = "<group>";
+		};
+		29C7D0CE202541E00015984B /* AudioPlayer.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29C7D0CD202541E00015984B /* en */,
+				29C7D0CF202541E10015984B /* es */,
+				29C7D0D0202541E20015984B /* zh-Hans */,
+			);
+			name = AudioPlayer.strings;
 			sourceTree = "<group>";
 		};
 		29CDAF98202225D500D1A30D /* Messages.strings */ = {

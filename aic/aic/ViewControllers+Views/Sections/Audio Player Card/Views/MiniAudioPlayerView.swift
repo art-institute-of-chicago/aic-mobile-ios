@@ -17,6 +17,8 @@ class MiniAudioPlayerView : BaseView {
     fileprivate let playPauseButtonScale:Float = 1.25
     
     // Views
+    let blurBGView: UIView = getBlurEffectView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.miniAudioPlayerHeight))
+    
     let insetView = UIView()
     
     let playPauseActivityHolderView = UIView()
@@ -30,7 +32,8 @@ class MiniAudioPlayerView : BaseView {
     init() {
         super.init(frame:CGRect.zero)
         
-        self.backgroundColor = .aicAudiobarColor
+        self.backgroundColor = .clear
+        self.clipsToBounds = true
         
         // Configure
         playPauseButton.tintColor = .white
@@ -56,6 +59,7 @@ class MiniAudioPlayerView : BaseView {
         insetView.addSubview(titleLabel)
         insetView.addSubview(fullscreenButton)
         
+        addSubview(blurBGView)
         addSubview(insetView)
         addSubview(progressBar)
         

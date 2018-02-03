@@ -11,8 +11,6 @@ import UIKit
 class ContentCardNavigationController : CardNavigationController {
 	var tableVC: UITableViewController
 	
-	var tableViewHeightConstraint: NSLayoutConstraint? = nil
-	
 	// Tour Card
 	init(tour: AICTourModel) {
 		tableVC = TourTableViewController(tour: tour)
@@ -50,7 +48,7 @@ class ContentCardNavigationController : CardNavigationController {
         tableVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: contentTopMargin)
         tableVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
         tableVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-        tableViewHeightConstraint = tableVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight - contentTopMargin)
+        tableVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight - contentTopMargin)
 	}
 }
 

@@ -33,7 +33,7 @@ class AudioPlayerView : BaseView {
         super.init(frame:CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: height))
         
         // Configure
-        backgroundColor = .aicLightGrayColor
+        backgroundColor = .aicAudioPlayerBackgroundColor
         
         slider.isUserInteractionEnabled = true
         slider.minimumValue = 0

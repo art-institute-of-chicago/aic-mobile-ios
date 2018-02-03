@@ -17,7 +17,8 @@ class SectionsViewController : UIViewController {
     //let locationManager: CLLocationManager = CLLocationManager()
 	
 	// Object Audio Card
-    let objectVC: ObjectViewController = ObjectViewController();
+    //let objectVC: ObjectViewController = ObjectViewController();
+    let audioPlayerVC: AudioPlayerNavigationController = AudioPlayerNavigationController()
 	
 	// Search Card
 	let searchVC: SearchNavigationController = SearchNavigationController()
@@ -31,14 +32,14 @@ class SectionsViewController : UIViewController {
     // Sections
     var viewControllers: [UIViewController] = []
     
-    var currentViewController:UIViewController? = nil
-    var previousViewController:UIViewController? = nil
+    var currentViewController: UIViewController? = nil
+    var previousViewController: UIViewController? = nil
     
     var viewControllersForTabBarItems: [UITabBarItem: UIViewController] = [:]
     var tabBarItemsForViewControllers: [UIViewController: UITabBarItem] = [:]
 	
 	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
-    var audioGuideVC:AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
+    var audioGuideVC: AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
 	var mapVC: MapNavigationController = MapNavigationController(section: Common.Sections[.map]!)
 	var infoVC:InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
     
@@ -90,12 +91,15 @@ class SectionsViewController : UIViewController {
         view.addSubview(sectionTabBarController.view)
 		sectionTabBarController.didMove(toParentViewController: self)
 		
-		objectVC.willMove(toParentViewController: sectionTabBarController)
-		sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: sectionTabBarController.tabBar)
-		objectVC.didMove(toParentViewController: sectionTabBarController)
+//        objectVC.willMove(toParentViewController: sectionTabBarController)
+//        sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: sectionTabBarController.tabBar)
+//        objectVC.didMove(toParentViewController: sectionTabBarController)
+        audioPlayerVC.willMove(toParentViewController: sectionTabBarController)
+        sectionTabBarController.view.insertSubview(audioPlayerVC.view, belowSubview: sectionTabBarController.tabBar)
+        audioPlayerVC.didMove(toParentViewController: sectionTabBarController)
 		
 		searchVC.willMove(toParentViewController: self.sectionTabBarController)
-		sectionTabBarController.view.insertSubview(searchVC.view, belowSubview:self.objectVC.view)
+		sectionTabBarController.view.insertSubview(searchVC.view, belowSubview: audioPlayerVC.view)
 		searchVC.didMove(toParentViewController: self.sectionTabBarController)
 		
 		sectionTabBarController.view.insertSubview(searchButton, belowSubview: searchVC.view)
@@ -103,10 +107,11 @@ class SectionsViewController : UIViewController {
 		// Set delegates
 		homeVC.sectionDelegate = self
 		mapVC.sectionDelegate = self
-		sectionTabBarController.delegate = self
-		objectVC.delegate = self
 		audioGuideVC.sectionDelegate = self
+        sectionTabBarController.delegate = self
 		searchVC.cardDelegate = self
+        audioPlayerVC.cardDelegate = self
+        //        objectVC.delegate = self
         
         //whatsOnVC.newsToursDelegate = self
         //whatsOnVC.delegate          = self
@@ -136,7 +141,7 @@ class SectionsViewController : UIViewController {
 		updateLanguage()
 	}
     
-    func setSelectedSection(sectionVC:UIViewController) {
+    func setSelectedSection(sectionVC: UIViewController) {
         // If tours tab was pressed when on a tour
         /*if sectionVC == currentViewController && sectionVC == toursVC {
             if toursVC.currentTour != nil {
@@ -151,7 +156,7 @@ class SectionsViewController : UIViewController {
         // Update colors for this VC
 		if let sVC = sectionVC as? SectionNavigationController {
 			sectionTabBarController.tabBar.tintColor = sVC.color
-			objectVC.setProgressBarColor(sVC.color)
+//            objectVC.setProgressBarColor(sVC.color)
 			//mapVC.color = sVC.color
 			// Tell the map what region this view shows
 			//mapVC.setViewableArea(frame: sVC.viewableMapArea)
@@ -195,7 +200,6 @@ class SectionsViewController : UIViewController {
         toursVC.removeCurrentTour()
         toursVC.reset()
     }*/
-    
     
     func disableMap(locationManagerDelegate:CLLocationManagerDelegate?) {
         //locationManager.delegate = locationManagerDelegate
@@ -247,8 +251,10 @@ class SectionsViewController : UIViewController {
     
     // MARK: Object view showing methods
     func showObject(object:AICObjectModel, audioGuideID: Int?) {
-        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
-        self.objectVC.showFullscreen()
+//        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
+//        self.objectVC.showFullscreen()
+        audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: audioGuideID)
+        audioPlayerVC.showFullscreen()
         self.showHeadphonesMessage()
         
         updateTabBarHeightWithMiniPlayer()
@@ -283,8 +289,8 @@ class SectionsViewController : UIViewController {
     }
     
     fileprivate func showTourOverview(forTourModel tour:AICTourModel) {
-        self.objectVC.setContent(forTourOverviewModel: tour.overview)
-        self.objectVC.showMiniPlayer()
+//        self.objectVC.setContent(forTourOverviewModel: tour.overview)
+//        self.objectVC.showMiniPlayer()
         self.showHeadphonesMessage()
         
         updateTabBarHeightWithMiniPlayer()
@@ -294,8 +300,8 @@ class SectionsViewController : UIViewController {
     }
     
     fileprivate func showTourStop(forTourModel tour:AICTourModel, atStopIndex stopIndex:Int) {
-        self.objectVC.setContent(forTour: tour, atStopIndex: stopIndex)
-        self.objectVC.showMiniPlayer()
+//        self.objectVC.setContent(forTour: tour, atStopIndex: stopIndex)
+//        self.objectVC.showMiniPlayer()
         self.showHeadphonesMessage()
         
         updateTabBarHeightWithMiniPlayer()
@@ -306,9 +312,9 @@ class SectionsViewController : UIViewController {
     
     // Update bottom margin for tab bar + audio player in case any views need to adjust
     private func updateTabBarHeightWithMiniPlayer() {
-        if Common.Layout.tabBarHeight == Common.Layout.tabBarHeightWithMiniAudioPlayerHeight {
-            Common.Layout.miniAudioPlayerHeight = objectVC.getMiniPlayerHeight()
-        }
+//        if Common.Layout.tabBarHeight == Common.Layout.tabBarHeightWithMiniAudioPlayerHeight {
+//            Common.Layout.miniAudioPlayerHeight = objectVC.getMiniPlayerHeight()
+//        }
     }
     
     // MARK: Location
@@ -414,22 +420,6 @@ class SectionsViewController : UIViewController {
 extension SectionsViewController : UITabBarControllerDelegate {
 	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
 		setSelectedSection(sectionVC: viewController)
-	}
-}
-
-// MARK: ObjectViewController Delegate
-extension SectionsViewController : ObjectViewControllerDelegate {
-    // When the Object View Controller Moves up (out of mini player mode)
-    // We hide the bottom navigation
-    func objectViewController(controller:ObjectViewController, didUpdateYPosition position:CGFloat) {
-        let screenHeight = UIScreen.main.bounds.height
-        let yPct:CGFloat = (position) / (screenHeight - self.sectionTabBarController.tabBar.frame.height - objectVC.getMiniPlayerHeight())
-        
-        // Set the sectionVC tab bar to hide as we show objectVC
-        self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * yPct)
-    }
-    
-    func objectViewControllerDidShowMiniPlayer(controller: ObjectViewController) {
 	}
 }
 
@@ -557,8 +547,19 @@ extension SectionsViewController : MessageViewControllerDelegate {
     }
 }
 
-// MARK: Search Card Delegate
+// MARK: Card Delegate
 extension SectionsViewController : CardNavigationControllerDelegate {
+    // When the Audio Player goes fullscreen hide the TabBar
+    func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint) {
+        if cardVC == audioPlayerVC {
+            let screenHeight = UIScreen.main.bounds.height
+            let yPct: CGFloat = position.y / (screenHeight - self.sectionTabBarController.tabBar.frame.height - Common.Layout.miniAudioPlayerHeight)
+
+            // Set the sectionVC tab bar to hide as we show audioPlayerVC
+            self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * yPct)
+        }
+    }
+    
 	func cardDidHide(cardVC: CardNavigationController) {
 		if cardVC == searchVC {
 			searchButton.isHidden = false
