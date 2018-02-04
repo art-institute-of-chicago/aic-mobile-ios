@@ -90,7 +90,7 @@ class ObjectViewController: UIViewController {
         
         // Mini Audio Player
         let fullscreenTap = UITapGestureRecognizer(target:self, action:#selector(ObjectViewController.fullscreenButtonTapped(_:)))
-        objectView.miniAudioPlayerView.fullscreenButton.addGestureRecognizer(fullscreenTap)
+        objectView.miniAudioPlayerView.closeButton.addGestureRecognizer(fullscreenTap)
         
         let miniAudioPlayerTap = UITapGestureRecognizer(target: self, action:#selector(ObjectViewController.miniAudioPlayerTapped))
         objectView.miniAudioPlayerView.addGestureRecognizer(miniAudioPlayerTap)
@@ -105,9 +105,6 @@ class ObjectViewController: UIViewController {
                                                     action: #selector(ObjectViewController.audioPlayerSliderFinishedSliding(_:)),
                                                     for: [UIControlEvents.touchUpInside, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel]
         )
-        
-        let collapseTap = UITapGestureRecognizer(target:self, action:#selector(ObjectViewController.collapseButtonTapped(_:)))
-        objectView.collapseButton.addGestureRecognizer(collapseTap)
         
         let panGesture = UIPanGestureRecognizer(target:self, action: #selector(ObjectViewController.handleObjectVCPanGesture(_:)))
         view.addGestureRecognizer(panGesture)
@@ -453,8 +450,7 @@ class ObjectViewController: UIViewController {
         }) 
         
         // Toggle visibility of fullscreen/collapse buttons
-        objectView.collapseButton.isHidden = true
-        objectView.miniAudioPlayerView.fullscreenButton.isHidden = false
+        objectView.miniAudioPlayerView.closeButton.isHidden = false
         
         // Show the status bar
         Common.Layout.showStatusBar = true
@@ -476,8 +472,7 @@ class ObjectViewController: UIViewController {
         }) 
         
         // Toggle visibility of fullscreen/collapse buttons
-        objectView.collapseButton.isHidden = false
-        objectView.miniAudioPlayerView.fullscreenButton.isHidden = true
+        objectView.miniAudioPlayerView.closeButton.isHidden = true
         
         // Hide the status bar
         Common.Layout.showStatusBar = false

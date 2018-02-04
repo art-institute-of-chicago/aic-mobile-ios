@@ -54,9 +54,25 @@ class AudioPlayerNavigationController : CardNavigationController {
         
         createViewConstraints()
         
+        // Mini Player Tap and Close Events
+        let miniAudioPlayerTap = UITapGestureRecognizer(target: self, action:#selector(miniAudioPlayerTapped))
+        miniAudioPlayerView.addGestureRecognizer(miniAudioPlayerTap)
+        
+        miniAudioPlayerView.closeButton.addTarget(self, action: #selector(miniAudioPlayerCloseButtonPressed(button:)), for: .touchUpInside)
+        
+        // Audio Player Slider
+        audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderValueChanged(slider:)), for: UIControlEvents.valueChanged)
+        audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderStartedSliding(slider:)), for: UIControlEvents.touchDown)
+        audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderFinishedSliding(slider:)), for: [UIControlEvents.touchUpInside, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel]
+        )
+        
+        // Play/Pause Button
+        miniAudioPlayerView.playPauseButton.delegate = self
+        audioInfoVC.audioPlayerView.playPauseButton.delegate = self
+        
         // AV Session
         configureAVAudioSession()
-        NotificationCenter.default.addObserver(self, selector: #selector(ObjectViewController.configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
     }
     
     func createViewConstraints() {
@@ -71,9 +87,15 @@ class AudioPlayerNavigationController : CardNavigationController {
         audioInfoVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight - contentTopMargin)
     }
     
+    // Progress Bar Color
+    
+    func setProgressBarColor(color: UIColor) {
+        miniAudioPlayerView.setProgressBarColor(color)
+    }
+    
     // MARK: Play Audio
     
-    func playArtwork(artwork: AICObjectModel, forAudioGuideID audioGuideID: Int?) {
+    func playArtwork(artwork: AICObjectModel, forAudioGuideID audioGuideID: Int? = nil) {
         //Check the index of the audio guide id and load the appropriate audio file
         var audioFile: AICAudioFileModel?
         if audioGuideID != nil {
@@ -162,7 +184,7 @@ class AudioPlayerNavigationController : CardNavigationController {
                     case .loaded:
                         // Create Audio Player
                         let playerItem = AVPlayerItem(asset: asset)
-                        NotificationCenter.default.addObserver(self, selector: #selector(ObjectViewController.audioPlayerDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+                        NotificationCenter.default.addObserver(self, selector: #selector(AudioPlayerNavigationController.audioPlayerDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
                         
                         // Set the item as our player's current item
                         self.avPlayer.replaceCurrentItem(with: playerItem)
@@ -174,7 +196,7 @@ class AudioPlayerNavigationController : CardNavigationController {
                         if self.audioProgressTimer == nil {
                             self.audioPlayerProgressTimer = Timer.scheduledTimer(timeInterval: 0.25,
                                                                                  target: self,
-                                                                                 selector: #selector(ObjectViewController.updateAudioPlayerProgress),
+                                                                                 selector: #selector(AudioPlayerNavigationController.updateAudioPlayerProgress),
                                                                                  userInfo: nil,
                                                                                  repeats: true
                             )
@@ -260,18 +282,18 @@ class AudioPlayerNavigationController : CardNavigationController {
         // of the command center, or else disabling other commands does not work.
         // For example:
         MPRemoteCommandCenter.shared().playCommand.isEnabled = true;
-        MPRemoteCommandCenter.shared().playCommand.addTarget(self, action: #selector(AudioPlayerNavigationController.play))
+        MPRemoteCommandCenter.shared().playCommand.addTarget(self, action: #selector(play))
         
         MPRemoteCommandCenter.shared().pauseCommand.isEnabled = true
-        MPRemoteCommandCenter.shared().pauseCommand.addTarget(self, action: #selector(AudioPlayerNavigationController.pause))
+        MPRemoteCommandCenter.shared().pauseCommand.addTarget(self, action: #selector(pause))
         
         MPRemoteCommandCenter.shared().skipForwardCommand.isEnabled = true
         MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [NSNumber(value: remoteSkipTime)]
-        MPRemoteCommandCenter.shared().skipForwardCommand.addTarget(self, action: #selector(AudioPlayerNavigationController.skipForward))
+        MPRemoteCommandCenter.shared().skipForwardCommand.addTarget(self, action: #selector(skipForward))
         
         MPRemoteCommandCenter.shared().skipBackwardCommand.isEnabled = true
         MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [NSNumber(value: remoteSkipTime)]
-        MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget(self, action: #selector(AudioPlayerNavigationController.skipBackward))
+        MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget(self, action: #selector(skipBackward))
     }
     
     @objc internal func play() {
@@ -349,7 +371,7 @@ class AudioPlayerNavigationController : CardNavigationController {
     
     fileprivate func synchronizePlayPauseButtons(forMode mode: PlayPauseButton.Mode) {
         miniAudioPlayerView.playPauseButton.mode = mode
-        //audioPlayerVC.playPauseButton.mode = mode
+        audioInfoVC.audioPlayerView.playPauseButton.mode = mode
     }
     
     // Show/Hide
@@ -459,13 +481,13 @@ extension AudioPlayerNavigationController {
     
     // Audio player Slider Events
     
-    @objc internal func audioPlayerSliderStartedSliding(_ slider:UISlider) {
+    @objc internal func audioPlayerSliderStartedSliding(slider: UISlider) {
         // Stop the progress from updating, otherwise the two funcs fight
         isUpdatingObjectViewProgressSlider = true
     }
     
     
-    @objc internal func audioPlayerSliderValueChanged(_ slider:UISlider) {
+    @objc internal func audioPlayerSliderValueChanged(slider: UISlider) {
         if let currentItem = avPlayer.currentItem {
             let newTime = CMTimeGetSeconds(currentItem.asset.duration) * Double(audioInfoVC.audioPlayerView.slider.value)
             seekToTime(newTime)
@@ -473,21 +495,33 @@ extension AudioPlayerNavigationController {
         }
     }
     
-    @objc internal func audioPlayerSliderFinishedSliding(_ slider:UISlider) {
+    @objc internal func audioPlayerSliderFinishedSliding(slider: UISlider) {
         isUpdatingObjectViewProgressSlider = false
         updateAudioPlayerProgress()
     }
     
-    @objc internal func fullscreenButtonTapped(_ sender:UIButton!) {
-        showFullscreen()
+    @objc internal func miniAudioPlayerCloseButtonPressed(button: UIButton) {
+        hide()
     }
     
     @objc internal func miniAudioPlayerTapped() {
         showFullscreen()
     }
-    
-    @objc internal func collapseButtonTapped(_ sender:UIButton!) {
-        //audioInfoVC.scrollView.setContentOffset(CGPoint(x: 0, y: -objectView.scrollView.contentInset.top), animated: true)
-        showMiniPlayer()
+}
+
+// MARK: PlayPauseButtonDelegate
+
+extension AudioPlayerNavigationController : PlayPauseButtonDelegate {
+    internal func playPauseButton(_ viewController:PlayPauseButton, modeChanged mode: PlayPauseButton.Mode) {
+        switch mode {
+        case PlayPauseButton.Mode.playing:
+            if avPlayer.currentItem?.duration == avPlayer.currentTime() {
+                seekToTime(0)
+            }
+            play()
+            
+        case PlayPauseButton.Mode.paused:
+            pause()
+        }
     }
 }

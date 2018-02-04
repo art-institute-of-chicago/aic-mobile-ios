@@ -67,8 +67,8 @@ class AudioInfoViewController : UIViewController {
         scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view)
         
         imageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.miniAudioPlayerHeight - 30.0)
-        imageView.autoPinEdge(.leading, to: .leading, of: self.view)
-        imageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+        imageView.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
+        imageView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
         imageViewHeight = imageView.autoSetDimension(.height, toSize: imageMaxHeight)
         
         audioPlayerView.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 16)

@@ -156,7 +156,7 @@ class SectionsViewController : UIViewController {
         // Update colors for this VC
 		if let sVC = sectionVC as? SectionNavigationController {
 			sectionTabBarController.tabBar.tintColor = sVC.color
-//            objectVC.setProgressBarColor(sVC.color)
+            audioPlayerVC.setProgressBarColor(color: sVC.color)
 			//mapVC.color = sVC.color
 			// Tell the map what region this view shows
 			//mapVC.setViewableArea(frame: sVC.viewableMapArea)
@@ -255,7 +255,7 @@ class SectionsViewController : UIViewController {
 //        self.objectVC.showFullscreen()
         audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: audioGuideID)
         audioPlayerVC.showFullscreen()
-        self.showHeadphonesMessage()
+        showHeadphonesMessage()
         
         updateTabBarHeightWithMiniPlayer()
     }
@@ -336,6 +336,7 @@ class SectionsViewController : UIViewController {
     
     
     // MARK: Messages
+    
     fileprivate func showLeaveTourMessage() {
 		let leaveCurrentTourMessageView = UIView()
 //        leaveCurrentTourMessageView.delegate = self
@@ -553,10 +554,12 @@ extension SectionsViewController : CardNavigationControllerDelegate {
     func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint) {
         if cardVC == audioPlayerVC {
             let screenHeight = UIScreen.main.bounds.height
-            let yPct: CGFloat = position.y / (screenHeight - self.sectionTabBarController.tabBar.frame.height - Common.Layout.miniAudioPlayerHeight)
-
+            
+            var percentageY: CGFloat = position.y / (screenHeight - self.sectionTabBarController.tabBar.frame.height - Common.Layout.miniAudioPlayerHeight)
+            percentageY = clamp(val: percentageY, minVal: 0.0, maxVal: 1.0)
+            
             // Set the sectionVC tab bar to hide as we show audioPlayerVC
-            self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * yPct)
+            self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * percentageY)
         }
     }
     

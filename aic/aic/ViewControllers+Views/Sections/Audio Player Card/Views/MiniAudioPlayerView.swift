@@ -24,8 +24,8 @@ class MiniAudioPlayerView : BaseView {
     let playPauseActivityHolderView = UIView()
     let playPauseButton = PlayPauseButton()
     let activityIndicator = UIActivityIndicatorView()
-    let titleLabel:UILabel = UILabel()
-    let fullscreenButton:UIButton = UIButton()
+    let titleLabel: UILabel = UILabel()
+    let closeButton: UIButton = UIButton()
     
     let progressBar = UIView()
     
@@ -44,10 +44,10 @@ class MiniAudioPlayerView : BaseView {
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.font = .aicSystemTextFont
         
-        fullscreenButton.backgroundColor = .clear
+        closeButton.backgroundColor = .clear
         let expandImage = #imageLiteral(resourceName: "expand")
-        fullscreenButton.setImage(expandImage, for: UIControlState())
-        fullscreenButton.frame = CGRect(x: 0,y: 0, width: expandImage.size.width, height: expandImage.size.height)
+        closeButton.setImage(expandImage, for: UIControlState())
+        closeButton.frame = CGRect(x: 0,y: 0, width: expandImage.size.width, height: expandImage.size.height)
         
         progressBar.backgroundColor = .aicMapColor
         
@@ -57,7 +57,7 @@ class MiniAudioPlayerView : BaseView {
         
         insetView.addSubview(playPauseActivityHolderView)
         insetView.addSubview(titleLabel)
-        insetView.addSubview(fullscreenButton)
+        insetView.addSubview(closeButton)
         
         addSubview(blurBGView)
         addSubview(insetView)
@@ -140,16 +140,16 @@ class MiniAudioPlayerView : BaseView {
             
             titleLabel.snp.makeConstraints { (make) -> Void in
                 make.left.equalTo(playPauseActivityHolderView.snp.right)
-                make.right.equalTo(fullscreenButton.snp.left)
+                make.right.equalTo(closeButton.snp.left)
                 make.centerY.equalTo(titleLabel.superview!)
                 
                 titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: UILayoutConstraintAxis.horizontal)
             }
             
-            fullscreenButton.snp.makeConstraints { (make) -> Void in
-                make.size.equalTo(fullscreenButton.frame.size)
-                make.right.equalTo(fullscreenButton.superview!)
-                make.centerY.equalTo(fullscreenButton.superview!)
+            closeButton.snp.makeConstraints { (make) -> Void in
+                make.size.equalTo(closeButton.frame.size)
+                make.right.equalTo(closeButton.superview!)
+                make.centerY.equalTo(closeButton.superview!)
             }
             
             progressBar.snp.makeConstraints({ (make) -> Void in

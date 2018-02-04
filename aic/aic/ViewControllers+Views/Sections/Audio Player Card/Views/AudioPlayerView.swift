@@ -10,13 +10,13 @@ import SnapKit
 class AudioPlayerView : BaseView {
     
     // MARK: Properties
-    let height:CGFloat = 120
-    let sidePadding:CGFloat = 30
-    let labelTopPadding:CGFloat = 15
+    let height: CGFloat = 120
+    let sidePadding: CGFloat = 30
+    let labelTopPadding: CGFloat = 15
     
     let margins = UIEdgeInsetsMake(15, 30, 10, 30)
     
-    let sliderHeight:CGFloat = 45.0
+    let sliderHeight: CGFloat = 45.0
     
     // Subviews
     
@@ -27,7 +27,7 @@ class AudioPlayerView : BaseView {
     
     let controlView = UIView()
     let playPauseButton = PlayPauseButton()
-    let slider:UISlider = UISlider()
+    let slider: UISlider = UISlider()
     
     init() {
         super.init(frame:CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: height))
@@ -54,7 +54,7 @@ class AudioPlayerView : BaseView {
         timeRemainingLabel.font = .aicShortTextFont
         timeRemainingLabel.text = " "
         
-        playPauseButton.tintColor = .black
+        playPauseButton.tintColor = .white
         
         // Add Subviews
         controlView.addSubview(playPauseButton)
