@@ -37,6 +37,6 @@ class ObjectRelatedToursView: ObjectContentSectionView {
         }
         
         bodyTextView.attributedText = links
-        bodyTextView.font = UIFont.aicTitleFont
+        bodyTextView.font = .aicTitleFont
     }
 }

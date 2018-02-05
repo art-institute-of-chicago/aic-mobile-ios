@@ -28,7 +28,7 @@ class ObjectContentSectionView: BaseView {
         self.translatesAutoresizingMaskIntoConstraints = false
         
         // Configure
-        topLine.backgroundColor = .aicGrayColor
+        topLine.backgroundColor = .aicDividerLineDarkColor
         
         titleLabel.numberOfLines = 1
         titleLabel.textColor = .black
@@ -51,15 +51,13 @@ class ObjectContentSectionView: BaseView {
     }
     
     func enableCollapsing() {
-        
         // Remove body text (start collapsed)
         bodyTextView.removeFromSuperview()
         
         // Create button
-        let expandImage = #imageLiteral(resourceName: "expandSm")
-        
         collapseExpandButton = UIButton()
-        collapseExpandButton?.setImage(expandImage, for: UIControlState())
+		collapseExpandButton?.setImage(#imageLiteral(resourceName: "audioInfoExpand"), for: .normal)
+		collapseExpandButton?.setImage(#imageLiteral(resourceName: "audioInfoCollapse"), for: .selected)
         
         // Add Tap Gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ObjectContentSectionView.collapseButtonTapped(_:)))

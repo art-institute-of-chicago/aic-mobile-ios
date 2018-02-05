@@ -82,7 +82,7 @@ class ObjectViewController: UIViewController {
         viewMinYPos = -CGFloat(self.getMiniPlayerHeight())
         viewMaxYPos = UIScreen.main.bounds.height - Common.Layout.tabBarHeight - getMiniPlayerHeight()
         
-        audioPlayerInitialY = objectView.imageView.frame.height - objectView.audioPlayerView.height
+        audioPlayerInitialY = objectView.imageView.frame.height - objectView.audioPlayerView.audioPlayerMinHeight
         objectView.audioPlayerView.frame.origin.y = audioPlayerInitialY
         
         
@@ -111,8 +111,8 @@ class ObjectViewController: UIViewController {
         
         // Assign Delegates
         objectView.scrollView.delegate = self
-        objectView.miniAudioPlayerView.playPauseButton.delegate = self
-        objectView.audioPlayerView.playPauseButton.delegate = self
+        //objectView.miniAudioPlayerView.playPauseButton.delegate = self
+        //objectView.audioPlayerView.playPauseButton.delegate = self
         panGesture.delegate = self
         
         
@@ -142,7 +142,7 @@ class ObjectViewController: UIViewController {
     }
     
     func setProgressBarColor(_ color:UIColor) {
-        objectView.miniAudioPlayerView.setProgressBarColor(color)
+		objectView.miniAudioPlayerView.setProgressBarColor(color: color)
     }
     
     // MARK: Object Loading
@@ -190,7 +190,6 @@ class ObjectViewController: UIViewController {
             // GA only accepts int values, so send an int from 1-10
             let progressValue:Int = Int(currentAudioFileMaxProgress * 100)
             AICAnalytics.objectViewAudioItemPlayedEvent(audioItem: currentAudioFile, pctComplete: progressValue)
-            print(currentAudioFileMaxProgress)
         }
         
         currentAudioFile = audioFile
@@ -308,13 +307,13 @@ class ObjectViewController: UIViewController {
     
     // Set the loading status as the track title
     private func showLoadingMessage() {
-        self.objectView.miniAudioPlayerView.showMessage(loadingMessage)
-        self.objectView.audioPlayerView.showMessage(message: loadingMessage)
+		self.objectView.miniAudioPlayerView.showLoadingMessage(message: loadingMessage)
+        self.objectView.audioPlayerView.showLoadingMessage(message: loadingMessage)
     }
     
     private func showAudioControls() {
-        self.objectView.miniAudioPlayerView.showProgressAndControls(currentAudioFile!.title)
-        self.objectView.audioPlayerView.showProgressAndControls(withTitle: currentAudioFile!.title)
+		self.objectView.miniAudioPlayerView.showTrackTitle(title: currentAudioFile!.title)
+        self.objectView.audioPlayerView.showTrackTitle(title: currentAudioFile!.title)
     }
     
     // MARK: Dimensions
@@ -374,7 +373,6 @@ class ObjectViewController: UIViewController {
             
             // Play
             self.avPlayer.play()
-            synchronizePlayPauseButtons(forMode: PlayPauseButton.Mode.playing)
             
             // Update MPNowPlaying
             var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
@@ -390,7 +388,6 @@ class ObjectViewController: UIViewController {
     @objc internal func pause() {
         if avPlayer.currentItem != nil {
             self.avPlayer.pause()
-            synchronizePlayPauseButtons(forMode: PlayPauseButton.Mode.paused)
             
             var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
             info![MPNowPlayingInfoPropertyPlaybackRate] = NSInteger(0.0)
@@ -433,11 +430,6 @@ class ObjectViewController: UIViewController {
             
             seekToTime(skipTime)
         }
-    }
-    
-    fileprivate func synchronizePlayPauseButtons(forMode mode:PlayPauseButton.Mode) {
-        objectView.miniAudioPlayerView.playPauseButton.mode = mode
-        objectView.audioPlayerView.playPauseButton.mode = mode
     }
     
     // MARK: Hide/Show/Position entire view
@@ -576,23 +568,6 @@ extension ObjectViewController : UIScrollViewDelegate {
     }
 }
 
-
-// MARK: Audio Control Methods
-extension ObjectViewController : PlayPauseButtonDelegate {
-    internal func playPauseButton(_ viewController:PlayPauseButton, modeChanged mode: PlayPauseButton.Mode) {
-        switch mode {
-        case PlayPauseButton.Mode.playing:
-            if avPlayer.currentItem?.duration == avPlayer.currentTime() {
-                seekToTime(0)
-            }
-            play()
-            
-        case PlayPauseButton.Mode.paused:
-            pause()
-        }
-    }
-}
-
 // MARK: Events
 extension ObjectViewController {
     // Received event from lock screen (remote control)
@@ -643,7 +618,7 @@ extension ObjectViewController {
             
             // Update the progress bar views
             objectView.audioPlayerView.updateProgress(progress: progress, duration: duration, setSliderValue: !isUpdatingObjectViewProgressSlider)
-            objectView.miniAudioPlayerView.updateProgress(progress, duration: duration)
+			objectView.miniAudioPlayerView.updateProgress(progress: progress, duration: duration)
             
             // Update now playing with progress
             var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
@@ -656,7 +631,7 @@ extension ObjectViewController {
     }
     
     @objc internal func audioPlayerDidFinishPlaying(_ notification:Notification) {
-        synchronizePlayPauseButtons(forMode: .paused)
+		
     }
     
     // Audio player Slider Events

@@ -8,63 +8,41 @@ import UIKit
 import SnapKit
 
 class AudioPlayerView : BaseView {
-    
-    // MARK: Properties
-    let height: CGFloat = 120
-    let sidePadding: CGFloat = 30
-    let labelTopPadding: CGFloat = 15
-    
-    let margins = UIEdgeInsetsMake(15, 30, 10, 30)
-    
-    let sliderHeight: CGFloat = 45.0
-    
-    // Subviews
-    
-    let insetView = UIView()
-    
-    let titleLabel = UILabel()
-    let timeRemainingLabel = UILabel()
-    
-    let controlView = UIView()
-    let playPauseButton = PlayPauseButton()
-    let slider: UISlider = UISlider()
-    
+	let titleLabel: UILabel = UILabel()
+	let timeRemainingLabel: UILabel = UILabel()
+	let playPauseButton: UIButton = UIButton()
+    let slider: AudioPlayerSlider = AudioPlayerSlider()
+	let audioPlayerMinHeight: CGFloat = 120
+	let sliderHeight: CGFloat = 45.0
+	
     init() {
-        super.init(frame:CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: height))
-        
-        // Configure
-        backgroundColor = .aicAudioPlayerBackgroundColor
-        
-        slider.isUserInteractionEnabled = true
-        slider.minimumValue = 0
-        slider.maximumValue = 1
-        slider.isContinuous = true
-        slider.tintColor = .red
-        slider.value = 0
-        
+        super.init(frame:CGRect.zero)
+		
+		self.backgroundColor = .aicAudioPlayerBackgroundColor
+		self.clipsToBounds = true
+		
         titleLabel.numberOfLines = 0
-        titleLabel.textColor = .black
-        titleLabel.textAlignment = NSTextAlignment.center
-        titleLabel.font = UIFont.aicTitleFont
-        titleLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - (margins.left + margins.right)
+        titleLabel.textColor = .white
+        titleLabel.textAlignment = .center
+        titleLabel.font = .aicAudioPlayerTrackTitleFont
         
         timeRemainingLabel.numberOfLines = 1
-        timeRemainingLabel.textColor = .black
-        timeRemainingLabel.textAlignment = NSTextAlignment.center
-        timeRemainingLabel.font = .aicShortTextFont
+        timeRemainingLabel.textColor = .aicCardDarkTextColor
+        timeRemainingLabel.textAlignment = .center
+        timeRemainingLabel.font = .aicAudioPlayerTimeRemainingFont
         timeRemainingLabel.text = " "
-        
-        playPauseButton.tintColor = .white
+		
+		playPauseButton.setImage(#imageLiteral(resourceName: "audioPlay"), for: .normal)
+		playPauseButton.setImage(#imageLiteral(resourceName: "audioPause"), for: .selected)
+		playPauseButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         
         // Add Subviews
-        controlView.addSubview(playPauseButton)
-        controlView.addSubview(slider)
-        
-        insetView.addSubview(titleLabel)
-        insetView.addSubview(timeRemainingLabel)
-        insetView.addSubview(controlView)
-        
-        self.addSubview(insetView)
+		self.addSubview(titleLabel)
+		self.addSubview(timeRemainingLabel)
+        self.addSubview(playPauseButton)
+        self.addSubview(slider)
+		
+		createConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -72,82 +50,66 @@ class AudioPlayerView : BaseView {
     }
     
     func reset() {
-        playPauseButton.mode = PlayPauseButton.Mode.paused
+        playPauseButton.isSelected = true
         timeRemainingLabel.text = "0:00/0:00"
         slider.value = 0.0
     }
     
-    func showMessage(message:String) {
+    func showLoadingMessage(message: String) {
+		titleLabel.text = message
         timeRemainingLabel.isHidden = true
-        controlView.isHidden = true
-        titleLabel.text = message
+        playPauseButton.isHidden = true
+		slider.isHidden = true
     }
     
-    func showProgressAndControls(withTitle title:String) {
+    func showTrackTitle(title: String) {
+		titleLabel.text = title
         timeRemainingLabel.isHidden = false
-        controlView.isHidden = false
-        titleLabel.text = title
+		playPauseButton.isHidden = false
+		slider.isHidden = false
     }
     
     func resetProgress() {
         slider.value = 0.0
     }
-    
-    func updateProgress(progress:Double, duration:Double, setSliderValue:Bool=true) {
-        if setSliderValue {
-            let newValue = progress/duration
-            if !newValue.isNaN {
-                slider.value = Float(progress/duration)
-            }
-        }
-        
-        let progressHMS = convertToHoursMinutesSeconds(seconds: Int(progress))
-        let durationHMS = convertToHoursMinutesSeconds(seconds: Int(duration))
-        
-        let timeFormat = "%i:%02i"
-        let progressString = String(format: timeFormat, progressHMS.1, progressHMS.2)
-        let durationString = String(format: timeFormat, durationHMS.1, durationHMS.2)
-        
-        timeRemainingLabel.text = "\(progressString)/\(durationString)"
-    }
-    
-    override func updateConstraints() {
-        insetView.snp.remakeConstraints { (make) in
-            make.edges.equalTo(insetView.superview!).inset(margins)
-            make.bottom.equalTo(controlView)
-        }
-        
-        titleLabel.snp.remakeConstraints { (make) in
-            make.top.equalTo(insetView)
-            make.left.right.equalTo(insetView)
-            make.height.greaterThanOrEqualTo(1)
-        }
-        
-        timeRemainingLabel.snp.remakeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
-            make.left.right.equalTo(insetView)
-            make.height.greaterThanOrEqualTo(25)
-        }
-        
-        controlView.snp.remakeConstraints { (make) in
-            make.top.equalTo(timeRemainingLabel.snp.bottom)
-            make.left.right.equalTo(insetView)
-            make.height.equalTo(playPauseButton.frame.height)
-        }
-        
-        playPauseButton.snp.remakeConstraints { (make) in
-            make.size.equalTo(playPauseButton.frame.size)
-            make.centerY.equalTo(controlView)
-            make.left.equalTo(controlView)
-        }
-        
-        slider.snp.remakeConstraints({ (make) in
-            make.left.equalTo(playPauseButton.snp.right).offset(10)
-            make.right.equalTo(controlView.snp.right)
-            make.centerY.equalTo(controlView)
-            make.height.equalTo(sliderHeight)
-        })
-        
-        super.updateConstraints()
+	
+	func updateProgress(progress: Double, duration: Double, setSliderValue: Bool=true) {
+		if setSliderValue {
+			let newValue = progress/duration
+			if !newValue.isNaN {
+				slider.value = Float(progress/duration)
+			}
+		}
+		
+		let progressHMS = convertToHoursMinutesSeconds(seconds: Int(progress))
+		let durationHMS = convertToHoursMinutesSeconds(seconds: Int(duration))
+		
+		let timeFormat = "%i:%02i"
+		let progressString = String(format: timeFormat, progressHMS.1, progressHMS.2)
+		let durationString = String(format: timeFormat, durationHMS.1, durationHMS.2)
+		
+		timeRemainingLabel.text = "\(progressString)/\(durationString)"
+	}
+	
+	func createConstraints() {
+		titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 16)
+		titleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
+		
+		timeRemainingLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 8)
+		timeRemainingLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		timeRemainingLabel.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
+		
+		slider.autoPinEdge(.top, to: .bottom, of: timeRemainingLabel, withOffset: 8)
+		slider.autoPinEdge(.leading, to: .trailing, of: playPauseButton, withOffset: 8)
+		slider.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
+		
+		playPauseButton.autoSetDimension(.width, toSize: 40.0)
+		playPauseButton.autoSetDimension(.height, toSize: 40.0)
+		playPauseButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: 8)
+		playPauseButton.autoAlignAxis(.horizontal, toSameAxisOf: slider)
+		
+		self.autoSetDimension(.width, toSize: UIScreen.main.bounds.width)
+		self.autoPinEdge(.bottom, to: .bottom, of: slider, withOffset: 8)
     }
 }

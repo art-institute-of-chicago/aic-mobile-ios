@@ -79,4 +79,12 @@ extension UIFont {
 	static let aicLanguageSelectionTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
 	
 	static let aicLoadingWelcomeFont: UIFont = UIFont(name: "IdealSans-Book", size: 45.0)!
+    
+    static let aicMiniPlayerTrackTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	
+	static let aicAudioPlayerTrackTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	
+	static let aicAudioPlayerTimeRemainingFont: UIFont = UIFont(name: "IdealSans-Book", size: 14.0)!
+	
+	static let aicAudioInfoSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!
 }

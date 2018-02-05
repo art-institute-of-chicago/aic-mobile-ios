@@ -118,6 +118,8 @@
 		29872A01201684CD00BB3B6A /* Info.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29872A03201684CD00BB3B6A /* Info.strings */; };
 		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
 		29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A27A071FCC769B007CEE1D /* HomeTourCell.xib */; };
+		29A67F852027752E003C630A /* AudioPlayerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F842027752E003C630A /* AudioPlayerSlider.swift */; };
+		29A67F872027D74B003C630A /* AudioInfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F862027D74B003C630A /* AudioInfoSectionView.swift */; };
 		29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */; };
 		29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */; };
 		29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */; };
@@ -233,7 +235,6 @@
 		E4DF50B01CEB8AFB0071345E /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DF50AF1CEB8AFB0071345E /* UIImageColors.swift */; };
 		E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */; };
 		E4E108E21C98F23200385842 /* TestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108E11C98F23200385842 /* TestModels.swift */; };
-		E4E108E61C99EC4C00385842 /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108E51C99EC4C00385842 /* PlayPauseButton.swift */; };
 		E4E861021CDBE46B006D07FD /* _NewsToursRevealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */; };
 		E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F518FA1D2586B0004BFB44 /* AICImageView.swift */; };
 		E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */; };
@@ -396,6 +397,8 @@
 		29872A05201684D300BB3B6A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Info.strings"; sourceTree = "<group>"; };
 		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
 		29A27A071FCC769B007CEE1D /* HomeTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTourCell.xib; sourceTree = "<group>"; };
+		29A67F842027752E003C630A /* AudioPlayerSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerSlider.swift; sourceTree = "<group>"; };
+		29A67F862027D74B003C630A /* AudioInfoSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInfoSectionView.swift; sourceTree = "<group>"; };
 		29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Bold.otf"; sourceTree = "<group>"; };
 		29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BoldItalic.otf"; sourceTree = "<group>"; };
 		29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Book.otf"; sourceTree = "<group>"; };
@@ -533,7 +536,6 @@
 		E4DF50AF1CEB8AFB0071345E /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageColors.swift; path = ThirdParty/UIImageColors/UIImageColors.swift; sourceTree = "<group>"; };
 		E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAudioFileModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4E108E11C98F23200385842 /* TestModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModels.swift; sourceTree = "<group>"; };
-		E4E108E51C99EC4C00385842 /* PlayPauseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
 		E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursRevealView.swift; sourceTree = "<group>"; };
 		E4F518FA1D2586B0004BFB44 /* AICImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICImageView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -841,6 +843,8 @@
 		29C7D0D420260E390015984B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				29A67F862027D74B003C630A /* AudioInfoSectionView.swift */,
+				29A67F842027752E003C630A /* AudioPlayerSlider.swift */,
 				E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */,
 				E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */,
 			);
@@ -1080,7 +1084,6 @@
 			children = (
 				E415ABC31C7298420093B719 /* ObjectViewController.swift */,
 				E4923FE61C9F53BE00AB255C /* ObjectView.swift */,
-				E4E108E51C99EC4C00385842 /* PlayPauseButton.swift */,
 				E4923FE21C9F36C700AB255C /* ObjectContentSectionView.swift */,
 				E4F7C1461CA1F46B005976D1 /* ObjectInfoView.swift */,
 				E4F7C1481CA1FE3E005976D1 /* ObjectRelatedToursView.swift */,
@@ -1707,7 +1710,6 @@
 				295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */,
 				E47306F01D23076900A77254 /* InstructionsPageViewController.swift in Sources */,
 				E415ABD61C7298420093B719 /* _InfoSectionViewController.swift in Sources */,
-				E4E108E61C99EC4C00385842 /* PlayPauseButton.swift in Sources */,
 				E411DE7F1CCD37A800E22047 /* AICGalleryModel.swift in Sources */,
 				294C0B6A201A770E00F2ABB1 /* MapFloorModel.swift in Sources */,
 				E42178391CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift in Sources */,
@@ -1764,6 +1766,7 @@
 				E42178361CC6B80200815B41 /* _InfoSectionTextField.swift in Sources */,
 				294C0B4D201A76F700F2ABB1 /* MapTextAnnotationView.swift in Sources */,
 				294C0B25201A756900F2ABB1 /* MapNavigationController.swift in Sources */,
+				29A67F852027752E003C630A /* AudioPlayerSlider.swift in Sources */,
 				2986A58C1FBCD38C00029E74 /* HomeNavigationController.swift in Sources */,
 				E417B52F1CA324E000C362A1 /* _InfoSectionView.swift in Sources */,
 				E4E861021CDBE46B006D07FD /* _NewsToursRevealView.swift in Sources */,
@@ -1811,6 +1814,7 @@
 				E4223CE51CC7FE6600503D43 /* MemberCardDataLoader.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,
 				29C7D0D220260AD50015984B /* AudioInfoViewController.swift in Sources */,
+				29A67F872027D74B003C630A /* AudioInfoSectionView.swift in Sources */,
 				29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */,
 				294C0B5B201A76F700F2ABB1 /* FloorplanOverlayRenderer.swift in Sources */,
 				E415ABD51C7298420093B719 /* MiniAudioPlayerView.swift in Sources */,

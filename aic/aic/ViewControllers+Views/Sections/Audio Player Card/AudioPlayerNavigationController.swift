@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 import Alamofire
+import Kingfisher
 
 class AudioPlayerNavigationController : CardNavigationController {
     var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
@@ -32,9 +33,6 @@ class AudioPlayerNavigationController : CardNavigationController {
     
     var currentAudioFile: AICAudioFileModel? = nil
     var currentAudioFileMaxProgress: CGFloat = 0
-    
-    // Cover Image for MPMediaPlayer + Object view
-    var coverImage: UIImage? = nil
     
     var isUpdatingObjectViewProgressSlider = false
     
@@ -67,9 +65,9 @@ class AudioPlayerNavigationController : CardNavigationController {
         )
         
         // Play/Pause Button
-        miniAudioPlayerView.playPauseButton.delegate = self
-        audioInfoVC.audioPlayerView.playPauseButton.delegate = self
-        
+		miniAudioPlayerView.playPauseButton.addTarget(self, action: #selector(playPauseButtonPressed(button:)), for: .touchUpInside)
+        audioInfoVC.audioPlayerView.playPauseButton.addTarget(self, action: #selector(playPauseButtonPressed(button:)), for: .touchUpInside)
+		
         // AV Session
         configureAVAudioSession()
         NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
@@ -84,13 +82,13 @@ class AudioPlayerNavigationController : CardNavigationController {
         audioInfoVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: contentTopMargin)
         audioInfoVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
         audioInfoVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-        audioInfoVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight - contentTopMargin)
+        audioInfoVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight + Common.Layout.tabBarHeight - contentTopMargin)
     }
     
     // Progress Bar Color
     
     func setProgressBarColor(color: UIColor) {
-        miniAudioPlayerView.setProgressBarColor(color)
+		miniAudioPlayerView.setProgressBarColor(color: color)
     }
     
     // MARK: Play Audio
@@ -110,13 +108,29 @@ class AudioPlayerNavigationController : CardNavigationController {
         }
         
         if load(audioFile: audioFile!, coverImageURL: artwork.imageUrl as URL) {
-            audioInfoVC.setArtworkContent(artwork: artwork)
+			miniAudioPlayerView.reset()
+			audioInfoVC.setArtworkContent(artwork: artwork, audio: audioFile!)
         }
     }
+	
+	func playTourOverview(tourOverview: AICTourOverviewModel) {
+		if load(audioFile: tourOverview.audio, coverImageURL: tourOverview.imageUrl as URL) {
+			miniAudioPlayerView.reset()
+			audioInfoVC.setTourOverviewContent(tourOverview: tourOverview)
+		}
+	}
+	
+	func playTourStop(tour: AICTourModel, stopIndex:Int) {
+		let stop = tour.stops[stopIndex]
+		if load(audioFile: stop.audio, coverImageURL: stop.object.imageUrl as URL) {
+			miniAudioPlayerView.reset()
+			audioInfoVC.setTourStopContent(tour: tour, stopIndex: stopIndex)
+		}
+	}
     
     // MARK: Load Audio
     
-    private func load(audioFile:AICAudioFileModel, coverImageURL:URL) -> Bool {
+    private func load(audioFile: AICAudioFileModel, coverImageURL: URL) -> Bool {
         
         if let currentAudioFile = currentAudioFile {
             // Make sure we haven't already tried to load this file
@@ -126,16 +140,15 @@ class AudioPlayerNavigationController : CardNavigationController {
             
             // Log analytics
             // GA only accepts int values, so send an int from 1-10
-            let progressValue:Int = Int(currentAudioFileMaxProgress * 100)
+            let progressValue: Int = Int(currentAudioFileMaxProgress * 100)
             AICAnalytics.objectViewAudioItemPlayedEvent(audioItem: currentAudioFile, pctComplete: progressValue)
-            print(currentAudioFileMaxProgress)
         }
         
         currentAudioFile = audioFile
         currentAudioFileMaxProgress = 0
         
         // Clear out current player
-        self.audioPlayerProgressTimer?.invalidate()
+        audioPlayerProgressTimer?.invalidate()
         
         // Reset visuals
         miniAudioPlayerView.resetProgress()
@@ -143,91 +156,74 @@ class AudioPlayerNavigationController : CardNavigationController {
         
         // Set the player view to show loading status
         showLoadingMessage()
-        
-        // Load the cover image
-        Alamofire.request(coverImageURL).responseData { (response) in
-            switch response.result {
-            case .failure( _ ):
-                DispatchQueue.main.async(execute: {
-                    self.showLoadError(forAudioFile: audioFile, coverImageURL: coverImageURL)
-                })
-                return
-            default:
-                break
-            }
-            
-            guard let coverImage = UIImage(data:response.data!) else {
-                DispatchQueue.main.async(execute: {
-                    self.showLoadError(forAudioFile: audioFile, coverImageURL: coverImageURL)
-                })
-                return
-            }
-            
-            self.coverImage = coverImage
-            
-           // audioInfoVC.setImage(imageURL: self.coverImage!)
-            
-            // Load the file
-            let asset = AVURLAsset(url: audioFile.url)
-            
-            asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
-                let error:NSErrorPointer = nil
-                let status = asset.statusOfValue(forKey: "tracks", error: error)
-                
-                // Make sure we're on the main thread for UI Updates (alert, timer, etc.)
-                DispatchQueue.main.async(execute: {
-                    switch status {
-                    case .failed, .cancelled:
-                        self.showLoadError(forAudioFile: audioFile, coverImageURL: coverImageURL)
-                        break
-                        
-                    case .loaded:
-                        // Create Audio Player
-                        let playerItem = AVPlayerItem(asset: asset)
-                        NotificationCenter.default.addObserver(self, selector: #selector(AudioPlayerNavigationController.audioPlayerDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
-                        
-                        // Set the item as our player's current item
-                        self.avPlayer.replaceCurrentItem(with: playerItem)
-                        
-                        // Show the audio file
-                        self.showAudioControls()
-                        
-                        // Create NSTimer to check for audio update progress and update as needed
-                        if self.audioProgressTimer == nil {
-                            self.audioPlayerProgressTimer = Timer.scheduledTimer(timeInterval: 0.25,
-                                                                                 target: self,
-                                                                                 selector: #selector(AudioPlayerNavigationController.updateAudioPlayerProgress),
-                                                                                 userInfo: nil,
-                                                                                 repeats: true
-                            )
-                        }
-                        
-                        // Set the MPNowPlaying information
-                        let songInfo: [String : AnyObject] = [
-                            MPMediaItemPropertyTitle: NSString(string: audioFile.title),
-                            MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
-                            MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: self.coverImage!),
-                            MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
-                            MPMediaItemPropertyAlbumTrackCount: NSNumber(floatLiteral: 0),
-                            MPNowPlayingInfoPropertyPlaybackQueueIndex: NSNumber(floatLiteral: 0),
-                            MPNowPlayingInfoPropertyPlaybackQueueCount: NSNumber(floatLiteral: 0)
-                        ]
-                        
-                        MPNowPlayingInfoCenter.default().nowPlayingInfo = songInfo
-                        
-                        // Auto-play on load
-                        
-                        self.play()
-                        
-                        break
-                        
-                    default:
-                        print("Unknown error")
-                    }
-                    
-                })
-            }
-        }
+		
+		// Load the file
+		let asset = AVURLAsset(url: audioFile.url)
+		asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
+			let error:NSErrorPointer = nil
+			let status = asset.statusOfValue(forKey: "tracks", error: error)
+			
+			// Make sure we're on the main thread for UI Updates (alert, timer, etc.)
+			DispatchQueue.main.async(execute: {
+				switch status {
+				case .failed, .cancelled:
+					self.showLoadError(forAudioFile: audioFile, coverImageURL: coverImageURL)
+					break
+					
+				case .loaded:
+					// Create Audio Player
+					let playerItem = AVPlayerItem(asset: asset)
+					NotificationCenter.default.addObserver(self, selector: #selector(AudioPlayerNavigationController.audioPlayerDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+					
+					// Set the item as our player's current item
+					self.avPlayer.replaceCurrentItem(with: playerItem)
+					
+					// Show the audio file
+					self.showAudioControls()
+					
+					// Create NSTimer to check for audio update progress and update as needed
+					if self.audioProgressTimer == nil {
+						self.audioPlayerProgressTimer = Timer.scheduledTimer(timeInterval: 0.25,
+																			 target: self,
+																			 selector: #selector(AudioPlayerNavigationController.updateAudioPlayerProgress),
+																			 userInfo: nil,
+																			 repeats: true
+						)
+					}
+					
+					// Retrieve cover image
+					KingfisherManager.shared.retrieveImage(with: ImageResource(downloadURL: coverImageURL, cacheKey: coverImageURL.absoluteString), options: KingfisherManager.shared.defaultOptions, progressBlock: nil, completionHandler: { (image, error, cacheType, imageUrl) in
+						
+						// MPMediaItemPropertyArtwork
+						let artwork = MPMediaItemArtwork.init(boundsSize: image!.size, requestHandler: { (size) -> UIImage in
+							return image!
+						})
+						
+						// Set the MPNowPlaying information
+						let songInfo: [String : AnyObject] = [
+							MPMediaItemPropertyTitle: NSString(string: audioFile.title),
+							MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
+							MPMediaItemPropertyArtwork: artwork,
+							MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
+							MPMediaItemPropertyAlbumTrackCount: NSNumber(floatLiteral: 0),
+							MPNowPlayingInfoPropertyPlaybackQueueIndex: NSNumber(floatLiteral: 0),
+							MPNowPlayingInfoPropertyPlaybackQueueCount: NSNumber(floatLiteral: 0),
+							MPNowPlayingInfoPropertyPlaybackRate: NSInteger(1.0) as AnyObject
+						]
+						
+						MPNowPlayingInfoCenter.default().nowPlayingInfo = songInfo
+					})
+					
+					// Auto-play on load
+					self.play()
+					
+					break
+					
+				default:
+					print("Unknown error")
+				}
+			})
+		}
         
         return true
     }
@@ -235,24 +231,25 @@ class AudioPlayerNavigationController : CardNavigationController {
     private func showLoadError(forAudioFile audioFile:AICAudioFileModel, coverImageURL:URL) {
         // Preset a UIAlertView that allows the user to try to load the file.
         let alertView = UIAlertController(title: loadFailureTitle, message: loadFailureMessage, preferredStyle: .alert)
-        alertView.addAction(UIAlertAction(title: self.reloadButtonTitle, style: .default, handler: { (alertAction) -> Void in
+        alertView.addAction(UIAlertAction(title: reloadButtonTitle, style: .default, handler: { (alertAction) -> Void in
             self.currentAudioFile = nil
             _ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
         }))
         
-        alertView.addAction(UIAlertAction(title: self.cancelButtonTitle, style: .cancel, handler: nil))
+        alertView.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: nil))
         self.present(alertView, animated: true, completion: nil)
     }
     
     // Set the loading status as the track title
     private func showLoadingMessage() {
-        miniAudioPlayerView.showMessage(loadingMessage)
-        audioInfoVC.audioPlayerView.showMessage(message: loadingMessage)
+        let localizedLoadingMessage = loadingMessage.localized(using: "AudioPlayer")
+        miniAudioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
+        audioInfoVC.audioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
     }
     
     private func showAudioControls() {
-        miniAudioPlayerView.showProgressAndControls(currentAudioFile!.title)
-        audioInfoVC.audioPlayerView.showProgressAndControls(withTitle: currentAudioFile!.title)
+        miniAudioPlayerView.showTrackTitle(title: currentAudioFile!.title)
+        audioInfoVC.audioPlayerView.showTrackTitle(title: currentAudioFile!.title)
     }
     
     // MARK: Audio Playback
@@ -308,13 +305,7 @@ class AudioPlayerNavigationController : CardNavigationController {
             
             // Play
             avPlayer.play()
-            synchronizePlayPauseButtons(forMode: PlayPauseButton.Mode.playing)
-            
-            // Update MPNowPlaying
-            var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
-            info![MPNowPlayingInfoPropertyPlaybackRate] = NSInteger(1.0)
-            
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+            synchronizePlayPauseButtons(isPlaying: true)
             
             // Enable proximity sensing, needed when user is holding phone to their ear to listen to audio
             UIDevice.current.isProximityMonitoringEnabled = true
@@ -324,7 +315,7 @@ class AudioPlayerNavigationController : CardNavigationController {
     @objc internal func pause() {
         if avPlayer.currentItem != nil {
             avPlayer.pause()
-            synchronizePlayPauseButtons(forMode: PlayPauseButton.Mode.paused)
+            synchronizePlayPauseButtons(isPlaying: false)
             
             var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
             info![MPNowPlayingInfoPropertyPlaybackRate] = NSInteger(0.0)
@@ -369,9 +360,9 @@ class AudioPlayerNavigationController : CardNavigationController {
         }
     }
     
-    fileprivate func synchronizePlayPauseButtons(forMode mode: PlayPauseButton.Mode) {
-        miniAudioPlayerView.playPauseButton.mode = mode
-        audioInfoVC.audioPlayerView.playPauseButton.mode = mode
+    fileprivate func synchronizePlayPauseButtons(isPlaying: Bool) {
+        miniAudioPlayerView.playPauseButton.isSelected = isPlaying
+        audioInfoVC.audioPlayerView.playPauseButton.isSelected = isPlaying
     }
     
     // Show/Hide
@@ -463,20 +454,20 @@ extension AudioPlayerNavigationController {
             
             // Update the progress bar views
             audioInfoVC.audioPlayerView.updateProgress(progress: progress, duration: duration, setSliderValue: !isUpdatingObjectViewProgressSlider)
-            miniAudioPlayerView.updateProgress(progress, duration: duration)
+			miniAudioPlayerView.updateProgress(progress: progress, duration: duration)
             
             // Update now playing with progress
-            var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
-            info![MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSInteger(progress)
-            
-            DispatchQueue.main.async {
-                MPNowPlayingInfoCenter.default().nowPlayingInfo = info
-            }
+			if var info = MPNowPlayingInfoCenter.default().nowPlayingInfo {
+            	info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSInteger(progress)
+            	DispatchQueue.main.async {
+                	MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+            	}
+			}
         }
     }
     
     @objc internal func audioPlayerDidFinishPlaying(_ notification:Notification) {
-        synchronizePlayPauseButtons(forMode: .paused)
+        synchronizePlayPauseButtons(isPlaying: false)
     }
     
     // Audio player Slider Events
@@ -501,27 +492,27 @@ extension AudioPlayerNavigationController {
     }
     
     @objc internal func miniAudioPlayerCloseButtonPressed(button: UIButton) {
-        hide()
+		pause()
+		hide()
+		
+		// TODO: remove track from MPNowPlayingInfoCenter and RemoteControl
     }
     
     @objc internal func miniAudioPlayerTapped() {
         showFullscreen()
     }
-}
-
-// MARK: PlayPauseButtonDelegate
-
-extension AudioPlayerNavigationController : PlayPauseButtonDelegate {
-    internal func playPauseButton(_ viewController:PlayPauseButton, modeChanged mode: PlayPauseButton.Mode) {
-        switch mode {
-        case PlayPauseButton.Mode.playing:
-            if avPlayer.currentItem?.duration == avPlayer.currentTime() {
-                seekToTime(0)
-            }
-            play()
-            
-        case PlayPauseButton.Mode.paused:
-            pause()
-        }
-    }
+	
+	@objc internal func playPauseButtonPressed(button: UIButton) {
+		// Play
+		if button.isSelected == false {
+			if avPlayer.currentItem?.duration == avPlayer.currentTime() {
+				seekToTime(0)
+			}
+			play()
+		}
+		// Pause
+		else {
+			pause()
+		}
+	}
 }
