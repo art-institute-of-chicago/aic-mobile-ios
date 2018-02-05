@@ -16,18 +16,20 @@ class InfoNavigationController : SectionNavigationController {
 	
 	override init(section: AICSectionModel) {
 		infoVC = InfoViewController(section: section)
-		
 		super.init(section: section)
-		
-		self.delegate = self
-		
-		infoVC.delegate = self
-		
-		self.pushViewController(infoVC, animated: false)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		self.delegate = self
+		infoVC.delegate = self
+		
+		self.pushViewController(infoVC, animated: false)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
