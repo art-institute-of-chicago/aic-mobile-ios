@@ -134,7 +134,9 @@ class AudioInfoSectionView : UIView {
 		bodyTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		bodyTextView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
 		
-		infoSectionHeight = self.autoSetDimension(.height, toSize: bodyTextView.frame.origin.y + bodyTextView.frame.height + 40)
+		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
+			infoSectionHeight = self.autoSetDimension(.height, toSize: bodyTextView.frame.origin.y + bodyTextView.frame.height + 40)
+		}
 	}
 	
 	// MARK: Collapse Button
@@ -144,22 +146,16 @@ class AudioInfoSectionView : UIView {
 			UIView.animate(withDuration: collapseAnimationDuration, animations: {
 				self.bodyTextView.alpha = 0
 				self.infoSectionHeight?.constant = self.collapsedHeight
-				self.collapseExpandButton.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi * 2.0))
-				self.setNeedsLayout()
-				self.layoutIfNeeded()
+				self.delegate?.audioInfoSectionDidUpdateHeight(audioInfoSectionView: self)
 			})
 		} else {
 			UIView.animate(withDuration: collapseAnimationDuration, animations: {
 				self.bodyTextView.alpha = 1
 				self.infoSectionHeight?.constant = self.bodyTextView.frame.origin.y + self.bodyTextView.frame.height + 32
-				self.collapseExpandButton.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
-				self.setNeedsLayout()
-				self.layoutIfNeeded()
+				self.delegate?.audioInfoSectionDidUpdateHeight(audioInfoSectionView: self)
 			})
 		}
 		
 		button.isSelected = !button.isSelected
-		
-		self.delegate?.audioInfoSectionDidUpdateHeight(audioInfoSectionView: self)
 	}
 }
