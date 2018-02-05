@@ -37,8 +37,7 @@ class AudioInfoSectionView : UIView {
 		titleLabel.textColor = .white
 		titleLabel.font = .aicAudioInfoSectionTitleFont
 		
-		collapseExpandButton.setImage(#imageLiteral(resourceName: "audioInfoExpand"), for: .normal)
-		collapseExpandButton.setImage(#imageLiteral(resourceName: "audioInfoCollapse"), for: .selected)
+		collapseExpandButton.setImage(#imageLiteral(resourceName: "audioInfoCollapseExpand"), for: .normal)
 		collapseExpandButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 		collapseExpandButton.addTarget(self, action: #selector(collapseButtonPressed(button:)), for: .touchUpInside)
 		collapseExpandButton.isEnabled = false
@@ -75,16 +74,16 @@ class AudioInfoSectionView : UIView {
 	
 	func show(collapseEnabled: Bool) {
 		isHidden = false
+		collapseExpandButton.isEnabled = collapseEnabled
+		collapseExpandButton.isHidden = !collapseEnabled
+		collapseExpandButton.isSelected = false
+		collapseExpandButton.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
 		if collapseEnabled == true {
 			infoSectionHeight?.constant = collapsedHeight
-			collapseExpandButton.isEnabled = true
-			collapseExpandButton.isHidden = false
 			bodyTextView.alpha = 0
 		}
 		else {
 			infoSectionHeight?.constant = bodyTextView.frame.origin.y + bodyTextView.frame.height + 32
-			collapseExpandButton.isEnabled = false
-			collapseExpandButton.isHidden = true
 			bodyTextView.alpha = 1
 		}
 		self.setNeedsLayout()
@@ -145,12 +144,14 @@ class AudioInfoSectionView : UIView {
 		if button.isSelected {
 			UIView.animate(withDuration: collapseAnimationDuration, animations: {
 				self.bodyTextView.alpha = 0
+				self.collapseExpandButton.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
 				self.infoSectionHeight?.constant = self.collapsedHeight
 				self.delegate?.audioInfoSectionDidUpdateHeight(audioInfoSectionView: self)
 			})
 		} else {
 			UIView.animate(withDuration: collapseAnimationDuration, animations: {
 				self.bodyTextView.alpha = 1
+				self.collapseExpandButton.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi * 2.0))
 				self.infoSectionHeight?.constant = self.bodyTextView.frame.origin.y + self.bodyTextView.frame.height + 32
 				self.delegate?.audioInfoSectionDidUpdateHeight(audioInfoSectionView: self)
 			})
