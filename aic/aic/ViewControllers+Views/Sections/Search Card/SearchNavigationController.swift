@@ -14,6 +14,7 @@ class SearchNavigationController : CardNavigationController {
 	let searchButton: UIButton = UIButton()
 	let dividerLine: UIView = UIView()
 	let resultsVC: ResultsTableViewController = ResultsTableViewController()
+	var currentTableView: UITableView
     
     let slideAnimator: SearchSlideAnimator = SearchSlideAnimator()
 	
@@ -24,6 +25,7 @@ class SearchNavigationController : CardNavigationController {
 	var searchBarInactiveLeading: CGFloat = 32
 	
 	init() {
+		currentTableView = resultsVC.tableView
         super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -67,10 +69,6 @@ class SearchNavigationController : CardNavigationController {
 		dividerLine.backgroundColor = .white
 		
 		resultsVC.searchDelegate = self
-		
-		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
-		//self.rootVC.view.clipsToBounds = false
-//        resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardFullscreenPositionY - searchResultsTopMargin - Common.Layout.tabBarHeight)
 		
 		// Add subviews
 		self.view.addSubview(searchBar)
@@ -174,13 +172,10 @@ class SearchNavigationController : CardNavigationController {
 	
 	// Back Button Pressed
 	@objc func backButtonPressed(button: UIButton) {
+		currentTableView = resultsVC.tableView
 		hideBackButton()
 		self.popViewController(animated: true)
 		self.view.layoutIfNeeded()
-		
-		// TEMPORARY FIX!
-		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
-//        resultsVC.view.frame = CGRect(x: 0, y: searchResultsTopMargin, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.cardFullscreenPositionY - searchResultsTopMargin - Common.Layout.tabBarHeight)
 	}
 	
 	func showBackButton() {
@@ -205,6 +200,19 @@ class SearchNavigationController : CardNavigationController {
 			self.searchBarLeadingConstraint?.constant = self.searchBarActiveLeading
 			self.view.layoutIfNeeded()
 		}
+	}
+	
+	func showSearchContentViewController(tableVC: UITableViewController) {
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
+		
+		showBackButton()
+		
+		currentTableView = tableVC.tableView
+		
+		let contentVC = SearchContentViewController(tableVC: tableVC)
+		self.pushViewController(contentVC, animated: true)
 	}
 }
 
@@ -285,27 +293,13 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	}
 	
 	func resultsTableDidSelect(artwork: AICObjectModel) {
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.resignFirstResponder()
-		searchTextField?.layoutIfNeeded()
-		
-		showBackButton()
-		
 		let artworkVC = ArtworkTableViewController(artwork: artwork)
-		let contentVC = SearchContentViewController(tableVC: artworkVC)
-		self.pushViewController(contentVC, animated: true)
+		showSearchContentViewController(tableVC: artworkVC)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.resignFirstResponder()
-		searchTextField?.layoutIfNeeded()
-		
-		showBackButton()
-		
 		let tourVC = TourTableViewController(tour: tour)
-		let contentVC = SearchContentViewController(tableVC: tourVC)
-		self.pushViewController(contentVC, animated: true)
+		showSearchContentViewController(tableVC: tourVC)
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
@@ -329,8 +323,8 @@ extension SearchNavigationController : UINavigationControllerDelegate {
 // Pan Gesture
 extension SearchNavigationController {
 	override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-		if gestureRecognizer == cardPanGesture || otherGestureRecognizer == cardPanGesture {
-			if resultsVC.tableView.contentOffset.y <= 0 {
+		if gestureRecognizer == cardPanGesture {
+			if currentTableView.contentOffset.y <= 0 {
 				return true
 			}
 		}

@@ -95,7 +95,7 @@ class CardNavigationController : UINavigationController {
     // MARK: Position
     
     fileprivate func setCardPosition(_ positionY: CGFloat) {
-        let yPosition = clamp(val: positionY, minVal: positionForState[openState]!, maxVal: positionForState[closedState]!)
+        let yPosition = clamp(val: positionY, minVal: positionForState[openState]!, maxVal: positionForState[.hidden]!)
         self.view.frame.origin = CGPoint(x: 0, y: yPosition)
         
         self.cardDelegate?.cardDidUpdatePosition?(cardVC: self, position: self.view.frame.origin)
@@ -142,9 +142,11 @@ class CardNavigationController : UINavigationController {
             self.setCardPosition(self.positionForState[.hidden]!)
             self.view.layer.cornerRadius = 0
         }, completion: { (completed) in
-            self.currentState = .hidden
-            self.cardDidHide()
-            self.cardDelegate?.cardDidHide?(cardVC: self)
+			if completed == true {
+				self.currentState = .hidden
+				self.cardDidHide()
+				self.cardDelegate?.cardDidHide?(cardVC: self)
+			}
         })
     }
     

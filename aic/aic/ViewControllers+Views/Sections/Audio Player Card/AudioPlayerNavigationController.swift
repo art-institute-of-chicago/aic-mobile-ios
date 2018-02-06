@@ -494,7 +494,7 @@ extension AudioPlayerNavigationController {
     @objc internal func miniAudioPlayerCloseButtonPressed(button: UIButton) {
 		pause()
 		hide()
-		
+		currentAudioFile = nil
 		// TODO: remove track from MPNowPlayingInfoCenter and RemoteControl
     }
     

@@ -582,9 +582,5 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 		if cardVC.isKind(of: ContentCardNavigationController.self) {
 			cardVC.view.removeFromSuperview()
 		}
-//		else if cardVC == searchVC {
-//			searchButton.isHidden = false
-//			searchButton.isEnabled = true
-//		}
 	}
 }

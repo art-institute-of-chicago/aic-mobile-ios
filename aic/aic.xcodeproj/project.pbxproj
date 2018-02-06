@@ -123,16 +123,6 @@
 		29A67F8A2028F7B6003C630A /* TourStopsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F892028F7B6003C630A /* TourStopsNavigationController.swift */; };
 		29A67F8C20290389003C630A /* TourStopPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F8B20290389003C630A /* TourStopPageViewController.swift */; };
 		29A67F8E20290B2C003C630A /* TourStopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F8D20290B2C003C630A /* TourStopViewController.swift */; };
-		29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */; };
-		29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */; };
-		29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */; };
-		29A7BCF31FBF85DB00FD8639 /* IdealSans-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE41FBF85DB00FD8639 /* IdealSans-BookItalic.otf */; };
-		29A7BCF41FBF85DB00FD8639 /* IdealSans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE51FBF85DB00FD8639 /* IdealSans-Light.otf */; };
-		29A7BCF51FBF85DB00FD8639 /* IdealSans-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE61FBF85DB00FD8639 /* IdealSans-LightItalic.otf */; };
-		29A7BCF61FBF85DB00FD8639 /* IdealSans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE71FBF85DB00FD8639 /* IdealSans-Medium.otf */; };
-		29A7BCF71FBF85DB00FD8639 /* IdealSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE81FBF85DB00FD8639 /* IdealSans-MediumItalic.otf */; };
-		29A7BCF81FBF85DB00FD8639 /* IdealSans-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE91FBF85DB00FD8639 /* IdealSans-Semibold.otf */; };
-		29A7BCF91FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEA1FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf */; };
 		29A7BCFA1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf */; };
 		29A7BCFB1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCED1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf */; };
 		29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEE1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf */; };
@@ -163,6 +153,16 @@
 		29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */; };
 		29F26201200FFADF0000BF05 /* ArtworkContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */; };
 		29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */; };
+		29F8997F202A3CA90081BA22 /* IdealSans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F89975202A3CA80081BA22 /* IdealSans-Light.otf */; };
+		29F89980202A3CA90081BA22 /* IdealSans-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F89976202A3CA80081BA22 /* IdealSans-Semibold.otf */; };
+		29F89981202A3CA90081BA22 /* IdealSans-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F89977202A3CA80081BA22 /* IdealSans-LightItalic.otf */; };
+		29F89982202A3CA90081BA22 /* IdealSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F89978202A3CA80081BA22 /* IdealSans-BoldItalic.otf */; };
+		29F89983202A3CA90081BA22 /* IdealSans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F89979202A3CA80081BA22 /* IdealSans-Medium.otf */; };
+		29F89984202A3CA90081BA22 /* IdealSans-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F8997A202A3CA80081BA22 /* IdealSans-SemiboldItalic.otf */; };
+		29F89985202A3CA90081BA22 /* IdealSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F8997B202A3CA90081BA22 /* IdealSans-Book.otf */; };
+		29F89986202A3CA90081BA22 /* IdealSans-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F8997C202A3CA90081BA22 /* IdealSans-BookItalic.otf */; };
+		29F89987202A3CA90081BA22 /* IdealSans-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F8997D202A3CA90081BA22 /* IdealSans-MediumItalic.otf */; };
+		29F89988202A3CA90081BA22 /* IdealSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29F8997E202A3CA90081BA22 /* IdealSans-Bold.otf */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
 		E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */; };
@@ -405,16 +405,6 @@
 		29A67F892028F7B6003C630A /* TourStopsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourStopsNavigationController.swift; sourceTree = "<group>"; };
 		29A67F8B20290389003C630A /* TourStopPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourStopPageViewController.swift; sourceTree = "<group>"; };
 		29A67F8D20290B2C003C630A /* TourStopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourStopViewController.swift; sourceTree = "<group>"; };
-		29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Bold.otf"; sourceTree = "<group>"; };
-		29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BoldItalic.otf"; sourceTree = "<group>"; };
-		29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Book.otf"; sourceTree = "<group>"; };
-		29A7BCE41FBF85DB00FD8639 /* IdealSans-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BookItalic.otf"; sourceTree = "<group>"; };
-		29A7BCE51FBF85DB00FD8639 /* IdealSans-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Light.otf"; sourceTree = "<group>"; };
-		29A7BCE61FBF85DB00FD8639 /* IdealSans-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-LightItalic.otf"; sourceTree = "<group>"; };
-		29A7BCE71FBF85DB00FD8639 /* IdealSans-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Medium.otf"; sourceTree = "<group>"; };
-		29A7BCE81FBF85DB00FD8639 /* IdealSans-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-MediumItalic.otf"; sourceTree = "<group>"; };
-		29A7BCE91FBF85DB00FD8639 /* IdealSans-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Semibold.otf"; sourceTree = "<group>"; };
-		29A7BCEA1FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		29A7BCEC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-Bold.otf"; sourceTree = "<group>"; };
 		29A7BCED1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-BoldItalic.otf"; sourceTree = "<group>"; };
 		29A7BCEE1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-Italic.otf"; sourceTree = "<group>"; };
@@ -449,6 +439,16 @@
 		29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkContentCell.swift; sourceTree = "<group>"; };
 		29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtworkContentCell.xib; sourceTree = "<group>"; };
 		29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllHeaderView.swift; sourceTree = "<group>"; };
+		29F89975202A3CA80081BA22 /* IdealSans-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Light.otf"; sourceTree = "<group>"; };
+		29F89976202A3CA80081BA22 /* IdealSans-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Semibold.otf"; sourceTree = "<group>"; };
+		29F89977202A3CA80081BA22 /* IdealSans-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-LightItalic.otf"; sourceTree = "<group>"; };
+		29F89978202A3CA80081BA22 /* IdealSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BoldItalic.otf"; sourceTree = "<group>"; };
+		29F89979202A3CA80081BA22 /* IdealSans-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Medium.otf"; sourceTree = "<group>"; };
+		29F8997A202A3CA80081BA22 /* IdealSans-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		29F8997B202A3CA90081BA22 /* IdealSans-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Book.otf"; sourceTree = "<group>"; };
+		29F8997C202A3CA90081BA22 /* IdealSans-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BookItalic.otf"; sourceTree = "<group>"; };
+		29F8997D202A3CA90081BA22 /* IdealSans-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-MediumItalic.otf"; sourceTree = "<group>"; };
+		29F8997E202A3CA90081BA22 /* IdealSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Bold.otf"; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		34A42DED784747728FEECA5D /* Pods_aicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -813,16 +813,16 @@
 		29A7BCE01FBF85DB00FD8639 /* idealsans */ = {
 			isa = PBXGroup;
 			children = (
-				29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */,
-				29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */,
-				29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */,
-				29A7BCE41FBF85DB00FD8639 /* IdealSans-BookItalic.otf */,
-				29A7BCE51FBF85DB00FD8639 /* IdealSans-Light.otf */,
-				29A7BCE61FBF85DB00FD8639 /* IdealSans-LightItalic.otf */,
-				29A7BCE71FBF85DB00FD8639 /* IdealSans-Medium.otf */,
-				29A7BCE81FBF85DB00FD8639 /* IdealSans-MediumItalic.otf */,
-				29A7BCE91FBF85DB00FD8639 /* IdealSans-Semibold.otf */,
-				29A7BCEA1FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf */,
+				29F8997E202A3CA90081BA22 /* IdealSans-Bold.otf */,
+				29F89978202A3CA80081BA22 /* IdealSans-BoldItalic.otf */,
+				29F8997B202A3CA90081BA22 /* IdealSans-Book.otf */,
+				29F8997C202A3CA90081BA22 /* IdealSans-BookItalic.otf */,
+				29F89975202A3CA80081BA22 /* IdealSans-Light.otf */,
+				29F89977202A3CA80081BA22 /* IdealSans-LightItalic.otf */,
+				29F89979202A3CA80081BA22 /* IdealSans-Medium.otf */,
+				29F8997D202A3CA90081BA22 /* IdealSans-MediumItalic.otf */,
+				29F89976202A3CA80081BA22 /* IdealSans-Semibold.otf */,
+				29F8997A202A3CA80081BA22 /* IdealSans-SemiboldItalic.otf */,
 			);
 			path = idealsans;
 			sourceTree = "<group>";
@@ -1429,20 +1429,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				293D009A1FA7C80D00BF2C26 /* README in Resources */,
-				29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */,
 				293D00991FA7C80D00BF2C26 /* OFL.txt in Resources */,
 				293D00961FA7C80D00BF2C26 /* OFL.txt in Resources */,
 				293D00A41FA7C80D00BF2C26 /* SourceSansPro-Regular.ttf in Resources */,
 				293D009E1FA7C80D00BF2C26 /* SourceSansPro-BoldItalic.ttf in Resources */,
+				29F89988202A3CA90081BA22 /* IdealSans-Bold.otf in Resources */,
 				29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */,
+				29F89986202A3CA90081BA22 /* IdealSans-BookItalic.otf in Resources */,
 				293D00A81FA7C82200BF2C26 /* map in Resources */,
 				29A7BCFB1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf in Resources */,
 				29872A01201684CD00BB3B6A /* Info.strings in Resources */,
 				298729FA2016378000BB3B6A /* Home.strings in Resources */,
 				29A7BCFA1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Bold.otf in Resources */,
+				29F89981202A3CA90081BA22 /* IdealSans-LightItalic.otf in Resources */,
 				29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */,
 				E497FA601D009B13007FA272 /* Assets.xcassets in Resources */,
 				293D00A61FA7C80D00BF2C26 /* SourceSansPro-SemiboldItalic.ttf in Resources */,
+				29F89983202A3CA90081BA22 /* IdealSans-Medium.otf in Resources */,
 				293D00A51FA7C80D00BF2C26 /* SourceSansPro-Semibold.ttf in Resources */,
 				293D00951FA7C80D00BF2C26 /* METADATA.json in Resources */,
 				293D009F1FA7C80D00BF2C26 /* SourceSansPro-ExtraLight.ttf in Resources */,
@@ -1451,7 +1454,6 @@
 				2931277F1FDF0EB5008BFAB1 /* ContentButtonCell.xib in Resources */,
 				2912219B1FDB43040096BB75 /* SuggestedSearchCell.xib in Resources */,
 				293D009B1FA7C80D00BF2C26 /* SourceSansPro-Black.ttf in Resources */,
-				29A7BCF41FBF85DB00FD8639 /* IdealSans-Light.otf in Resources */,
 				2902198E1FCE2ABA006CFA9E /* HomeEventCell.xib in Resources */,
 				293D00921FA7C80D00BF2C26 /* Lora-BoldItalic.ttf in Resources */,
 				294C0B1B20193AC800F2ABB1 /* LocationSettings.strings in Resources */,
@@ -1460,40 +1462,38 @@
 				293D00A21FA7C80D00BF2C26 /* SourceSansPro-Light.ttf in Resources */,
 				294C0B23201A52CB00F2ABB1 /* EventContentCell.xib in Resources */,
 				293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */,
+				29F89980202A3CA90081BA22 /* IdealSans-Semibold.otf in Resources */,
 				293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */,
 				293D009C1FA7C80D00BF2C26 /* SourceSansPro-BlackItalic.ttf in Resources */,
 				29CDAF96202225D500D1A30D /* Messages.strings in Resources */,
+				29F8997F202A3CA90081BA22 /* IdealSans-Light.otf in Resources */,
 				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
 				2968F6932012B33000638153 /* TabMenu.strings in Resources */,
-				29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */,
 				29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */,
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
-				29A7BCF51FBF85DB00FD8639 /* IdealSans-LightItalic.otf in Resources */,
 				E47A97381CF607990041D0A6 /* Settings.bundle in Resources */,
-				29A7BCF31FBF85DB00FD8639 /* IdealSans-BookItalic.otf in Resources */,
-				29A7BCF71FBF85DB00FD8639 /* IdealSans-MediumItalic.otf in Resources */,
-				29A7BCF61FBF85DB00FD8639 /* IdealSans-Medium.otf in Resources */,
 				2931277C1FDEF327008BFAB1 /* MapItemCell.xib in Resources */,
-				29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */,
 				2968F68B2012942800638153 /* LanguageSettings.strings in Resources */,
 				2941CE7E1FE092AC00B7CCEE /* TourContentCell.xib in Resources */,
 				293D00A31FA7C80D00BF2C26 /* SourceSansPro-LightItalic.ttf in Resources */,
-				29A7BCF91FBF85DB00FD8639 /* IdealSans-SemiboldItalic.otf in Resources */,
+				29F89987202A3CA90081BA22 /* IdealSans-MediumItalic.otf in Resources */,
 				293D00A11FA7C80D00BF2C26 /* SourceSansPro-Italic.ttf in Resources */,
 				29412AEC1FCE1F44005A7172 /* HomeExhibitionCell.xib in Resources */,
-				29A7BCF81FBF85DB00FD8639 /* IdealSans-Semibold.otf in Resources */,
 				29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */,
 				E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */,
 				29C7D0CC202541E00015984B /* AudioPlayer.strings in Resources */,
 				298729F320155E2C00BB3B6A /* Sections.strings in Resources */,
 				293D00A01FA7C80D00BF2C26 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
+				29F89985202A3CA90081BA22 /* IdealSans-Book.otf in Resources */,
 				293D00AC1FA7CA6700BF2C26 /* video in Resources */,
+				29F89984202A3CA90081BA22 /* IdealSans-SemiboldItalic.otf in Resources */,
 				294338561FDD656500ECF321 /* MapItemsCollectionContainerCell.xib in Resources */,
 				29F26201200FFADF0000BF05 /* ArtworkContentCell.xib in Resources */,
 				293D008F1FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */,
 				29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */,
 				293D00971FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */,
 				29A7BCFD1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf in Resources */,
+				29F89982202A3CA90081BA22 /* IdealSans-BoldItalic.otf in Resources */,
 				293D00931FA7C80D00BF2C26 /* Lora-Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

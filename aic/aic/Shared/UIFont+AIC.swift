@@ -8,11 +8,11 @@ import UIKit
 extension UIFont {
 	static let aicSectionBigTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 40.0)!
 	
-	static let aicSectionTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 30.0)!
+	static let aicSectionTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 30.0)!.upperCaseNumbers()
 	
 	static let aicSectionDescriptionFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 16.0)!
 
-	static let aicNumberPadFont: UIFont = UIFont(name: "SourceSansPro-Regular", size: 30.0)!
+	static let aicNumberPadFont: UIFont = UIFont(name: "SourceSansPro-Regular", size: 30.0)!.upperCaseNumbers()
 
 	static let aicHeaderSmallFont: UIFont = UIFont(name: "SourceSansPro-Black", size: 26.0)!
 
@@ -93,4 +93,23 @@ extension UIFont {
 	static let aicMapCardBoldTextFont: UIFont = UIFont(name: "IdealSans-Medium", size: 16.0)!
 	
 	static let aicMapCardTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	
+	func upperCaseNumbers() -> UIFont {
+		let originalFontDescriptor = self.fontDescriptor
+		
+		// Everry Font feature has a specific identifier (ex: "Number Case" is 21)
+		// Full list of font features identifiers and values here: https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type1
+		let numberCaseFeatureIdentifier = 21
+		let upperCaseSelectorValue = 1
+		let featureSettings = [
+			[ UIFontDescriptor.FeatureKey.featureIdentifier: numberCaseFeatureIdentifier,
+			  UIFontDescriptor.FeatureKey.typeIdentifier: upperCaseSelectorValue]
+		]
+		
+		let attributes = [UIFontDescriptor.AttributeName.featureSettings: featureSettings]
+		let fontDescriptor =  originalFontDescriptor.addingAttributes(attributes)
+		let font = UIFont(descriptor: fontDescriptor, size: 0)
+		
+		return font
+	}
 }
