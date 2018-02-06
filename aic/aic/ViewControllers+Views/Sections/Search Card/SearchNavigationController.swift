@@ -105,8 +105,7 @@ class SearchNavigationController : CardNavigationController {
 		dividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
-
-		// TODO: figure out why I can set constraints on the tableVC, it messes up when navigating to the next page
+		
         resultsVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: searchResultsTopMargin)
         resultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
         resultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
@@ -325,5 +324,17 @@ extension SearchNavigationController : UINavigationControllerDelegate {
         slideAnimator.isAnimatingIn = (operation == .push)
         return slideAnimator
     }
+}
+
+// Pan Gesture
+extension SearchNavigationController {
+	override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		if gestureRecognizer == cardPanGesture || otherGestureRecognizer == cardPanGesture {
+			if resultsVC.tableView.contentOffset.y <= 0 {
+				return true
+			}
+		}
+		return false
+	}
 }
 

@@ -20,6 +20,8 @@ class SectionsViewController : UIViewController {
     //let objectVC: ObjectViewController = ObjectViewController();
     let audioPlayerVC: AudioPlayerNavigationController = AudioPlayerNavigationController()
 	
+	var contentCardVC: ContentCardNavigationController? = nil
+	
 	// Search Card
 	let searchVC: SearchNavigationController = SearchNavigationController()
 	
@@ -168,6 +170,9 @@ class SectionsViewController : UIViewController {
 		if currentViewController != previousViewController {
 			if searchVC.currentState == .fullscreen {
 				searchVC.hide()
+			}
+			if let contentCardVC = self.contentCardVC {
+				contentCardVC.hide()
 			}
 		}
         
@@ -433,24 +438,24 @@ extension SectionsViewController : UITabBarControllerDelegate {
 
 extension SectionsViewController : HomeNavigationControllerDelegate {
 	func showTourCard(tour: AICTourModel) {
-		let contentCardVC = ContentCardNavigationController(tour: tour)
-		contentCardVC.cardDelegate = self
-		showContentCard(contentCardVC)
+		showContentCard(ContentCardNavigationController(tour: tour))
 	}
 	
 	func showExhibitionCard(exhibition: AICExhibitionModel) {
-		let contentCardVC = ContentCardNavigationController(exhibition: exhibition)
-		contentCardVC.cardDelegate = self
-		showContentCard(contentCardVC)
+		showContentCard(ContentCardNavigationController(exhibition: exhibition))
 	}
 	
 	func showEventCard(event: AICEventModel) {
-		let contentCardVC = ContentCardNavigationController(event: event)
-		contentCardVC.cardDelegate = self
-		showContentCard(contentCardVC)
+		showContentCard(ContentCardNavigationController(event: event))
 	}
 	
 	func showContentCard(_ contentCardVC: ContentCardNavigationController) {
+		if let cardVC = self.contentCardVC {
+			cardVC.view.removeFromSuperview()
+		}
+		self.contentCardVC = contentCardVC
+		contentCardVC.cardDelegate = self
+		
 		searchButton.isHidden = true
 		searchButton.isEnabled = false
 		
