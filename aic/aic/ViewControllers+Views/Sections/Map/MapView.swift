@@ -109,19 +109,19 @@ class MapView: MKMapView {
         }
     }
     
-    func setRandomZoomAndHeading(forCenterCoordinate centerCoordinate:CLLocationCoordinate2D, duration:Double=0.5) {
-        let ran = Double(arc4random())/Double(UINT32_MAX)
-        let randomHeading = map(val: ran, oldRange1: 0.0, oldRange2: 1.0, newRange1: -45.0, newRange2: 45.0)
-        
-        let randomAltitude = map(val: Double(arc4random())/Double(UINT32_MAX),
-                                  oldRange1: 0,
-                                  oldRange2: 1,
-                                  newRange1: Common.Map.ZoomLevelAltitude.zoomedIn.rawValue + 1.0,
-                                  newRange2: Common.Map.ZoomLevelAltitude.zoomedOut.rawValue/2.0
-        )
-        
-        zoomIn(onCenterCoordinate: centerCoordinate, altitude: randomAltitude, heading: randomHeading)
-    }
+//    func setRandomZoomAndHeading(forCenterCoordinate centerCoordinate:CLLocationCoordinate2D, duration:Double=0.5) {
+//        let ran = Double(arc4random())/Double(UINT32_MAX)
+//        let randomHeading = map(val: ran, oldRange1: 0.0, oldRange2: 1.0, newRange1: -45.0, newRange2: 45.0)
+//        
+//        let randomAltitude = map(val: Double(arc4random())/Double(UINT32_MAX),
+//                                  oldRange1: 0,
+//                                  oldRange2: 1,
+//                                  newRange1: Common.Map.ZoomLevelAltitude.zoomedIn.rawValue + 1.0,
+//                                  newRange2: Common.Map.ZoomLevelAltitude.zoomedOut.rawValue/2.0
+//        )
+//        
+//        zoomIn(onCenterCoordinate: centerCoordinate, altitude: randomAltitude, heading: randomHeading)
+//    }
 
     func zoomIn(onCenterCoordinate centerCoordinate:CLLocationCoordinate2D) {
         zoomIn(onCenterCoordinate: centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedMax.rawValue, heading:camera.heading)

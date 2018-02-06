@@ -204,7 +204,7 @@ struct Common {
 			return UIScreen.main.bounds.height - cardFullscreenPositionY - Common.Layout.tabBarHeight
 		}
         
-        static var cardMinimizedContentHeight: CGFloat = 170.0
+        static var cardMinimizedContentHeight: CGFloat = 170.0 + Common.Layout.miniAudioPlayerHeight
 
         static let showTabBarTitles = true
 

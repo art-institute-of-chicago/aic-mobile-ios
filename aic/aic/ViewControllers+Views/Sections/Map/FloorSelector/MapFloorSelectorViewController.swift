@@ -19,11 +19,11 @@ class MapFloorSelectorViewController: UIViewController {
         case EnabledWithHeading = "orientActive"
     }
     
-    weak var delegate:MapFloorSelectorViewControllerDelegate?
+    weak var delegate: MapFloorSelectorViewControllerDelegate?
     
-    private var floorSelectorView:MapFloorSelectorView! = nil
+    private var floorSelectorView: MapFloorSelectorView! = nil
     
-    var locationMode:LocationMode = .Disabled {
+    var locationMode: LocationMode = .Disabled {
         didSet {
             updateLocationImageForCurrentMode()
         }

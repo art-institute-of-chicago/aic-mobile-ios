@@ -1089,14 +1089,14 @@
 				2968F67A2012607800638153 /* Language */,
 				E47306E61D23076900A77254 /* _Instructions */,
 				E433BAD11CFDD65B0086F2ED /* Messages */,
-				E415ABC21C7298420093B719 /* ObjectView */,
+				E415ABC21C7298420093B719 /* _ObjectView */,
 				E415ABC61C7298420093B719 /* Sections */,
 				E433BACE1CFDD64A0086F2ED /* RootViewController.swift */,
 			);
 			path = "ViewControllers+Views";
 			sourceTree = "<group>";
 		};
-		E415ABC21C7298420093B719 /* ObjectView */ = {
+		E415ABC21C7298420093B719 /* _ObjectView */ = {
 			isa = PBXGroup;
 			children = (
 				E415ABC31C7298420093B719 /* ObjectViewController.swift */,
@@ -1107,8 +1107,7 @@
 				E4F7C14C1CA201B6005976D1 /* ObjectTranscriptView.swift */,
 				E4F7C14A1CA200EF005976D1 /* ObjectCreditsView.swift */,
 			);
-			name = ObjectView;
-			path = "../ViewControllers+Views/ObjectView";
+			path = _ObjectView;
 			sourceTree = "<group>";
 		};
 		E415ABC61C7298420093B719 /* Sections */ = {

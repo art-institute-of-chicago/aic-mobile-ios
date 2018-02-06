@@ -48,7 +48,7 @@ class TourStopsNavigationController: CardNavigationController {
 		tourStopPageVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: contentTopMargin)
 		tourStopPageVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
 		tourStopPageVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-		tourStopPageVC.view.autoSetDimension(.height, toSize: Common.Layout.cardMinimizedContentHeight - contentTopMargin)
+		tourStopPageVC.view.autoSetDimension(.height, toSize: Common.Layout.cardMinimizedContentHeight - contentTopMargin - Common.Layout.miniAudioPlayerHeight)
 		
 		titleLabel.autoPinEdge(.top, to: .top, of: self.view, withOffset: contentTopMargin + 5)
 		titleLabel.autoPinEdge(.leading, to: .leading, of: self.view,  withOffset: 16)

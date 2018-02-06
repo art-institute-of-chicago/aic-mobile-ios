@@ -40,7 +40,7 @@ class CardNavigationController : UINavigationController {
     
     private let positionForState: [State : CGFloat] = [
         .hidden : UIScreen.main.bounds.height - Common.Layout.tabBarHeight,
-        .minimized : UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.miniAudioPlayerHeight - Common.Layout.cardMinimizedContentHeight,
+        .minimized : UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.cardMinimizedContentHeight,
         .mini_player : UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.miniAudioPlayerHeight,
         .fullscreen : Common.Layout.cardFullscreenPositionY
     ]

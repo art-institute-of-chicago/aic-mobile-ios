@@ -17,13 +17,12 @@ protocol MapViewControllerDelegate : class {
 class MapViewController: UIViewController {
     
     enum Mode {
-        case disabled
         case allInformation
-        case newsLocation
+        case location
         case tour
     }
     
-    var mode: Mode = .disabled {
+    var mode: Mode = .allInformation {
         didSet {
             updateMapForModeChange(andStorePreviousMode: oldValue)
         }
@@ -115,7 +114,7 @@ class MapViewController: UIViewController {
         mapView.addGestureRecognizer(panGesture)
         
         // Init map
-        updateMapForModeChange(andStorePreviousMode: .disabled)
+        updateMapForModeChange(andStorePreviousMode: .allInformation)
         setCurrentFloor(forFloorNum: Common.Map.startFloor)
         
         
@@ -162,16 +161,10 @@ class MapViewController: UIViewController {
         }
     }
     
-    // Hide floor selector remove all annotations and randomly rotate
-    func showDisabled() {
-        mode = .disabled
-        mapView.setRandomZoomAndHeading(forCenterCoordinate: model.floors[0].overlay.coordinate)
-    }
-    
     // Show a news item (location) on the map
     // Shows only that item and hides all other floor level info
     func showNews(forNewsItem item:AICExhibitionModel) {
-        mode = .newsLocation
+        mode = .location
         
         // Add location annotation the floor model
         let floor = model.floors[item.location.floor]
@@ -224,11 +217,6 @@ class MapViewController: UIViewController {
         // Set the new state
         mapView.departmentHud.hide()
         mapView.removeAnnotations(mapView.annotations)
-        
-        // Show/Hide floor selectore
-        let disabled = (mode == .disabled)
-        floorSelectorVC.view.isHidden = disabled
-        mapView.showsUserLocation = !disabled
         
         isSwitchingModes = true
         
@@ -389,10 +377,6 @@ class MapViewController: UIViewController {
         mapView.calculateCurrentAltitude()
         
         switch mode {
-        case .disabled:
-            mapView.removeAnnotations(mapView.annotations)
-            break
-            
         case .allInformation:
             updateAllInformationAnnotations(isSwitchingFloors: forceUpdate)
             updateAllInformationAnnotationViews()
@@ -402,7 +386,7 @@ class MapViewController: UIViewController {
             updateTourAnnotationViews()
             break
             
-        case .newsLocation:
+        case .location:
             updateNewsLocationAnnotationViews()
             break
         }

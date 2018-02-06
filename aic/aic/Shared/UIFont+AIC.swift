@@ -94,11 +94,17 @@ extension UIFont {
 	
 	static let aicMapCardTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
 	
+	/// Font modified to use uppercase numbers
+	///
+	/// Every Font feature has a specific identifier (ex: "Number Case" is 21).
+	/// Full list of font features identifiers and values here:
+	/// https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type1
+	/// Implementation based on:
+	/// https://stackoverflow.com/questions/46450875/ios-opentype-font-features-in-swift
+	///
 	func upperCaseNumbers() -> UIFont {
 		let originalFontDescriptor = self.fontDescriptor
 		
-		// Everry Font feature has a specific identifier (ex: "Number Case" is 21)
-		// Full list of font features identifiers and values here: https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type1
 		let numberCaseFeatureIdentifier = 21
 		let upperCaseSelectorValue = 1
 		let featureSettings = [

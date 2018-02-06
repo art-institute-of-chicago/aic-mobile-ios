@@ -37,13 +37,6 @@ class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.frame = UIScreen.main.bounds
-		
-		for fontFamily in UIFont.familyNames {
-			print("Font family name = \(fontFamily)")
-			for fontName in UIFont.fontNames(forFamilyName: fontFamily) {
-				print("- Font name = \(fontName)")
-			}
-		}
         
         registerSettingsBundle()
         

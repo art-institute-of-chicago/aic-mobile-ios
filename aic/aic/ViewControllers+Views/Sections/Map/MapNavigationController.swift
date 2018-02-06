@@ -37,6 +37,7 @@ class MapNavigationController : SectionNavigationController {
 		
 		// Setup delegates
 		mapVC.delegate = self
+		tourStopsVC.cardDelegate = self
 		locationManager.delegate = self.mapVC
 		
 		// Add root viewcontroller
@@ -48,7 +49,7 @@ class MapNavigationController : SectionNavigationController {
 		tourStopsVC.didMove(toParentViewController: self)
 		
 		// Initial map state
-		self.mapVC.showAllInformation()
+//		self.mapVC.showAllInformation()
 		
 		// Location
 		startLocationManager()
@@ -58,6 +59,8 @@ class MapNavigationController : SectionNavigationController {
 		super.viewWillAppear(animated)
 		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
 		
+		// TODO: Remove this code, for testing purposes only
+		mapVC.showTour(forTour: AppDataManager.sharedInstance.app.tours[5])
 		tourStopsVC.setTourContent(tour: AppDataManager.sharedInstance.app.tours[5])
 		tourStopsVC.showMinimized()
 	}
@@ -135,4 +138,19 @@ extension MapNavigationController : MapViewControllerDelegate {
 		//showTourStop(forStopObjectModel: stopObject)
 	}
 }
+
+extension MapNavigationController : CardNavigationControllerDelegate {
+	// update the view area of the map as the card slides
+	func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint) {
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: position.y)))
+	}
+	
+	func cardDidHide(cardVC: CardNavigationController) {
+		if cardVC == tourStopsVC {
+			mapVC.showAllInformation()
+		}
+	}
+}
+
+
 
