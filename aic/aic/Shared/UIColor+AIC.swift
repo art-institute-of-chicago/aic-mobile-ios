@@ -64,6 +64,8 @@ extension UIColor {
     
     static let aicAudioPlayerBackgroundColor: UIColor = UIColor(white: 25.0 / 255.0, alpha: 1.0)
 	
+	static let aicMapCardBackgroundColor: UIColor = UIColor(red: 119.0 / 255.0, green: 137.0 / 255.0, blue: 167.0 / 255.0, alpha: 1.0)
+	
     func lighter(_ amount : CGFloat = 0.25) -> PXColor {
         return hueColorWithBrightnessAmount(1 + amount)
     }

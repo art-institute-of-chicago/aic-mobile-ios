@@ -17,6 +17,8 @@ protocol MapNavigationControllerDelegate : class {
 class MapNavigationController : SectionNavigationController {
 	let mapVC: MapViewController = MapViewController()
 	
+	let tourStopsVC: TourStopsNavigationController = TourStopsNavigationController()
+	
 	let locationManager: CLLocationManager = CLLocationManager()
 	fileprivate var enableLocationMessageView: MessageViewController? = nil
 	
@@ -40,6 +42,11 @@ class MapNavigationController : SectionNavigationController {
 		// Add root viewcontroller
 		self.pushViewController(mapVC, animated: false)
 		
+		// Add Tour Stops Card
+		tourStopsVC.willMove(toParentViewController: self)
+		self.view.addSubview(tourStopsVC.view)
+		tourStopsVC.didMove(toParentViewController: self)
+		
 		// Initial map state
 		self.mapVC.showAllInformation()
 		
@@ -50,6 +57,9 @@ class MapNavigationController : SectionNavigationController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
+		
+		tourStopsVC.setTourContent(tour: AppDataManager.sharedInstance.app.tours[5])
+		tourStopsVC.showMinimized()
 	}
 	
 	// MARK: Location Manager
@@ -113,6 +123,10 @@ extension MapNavigationController : MessageViewControllerDelegate {
 
 // MARK: Map Delegate Methods
 extension MapNavigationController : MapViewControllerDelegate {
+	func mapWasPressed() {
+		sectionNavigationBar.hide()
+	}
+	
 	func mapDidPressArtworkPlayButton(artwork: AICObjectModel) {
 		self.sectionDelegate?.playArtwork(artwork: artwork)
 	}

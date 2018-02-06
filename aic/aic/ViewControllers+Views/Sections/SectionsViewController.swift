@@ -80,7 +80,9 @@ class SectionsViewController : UIViewController {
 		
 		// Setup Search Button
 		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
-		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+		searchButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+		searchButton.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+		searchButton.layer.cornerRadius = 18
 		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
 		
         // Setup and add contentView
@@ -130,8 +132,8 @@ class SectionsViewController : UIViewController {
     }
 	
 	func createViewConstraints() {
-		searchButton.autoSetDimensions(to: CGSize(width: 44, height: 44))
-		searchButton.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -6)
+		searchButton.autoSetDimensions(to: CGSize(width: 36, height: 36))
+		searchButton.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -11)
 		searchButton.autoPinEdge(.bottom, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight - 3)
 	}
 	
@@ -249,10 +251,13 @@ class SectionsViewController : UIViewController {
         AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)*/
     }
     
-    // MARK: Object view showing methods
+    // MARK: Audio Player showing methods
     func showObject(object:AICObjectModel, audioGuideID: Int?) {
 //        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
 //        self.objectVC.showFullscreen()
+		searchButton.isHidden = false
+		searchButton.isEnabled = true
+		
         audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: audioGuideID)
         audioPlayerVC.showFullscreen()
         showHeadphonesMessage()
@@ -446,6 +451,9 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 	}
 	
 	func showContentCard(_ contentCardVC: ContentCardNavigationController) {
+		searchButton.isHidden = true
+		searchButton.isEnabled = false
+		
 		contentCardVC.willMove(toParentViewController: sectionTabBarController)
 		sectionTabBarController.view.insertSubview(contentCardVC.view, aboveSubview: searchVC.view)
 		contentCardVC.didMove(toParentViewController: sectionTabBarController)
@@ -564,12 +572,14 @@ extension SectionsViewController : CardNavigationControllerDelegate {
     }
     
 	func cardDidHide(cardVC: CardNavigationController) {
-		if cardVC == searchVC {
-			searchButton.isHidden = false
-			searchButton.isEnabled = true
-		}
-		else if cardVC.isKind(of: ContentCardNavigationController.self) {
+		searchButton.isHidden = false
+		searchButton.isEnabled = true
+		if cardVC.isKind(of: ContentCardNavigationController.self) {
 			cardVC.view.removeFromSuperview()
 		}
+//		else if cardVC == searchVC {
+//			searchButton.isHidden = false
+//			searchButton.isEnabled = true
+//		}
 	}
 }

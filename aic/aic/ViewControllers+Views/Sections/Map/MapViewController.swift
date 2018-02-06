@@ -9,6 +9,7 @@ import MapKit
 import Localize_Swift
 
 protocol MapViewControllerDelegate : class {
+	func mapWasPressed()
     func mapDidPressArtworkPlayButton(artwork: AICObjectModel)
     func mapDidSelectTourStop(artwork: AICObjectModel)
 }
@@ -22,7 +23,7 @@ class MapViewController: UIViewController {
         case tour
     }
     
-    var mode:Mode = .disabled {
+    var mode: Mode = .disabled {
         didSet {
             updateMapForModeChange(andStorePreviousMode: oldValue)
         }
@@ -786,11 +787,13 @@ extension MapViewController : UIGestureRecognizerDelegate {
     
     @objc func mapViewWasPinched(_ gesture:UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
+		self.delegate?.mapWasPressed()
     }
     
     @objc func mapViewWasPanned(_ gesture:UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
         mapView.keepMapInView()
+		self.delegate?.mapWasPressed()
     }
 }
 

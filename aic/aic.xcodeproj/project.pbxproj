@@ -120,6 +120,9 @@
 		29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A27A071FCC769B007CEE1D /* HomeTourCell.xib */; };
 		29A67F852027752E003C630A /* AudioPlayerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F842027752E003C630A /* AudioPlayerSlider.swift */; };
 		29A67F872027D74B003C630A /* AudioInfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F862027D74B003C630A /* AudioInfoSectionView.swift */; };
+		29A67F8A2028F7B6003C630A /* TourStopsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F892028F7B6003C630A /* TourStopsNavigationController.swift */; };
+		29A67F8C20290389003C630A /* TourStopPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F8B20290389003C630A /* TourStopPageViewController.swift */; };
+		29A67F8E20290B2C003C630A /* TourStopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F8D20290B2C003C630A /* TourStopViewController.swift */; };
 		29A7BCF01FBF85DB00FD8639 /* IdealSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */; };
 		29A7BCF11FBF85DB00FD8639 /* IdealSans-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */; };
 		29A7BCF21FBF85DB00FD8639 /* IdealSans-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */; };
@@ -399,6 +402,9 @@
 		29A27A071FCC769B007CEE1D /* HomeTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTourCell.xib; sourceTree = "<group>"; };
 		29A67F842027752E003C630A /* AudioPlayerSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerSlider.swift; sourceTree = "<group>"; };
 		29A67F862027D74B003C630A /* AudioInfoSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInfoSectionView.swift; sourceTree = "<group>"; };
+		29A67F892028F7B6003C630A /* TourStopsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourStopsNavigationController.swift; sourceTree = "<group>"; };
+		29A67F8B20290389003C630A /* TourStopPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourStopPageViewController.swift; sourceTree = "<group>"; };
+		29A67F8D20290B2C003C630A /* TourStopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourStopViewController.swift; sourceTree = "<group>"; };
 		29A7BCE11FBF85DB00FD8639 /* IdealSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Bold.otf"; sourceTree = "<group>"; };
 		29A7BCE21FBF85DB00FD8639 /* IdealSans-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-BoldItalic.otf"; sourceTree = "<group>"; };
 		29A7BCE31FBF85DB00FD8639 /* IdealSans-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IdealSans-Book.otf"; sourceTree = "<group>"; };
@@ -794,6 +800,16 @@
 			path = "Table View Controllers";
 			sourceTree = "<group>";
 		};
+		29A67F882028F74F003C630A /* Tour Stops Card */ = {
+			isa = PBXGroup;
+			children = (
+				29A67F8D20290B2C003C630A /* TourStopViewController.swift */,
+				29A67F8B20290389003C630A /* TourStopPageViewController.swift */,
+				29A67F892028F7B6003C630A /* TourStopsNavigationController.swift */,
+			);
+			path = "Tour Stops Card";
+			sourceTree = "<group>";
+		};
 		29A7BCE01FBF85DB00FD8639 /* idealsans */ = {
 			isa = PBXGroup;
 			children = (
@@ -868,6 +884,7 @@
 		29E6DD631FB9ED6300C3303D /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				29A67F882028F74F003C630A /* Tour Stops Card */,
 				294C0B39201A76F700F2ABB1 /* Annotations */,
 				294C0B32201A76F600F2ABB1 /* AnnotationViews */,
 				294C0B40201A76F700F2ABB1 /* FloorSelector */,
@@ -1717,6 +1734,7 @@
 				294C0B59201A76F700F2ABB1 /* MapFloorSelectorView.swift in Sources */,
 				29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */,
 				28F7980E1E7B40E600D22E0E /* Common.swift in Sources */,
+				29A67F8C20290389003C630A /* TourStopPageViewController.swift in Sources */,
 				E421783C1CC6E1F300815B41 /* String+AIC.swift in Sources */,
 				E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */,
 				294C0B67201A770E00F2ABB1 /* MapDepartmentHUDView.swift in Sources */,
@@ -1730,6 +1748,7 @@
 				291221971FDB35650096BB75 /* SuggestedSearchCell.swift in Sources */,
 				29F261FD200FE5C30000BF05 /* ExhibitionContentCell.swift in Sources */,
 				294C0B51201A76F700F2ABB1 /* MapAnnotationView.swift in Sources */,
+				29A67F8A2028F7B6003C630A /* TourStopsNavigationController.swift in Sources */,
 				294C0B54201A76F700F2ABB1 /* MapLocationAnnotation.swift in Sources */,
 				E4923FE31C9F36C800AB255C /* ObjectContentSectionView.swift in Sources */,
 				295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */,
@@ -1788,6 +1807,7 @@
 				E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */,
 				E4F7AF951CFB64DE00524F87 /* AICMapModel.swift in Sources */,
 				E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */,
+				29A67F8E20290B2C003C630A /* TourStopViewController.swift in Sources */,
 				E417B52B1CA322C200C362A1 /* ToursSectionView.swift in Sources */,
 				E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */,
 				294C0B4E201A76F700F2ABB1 /* MapLocationAnnotationView.swift in Sources */,

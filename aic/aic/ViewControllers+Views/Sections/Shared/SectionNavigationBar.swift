@@ -112,6 +112,17 @@ class SectionNavigationBar : UIView {
 		}
 	}
 	
+	func hide() {
+		UIView.animate(withDuration: 0.5) {
+			self.frame.size.height = 0
+			self.backdropImageView.alpha = 0.0
+			self.iconImageView.alpha = 0.0
+			self.descriptionLabel.alpha = 0.0
+			self.titleLabel.transform = CGAffineTransform(scaleX: CGFloat(self.titleMinimumScale), y: CGFloat(self.titleMinimumScale))
+			self.layoutIfNeeded()
+		}
+	}
+	
 	func setBackButtonHidden(_ hidden: Bool) {
 		backButton.isHidden = hidden
 		backButton.isEnabled = !hidden

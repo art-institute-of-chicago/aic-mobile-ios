@@ -47,7 +47,6 @@ class ContentButtonCell : UITableViewCell {
 //		}
 		
 		itemImageView.kf.setImage(with: imageUrl)
-		//itemImageView.loadImageAsynchronously(fromUrl: imageUrl, withCropRect: nil)
 		itemTitleLabel.text = title
 		itemSubtitleLabel.text = subtitle
 		

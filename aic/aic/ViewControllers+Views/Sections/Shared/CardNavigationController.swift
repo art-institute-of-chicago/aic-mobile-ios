@@ -95,7 +95,7 @@ class CardNavigationController : UINavigationController {
     // MARK: Position
     
     fileprivate func setCardPosition(_ positionY: CGFloat) {
-        let yPosition = clamp(val: positionY, minVal: positionForState[.fullscreen]!, maxVal: positionForState[.hidden]!)
+        let yPosition = clamp(val: positionY, minVal: positionForState[openState]!, maxVal: positionForState[closedState]!)
         self.view.frame.origin = CGPoint(x: 0, y: yPosition)
         
         self.cardDelegate?.cardDidUpdatePosition?(cardVC: self, position: self.view.frame.origin)
