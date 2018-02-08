@@ -167,8 +167,8 @@ class MapViewController: UIViewController {
         mode = .location
         
         // Add location annotation the floor model
-        let floor = model.floors[item.location.floor]
-        let locationAnnotation = MapLocationAnnotation(coordinate: item.location.coordinate, thumbUrl: item.thumbnailUrl)
+        let floor = model.floors[item.location!.floor]
+        let locationAnnotation = MapLocationAnnotation(coordinate: item.location!.coordinate)
         
         floor.locationAnnotations = [locationAnnotation]
         setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
@@ -176,7 +176,7 @@ class MapViewController: UIViewController {
         mapView.addAnnotation(locationAnnotation)
         
         // Zoom in on the item
-        mapView.zoomIn(onCenterCoordinate: item.location.coordinate);
+        mapView.zoomIn(onCenterCoordinate: item.location!.coordinate);
     }
     
     // Shows all the objects on a tour, with active/inactive

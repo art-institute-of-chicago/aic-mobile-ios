@@ -20,7 +20,8 @@ class AppDataParser {
         case audioFileNotFound(nid:Int)
         case objectNotFound(nid:Int)
         case galleryDisabled(galleryName:String)
-        case galleryNotFound(galleryName:String)
+        case galleryNameNotFound(galleryName:String)
+		case galleryIdNotFound(galleryId:Int)
         case tourStopsNotFound
         case jsonObjectNotFoundForKey(key:String)
         case noValidTourStops
@@ -32,89 +33,79 @@ class AppDataParser {
 	private var objects = [AICObjectModel]()
     
     // MARK: Exhibitions
-    func parse(newsItemsData itemsData:Data) -> [AICExhibitionModel] {
-        let json = JSON(data: itemsData)
-        
-        var newsItems:[AICExhibitionModel] = []
-        for newsItem in json {
-            do {
-                try handleParseError({
-                    let newsItem = try self.parse(newsItemData: newsItem.1)
-                    newsItems.append(newsItem)
-                })
-            }
-            catch {
-                if Common.Testing.printDataErrors {
-                    print("could not parse AIC News Item Data:\n\(newsItem.1)\n")
-                }
-            }
-        }
+    func parse(exhibitionsData data: Data) -> [AICExhibitionModel] {
+		var exhibitionItems: [AICExhibitionModel] = []
+		
+		let json = JSON(data: data)
+		let dataJSON: JSON = json["data"]
+		for exhibitionJSON: JSON in dataJSON.arrayValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let exhibitionItem = try self.parse(exhibitionJSON: exhibitionJSON)
+					exhibitionItems.append(exhibitionItem)
+				})
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Exhibition:\n\(exhibitionJSON)\n")
+				}
+			}
+		}
 		
 		// Order by recently opened
-		newsItems = newsItems.sorted(by: { $0.startDate.compare($1.startDate) == .orderedAscending })
-        
-        return newsItems
+//		newsItems = newsItems.sorted(by: { $0.startDate.compare($1.startDate) == .orderedAscending })
+		
+		return exhibitionItems
     }
     
-    private func parse(newsItemData itemData:JSON) throws -> AICExhibitionModel {
-        let title = try getString(fromJSON: itemData, forKey: "title")
-        var description = try getString(fromJSON: itemData, forKey: "body")
-        
-        // Remove any leading whitespace, currently a bug in JSON
-        if description.count > 1 && description.first == " " {
-			description = String(description[description.index(description.startIndex, offsetBy: 1)...])
-        }
-        
-        let thumbnailURL = try getURL(fromJSON: itemData, forKey: "thumbnail")
-        let imageURL = try getURL(fromJSON: itemData, forKey: "feature_image_mobile")
-        let imageCropRect: CGRect? = try? getRect(fromJSON: itemData, forKey: "large_image_crop_rect")
-        
-        // Parse out first gallery listed for exhibition
-        var location:CoordinateWithFloor? = nil
-        
-        let galleries = try getString(fromJSON: itemData, forKey: "exhibition_location")
-        let firstGallery = galleries.components(separatedBy: ", ").first
-        
-        if let firstGalleryName = firstGallery {
-            let gallery = try getGallery(forGalleryName: firstGalleryName)
-            location = gallery.location
-        } else {
-            throw ParseError.galleryNotFound(galleryName: galleries)
-        }
-        
-        // Get date exibition ends
-        let dateString = try getString(fromJSON: itemData, forKey: "date")
-		guard let startDateString = dateString.components(separatedBy: " to ").first else {
-			throw ParseError.newsBadDateString(dateString: dateString)
+    private func parse(exhibitionJSON: JSON) throws -> AICExhibitionModel {
+        let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
+        let description = try getString(fromJSON: exhibitionJSON, forKey: "short_description")
+		
+		// optional image
+		var imageURL: URL?
+		do {
+			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "image")
 		}
-		guard let endDateString = dateString.components(separatedBy: " to ").last else {
-            throw ParseError.newsBadDateString(dateString: dateString)
-        }
+		catch{}
+		
+        // Parse out first gallery listed for exhibition
+        var location: CoordinateWithFloor? = nil
+		
+		// optional location
+		var gallery: AICGalleryModel?
+		do {
+			let galleryId = try getInt(fromJSON: exhibitionJSON, forKey: "gallery_id")
+			gallery = try getGallery(forGalleryId: galleryId)
+			location = gallery!.location
+		}
+		catch{}
         
+		// Get date exibition ends
+		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
+		let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_end_at")
+		
 		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-d h:m:s"
+		dateFormatter.locale = Locale(identifier: "en_US")
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+		
+		// TODO: fix the timezone
 		
 		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
-			throw ParseError.newsBadDateString(dateString: dateString)
+			throw ParseError.newsBadDateString(dateString: startDateString)
 		}
 		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
-			throw ParseError.newsBadDateString(dateString: dateString)
+			throw ParseError.newsBadDateString(dateString: endDateString)
 		}
-        
-        //Don't throw if the isFeatured flag isn't set, it is only set for new items
-        let bannerString = try? getString(fromJSON: itemData, forKey: "tour_banner")
 
         // Return news item
         return AICExhibitionModel(title: title,
                                 shortDescription: description,
-                                longDescription: description,
                                 imageUrl: imageURL,
-                                imageCropRect: imageCropRect,
-								thumbnailUrl: thumbnailURL,
 								startDate: startDate,
 								endDate: endDate,
-                                location: location!,
-                                bannerString: bannerString
+                                location: location
         )
     }
 	
@@ -124,20 +115,18 @@ class AppDataParser {
 		var eventItems:[AICEventModel] = []
 		
 		let json = JSON(data: data)
-		
-		do {
-			try handleParseError({ [unowned self] in
-				
-				let dataJson: JSON = json["data"]
-				for eventJson: JSON in dataJson.arrayValue {
+		let dataJson: JSON = json["data"]
+		for eventJson: JSON in dataJson.arrayValue {
+			do {
+				try handleParseError({ [unowned self] in
 					let eventItem = try self.parse(eventJson: eventJson)
 					eventItems.append(eventItem)
+				})
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Event:\n\(json)\n")
 				}
-			})
-		}
-		catch {
-			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Event Items:\n\(json)\n")
 			}
 		}
 		
@@ -295,7 +284,9 @@ class AppDataParser {
     func parse(galleryJSON: JSON?) throws -> AICGalleryModel {
         let nid         = try getInt(fromJSON: galleryJSON!, forKey: "nid")
         let title       = try getString(fromJSON: galleryJSON!, forKey: "title")
-        
+		
+		let galleryId	= try getInt(fromJSON: galleryJSON!, forKey: "gallery_id")
+		
         var displayTitle = title.replacingOccurrences(of: "Gallery ", with: "")
         displayTitle = displayTitle.replacingOccurrences(of: "Galleries ", with: "")
         
@@ -309,6 +300,7 @@ class AppDataParser {
         let floorNumber:Int! = lowerLevel == "LL" ? 0 : try getInt(fromJSON: galleryJSON!, forKey: "floor")
         
         let gallery = AICGalleryModel(id: nid,
+									  galleryId: galleryId,
                                       title: title,
                                       displayTitle: displayTitle,
                                       location: CoordinateWithFloor(coordinate: location, floor: floorNumber),
@@ -902,13 +894,21 @@ class AppDataParser {
         return object
     }
     
-    private func getGallery(forGalleryName galleryName:String) throws -> AICGalleryModel {
+    private func getGallery(forGalleryName galleryName: String) throws -> AICGalleryModel {
 		guard let gallery = self.galleries.filter({$0.title == galleryName && $0.isOpen == true}).first else {
-			throw ParseError.galleryNotFound(galleryName: galleryName)
+			throw ParseError.galleryNameNotFound(galleryName: galleryName)
 		}
         
         return gallery
     }
+	
+	private func getGallery(forGalleryId galleryId: Int) throws -> AICGalleryModel {
+		guard let gallery = self.galleries.filter({$0.galleryId == galleryId && $0.isOpen == true}).first else {
+			throw ParseError.galleryIdNotFound(galleryId: galleryId)
+		}
+		
+		return gallery
+	}
 	
 	private func getLanguageFor(translationJSON: JSON) throws -> Common.Language {
 		do {
@@ -965,9 +965,13 @@ class AppDataParser {
             errorMessage = "Gallery '\(galleryName)' is disabled, ignoring."
         }
             
-        catch ParseError.galleryNotFound(let galleryName) {
+        catch ParseError.galleryNameNotFound(let galleryName) {
             errorMessage = "Could not find gallery for gallery name '\(galleryName)'"
         }
+			
+		catch ParseError.galleryIdNotFound(let galleryId) {
+			errorMessage = "Could not find gallery for gallery Id '\(galleryId)'"
+		}
             
         catch ParseError.jsonObjectNotFoundForKey(let key) {
             errorMessage = "Could not find Json object for key '\(key)'"

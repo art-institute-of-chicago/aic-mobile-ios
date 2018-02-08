@@ -9,11 +9,9 @@ import MapKit
 class MapLocationAnnotation : NSObject, MKAnnotation {
     // MARK: Properties
     var coordinate: CLLocationCoordinate2D
-    var thumbUrl: URL
     
     // MARK: Initialization
-    init(coordinate: CLLocationCoordinate2D, thumbUrl:URL) {
+	init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
-        self.thumbUrl = thumbUrl
     }
 }

@@ -111,7 +111,7 @@ class AppDataManager {
                 //We have good cached app data, continue on
                 self.app = self.dataParser.parse(appData: cachedAppData)
                 self.updateDownloadProgress()
-                self.downloadNewsFeeds()
+                self.downloadExhibitions()
             }
             
         }
@@ -148,65 +148,110 @@ class AppDataManager {
                         self.app = self.dataParser.parse(appData: cachedAppData)
                     }
 					self.updateDownloadProgress()
-					self.downloadNewsFeeds()
+					self.downloadExhibitions()
                 }
         }
     }
-    
-    private func downloadNewsFeeds() {
-        let newsFeedString = Common.DataConstants.NewsFeed.Featured
-        lastModifiedStringsMatch(atURL: newsFeedString as URLConvertible, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskNewsFeedLastModifiedString) { (stringsMatch) in
-            if !stringsMatch {
-                self.parseNews(fromFeed: Common.DataConstants.NewsFeed.Featured)
-            }else{
-                guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
-                    self.notifyLoadFailure(withMessage: "Failed to load news data.")
-                    return
-                }
-                let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
-                self.exhibitions = newsItems
-				
-                self.updateDownloadProgress()
+	
+	private func downloadExhibitions() {
+		let urlRequest = URLRequest(url: URL(string: Common.DataConstants.dataHubURL + "exhibitions/search?limit=99")!)
+		let urlString = urlRequest.url?.absoluteString
+		let parameters: [String: Any] = [
+			"_source": true,
+			"sort": ["aic_start_at", "aic_end_at"],
+			"query": [
+				"bool": [
+					"must": [
+						[
+							"range": [
+								"aic_start_at": ["lte": "now+1w"]
+							]
+						],
+						[
+							"range": [
+								"aic_end_at": ["gte": "now"]
+							]
+						]
+					],
+					"must_not": [
+						[
+							"term": [
+								"status": "Closed"
+							]
+						]
+					]
+				]
+			]
+		]
+		
+		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+			.validate()
+			.responseData { response in
+				switch response.result {
+				case .success(let value):
+					self.exhibitions = self.dataParser.parse(exhibitionsData: value)
+				case .failure(let error):
+					print(error)
+				}
+				self.updateDownloadProgress()
 				self.downloadEvents()
-            }
-        }
-    }
+		}
+	}
     
-    private func parseNews(fromFeed feed:String) {
-        
-        let request = URLRequest(url: URL(string: feed)!) as URLRequestConvertible
-        
-        Alamofire.request(request)
-            .validate()
-            .responseData { response in
-                if self.loadFailure == false {
-                    switch response.result {
-                    case .success(let value):
-                        let newsItems = self.dataParser.parse(newsItemsData: value)
-                        self.writeDataToDisk(data: value,
-                                             fileName: Common.DataConstants.localNewsFeedFilename)
-                        
-						self.exhibitions = newsItems
-                        
-                    case .failure(let error):
-                        guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
-                            // If there was an issue loading the news feed let the user know
-                            self.notifyLoadFailure(withMessage: "Failed to load news data.")
-                            print(error)
-                            return
-                        }
-                        //We have a good cache of the news feed, continue on
-                        let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
-                    
-						self.exhibitions = newsItems
-                    
-                    }
-                    
-                    self.updateDownloadProgress()
-					self.downloadEvents()
-                }
-        }
-    }
+//    private func downloadExhibitions() {
+//        let newsFeedString = Common.DataConstants.NewsFeed.Featured
+//        lastModifiedStringsMatch(atURL: newsFeedString as URLConvertible, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskNewsFeedLastModifiedString) { (stringsMatch) in
+//            if !stringsMatch {
+//                self.parseExhibitions(fromFeed: Common.DataConstants.NewsFeed.Featured)
+//            }else{
+//                guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
+//                    self.notifyLoadFailure(withMessage: "Failed to load news data.")
+//                    return
+//                }
+//                let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
+//                self.exhibitions = newsItems
+//
+//                self.updateDownloadProgress()
+//				self.downloadEvents()
+//            }
+//        }
+//    }
+//
+//    private func parseExhibitions(fromFeed feed:String) {
+//
+//        let request = URLRequest(url: URL(string: feed)!) as URLRequestConvertible
+//
+//        Alamofire.request(request)
+//            .validate()
+//            .responseData { response in
+//                if self.loadFailure == false {
+//                    switch response.result {
+//                    case .success(let value):
+//                        let newsItems = self.dataParser.parse(newsItemsData: value)
+//                        self.writeDataToDisk(data: value,
+//                                             fileName: Common.DataConstants.localNewsFeedFilename)
+//
+//						self.exhibitions = newsItems
+//
+//                    case .failure(let error):
+//                        guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
+//                            // If there was an issue loading the news feed let the user know
+//                            self.notifyLoadFailure(withMessage: "Failed to load news data.")
+//                            print(error)
+//                            return
+//                        }
+//                        //We have a good cache of the news feed, continue on
+//                        let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
+//
+//						self.exhibitions = newsItems
+//
+//                    }
+//
+//                    self.updateDownloadProgress()
+//					self.downloadEvents()
+//                }
+//        }
+//    }
 	
 	func downloadEvents() {
 		let urlRequest = URLRequest(url: URL(string: Common.DataConstants.dataHubURL + "events/search?limit=99")!)
@@ -219,7 +264,7 @@ class AppDataManager {
 					"must": [
 						[
 							"range": [
-								"start_at": ["lte": "now+7d"]
+								"start_at": ["lte": "now+1w"]
 							]
 						],
 						[
