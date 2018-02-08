@@ -4,9 +4,11 @@
  */
 
 struct AICAppDataModel {
-	var museumInfo:AICMuseumInfoModel
-    var galleries:[AICGalleryModel]     = []
-    var objects:[AICObjectModel]        = []
-    var audioFiles:[AICAudioFileModel]  = []
-    var tours:[AICTourModel]            = []
+	let generalInfo: AICGeneralInfoModel
+    var galleries: [AICGalleryModel]	= []
+    var objects: [AICObjectModel]		= []
+    var audioFiles: [AICAudioFileModel] = []
+    var tours: [AICTourModel]			= []
+	var featuredTours: [Int]			= []
+	var featuredExhibitions: [Int]		= []
 }

@@ -19,10 +19,9 @@ class InfoPageView : UIView {
 	
 	let titleHeight: CGFloat = 109
 	
-	init(title: String, text: String) {
+	init() {
 		super.init(frame: CGRect.zero)
 		
-		titleLabel.text = title.localized(using: "LanguageSelection")
 		titleLabel.textColor = .aicDarkGrayColor
 		titleLabel.textAlignment = .center
 		titleLabel.font = .aicInfoSectionTitleFont
@@ -30,15 +29,8 @@ class InfoPageView : UIView {
 		
 		dividerLine.backgroundColor = .aicDividerLineColor
 		
-		
 		// TODO: change this to use getAttributedStringWithLineHeight
-		let paragraphStyle = NSMutableParagraphStyle()
-		paragraphStyle.lineSpacing = 6
-		let textAttrString = NSMutableAttributedString(string: text.localized(using: "LanguageSelection"))
-		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
-		
 		textView.setDefaultsForAICAttributedTextView()
-		textView.attributedText = textAttrString
 		textView.textColor = .aicDarkGrayColor
 		textView.font = .aicInfoSectionTextFont
 		textView.textAlignment = .center

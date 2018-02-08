@@ -179,7 +179,12 @@ class ToursSectionStopsScrollerView: NewsToursRevealView {
         if focusedItem <= 0 {
             focusedStopLabel.text = tourModel!.overview.title
         } else {
-            focusedStopLabel.text = tourModel!.stops[focusedItem-1].audio.title
+			let stop = tourModel!.stops[focusedItem-1]
+			var audioTranslation = stop.audio.translations[.english]!
+			if let translation: AICAudioFileTranslationModel = stop.audio.translations[Common.currentLanguage] {
+				audioTranslation = translation
+			}
+            focusedStopLabel.text = audioTranslation.title
         }
         
         if andNotifyDelegate {

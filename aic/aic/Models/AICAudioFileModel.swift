@@ -8,7 +8,11 @@ import Foundation
 
 struct AICAudioFileModel {
     let nid: Int
-    let title: String
-    let url: URL
-    let transcript: String
+	var translations: [Common.Language : AICAudioFileTranslationModel]
+}
+
+struct AICAudioFileTranslationModel {
+	let title: String
+	let url: URL
+	let transcript: String
 }

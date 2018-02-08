@@ -10,7 +10,7 @@ import UIKit
 import Localize_Swift
 
 class LanguageViewController : UIViewController {
-	let pageView: InfoPageView = InfoPageView(title: "Language Settings Title".localized(using: "LanguageSettings"), text: "Language Settings Text".localized(using: "LanguageSettings"))
+	let pageView: InfoPageView = InfoPageView()
 	let englishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	let spanishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	let chineseButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)

@@ -10,13 +10,9 @@ import UIKit
 import Localize_Swift
 
 class MuseumInfoViewController : UIViewController {
-	let pageView: InfoPageView
+	let pageView: InfoPageView = InfoPageView()
 	
 	init() {
-		var text = Common.Info.museumInformationHours
-		text += "\n\n" + Common.Info.museumInformationAddress
-		text += "\n\n" + Common.Info.museumInformationPhoneNumber
-		pageView = InfoPageView(title: Common.Info.museumInformationTitle, text: text)
 		super.init(nibName: nil, bundle: nil)
 		
 		self.navigationItem.title = "Museum Information"
@@ -58,6 +54,11 @@ class MuseumInfoViewController : UIViewController {
 	@objc func updateLanguage() {
 		pageView.titleLabel.text = "Museum Information".localized(using: "Sections")
 		//		pageView.textView.text = // TODO: add translation to MuseumInfo model
+		
+		//		var text = Common.Info.museumInformationHours
+		//		text += "\n\n" + Common.Info.museumInformationAddress
+		//		text += "\n\n" + Common.Info.museumInformationPhoneNumber
+		//		pageView = InfoPageView(title: Common.Info.museumInformationTitle, text: text)
 	}
 }
 

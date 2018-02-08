@@ -269,15 +269,26 @@ class AppDataManager {
         return app.objects.filter( { $0.location.floor == floor })
     }
     
-    func getObject(forAudioGuideID id:Int) -> AICObjectModel? {
-        let objectsWithAudioIDs = app.objects.filter({ $0.audioGuideIDs != nil })
-        
-        guard objectsWithAudioIDs.count > 0 else {
-            return nil
-        }
-        
-        return objectsWithAudioIDs.filter({ $0.audioGuideIDs!.contains(id) }).first
+    func getObject(forSelectorNumber number: Int) -> AICObjectModel? {
+        return app.objects.filter({ $0.audioCommentaries.contains(where: { (audioCommentary) -> Bool in
+			if let selectorNumber = audioCommentary.selectorNumber  {
+				return selectorNumber == number
+			}
+			return false
+		}) }).first
     }
+	
+	func getAudioFile(forObject object: AICObjectModel, selectorNumber: Int?) -> AICAudioFileModel {
+		// If a selectorNumber is specified, check that the object has it in its list
+		if let number = selectorNumber {
+			let audioCommentariesWithNumber = object.audioCommentaries.filter({ $0.selectorNumber == number  })
+			if audioCommentariesWithNumber.count > 0 {
+				return audioCommentariesWithNumber.first!.audioFile
+			}
+		}
+		// Otherwise return first audio file
+		return object.audioCommentaries.first!.audioFile
+	}
     
     func getObject(forID id:Int) -> AICObjectModel? {
         return app.objects.filter({ $0.nid == id }).first

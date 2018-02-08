@@ -85,7 +85,7 @@ class ObjectView: UIView {
     }
     
     func display(object:AICObjectModel) {
-        display(object: object, audioFile: object.audioFiles!.first!)
+        display(object: object, audioFile: object.audioCommentaries.first!.audioFile)
     }
     
     func display(tour:AICTourModel, atStopIndex stopIndex:Int) {
@@ -111,8 +111,13 @@ class ObjectView: UIView {
             relatedToursContentView.set(relatedTours: relatedTours)
             contentViewSubviews.append(relatedToursContentView)
         }
+		
+		var audioTranslation: AICAudioFileTranslationModel = audioFile.translations[.english]!
+		if let translation: AICAudioFileTranslationModel = audioFile.translations[Common.currentLanguage] {
+			audioTranslation = translation
+		}
         
-        transcriptContentView.set(transcript: audioFile.transcript)
+        transcriptContentView.set(transcript: audioTranslation.transcript)
         contentViewSubviews.append(transcriptContentView)
         
         if object.credits != nil || object.imageCopyright != nil {
@@ -131,8 +136,13 @@ class ObjectView: UIView {
         
         objectInfoContentView.set(info: tourOverview.description)
         contentViewSubviews.append(objectInfoContentView)
+		
+		var audioTranslation: AICAudioFileTranslationModel = tourOverview.audio.translations[.english]!
+		if let translation: AICAudioFileTranslationModel = tourOverview.audio.translations[Common.currentLanguage] {
+			audioTranslation = translation
+		}
         
-        transcriptContentView.set(transcript: tourOverview.audio.transcript)
+        transcriptContentView.set(transcript: audioTranslation.transcript)
         contentViewSubviews.append(transcriptContentView)
         
         creditsContentView.set(credits: tourOverview.credits, imageCopyright: nil)

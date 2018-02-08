@@ -146,32 +146,20 @@ class ObjectViewController: UIViewController {
     }
     
     // MARK: Object Loading
-    func setContent(forObjectModel object:AICObjectModel, audioGuideID: Int?) {
-        //Check the index of the audio guide id and load the appropriate audio file
-        var audioFile: AICAudioFileModel?
-        if audioGuideID != nil {
-            let audioGuideIDIndex = object.audioGuideIDs!.index(of: audioGuideID!)
-            if object.audioFiles!.count > audioGuideIDIndex! {
-                audioFile = object.audioFiles![audioGuideIDIndex!]
-            }
-        }
-        
-        if audioFile == nil {
-            audioFile = object.audioFiles!.first!
-        }
-        
-        if load(audioFile: audioFile!, coverImageURL: object.imageUrl as URL) {
+    func setContent(forObjectModel object: AICObjectModel, selectorNumber: Int?) {
+		let audioFile: AICAudioFileModel = AppDataManager.sharedInstance.getAudioFile(forObject: object, selectorNumber: selectorNumber)
+        if load(audioFile: audioFile, coverImageURL: object.imageUrl as URL) {
             objectView.display(object: object)
         }
     }
     
-    func setContent(forTourOverviewModel tourOverview:AICTourOverviewModel) {
+    func setContent(forTourOverviewModel tourOverview: AICTourOverviewModel) {
         if load(audioFile: tourOverview.audio, coverImageURL: tourOverview.imageUrl as URL) {
             objectView.display(tourOverview: tourOverview)
         }
     }
     
-    func setContent(forTour tour:AICTourModel, atStopIndex stopIndex:Int) {
+    func setContent(forTour tour: AICTourModel, atStopIndex stopIndex:Int) {
         let stop = tour.stops[stopIndex]
         if load(audioFile: stop.audio, coverImageURL: stop.object.imageUrl as URL) {
             objectView.display(tour: tour, atStopIndex:stopIndex)
@@ -227,9 +215,14 @@ class ObjectViewController: UIViewController {
             self.coverImage = coverImage
     
             self.objectView.setImage(self.coverImage!)
-        
+			
+			var audioTranslation: AICAudioFileTranslationModel = audioFile.translations[.english]!
+			if let translation: AICAudioFileTranslationModel = audioFile.translations[Common.currentLanguage] {
+				audioTranslation = translation
+			}
+			
             // Load the file
-            let asset = AVURLAsset(url: audioFile.url)
+            let asset = AVURLAsset(url: audioTranslation.url)
             
             asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
                 let error:NSErrorPointer = nil
@@ -262,10 +255,15 @@ class ObjectViewController: UIViewController {
                                                                                                 repeats: true
                             )
                         }
-                        
+						
+						var audioTranslation: AICAudioFileTranslationModel = audioFile.translations[.english]!
+						if let translation: AICAudioFileTranslationModel = audioFile.translations[Common.currentLanguage] {
+							audioTranslation = translation
+						}
+						
                         // Set the MPNowPlaying information
                         let songInfo: [String : AnyObject] = [
-                            MPMediaItemPropertyTitle: NSString(string: audioFile.title),
+                            MPMediaItemPropertyTitle: NSString(string: audioTranslation.title),
                             MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
                             MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: self.coverImage!),
                             MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
@@ -312,8 +310,13 @@ class ObjectViewController: UIViewController {
     }
     
     private func showAudioControls() {
-		self.objectView.miniAudioPlayerView.showTrackTitle(title: currentAudioFile!.title)
-        self.objectView.audioPlayerView.showTrackTitle(title: currentAudioFile!.title)
+		var audioTranslation: AICAudioFileTranslationModel = currentAudioFile!.translations[.english]!
+		if let translation: AICAudioFileTranslationModel = currentAudioFile!.translations[Common.currentLanguage] {
+			audioTranslation = translation
+		}
+		
+		self.objectView.miniAudioPlayerView.showTrackTitle(title: audioTranslation.title)
+        self.objectView.audioPlayerView.showTrackTitle(title: audioTranslation.title)
     }
     
     // MARK: Dimensions

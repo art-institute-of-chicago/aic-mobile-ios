@@ -6,6 +6,7 @@
 import UIKit
 import CoreLocation
 import SnapKit
+import Localize_Swift
 
 struct Common {
     
@@ -152,6 +153,17 @@ struct Common {
 		case english = "en"
 		case spanish = "es"
 		case chinese = "zh-Hans"
+	}
+	
+	static var currentLanguage: Language {
+		let current = Localize.currentLanguage()
+		if current.hasPrefix("es") {
+			return .spanish
+		}
+		else if current.hasPrefix("zh") {
+			return .chinese
+		}
+		return .english
 	}
 
     // MARK: Layout
@@ -506,16 +518,11 @@ struct Common {
         static let becomeMemberAccessPrompt = "Already a member?"
         static let becomeMemberAccessButtonTitle = "Access Member Card"
         static let becomeMemberExistingMemberTitle = "Welcome Back"
-
-        static let museumInformationTitle = "Museum Information"
-        static let museumInformationHours = "Open daily 10:30am to 5:00pm\nThursday until 8:00pm\n\nClosed Thanksgiving, Christmas,\nand New Year’s Day"
+		
         static let museumInformationAddress = "111 S Michigan Ave\nChicago, IL 60603"
         static let museumInformationPhoneNumber = "+1 312 443 3600"
         static let museumInformationGetTicketsTitle = "Get Tickets"
         static let museumInformationGetTicketsURL = "https://sales.artic.edu/admissiondate"
-		
-		static let locationTitle = "Where Are You?"
-		static let locationText = "We’d like to use your location to help you navigate the museum."
 
         static let potionURL = "http://www.potiondesign.com"
 

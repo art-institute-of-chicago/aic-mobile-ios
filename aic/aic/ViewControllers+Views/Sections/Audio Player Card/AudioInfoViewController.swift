@@ -128,8 +128,14 @@ class AudioInfoViewController : UIViewController {
 //			contentViewSubviews.append(relatedToursContentView)
 //		}
 		
+		// Default to English Audio, then check if current language is aavailable in translations
+		var audioTranslation: AICAudioFileTranslationModel = audio.translations[.english]!
+		if let translation: AICAudioFileTranslationModel = audio.translations[Common.currentLanguage] {
+			audioTranslation = translation
+		}
+		
 		transcriptView.show(collapseEnabled: true)
-		transcriptView.bodyTextView.text = audio.transcript.stringByDecodingHTMLEntities
+		transcriptView.bodyTextView.text = audioTranslation.transcript.stringByDecodingHTMLEntities
 		
 		var creditsString = ""
 		if (artwork.credits ?? "").isEmpty == false { creditsString += artwork.credits! }

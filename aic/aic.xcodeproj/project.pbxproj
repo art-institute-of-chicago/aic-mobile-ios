@@ -17,6 +17,7 @@
 		291221971FDB35650096BB75 /* SuggestedSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291221961FDB35650096BB75 /* SuggestedSearchCell.swift */; };
 		291221991FDB359D0096BB75 /* ResultsSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */; };
 		2912219B1FDB43040096BB75 /* SuggestedSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */; };
+		2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */; };
 		291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */; };
 		291FB71F1FDA0905007794E0 /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */; };
 		2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127791FDEF2C5008BFAB1 /* MapItemCell.swift */; };
@@ -116,7 +117,7 @@
 		298729F320155E2C00BB3B6A /* Sections.strings in Resources */ = {isa = PBXBuildFile; fileRef = 298729F520155E2C00BB3B6A /* Sections.strings */; };
 		298729FA2016378000BB3B6A /* Home.strings in Resources */ = {isa = PBXBuildFile; fileRef = 298729FC2016378000BB3B6A /* Home.strings */; };
 		29872A01201684CD00BB3B6A /* Info.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29872A03201684CD00BB3B6A /* Info.strings */; };
-		2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */; };
+		2994891F1FA3849C00943197 /* AICGeneralInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994891E1FA3849C00943197 /* AICGeneralInfoModel.swift */; };
 		29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A27A071FCC769B007CEE1D /* HomeTourCell.xib */; };
 		29A67F852027752E003C630A /* AudioPlayerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F842027752E003C630A /* AudioPlayerSlider.swift */; };
 		29A67F872027D74B003C630A /* AudioInfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A67F862027D74B003C630A /* AudioInfoSectionView.swift */; };
@@ -237,7 +238,6 @@
 		E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */; };
 		E4DF50B01CEB8AFB0071345E /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DF50AF1CEB8AFB0071345E /* UIImageColors.swift */; };
 		E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */; };
-		E4E108E21C98F23200385842 /* TestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108E11C98F23200385842 /* TestModels.swift */; };
 		E4E861021CDBE46B006D07FD /* _NewsToursRevealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */; };
 		E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F518FA1D2586B0004BFB44 /* AICImageView.swift */; };
 		E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */; };
@@ -287,6 +287,7 @@
 		291221961FDB35650096BB75 /* SuggestedSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedSearchCell.swift; sourceTree = "<group>"; };
 		291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsSectionTitleView.swift; sourceTree = "<group>"; };
 		2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestedSearchCell.xib; sourceTree = "<group>"; };
+		2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICAudioCommentaryModel.swift; sourceTree = "<group>"; };
 		291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsFilterMenuView.swift; sourceTree = "<group>"; };
 		291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationController.swift; sourceTree = "<group>"; };
 		293127791FDEF2C5008BFAB1 /* MapItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemCell.swift; sourceTree = "<group>"; };
@@ -398,7 +399,7 @@
 		29872A02201684CD00BB3B6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Info.strings; sourceTree = "<group>"; };
 		29872A04201684D100BB3B6A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Info.strings; sourceTree = "<group>"; };
 		29872A05201684D300BB3B6A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Info.strings"; sourceTree = "<group>"; };
-		2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICMuseumInfoModel.swift; sourceTree = "<group>"; };
+		2994891E1FA3849C00943197 /* AICGeneralInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICGeneralInfoModel.swift; sourceTree = "<group>"; };
 		29A27A071FCC769B007CEE1D /* HomeTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTourCell.xib; sourceTree = "<group>"; };
 		29A67F842027752E003C630A /* AudioPlayerSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerSlider.swift; sourceTree = "<group>"; };
 		29A67F862027D74B003C630A /* AudioInfoSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInfoSectionView.swift; sourceTree = "<group>"; };
@@ -541,7 +542,6 @@
 		E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AIC.swift"; sourceTree = "<group>"; };
 		E4DF50AF1CEB8AFB0071345E /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageColors.swift; path = ThirdParty/UIImageColors/UIImageColors.swift; sourceTree = "<group>"; };
 		E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAudioFileModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E4E108E11C98F23200385842 /* TestModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestModels.swift; sourceTree = "<group>"; };
 		E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursRevealView.swift; sourceTree = "<group>"; };
 		E4F518FA1D2586B0004BFB44 /* AICImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICImageView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -994,7 +994,6 @@
 			isa = PBXGroup;
 			children = (
 				0E3350C21DA6C7A500CE3612 /* aic.entitlements */,
-				E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */,
 				E4DF50AD1CEB8ACB0071345E /* ThirdParty */,
 				E43F36891D2B2F8200DA4DA6 /* Analytics */,
 				E433BACC1CFDD64A0086F2ED /* Application */,
@@ -1005,9 +1004,10 @@
 				E415ABBF1C7298420093B719 /* ViewControllers+Views */,
 				293D00731FA7C7EF00BF2C26 /* Assets */,
 				E497FA5F1D009B13007FA272 /* Assets.xcassets */,
-				E415AB8F1C7297E60093B719 /* Info.plist */,
 				E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */,
+				E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */,
 				32A2A70F1E8079610025186F /* Config.plist */,
+				E415AB8F1C7297E60093B719 /* Info.plist */,
 			);
 			path = aic;
 			sourceTree = "<group>";
@@ -1054,8 +1054,9 @@
 		E415ABBD1C7298420093B719 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E4E108E11C98F23200385842 /* TestModels.swift */,
 				E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */,
+				2994891E1FA3849C00943197 /* AICGeneralInfoModel.swift */,
+				2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */,
 				E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */,
 				E4D159381CBAE8C100536B4D /* AICCoordinateWithFloor.swift */,
 				295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */,
@@ -1068,7 +1069,6 @@
 				0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */,
 				E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */,
 				E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */,
-				2994891E1FA3849C00943197 /* AICMuseumInfoModel.swift */,
 				E425B3CD1C97649300A19F6F /* AICObjectModel.swift */,
 				293127821FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift */,
 				293127841FDF3B0B008BFAB1 /* AICSearchedAutocompleteStringModel.swift */,
@@ -1698,6 +1698,7 @@
 				294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */,
 				E456CF761CE426DF00D25E5B /* AICTourOverviewModel.swift in Sources */,
 				E4F82F721CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift in Sources */,
+				2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */,
 				E417B52D1CA3236600C362A1 /* NearbySectionView.swift in Sources */,
 				294C0B50201A76F700F2ABB1 /* MapDepartmentAnnotationView.swift in Sources */,
 				295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */,
@@ -1774,7 +1775,6 @@
 				29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */,
 				294C0B5A201A76F700F2ABB1 /* MapFloorSelectorViewController.swift in Sources */,
 				E497FA621D00ABAD007FA272 /* AICMessageSmallModel.swift in Sources */,
-				E4E108E21C98F23200385842 /* TestModels.swift in Sources */,
 				294C0B5C201A76F700F2ABB1 /* Utilities.swift in Sources */,
 				E4923FC11C9E00B500AB255C /* UIView+AIC.swift in Sources */,
 				2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */,
@@ -1858,7 +1858,7 @@
 				E47306EE1D23076900A77254 /* InstructionsItemViewController.swift in Sources */,
 				E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */,
 				29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */,
-				2994891F1FA3849C00943197 /* AICMuseumInfoModel.swift in Sources */,
+				2994891F1FA3849C00943197 /* AICGeneralInfoModel.swift in Sources */,
 				294338541FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -32,12 +32,12 @@ class InfoSectionInformationView: BaseView {
         
         infoContentViewHolder.backgroundColor = .white
         
-        titleLabel.text = AppDataManager.sharedInstance.app.museumInfo.title
+        //titleLabel.text = AppDataManager.sharedInstance.app.museumInfo.title
         titleLabel.textColor = .black
         titleLabel.font = .aicTitleFont
 		
 		museumHoursTextView.frame = UIScreen.main.bounds.insetBy(dx: contentMargins.left + contentMargins.right, dy: 0)
-		museumHoursTextView.text = AppDataManager.sharedInstance.app.museumInfo.museumHours
+		//museumHoursTextView.text = AppDataManager.sharedInstance.app.museumInfo.museumHours
 		museumHoursTextView.textColor = .black
 		museumHoursTextView.font = .aicTextFont
 		museumHoursTextView.setDefaultsForAICAttributedTextView()

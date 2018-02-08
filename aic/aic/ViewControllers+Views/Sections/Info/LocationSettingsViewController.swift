@@ -10,7 +10,7 @@ import UIKit
 import Localize_Swift
 
 class LocationSettingsViewController : UIViewController {
-	let pageView: InfoPageView = InfoPageView(title: Common.Info.locationTitle, text: Common.Info.locationText)
+	let pageView: InfoPageView = InfoPageView()
 	let locationButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	
 	init() {

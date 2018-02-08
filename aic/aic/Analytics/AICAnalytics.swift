@@ -162,8 +162,8 @@ class AICAnalytics {
     }
     
     // Object View
-    static func objectViewAudioItemPlayedEvent(audioItem:AICAudioFileModel, pctComplete:Int) {
-        AICAnalytics.sendAnalyticEvent(category: Category.object, action: Action.objectFinishedPlaying, label: audioItem.title, value: NSNumber(value: pctComplete as Int))
+    static func objectViewAudioItemPlayedEvent(audioItem: AICAudioFileModel, pctComplete: Int) {
+		AICAnalytics.sendAnalyticEvent(category: Category.object, action: Action.objectFinishedPlaying, label: audioItem.translations[Common.currentLanguage]!.title, value: NSNumber(value: pctComplete as Int))
     }
     
     // Members

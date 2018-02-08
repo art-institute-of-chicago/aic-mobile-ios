@@ -191,7 +191,7 @@ extension AudioGuideNavigationController {
                 return
             }
             
-            guard let object = AppDataManager.sharedInstance.getObject(forAudioGuideID: id) else {
+            guard let object = AppDataManager.sharedInstance.getObject(forSelectorNumber: id) else {
                 shakeForIncorrect()
                 return
             }
