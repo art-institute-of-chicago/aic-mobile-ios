@@ -18,6 +18,8 @@
 		291221991FDB359D0096BB75 /* ResultsSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */; };
 		2912219B1FDB43040096BB75 /* SuggestedSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */; };
 		2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */; };
+		2915B0F2202CA08B00DEBB03 /* LanguageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B0F1202CA08B00DEBB03 /* LanguageSelectorView.swift */; };
+		2915B0F4202CA0BE00DEBB03 /* LanguageSelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B0F3202CA0BE00DEBB03 /* LanguageSelectorButton.swift */; };
 		291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */; };
 		291FB71F1FDA0905007794E0 /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */; };
 		2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127791FDEF2C5008BFAB1 /* MapItemCell.swift */; };
@@ -288,6 +290,8 @@
 		291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsSectionTitleView.swift; sourceTree = "<group>"; };
 		2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestedSearchCell.xib; sourceTree = "<group>"; };
 		2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICAudioCommentaryModel.swift; sourceTree = "<group>"; };
+		2915B0F1202CA08B00DEBB03 /* LanguageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectorView.swift; sourceTree = "<group>"; };
+		2915B0F3202CA0BE00DEBB03 /* LanguageSelectorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectorButton.swift; sourceTree = "<group>"; };
 		291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsFilterMenuView.swift; sourceTree = "<group>"; };
 		291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationController.swift; sourceTree = "<group>"; };
 		293127791FDEF2C5008BFAB1 /* MapItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemCell.swift; sourceTree = "<group>"; };
@@ -1280,6 +1284,8 @@
 			children = (
 				2931277D1FDF0E71008BFAB1 /* Table View Cells */,
 				296D559420239F3E00442A60 /* CardNavigationController.swift */,
+				2915B0F3202CA0BE00DEBB03 /* LanguageSelectorButton.swift */,
+				2915B0F1202CA08B00DEBB03 /* LanguageSelectorView.swift */,
 				295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */,
 				2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */,
 				E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */,
@@ -1768,6 +1774,7 @@
 				E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */,
 				29B9B58F1FD0A3FF0095FE52 /* SeeAllViewController.swift in Sources */,
 				2941CE7A1FE08EF400B7CCEE /* CardTitleView.swift in Sources */,
+				2915B0F2202CA08B00DEBB03 /* LanguageSelectorView.swift in Sources */,
 				E47A971A1CF262760041D0A6 /* AICInstructionsScreenModel.swift in Sources */,
 				294C0B53201A76F700F2ABB1 /* MapObjectAnnotation.swift in Sources */,
 				E42677E51CC5677A0046BB27 /* _InfoSectionInformationView.swift in Sources */,
@@ -1820,6 +1827,7 @@
 				E47A97161CEFBC150041D0A6 /* AppDataParser.swift in Sources */,
 				296D559520239F3E00442A60 /* CardNavigationController.swift in Sources */,
 				294C0B61201A76F700F2ABB1 /* MKMapRectRotated.swift in Sources */,
+				2915B0F4202CA0BE00DEBB03 /* LanguageSelectorButton.swift in Sources */,
 				2941CE801FE09F6000B7CCEE /* SearchContentViewController.swift in Sources */,
 				294C0B6B201A770E00F2ABB1 /* MapState.swift in Sources */,
 				E4F7C14D1CA201B6005976D1 /* ObjectTranscriptView.swift in Sources */,

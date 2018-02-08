@@ -53,6 +53,14 @@
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TeH-Be-21x" customClass="LanguageSelectorView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="261" y="115.5" width="94" height="98"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="98" id="LbE-IF-Ffn"/>
+                            <constraint firstAttribute="width" constant="94" id="TNg-xM-TUR"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Oia-Gy-VmZ" firstAttribute="top" secondItem="M4X-H7-qci" secondAttribute="bottom" constant="16" id="2nj-cZ-KGL"/>
@@ -62,6 +70,8 @@
                     <constraint firstItem="7zJ-6p-yGa" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leadingMargin" id="aUm-gW-fyd"/>
                     <constraint firstItem="M4X-H7-qci" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leading" id="dpD-9t-v2H"/>
                     <constraint firstItem="7zJ-6p-yGa" firstAttribute="top" secondItem="ZAJ-5a-7Ql" secondAttribute="top" constant="313" id="iwA-65-2za"/>
+                    <constraint firstItem="TeH-Be-21x" firstAttribute="trailing" secondItem="M4X-H7-qci" secondAttribute="trailing" constant="-20" id="uaj-dc-FIS"/>
+                    <constraint firstItem="TeH-Be-21x" firstAttribute="bottom" secondItem="M4X-H7-qci" secondAttribute="bottom" constant="-7" id="vwH-yQ-TWQ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="7zJ-6p-yGa" secondAttribute="trailing" id="wWi-ij-Ppx"/>
                 </constraints>
             </tableViewCellContentView>
@@ -71,6 +81,7 @@
             </constraints>
             <connections>
                 <outlet property="descriptionLabel" destination="7zJ-6p-yGa" id="waH-aH-FnD"/>
+                <outlet property="languageSelectorView" destination="TeH-Be-21x" id="qEj-5w-OxH"/>
                 <outlet property="startTourButton" destination="Oia-Gy-VmZ" id="rM1-mS-1QX"/>
                 <outlet property="tourImageView" destination="M4X-H7-qci" id="Rh1-Qx-d6o"/>
             </connections>

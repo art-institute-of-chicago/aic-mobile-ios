@@ -10,10 +10,12 @@ import UIKit
 
 class TourTableViewController : UITableViewController {
 	var tourModel: AICTourModel
+	var language: Common.Language = .english
 	
 	init(tour: AICTourModel) {
 		tourModel = tour
-		if let _ = tourModel.translations[Common.currentLanguage] {
+		if tourModel.availableLanguages.contains(Common.currentLanguage) {
+			language = Common.currentLanguage
 			tourModel.language = Common.currentLanguage
 		}
 		super.init(nibName: nil, bundle: nil)
@@ -57,6 +59,7 @@ extension TourTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: TourContentCell.reuseIdentifier, for: indexPath) as! TourContentCell
 			cell.tourModel = tourModel
+			cell.languageSelectorView.delegate = self
 			return cell
 		}
 		else if indexPath.row == 1 {
@@ -105,6 +108,15 @@ extension TourTableViewController {
 extension TourTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
+	}
+}
+
+// MARK: LanguageSelectorViewDelegate
+extension TourTableViewController : LanguageSelectorViewDelegate {
+	func languageSelectorDidSelect(language: Common.Language) {
+		self.language = language
+		tourModel.language = language
+		self.tableView.reloadData()
 	}
 }
 

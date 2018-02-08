@@ -15,6 +15,7 @@ class TourContentCell : UITableViewCell {
 	@IBOutlet var tourImageView: AICImageView!
 	@IBOutlet var descriptionLabel: UILabel!
 	@IBOutlet var startTourButton: AICButton!
+	@IBOutlet weak var languageSelectorView: LanguageSelectorView!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -33,13 +34,14 @@ class TourContentCell : UITableViewCell {
 				return
 			}
 			
-			var tourTranslationModel = tourModel.translations[.english]!
-			if let translation: AICTourTranslationModel = tourModel.translations[Common.currentLanguage] {
-				tourTranslationModel = translation
+			languageSelectorView.isHidden = true
+			if tourModel.availableLanguages.count > 1 {
+				languageSelectorView.isHidden = false
+				languageSelectorView.setLanguages(languages: tourModel.availableLanguages, defaultLanguage: tourModel.language)
 			}
 			
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
-			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourTranslationModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
+			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
 		}
 	}

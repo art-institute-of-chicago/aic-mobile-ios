@@ -26,13 +26,15 @@ struct AICTourModel {
 	
 	var translations: [Common.Language : AICTourTranslationModel]
 	
-	var language: Common.Language = .english {
-		didSet {
-			if availableLanguages.contains(language) == false {
-				self.language = oldValue
-			}
-		}
-	}
+//	var language: Common.Language = .english {
+//		didSet {
+//			if availableLanguages.contains(language) == false {
+//				self.language = oldValue
+//			}
+//		}
+//	}
+	
+	var language: Common.Language = .english
 	
 	var availableLanguages: [Common.Language] {
 		var languages: [Common.Language] = []

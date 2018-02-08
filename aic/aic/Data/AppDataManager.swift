@@ -191,19 +191,14 @@ class AppDataManager {
 				case .success(let value):
 					self.exhibitions = self.dataParser.parse(exhibitionsData: value)
 					
-					// assign image to exhibitions if available
-					// TODO: possibly clean this code
-					var exhibitionsWithImagesFromCMS: [AICExhibitionModel] = []
-					for exhibition in self.exhibitions {
-						var exhibitonWithImage = exhibition
-						if exhibition.imageUrl == nil {
-							if let image = self.app.exhibitionOptionalImages[exhibition.id] {
-								exhibitonWithImage.imageUrl = image
+					// Assign to exhibitions optional images from CMS, if available
+					for index in 0...self.exhibitions.count-1 {
+						if self.exhibitions[index].imageUrl == nil {
+							if let image = self.app.exhibitionOptionalImages[self.exhibitions[index].id] {
+								self.exhibitions[index].imageUrl = image
 							}
 						}
-						exhibitionsWithImagesFromCMS.append(exhibitonWithImage)
 					}
-					self.exhibitions = exhibitionsWithImagesFromCMS
 					
 				case .failure(let error):
 					print(error)

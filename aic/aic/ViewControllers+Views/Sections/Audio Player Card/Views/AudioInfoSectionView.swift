@@ -37,7 +37,7 @@ class AudioInfoSectionView : UIView {
 		titleLabel.textColor = .white
 		titleLabel.font = .aicAudioInfoSectionTitleFont
 		
-		collapseExpandButton.setImage(#imageLiteral(resourceName: "audioInfoCollapseExpand"), for: .normal)
+		collapseExpandButton.setImage(#imageLiteral(resourceName: "collapseExpand"), for: .normal)
 		collapseExpandButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
 		collapseExpandButton.addTarget(self, action: #selector(collapseButtonPressed(button:)), for: .touchUpInside)
 		collapseExpandButton.isEnabled = false
