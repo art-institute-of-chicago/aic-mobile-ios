@@ -358,6 +358,8 @@ class AppDataManager {
     }
 	
 	func getEventsForEarliestDay() -> [AICEventModel] {
+		var dayEvents: [AICEventModel] = []
+		
 		// set earliest day to 1 year in the future
 		var components = DateComponents()
 		components.setValue(1, for: .year)
@@ -371,7 +373,61 @@ class AppDataManager {
 			}
 		}
 		
-		return events.filter({ Calendar.current.compare($0.startDate, to: earliestDate, toGranularity: .day) == .orderedSame })
+		let eventsForEarliestDate = events.filter({ Calendar.current.compare($0.startDate, to: earliestDate, toGranularity: .day) == .orderedSame })
+		
+		for event in eventsForEarliestDate {
+			let now = Date()
+			if event.startDate > now {
+				dayEvents.append(event)
+			}
+			if dayEvents.count == 6 {
+				break
+			}
+		}
+		
+		if dayEvents.isEmpty {
+			if let lastEventOfEarliestDay = eventsForEarliestDate.last {
+				dayEvents.append(lastEventOfEarliestDay)
+			}
+		}
+		
+		return dayEvents
+	}
+	
+	func getToursForHome() -> [AICTourModel] {
+		var tourItems: [AICTourModel] = []
+		for tour in self.app.tours {
+			tourItems.append(tour)
+			if tourItems.count == Common.Home.maxNumberOfTours {
+				break
+			}
+		}
+		return tourItems
+	}
+	
+	func getExhibitionsForHome() -> [AICExhibitionModel] {
+		var exhibitionItems: [AICExhibitionModel] = []
+		for exhibition in self.exhibitions {
+			exhibitionItems.append(exhibition)
+			if exhibitionItems.count == Common.Home.maxNumberOfExhibitions {
+				break
+			}
+		}
+		return exhibitionItems
+	}
+	
+	func getEventsForHome() -> [AICEventModel] {
+		var eventItems: [AICEventModel] = []
+		let now: Date = Date()
+		for event in self.events {
+			if event.startDate > now {
+				eventItems.append(event)
+			}
+			if eventItems.count == Common.Home.maxNumberOfEvents {
+				break
+			}
+		}
+		return eventItems
 	}
     
     // Find the tours this object is on, and filter out a tour if sepecified

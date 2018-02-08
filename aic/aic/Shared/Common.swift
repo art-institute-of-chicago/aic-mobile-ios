@@ -347,8 +347,16 @@ struct Common {
             return userLocation.distance(from: objectCLLocation)
         }
     }
+	
+	// MARK: Home
+	struct Home {
+		static let maxNumberOfTours: Int = 6
+		static let maxNumberOfExhibitions: Int = 6
+		static let maxNumberOfEvents: Int = 8
+	}
 
-    // MARK: Intro
+    // MARK: Instructions
+	// TODO: REMOVE instructions
     // Content for each screen
     struct Instructions {
         static let screens = [
@@ -392,7 +400,7 @@ struct Common {
             )
         ]
     }
-
+	
     // MARK: Map
     struct Map {
         static let backgroundOverlayAlpha:CGFloat = 0.75
@@ -543,6 +551,7 @@ struct Common {
 		static func throughDateString(endDate: Date) -> String {
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "MMMM d, yyyy"
+			//DateFormatter.localizedString(from: endDate, dateStyle: .medium, timeStyle: .medium)
 			let endDateFormatted = dateFormatter.string(from: endDate)
 			return "Through \(endDateFormatted)"
 		}

@@ -35,9 +35,17 @@ class LanguageSelectorView : UIView {
 	var language: Common.Language = .english {
 		didSet {
 			// rearrange our array so the selected language is in the front
-			if let indexOfSelected: Int = availableLanguages.index(of: language) {
-				availableLanguages.remove(at: indexOfSelected)
-				availableLanguages.insert(language, at: 0)
+			// non-selected languages will appear always in the same order from the bottom: english, spanish, chinese
+			availableLanguages.sort { (first, second) -> Bool in
+				if first == language { return true }
+				else if second == language { return false }
+				else if first == .english { return true }
+				else if second == .english { return false }
+				else if first == .spanish { return true }
+				else if second == .spanish { return false }
+				else if first == .chinese { return true }
+				else if second == .chinese { return false }
+				return false
 			}
 			
 			// reset button languages in order starting from the selected at the bottom
@@ -146,7 +154,7 @@ class LanguageSelectorView : UIView {
 		}, completion: nil)
 	}
 	
-	func close() {
+	@objc func close() {
 		currentState = .closed
 		languageAButton.isEnabled = false
 		languageBButton.isEnabled = false
@@ -171,6 +179,7 @@ class LanguageSelectorView : UIView {
 	@objc func languageOptionButtonPressed(button: LanguageSelectorButton) {
 		language = button.language
 		self.delegate?.languageSelectorDidSelect(language: language)
+		self.perform(#selector(close), with: nil, afterDelay: 0.2)
 	}
 	
 	@objc func selectedLanguageButtonPressed(button: LanguageSelectorButton) {

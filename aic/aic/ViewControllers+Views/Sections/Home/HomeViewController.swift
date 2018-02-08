@@ -42,41 +42,6 @@ class HomeViewController : SectionViewController {
 	
 	override init(section: AICSectionModel) {
 		super.init(section: section)
-		
-		
-		// TODO: move these calculations to DataManager
-		// TODO: get this data from DataManager on viewWillAppear
-		// TODO: set max number of items in Common / Settings
-		for tour in AppDataManager.sharedInstance.app.tours {
-			tourItems.append(tour)
-			if tourItems.count == 6 {
-				break
-			}
-		}
-		
-		for exhibition in AppDataManager.sharedInstance.exhibitions {
-			exhibitionItems.append(exhibition)
-			if exhibitionItems.count == 6 {
-				break
-			}
-		}
-		
-		let earliestDayEvents = AppDataManager.sharedInstance.getEventsForEarliestDay()
-		for event in earliestDayEvents {
-			let now = Date()
-			if event.startDate > now {
-				eventItems.append(event)
-			}
-			if eventItems.count == 6 {
-				break
-			}
-		}
-		
-		if eventItems.isEmpty {
-			if let lastEventOfEarliestDay = earliestDayEvents.last {
-				eventItems.append(lastEventOfEarliestDay)
-			}
-		}
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -127,6 +92,11 @@ class HomeViewController : SectionViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		// TODO: set max number of items (6) in Common / Settings
+		tourItems = AppDataManager.sharedInstance.getToursForHome()
+		exhibitionItems = AppDataManager.sharedInstance.getExhibitionsForHome()
+		eventItems = AppDataManager.sharedInstance.getEventsForHome()
 		
 		self.view.layoutIfNeeded()
 		self.scrollView.contentSize.width = self.view.frame.width
