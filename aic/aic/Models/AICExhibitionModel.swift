@@ -6,9 +6,10 @@
 import CoreLocation
 
 struct AICExhibitionModel {
+	let id: Int
     let title: String
     let shortDescription: String
-    let imageUrl: URL?
+    var imageUrl: URL?
 	
 	let startDate: Date
 	let endDate: Date

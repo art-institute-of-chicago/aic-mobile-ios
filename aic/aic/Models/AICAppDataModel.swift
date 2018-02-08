@@ -11,4 +11,5 @@ struct AICAppDataModel {
     var tours: [AICTourModel]			= []
 	var featuredTours: [Int]			= []
 	var featuredExhibitions: [Int]		= []
+	var exhibitionOptionalImages: [Int : URL] = [:]
 }

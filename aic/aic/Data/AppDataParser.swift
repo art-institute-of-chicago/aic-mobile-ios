@@ -59,6 +59,7 @@ class AppDataParser {
     }
     
     private func parse(exhibitionJSON: JSON) throws -> AICExhibitionModel {
+		let id = try getInt(fromJSON: exhibitionJSON, forKey: "id")
         let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
         let description = try getString(fromJSON: exhibitionJSON, forKey: "short_description")
 		
@@ -100,12 +101,13 @@ class AppDataParser {
 		}
 
         // Return news item
-        return AICExhibitionModel(title: title,
-                                shortDescription: description,
-                                imageUrl: imageURL,
-								startDate: startDate,
-								endDate: endDate,
-                                location: location
+		return AICExhibitionModel(id: id,
+								  title: title,
+								  shortDescription: description,
+								  imageUrl: imageURL,
+								  startDate: startDate,
+								  endDate: endDate,
+								  location: location
         )
     }
 	
@@ -178,6 +180,7 @@ class AppDataParser {
 		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
 		let featuredTours = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
 		let featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
+		let exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
 			
 		let appData = AICAppDataModel(generalInfo: generalInfo,
 							   galleries: self.galleries,
@@ -185,7 +188,8 @@ class AppDataParser {
 							   audioFiles: self.audioFiles,
 							   tours: tours,
 							   featuredTours: featuredTours,
-							   featuredExhibitions: featuredExhibitions
+							   featuredExhibitions: featuredExhibitions,
+							   exhibitionOptionalImages: exhibitionOptionalImages
 		)
 		
 		return appData
@@ -615,6 +619,26 @@ class AppDataParser {
 									   durationInMinutes: durationInMinutes,
 									   overview: overview
 		)
+	}
+	
+	// MARK: Exhibition Images
+	
+	func parse(exhibitionImagesJSON: JSON) -> [Int : URL] {
+		var exhibitionImages = [Int : URL]()
+		for (exhibitionId, exhibitionImageJSON):(String, JSON) in exhibitionImagesJSON.dictionaryValue {
+			do {
+				try handleParseError({
+					let imageUrl: URL = try getURL(fromJSON: exhibitionImageJSON, forKey: "image_url")
+					exhibitionImages[Int(exhibitionId)!] = imageUrl
+				})
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse Exhibition Images:\n\(exhibitionImagesJSON)\n")
+				}
+			}
+		}
+		return exhibitionImages
 	}
 	
 	// MARK: Search data
