@@ -12,6 +12,7 @@ class AudioInfoViewController : UIViewController {
     var artworkModel: AICObjectModel? = nil
 	var tourOverviewModel: AICTourOverviewModel? = nil
     var tourModel: AICTourModel? = nil
+	var tourTranslationModel: AICTourTranslationModel? = nil
     
     let scrollView: UIScrollView = UIScrollView()
     let imageView: UIImageView = UIImageView()
@@ -169,8 +170,14 @@ class AudioInfoViewController : UIViewController {
 		reset()
 		
         tourModel = tour
+		
+		tourTranslationModel = tour.translations[.english]!
+		if let translation: AICTourTranslationModel = tour.translations[Common.currentLanguage] {
+			tourTranslationModel = translation
+		}
+		
 		setImage(imageURL: tour.imageUrl)
-		setDescription(description: tour.longDescription)
+		setDescription(description: tourTranslationModel!.longDescription)
 		
 		updateLayout()
     }

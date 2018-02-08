@@ -124,23 +124,23 @@ class AICAnalytics {
     
     // Tours
     static func sendTourDidShowOverviewEvent(forTour tour:AICTourModel) {
-        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourOverviewShown, label: tour.title)
+        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourOverviewShown, label: tour.translations[.english]!.title)
     }
     
 	static func sendTourExpandedEvent(forTour tour:AICTourModel) {
-		AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.expanded, label: tour.title)
+		AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.expanded, label: tour.translations[.english]!.title)
 	}
     
     static func sendTourStartedFromLinkEvent(forTour tour:AICTourModel) {
-        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourStartedFromLink, label: tour.title)
+        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourStartedFromLink, label: tour.translations[.english]!.title)
     }
     
     static func sendTourDidStartEvent(forTour tour:AICTourModel) {
-        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourStarted, label: tour.title)
+        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourStarted, label: tour.translations[.english]!.title)
     }
     
     static func sendTourDidLeaveEvent(forTour tour:AICTourModel) {
-        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourLeft, label: tour.title)
+        AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourLeft, label: tour.translations[.english]!.title)
     }
     
     static func sendTourDidShowObjectEvent(forObject object:AICObjectModel) {
@@ -163,7 +163,7 @@ class AICAnalytics {
     
     // Object View
     static func objectViewAudioItemPlayedEvent(audioItem: AICAudioFileModel, pctComplete: Int) {
-		AICAnalytics.sendAnalyticEvent(category: Category.object, action: Action.objectFinishedPlaying, label: audioItem.translations[Common.currentLanguage]!.title, value: NSNumber(value: pctComplete as Int))
+		AICAnalytics.sendAnalyticEvent(category: Category.object, action: Action.objectFinishedPlaying, label: audioItem.translations[.english]!.title, value: NSNumber(value: pctComplete as Int))
     }
     
     // Members

@@ -33,8 +33,13 @@ class TourContentCell : UITableViewCell {
 				return
 			}
 			
+			var tourTranslationModel = tourModel.translations[.english]!
+			if let translation: AICTourTranslationModel = tourModel.translations[Common.currentLanguage] {
+				tourTranslationModel = translation
+			}
+			
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
-			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
+			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourTranslationModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
 		}
 	}

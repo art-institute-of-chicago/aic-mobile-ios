@@ -32,7 +32,6 @@ class AudioPlayerNavigationController : CardNavigationController {
     private var audioPlayerProgressTimer: Timer? = nil
     
     var currentAudioFile: AICAudioFileModel? = nil
-	var currentAudioFileTranslation: AICAudioFileTranslationModel? = nil
     var currentAudioFileMaxProgress: CGFloat = 0
     
     var isUpdatingObjectViewProgressSlider = false
@@ -136,10 +135,9 @@ class AudioPlayerNavigationController : CardNavigationController {
         currentAudioFile = audioFile
         currentAudioFileMaxProgress = 0
 		
-		// Audio Translation
-		currentAudioFileTranslation = audioFile.translations[.english]!
-		if let translation: AICAudioFileTranslationModel = audioFile.translations[Common.currentLanguage] {
-			currentAudioFileTranslation = translation
+		// Set Audio Translation
+		if let _ = audioFile.translations[Common.currentLanguage] {
+			currentAudioFile!.language = Common.currentLanguage
 		}
         
         // Clear out current player
@@ -153,7 +151,7 @@ class AudioPlayerNavigationController : CardNavigationController {
         showLoadingMessage()
 		
 		// Load the file
-		let asset = AVURLAsset(url: currentAudioFileTranslation!.url)
+		let asset = AVURLAsset(url: currentAudioFile!.url)
 		asset.loadValuesAsynchronously(forKeys: ["tracks"]) {
 			let error:NSErrorPointer = nil
 			let status = asset.statusOfValue(forKey: "tracks", error: error)
@@ -196,7 +194,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 						
 						// Set the MPNowPlaying information
 						let songInfo: [String : AnyObject] = [
-							MPMediaItemPropertyTitle: NSString(string: self.currentAudioFileTranslation!.title),
+							MPMediaItemPropertyTitle: NSString(string: self.currentAudioFile!.title),
 							MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
 							MPMediaItemPropertyArtwork: artwork,
 							MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
@@ -228,7 +226,6 @@ class AudioPlayerNavigationController : CardNavigationController {
         let alertView = UIAlertController(title: loadFailureTitle, message: loadFailureMessage, preferredStyle: .alert)
         alertView.addAction(UIAlertAction(title: reloadButtonTitle, style: .default, handler: { (alertAction) -> Void in
             self.currentAudioFile = nil
-			self.currentAudioFileTranslation = nil
             _ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
         }))
         
@@ -244,8 +241,8 @@ class AudioPlayerNavigationController : CardNavigationController {
     }
     
     private func showAudioControls() {
-        miniAudioPlayerView.showTrackTitle(title: currentAudioFileTranslation!.title)
-        audioInfoVC.audioPlayerView.showTrackTitle(title: currentAudioFileTranslation!.title)
+        miniAudioPlayerView.showTrackTitle(title: currentAudioFile!.title)
+        audioInfoVC.audioPlayerView.showTrackTitle(title: currentAudioFile!.title)
     }
     
     // MARK: Audio Playback
@@ -491,7 +488,6 @@ extension AudioPlayerNavigationController {
 		pause()
 		hide()
 		currentAudioFile = nil
-		currentAudioFileTranslation = nil
 		// TODO: remove track from MPNowPlayingInfoCenter and RemoteControl
     }
     

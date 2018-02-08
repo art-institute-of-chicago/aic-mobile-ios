@@ -479,7 +479,8 @@ class AppDataParser {
 		}
 		
 		return AICAudioFileModel(nid:nid,
-								 translations: translations
+								 translations: translations,
+								 language: .english
 		)
 	}
 	
@@ -493,7 +494,6 @@ class AppDataParser {
 											transcript: transcript
 		)
 	}
-	
 	
 	// MARK: Parse tours
 	fileprivate func parse(toursJSON:JSON) -> [AICTourModel] {
@@ -518,27 +518,14 @@ class AppDataParser {
     
     fileprivate func parse(tourJSON: JSON) throws -> AICTourModel {
         let nid                 = try getInt(fromJSON: tourJSON, forKey: "nid")
-        let title               = try getString(fromJSON: tourJSON, forKey: "title")
         let imageUrl            = try getURL(fromJSON: tourJSON, forKey: "image_url")
-        let shortDescription        = try getString(fromJSON: tourJSON, forKey: "description")
-        
-        var longDescription     = try getString(fromJSON: tourJSON, forKey: "intro")
-        longDescription = "\(shortDescription)\r\r\(longDescription)"
         
         let audioFileID         = try getInt(fromJSON: tourJSON, forKey: "tour_audio")
         let audioFile           = try getAudioFile(forNID:audioFileID)
         
-        // Create overview
-        let overview = AICTourOverviewModel(title: "Tour Overview",
-                                            description: longDescription,
-                                            imageUrl: imageUrl,
-                                            audio: audioFile,
-                                            credits: "Copyright 2016 Art Institue of Chicago"
-        )
-        
         // Create Stops
         var stops:[AICTourStopModel] = []
-        guard let stopsData = tourJSON["stops"].array else {
+        guard let stopsData = tourJSON["tour_stops"].array else {
             throw ParseError.tourStopsNotFound
         }
         
@@ -547,23 +534,33 @@ class AppDataParser {
             do {
                 try handleParseError({
                     let order       = try self.getInt(fromJSON: stopData, forKey: "sort")
+					
+					let objectID    = try self.getInt(fromJSON: stopData, forKey: "object")
+					let object      = try self.getObject(forNID: objectID)
                     
-                    let audioFileID = try self.getInt(fromJSON: stopData, forKey: "audio")
-                    let audioFile   = try self.getAudioFile(forNID:audioFileID)
-                    
-                    let objectID    = try self.getInt(fromJSON: stopData, forKey: "object")
-                    let object      = try self.getObject(forNID: objectID)
+                    let audioFileID = try self.getInt(fromJSON: stopData, forKey: "audio_id")
+                    let audioFile   = try self.getAudioFile(forNID: audioFileID)
+					
+					// Selector number is optional
+					var audioBumper: AICAudioFileModel?
+					do {
+						let audioBumperID	= try getInt(fromJSON: stopData, forKey: "audio_bumper")
+						audioBumper			= try self.getAudioFile(forNID: audioBumperID)
+					} catch {
+						audioBumper = nil
+					}
                     
                     let stop = AICTourStopModel(order: order,
                                                 object: object,
-                                                audio:audioFile
+                                                audio:audioFile,
+												audioBumper: audioBumper
                     )
                     
                     stops.append(stop)
                 })
             } catch {
                 if Common.Testing.printDataErrors {
-                    print("Could not parse stop data:\n\(stopData) in Tour \(nid)\n")
+                    //print("Could not parse stop data:\n\(stopData) in Tour \(nid)\n")
                 }
             }
             
@@ -573,23 +570,60 @@ class AppDataParser {
         if stops.count == 0 {
             throw ParseError.noValidTourStops
         }
-        
 
         let bannerString = try? getString(fromJSON: tourJSON, forKey: "tour_banner")
 		
-		let durationInMinutes = try? getString(fromJSON: tourJSON, forKey: "tour_duration")
+		var translations: [Common.Language : AICTourTranslationModel] = [:]
+		let translationsJSON = tourJSON["translations"].array
+		
+		let translationEng = try parseTranslation(tourJSON: tourJSON, imageUrl: imageUrl, audioFile: audioFile)
+		translations[.english] = translationEng
+		
+		for translationJSON in translationsJSON! {
+			do {
+				let language = try getLanguageFor(translationJSON: translationJSON)
+				let translation = try parseTranslation(tourJSON: translationJSON, imageUrl: imageUrl, audioFile: audioFile)
+				translations[language] = translation
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse General Info translation:\n\(translationJSON)\n")
+				}
+			}
+		}
         
         return AICTourModel(nid:nid,
-                            title: title,
-                            shortDescription: shortDescription,
-                            longDescription: longDescription,
                             imageUrl: imageUrl,
-                            overview: overview,
                             stops: stops,
                             bannerString: bannerString,
-							durationInMinutes: durationInMinutes
+							translations: translations,
+							language: .english
         )
     }
+	
+	func parseTranslation(tourJSON: JSON, imageUrl: URL, audioFile: AICAudioFileModel) throws -> AICTourTranslationModel {
+		let title				= try getString(fromJSON: tourJSON, forKey: "title")
+		let shortDescription	= try getString(fromJSON: tourJSON, forKey: "description")
+		
+		var longDescription		= try getString(fromJSON: tourJSON, forKey: "intro")
+		longDescription = "\(shortDescription)\r\r\(longDescription)"
+		
+		let durationInMinutes = try? getString(fromJSON: tourJSON, forKey: "tour_duration")
+		
+		// Create overview
+		let overview = AICTourOverviewModel(title: title,
+											description: longDescription,
+											imageUrl: imageUrl,
+											audio: audioFile,
+											credits: "Copyright 2016 Art Institue of Chicago"
+		)
+		
+		return AICTourTranslationModel(title: title,
+									   shortDescription: shortDescription,
+									   longDescription: longDescription,
+									   durationInMinutes: durationInMinutes,
+									   overview: overview
+		)
+	}
 	
 	// MARK: Search data
 	

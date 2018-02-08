@@ -22,7 +22,12 @@ class ObjectRelatedToursView: ObjectContentSectionView {
         let links:NSMutableAttributedString = NSMutableAttributedString()
         
         for tour in tours {
-            var linkText = tour.title
+			var tourModel = tour
+			if let _ = tour.translations[Common.currentLanguage] {
+				tourModel.language = Common.currentLanguage
+			}
+			
+            var linkText = tourModel.title
             if tour.nid != tours.last?.nid {
                 linkText += "\n"
             }

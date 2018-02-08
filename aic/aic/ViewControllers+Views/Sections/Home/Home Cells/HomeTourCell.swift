@@ -42,17 +42,21 @@ class HomeTourCell : UICollectionViewCell {
 				return
 			}
 			
+			if let _ = tourModel.translations[Common.currentLanguage] {
+				self.tourModel!.language = Common.currentLanguage
+			}
+			
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 //			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
-			tourTitleLabel.text = tourModel.title.stringByDecodingHTMLEntities
-			shortDescriptionTextView.text = tourModel.shortDescription.stringByDecodingHTMLEntities
-			stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
+			tourTitleLabel.text = self.tourModel!.title.stringByDecodingHTMLEntities
+			shortDescriptionTextView.text = self.tourModel!.shortDescription.stringByDecodingHTMLEntities
+			stopsNumberLabel.text = "\(self.tourModel!.stops.count) Stops"
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true
 				durationLabel.isHidden = true
 			}
-			else if let duration: String = tourModel.durationInMinutes {
+			else if let duration: String = self.tourModel!.durationInMinutes {
 				durationLabel.text = "\(duration)min"
 			}
 		}

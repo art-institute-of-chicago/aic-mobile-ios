@@ -9,10 +9,13 @@
 import UIKit
 
 class TourTableViewController : UITableViewController {
-	let tourModel: AICTourModel
+	var tourModel: AICTourModel
 	
 	init(tour: AICTourModel) {
 		tourModel = tour
+		if let _ = tourModel.translations[Common.currentLanguage] {
+			tourModel.language = Common.currentLanguage
+		}
 		super.init(nibName: nil, bundle: nil)
 	}
 	
