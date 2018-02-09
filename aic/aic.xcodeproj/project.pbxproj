@@ -30,9 +30,6 @@
 		2931277F1FDF0EB5008BFAB1 /* ContentButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2931277E1FDF0EB5008BFAB1 /* ContentButtonCell.xib */; };
 		293127811FDF0EC5008BFAB1 /* ContentButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127801FDF0EC5008BFAB1 /* ContentButtonCell.swift */; };
 		293127831FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127821FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift */; };
-		293127851FDF3B0B008BFAB1 /* AICSearchedAutocompleteStringModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127841FDF3B0B008BFAB1 /* AICSearchedAutocompleteStringModel.swift */; };
-		293127871FDF3B23008BFAB1 /* AICSearchedTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127861FDF3B23008BFAB1 /* AICSearchedTourModel.swift */; };
-		293127891FDF3B3E008BFAB1 /* AICSearchedExhibitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127881FDF3B3E008BFAB1 /* AICSearchedExhibitionModel.swift */; };
 		293D008F1FA7C80D00BF2C26 /* DESCRIPTION.en_us.html in Resources */ = {isa = PBXBuildFile; fileRef = 293D00761FA7C80D00BF2C26 /* DESCRIPTION.en_us.html */; };
 		293D00901FA7C80D00BF2C26 /* FONTLOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 293D00771FA7C80D00BF2C26 /* FONTLOG.txt */; };
 		293D00911FA7C80D00BF2C26 /* Lora-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 293D00781FA7C80D00BF2C26 /* Lora-Bold.ttf */; };
@@ -311,9 +308,6 @@
 		2931277E1FDF0EB5008BFAB1 /* ContentButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentButtonCell.xib; sourceTree = "<group>"; };
 		293127801FDF0EC5008BFAB1 /* ContentButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentButtonCell.swift; sourceTree = "<group>"; };
 		293127821FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICSearchedArtworkModel.swift; sourceTree = "<group>"; };
-		293127841FDF3B0B008BFAB1 /* AICSearchedAutocompleteStringModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICSearchedAutocompleteStringModel.swift; sourceTree = "<group>"; };
-		293127861FDF3B23008BFAB1 /* AICSearchedTourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICSearchedTourModel.swift; sourceTree = "<group>"; };
-		293127881FDF3B3E008BFAB1 /* AICSearchedExhibitionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICSearchedExhibitionModel.swift; sourceTree = "<group>"; };
 		293D00761FA7C80D00BF2C26 /* DESCRIPTION.en_us.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DESCRIPTION.en_us.html; sourceTree = "<group>"; };
 		293D00771FA7C80D00BF2C26 /* FONTLOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
 		293D00781FA7C80D00BF2C26 /* Lora-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lora-Bold.ttf"; sourceTree = "<group>"; };
@@ -1090,9 +1084,6 @@
 				E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */,
 				E425B3CD1C97649300A19F6F /* AICObjectModel.swift */,
 				293127821FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift */,
-				293127841FDF3B0B008BFAB1 /* AICSearchedAutocompleteStringModel.swift */,
-				293127881FDF3B3E008BFAB1 /* AICSearchedExhibitionModel.swift */,
-				293127861FDF3B23008BFAB1 /* AICSearchedTourModel.swift */,
 				E4D159341CBAE3E900536B4D /* AICTourModel.swift */,
 				E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */,
 				E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */,
@@ -1741,7 +1732,6 @@
 				E42178341CC6A2CA00815B41 /* _InfoSectionMemberCardView.swift in Sources */,
 				E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */,
 				294C0B4F201A76F700F2ABB1 /* MapObjectAnnotationView.swift in Sources */,
-				293127891FDF3B3E008BFAB1 /* AICSearchedExhibitionModel.swift in Sources */,
 				E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */,
 				E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */,
 				E4F82F6D1CA45F3400E4224B /* _SectionView.swift in Sources */,
@@ -1762,7 +1752,6 @@
 				E421783C1CC6E1F300815B41 /* String+AIC.swift in Sources */,
 				E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */,
 				294C0B67201A770E00F2ABB1 /* MapDepartmentHUDView.swift in Sources */,
-				293127851FDF3B0B008BFAB1 /* AICSearchedAutocompleteStringModel.swift in Sources */,
 				E4F519C71C87B2F200226188 /* Helpers.swift in Sources */,
 				E49BAB8A1CB1968900AE0678 /* ToursSectionStopView.swift in Sources */,
 				E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */,
@@ -1817,7 +1806,6 @@
 				E439FD011CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift in Sources */,
 				291221991FDB359D0096BB75 /* ResultsSectionTitleView.swift in Sources */,
 				29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */,
-				293127871FDF3B23008BFAB1 /* AICSearchedTourModel.swift in Sources */,
 				29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */,
 				E4D1592D1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift in Sources */,
 				29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */,

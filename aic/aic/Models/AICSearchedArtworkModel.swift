@@ -10,6 +10,4 @@ import Foundation
 
 struct AICSearchedArtworkModel {
 	let objectId: Int
-	let apiLink: URL
-	let score: CGFloat
 }

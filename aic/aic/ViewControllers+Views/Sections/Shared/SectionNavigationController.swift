@@ -79,10 +79,33 @@ class SectionNavigationController : UINavigationController {
 	}
 	
 	@objc func updateLanguage() {
-		let backButtonHidden = self.viewControllers.count <= 1
+		let isRootVC: Bool = self.viewControllers.count <= 1
+		let backButtonHidden = isRootVC
+		var titleText = self.topViewController?.navigationItem.title?.localized(using: "Sections")
+		var subtitleText = sectionModel.description.localized(using: "Sections")
+		
+		// Set text from CMS for rootViewControllers of audio, map and info sections
+		if isRootVC {
+			let generalInfo = AppDataManager.sharedInstance.app.generalInfo
+			if generalInfo.availableLanguages.contains(Common.currentLanguage) {
+				if sectionModel.nid == Section.audioGuide.rawValue {
+					titleText = generalInfo.translations[Common.currentLanguage]!.audioTitle
+					subtitleText = generalInfo.translations[Common.currentLanguage]!.audioSubtitle
+				}
+				else if sectionModel.nid == Section.map.rawValue {
+					titleText = generalInfo.translations[Common.currentLanguage]!.mapTitle
+					subtitleText = generalInfo.translations[Common.currentLanguage]!.mapSubtitle
+				}
+				else if sectionModel.nid == Section.info.rawValue {
+					titleText = generalInfo.translations[Common.currentLanguage]!.infoTitle
+					subtitleText = generalInfo.translations[Common.currentLanguage]!.infoSubtitle
+				}
+			}
+		}
+		
 		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
-		sectionNavigationBar.titleLabel.text = self.topViewController?.navigationItem.title?.localized(using: "Sections")
-		sectionNavigationBar.descriptionLabel.text = sectionModel.description.localized(using: "Sections")
+		sectionNavigationBar.titleLabel.text = titleText
+		sectionNavigationBar.descriptionLabel.text = subtitleText
 	}
 	
 	@objc private func backButtonPressed(button: UIButton) {

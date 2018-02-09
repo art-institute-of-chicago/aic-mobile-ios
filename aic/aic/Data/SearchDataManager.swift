@@ -88,8 +88,8 @@ class SearchDataManager {
 				case .success(let value):
 					var tours = [AICTourModel]()
 					let searchedTours = self.dataParser.parse(searchedToursData: value)
-					for searchedTour in searchedTours {
-						if let tour = AppDataManager.sharedInstance.getTour(forID: searchedTour.tourId) {
+					for tourId in searchedTours {
+						if let tour = AppDataManager.sharedInstance.getTour(forID: tourId) {
 							tours.append(tour)
 						}
 					}

@@ -724,9 +724,7 @@ class AppDataParser {
 				let dataJson: JSON = json["data"]
 				for resultson: JSON in dataJson.arrayValue {
 					let objectId = try self.getInt(fromJSON: resultson, forKey: "id")
-					let apiLink = try self.getURL(fromJSON: resultson, forKey: "api_link")
-					let score = try getFloat(fromJSON: resultson, forKey: "_score")
-					let searchedArtwork = AICSearchedArtworkModel(objectId: objectId, apiLink: apiLink, score: score)
+					let searchedArtwork = AICSearchedArtworkModel(objectId: objectId)
 					searchedArtworks.append(searchedArtwork)
 				}
 			})
@@ -739,18 +737,18 @@ class AppDataParser {
 		return searchedArtworks
 	}
 	
-	func parse(searchedToursData: Data) -> [AICSearchedTourModel] {
-		var searchedTours = [AICSearchedTourModel]()
+	/// Parse Searched Tours
+	///
+	/// Returns an array of tourIds to match with the tours in the appData.json
+	func parse(searchedToursData: Data) -> [Int] {
+		var searchedTours = [Int]()
 		let json = JSON(data: searchedToursData)
 		do {
 			try handleParseError({ [unowned self] in
 				let dataJson: JSON = json["data"]
 				for resultson: JSON in dataJson.arrayValue {
 					let tourId = try self.getInt(fromJSON: resultson, forKey: "id")
-					let apiLink = try self.getURL(fromJSON: resultson, forKey: "api_link")
-					let score = try getFloat(fromJSON: resultson, forKey: "_score")
-					let searchedTour = AICSearchedTourModel(tourId: tourId, apiLink: apiLink, score: score)
-					searchedTours.append(searchedTour)
+					searchedTours.append(tourId)
 				}
 			})
 		}
