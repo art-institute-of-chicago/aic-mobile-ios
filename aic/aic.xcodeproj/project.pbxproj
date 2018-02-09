@@ -20,6 +20,10 @@
 		2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */; };
 		2915B0F2202CA08B00DEBB03 /* LanguageSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B0F1202CA08B00DEBB03 /* LanguageSelectorView.swift */; };
 		2915B0F4202CA0BE00DEBB03 /* LanguageSelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B0F3202CA0BE00DEBB03 /* LanguageSelectorButton.swift */; };
+		2915B0F7202D3A2100DEBB03 /* Map.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2915B0F9202D3A2100DEBB03 /* Map.strings */; };
+		2915B0FE202D3ACD00DEBB03 /* Tour.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2915B100202D3ACD00DEBB03 /* Tour.strings */; };
+		2915B107202D433C00DEBB03 /* Search.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2915B109202D433C00DEBB03 /* Search.strings */; };
+		2915B10C202D442B00DEBB03 /* Audio.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2915B10E202D442B00DEBB03 /* Audio.strings */; };
 		291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */; };
 		291FB71F1FDA0905007794E0 /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */; };
 		2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127791FDEF2C5008BFAB1 /* MapItemCell.swift */; };
@@ -292,6 +296,18 @@
 		2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICAudioCommentaryModel.swift; sourceTree = "<group>"; };
 		2915B0F1202CA08B00DEBB03 /* LanguageSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectorView.swift; sourceTree = "<group>"; };
 		2915B0F3202CA0BE00DEBB03 /* LanguageSelectorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectorButton.swift; sourceTree = "<group>"; };
+		2915B0F8202D3A2100DEBB03 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Map.strings; sourceTree = "<group>"; };
+		2915B0FA202D3A5E00DEBB03 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Map.strings; sourceTree = "<group>"; };
+		2915B0FB202D3A5E00DEBB03 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Map.strings"; sourceTree = "<group>"; };
+		2915B0FF202D3ACD00DEBB03 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Tour.strings; sourceTree = "<group>"; };
+		2915B101202D3AE500DEBB03 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Tour.strings; sourceTree = "<group>"; };
+		2915B102202D3AE700DEBB03 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Tour.strings"; sourceTree = "<group>"; };
+		2915B108202D433C00DEBB03 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Search.strings; sourceTree = "<group>"; };
+		2915B10A202D433E00DEBB03 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Search.strings; sourceTree = "<group>"; };
+		2915B10B202D433E00DEBB03 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Search.strings"; sourceTree = "<group>"; };
+		2915B10D202D442B00DEBB03 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Audio.strings; sourceTree = "<group>"; };
+		2915B10F202D442D00DEBB03 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Audio.strings; sourceTree = "<group>"; };
+		2915B110202D442E00DEBB03 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Audio.strings"; sourceTree = "<group>"; };
 		291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsFilterMenuView.swift; sourceTree = "<group>"; };
 		291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationController.swift; sourceTree = "<group>"; };
 		293127791FDEF2C5008BFAB1 /* MapItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemCell.swift; sourceTree = "<group>"; };
@@ -789,6 +805,10 @@
 				294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */,
 				29CDAF98202225D500D1A30D /* Messages.strings */,
 				29C7D0CE202541E00015984B /* AudioPlayer.strings */,
+				2915B0F9202D3A2100DEBB03 /* Map.strings */,
+				2915B100202D3ACD00DEBB03 /* Tour.strings */,
+				2915B109202D433C00DEBB03 /* Search.strings */,
+				2915B10E202D442B00DEBB03 /* Audio.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -877,10 +897,10 @@
 				29F3A9341FE5D27C000BCABE /* Header Views */,
 				29F3A9371FE5DF8F000BCABE /* Home Cells */,
 				29412AEA1FCE174C005A7172 /* See All Cells */,
-				2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */,
-				2986A5871FBCBD5B00029E74 /* HomeViewController.swift */,
 				29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */,
 				29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */,
+				2986A5871FBCBD5B00029E74 /* HomeViewController.swift */,
+				2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1449,11 +1469,13 @@
 				29F89981202A3CA90081BA22 /* IdealSans-LightItalic.otf in Resources */,
 				29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */,
 				E497FA601D009B13007FA272 /* Assets.xcassets in Resources */,
+				2915B10C202D442B00DEBB03 /* Audio.strings in Resources */,
 				293D00A61FA7C80D00BF2C26 /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				29F89983202A3CA90081BA22 /* IdealSans-Medium.otf in Resources */,
 				293D00A51FA7C80D00BF2C26 /* SourceSansPro-Semibold.ttf in Resources */,
 				293D00951FA7C80D00BF2C26 /* METADATA.json in Resources */,
 				293D009F1FA7C80D00BF2C26 /* SourceSansPro-ExtraLight.ttf in Resources */,
+				2915B0F7202D3A2100DEBB03 /* Map.strings in Resources */,
 				293D009D1FA7C80D00BF2C26 /* SourceSansPro-Bold.ttf in Resources */,
 				293D00941FA7C80D00BF2C26 /* Lora-Regular.ttf in Resources */,
 				2931277F1FDF0EB5008BFAB1 /* ContentButtonCell.xib in Resources */,
@@ -1478,6 +1500,8 @@
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
 				E47A97381CF607990041D0A6 /* Settings.bundle in Resources */,
 				2931277C1FDEF327008BFAB1 /* MapItemCell.xib in Resources */,
+				2915B107202D433C00DEBB03 /* Search.strings in Resources */,
+				2915B0FE202D3ACD00DEBB03 /* Tour.strings in Resources */,
 				2968F68B2012942800638153 /* LanguageSettings.strings in Resources */,
 				2941CE7E1FE092AC00B7CCEE /* TourContentCell.xib in Resources */,
 				293D00A31FA7C80D00BF2C26 /* SourceSansPro-LightItalic.ttf in Resources */,
@@ -1903,6 +1927,46 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2915B0F9202D3A2100DEBB03 /* Map.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2915B0F8202D3A2100DEBB03 /* en */,
+				2915B0FA202D3A5E00DEBB03 /* es */,
+				2915B0FB202D3A5E00DEBB03 /* zh-Hans */,
+			);
+			name = Map.strings;
+			sourceTree = "<group>";
+		};
+		2915B100202D3ACD00DEBB03 /* Tour.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2915B0FF202D3ACD00DEBB03 /* en */,
+				2915B101202D3AE500DEBB03 /* es */,
+				2915B102202D3AE700DEBB03 /* zh-Hans */,
+			);
+			name = Tour.strings;
+			sourceTree = "<group>";
+		};
+		2915B109202D433C00DEBB03 /* Search.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2915B108202D433C00DEBB03 /* en */,
+				2915B10A202D433E00DEBB03 /* es */,
+				2915B10B202D433E00DEBB03 /* zh-Hans */,
+			);
+			name = Search.strings;
+			sourceTree = "<group>";
+		};
+		2915B10E202D442B00DEBB03 /* Audio.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2915B10D202D442B00DEBB03 /* en */,
+				2915B10F202D442D00DEBB03 /* es */,
+				2915B110202D442E00DEBB03 /* zh-Hans */,
+			);
+			name = Audio.strings;
+			sourceTree = "<group>";
+		};
 		294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

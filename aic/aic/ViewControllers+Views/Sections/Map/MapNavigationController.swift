@@ -15,8 +15,11 @@ protocol MapNavigationControllerDelegate : class {
 }
 
 class MapNavigationController : SectionNavigationController {
-	let mapVC: MapViewController = MapViewController()
+	var tourModel: AICTourModel? = nil
+	var tourLanguage: Common.Language = .english
+	var tourStopIndex: Int? = nil
 	
+	let mapVC: MapViewController = MapViewController()
 	let tourStopsVC: TourStopsNavigationController = TourStopsNavigationController()
 	
 	let locationManager: CLLocationManager = CLLocationManager()
@@ -63,17 +66,13 @@ class MapNavigationController : SectionNavigationController {
 		super.viewWillAppear(animated)
 		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
 		
-		self.view.setNeedsLayout()
-		self.view.layoutIfNeeded()
-		self.view.layoutSubviews()
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		self.view.setNeedsLayout()
-		self.view.layoutIfNeeded()
-		self.view.layoutSubviews()
+		// If there's a tour to show, show tour
+		if let tour = tourModel {
+			mapVC.showTour(forTour: tourModel!)
+			tourStopsVC.setTourContent(tour: tourModel!, language: tourLanguage)
+			tourStopsVC.setCurrentStop(stopIndex: tourStopIndex)
+			tourStopsVC.showMinimized()
+		}
 	}
 	
 	// MARK: Location Manager
@@ -125,14 +124,9 @@ class MapNavigationController : SectionNavigationController {
 			sectionNavigationBar.hide()
 		}
 		
-		mapVC.showTour(forTour: tour)
-		tourStopsVC.setTourContent(tour: tour, language: language)
-		tourStopsVC.setCurrentStop(stopIndex: stopIndex)
-		tourStopsVC.showMinimized()
-		
-		self.view.setNeedsLayout()
-		self.view.layoutIfNeeded()
-		self.view.layoutSubviews()
+		tourModel = tour
+		tourLanguage = language
+		tourStopIndex = stopIndex
 	}
 }
 
@@ -176,6 +170,9 @@ extension MapNavigationController : CardNavigationControllerDelegate {
 	func cardDidHide(cardVC: CardNavigationController) {
 		if cardVC == tourStopsVC {
 			mapVC.showAllInformation()
+			tourModel = nil
+			tourLanguage = .english
+			tourStopIndex = nil
 		}
 	}
 }

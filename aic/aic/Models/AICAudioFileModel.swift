@@ -10,7 +10,7 @@ struct AICAudioFileModel {
     let nid: Int
 	
 	// Translated content
-	var title: String { return self.translations[self.language]!.title }
+	var trackTitle: String { return self.translations[self.language]!.trackTitle }
 	var url: URL { return self.translations[self.language]!.url }
 	var transcript: String { return self.translations[self.language]!.transcript }
 	
@@ -34,7 +34,7 @@ struct AICAudioFileModel {
 }
 
 struct AICAudioFileTranslationModel {
-	let title: String
+	var trackTitle: String
 	let url: URL
 	let transcript: String
 }

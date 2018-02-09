@@ -114,6 +114,7 @@ class SectionsViewController : UIViewController {
 		audioGuideVC.sectionDelegate = self
         sectionTabBarController.delegate = self
 		searchVC.cardDelegate = self
+		searchVC.sectionsVC = self
         audioPlayerVC.cardDelegate = self
         //        objectVC.delegate = self
         
@@ -242,9 +243,9 @@ class SectionsViewController : UIViewController {
             return
         }*/
 		
-		sectionTabBarController.selectedIndex = 2
         setSelectedSection(sectionVC: mapVC)
 		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
+		sectionTabBarController.selectedIndex = 2
 		
 		
         // If this is coming from an object view,

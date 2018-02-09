@@ -28,5 +28,5 @@ struct AICObjectModel {
         
     let location: CoordinateWithFloor
 	
-//	let gallery: AICGalleryModel
+	let gallery: AICGalleryModel
 }

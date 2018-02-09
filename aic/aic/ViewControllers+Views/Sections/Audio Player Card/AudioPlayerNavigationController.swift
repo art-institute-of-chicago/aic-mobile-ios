@@ -194,7 +194,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 						
 						// Set the MPNowPlaying information
 						let songInfo: [String : AnyObject] = [
-							MPMediaItemPropertyTitle: NSString(string: self.currentAudioFile!.title),
+							MPMediaItemPropertyTitle: NSString(string: self.currentAudioFile!.trackTitle),
 							MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
 							MPMediaItemPropertyArtwork: artwork,
 							MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
@@ -241,8 +241,8 @@ class AudioPlayerNavigationController : CardNavigationController {
     }
     
     private func showAudioControls() {
-        miniAudioPlayerView.showTrackTitle(title: currentAudioFile!.title)
-        audioInfoVC.audioPlayerView.showTrackTitle(title: currentAudioFile!.title)
+        miniAudioPlayerView.showTrackTitle(title: currentAudioFile!.trackTitle)
+        audioInfoVC.audioPlayerView.showTrackTitle(title: currentAudioFile!.trackTitle)
     }
     
     // MARK: Audio Playback

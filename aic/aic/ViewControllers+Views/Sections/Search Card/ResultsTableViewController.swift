@@ -18,7 +18,7 @@ protocol ResultsTableViewControllerDelegate : class {
 }
 
 class ResultsTableViewController : UITableViewController {
-	let promotedSearchStringItems: [String] = ["Essentials Tour", "Impressionism", "American Gothic"]
+	var promotedSearchStringItems: [String] = ["Essentials Tour", "Impressionism", "American Gothic"]
 	var autocompleteStringItems: [String] = []
 	var artworkItems: [AICObjectModel] = []
 	var tourItems: [AICTourModel] = []
@@ -64,6 +64,7 @@ class ResultsTableViewController : UITableViewController {
         self.filter = .empty
 	}
 }
+
 
 // MARK: Scroll events
 extension ResultsTableViewController {
@@ -151,15 +152,18 @@ extension ResultsTableViewController {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: "Gallery Name")
+				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title)
 				return cell
 			}
 			else if indexPath.section == 2 {
 				// tour cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-				let tour = tourItems[indexPath.row]
+				var tour = tourItems[indexPath.row]
+				if tour.availableLanguages.contains(Common.currentLanguage) {
+					tour.language = Common.currentLanguage
+				}
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
-				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "Gallery Name")
+				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
 				return cell
 			}
 			else if indexPath.section == 3 {
@@ -178,14 +182,17 @@ extension ResultsTableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 			let artwork = artworkItems[indexPath.row]
 			setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-			cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: "Gallery Name")
+			cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title)
 			return cell
 		}
 		else if filter == .tours {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-			let tour = tourItems[indexPath.row]
+			var tour = tourItems[indexPath.row]
+			if tour.availableLanguages.contains(Common.currentLanguage) {
+				tour.language = Common.currentLanguage
+			}
 			setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
-			cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "Gallery Name")
+			cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
 			return cell
 		}
 		else if filter == .exhibitions {
@@ -223,7 +230,7 @@ extension ResultsTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		if filter == .empty {
 			if section <= 1 {
-				let titles = ["Search Content", "On the Map"]
+				let titles = ["Search".localized(using: "Search"), "On the Map".localized(using: "Search")]
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
 				titleView.titleLabel.text = titles[section]
 				return titleView
@@ -239,27 +246,27 @@ extension ResultsTableViewController {
 			else if section == 1 && artworkItems.count > 0 {
 				// artworks header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
-				titleView.contentTitleLabel.text = "Artworks"
+				titleView.contentTitleLabel.text = "Artworks".localized(using: "Search")
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllArtworksButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
 			else if section == 2 && tourItems.count > 0 {
 				// tours header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
-				titleView.contentTitleLabel.text = "Tours"
+				titleView.contentTitleLabel.text = "Tours".localized(using: "Search")
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
 			else if section == 3 && exhibitionItems.count > 0 {
 				// exhibitions header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
-				titleView.contentTitleLabel.text = "Exhibitions"
+				titleView.contentTitleLabel.text = "Exhibitions".localized(using: "Search")
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllExhibitionsButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
 			else if section == 4 {
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
-				titleView.titleLabel.text = "On the Map"
+				titleView.titleLabel.text = "On the Map".localized(using: "Search")
 				return titleView
 			}
 		}

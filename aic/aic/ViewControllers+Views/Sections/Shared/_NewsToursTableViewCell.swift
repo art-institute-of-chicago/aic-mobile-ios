@@ -108,7 +108,7 @@ class NewsToursTableViewCell: UITableViewCell {
         revealContentButton = AICButton(color: .aicInfoColor, isSmall: false)
 		
         
-        revealContentButton.setTitle(model.revealTitle, for: UIControlState())
+        revealContentButton.setTitle("", for: UIControlState())
         revealContentButton.isHidden = true
         
         contentView.backgroundColor = .white

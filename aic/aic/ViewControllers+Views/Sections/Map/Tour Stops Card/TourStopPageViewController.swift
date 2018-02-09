@@ -51,6 +51,7 @@ class TourStopPageViewController : UIPageViewController {
 					// Tour Overview
 					page.titleLabel.text = tour.overview.title
 					page.imageView.kf.setImage(with: tour.overview.imageUrl)
+					page.locationLabel.text = Common.Map.stringForFloorNumber[tour.stops.first!.object.location.floor]
 					page.stopIndex = index
 				}
 				else {
@@ -59,6 +60,7 @@ class TourStopPageViewController : UIPageViewController {
 						let stop = tour.stops[index-1]
 						page.titleLabel.text = stop.object.title
 						page.imageView.kf.setImage(with: stop.object.imageUrl)
+						page.locationLabel.text = Common.Map.stringForFloorNumber[stop.object.location.floor]
 						page.stopIndex = index
 					}
 				}
@@ -127,7 +129,7 @@ extension TourStopPageViewController: UIPageViewControllerDataSource {
 	// MARK: UIPageControl
 	func presentationCount(for pageViewController: UIPageViewController) -> Int {
 		if let tour = tourModel {
-			return tour.stops.count + 1
+			return tour.stops.count
 		}
 		return 0
 	}

@@ -340,7 +340,8 @@ class AppDataParser {
         let location        = try getCLLocation2d(fromJSON: objectJSON, forKey:"location")
         
         let galleryName     = try getString(fromJSON: objectJSON, forKey: "gallery_location")
-        let floorNumber     = try getGallery(forGalleryName: galleryName).location.floor
+        let gallery     	= try getGallery(forGalleryName: galleryName)
+		let floorNumber		= gallery.location.floor
         
         let title           = try getString(fromJSON: objectJSON, forKey: "title")
         
@@ -413,7 +414,8 @@ class AppDataParser {
                               tombstone: tombstone,
                               credits: credits,
                               imageCopyright: imageCopyright,
-                              location: CoordinateWithFloor(coordinate: location, floor: floorNumber)
+                              location: CoordinateWithFloor(coordinate: location, floor: floorNumber),
+							  gallery: gallery
         )
     }
 	
@@ -455,6 +457,7 @@ class AppDataParser {
     
     fileprivate func parse(audioFileJSON: JSON) throws -> AICAudioFileModel {
         let nid         = try getInt(fromJSON: audioFileJSON, forKey: "nid")
+		let title		= try getString(fromJSON: audioFileJSON, forKey: "title")
 		
 		var translations: [Common.Language : AICAudioFileTranslationModel] = [:]
 		let translationsJSON = audioFileJSON["translations"].array
@@ -465,11 +468,22 @@ class AppDataParser {
 		for translationJSON in translationsJSON! {
 			do {
 				let language = try getLanguageFor(translationJSON: translationJSON)
-				let translation = try parseTranslation(audioFileJSON: translationJSON)
+				var translation = try parseTranslation(audioFileJSON: translationJSON)
+				
+				// default to English track title or the title of the audio file if a track title is not provided
+				if translation.trackTitle.isEmpty {
+					if translationEng.trackTitle.isEmpty {
+						translation.trackTitle = title
+					}
+					else {
+						translation.trackTitle = translationEng.trackTitle
+					}
+				}
+				
 				translations[language] = translation
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse General Info translation:\n\(translationJSON)\n")
+					print("Could not parse Audio translation:\n\(translationJSON)\n")
 				}
 			}
 		}
@@ -481,11 +495,18 @@ class AppDataParser {
 	}
 	
 	func parseTranslation(audioFileJSON: JSON) throws -> AICAudioFileTranslationModel {
-		let title       = try getString(fromJSON: audioFileJSON, forKey: "title")
 		let url         = try getURL(fromJSON: audioFileJSON, forKey: "audio_file_url")
 		let transcript  = try getString(fromJSON: audioFileJSON, forKey: "audio_transcript")
 		
-		return AICAudioFileTranslationModel(title: title,
+		var trackTitle: String?
+		do {
+			trackTitle = try getString(fromJSON: audioFileJSON, forKey: "track_title")
+		}
+		catch{
+			trackTitle = ""
+		}
+		
+		return AICAudioFileTranslationModel(trackTitle: trackTitle!,
 											url: url,
 											transcript: transcript
 		)

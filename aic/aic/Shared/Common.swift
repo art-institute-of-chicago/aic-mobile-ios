@@ -407,6 +407,14 @@ struct Common {
 
         static let totalFloors = 4
         static let startFloor = 1
+		
+		static var stringForFloorNumber: [Int : String] {
+			return [
+				0 : "Lower Level".localized(using: "Map"),
+				1 : "First Level".localized(using: "Map"),
+				2 : "Second Level".localized(using: "Map"),
+				3 : "Third Level".localized(using: "Map")]
+		}
 
         // File directories
         static let mapsDirectory = "map"
@@ -592,8 +600,6 @@ struct Common {
 	
 	// MARK: Search
 	struct Search {
-		static let  searchBarPlaceholder = " Looking for an artwork?"
-		
 		enum Filter {
 			case empty
 			case suggested

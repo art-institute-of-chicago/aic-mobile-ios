@@ -17,8 +17,6 @@ struct AICTourModel {
     
     let additionalInformation: String? = nil
     let imageUrl: URL
-    
-    let revealTitle: String = "Start Tour"
 	
     let stops: [AICTourStopModel]
     

@@ -263,7 +263,7 @@ class ObjectViewController: UIViewController {
 						
                         // Set the MPNowPlaying information
                         let songInfo: [String : AnyObject] = [
-                            MPMediaItemPropertyTitle: NSString(string: audioTranslation.title),
+                            MPMediaItemPropertyTitle: NSString(string: audioTranslation.trackTitle),
                             MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
                             MPMediaItemPropertyArtwork: MPMediaItemArtwork(image: self.coverImage!),
                             MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
@@ -315,8 +315,8 @@ class ObjectViewController: UIViewController {
 			audioTranslation = translation
 		}
 		
-		self.objectView.miniAudioPlayerView.showTrackTitle(title: audioTranslation.title)
-        self.objectView.audioPlayerView.showTrackTitle(title: audioTranslation.title)
+		self.objectView.miniAudioPlayerView.showTrackTitle(title: audioTranslation.trackTitle)
+        self.objectView.audioPlayerView.showTrackTitle(title: audioTranslation.trackTitle)
     }
     
     // MARK: Dimensions

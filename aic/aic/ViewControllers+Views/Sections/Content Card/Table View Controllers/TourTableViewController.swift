@@ -66,6 +66,7 @@ extension TourTableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: TourContentCell.reuseIdentifier, for: indexPath) as! TourContentCell
 			cell.tourModel = tourModel
 			cell.languageSelectorView.delegate = self
+			cell.startTourButton.setTitle("Start Tour".localized(using: "Tour"), for: .normal)
 			cell.startTourButton.addTarget(self, action: #selector(tourStartButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}

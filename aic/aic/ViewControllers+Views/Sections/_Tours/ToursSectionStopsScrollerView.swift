@@ -184,7 +184,7 @@ class ToursSectionStopsScrollerView: NewsToursRevealView {
 			if let translation: AICAudioFileTranslationModel = stop.audio.translations[Common.currentLanguage] {
 				audioTranslation = translation
 			}
-            focusedStopLabel.text = audioTranslation.title
+            focusedStopLabel.text = audioTranslation.trackTitle
         }
         
         if andNotifyDelegate {

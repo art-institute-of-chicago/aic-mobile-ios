@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class SearchNavigationController : CardNavigationController {
 	let backButton: UIButton = UIButton()
@@ -24,6 +25,8 @@ class SearchNavigationController : CardNavigationController {
 	var searchBarActiveLeading: CGFloat = 2
 	var searchBarInactiveLeading: CGFloat = 32
 	
+	weak var sectionsVC: SectionsViewController? = nil
+	
 	init() {
 		currentTableView = resultsVC.tableView
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +34,10 @@ class SearchNavigationController : CardNavigationController {
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	override func viewDidLoad() {
@@ -52,7 +59,7 @@ class SearchNavigationController : CardNavigationController {
 		searchBar.isTranslucent = false
 		searchBar.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
 		searchBar.setImage(#imageLiteral(resourceName: "searchClear"), for: .clear, state: .normal)
-		searchBar.placeholder = Common.Search.searchBarPlaceholder
+		searchBar.placeholder = "Search Prompt".localized(using: "Search")
 		searchBar.keyboardAppearance = .dark
 		searchBar.delegate = self
 		
@@ -85,6 +92,9 @@ class SearchNavigationController : CardNavigationController {
         
         // NavigationController Delegate
         self.delegate = self
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
 	}
 	
 	func createViewConstraints() {
@@ -110,6 +120,15 @@ class SearchNavigationController : CardNavigationController {
         resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view, withOffset: -Common.Layout.tabBarHeight)
 	}
 	
+	// MARK: Language
+	
+	@objc func updateLanguage() {
+		searchBar.placeholder = "Search Prompt".localized(using: "Search")
+		resultsVC.tableView.reloadData()
+	}
+	
+	// MARK: Show/Hide
+	
 	override func cardWillShowFullscreen() {
 		if viewControllers.count < 2 {
 			// show keyboard when the card shows
@@ -121,6 +140,7 @@ class SearchNavigationController : CardNavigationController {
 		
 		resultsVC.view.setNeedsLayout()
 		resultsVC.view.layoutIfNeeded()
+		updateLanguage()
 	}
 	
 	override func cardDidShowFullscreen() {
@@ -299,6 +319,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
 		let tourVC = TourTableViewController(tour: tour)
+		tourVC.tourTableDelegate = self.sectionsVC // set tourTableDelegate to the parent SectionsViewController
 		showSearchContentViewController(tableVC: tourVC)
 	}
 	

@@ -40,7 +40,6 @@ class TourStopViewController : UIViewController {
 		titleLabel.font = .aicMapCardBoldTextFont
 		titleLabel.textColor = .white
 		
-		locationLabel.text = "Floor"
 		locationLabel.numberOfLines = 1
 		locationLabel.lineBreakMode = .byTruncatingTail
 		locationLabel.textAlignment = .left
