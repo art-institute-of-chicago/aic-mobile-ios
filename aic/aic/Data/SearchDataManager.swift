@@ -27,7 +27,9 @@ class SearchDataManager {
 	private var loadFailure: Bool = false
 	
 	func loadAutocompleteStrings(searchText: String) {
-		var url = Common.DataConstants.dataHubURL + "autocomplete?q=" + searchText
+		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
+		url += AppDataManager.sharedInstance.app.dataSettings[.autocompleteEndpoint]!
+		url += "?q=" + searchText
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
@@ -46,7 +48,9 @@ class SearchDataManager {
 	}
 	
 	func loadArtworks(searchText: String) {
-		var url = Common.DataConstants.dataHubURL + "artworks/search?q=" + searchText + "&limit=99"
+		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
+		url += AppDataManager.sharedInstance.app.dataSettings[.artworksEndpoint]!
+		url += "/search?q=" + searchText + "&limit=99"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
@@ -71,7 +75,9 @@ class SearchDataManager {
 	}
 	
 	func loadTours(searchText: String) {
-		var url = Common.DataConstants.dataHubURL + "tours/search?q=" + searchText + "&limit=99"
+		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
+		url += AppDataManager.sharedInstance.app.dataSettings[.toursEndpoint]!
+		url += "/search?q=" + searchText + "&limit=99"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		

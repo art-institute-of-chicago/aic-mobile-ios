@@ -44,8 +44,6 @@ struct Common {
         static var appDataExternalPrefix = "http://localhost:8888/"
         static var appDataInternalPrefix = "http://localhost:8888/"
 		static var appDataLocalPrefix = "http://localhost:9000/"
-		
-		static var dataHubURL = "http://localhost:8888/"
 
         // This URL is the link for requests to validate member card data. The member card feature is disabled by default
         // in the open source version of this application
@@ -607,5 +605,18 @@ struct Common {
 			case tours
 			case exhibitions
 		}
+	}
+	
+	// MARK: Data Settings
+	enum DataSetting: String {
+		case imageServerUrl = "image_server_url"
+		case dataApiUrl = "data_api_url"
+		case exhibitionsEndpoint = "exhibitions_endpoint"
+		case artworksEndpoint = "artworks_endpoint"
+		case galleriesEndpoint = "galleries_endpoint"
+		case imagesEndpoint = "images_endpoint"
+		case eventsEndpoint = "events_endpoint"
+		case autocompleteEndpoint = "autocomplete_endpoint"
+		case toursEndpoint = "tours_endpoint"
 	}
 }

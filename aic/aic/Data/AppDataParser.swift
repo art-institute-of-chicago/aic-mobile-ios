@@ -181,15 +181,17 @@ class AppDataParser {
 		let featuredTours = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
 		let featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
 		let exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
+		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
 			
 		let appData = AICAppDataModel(generalInfo: generalInfo,
-							   galleries: self.galleries,
-							   objects: self.objects,
-							   audioFiles: self.audioFiles,
-							   tours: tours,
-							   featuredTours: featuredTours,
-							   featuredExhibitions: featuredExhibitions,
-							   exhibitionOptionalImages: exhibitionOptionalImages
+									  galleries: self.galleries,
+									  objects: self.objects,
+									  audioFiles: self.audioFiles,
+									  tours: tours,
+									  featuredTours: featuredTours,
+									  featuredExhibitions: featuredExhibitions,
+									  exhibitionOptionalImages: exhibitionOptionalImages,
+									  dataSettings: dataSettings
 		)
 		
 		return appData
@@ -660,6 +662,29 @@ class AppDataParser {
 			}
 		}
 		return exhibitionImages
+	}
+	
+	// MARK: Data Settings
+	
+	func parse(dataSettingsJSON: JSON) -> [Common.DataSetting : String] {
+		var dataSettings = [Common.DataSetting : String]()
+		do {
+			dataSettings[.imageServerUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.imageServerUrl.rawValue)
+			dataSettings[.dataApiUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.dataApiUrl.rawValue)
+			dataSettings[.exhibitionsEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.exhibitionsEndpoint.rawValue)
+			dataSettings[.artworksEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.artworksEndpoint.rawValue)
+			dataSettings[.galleriesEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.galleriesEndpoint.rawValue)
+			dataSettings[.imagesEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.imagesEndpoint.rawValue)
+			dataSettings[.eventsEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.eventsEndpoint.rawValue)
+			dataSettings[.autocompleteEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.autocompleteEndpoint.rawValue)
+			dataSettings[.toursEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.toursEndpoint.rawValue)
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse Data Settings:\n\(dataSettingsJSON)\n")
+			}
+		}
+		return dataSettings
 	}
 	
 	// MARK: Search data

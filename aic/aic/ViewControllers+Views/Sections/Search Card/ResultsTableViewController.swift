@@ -247,6 +247,7 @@ extension ResultsTableViewController {
 				// artworks header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Artworks".localized(using: "Search")
+				titleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllArtworksButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
@@ -254,6 +255,7 @@ extension ResultsTableViewController {
 				// tours header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Tours".localized(using: "Search")
+				titleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
@@ -261,6 +263,7 @@ extension ResultsTableViewController {
 				// exhibitions header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Exhibitions".localized(using: "Search")
+				titleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllExhibitionsButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}

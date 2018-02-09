@@ -12,4 +12,5 @@ struct AICAppDataModel {
 	var featuredTours: [Int]			= []
 	var featuredExhibitions: [Int]		= []
 	var exhibitionOptionalImages: [Int : URL] = [:]
+	var dataSettings: [Common.DataSetting : String]	= [:]
 }
