@@ -595,6 +595,9 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 extension SectionsViewController : TourTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
 	func tourStartSelected(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
 		showTourOnMap(tour: tour, language: language, stopIndex: stopIndex)
 	}
 }

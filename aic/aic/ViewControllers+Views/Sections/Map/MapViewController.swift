@@ -155,7 +155,7 @@ class MapViewController: UIViewController {
         mode = .allInformation
         
         if let mapState = allInformationMapState {
-            restoreMapState(toState: mapState)
+            //restoreMapState(toState: mapState)
         } else {
             mapView.showFullMap(useDefaultHeading: true)
         }

@@ -27,6 +27,8 @@ class MapNavigationController : SectionNavigationController {
 	
 	weak var sectionDelegate: MapNavigationControllerDelegate? = nil
 	
+	var isMapTabOpen: Bool = false
+	
 	override init(section: AICSectionModel) {
 		super.init(section: section)
 	}
@@ -64,15 +66,21 @@ class MapNavigationController : SectionNavigationController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		isMapTabOpen = true
+		
 		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
 		
-		// If there's a tour to show, show tour
-		if let tour = tourModel {
-			mapVC.showTour(forTour: tourModel!)
-			tourStopsVC.setTourContent(tour: tourModel!, language: tourLanguage)
-			tourStopsVC.setCurrentStop(stopIndex: tourStopIndex)
-			tourStopsVC.showMinimized()
+		// If there's a tour to show, show tour card
+		if mapVC.mode == .tour {
+			showTourCard()
 		}
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		isMapTabOpen = false
 	}
 	
 	// MARK: Location Manager
@@ -127,6 +135,22 @@ class MapNavigationController : SectionNavigationController {
 		tourModel = tour
 		tourLanguage = language
 		tourStopIndex = stopIndex
+		
+		mapVC.showTour(forTour: tour)
+		
+		// if we are on the Map tab, open tour immediately
+		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
+		if isMapTabOpen {
+			showTourCard()
+		}
+	}
+	
+	private func showTourCard() {
+		tourStopsVC.setTourContent(tour: tourModel!, language: tourLanguage)
+		tourStopsVC.setCurrentStop(stopIndex: tourStopIndex)
+		if tourStopsVC.currentState == .hidden {
+			tourStopsVC.showMinimized()
+		}
 	}
 }
 

@@ -60,12 +60,6 @@ class TourStopsNavigationController: CardNavigationController {
 		dividerLine.autoSetDimension(.height, toSize: 1)
 	}
 	
-	override func cardDidShowMinimized() {
-		UIView.animate(withDuration: 0.3) {
-			self.tourStopPageVC.view.alpha = 1
-		}
-	}
-	
 	// MARK: Content
 	
 	func setTourContent(tour: AICTourModel, language: Common.Language) {
@@ -73,7 +67,9 @@ class TourStopsNavigationController: CardNavigationController {
 		tourModel!.language = language
 		titleLabel.text = tourModel!.title
 		tourStopPageVC.setTour(tour: tourModel!)
-		tourStopPageVC.view.alpha = 0
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.cardDelegate?.cardDidUpdatePosition?(cardVC: self, position: self.view.frame.origin)
 	}
 	
 	func setCurrentStop(stopIndex: Int?) {
