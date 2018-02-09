@@ -1,9 +1,13 @@
 /* 
-  Audio.strings
+  Tour.strings
   aic
 
   Created by Filippo Vanucci on 2/8/18.
   Copyright © 2018 Art Institute of Chicago. All rights reserved.
 */
 
-"Transcript" = "Texto";
+"Start Tour" = "Comenzar visita";
+
+"Show on map" = "Ver mapa";
+
+"Buy Tickets" = "Comprar boletos";

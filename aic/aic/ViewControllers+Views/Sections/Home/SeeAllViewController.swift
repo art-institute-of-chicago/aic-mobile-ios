@@ -25,7 +25,7 @@ class SeeAllViewController : UIViewController {
 	}
 	let content: ContentType
 	
-	let titles = [ContentType.tours:"Tours", ContentType.exhibitions:"On View", ContentType.events:"Events"]
+	let titles = [ContentType.tours : "Tours", ContentType.exhibitions : "On View", ContentType.events : "Events"]
 	
 	var tourItems: [AICTourModel] = []
 	var exhibitionItems: [AICExhibitionModel] = []
@@ -113,7 +113,7 @@ class SeeAllViewController : UIViewController {
 		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Common.Layout.miniAudioPlayerHeight, right: 0)
 		collectionView.showsVerticalScrollIndicator = false
 		collectionView.backgroundColor = .white
-		if content == .events {
+		if content == .events || content == .tours {
 			collectionView.register(SeeAllHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier)
 		}
 		return collectionView
@@ -134,6 +134,9 @@ extension SeeAllViewController : UICollectionViewDataSource {
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		if content == .events {
 			return eventItems.count
+		}
+		else if content == .tours {
+			return 1 // TODO: replace with tour categories
 		}
 		return 1
 	}
@@ -178,6 +181,11 @@ extension SeeAllViewController : UICollectionViewDataSource {
 				sectionHeader.titleLabel.text = Common.Info.monthDayString(date: eventDates[indexPath.section])
 				return sectionHeader
 			}
+			else if content == .tours {
+				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
+				sectionHeader.titleLabel.text = "" // TODO: replace with tour categories
+				return sectionHeader
+			}
 		}
 		
 		return UICollectionReusableView()
@@ -201,7 +209,7 @@ extension SeeAllViewController : UICollectionViewDelegate {
 
 extension SeeAllViewController : UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		if content == .events {
+		if content == .events || content == .tours {
 			return CGSize(width: UIScreen.main.bounds.width, height: SeeAllHeaderView.headerHeight)
 		}
 		return CGSize.zero

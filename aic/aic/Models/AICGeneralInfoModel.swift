@@ -9,6 +9,14 @@ import Foundation
 struct AICGeneralInfoModel {
 	let nid: Int
 	var translations: [Common.Language : AICGeneralInfoTranslationModel]
+	
+	var availableLanguages: [Common.Language] {
+		var languages: [Common.Language] = []
+		for (key, translation) in translations {
+			languages.append(key)
+		}
+		return languages
+	}
 }
 
 struct AICGeneralInfoTranslationModel {
