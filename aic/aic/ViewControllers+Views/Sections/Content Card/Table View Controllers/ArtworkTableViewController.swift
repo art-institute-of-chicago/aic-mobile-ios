@@ -9,10 +9,10 @@
 import UIKit
 
 class ArtworkTableViewController : UITableViewController {
-	let objectModel: AICObjectModel
+	var artworkModel: AICSearchedArtworkModel
 	
-	init(artwork: AICObjectModel) {
-		objectModel = artwork
+	init(artwork: AICSearchedArtworkModel) {
+		artworkModel = artwork
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -51,7 +51,7 @@ extension ArtworkTableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ArtworkContentCell.reuseIdentifier, for: indexPath) as! ArtworkContentCell
-			cell.objectModel = objectModel
+			cell.artworkModel = artworkModel
 			return cell
 		}
 		return UITableViewCell()
@@ -62,7 +62,7 @@ extension ArtworkTableViewController {
 extension ArtworkTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CardTitleView.reuseIdentifier) as! CardTitleView
-		titleView.titleLabel.text = objectModel.title.stringByDecodingHTMLEntities
+		titleView.titleLabel.text = artworkModel.title.stringByDecodingHTMLEntities
 		return titleView
 	}
 	

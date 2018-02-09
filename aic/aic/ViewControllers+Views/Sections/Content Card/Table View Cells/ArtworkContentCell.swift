@@ -28,9 +28,9 @@ class ArtworkContentCell : UITableViewCell {
 		artworkImageView.clipsToBounds = true
 	}
 	
-	var objectModel: AICObjectModel? = nil {
+	var artworkModel: AICSearchedArtworkModel? = nil {
 		didSet {
-			guard let objectModel = self.objectModel else {
+			guard let objectModel = self.artworkModel else {
 				return
 			}
 			

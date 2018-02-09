@@ -711,29 +711,97 @@ class AppDataParser {
 			}
 		}
 		
-		// TODO: sort results by score and return only the first 3
-		
 		return autocompleteStrings
 	}
 	
 	func parse(searchedArtworksData: Data) -> [AICSearchedArtworkModel] {
 		var searchedArtworks = [AICSearchedArtworkModel]()
+		
 		let json = JSON(data: searchedArtworksData)
-		do {
-			try handleParseError({ [unowned self] in
-				let dataJson: JSON = json["data"]
-				for resultson: JSON in dataJson.arrayValue {
-					let objectId = try self.getInt(fromJSON: resultson, forKey: "id")
-					let searchedArtwork = AICSearchedArtworkModel(objectId: objectId)
-					searchedArtworks.append(searchedArtwork)
+		
+		let dataJSON: JSON = json["data"]
+		for resultJSON: JSON in dataJSON.arrayValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let artworkId = try self.getInt(fromJSON: resultJSON, forKey: "id")
+					let isOnView = try self.getBool(fromJSON: resultJSON, forKey: "is_on_view")
+					
+					// If this artwork is also in the mobile CMS,
+					// we get the data correspondent data from the AICObjectModel
+					if let object = AppDataManager.sharedInstance.getObject(forObjectID: artworkId) {
+						var artistDisplay = ""
+						if let tombstone = object.tombstone {
+							artistDisplay = tombstone
+						}
+						let searchedArtwork = AICSearchedArtworkModel(artworkId: artworkId,
+																	  audioObject: object,
+																	  title: object.title,
+																	  thumbnailUrl: object.thumbnailUrl,
+																	  imageUrl: object.imageUrl,
+																	  artistDisplay: artistDisplay,
+																	  location: object.location,
+																	  gallery: object.gallery)
+						searchedArtworks.append(searchedArtwork)
+					}
+					// Otherwise we parse from the data api
+					else if isOnView {
+						let audioObject: AICObjectModel? = nil
+						let title: String = try getString(fromJSON: resultJSON, forKey: "title")
+						let artistDisplay: String = try getString(fromJSON: resultJSON, forKey: "artist_display")
+						
+						// optional
+						var thumbnailUrl: URL? = nil
+						var imageUrl: URL? = nil
+						do {
+							let iiifString = try getString(fromJSON: resultJSON, forKey: "image_iiif_url")
+							let thumbnailString: String = iiifString + "/full/!200,200/0/default.jpg"
+							let imageString: String = iiifString + "/full/!800,800/0/default.jpg"
+							thumbnailUrl = URL(string: thumbnailString)
+							imageUrl = URL(string: imageString)
+						}
+						catch {}
+						
+						if thumbnailUrl == nil {
+							thumbnailUrl = URL(string: "http://aic-mobile-tours.artic.edu/sites/default_staging/files/object-images/AIC_ImagePlaceholder_25.png")!
+						}
+						if imageUrl == nil {
+							imageUrl = URL(string: "http://aic-mobile-tours.artic.edu/sites/default_staging/files/object-images/AIC_ImagePlaceholder_25.png")!
+						}
+						
+						let galleryId 		= try getInt(fromJSON: resultJSON, forKey: "gallery_id")
+						let gallery     	= try getGallery(forGalleryId: galleryId)
+						
+						var location: CoordinateWithFloor? = nil
+						do {
+							let coreLocation = try getCLLocation2d(fromJSON: resultJSON, forKey: "latlon")
+							let floorNumber		= gallery.location.floor
+							location = CoordinateWithFloor(coordinate: coreLocation, floor: floorNumber)
+						}
+						catch{}
+						
+						if location == nil {
+							location = gallery.location
+						}
+						
+						let searchedArtwork = AICSearchedArtworkModel(artworkId: artworkId,
+																	  audioObject: audioObject,
+																	  title: title,
+																	  thumbnailUrl: thumbnailUrl!,
+																	  imageUrl: imageUrl!,
+																	  artistDisplay: artistDisplay,
+																	  location: location!,
+																	  gallery: gallery)
+						searchedArtworks.append(searchedArtwork)
+					}
+				})
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Search Autocomplete:\n\(json)\n")
 				}
-			})
-		}
-		catch {
-			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Search Autocomplete:\n\(json)\n")
 			}
 		}
+		
 		return searchedArtworks
 	}
 	
@@ -971,10 +1039,9 @@ class AppDataParser {
     }
 	
 	private func getGallery(forGalleryId galleryId: Int) throws -> AICGalleryModel {
-		guard let gallery = self.galleries.filter({$0.galleryId == galleryId && $0.isOpen == true}).first else {
+		guard let gallery = AppDataManager.sharedInstance.app.galleries.filter({$0.galleryId == galleryId && $0.isOpen == true}).first else {
 			throw ParseError.galleryIdNotFound(galleryId: galleryId)
 		}
-		
 		return gallery
 	}
 	

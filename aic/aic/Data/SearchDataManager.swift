@@ -11,7 +11,7 @@ import Alamofire
 
 protocol SearchDataManagerDelegate : class {
 	func searchDataDidFinishLoading(autocompleteStrings: [String])
-	func searchDataDidFinishLoading(artworks: [AICObjectModel])
+	func searchDataDidFinishLoading(searchedArtworks: [AICSearchedArtworkModel])
 	func searchDataDidFinishLoading(tours: [AICTourModel])
 	func searchDataDidFinishLoading(exhibitions: [AICExhibitionModel])
 	func searchDataFailure(withMessage: String)
@@ -50,23 +50,41 @@ class SearchDataManager {
 	func loadArtworks(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.artworksEndpoint]!
-		url += "/search?q=" + searchText + "&limit=99"
+		url += "/search?limit=20"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-		let request = URLRequest(url: URL(string: url)!)
+		let urlRequest = URLRequest(url:  URL(string: url)!)
+		let urlString = urlRequest.url?.absoluteString
+		let parameters: [String: Any] = [
+			"_source": true,
+			"sort": ["_score"],
+			"query": [
+				"bool": [
+					"must": [
+						[
+							"match": [
+								"title": [
+									"query": searchText,
+									"operator": "and"
+								]
+							]
+						],
+						[
+							"term": [
+								"is_on_view": "true"
+							]
+						]
+					]
+				]
+			]
+		]
 		
-		Alamofire.request(request as URLRequestConvertible)
+		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
 			.validate()
 			.responseData { response in
 				switch response.result {
 				case .success(let value):
-					var artworks = [AICObjectModel]()
 					let searchedArtworks = self.dataParser.parse(searchedArtworksData: value)
-					for searchedArtwork in searchedArtworks {
-						if let object = AppDataManager.sharedInstance.getObject(forObjectID: searchedArtwork.objectId) {
-							artworks.append(object)
-						}
-					}
-					self.delegate?.searchDataDidFinishLoading(artworks: artworks)
+					self.delegate?.searchDataDidFinishLoading(searchedArtworks: searchedArtworks)
 				case .failure(let error):
 					//self.notifyLoadFailure(withMessage: "Failed to load search data.")
 					print(error)
@@ -77,7 +95,7 @@ class SearchDataManager {
 	func loadTours(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.toursEndpoint]!
-		url += "/search?q=" + searchText + "&limit=99"
+		url += "/search?q=" + searchText + "&limit=20"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		

@@ -32,7 +32,7 @@ class AppDataManager {
     func load() {
         
         // TODO: Refactor this
-        // Replace Common.swift values w/ values from Config.plist
+		// A lot of urls and strings not needed in v2.0
         if let url = Bundle.main.url(forResource:"Config", withExtension: "plist") {
             do {
                 let data = try Data(contentsOf:url)

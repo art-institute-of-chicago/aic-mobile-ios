@@ -10,7 +10,7 @@ import UIKit
 
 protocol ResultsTableViewControllerDelegate : class {
 	func resultsTableDidSelect(searchText: String)
-	func resultsTableDidSelect(artwork: AICObjectModel)
+	func resultsTableDidSelect(artwork: AICSearchedArtworkModel)
 	func resultsTableDidSelect(tour: AICTourModel)
 	func resultsTableDidSelect(exhibition: AICExhibitionModel)
 	func resultsTableDidSelect(filter: Common.Search.Filter)
@@ -20,7 +20,7 @@ protocol ResultsTableViewControllerDelegate : class {
 class ResultsTableViewController : UITableViewController {
 	var promotedSearchStringItems: [String] = ["Essentials Tour", "Impressionism", "American Gothic"]
 	var autocompleteStringItems: [String] = []
-	var artworkItems: [AICObjectModel] = []
+	var artworkItems: [AICSearchedArtworkModel] = []
 	var tourItems: [AICTourModel] = []
 	var exhibitionItems: [AICExhibitionModel] = []
 	

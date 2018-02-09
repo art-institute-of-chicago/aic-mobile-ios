@@ -270,8 +270,8 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 		self.view.layoutIfNeeded()
 	}
 	
-	func searchDataDidFinishLoading(artworks: [AICObjectModel]) {
-		resultsVC.artworkItems = artworks
+	func searchDataDidFinishLoading(searchedArtworks: [AICSearchedArtworkModel]) {
+		resultsVC.artworkItems = searchedArtworks
 		resultsVC.tableView.reloadData()
 		self.view.layoutIfNeeded()
 	}
@@ -312,7 +312,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		loadSearch(searchText: searchText, showAutocomplete: false)
 	}
 	
-	func resultsTableDidSelect(artwork: AICObjectModel) {
+	func resultsTableDidSelect(artwork: AICSearchedArtworkModel) {
 		let artworkVC = ArtworkTableViewController(artwork: artwork)
 		showSearchContentViewController(tableVC: artworkVC)
 	}

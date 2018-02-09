@@ -12,7 +12,6 @@ class AudioInfoViewController : UIViewController {
     var artworkModel: AICObjectModel? = nil
 	var tourOverviewModel: AICTourOverviewModel? = nil
     var tourModel: AICTourModel? = nil
-	var tourTranslationModel: AICTourTranslationModel? = nil
     
     let scrollView: UIScrollView = UIScrollView()
     let imageView: UIImageView = UIImageView()
@@ -130,13 +129,13 @@ class AudioInfoViewController : UIViewController {
 //		}
 		
 		// Default to English Audio, then check if current language is aavailable in translations
-		var audioTranslation: AICAudioFileTranslationModel = audio.translations[.english]!
-		if let translation: AICAudioFileTranslationModel = audio.translations[Common.currentLanguage] {
-			audioTranslation = translation
+		var audioModel = audio
+		if audioModel.availableLanguages.contains(Common.currentLanguage) {
+			audioModel.language = Common.currentLanguage
 		}
 		
 		transcriptView.show(collapseEnabled: true)
-		transcriptView.bodyTextView.text = audioTranslation.transcript.stringByDecodingHTMLEntities
+		transcriptView.bodyTextView.text = audioModel.transcript.stringByDecodingHTMLEntities
 		
 		var creditsString = ""
 		if (artwork.credits ?? "").isEmpty == false { creditsString += artwork.credits! }
@@ -171,13 +170,12 @@ class AudioInfoViewController : UIViewController {
 		
         tourModel = tour
 		
-		tourTranslationModel = tour.translations[.english]!
-		if let translation: AICTourTranslationModel = tour.translations[Common.currentLanguage] {
-			tourTranslationModel = translation
+		if tourModel!.availableLanguages.contains(Common.currentLanguage) {
+			tourModel!.language = Common.currentLanguage
 		}
 		
 		setImage(imageURL: tour.imageUrl)
-		setDescription(description: tourTranslationModel!.longDescription)
+		setDescription(description: tourModel!.longDescription)
 		
 		updateLayout()
     }
