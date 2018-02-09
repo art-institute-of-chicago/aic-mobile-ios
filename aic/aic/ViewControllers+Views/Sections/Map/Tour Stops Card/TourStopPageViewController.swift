@@ -11,8 +11,9 @@ import UIKit
 class TourStopPageViewController : UIPageViewController {
 	private var tourModel: AICTourModel? = nil
 	
+	private var tourStopViewControllers: [TourStopViewController] = []
+	
 	private var currentIndex = 0
-	private var currentPage = 0
 	
 	init() {
 		super.init(transitionStyle: UIPageViewControllerTransitionStyle.scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal, options: nil)
@@ -25,8 +26,9 @@ class TourStopPageViewController : UIPageViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight)
-		self.view.clipsToBounds = true
+		self.view.clipsToBounds = false
+		
+		// Init the first item view controller
 		
 		self.delegate = self
 		self.dataSource = self
@@ -42,28 +44,42 @@ class TourStopPageViewController : UIPageViewController {
 	
 	func tourStopController(_ index: Int) -> TourStopViewController? {
 		if let tour = tourModel {
-			let page = TourStopViewController()
-			
-			page.titleLabel.text = tour.stops[index].object.title
-			page.imageView.kf.setImage(with: tour.stops[index].object.imageUrl)
-			page.stopIndex = index
-			
-			return page
+			if index < tour.stops.count + 1 {
+				let page = TourStopViewController()
+				
+				if index == 0 {
+					// Tour Overview
+					page.titleLabel.text = tour.overview.title
+					page.imageView.kf.setImage(with: tour.overview.imageUrl)
+					page.stopIndex = index
+				}
+				else {
+					// Stop
+					if index-1 < tour.stops.count {
+						let stop = tour.stops[index-1]
+						page.titleLabel.text = stop.object.title
+						page.imageView.kf.setImage(with: stop.object.imageUrl)
+						page.stopIndex = index
+					}
+				}
+				return page
+			}
 		}
-		
 		return nil
 	}
 	
-	func setTour(tour: AICTourModel, stopIndex: Int) {
+	func setTour(tour: AICTourModel) {
 		tourModel = tour
-		currentPage = stopIndex
-		currentIndex = stopIndex
-		
+		setCurrentPage(pageIndex: 0)
+	}
+	
+	func setCurrentPage(pageIndex: Int) {
 		// Set Tour Stop Page
-		if let viewController = tourStopController(currentPage) {
+		if let viewController = tourStopController(pageIndex) {
+			currentIndex = pageIndex
+			
 			let viewControllers = [viewController]
 			
-			// Set them
 			setViewControllers(
 				viewControllers,
 				direction: .forward,
@@ -72,35 +88,6 @@ class TourStopPageViewController : UIPageViewController {
 			)
 		}
 	}
-	
-//	// Override to put the page view controller on top
-//	override func viewDidLayoutSubviews() {
-//		super.viewDidLayoutSubviews()
-//
-//		var scrollView: UIScrollView? = nil
-//		var pageControl: UIPageControl? = nil
-//		let subViews: NSArray = view.subviews as NSArray
-//
-//		for view in subViews {
-//			if view is UIScrollView {
-//				scrollView = view as? UIScrollView
-//			}
-//			else if view is UIPageControl {
-//				pageControl = (view as? UIPageControl)
-//				pageControl!.frame.origin.y = UIScreen.main.bounds.height - pageControl!.frame.height - pageControlMarginBottom
-//
-//				for view in pageControl!.subviews {
-//					view.layer.borderColor = UIColor.white.cgColor
-//					view.layer.borderWidth = 1
-//				}
-//			}
-//		}
-//
-//		if (scrollView != nil && pageControl != nil) {
-//			scrollView?.frame = view.bounds
-//			view.bringSubview(toFront: pageControl!)
-//		}
-//	}
 }
 
 // MARK: UIPageViewControllerDataSource
@@ -140,13 +127,13 @@ extension TourStopPageViewController: UIPageViewControllerDataSource {
 	// MARK: UIPageControl
 	func presentationCount(for pageViewController: UIPageViewController) -> Int {
 		if let tour = tourModel {
-			return tour.stops.count
+			return tour.stops.count + 1
 		}
 		return 0
 	}
 	
 	func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-		return currentPage
+		return currentIndex
 	}
 }
 

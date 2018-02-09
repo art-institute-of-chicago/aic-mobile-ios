@@ -27,6 +27,8 @@ class TourStopViewController : UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight)
+		
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true
 		imageView.backgroundColor = .aicLightGrayColor

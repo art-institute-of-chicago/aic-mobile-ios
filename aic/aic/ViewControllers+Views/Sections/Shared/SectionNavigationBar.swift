@@ -29,6 +29,13 @@ class SectionNavigationBar : UIView {
 	
 	internal let titleString:String
 	
+	enum State {
+		case open
+		case collapsed
+		case hidden
+	}
+	var currentState: State = .open
+	
 	init(section: AICSectionModel) {
 		
 		self.titleString = section.title
@@ -102,6 +109,7 @@ class SectionNavigationBar : UIView {
 	}
 	
 	func collapse() {
+		currentState = .collapsed
 		UIView.animate(withDuration: 0.5) {
 			self.frame.size.height = Common.Layout.navigationBarMinimizedHeight
 			self.backdropImageView.alpha = 0.0
@@ -113,6 +121,7 @@ class SectionNavigationBar : UIView {
 	}
 	
 	func hide() {
+		currentState = .hidden
 		UIView.animate(withDuration: 0.5) {
 			self.frame.size.height = 0
 			self.backdropImageView.alpha = 0.0
@@ -141,6 +150,13 @@ class SectionNavigationBar : UIView {
 		self.iconImageView.alpha = alphaVal
 		self.descriptionLabel.alpha = alphaVal
 		self.titleLabel.transform = CGAffineTransform(scaleX: titleScale, y: titleScale)
+		
+		if frameHeight == Common.Layout.navigationBarMinimizedHeight {
+			currentState = .collapsed
+		}
+		else if frameHeight > Common.Layout.navigationBarMinimizedHeight {
+			currentState = .open
+		}
 	}
 	
 	func createConstraints() {

@@ -53,16 +53,27 @@ class MapNavigationController : SectionNavigationController {
 		
 		// Location
 		startLocationManager()
+		
+		self.view.setNeedsLayout()
+		self.view.layoutIfNeeded()
+		self.view.layoutSubviews()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
 		
-		// TODO: Remove this code, for testing purposes only
-		mapVC.showTour(forTour: AppDataManager.sharedInstance.app.tours[5])
-		tourStopsVC.setTourContent(tour: AppDataManager.sharedInstance.app.tours[5])
-		tourStopsVC.showMinimized()
+		self.view.setNeedsLayout()
+		self.view.layoutIfNeeded()
+		self.view.layoutSubviews()
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		self.view.setNeedsLayout()
+		self.view.layoutIfNeeded()
+		self.view.layoutSubviews()
 	}
 	
 	// MARK: Location Manager
@@ -105,6 +116,23 @@ class MapNavigationController : SectionNavigationController {
 			messageView.dismiss(animated: true, completion: nil)
 			enableLocationMessageView = nil
 		}
+	}
+	
+	// MARK: Show
+	
+	func showTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
+		if sectionNavigationBar.currentState != .hidden {
+			sectionNavigationBar.hide()
+		}
+		
+		mapVC.showTour(forTour: tour)
+		tourStopsVC.setTourContent(tour: tour, language: language)
+		tourStopsVC.setCurrentStop(stopIndex: stopIndex)
+		tourStopsVC.showMinimized()
+		
+		self.view.setNeedsLayout()
+		self.view.layoutIfNeeded()
+		self.view.layoutSubviews()
 	}
 }
 

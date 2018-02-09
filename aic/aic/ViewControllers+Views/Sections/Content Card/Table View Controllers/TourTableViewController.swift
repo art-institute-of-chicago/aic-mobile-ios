@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol TourTableViewControllerDelegate : class {
+	func tourStartSelected(tour: AICTourModel, language: Common.Language, stopIndex: Int?)
+}
+
 class TourTableViewController : UITableViewController {
 	var tourModel: AICTourModel
 	var language: Common.Language = .english
+	
+	weak var tourTableDelegate: TourTableViewControllerDelegate? = nil
 	
 	init(tour: AICTourModel) {
 		tourModel = tour
@@ -60,6 +66,7 @@ extension TourTableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: TourContentCell.reuseIdentifier, for: indexPath) as! TourContentCell
 			cell.tourModel = tourModel
 			cell.languageSelectorView.delegate = self
+			cell.startTourButton.addTarget(self, action: #selector(tourStartButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}
 		else if indexPath.row == 1 {
@@ -91,7 +98,6 @@ extension TourTableViewController {
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 80
 	}
-    
 }
 
 // MARK: Scroll Delegate
@@ -107,7 +113,21 @@ extension TourTableViewController {
 // MARK: Interaction
 extension TourTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		
+		// tour overview stop
+		if indexPath.row == 1 {
+			self.tourTableDelegate?.tourStartSelected(tour: tourModel, language: language, stopIndex: nil)
+		}
+		// tour stop
+		else if indexPath.row > 1 {
+			let stopIndex: Int = indexPath.row - 2
+			if stopIndex < tourModel.stops.count {
+				self.tourTableDelegate?.tourStartSelected(tour: tourModel, language: language, stopIndex: stopIndex)
+			}
+		}
+	}
+	
+	@objc func tourStartButtonPressed(button: UIButton) {
+		self.tourTableDelegate?.tourStartSelected(tour: tourModel, language: language, stopIndex: nil)
 	}
 }
 

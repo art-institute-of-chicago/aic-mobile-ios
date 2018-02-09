@@ -60,11 +60,30 @@ class TourStopsNavigationController: CardNavigationController {
 		dividerLine.autoSetDimension(.height, toSize: 1)
 	}
 	
+	override func cardDidShowMinimized() {
+		UIView.animate(withDuration: 0.3) {
+			self.tourStopPageVC.view.alpha = 1
+		}
+	}
+	
 	// MARK: Content
 	
-	func setTourContent(tour: AICTourModel) {
+	func setTourContent(tour: AICTourModel, language: Common.Language) {
 		tourModel = tour
-		tourStopPageVC.setTour(tour: tour, stopIndex: 0)
-		
+		tourModel!.language = language
+		titleLabel.text = tourModel!.title
+		tourStopPageVC.setTour(tour: tourModel!)
+		tourStopPageVC.view.alpha = 0
+	}
+	
+	func setCurrentStop(stopIndex: Int?) {
+		if let index = stopIndex {
+			// Stop
+			tourStopPageVC.setCurrentPage(pageIndex: index + 1)
+		}
+		else {
+			// Overview
+			tourStopPageVC.setCurrentPage(pageIndex: 0)
+		}
 	}
 }

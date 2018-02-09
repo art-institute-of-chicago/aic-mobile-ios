@@ -213,7 +213,8 @@ class SectionsViewController : UIViewController {
         //mapVC.showDisabled()
     }
     
-    // Intro animation
+	// MARK: Intro animation
+	// TODO: remove function but keep deep link to related tour
     func animateInInitialView() {
 		sectionTabBarController.view.alpha = 0.0
         homeVC.view.alpha = 0.0
@@ -234,30 +235,30 @@ class SectionsViewController : UIViewController {
         (UIApplication.shared.delegate as? AppDelegate)?.triggerDeepLinkIfPresent()
     }
     
-    func startTour(tour:AICTourModel) {
+	func showTourOnMap(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
         /*if toursVC.currentTour != nil {
             self.requestedTour = tour
             showLeaveTourMessage()
             return
-        }
-        
-        setSelectedSection(sectionVC: toursVC)
-        
-        locationManager.delegate = mapVC
-        toursVC.showTour(forTourModel: tour)
-        
+        }*/
+		
+		sectionTabBarController.selectedIndex = 2
+        setSelectedSection(sectionVC: mapVC)
+		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
+		
+		
         // If this is coming from an object view,
         //show the mini player to reveal tour below
-        if objectVC.mode != .hidden {
-            objectVC.showMiniPlayer()
-        }
-        
+//        if objectVC.mode != .hidden {
+//            objectVC.showMiniPlayer()
+//        }
+		
         // Log Analytics
-        AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)*/
+//        AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)
     }
     
     // MARK: Audio Player showing methods
-    func showObject(object:AICObjectModel, audioGuideID: Int?) {
+    func playObject(object:AICObjectModel, audioGuideID: Int?) {
 //        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
 //        self.objectVC.showFullscreen()
 		searchButton.isHidden = false
@@ -270,14 +271,14 @@ class SectionsViewController : UIViewController {
         updateTabBarHeightWithMiniPlayer()
     }
     
-    func showAudioGuideObject(object:AICObjectModel, audioGuideID: Int) {
-        showObject(object: object, audioGuideID: audioGuideID)
+    func playAudioGuideObject(object:AICObjectModel, audioGuideID: Int) {
+        playObject(object: object, audioGuideID: audioGuideID)
         
         // Log analytics
         AICAnalytics.sendAudioGuideDidShowObjectEvent(forObject: object)
     }
     
-    func showMapObject(forObjectModel object:AICObjectModel) {
+    func playMapObject(forObjectModel object:AICObjectModel) {
 //        if currentViewController == toursVC {
 //            guard let currentTour = toursVC.currentTour else {
 //                print("Could not display object because it isn't on currently displayed tour.")
@@ -291,14 +292,14 @@ class SectionsViewController : UIViewController {
 //
 //            showTourStop(forTourModel: currentTour, atStopIndex: tourStopIndex)
 //        } else {
-            showObject(object: object, audioGuideID: nil)
+            playObject(object: object, audioGuideID: nil)
 //        }
 		
         // Log analytics
         AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
     }
     
-    fileprivate func showTourOverview(forTourModel tour:AICTourModel) {
+    fileprivate func playTourOverview(forTourModel tour:AICTourModel) {
 //        self.objectVC.setContent(forTourOverviewModel: tour.overview)
 //        self.objectVC.showMiniPlayer()
         self.showHeadphonesMessage()
@@ -309,7 +310,7 @@ class SectionsViewController : UIViewController {
         AICAnalytics.sendTourDidShowOverviewEvent(forTour: tour)
     }
     
-    fileprivate func showTourStop(forTourModel tour:AICTourModel, atStopIndex stopIndex:Int) {
+    fileprivate func playTourStop(forTourModel tour:AICTourModel, atStopIndex stopIndex:Int) {
 //        self.objectVC.setContent(forTour: tour, atStopIndex: stopIndex)
 //        self.objectVC.showMiniPlayer()
         self.showHeadphonesMessage()
@@ -438,15 +439,19 @@ extension SectionsViewController : UITabBarControllerDelegate {
 
 extension SectionsViewController : HomeNavigationControllerDelegate {
 	func showTourCard(tour: AICTourModel) {
-		showContentCard(ContentCardNavigationController(tour: tour))
+		let tourTableVC = TourTableViewController(tour: tour)
+		tourTableVC.tourTableDelegate = self
+		showContentCard(ContentCardNavigationController(tableVC: tourTableVC))
 	}
 	
 	func showExhibitionCard(exhibition: AICExhibitionModel) {
-		showContentCard(ContentCardNavigationController(exhibition: exhibition))
+		let exhibitionTableVC = ExhibitionTableViewController(exhibition: exhibition)
+		showContentCard(ContentCardNavigationController(tableVC: exhibitionTableVC))
 	}
 	
 	func showEventCard(event: AICEventModel) {
-		showContentCard(ContentCardNavigationController(event: event))
+		let eventTableVC = EventTableViewController(event: event)
+		showContentCard(ContentCardNavigationController(tableVC: eventTableVC))
 	}
 	
 	func showContentCard(_ contentCardVC: ContentCardNavigationController) {
@@ -470,7 +475,7 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 // MARK: AudioGuide delegate
 extension SectionsViewController : AudioGuideNavigationControllerDelegate {
     func audioGuideDidSelectObject(object: AICObjectModel, audioGuideID: Int) {
-        showAudioGuideObject(object: object, audioGuideID: audioGuideID)
+        playAudioGuideObject(object: object, audioGuideID: audioGuideID)
     }
 }
 
@@ -500,11 +505,11 @@ extension SectionsViewController : ToursSectionViewControllerDelegate {
     }
     
     func toursSectionDidSelectTourOverview(tour:AICTourModel) {
-        showTourOverview(forTourModel: tour)
+        playTourOverview(forTourModel: tour)
     }
     
     func toursSectionDidSelectTourStop(tour: AICTourModel, stopIndex:Int) {
-        showTourStop(forTourModel: tour, atStopIndex:stopIndex)
+        playTourStop(forTourModel: tour, atStopIndex:stopIndex)
     }
     
     func toursSectionDidLeaveTour(tour: AICTourModel) {
@@ -516,7 +521,7 @@ extension SectionsViewController : ToursSectionViewControllerDelegate {
 // MARK: Map Delegate Methods
 extension SectionsViewController : MapNavigationControllerDelegate {
 	func playArtwork(artwork: AICObjectModel) {
-		showMapObject(forObjectModel: artwork)
+		playMapObject(forObjectModel: artwork)
 	}
 }
 
@@ -529,7 +534,7 @@ extension SectionsViewController : MessageViewControllerDelegate {
             if let requestedTour = self.requestedTour {
                 self.requestedTour = nil
 //                toursVC.removeCurrentTour()
-                startTour(tour: requestedTour)
+                //startTour(tour: requestedTour)
             } else {
 //                removeCurrentTour()
             }
@@ -582,5 +587,13 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 		if cardVC.isKind(of: ContentCardNavigationController.self) {
 			cardVC.view.removeFromSuperview()
 		}
+	}
+}
+
+// MARK: TourTableViewControllerDelegate
+extension SectionsViewController : TourTableViewControllerDelegate {
+	// Pressed "Start Tour" or tour stop in content card
+	func tourStartSelected(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
+		showTourOnMap(tour: tour, language: language, stopIndex: stopIndex)
 	}
 }

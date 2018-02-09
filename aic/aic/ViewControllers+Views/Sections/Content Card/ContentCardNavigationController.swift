@@ -11,22 +11,9 @@ import UIKit
 class ContentCardNavigationController : CardNavigationController {
 	var tableVC: UITableViewController
 	
-	// Tour Card
-	init(tour: AICTourModel) {
-		tableVC = TourTableViewController(tour: tour)
+	init(tableVC: UITableViewController) {
+		self.tableVC = tableVC
 		super.init(nibName: nil, bundle: nil)
-	}
-	
-	// Exhibition Card
-	init(exhibition: AICExhibitionModel) {
-		tableVC = ExhibitionTableViewController(exhibition: exhibition)
-		super.init(nibName: nil, bundle: nil)
-	}
-	
-	// Event Card
-	init(event: AICEventModel) {
-		tableVC = EventTableViewController(event: event)
-        super.init(nibName: nil, bundle: nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
