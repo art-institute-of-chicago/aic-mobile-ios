@@ -53,6 +53,7 @@ extension EventTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: EventContentCell.reuseIdentifier, for: indexPath) as! EventContentCell
 			cell.eventModel = eventModel
+			cell.delegate = self
 			return cell
 		}
 		return UITableViewCell()
@@ -88,3 +89,10 @@ extension EventTableViewController {
 		
 	}
 }
+
+extension EventTableViewController : EventContentCellDelegate {
+	func eventBuyTicketsButtonPressed(url: URL) {
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
+	}
+}
+

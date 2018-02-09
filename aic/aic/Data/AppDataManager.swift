@@ -425,6 +425,23 @@ class AppDataManager {
 		}
 		return eventItems
 	}
+	
+	func getEventBuyTicketURL(event: AICEventModel) -> URL? {
+		if event.isTicketed {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "M/d/yyyy"
+			//DateFormatter.localizedString(from: endDate, dateStyle: .medium, timeStyle: .medium)
+			let dateFormatted = dateFormatter.string(from: event.startDate)
+			
+			var url: String = "https://sales.artic.edu/Events/Event/"
+			url += String(event.eventId)
+			url += "?date="
+			url += dateFormatted
+			
+			return URL(string: url)
+		}
+		return nil
+	}
     
     // Find the tours this object is on, and filter out a tour if sepecified
     func getRelatedTours(forObject object:AICObjectModel, excludingTour:AICTourModel? = nil) -> [AICTourModel] {

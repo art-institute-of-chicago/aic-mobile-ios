@@ -64,7 +64,7 @@ class SearchDataManager {
 							"match": [
 								"title": [
 									"query": searchText,
-									"operator": "and"
+									"operator": "or"
 								]
 							]
 						],

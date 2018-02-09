@@ -8,12 +8,23 @@
 
 import UIKit
 
+protocol EventContentCellDelegate : class {
+	func eventBuyTicketsButtonPressed(url: URL)
+}
+
 class EventContentCell : UITableViewCell {
 	static let reuseIdentifier = "eventContentCell"
 	
 	@IBOutlet var eventImageView: AICImageView!
 	@IBOutlet var descriptionLabel: UILabel!
-//	@IBOutlet var buyTicketsButton: AICButton!
+	@IBOutlet weak var buyTicketsButton: AICButton!
+	
+	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
+	let descriptionVerticalSpacingMin: CGFloat = 32
+	
+	var buyTicketsUrl: URL? = nil
+	
+	weak var delegate: EventContentCellDelegate? = nil
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -37,6 +48,23 @@ class EventContentCell : UITableViewCell {
 			let descriptionText = eventModel.longDescription.replacingOccurrences(of: "<br />", with: "\n")
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: descriptionText.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
+			
+			buyTicketsUrl = AppDataManager.sharedInstance.getEventBuyTicketURL(event: eventModel)
+			if buyTicketsUrl == nil {
+				buyTicketsButton.isEnabled = false
+				buyTicketsButton.isHidden = true
+				descriptionToImageVerticalSpacing.constant = descriptionVerticalSpacingMin
+			}
+			else {
+				buyTicketsButton.addTarget(self, action: #selector(buyTicketsButtonPressed(button:)), for: .touchUpInside)
+			}
+			
+			self.setNeedsLayout()
+			self.layoutIfNeeded()
 		}
+	}
+	
+	@objc func buyTicketsButtonPressed(button: UIButton) {
+		self.delegate?.eventBuyTicketsButtonPressed(url: buyTicketsUrl!)
 	}
 }

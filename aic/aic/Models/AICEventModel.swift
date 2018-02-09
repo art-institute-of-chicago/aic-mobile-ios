@@ -9,12 +9,15 @@
 import CoreLocation
 
 struct AICEventModel {
-	let title:String
-	let shortDescription:String
-	let longDescription:String
+	let eventId: Int
+	let title: String
+	let shortDescription: String
+	let longDescription: String
 	
-	let imageUrl:URL
+	let imageUrl: URL
 	
 	let startDate: Date
 	let endDate: Date
+	
+	let isTicketed: Bool
 }

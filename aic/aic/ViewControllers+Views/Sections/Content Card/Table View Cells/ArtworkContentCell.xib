@@ -19,11 +19,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="artworkContentCell" rowHeight="602" id="cJi-GU-S3Z" customClass="ArtworkContentCell" customModule="aic" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="602"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="artworkContentCell" rowHeight="560" id="cJi-GU-S3Z" customClass="ArtworkContentCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="560"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cJi-GU-S3Z" id="FZo-ir-nod">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="601.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="559.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0gb-q7-Ckj" customClass="AICImageView" customModule="aic" customModuleProvider="target">
@@ -63,22 +63,15 @@
                         <nil key="highlightedColor"/>
                         <size key="shadowOffset" width="0.0" height="0.0"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dimensions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YE-QF-Wh9">
-                        <rect key="frame" x="16" y="484" width="343" height="17"/>
-                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VuV-uX-a1H">
-                        <rect key="frame" x="16" y="533" width="343" height="1"/>
+                        <rect key="frame" x="16" y="491" width="343" height="1"/>
                         <color key="backgroundColor" red="0.63137254901960782" green="0.63137254901960782" blue="0.63137254901960782" alpha="0.4043236301369863" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="Y7J-PF-swm"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCz-Ae-RrX">
-                        <rect key="frame" x="16" y="554" width="343" height="17"/>
+                        <rect key="frame" x="16" y="512" width="343" height="17"/>
                         <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -86,10 +79,9 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="4YE-QF-Wh9" firstAttribute="leading" secondItem="FZo-ir-nod" secondAttribute="leading" constant="16" id="7Jk-pB-Ta0"/>
+                    <constraint firstItem="VuV-uX-a1H" firstAttribute="top" secondItem="b7E-yS-5QK" secondAttribute="bottom" constant="32" id="52o-Uo-f9B"/>
                     <constraint firstAttribute="trailing" secondItem="b7E-yS-5QK" secondAttribute="trailing" constant="16" id="8Ek-Kx-EH1"/>
                     <constraint firstItem="b7E-yS-5QK" firstAttribute="top" secondItem="DkG-Tn-HfR" secondAttribute="bottom" constant="32" id="9mK-qm-zcg"/>
-                    <constraint firstItem="VuV-uX-a1H" firstAttribute="top" secondItem="4YE-QF-Wh9" secondAttribute="bottom" constant="32" id="Bc6-cK-wef"/>
                     <constraint firstAttribute="bottom" secondItem="jCz-Ae-RrX" secondAttribute="bottom" constant="30.5" id="F0h-Ir-a2s"/>
                     <constraint firstItem="b7E-yS-5QK" firstAttribute="leading" secondItem="FZo-ir-nod" secondAttribute="leading" constant="16" id="LaF-Ty-vT5"/>
                     <constraint firstItem="0gb-q7-Ckj" firstAttribute="centerX" secondItem="FZo-ir-nod" secondAttribute="centerX" id="Lsy-2t-DPd"/>
@@ -97,10 +89,8 @@
                     <constraint firstItem="jCz-Ae-RrX" firstAttribute="leading" secondItem="FZo-ir-nod" secondAttribute="leading" constant="16" id="UdF-si-Gak"/>
                     <constraint firstItem="yUV-LP-EGt" firstAttribute="top" secondItem="0gb-q7-Ckj" secondAttribute="bottom" constant="16" id="YPb-iW-WNw"/>
                     <constraint firstAttribute="trailing" secondItem="0gb-q7-Ckj" secondAttribute="trailing" constant="16" id="ajs-IU-dpg"/>
-                    <constraint firstAttribute="trailing" secondItem="4YE-QF-Wh9" secondAttribute="trailing" constant="16" id="c7n-1h-yjt"/>
                     <constraint firstItem="0gb-q7-Ckj" firstAttribute="leading" secondItem="FZo-ir-nod" secondAttribute="leading" constant="16" id="fTX-iT-Has"/>
                     <constraint firstItem="DkG-Tn-HfR" firstAttribute="top" secondItem="0gb-q7-Ckj" secondAttribute="bottom" constant="16" id="j1L-eH-v2r"/>
-                    <constraint firstItem="4YE-QF-Wh9" firstAttribute="top" secondItem="b7E-yS-5QK" secondAttribute="bottom" constant="25" id="nSn-Lu-o0D"/>
                     <constraint firstAttribute="trailing" secondItem="VuV-uX-a1H" secondAttribute="trailing" constant="16" id="oTF-5l-EbA"/>
                     <constraint firstItem="0gb-q7-Ckj" firstAttribute="top" secondItem="FZo-ir-nod" secondAttribute="top" id="qtu-Lt-sNl"/>
                     <constraint firstItem="DkG-Tn-HfR" firstAttribute="centerX" secondItem="FZo-ir-nod" secondAttribute="centerX" constant="-78" id="tM1-Yw-oiu"/>
@@ -111,11 +101,15 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="artistDisplayLabel" destination="b7E-yS-5QK" id="eTt-0v-h3e"/>
                 <outlet property="artworkImageHeight" destination="SVl-du-zgM" id="zpg-CF-ADh"/>
                 <outlet property="artworkImageView" destination="0gb-q7-Ckj" id="nFR-QV-OWs"/>
+                <outlet property="descriptionLabel" destination="jCz-Ae-RrX" id="StA-JU-e5b"/>
+                <outlet property="playAudioButton" destination="yUV-LP-EGt" id="Lh1-bw-AXb"/>
                 <outlet property="showOnMapButton" destination="DkG-Tn-HfR" id="ffm-8Y-dkk"/>
+                <outlet property="showOnMapButtonHorizontalOffset" destination="tM1-Yw-oiu" id="2ze-bZ-jA8"/>
             </connections>
-            <point key="canvasLocation" x="35.5" y="333"/>
+            <point key="canvasLocation" x="35.5" y="312"/>
         </tableViewCell>
     </objects>
 </document>
