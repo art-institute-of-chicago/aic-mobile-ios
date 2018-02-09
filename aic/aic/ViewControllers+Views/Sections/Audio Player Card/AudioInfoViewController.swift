@@ -15,6 +15,7 @@ class AudioInfoViewController : UIViewController {
     
     let scrollView: UIScrollView = UIScrollView()
     let imageView: UIImageView = UIImageView()
+	let languageSelector: LanguageSelectorView = LanguageSelectorView()
     let audioPlayerView: AudioPlayerView = AudioPlayerView()
 	let descriptionLabel: UILabel = UILabel()
 	let relatedToursView = AudioInfoSectionView()
@@ -43,14 +44,13 @@ class AudioInfoViewController : UIViewController {
 		descriptionLabel.numberOfLines = 0
 		descriptionLabel.textColor = .white
 		
-		transcriptView.titleLabel.text = "Transcripts"
 		transcriptView.delegate = self
 		
-		creditsView.titleLabel.text = "Credits"
 		creditsView.delegate = self
 		
 		// Add subviews
 		scrollView.addSubview(imageView)
+		scrollView.addSubview(languageSelector)
 		scrollView.addSubview(audioPlayerView)
 		scrollView.addSubview(descriptionLabel)
 //		scrollView.addSubview(relatedToursView)
@@ -87,6 +87,10 @@ class AudioInfoViewController : UIViewController {
         audioPlayerView.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 16)
         audioPlayerView.autoPinEdge(.leading, to: .leading, of: self.view)
         audioPlayerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		
+		languageSelector.autoSetDimensions(to: LanguageSelectorView.selectorSize)
+		languageSelector.autoPinEdge(.bottom, to: .top, of: audioPlayerView, withOffset: -16)
+		languageSelector.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		
 		descriptionLabel.autoPinEdge(.top, to: .bottom, of: audioPlayerView, withOffset: 32)
 		descriptionLabel.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
@@ -128,14 +132,17 @@ class AudioInfoViewController : UIViewController {
 //			contentViewSubviews.append(relatedToursContentView)
 //		}
 		
-		// Default to English Audio, then check if current language is aavailable in translations
-		var audioModel = audio
-		if audioModel.availableLanguages.contains(Common.currentLanguage) {
-			audioModel.language = Common.currentLanguage
+		// Language
+		languageSelector.isHidden = true
+		if audio.availableLanguages.count > 1 {
+			languageSelector.isHidden = false
+			languageSelector.close()
+			languageSelector.setLanguages(languages: audio.availableLanguages, defaultLanguage: audio.language)
 		}
+		updateLanguage(language: audio.language)
 		
 		transcriptView.show(collapseEnabled: true)
-		transcriptView.bodyTextView.text = audioModel.transcript.stringByDecodingHTMLEntities
+		transcriptView.bodyTextView.text = audio.transcript.stringByDecodingHTMLEntities
 		
 		var creditsString = ""
 		if (artwork.credits ?? "").isEmpty == false { creditsString += artwork.credits! }
@@ -179,24 +186,30 @@ class AudioInfoViewController : UIViewController {
 		
 		updateLayout()
     }
+	
+	// Language
+	private func updateLanguage(language: Common.Language) {
+		creditsView.titleLabel.text = "Credits".localized(using: "AudioPlayer")
+		transcriptView.titleLabel.text = "Transcript".localized(using: "AudioPlayer")
+	}
     
     private func setImage(imageURL: URL) {
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
             // calculate image dimension to adjust height of imageview
-            if let _ = image {
-                let imageAspectRatio = image!.size.width / image!.size.height
-                let viewAspectRatio = self.imageView.frame.width / self.imageViewHeight!.constant
-                
-                if imageAspectRatio > viewAspectRatio {
-                    self.imageViewHeight!.constant = self.imageView.frame.width * (image!.size.height / image!.size.width)
-                }
-                else {
-                    self.imageViewHeight!.constant = self.imageMaxHeight
-                }
-				
-				self.updateLayout()
-            }
+//            if let _ = image {
+//                let imageAspectRatio = image!.size.width / image!.size.height
+//                let viewAspectRatio = self.imageView.frame.width / self.imageViewHeight!.constant
+//
+//                if imageAspectRatio > viewAspectRatio {
+//                    self.imageViewHeight!.constant = self.imageView.frame.width * (image!.size.height / image!.size.width)
+//                }
+//                else {
+//                    self.imageViewHeight!.constant = self.imageMaxHeight
+//                }
+//
+//				self.updateLayout()
+//            }
         }
 		updateLayout()
     }
@@ -209,6 +222,8 @@ class AudioInfoViewController : UIViewController {
 		audioPlayerView.reset()
 		imageView.image = nil
 		descriptionLabel.text = ""
+		languageSelector.close()
+		languageSelector.isHidden = true
 	}
 }
 
@@ -228,3 +243,5 @@ extension AudioInfoViewController : AudioInfoSectionViewDelegate {
 		updateLayout()
 	}
 }
+
+

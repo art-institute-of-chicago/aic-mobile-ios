@@ -14,10 +14,9 @@ import Kingfisher
 
 class AudioPlayerNavigationController : CardNavigationController {
     var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
-    
     let miniAudioPlayerView: MiniAudioPlayerView = MiniAudioPlayerView()
-    
-    let remoteSkipTime: Int = 10 // Number of seconds to skip forward/back wiht MPRemoteCommandCenter seek
+	
+	let remoteSkipTime: Int = 10 // Number of seconds to skip forward/back wiht MPRemoteCommandCenter seek
     
     // Message Localized Strings
     let loadingMessage = "Loading Message"
@@ -30,9 +29,11 @@ class AudioPlayerNavigationController : CardNavigationController {
     fileprivate let avPlayer = AVPlayer()
     private var audioProgressTimer: Timer?
     private var audioPlayerProgressTimer: Timer? = nil
-    
+	
+	var currentArtwork: AICObjectModel? = nil
     var currentAudioFile: AICAudioFileModel? = nil
     var currentAudioFileMaxProgress: CGFloat = 0
+	var selectedLanguage: Common.Language? = nil
     
     var isUpdatingObjectViewProgressSlider = false
     
@@ -51,7 +52,10 @@ class AudioPlayerNavigationController : CardNavigationController {
         rootVC.view.addSubview(miniAudioPlayerView)
         
         createViewConstraints()
-        
+		
+		// Language Selector Delegate
+		audioInfoVC.languageSelector.delegate = self
+		
         // Mini Player Tap and Close Events
         let miniAudioPlayerTap = UITapGestureRecognizer(target: self, action:#selector(miniAudioPlayerTapped))
         miniAudioPlayerView.addGestureRecognizer(miniAudioPlayerTap)
@@ -94,7 +98,12 @@ class AudioPlayerNavigationController : CardNavigationController {
     // MARK: Play Audio
     
     func playArtwork(artwork: AICObjectModel, forAudioGuideID selectorNumber: Int? = nil) {
-        let audioFile: AICAudioFileModel = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: selectorNumber)
+		currentArtwork = artwork
+        var audioFile: AICAudioFileModel = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: selectorNumber)
+		// Default to English Audio, then check if current language is aavailable in translations
+		if audioFile.availableLanguages.contains(Common.currentLanguage) {
+			audioFile.language = Common.currentLanguage
+		}
         if load(audioFile: audioFile, coverImageURL: artwork.imageUrl as URL) {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setArtworkContent(artwork: artwork, audio: audioFile)
@@ -121,22 +130,27 @@ class AudioPlayerNavigationController : CardNavigationController {
     private func load(audioFile: AICAudioFileModel, coverImageURL: URL) -> Bool {
         
         if let currentAudioFile = currentAudioFile {
-            // Make sure we haven't already tried to load this file
-            if (audioFile.nid == currentAudioFile.nid) {
-                return false
+            // If it's a new artwork, log analytics
+            if (audioFile.nid != currentAudioFile.nid) {
+				// Log analytics
+				// GA only accepts int values, so send an int from 1-10
+				let progressValue: Int = Int(currentAudioFileMaxProgress * 100)
+				AICAnalytics.objectViewAudioItemPlayedEvent(audioItem: currentAudioFile, pctComplete: progressValue)
             }
-            
-            // Log analytics
-            // GA only accepts int values, so send an int from 1-10
-            let progressValue: Int = Int(currentAudioFileMaxProgress * 100)
-            AICAnalytics.objectViewAudioItemPlayedEvent(audioItem: currentAudioFile, pctComplete: progressValue)
+			// If it's same nid and language, don't load audio
+			else if selectedLanguage == nil {
+				return false
+			}
         }
-        
+		
         currentAudioFile = audioFile
         currentAudioFileMaxProgress = 0
 		
 		// Set Audio Translation
-		if let _ = audioFile.translations[Common.currentLanguage] {
+		if selectedLanguage != nil {
+			currentAudioFile!.language = selectedLanguage!
+		}
+		else if audioFile.availableLanguages.contains(Common.currentLanguage) {
 			currentAudioFile!.language = Common.currentLanguage
 		}
         
@@ -373,7 +387,11 @@ class AudioPlayerNavigationController : CardNavigationController {
             self.downArrowImageView.alpha = 0.0
         }
     }
-    
+	
+	override func cardWillShowMiniPlayer() {
+		audioInfoVC.languageSelector.close()
+	}
+	
     override func cardDidShowMiniPlayer() {
         UIView.animate(withDuration: 0.25) {
             self.miniAudioPlayerView.alpha = 1.0
@@ -382,6 +400,10 @@ class AudioPlayerNavigationController : CardNavigationController {
             self.view.backgroundColor = .clear
         }, completion: nil)
     }
+	
+	override func cardWillHide() {
+		audioInfoVC.languageSelector.close()
+	}
 }
 
 // Pan Gesture
@@ -506,6 +528,23 @@ extension AudioPlayerNavigationController {
 		// Pause
 		else {
 			pause()
+		}
+	}
+}
+
+// MARK: LanguageSelectorViewDelegate
+
+extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
+	func languageSelectorDidSelect(language: Common.Language) {
+		if let _ = currentAudioFile {
+			if currentAudioFile!.availableLanguages.contains(language) {
+				selectedLanguage = language // set the language to indicate the language has been selected using the LanguageSelector
+				if load(audioFile: currentAudioFile!, coverImageURL: currentArtwork!.imageUrl as URL) {
+					miniAudioPlayerView.reset()
+					audioInfoVC.setArtworkContent(artwork: currentArtwork!, audio: currentAudioFile!)
+				}
+				selectedLanguage = nil
+			}
 		}
 	}
 }

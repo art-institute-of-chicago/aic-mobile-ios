@@ -461,10 +461,18 @@ class AppDataParser {
         let nid         = try getInt(fromJSON: audioFileJSON, forKey: "nid")
 		let title		= try getString(fromJSON: audioFileJSON, forKey: "title")
 		
+		if nid == 1458 {
+			print("1458")
+		}
+		
 		var translations: [Common.Language : AICAudioFileTranslationModel] = [:]
 		let translationsJSON = audioFileJSON["translations"].array
 		
-		let translationEng = try parseTranslation(audioFileJSON: audioFileJSON)
+		var translationEng = try parseTranslation(audioFileJSON: audioFileJSON)
+		// default to the title of the Audio File if English track title is not provided
+		if translationEng.trackTitle.isEmpty {
+			translationEng.trackTitle = title
+		}
 		translations[.english] = translationEng
 		
 		for translationJSON in translationsJSON! {
@@ -472,14 +480,9 @@ class AppDataParser {
 				let language = try getLanguageFor(translationJSON: translationJSON)
 				var translation = try parseTranslation(audioFileJSON: translationJSON)
 				
-				// default to English track title or the title of the audio file if a track title is not provided
+				// default to English track title or if a Spanish/Chinese track title is not provided
 				if translation.trackTitle.isEmpty {
-					if translationEng.trackTitle.isEmpty {
-						translation.trackTitle = title
-					}
-					else {
-						translation.trackTitle = translationEng.trackTitle
-					}
+					translation.trackTitle = translationEng.trackTitle
 				}
 				
 				translations[language] = translation
