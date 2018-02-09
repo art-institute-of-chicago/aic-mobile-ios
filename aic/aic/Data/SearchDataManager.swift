@@ -118,4 +118,60 @@ class SearchDataManager {
 				}
 		}
 	}
+	
+	func loadExhibitions(searchText: String) {
+		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
+		url += AppDataManager.sharedInstance.app.dataSettings[.exhibitionsEndpoint]!
+		url += "/search?limit=20"
+		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+		let urlRequest = URLRequest(url:  URL(string: url)!)
+		let urlString = urlRequest.url?.absoluteString
+		let parameters: [String: Any] = [
+			"_source": true,
+			"sort": ["_score"],
+			"query": [
+				"bool": [
+					"must": [
+						[
+							"range": [
+								"aic_start_at": [
+									"gte": "now-10y",
+									"lte": "now+10y"
+								]
+							]
+						],
+						[
+							"range": [
+								"aic_end_at": [
+									"gte": "now-10y",
+									"lte": "now+10y"
+								]
+							]
+						],
+						[
+							"match": [
+								"title": [
+									"query": searchText,
+									"operator": "or"
+								]
+							]
+						]
+					]
+				]
+			]
+		]
+		
+		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+			.validate()
+			.responseData { response in
+				switch response.result {
+				case .success(let value):
+					let searchedExhibitions = self.dataParser.parse(exhibitionsData: value)
+					self.delegate?.searchDataDidFinishLoading(exhibitions: searchedExhibitions)
+				case .failure(let error):
+					//self.notifyLoadFailure(withMessage: "Failed to load search data.")
+					print(error)
+				}
+		}
+	}
 }

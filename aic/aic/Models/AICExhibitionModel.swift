@@ -13,6 +13,8 @@ struct AICExhibitionModel {
 	
 	let startDate: Date
 	let endDate: Date
+	
+	let webUrl: URL?
     
 	let location: CoordinateWithFloor? // TODO: temporarily making this optional
 }

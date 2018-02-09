@@ -81,6 +81,13 @@ class AppDataParser {
 			location = gallery!.location
 		}
 		catch{}
+		
+		// optional weburl
+		var webURL: URL?
+		do {
+			webURL = try getURL(fromJSON: exhibitionJSON, forKey: "web_url")
+		}
+		catch{}
         
 		// Get date exibition ends
 		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
@@ -107,6 +114,7 @@ class AppDataParser {
 								  imageUrl: imageURL,
 								  startDate: startDate,
 								  endDate: endDate,
+								  webUrl: webURL,
 								  location: location
         )
     }

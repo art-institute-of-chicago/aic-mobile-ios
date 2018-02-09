@@ -44,7 +44,6 @@
                         <state key="normal" title="Show On Map">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="highlighted" title="Start Tour"/>
                     </button>
                     <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1T-B2-Jzi" customClass="AICButton" customModule="aic" customModuleProvider="target">
                         <rect key="frame" x="195.5" y="376" width="140" height="50"/>
@@ -81,9 +80,9 @@
                     <constraint firstItem="08c-cl-LXS" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" constant="16" id="JxY-Kq-GeD"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" id="LMI-rI-roE"/>
                     <constraint firstAttribute="bottom" secondItem="DlE-mQ-422" secondAttribute="bottom" constant="60" id="LmU-b6-03T"/>
-                    <constraint firstItem="DlE-mQ-422" firstAttribute="top" secondItem="mLP-V2-pYH" secondAttribute="top" constant="453" id="ZDY-W3-gsW"/>
                     <constraint firstItem="DlE-mQ-422" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" constant="16" id="fU0-bV-xsi"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="top" secondItem="mLP-V2-pYH" secondAttribute="top" id="fd9-We-uYR"/>
+                    <constraint firstItem="DlE-mQ-422" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="93" id="kPo-gB-miH"/>
                     <constraint firstItem="pPS-6o-axa" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="16" id="noq-C4-Ad8"/>
                     <constraint firstItem="B1T-B2-Jzi" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" constant="78" id="oCy-td-9t8"/>
                     <constraint firstItem="08c-cl-LXS" firstAttribute="top" secondItem="DlE-mQ-422" secondAttribute="bottom" constant="25" id="u33-zn-kjO"/>
@@ -93,9 +92,12 @@
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="buyTicketsButton" destination="B1T-B2-Jzi" id="arm-p6-ITN"/>
+                <outlet property="buyTicketsButtonHorizontalOffset" destination="oCy-td-9t8" id="frN-Md-Nnz"/>
                 <outlet property="descriptionLabel" destination="DlE-mQ-422" id="7qc-pM-tV9"/>
+                <outlet property="descriptionToImageVerticalSpacing" destination="kPo-gB-miH" id="Zcy-oB-RsJ"/>
                 <outlet property="exhibitionImageView" destination="Zhx-kn-QDT" id="DYR-hF-yKX"/>
                 <outlet property="showOnMapButton" destination="pPS-6o-axa" id="LkO-0j-NfG"/>
+                <outlet property="showOnMapButtonHorizontalOffset" destination="Dt4-bW-jQN" id="tF9-bH-Ywo"/>
                 <outlet property="throughDateLabel" destination="08c-cl-LXS" id="LDe-n8-mgS"/>
             </connections>
             <point key="canvasLocation" x="2.5" y="154.5"/>

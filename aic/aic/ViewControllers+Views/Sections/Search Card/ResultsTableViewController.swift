@@ -169,7 +169,9 @@ extension ResultsTableViewController {
 			else if indexPath.section == 3 {
 				// exhibition cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+				let exhibition = exhibitionItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
+				cell.setContent(imageUrl: URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!, title: exhibition.title, subtitle: "") // TODO: make imageUrl optional in cell
 				return cell
 			}
 			else if indexPath.section == 4 {
@@ -197,7 +199,9 @@ extension ResultsTableViewController {
 		}
 		else if filter == .exhibitions {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+			let exhibition = exhibitionItems[indexPath.row]
 			setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
+			cell.setContent(imageUrl: URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!, title: exhibition.title, subtitle: "") // TODO: make imageUrl optional in cell
 			return cell
 		}
 		return UITableViewCell()

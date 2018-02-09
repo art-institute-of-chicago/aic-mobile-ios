@@ -130,7 +130,7 @@ class SearchNavigationController : CardNavigationController {
 	// MARK: Show/Hide
 	
 	override func cardWillShowFullscreen() {
-		if viewControllers.count < 2 {
+		if viewControllers.count < 2 && currentState != .fullscreen {
 			// show keyboard when the card shows
 			DispatchQueue.main.async {
 				let searchTextField = self.searchBar.value(forKey: "searchField") as? UITextField
@@ -168,6 +168,7 @@ class SearchNavigationController : CardNavigationController {
 		}
 		SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
 		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
+		SearchDataManager.sharedInstance.loadExhibitions(searchText: searchText)
 		if resultsVC.filter == .empty {
 			resultsVC.filter = .suggested
 		}
@@ -324,7 +325,8 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
-		
+		let exhibitionVC = ExhibitionTableViewController(exhibition: exhibition)
+		showSearchContentViewController(tableVC: exhibitionVC)
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {

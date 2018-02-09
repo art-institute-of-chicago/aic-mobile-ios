@@ -52,6 +52,7 @@ extension ExhibitionTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ExhibitionContentCell.reuseIdentifier, for: indexPath) as! ExhibitionContentCell
 			cell.exhibitionModel = exhibitionModel
+			cell.delegate = self
 			return cell
 		}
 		return UITableViewCell()
@@ -68,6 +69,13 @@ extension ExhibitionTableViewController {
 	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 80
+	}
+}
+
+// MARK: Interaction
+extension ExhibitionTableViewController : ExhibitionContentCellDelegate {
+	func exhibitionBuyTicketsButtonPressed(url: URL) {
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
 	}
 }
 
