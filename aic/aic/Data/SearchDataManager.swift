@@ -166,8 +166,18 @@ class SearchDataManager {
 			.responseData { response in
 				switch response.result {
 				case .success(let value):
+					var exhibitions = [AICExhibitionModel]()
 					let searchedExhibitions = self.dataParser.parse(exhibitionsData: value)
-					self.delegate?.searchDataDidFinishLoading(exhibitions: searchedExhibitions)
+					// Assign imageUrl to search exhibition, if it already exists in the current exhibitions
+					for searchedExhibition in searchedExhibitions {
+						if let currentExhibition = AppDataManager.sharedInstance.exhibitions.filter({ $0.id == searchedExhibition.id }).first {
+							exhibitions.append(currentExhibition)
+						}
+						else {
+							exhibitions.append(searchedExhibition)
+						}
+					}
+					self.delegate?.searchDataDidFinishLoading(exhibitions: exhibitions)
 				case .failure(let error):
 					//self.notifyLoadFailure(withMessage: "Failed to load search data.")
 					print(error)

@@ -40,13 +40,21 @@ class ContentButtonCell : UITableViewCell {
 		dividerLineBottom.backgroundColor = .aicDividerLineDarkColor
 	}
 	
-	func setContent(imageUrl: URL, title: String, subtitle: String) {
+	func setContent(imageUrl: URL?, title: String, subtitle: String) {
 		// TODO: cache and don't load unless necessary
 //		if contentLoaded == true {
 //			return
 //		}
 		
-		itemImageView.kf.setImage(with: imageUrl)
+		// Load image only if URL is not nil
+		if let url = imageUrl {
+			itemImageView.kf.setImage(with: url)
+		}
+		// Otherwise show placeholder image
+		else {
+			itemImageView.image = #imageLiteral(resourceName: "artworkPlaceholder")
+		}
+		
 		itemTitleLabel.text = title
 		itemSubtitleLabel.text = subtitle
 		
