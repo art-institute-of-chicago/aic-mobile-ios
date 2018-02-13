@@ -844,6 +844,7 @@ class AppDataParser {
 	}
 	
 	// MARK: Member Card
+	
 	func parse(memberData data: Data, zipCode: String) throws -> AICMemberCardModel {
 		let json = JSON(data: data)
 		let memberData = json["data"]

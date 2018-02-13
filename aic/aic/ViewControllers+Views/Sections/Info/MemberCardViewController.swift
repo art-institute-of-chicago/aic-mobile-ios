@@ -174,4 +174,14 @@ extension MemberCardViewController : MemberDataManagerDelegate {
 		alert.addAction(action)
 		present(alert, animated:true)
 	}
+	
+	func memberCardDataLoadingFailedWithError(error: String) {
+		let alert = UIAlertController(title: Common.Info.alertMessageNotFound, message: error, preferredStyle: UIAlertControllerStyle.alert)
+		let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
+			self.loadMemberFromUserDefaults()
+		})
+		
+		alert.addAction(action)
+		present(alert, animated:true)
+	}
 }

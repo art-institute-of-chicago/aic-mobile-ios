@@ -53,7 +53,7 @@ class MemberCardView : UIView {
 		memberNameLabel.autoAlignAxis(.vertical, toSameAxisOf: self)
 		memberNameLabel.autoSetDimension(.width, toSize: 309)
 		
-		membershipInfoLabel.autoPinEdge(.top, to: .bottom, of: memberNameLabel, withOffset: -10)
+		membershipInfoLabel.autoPinEdge(.top, to: .bottom, of: memberNameLabel, withOffset: 5)
 		membershipInfoLabel.autoAlignAxis(.vertical, toSameAxisOf: self)
 		membershipInfoLabel.autoSetDimension(.width, toSize: 309)
 		

@@ -298,6 +298,19 @@ extension InfoSectionMemberCardViewController : MemberDataManagerDelegate {
 		alert.addAction(action)
 		present(alert, animated:true)
 	}
+	
+	func memberCardDataLoadingFailedWithError(error: String) {
+		self.currentMemberAPIData = nil
+		self.currentlySelectedMember = 0
+		
+		let alert = UIAlertController(title: Common.Info.alertMessageParseError, message: "", preferredStyle: UIAlertControllerStyle.alert)
+		let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
+			self.loadMemberFromUserDefaults()
+		}
+		)
+		alert.addAction(action)
+		present(alert, animated:true)
+	}
 }
 
 // Alert Events
