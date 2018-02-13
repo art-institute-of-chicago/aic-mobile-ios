@@ -439,6 +439,12 @@ extension SectionsViewController : UITabBarControllerDelegate {
 // MARK: Home Delegate
 
 extension SectionsViewController : HomeNavigationControllerDelegate {
+	func showMemberCard() {
+		setSelectedSection(sectionVC: infoVC)
+		infoVC.shouldShowMemberCard = true
+		sectionTabBarController.selectedIndex = 3
+	}
+	
 	func showTourCard(tour: AICTourModel) {
 		let tourTableVC = TourTableViewController(tour: tour)
 		tourTableVC.tourTableDelegate = self

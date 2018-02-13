@@ -10,6 +10,7 @@ import UIKit
 import Localize_Swift
 
 protocol HomeNavigationControllerDelegate : class {
+	func showMemberCard()
 	func showTourCard(tour: AICTourModel)
 	func showExhibitionCard(exhibition: AICExhibitionModel)
 	func showEventCard(event: AICEventModel)
@@ -55,6 +56,10 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 }
 
 extension HomeNavigationController : HomeViewControllerDelegate {
+	func homeDidSelectAccessMemberCard() {
+		self.sectionDelegate?.showMemberCard()
+	}
+	
 	func homeDidSelectSeeAllTours() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)

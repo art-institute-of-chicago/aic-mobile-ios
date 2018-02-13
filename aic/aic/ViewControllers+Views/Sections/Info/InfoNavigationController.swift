@@ -15,6 +15,8 @@ class InfoNavigationController : SectionNavigationController {
 	let languageVC: LanguageViewController = LanguageViewController()
 	let locationSettingsVC: LocationSettingsViewController = LocationSettingsViewController()
 	
+	var shouldShowMemberCard: Bool = false
+	
 	override init(section: AICSectionModel) {
 		infoVC = InfoViewController(section: section)
 		super.init(section: section)
@@ -35,6 +37,12 @@ class InfoNavigationController : SectionNavigationController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		if shouldShowMemberCard {
+			self.popToRootViewController(animated: false)
+			showMemberCard()
+			shouldShowMemberCard = false
+		}
 	}
 	
 	func showMemberCard() {

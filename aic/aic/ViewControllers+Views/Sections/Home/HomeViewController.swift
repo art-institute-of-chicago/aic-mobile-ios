@@ -10,6 +10,7 @@ import UIKit
 import Localize_Swift
 
 protocol HomeViewControllerDelegate : class {
+	func homeDidSelectAccessMemberCard()
 	func homeDidSelectSeeAllTours()
 	func homeDidSelectSeeAllExhibitions()
 	func homeDidSelectSeeAllEvents()
@@ -57,6 +58,8 @@ class HomeViewController : SectionViewController {
 		
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
+		
+		memberPromptView.delegate = self
 		
 		toursCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
 		toursCollectionView.delegate = self
@@ -176,6 +179,8 @@ class HomeViewController : SectionViewController {
 		eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.eventCellSize.height)
 	}
 	
+	// MARK: Language
+	
 	@objc func updateLanguage() {
 		memberPromptView.promptTextView.text = "Member Card Prompt".localized(using: "Home")
 		memberPromptView.accessMemberCardTextView.text = "Member Card Button Title".localized(using: "Home")
@@ -190,6 +195,8 @@ class HomeViewController : SectionViewController {
 		eventsTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
 	}
 	
+	// MARK: Buttons
+	
 	@objc private func seeAllToursButtonPressed(button: UIButton) {
 		self.delegate?.homeDidSelectSeeAllTours()
 	}
@@ -203,6 +210,16 @@ class HomeViewController : SectionViewController {
 	}
 }
 
+// MARK: HomeMemberPromptViewDelegate
+
+extension HomeViewController : HomeMemberPromptViewDelegate {
+	func memberPromptDidSelectAccessMemberCard() {
+		self.delegate?.homeDidSelectAccessMemberCard()
+	}
+}
+
+// MARK: ScrollViewDelegate
+
 extension HomeViewController : UIScrollViewDelegate {
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		if scrollView == self.scrollView {
@@ -210,6 +227,8 @@ extension HomeViewController : UIScrollViewDelegate {
 		}
 	}
 }
+
+// MARK: Collection Views
 
 extension HomeViewController : UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -26,11 +26,13 @@ class MemberLoginView : UIView {
 		memberIDTitleLabel.numberOfLines = 1
 		memberIDTitleLabel.textAlignment = .left
 		
+		memberIDTextField.placeholder = "Enter your Member ID..."
 		memberIDTextField.backgroundColor = .aicMemberCardLoginFieldColor
 		memberIDTextField.textColor = .black
 		memberIDTextField.font = .aicMemberCardLoginFieldFont
 		memberIDTextField.leftViewMode = .always
 		memberIDTextField.leftView = UIView(frame: CGRect(x: 0, y:0, width: 10, height: 40))
+		memberIDTextField.keyboardType = .numberPad
 		
 		memberZipCodeTitleLabel.text = "Zip Code"
 		memberZipCodeTitleLabel.font = .aicMemberCardTitleFont
@@ -38,11 +40,13 @@ class MemberLoginView : UIView {
 		memberZipCodeTitleLabel.numberOfLines = 1
 		memberZipCodeTitleLabel.textAlignment = .left
 		
+		memberZipCodeTextField.placeholder = "Enter your home zip code..."
 		memberZipCodeTextField.backgroundColor = .aicMemberCardLoginFieldColor
 		memberZipCodeTextField.textColor = .black
 		memberZipCodeTextField.font = .aicMemberCardLoginFieldFont
 		memberZipCodeTextField.leftViewMode = .always
 		memberZipCodeTextField.leftView = UIView(frame: CGRect(x: 0, y:0, width: 10, height: 40))
+		memberZipCodeTextField.keyboardType = .numbersAndPunctuation
 		
 		loginButton.setTitle("Sign In", for: .normal)
 		

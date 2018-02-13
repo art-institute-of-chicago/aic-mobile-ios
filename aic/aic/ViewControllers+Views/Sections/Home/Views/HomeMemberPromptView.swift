@@ -9,6 +9,10 @@
 import UIKit
 import PureLayout
 
+protocol HomeMemberPromptViewDelegate : class {
+	func memberPromptDidSelectAccessMemberCard()
+}
+
 class HomeMemberPromptView: BaseView {
 	let promptTextView: UITextView = UITextView()
 	let accessMemberCardTextView: LinkedTextView = LinkedTextView()
@@ -16,6 +20,8 @@ class HomeMemberPromptView: BaseView {
 	let topMargin: CGFloat = 32.0
 	let accessMemberCardTopMargin: CGFloat = 18.0
 	let bottomMargin: CGFloat = 32.0
+	
+	weak var delegate: HomeMemberPromptViewDelegate? = nil
 	
 	init() {
 		super.init(frame:CGRect.zero)
@@ -35,13 +41,13 @@ class HomeMemberPromptView: BaseView {
 		
 		// TODO: make link to open your member card
 		let accessMemberCardAttrText = NSMutableAttributedString(string: "Access your member card.")
-//		let accessMemberCardURL = URL(string: Common.Info.becomeMemberJoinURL)!
-//		accessMemberCardAttrText.addAttributes([NSAttributedStringKey.link : accessMemberCardURL], range: NSMakeRange(0, accessMemberCardAttrText.string.count))
+		let accessMemberCardURL = URL(string: String("artic://membercard"))!
+		accessMemberCardAttrText.addAttributes([NSAttributedStringKey.link : accessMemberCardURL], range: NSMakeRange(0, accessMemberCardAttrText.string.count))
 		
 		accessMemberCardTextView.setDefaultsForAICAttributedTextView()
 		accessMemberCardTextView.attributedText = accessMemberCardAttrText
-//		accessMemberCardTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeMemberPromptLinkColor]
-		accessMemberCardTextView.textColor = UIColor.aicHomeMemberPromptLinkColor
+		accessMemberCardTextView.textColor = .aicHomeMemberPromptLinkColor
+		accessMemberCardTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeMemberPromptLinkColor]
 		accessMemberCardTextView.textAlignment = NSTextAlignment.center
 		accessMemberCardTextView.font = .aicTextFont
 		accessMemberCardTextView.delegate = self
@@ -75,7 +81,11 @@ class HomeMemberPromptView: BaseView {
 
 extension HomeMemberPromptView : UITextViewDelegate {
 	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-		// TODO: open member card if available
+		// MARK: Link to open Member Card
+		if textView == accessMemberCardTextView {
+			self.delegate?.memberPromptDidSelectAccessMemberCard()
+			return false
+		}
 		return false
 	}
 }

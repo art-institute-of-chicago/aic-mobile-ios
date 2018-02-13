@@ -41,6 +41,9 @@ class MemberCardViewController : UIViewController {
 		cardView.changeInfoButton.addTarget(self, action: #selector(changeInfoButtonPressed(button:)), for: .touchUpInside)
 		cardView.switchCardholderButton.addTarget(self, action: #selector(switchCardholderButtonPressed(button:)), for: .touchUpInside)
 		
+		let dismissKeyboardTapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+		self.view.addGestureRecognizer(dismissKeyboardTapGesture)
+		
 		// Add subviews
 		self.view.addSubview(loginView)
 		self.view.addSubview(loadingIndicatorView)
@@ -57,7 +60,7 @@ class MemberCardViewController : UIViewController {
 		
 		updateLanguage()
 		
-		showLogin()
+		loadMemberFromUserDefaults()
 	}
 	
 	private func createViewConstraints() {
@@ -74,6 +77,8 @@ class MemberCardViewController : UIViewController {
 		cardView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		cardView.autoPinEdge(.bottom, to: .bottom, of: self.view)
 	}
+	
+	// MARK: Language
 	
 	@objc private func updateLanguage() {
 		
@@ -102,21 +107,37 @@ class MemberCardViewController : UIViewController {
 		cardView.isHidden = false
 	}
 	
+	// MARK: Load Member
+	
 	private func loadMemberFromUserDefaults() {
-		
+		if let memberInfo = memberDataManager.getSavedMember() {
+			loadMember(memberId: memberInfo.memberID, zipCode: memberInfo.memberZip)
+		} else {
+			showLogin()
+		}
 	}
 	
-	// Buttons
-	
-	@objc private func loginButtonPressed(button: UIButton) {
-		let memberId = loginView.memberIDTextField.text!
-		let zipCode = loginView.memberZipCodeTextField.text!
-		
+	private func loadMember(memberId: String, zipCode: String) {
 		memberDataManager.validateMember(memberID: memberId, zipCode: zipCode)
 		showLoading()
 	}
 	
+	// MARK: Buttons
+	
+	@objc private func loginButtonPressed(button: UIButton) {
+		hideKeyboard()
+		
+		let memberId = loginView.memberIDTextField.text!
+		let zipCode = loginView.memberZipCodeTextField.text!
+		
+		loadMember(memberId: memberId, zipCode: zipCode)
+	}
+	
 	@objc private func changeInfoButtonPressed(button: UIButton) {
+		if let memberInfo = memberDataManager.getSavedMember() {
+			loginView.memberIDTextField.text = memberInfo.memberID
+			loginView.memberZipCodeTextField.text = memberInfo.memberZip
+		}
 		showLogin()
 	}
 	
@@ -128,20 +149,25 @@ class MemberCardViewController : UIViewController {
 			memberDataManager.saveCurrentMember()
 		}
 	}
+	
+	// MARK: Dismiss Keyboard
+	
+	@objc private func hideKeyboard() {
+		self.view.endEditing(true)
+	}
 }
 
 // MARK: MemberDataManagerDelegate
 
 extension MemberCardViewController : MemberDataManagerDelegate {
 	func memberCardDidLoadForMember(memberCard: AICMemberCardModel) {
-		cardView.setContent(memberCard: memberCard, memberNameIndex: 0)
+		cardView.setContent(memberCard: memberCard, memberNameIndex: memberDataManager.currentMemberNameIndex)
 		showCard()
 	}
 	
 	func memberCardDataLoadingFailed() {
 		let alert = UIAlertController(title: Common.Info.alertMessageParseError, message: "", preferredStyle: UIAlertControllerStyle.alert)
 		let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
-			self.showLogin()
 			self.loadMemberFromUserDefaults()
 		})
 		
