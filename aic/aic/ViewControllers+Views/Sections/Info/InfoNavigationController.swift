@@ -10,6 +10,7 @@ import UIKit
 
 class InfoNavigationController : SectionNavigationController {
 	let infoVC: InfoViewController
+	let memberCardVC: MemberCardViewController = MemberCardViewController()
 	let museumInfoVC: MuseumInfoViewController = MuseumInfoViewController()
 	let languageVC: LanguageViewController = LanguageViewController()
 	let locationSettingsVC: LocationSettingsViewController = LocationSettingsViewController()
@@ -35,6 +36,13 @@ class InfoNavigationController : SectionNavigationController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 	}
+	
+	func showMemberCard() {
+		self.sectionNavigationBar.collapse()
+		self.sectionNavigationBar.setBackButtonHidden(false)
+		
+		self.pushViewController(memberCardVC, animated: true)
+	}
 }
 
 extension InfoNavigationController : UINavigationControllerDelegate {
@@ -53,6 +61,10 @@ extension InfoNavigationController : UINavigationControllerDelegate {
 }
 
 extension InfoNavigationController : InfoViewControllerDelegate {
+	func accessMemberCardButtonPressed() {
+		showMemberCard()
+	}
+	
 	func museumInfoButtonPressed() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)

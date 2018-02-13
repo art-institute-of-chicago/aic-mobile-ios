@@ -22,12 +22,6 @@ class MuseumInfoViewController : UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func createViewConstraints() {
-		pageView.autoPinEdge(.top, to: .top, of: self.view)
-		pageView.autoPinEdge(.leading, to: .leading, of: self.view)
-		pageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-	}
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -42,13 +36,19 @@ class MuseumInfoViewController : UIViewController {
 		createViewConstraints()
 		
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		updateLanguage()
+	}
+	
+	func createViewConstraints() {
+		pageView.autoPinEdge(.top, to: .top, of: self.view)
+		pageView.autoPinEdge(.leading, to: .leading, of: self.view)
+		pageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 	}
 	
 	@objc func updateLanguage() {

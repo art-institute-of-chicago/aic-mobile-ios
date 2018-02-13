@@ -42,7 +42,13 @@ class LocationSettingsViewController : UIViewController {
 		createViewConstraints()
 		
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		updateLanguage()
 	}
 	
 	func createViewConstraints() {
@@ -52,12 +58,6 @@ class LocationSettingsViewController : UIViewController {
 		
 		locationButton.autoPinEdge(.top, to: .bottom, of: pageView)
 		locationButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
-	}
-	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		
-		updateLanguage()
 	}
 	
 	@objc func updateLanguage() {

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E2D15591DA8134200D06A4A /* AICMemberAPIDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */; };
+		0E2D15591DA8134200D06A4A /* AICMemberCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D15581DA8134200D06A4A /* AICMemberCardModel.swift */; };
 		1370EED7178BE85DDE6304C6 /* Pods_aicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */; };
 		28F7980E1E7B40E600D22E0E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F7980D1E7B40E600D22E0E /* Common.swift */; };
 		2902198E1FCE2ABA006CFA9E /* HomeEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */; };
@@ -109,6 +109,7 @@
 		2968F68B2012942800638153 /* LanguageSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F68D2012942800638153 /* LanguageSettings.strings */; };
 		2968F6932012B33000638153 /* TabMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F6952012B33000638153 /* TabMenu.strings */; };
 		296D559520239F3E00442A60 /* CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D559420239F3E00442A60 /* CardNavigationController.swift */; };
+		2981454520322BA10055F016 /* MemberCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981454420322BA10055F016 /* MemberCardViewController.swift */; };
 		29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */; };
 		29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */; };
 		29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCF200D870C003B6DB5 /* EventTableViewController.swift */; };
@@ -137,6 +138,8 @@
 		29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */; };
 		29B9B5931FD0A7670095FE52 /* SeeAllTourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */; };
 		29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */; };
+		29BF45D820333F7D00919FE8 /* MemberLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BF45D720333F7D00919FE8 /* MemberLoginView.swift */; };
+		29BF45DA20333F8900919FE8 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BF45D920333F8900919FE8 /* MemberCardView.swift */; };
 		29C7D0C5202456100015984B /* SearchSlideAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C7D0C4202456100015984B /* SearchSlideAnimator.swift */; };
 		29C7D0C9202532930015984B /* AudioPlayerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C7D0C8202532930015984B /* AudioPlayerNavigationController.swift */; };
 		29C7D0CC202541E00015984B /* AudioPlayer.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29C7D0CE202541E00015984B /* AudioPlayer.strings */; };
@@ -190,7 +193,7 @@
 		E42178361CC6B80200815B41 /* _InfoSectionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178351CC6B80200815B41 /* _InfoSectionTextField.swift */; };
 		E42178391CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178381CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift */; };
 		E421783C1CC6E1F300815B41 /* String+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E421783B1CC6E1F300815B41 /* String+AIC.swift */; };
-		E4223CE51CC7FE6600503D43 /* MemberCardDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4223CE41CC7FE6600503D43 /* MemberCardDataLoader.swift */; };
+		E4223CE51CC7FE6600503D43 /* MemberDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */; };
 		E4223CE81CC8013300503D43 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4223CE71CC8013300503D43 /* Alamofire.framework */; };
 		E425B3CE1C97649300A19F6F /* AICObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E425B3CD1C97649300A19F6F /* AICObjectModel.swift */; };
 		E42677E31CC558060046BB27 /* AICButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42677E21CC558060046BB27 /* AICButton.swift */; };
@@ -276,7 +279,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberAPIDataModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		0E2D15581DA8134200D06A4A /* AICMemberCardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberCardModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0E3350C21DA6C7A500CE3612 /* aic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aic.entitlements; sourceTree = "<group>"; };
 		1E88FB8CA5CC2BB16C8482A6 /* Pods-aicRental.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicRental.release.xcconfig"; path = "Pods/Target Support Files/Pods-aicRental/Pods-aicRental.release.xcconfig"; sourceTree = "<group>"; };
 		223EFA1418FE36F1D127D26D /* Pods-aicTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicTests/Pods-aicTests.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -393,6 +396,7 @@
 		2968F6962012B36000638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TabMenu.strings; sourceTree = "<group>"; };
 		2968F6972012B36400638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabMenu.strings"; sourceTree = "<group>"; };
 		296D559420239F3E00442A60 /* CardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNavigationController.swift; sourceTree = "<group>"; };
+		2981454420322BA10055F016 /* MemberCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardViewController.swift; sourceTree = "<group>"; };
 		29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardNavigationController.swift; sourceTree = "<group>"; };
 		29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionTableViewController.swift; sourceTree = "<group>"; };
 		29824BCF200D870C003B6DB5 /* EventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
@@ -427,6 +431,8 @@
 		29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllTourCell.xib; sourceTree = "<group>"; };
 		29B9B5921FD0A7670095FE52 /* SeeAllTourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllTourCell.swift; sourceTree = "<group>"; };
 		29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Model.swift"; sourceTree = "<group>"; };
+		29BF45D720333F7D00919FE8 /* MemberLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberLoginView.swift; sourceTree = "<group>"; };
+		29BF45D920333F8900919FE8 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
 		29C7D0C4202456100015984B /* SearchSlideAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlideAnimator.swift; sourceTree = "<group>"; };
 		29C7D0C8202532930015984B /* AudioPlayerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerNavigationController.swift; sourceTree = "<group>"; };
 		29C7D0CD202541E00015984B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AudioPlayer.strings; sourceTree = "<group>"; };
@@ -501,7 +507,7 @@
 		E42178351CC6B80200815B41 /* _InfoSectionTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionTextField.swift; sourceTree = "<group>"; };
 		E42178381CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionMemberCardViewController.swift; sourceTree = "<group>"; };
 		E421783B1CC6E1F300815B41 /* String+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AIC.swift"; sourceTree = "<group>"; };
-		E4223CE41CC7FE6600503D43 /* MemberCardDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCardDataLoader.swift; sourceTree = "<group>"; };
+		E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberDataManager.swift; sourceTree = "<group>"; };
 		E4223CE71CC8013300503D43 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		E425B3CD1C97649300A19F6F /* AICObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICObjectModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E42677E21CC558060046BB27 /* AICButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICButton.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -625,11 +631,9 @@
 				29C7D0C3202455F10015984B /* Slide Animator */,
 				293127781FDEF0E7008BFAB1 /* Map Item Cell */,
 				291221951FDB2D490096BB75 /* Table View Cells */,
-				2941CE811FE0D62E00B7CCEE /* ResultsContentTitleView.swift */,
-				291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */,
-				291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */,
-				291221931FDB2BAC0096BB75 /* ResultsTableViewController.swift */,
+				298145422032173E0055F016 /* Views */,
 				2941CE7F1FE09F6000B7CCEE /* SearchContentViewController.swift */,
+				291221931FDB2BAC0096BB75 /* ResultsTableViewController.swift */,
 				291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */,
 			);
 			path = "Search Card";
@@ -802,6 +806,29 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		298145422032173E0055F016 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2941CE811FE0D62E00B7CCEE /* ResultsContentTitleView.swift */,
+				291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */,
+				291221981FDB359D0096BB75 /* ResultsSectionTitleView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2981454320322B680055F016 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */,
+				2902E0AF1FC47FF60070C78C /* InfoButton.swift */,
+				29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */,
+				295AC0981FDF923B009A0FAF /* InfoPageView.swift */,
+				29BF45D920333F8900919FE8 /* MemberCardView.swift */,
+				29BF45D720333F7D00919FE8 /* MemberLoginView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		29824BCC200D86AD003B6DB5 /* Table View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -883,10 +910,9 @@
 		29DAF0621FB3C69E002ED862 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				29F3A9341FE5D27C000BCABE /* Header Views */,
 				29F3A9371FE5DF8F000BCABE /* Home Cells */,
 				29412AEA1FCE174C005A7172 /* See All Cells */,
-				29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */,
+				29F3A9341FE5D27C000BCABE /* Views */,
 				29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */,
 				2986A5871FBCBD5B00029E74 /* HomeViewController.swift */,
 				2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */,
@@ -938,13 +964,14 @@
 			path = "Table View Cells";
 			sourceTree = "<group>";
 		};
-		29F3A9341FE5D27C000BCABE /* Header Views */ = {
+		29F3A9341FE5D27C000BCABE /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				29B9B58A1FCFC5660095FE52 /* HomeContentTitleView.swift */,
+				29C91B0E1FC4E04E008C3E9E /* HomeMemberPromptView.swift */,
 				29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */,
 			);
-			path = "Header Views";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		29F3A9371FE5DF8F000BCABE /* Home Cells */ = {
@@ -1079,7 +1106,7 @@
 				E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */,
 				E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */,
 				E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */,
-				0E2D15581DA8134200D06A4A /* AICMemberAPIDataModel.swift */,
+				0E2D15581DA8134200D06A4A /* AICMemberCardModel.swift */,
 				E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */,
 				E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */,
 				E425B3CD1C97649300A19F6F /* AICObjectModel.swift */,
@@ -1142,15 +1169,13 @@
 		E415ABC71C7298420093B719 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */,
-				2902E0AF1FC47FF60070C78C /* InfoButton.swift */,
-				29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */,
-				295AC0981FDF923B009A0FAF /* InfoPageView.swift */,
-				29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */,
-				29A7BD001FBF87D900FD8639 /* InfoViewController.swift */,
+				2981454320322B680055F016 /* Views */,
+				2981454420322BA10055F016 /* MemberCardViewController.swift */,
 				295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */,
 				295AC0961FDF8FE5009A0FAF /* LanguageViewController.swift */,
 				295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */,
+				29A7BD001FBF87D900FD8639 /* InfoViewController.swift */,
+				29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */,
 				E415ABC81C7298420093B719 /* _InfoSectionViewController.swift */,
 				E42178381CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift */,
 				E417B52E1CA324E000C362A1 /* _InfoSectionView.swift */,
@@ -1196,7 +1221,7 @@
 			children = (
 				E47A97131CEFBC150041D0A6 /* AppDataManager.swift */,
 				E47A97141CEFBC150041D0A6 /* AppDataParser.swift */,
-				E4223CE41CC7FE6600503D43 /* MemberCardDataLoader.swift */,
+				E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */,
 				E4F7AF9B1CFBA11200524F87 /* MapSVGParser.swift */,
 				294338511FDC849E00ECF321 /* SearchDataManager.swift */,
 			);
@@ -1758,12 +1783,14 @@
 				E49BAB881CAEF13E00AE0678 /* ToursSectionStopsScrollerView.swift in Sources */,
 				E4F7C1491CA1FE3E005976D1 /* ObjectRelatedToursView.swift in Sources */,
 				29B9B58B1FCFC5660095FE52 /* HomeContentTitleView.swift in Sources */,
+				29BF45DA20333F8900919FE8 /* MemberCardView.swift in Sources */,
 				291221971FDB35650096BB75 /* SuggestedSearchCell.swift in Sources */,
 				29F261FD200FE5C30000BF05 /* ExhibitionContentCell.swift in Sources */,
 				294C0B51201A76F700F2ABB1 /* MapAnnotationView.swift in Sources */,
 				29A67F8A2028F7B6003C630A /* TourStopsNavigationController.swift in Sources */,
 				294C0B54201A76F700F2ABB1 /* MapLocationAnnotation.swift in Sources */,
 				E4923FE31C9F36C800AB255C /* ObjectContentSectionView.swift in Sources */,
+				2981454520322BA10055F016 /* MemberCardViewController.swift in Sources */,
 				295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */,
 				E4F7C14B1CA200EF005976D1 /* ObjectCreditsView.swift in Sources */,
 				E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */,
@@ -1807,6 +1834,7 @@
 				291221991FDB359D0096BB75 /* ResultsSectionTitleView.swift in Sources */,
 				29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */,
 				29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */,
+				29BF45D820333F7D00919FE8 /* MemberLoginView.swift in Sources */,
 				E4D1592D1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift in Sources */,
 				29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */,
 				E4CD3FD31CA9CDB200013E75 /* _NewsToursTableViewCell.swift in Sources */,
@@ -1844,7 +1872,7 @@
 				29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */,
 				293127811FDF0EC5008BFAB1 /* ContentButtonCell.swift in Sources */,
 				294C0B21201A52BC00F2ABB1 /* EventContentCell.swift in Sources */,
-				E4223CE51CC7FE6600503D43 /* MemberCardDataLoader.swift in Sources */,
+				E4223CE51CC7FE6600503D43 /* MemberDataManager.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,
 				29C7D0D220260AD50015984B /* AudioInfoViewController.swift in Sources */,
 				29A67F872027D74B003C630A /* AudioInfoSectionView.swift in Sources */,
@@ -1866,7 +1894,7 @@
 				E4D159391CBAE8C100536B4D /* AICCoordinateWithFloor.swift in Sources */,
 				E458502F1CAC8C1A00131A66 /* AICExhibitionModel.swift in Sources */,
 				E47A97151CEFBC150041D0A6 /* AppDataManager.swift in Sources */,
-				0E2D15591DA8134200D06A4A /* AICMemberAPIDataModel.swift in Sources */,
+				0E2D15591DA8134200D06A4A /* AICMemberCardModel.swift in Sources */,
 				2902E0B01FC47FF60070C78C /* InfoButton.swift in Sources */,
 				29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */,
 				E47306EE1D23076900A77254 /* InstructionsItemViewController.swift in Sources */,

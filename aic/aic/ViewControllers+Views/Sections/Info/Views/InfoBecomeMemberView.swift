@@ -6,6 +6,13 @@
 import UIKit
 
 class InfoBecomeMemberView: BaseView {
+	let titleLabel = UILabel()
+	let titleDividerLine = UIView()
+	let joinPromptLabel = UILabel()
+	let joinTextView = LinkedTextView()
+	let accessPromptLabel = UILabel()
+	let accessButton = AICButton(color: .aicInfoColor, isSmall: false)
+	let bottomDividerLine = UIView()
 	
 	let titleLabelHeight: CGFloat = 80
     let joinPromptMarginTop: CGFloat = 16
@@ -13,14 +20,6 @@ class InfoBecomeMemberView: BaseView {
     let accessPromptMarginTop: CGFloat = 28
     let accessButtonMarginTop: CGFloat = 20
 	let accessButtonMarginBottom: CGFloat = 20
-    
-    let titleLabel = UILabel()
-	let titleDividerLine = UIView()
-	let joinPromptLabel = UILabel()
-    let joinTextView = LinkedTextView()
-    let accessPromptLabel = UILabel()
-	let accessButton = AICButton(color: .aicInfoColor, isSmall: false)
-	let bottomDividerLine = UIView()
     
     var savedMember: AICMemberInfoModel? {
         didSet{

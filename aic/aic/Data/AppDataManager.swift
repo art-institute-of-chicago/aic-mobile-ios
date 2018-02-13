@@ -260,7 +260,7 @@ class AppDataManager {
 //    }
 	
 	func downloadEvents() {
-		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]! + "/search?limit=99")!)
+		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]! + "/search?limit=200")!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
 			"_source": true,

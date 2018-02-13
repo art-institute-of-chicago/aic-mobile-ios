@@ -10,6 +10,7 @@ import UIKit
 import Localize_Swift
 
 protocol InfoViewControllerDelegate : class {
+	func accessMemberCardButtonPressed()
 	func museumInfoButtonPressed()
 	func languageButtonPressed()
 	func locationButtonPressed()
@@ -48,6 +49,8 @@ class InfoViewController : SectionViewController {
 		scrollView.delegate = self
 		
 		whiteBackgroundView.backgroundColor = .white
+		
+		becomeMemberView.accessButton.addTarget(self, action: #selector(accessMemberCardButtonPressed(button:)), for: .touchUpInside)
 		
 		museumInfoButton.setTitle("Museum Information", for: .normal)
 		museumInfoButton.addTarget(self, action: #selector(infoButtonPressed(button:)), for: .touchUpInside)
@@ -145,6 +148,10 @@ class InfoViewController : SectionViewController {
 		else if button == locationButton {
 			self.delegate?.locationButtonPressed()
 		}
+	}
+	
+	@objc func accessMemberCardButtonPressed(button: UIButton) {
+		self.delegate?.accessMemberCardButtonPressed()
 	}
 }
 

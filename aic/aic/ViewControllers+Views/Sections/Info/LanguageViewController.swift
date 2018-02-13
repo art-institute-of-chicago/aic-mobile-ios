@@ -56,7 +56,7 @@ class LanguageViewController : UIViewController {
 		createViewConstraints()
 		
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +80,15 @@ class LanguageViewController : UIViewController {
 		chineseButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 	}
 	
+	@objc func updateLanguage() {
+		pageView.titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
+		pageView.textView.text = "Language Settings Text".localized(using: "LanguageSettings")
+		
+		englishButton.isHighlighted = Localize.currentLanguage() != Common.Language.english.rawValue
+		spanishButton.isHighlighted = Localize.currentLanguage() != Common.Language.spanish.rawValue
+		chineseButton.isHighlighted = Localize.currentLanguage() != Common.Language.chinese.rawValue
+	}
+	
 	@objc func languageButtonPressed(button: UIButton) {
 		if button == englishButton {
 			Localize.setCurrentLanguage(Common.Language.english.rawValue)
@@ -90,15 +99,6 @@ class LanguageViewController : UIViewController {
 		else if button == chineseButton {
 			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
 		}
-	}
-	
-	@objc func updateLanguage() {
-		pageView.titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
-		pageView.textView.text = "Language Settings Text".localized(using: "LanguageSettings")
-		
-		englishButton.isHighlighted = Localize.currentLanguage() != Common.Language.english.rawValue
-		spanishButton.isHighlighted = Localize.currentLanguage() != Common.Language.spanish.rawValue
-		chineseButton.isHighlighted = Localize.currentLanguage() != Common.Language.chinese.rawValue
 	}
 }
 

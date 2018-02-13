@@ -68,19 +68,29 @@ class SectionNavigationController : UINavigationController {
 	
 	override func popViewController(animated: Bool) -> UIViewController? {
 		let vc: UIViewController? = super.popViewController(animated: animated)
+		
+		let isRootVC: Bool = self.viewControllers.count <= 1
+		let backButtonHidden = isRootVC
+		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
+		
 		updateLanguage()
+		
 		return vc
 	}
 	
 	
 	override func pushViewController(_ viewController: UIViewController, animated: Bool) {
 		super.pushViewController(viewController, animated: animated)
+		
+		let isRootVC: Bool = self.viewControllers.count <= 1
+		let backButtonHidden = isRootVC
+		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
+		
 		updateLanguage()
 	}
 	
 	@objc func updateLanguage() {
 		let isRootVC: Bool = self.viewControllers.count <= 1
-		let backButtonHidden = isRootVC
 		var titleText = self.topViewController?.navigationItem.title?.localized(using: "Sections")
 		var subtitleText = sectionModel.description.localized(using: "Sections")
 		
@@ -103,7 +113,6 @@ class SectionNavigationController : UINavigationController {
 			}
 		}
 		
-		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
 		sectionNavigationBar.titleLabel.text = titleText
 		sectionNavigationBar.descriptionLabel.text = subtitleText
 	}

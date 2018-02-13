@@ -8,11 +8,11 @@ import UIKit
 class InfoSectionMemberCardViewController: UIViewController {
     
     let memberCardView = InfoSectionMemberCardView()
-    let memberCardValidator = MemberCardDataValidator()
+    let memberCardValidator = MemberDataManager()
     
     var isShowingBarcode = false
     
-    var currentMemberAPIData:AICMemberCardAPIData? = nil
+    var currentMemberAPIData:AICMemberCardModel? = nil
     var currentlySelectedMember:Int = 0
     
     override func loadView() {
@@ -61,7 +61,7 @@ class InfoSectionMemberCardViewController: UIViewController {
         memberCardView.loadingIndicator.startAnimating()
         
         // Load the member
-        memberCardValidator.validateMember(forMemberID: infoModel.memberID, withZipCode: infoModel.memberZip)
+        memberCardValidator.validateMember(memberID: infoModel.memberID, zipCode: infoModel.memberZip)
     }
     
     fileprivate func loadMemberFromInputFields() {
@@ -113,7 +113,7 @@ class InfoSectionMemberCardViewController: UIViewController {
         }
         
         // Create barcode
-        let data = String(apiData.primaryConstituentID).data(using: String.Encoding.ascii)
+        let data = String(apiData.cardId).data(using: String.Encoding.ascii)
         let filter = CIFilter(name: "CICode128BarcodeGenerator")
         filter!.setValue(data, forKey: "inputMessage")
         
@@ -177,7 +177,7 @@ class InfoSectionMemberCardViewController: UIViewController {
         isShowingBarcode = true
         
         // Log analytics
-        AICAnalytics.memberDidShowMemberCard(memberID: apiData.primaryConstituentID)
+        AICAnalytics.memberDidShowMemberCard(memberID: apiData.cardId)
     }
     
     fileprivate func saveCurrentMember() {
@@ -188,12 +188,12 @@ class InfoSectionMemberCardViewController: UIViewController {
         let defaults = UserDefaults.standard
         
         // Store
-        defaults.set(apiData.primaryConstituentID, forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey)
+        defaults.set(apiData.cardId, forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey)
         defaults.set(apiData.memberZip, forKey: Common.UserDefaults.memberInfoZipUserDefaultsKey)
         
         // Reset selected member if we are switching to another ID
         let curSavedMemberID = defaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) as? String
-        if curSavedMemberID != apiData.primaryConstituentID {
+        if curSavedMemberID != apiData.cardId {
             defaults.set(0, forKey: Common.UserDefaults.memberInfoSelectedMemberDefaultsKey)
             currentlySelectedMember = 0
         } else {
@@ -279,37 +279,25 @@ extension InfoSectionMemberCardViewController : UITextFieldDelegate {
     }
 }
 
-extension InfoSectionMemberCardViewController : MemberCardDataValidatorDelegate {
-    func memberCardDataValidatorDidValidateMember(_ data: AICMemberCardAPIData) {
-        currentMemberAPIData = data
-        saveCurrentMember()
-        showMemberInfo()
-    }
-    
-    func memberCardDataValidatorValidationError(_ error: String) {
-        self.currentMemberAPIData = nil
-        self.currentlySelectedMember = 0
-        
-        let alert = UIAlertController(title: Common.Info.alertMessageNotFound, message: error, preferredStyle: UIAlertControllerStyle.alert)
-        let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
-            self.loadMemberFromUserDefaults()
-        }
-        )
-        
-        alert.addAction(action)
-        present(alert, animated:true)
-        
-    }
-    
-    func memberCardDataValidatorParseError() {
-        let alert = UIAlertController(title: Common.Info.alertMessageParseError, message: "", preferredStyle: UIAlertControllerStyle.alert)
-        let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
-            self.loadMemberFromUserDefaults()
-        }
-        )
-        alert.addAction(action)
-        present(alert, animated:true)
-    }
+extension InfoSectionMemberCardViewController : MemberDataManagerDelegate {
+	func memberCardDidLoadForMember(memberCard: AICMemberCardModel) {
+		currentMemberAPIData = memberCard
+		saveCurrentMember()
+		showMemberInfo()
+	}
+	
+	func memberCardDataLoadingFailed() {
+		self.currentMemberAPIData = nil
+		self.currentlySelectedMember = 0
+		
+		let alert = UIAlertController(title: Common.Info.alertMessageParseError, message: "", preferredStyle: UIAlertControllerStyle.alert)
+		let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
+			self.loadMemberFromUserDefaults()
+		}
+		)
+		alert.addAction(action)
+		present(alert, animated:true)
+	}
 }
 
 // Alert Events

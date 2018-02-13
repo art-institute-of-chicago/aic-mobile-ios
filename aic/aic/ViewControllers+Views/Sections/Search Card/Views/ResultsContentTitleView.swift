@@ -11,6 +11,7 @@ import UIKit
 class ResultsContentTitleView : UITableViewHeaderFooterView {
 	static let reuseIdentifier: String = "resultsContentTitleView"
 	
+	let dividerLine: UIView = UIView()
 	let contentTitleLabel: UILabel = UILabel()
 	let seeAllButton: UIButton = UIButton()
 	
@@ -18,6 +19,8 @@ class ResultsContentTitleView : UITableViewHeaderFooterView {
 		super.init(reuseIdentifier: reuseIdentifier)
 		
 		self.contentView.backgroundColor = .aicDarkGrayColor
+		
+		dividerLine.backgroundColor = .aicDividerLineDarkColor
 		
 		contentTitleLabel.font = .aicHomeCollectionTitleFont
 		contentTitleLabel.textColor = .white
@@ -28,6 +31,7 @@ class ResultsContentTitleView : UITableViewHeaderFooterView {
 		seeAllButton.setTitleColor(.aicCardDarkTextColor, for: .normal)
 		seeAllButton.setImage(#imageLiteral(resourceName: "homeSeeAllArrow").colorized(.aicCardDarkTextColor), for: .normal)
 		
+		self.contentView.addSubview(dividerLine)
 		self.contentView.addSubview(contentTitleLabel)
 		self.contentView.addSubview(seeAllButton)
 	}
@@ -37,6 +41,11 @@ class ResultsContentTitleView : UITableViewHeaderFooterView {
 	}
 	
 	override func updateConstraints() {
+		dividerLine.autoPinEdge(.top, to: .top, of: self)
+		dividerLine.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
+		dividerLine.autoSetDimension(.height, toSize: 1)
+		
 		contentTitleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 17)
 		contentTitleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		

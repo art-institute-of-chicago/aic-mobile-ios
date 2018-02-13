@@ -94,6 +94,10 @@ extension UIFont {
 	
 	static let aicMapCardTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
 	
+	static let aicMemberCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	
+	static let aicMemberCardLoginFieldFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!.upperCaseNumbers()
+	
 	/// Font modified to use uppercase numbers
 	///
 	/// Every Font feature has a specific identifier (ex: "Number Case" is 21).
