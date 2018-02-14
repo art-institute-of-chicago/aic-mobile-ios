@@ -25,7 +25,7 @@ class AudioGuideNavigationController : SectionNavigationController {
                           6:"7", 7:"8", 8:"9",
                           9:"<", 10:"0", 11:"GO"]
 	private let maxInputCharacters = 5
-	private(set) var curInputValue = "";
+	private(set) var currentInputValue = "";
     
     // Delegate
     weak var sectionDelegate: AudioGuideNavigationControllerDelegate?
@@ -61,6 +61,14 @@ class AudioGuideNavigationController : SectionNavigationController {
 		createViewConstraints()
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		if currentInputValue.isEmpty == false {
+			sectionNavigationBar.titleLabel.text = String(currentInputValue)
+		}
+	}
+	
 	static func createCollectionView() -> UICollectionView {
 		let buttonSize = Int(buttonSizeRatio * UIScreen.main.bounds.width)
 		let buttonSpacing = Int(colSpacingRatio * UIScreen.main.bounds.width)
@@ -94,36 +102,36 @@ class AudioGuideNavigationController : SectionNavigationController {
     }
 	
 	private func clearInput() {
-		curInputValue = ""
+		currentInputValue = ""
 		setTitleForCurInputValue()
 	}
 	
 	private func setTitleForCurInputValue() {
-		let curNumInputChars = curInputValue.count
+		let curNumInputChars = currentInputValue.count
 		
 		if curNumInputChars == 0 {
 			sectionNavigationBar.titleLabel.text = rootViewController.navigationItem.title?.localized(using: "Sections")
 		} else {
-			sectionNavigationBar.titleLabel.text = curInputValue
+			sectionNavigationBar.titleLabel.text = currentInputValue
 		}
 	}
 	
 	private func addNumberPadInput(value:String) {
-		if curInputValue.count < maxInputCharacters {
-			curInputValue.append(value)
+		if currentInputValue.count < maxInputCharacters {
+			currentInputValue.append(value)
 		}
 		
 		setTitleForCurInputValue()
 	}
 	
 	private func removeLastNumberPadInput() {
-		let curNumInputChars = curInputValue.count
+		let curNumInputChars = currentInputValue.count
 		if curNumInputChars > 0 {
 			if curNumInputChars == 1 {
-				curInputValue = ""
+				currentInputValue = ""
 			} else {
-				let index = curInputValue.index(curInputValue.endIndex, offsetBy: -1)
-				curInputValue = String(curInputValue[..<index])
+				let index = currentInputValue.index(currentInputValue.endIndex, offsetBy: -1)
+				currentInputValue = String(currentInputValue[..<index])
 			}
 		}
 		
@@ -186,7 +194,7 @@ extension AudioGuideNavigationController {
         let strVal = buttonValueMap[button.tag]!
         switch strVal {
         case "GO":
-            guard let id:Int = Int(curInputValue) else {
+            guard let id:Int = Int(currentInputValue) else {
                 shakeForIncorrect()
                 return
             }

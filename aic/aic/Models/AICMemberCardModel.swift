@@ -9,4 +9,6 @@ struct AICMemberCardModel {
 	let memberLevel: String
 	let memberZip: String
 	let expirationDate: Date
+	let isReciprocalMember: Bool
+	let isLifeMembership: Bool
 }

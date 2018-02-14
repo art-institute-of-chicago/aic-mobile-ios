@@ -933,12 +933,12 @@
 				294C0B32201A76F600F2ABB1 /* AnnotationViews */,
 				294C0B40201A76F700F2ABB1 /* FloorSelector */,
 				294C0B44201A76F700F2ABB1 /* Footprint */,
-				294C0B24201A756900F2ABB1 /* MapNavigationController.swift */,
-				294C0B63201A770D00F2ABB1 /* MapViewController.swift */,
 				294C0B62201A770C00F2ABB1 /* MapDepartmentHUDView.swift */,
 				294C0B65201A770D00F2ABB1 /* MapFloorModel.swift */,
 				294C0B66201A770E00F2ABB1 /* MapState.swift */,
 				294C0B64201A770D00F2ABB1 /* MapView.swift */,
+				294C0B63201A770D00F2ABB1 /* MapViewController.swift */,
+				294C0B24201A756900F2ABB1 /* MapNavigationController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1195,8 +1195,8 @@
 		E415ABC91C7298420093B719 /* AudioGuide */ = {
 			isa = PBXGroup;
 			children = (
-				E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */,
 				E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */,
+				E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */,
 			);
 			path = AudioGuide;
 			sourceTree = "<group>";

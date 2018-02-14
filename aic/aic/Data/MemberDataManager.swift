@@ -80,6 +80,12 @@ class MemberDataManager {
 					
 					if let memberCard = self.parse(memberXML: xml, zipCode: zipCode) {
 						self.currentMemberCard = memberCard
+						// Reset memberNameIndex if it's a new member ID
+						if let savedMemberInfo = self.getSavedMember() {
+							if savedMemberInfo.memberID != memberCard.cardId {
+								self.currentMemberNameIndex = 0
+							}
+						}
 						self.saveCurrentMember()
 						self.delegate?.memberCardDidLoadForMember(memberCard: memberCard)
 					}
@@ -103,7 +109,7 @@ class MemberDataManager {
 					let memberInfo = try memberships.byKey("Member-1")
 					
 					let primaryConstituentID = try memberInfo.byKey("PrimaryConstituentID").element?.text
-					let memberLevel = try memberInfo.byKey("MemberLevel").element?.text
+					var memberLevel = try memberInfo.byKey("MemberLevel").element?.text
 					let expirationDateString = try memberInfo.byKey("Expiration").element?.text
 					
 					let dateFormatter = DateFormatter()
@@ -120,6 +126,39 @@ class MemberDataManager {
 					let mainMemberName = try memberInfo.byKey("CardHolder").element?.text
 					if mainMemberName != nil {
 						memberNames.append(mainMemberName!)
+					}
+					
+					var isReciprocal = false
+					var isLifeMembership = false
+					
+					switch memberLevel! {
+						case "Life Membership":
+							memberLevel = "Life Member"
+							isLifeMembership = true
+						case "Premium Member":
+							isReciprocal = true
+						case "Lionhearted Council":
+							isReciprocal = true
+						case "Lionhearted Roundtable":
+							isReciprocal = true
+						case "Lionhearted Circle":
+							isReciprocal = true
+						case "Sustaining Fellow Young":
+							isReciprocal = true
+						case "Sustaining Fellow":
+							isReciprocal = true
+						case "Sustaining Fellow Bronze":
+							isReciprocal = true
+						case "Sustaining Fellow Silver":
+							isReciprocal = true
+						case "Sustaining Fellow Sterling":
+							isReciprocal = true
+						case "Sustaining Fellow Gold":
+							isReciprocal = true
+						case "Sustaining Fellow Platinum":
+							isReciprocal = true
+						default:
+							isReciprocal = false
 					}
 					
 					// Try to get second member info
@@ -140,7 +179,10 @@ class MemberDataManager {
 												  memberNames: memberNames,
 												  memberLevel: memberLevel!,
 												  memberZip: zipCode,
-												  expirationDate: expirationDate!)
+												  expirationDate: expirationDate!,
+												  isReciprocalMember: isReciprocal,
+												  isLifeMembership: isLifeMembership
+						)
 					}
 				}
 				delegate?.memberCardDataLoadingFailed()

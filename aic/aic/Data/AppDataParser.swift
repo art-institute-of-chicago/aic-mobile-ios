@@ -848,42 +848,6 @@ class AppDataParser {
 		}
 		return searchedTours
 	}
-	
-	// MARK: Member Card
-	
-	func parse(memberData data: Data, zipCode: String) throws -> AICMemberCardModel {
-		let json = JSON(data: data)
-		let memberData = json["data"]
-		
-		let cardId = try getInt(fromJSON: memberData, forKey: "id")
-		let members = memberData["members"].arrayValue
-		
-		var memberNames = [String]()
-		for member in members {
-			let firstName = try getString(fromJSON: member, forKey: "first_name")
-			let lastName = try getString(fromJSON: member, forKey: "last_name")
-			memberNames.append(firstName + " " + lastName)
-		}
-		
-		let expirationDateString = try getString(fromJSON: memberData, forKey: "valid_until")
-		
-		let dateFormatter = DateFormatter()
-		dateFormatter.locale = Locale(identifier: "en_US")
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-		
-		// TODO: fix the timezone
-		
-		guard let expirationDate: Date = dateFormatter.date(from: expirationDateString) else {
-			throw ParseError.newsBadDateString(dateString: expirationDateString)
-		}
-		
-		return AICMemberCardModel(cardId: String(cardId),
-								  memberNames: memberNames,
-								  memberLevel: "",
-								  memberZip: zipCode,
-								  expirationDate: expirationDate)
-	}
     
     // MARK: Error-Throwing data parsing functions
     

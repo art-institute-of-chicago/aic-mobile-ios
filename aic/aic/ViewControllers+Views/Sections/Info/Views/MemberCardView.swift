@@ -11,9 +11,12 @@ import UIKit
 class MemberCardView : UIView {
 	let memberNameLabel: UILabel = UILabel()
 	let membershipInfoLabel: UILabel = UILabel()
-	let barcodeImageView = UIImageView()
+	let barcodeImageView: UIImageView = UIImageView()
+	let barcodeReciprocalBadgeImageView: UIImageView = UIImageView()
 	let changeInfoButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
 	let switchCardholderButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
+	
+	private let barcodeWidth: CGFloat = min(UIScreen.main.bounds.width - 10, 365)
 	
 	init() {
 		super.init(frame: CGRect.zero)
@@ -30,6 +33,9 @@ class MemberCardView : UIView {
 		membershipInfoLabel.numberOfLines = 2
 		membershipInfoLabel.textAlignment = .left
 		
+		barcodeReciprocalBadgeImageView.contentMode = .scaleAspectFill
+		barcodeReciprocalBadgeImageView.image = #imageLiteral(resourceName: "reciprocal_logo")
+		
 		changeInfoButton.setTitle("Change Information", for: .normal)
 		
 		switchCardholderButton.setTitle("Switch Cardholder", for: .normal)
@@ -38,6 +44,7 @@ class MemberCardView : UIView {
 		self.addSubview(memberNameLabel)
 		self.addSubview(membershipInfoLabel)
 		self.addSubview(barcodeImageView)
+		self.addSubview(barcodeReciprocalBadgeImageView)
 		self.addSubview(changeInfoButton)
 		self.addSubview(switchCardholderButton)
 		
@@ -51,13 +58,18 @@ class MemberCardView : UIView {
 	private func createConstraints() {
 		memberNameLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 23)
 		memberNameLabel.autoAlignAxis(.vertical, toSameAxisOf: self)
-		memberNameLabel.autoSetDimension(.width, toSize: 309)
+		memberNameLabel.autoSetDimension(.width, toSize: barcodeWidth - 55)
 		
 		membershipInfoLabel.autoPinEdge(.top, to: .bottom, of: memberNameLabel, withOffset: 5)
 		membershipInfoLabel.autoAlignAxis(.vertical, toSameAxisOf: self)
-		membershipInfoLabel.autoSetDimension(.width, toSize: 309)
+		membershipInfoLabel.autoSetDimension(.width, toSize: barcodeWidth - 55)
+		
+		barcodeReciprocalBadgeImageView.autoPinEdge(.top, to: .bottom, of: memberNameLabel, withOffset: 6)
+		barcodeReciprocalBadgeImageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
+		barcodeReciprocalBadgeImageView.autoAlignAxis(.vertical, toSameAxisOf: self, withOffset: barcodeWidth * 0.5 - 20)
 		
 		barcodeImageView.autoPinEdge(.top, to: .bottom, of: membershipInfoLabel, withOffset: 20)
+		barcodeImageView.autoSetDimensions(to: CGSize(width: barcodeWidth, height: 140))
 		barcodeImageView.autoAlignAxis(.vertical, toSameAxisOf: self)
 		
 		changeInfoButton.autoPinEdge(.top, to: .bottom, of: barcodeImageView, withOffset: 20)
@@ -76,7 +88,10 @@ class MemberCardView : UIView {
 		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 		let expirationDateString = dateFormatter.string(from: memberCard.expirationDate)
 		
-		membershipInfoLabel.text = memberCard.memberLevel + "\n" + "Expires".localized(using: "MemberCard") + ": " + expirationDateString
+		membershipInfoLabel.text = memberCard.memberLevel
+		if memberCard.isLifeMembership == false {
+			membershipInfoLabel.text = memberCard.memberLevel + "\n" + "Expires".localized(using: "MemberCard") + ": " + expirationDateString
+		}
 		
 		// Barcode
 		let data = String(memberCard.cardId).data(using: String.Encoding.ascii)
@@ -86,6 +101,11 @@ class MemberCardView : UIView {
 		let barcodeImage = UIImage(ciImage: barcodeCIImage.transformed(by: CGAffineTransform(scaleX: 4.5,y: 4.5)))
 		
 		barcodeImageView.image = barcodeImage
+		
+		switchCardholderButton.isHidden = memberCard.memberNames.count < 2
+		switchCardholderButton.isEnabled = !switchCardholderButton.isHidden
+		
+		barcodeReciprocalBadgeImageView.isHidden = !memberCard.isReciprocalMember
 	}
 }
 
