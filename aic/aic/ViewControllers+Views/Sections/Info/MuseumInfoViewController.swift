@@ -27,6 +27,8 @@ class MuseumInfoViewController : UIViewController {
 		
 		self.view.backgroundColor = .white
 		
+		pageView.textView.dataDetectorTypes = [.address, .phoneNumber]
+		
 		self.view.addSubview(pageView)
 		
 		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
