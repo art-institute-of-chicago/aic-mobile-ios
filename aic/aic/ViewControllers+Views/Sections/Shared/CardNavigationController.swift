@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol CardNavigationControllerDelegate : class {
     @objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)
+	@objc optional func cardDidShowMiniplayer(cardVC: CardNavigationController)
     @objc optional func cardDidHide(cardVC: CardNavigationController)
 }
 
@@ -133,6 +134,7 @@ class CardNavigationController : UINavigationController {
         }, completion: { (completed) in
             self.currentState = .mini_player
             self.cardDidShowMiniPlayer()
+			self.cardDelegate?.cardDidShowMiniplayer?(cardVC: self)
         })
     }
     

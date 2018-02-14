@@ -9,11 +9,13 @@
 import UIKit
 
 class SectionNavigationBar : UIView {
+	let headerView: UIView = UIView()
 	let backdropImageView:UIImageView = UIImageView()
 	let backButton: UIButton = UIButton()
 	let iconImageView:UIImageView = UIImageView()
 	let titleLabel:UILabel = UILabel()
 	let descriptionLabel:UILabel = UILabel()
+	let searchButton: UIButton = UIButton()
 	
 	private let margins = UIEdgeInsetsMake(40, 30, 30, 30)
 	
@@ -26,6 +28,7 @@ class SectionNavigationBar : UIView {
 	private var titleBottomMargin: CGFloat = 5
 	private var titleMinimumScale: CGFloat = 0.7
 	private let descriptionTopMargin: CGFloat = 65
+	private let searchButtonBackgroundAlpha: CGFloat = 0.4
 	
 	internal let titleString:String
 	
@@ -37,13 +40,14 @@ class SectionNavigationBar : UIView {
 	var currentState: State = .open
 	
 	init(section: AICSectionModel) {
+		titleString = section.title
+		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.navigationBarMinimizedHeight))
 		
-		self.titleString = section.title
+		self.backgroundColor = .clear
 		
-		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.navigationBarHeight))
-		
-		self.clipsToBounds = true
-		self.backgroundColor = section.color
+		headerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.navigationBarHeight)
+		headerView.clipsToBounds = true
+		headerView.backgroundColor = section.color
 		
 		if let _ = section.background {
 			self.backdropImageView.image = section.background
@@ -91,14 +95,21 @@ class SectionNavigationBar : UIView {
 			descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
 		}
 		
+		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
+		searchButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+		searchButton.backgroundColor = UIColor(white: 0.0, alpha: searchButtonBackgroundAlpha)
+		searchButton.layer.cornerRadius = 18
+		
 		// Add Subviews
-		addSubview(backdropImageView)
-		addSubview(iconImageView)
-		addSubview(titleLabel)
+		headerView.addSubview(backdropImageView)
+		headerView.addSubview(iconImageView)
+		headerView.addSubview(titleLabel)
 		if section.nid != Section.home.rawValue {
-			addSubview(descriptionLabel)
+			headerView.addSubview(descriptionLabel)
 		}
-		addSubview(backButton)
+		headerView.addSubview(backButton)
+		addSubview(headerView)
+		addSubview(searchButton)
 		
 		createConstraints()
 		layoutIfNeeded()
@@ -111,10 +122,11 @@ class SectionNavigationBar : UIView {
 	func collapse() {
 		currentState = .collapsed
 		UIView.animate(withDuration: 0.5) {
-			self.frame.size.height = Common.Layout.navigationBarMinimizedHeight
+			self.headerView.frame.size.height = Common.Layout.navigationBarMinimizedHeight
 			self.backdropImageView.alpha = 0.0
 			self.iconImageView.alpha = 0.0
 			self.descriptionLabel.alpha = 0.0
+			self.searchButton.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
 			self.titleLabel.transform = CGAffineTransform(scaleX: CGFloat(self.titleMinimumScale), y: CGFloat(self.titleMinimumScale))
 			self.layoutIfNeeded()
 		}
@@ -123,10 +135,11 @@ class SectionNavigationBar : UIView {
 	func hide() {
 		currentState = .hidden
 		UIView.animate(withDuration: 0.5) {
-			self.frame.size.height = 0
+			self.headerView.frame.size.height = 0
 			self.backdropImageView.alpha = 0.0
 			self.iconImageView.alpha = 0.0
 			self.descriptionLabel.alpha = 0.0
+			self.searchButton.backgroundColor = UIColor(white: 0.0, alpha: self.searchButtonBackgroundAlpha)
 			self.titleLabel.transform = CGAffineTransform(scaleX: CGFloat(self.titleMinimumScale), y: CGFloat(self.titleMinimumScale))
 			self.layoutIfNeeded()
 		}
@@ -145,10 +158,11 @@ class SectionNavigationBar : UIView {
 		var titleScale = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: Double(titleMinimumScale), newRange2: 1.0))
 		titleScale = clamp(val: titleScale, minVal: titleMinimumScale, maxVal: 1.0)
 		
-		self.frame.size.height = frameHeight
+		self.headerView.frame.size.height = frameHeight
 		self.backdropImageView.alpha = alphaVal
 		self.iconImageView.alpha = alphaVal
 		self.descriptionLabel.alpha = alphaVal
+		self.searchButton.backgroundColor = UIColor(white: 0.0, alpha: searchButtonBackgroundAlpha * alphaVal)
 		self.titleLabel.transform = CGAffineTransform(scaleX: titleScale, y: titleScale)
 		
 		if frameHeight == Common.Layout.navigationBarMinimizedHeight {
@@ -160,35 +174,39 @@ class SectionNavigationBar : UIView {
 	}
 	
 	func createConstraints() {
-		backButton.autoPinEdge(.bottom, to: .top, of: self, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
-		backButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: backButtonLeftMargin)
+		backButton.autoPinEdge(.bottom, to: .top, of: headerView, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
+		backButton.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: backButtonLeftMargin)
 		
 		if let _ = self.backdropImageView.image {
-			backdropImageView.autoPinEdge(.top, to: .top, of: self)
-			backdropImageView.autoPinEdge(.leading, to: .leading, of: self)
-			backdropImageView.autoPinEdge(.trailing, to: .trailing, of: self)
+			backdropImageView.autoPinEdge(.top, to: .top, of: headerView)
+			backdropImageView.autoPinEdge(.leading, to: .leading, of: headerView)
+			backdropImageView.autoPinEdge(.trailing, to: .trailing, of: headerView)
 			backdropImageView.autoMatch(.height, to: .width, of: backdropImageView, withMultiplier: backdropImageView.image!.size.height / backdropImageView.image!.size.width)
 		}
 		
-		iconImageView.autoAlignAxis(.vertical, toSameAxisOf: self)
+		iconImageView.autoAlignAxis(.vertical, toSameAxisOf: headerView)
 		iconImageView.autoPinEdge(.bottom, to: .top, of: titleLabel, withOffset: -iconBottomMargin)
 		iconImageView.autoSetDimension(.width, toSize: iconImageView.image!.size.width)
 		iconImageView.autoSetDimension(.height, toSize: iconImageView.image!.size.height)
 		
 		NSLayoutConstraint.autoSetPriority(.defaultLow) {
-			titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: titleTopMargin)
+			titleLabel.autoPinEdge(.top, to: .top, of: headerView, withOffset: titleTopMargin)
 		}
-		titleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 0)
-		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: 0)
+		titleLabel.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 0)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView, withOffset: 0)
 		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
-			titleLabel.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -titleBottomMargin, relation: .lessThanOrEqual)
+			titleLabel.autoPinEdge(.bottom, to: .bottom, of: headerView, withOffset: -titleBottomMargin, relation: .lessThanOrEqual)
 		}
 		
 		if descriptionLabel.superview != nil {
 			descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel)
 			descriptionLabel.autoSetDimensions(to: CGSize(width: 300.0, height: 60.0))
-			descriptionLabel.autoAlignAxis(.vertical, toSameAxisOf: self)
+			descriptionLabel.autoAlignAxis(.vertical, toSameAxisOf: headerView)
 		}
+		
+		searchButton.autoSetDimensions(to: CGSize(width: 36, height: 36))
+		searchButton.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -11)
+		searchButton.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -5)
 	}
 }
 

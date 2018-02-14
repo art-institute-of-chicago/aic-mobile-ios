@@ -24,21 +24,15 @@ class SectionsViewController : UIViewController {
 	
 	// Search Card
 	let searchVC: SearchNavigationController = SearchNavigationController()
-	
-	// Search Button
-	let searchButton: UIButton = UIButton()
     
     // TabBar
     var sectionTabBarController: UITabBarController = UITabBarController()
     
     // Sections
-    var viewControllers: [UIViewController] = []
+    var sectionViewControllers: [SectionNavigationController] = []
     
-    var currentViewController: UIViewController? = nil
-    var previousViewController: UIViewController? = nil
-    
-    var viewControllersForTabBarItems: [UITabBarItem: UIViewController] = [:]
-    var tabBarItemsForViewControllers: [UIViewController: UITabBarItem] = [:]
+    var currentViewController: SectionNavigationController
+    var previousViewController: SectionNavigationController? = nil
 	
 	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
     var audioGuideVC: AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
@@ -53,6 +47,7 @@ class SectionsViewController : UIViewController {
     fileprivate var headphonesMessageView: MessageViewController? = nil
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+		currentViewController = homeVC
         super.init(nibName: nil, bundle: nil)
     }
 	
@@ -66,7 +61,7 @@ class SectionsViewController : UIViewController {
     
     override func viewDidLoad() {
         // Set the view controllers for the tab bar
-        self.viewControllers = [
+        sectionViewControllers = [
 			homeVC,
             audioGuideVC,
             mapVC,
@@ -78,14 +73,7 @@ class SectionsViewController : UIViewController {
 		sectionTabBarController.tabBar.tintColor = .aicHomeColor
         sectionTabBarController.tabBar.backgroundColor = .aicTabbarColor
         sectionTabBarController.tabBar.barStyle = UIBarStyle.black
-		sectionTabBarController.viewControllers = self.viewControllers
-		
-		// Setup Search Button
-		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
-		searchButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
-		searchButton.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
-		searchButton.layer.cornerRadius = 18
-		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
+		sectionTabBarController.viewControllers = sectionViewControllers
 		
         // Setup and add contentView
         //mapVC.view.alpha = 0.0
@@ -106,8 +94,6 @@ class SectionsViewController : UIViewController {
 		sectionTabBarController.view.insertSubview(searchVC.view, belowSubview: audioPlayerVC.view)
 		searchVC.didMove(toParentViewController: self.sectionTabBarController)
 		
-		sectionTabBarController.view.insertSubview(searchButton, belowSubview: searchVC.view)
-		
 		// Set delegates
 		homeVC.sectionDelegate = self
 		mapVC.sectionDelegate = self
@@ -116,29 +102,15 @@ class SectionsViewController : UIViewController {
 		searchVC.cardDelegate = self
 		searchVC.sectionsVC = self
         audioPlayerVC.cardDelegate = self
-        //        objectVC.delegate = self
-        
-        //whatsOnVC.newsToursDelegate = self
-        //whatsOnVC.delegate          = self
-        
-        //toursVC.newsToursDelegate   = self
-        //toursVC.delegate            = self
-        
-        //locationManager.delegate = mapVC
-        
-        //startLocationManager()
 		
-		createViewConstraints()
+		// Search Buttons
+		for sectionVC in sectionViewControllers {
+			sectionVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
+		}
 		
 		// Language
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
     }
-	
-	func createViewConstraints() {
-		searchButton.autoSetDimensions(to: CGSize(width: 36, height: 36))
-		searchButton.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -11)
-		searchButton.autoPinEdge(.bottom, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight - 3)
-	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -146,7 +118,7 @@ class SectionsViewController : UIViewController {
 		updateLanguage()
 	}
     
-    func setSelectedSection(sectionVC: UIViewController) {
+    func setSelectedSection(sectionVC: SectionNavigationController) {
         // If tours tab was pressed when on a tour
         /*if sectionVC == currentViewController && sectionVC == toursVC {
             if toursVC.currentTour != nil {
@@ -159,13 +131,8 @@ class SectionsViewController : UIViewController {
         currentViewController = sectionVC
         
         // Update colors for this VC
-		if let sVC = sectionVC as? SectionNavigationController {
-			sectionTabBarController.tabBar.tintColor = sVC.color
-            audioPlayerVC.setProgressBarColor(color: sVC.color)
-			//mapVC.color = sVC.color
-			// Tell the map what region this view shows
-			//mapVC.setViewableArea(frame: sVC.viewableMapArea)
-		}
+		sectionTabBarController.tabBar.tintColor = sectionVC.color
+		audioPlayerVC.setProgressBarColor(color: sectionVC.color)
 		
 		// Card operations
 		if currentViewController != previousViewController {
@@ -197,9 +164,6 @@ class SectionsViewController : UIViewController {
 //            disableMap(locationManagerDelegate: nil)
 //        }
 		
-		if let sVC: SectionViewController = sectionVC as? SectionViewController {
-			sVC.reset()
-		}
         sectionVC.view.setNeedsUpdateConstraints()
     }
     
@@ -219,17 +183,12 @@ class SectionsViewController : UIViewController {
     func animateInInitialView() {
 		sectionTabBarController.view.alpha = 0.0
         homeVC.view.alpha = 0.0
-		searchButton.isHidden = true
-		searchButton.isEnabled = false
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
 									self.sectionTabBarController.view.alpha = 1.0
                                     self.homeVC.view.alpha = 1.0
             }, completion: { (value:Bool) in
-				self.searchButton.isHidden = false
-				self.searchButton.isEnabled = true
-				
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
         })
         Common.DeepLinks.loadedEnoughToLink = true
@@ -247,7 +206,6 @@ class SectionsViewController : UIViewController {
 		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
 		sectionTabBarController.selectedIndex = 2
 		
-		
         // If this is coming from an object view,
         //show the mini player to reveal tour below
 //        if objectVC.mode != .hidden {
@@ -262,8 +220,8 @@ class SectionsViewController : UIViewController {
     func playObject(object:AICObjectModel, audioGuideID: Int?) {
 //        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
 //        self.objectVC.showFullscreen()
-		searchButton.isHidden = false
-		searchButton.isEnabled = true
+		
+		setSearchButtonEnabled(false)
 		
         audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: audioGuideID)
         audioPlayerVC.showFullscreen()
@@ -328,25 +286,16 @@ class SectionsViewController : UIViewController {
 //            Common.Layout.miniAudioPlayerHeight = objectVC.getMiniPlayerHeight()
 //        }
     }
-    
-    // MARK: Location
-//    fileprivate func startLocationManager() {
-//        //See if we need to prompt first
-//        let defaults = UserDefaults.standard
-//        let showEnableLocationMessageValue = defaults.bool(forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
-//        
-//        // If we do show it
-//        if showEnableLocationMessageValue {
-//            showEnableLocationMessage()
-//        } else {  // Otherwise try to start the location manager
-//            // Init location manager
-//            locationManager.requestWhenInUseAuthorization()
-//            locationManager.startUpdatingLocation()
-//            locationManager.startUpdatingHeading()
-//        }
-//    }
-    
-    
+	
+	// Show/Hide Search Buttons
+	
+	private func setSearchButtonEnabled(_ enabled: Bool) {
+		for sectionVC in sectionViewControllers {
+			sectionVC.sectionNavigationBar.searchButton.isEnabled = enabled
+			sectionVC.sectionNavigationBar.searchButton.isHidden = !enabled
+		}
+	}
+	
     // MARK: Messages
     
     fileprivate func showLeaveTourMessage() {
@@ -363,26 +312,6 @@ class SectionsViewController : UIViewController {
 //            self.leaveCurrentTourMessageView = nil
         }
     }
-	
-//	fileprivate func showEnableLocationMessage() {
-//		let enableLocationView = MessageLargeView(model: Common.Messages.enableLocation)
-//		enableLocationView.delegate = self
-//		
-//		self.enableLocationMessageView = enableLocationView
-//		view.addSubview(enableLocationView)
-//	}
-    
-//	fileprivate func hideEnableLocationMessage() {
-//		if let enableLocationMessageView = self.enableLocationMessageView {
-//			// Update user defaults
-//			let defaults = UserDefaults.standard
-//			defaults.set(false, forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
-//			defaults.synchronize()
-//			
-//			enableLocationMessageView.removeFromSuperview()
-//			self.enableLocationMessageView = nil
-//		}
-//	}
     
     fileprivate func showHeadphonesMessage() {
         let defaults = UserDefaults.standard
@@ -415,8 +344,7 @@ class SectionsViewController : UIViewController {
     }
 	
 	@objc func searchButtonPressed(button: UIButton) {
-		searchButton.isHidden = true
-		searchButton.isEnabled = false
+		setSearchButtonEnabled(false)
 		searchVC.showFullscreen()
 	}
 	
@@ -432,7 +360,9 @@ class SectionsViewController : UIViewController {
 // MARK: SectionTabBarController Delegate Methods
 extension SectionsViewController : UITabBarControllerDelegate {
 	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-		setSelectedSection(sectionVC: viewController)
+		if let sectionVC = viewController as? SectionNavigationController {
+			setSelectedSection(sectionVC: sectionVC)
+		}
 	}
 }
 
@@ -468,8 +398,7 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 		self.contentCardVC = contentCardVC
 		contentCardVC.cardDelegate = self
 		
-		searchButton.isHidden = true
-		searchButton.isEnabled = false
+		setSearchButtonEnabled(false)
 		
 		contentCardVC.willMove(toParentViewController: sectionTabBarController)
 		sectionTabBarController.view.insertSubview(contentCardVC.view, aboveSubview: searchVC.view)
@@ -587,10 +516,15 @@ extension SectionsViewController : CardNavigationControllerDelegate {
             self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * percentageY)
         }
     }
+	
+	func cardDidShowMiniplayer(cardVC: CardNavigationController) {
+		if cardVC == audioPlayerVC {
+			setSearchButtonEnabled(true)
+		}
+	}
     
 	func cardDidHide(cardVC: CardNavigationController) {
-		searchButton.isHidden = false
-		searchButton.isEnabled = true
+		setSearchButtonEnabled(true)
 		if cardVC.isKind(of: ContentCardNavigationController.self) {
 			cardVC.view.removeFromSuperview()
 		}
