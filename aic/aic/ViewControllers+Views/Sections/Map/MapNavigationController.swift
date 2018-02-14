@@ -22,7 +22,6 @@ class MapNavigationController : SectionNavigationController {
 	let mapVC: MapViewController = MapViewController()
 	let tourStopsVC: TourStopsNavigationController = TourStopsNavigationController()
 	
-	let locationManager: CLLocationManager = CLLocationManager()
 	fileprivate var enableLocationMessageView: MessageViewController? = nil
 	
 	weak var sectionDelegate: MapNavigationControllerDelegate? = nil
@@ -43,7 +42,7 @@ class MapNavigationController : SectionNavigationController {
 		// Setup delegates
 		mapVC.delegate = self
 		tourStopsVC.cardDelegate = self
-		locationManager.delegate = self.mapVC
+		Common.Map.locationManager.delegate = self.mapVC
 		
 		// Add root viewcontroller
 		self.pushViewController(mapVC, animated: false)
@@ -94,9 +93,9 @@ class MapNavigationController : SectionNavigationController {
 			showEnableLocationMessage()
         } else {  // Otherwise try to start the location manager
             // Init location manager
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.startUpdatingLocation()
-            locationManager.startUpdatingHeading()
+            Common.Map.locationManager.requestWhenInUseAuthorization()
+            Common.Map.locationManager.startUpdatingLocation()
+            Common.Map.locationManager.startUpdatingHeading()
         }
 	}
 	

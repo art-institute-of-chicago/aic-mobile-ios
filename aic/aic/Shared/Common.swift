@@ -401,6 +401,9 @@ struct Common {
 	
     // MARK: Map
     struct Map {
+		// Location Manager
+		static let locationManager: CLLocationManager = CLLocationManager()
+		
         static let backgroundOverlayAlpha:CGFloat = 0.75
 
         static let totalFloors = 4

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 import Localize_Swift
 
 class LocationSettingsViewController : UIViewController {
@@ -21,6 +22,10 @@ class LocationSettingsViewController : UIViewController {
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	override func viewDidLoad() {
@@ -43,6 +48,9 @@ class LocationSettingsViewController : UIViewController {
 		
 		// Language
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+		
+		// Coming back from Settings
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -64,11 +72,23 @@ class LocationSettingsViewController : UIViewController {
 		pageView.titleLabel.text = "Location Settings Title".localized(using: "LocationSettings")
 		pageView.textView.text = "Location Settings Text".localized(using: "LocationSettings")
 		
-		locationButton.setTitle("Location Enabled".localized(using: "LocationSettings"), for: .normal)
+		if CLLocationManager.locationServicesEnabled() {
+			switch(CLLocationManager.authorizationStatus()) {
+			case .restricted, .denied:
+				locationButton.setTitle("Location Disabled".localized(using: "LocationSettings"), for: .normal)
+			case .authorizedAlways, .authorizedWhenInUse:
+				locationButton.setTitle("Location Enabled".localized(using: "LocationSettings"), for: .normal)
+			case .notDetermined:
+				Common.Map.locationManager.requestAlwaysAuthorization()
+			}
+		}
+		else {
+			locationButton.setTitle("Location Disabled".localized(using: "LocationSettings"), for: .normal)
+		}
 	}
 	
 	@objc func locationButtonPressed(button: UIButton) {
-		// TODO: link to settings page to change location preferences
+		UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
 	}
 }
 
