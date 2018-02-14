@@ -81,7 +81,13 @@ class MemberCardViewController : UIViewController {
 	// MARK: Language
 	
 	@objc private func updateLanguage() {
-		
+		loginView.memberIDTitleLabel.text = "Member ID Field Title".localized(using: "MemberCard")
+		loginView.memberIDTextField.placeholder = "Member ID Field Placeholder".localized(using: "MemberCard")
+		loginView.memberZipCodeTitleLabel.text = "Member ZipCode Field Title".localized(using: "MemberCard")
+		loginView.memberZipCodeTextField.placeholder = "Member ZipCode Field Placeholder".localized(using: "MemberCard")
+		loginView.loginButton.setTitle("Sign In".localized(using: "MemberCard"), for: .normal)
+		cardView.changeInfoButton.setTitle("Change Info".localized(using: "MemberCard"), for: .normal)
+		cardView.switchCardholderButton.setTitle("Switch Cardholder".localized(using: "MemberCard"), for: .normal)
 	}
 	
 	// MARK: Show Views
@@ -166,18 +172,8 @@ extension MemberCardViewController : MemberDataManagerDelegate {
 	}
 	
 	func memberCardDataLoadingFailed() {
-		let alert = UIAlertController(title: Common.Info.alertMessageParseError, message: "", preferredStyle: UIAlertControllerStyle.alert)
-		let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
-			self.loadMemberFromUserDefaults()
-		})
-		
-		alert.addAction(action)
-		present(alert, animated:true)
-	}
-	
-	func memberCardDataLoadingFailedWithError(error: String) {
-		let alert = UIAlertController(title: Common.Info.alertMessageNotFound, message: error, preferredStyle: UIAlertControllerStyle.alert)
-		let action = UIAlertAction(title: Common.Info.alertMessageCancelButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
+		let alert = UIAlertController(title: "Member Not Found Alert".localized(using: "MemberCard"), message: "", preferredStyle: UIAlertControllerStyle.alert)
+		let action = UIAlertAction(title: "Member Not Found Alert Ok Button".localized(using: "MemberCard"), style: UIAlertActionStyle.default, handler: { (action) in
 			self.loadMemberFromUserDefaults()
 		})
 		

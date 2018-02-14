@@ -76,7 +76,7 @@ class MemberCardView : UIView {
 		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 		let expirationDateString = dateFormatter.string(from: memberCard.expirationDate)
 		
-		membershipInfoLabel.text = memberCard.memberLevel + "\nExpires: " + expirationDateString
+		membershipInfoLabel.text = memberCard.memberLevel + "\n" + "Expires".localized(using: "MemberCard") + ": " + expirationDateString
 		
 		// Barcode
 		let data = String(memberCard.cardId).data(using: String.Encoding.ascii)

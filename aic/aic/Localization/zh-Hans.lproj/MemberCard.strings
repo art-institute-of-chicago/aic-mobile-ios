@@ -1,0 +1,27 @@
+/* 
+  MemberCard.strings
+  aic
+
+  Created by Filippo Vanucci on 2/13/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Member Not Found Alert" = "Missing translation (Chinese)";
+
+"Member Not Found Alert Ok Button" = "Missing translation (Chinese)";
+
+"Member ID Field Title" = "Missing translation (Chinese)";
+
+"Member ID Field Placeholder" = "Missing translation (Chinese)";
+
+"Member ZipCode Field Title" = "Missing translation (Chinese)";
+
+"Member ZipCode Field Placeholder" = "Missing translation (Chinese)";
+
+"Sign In" = "Missing translation (Chinese)";
+
+"Change Info" = "Missing translation (Chinese)";
+
+"Switch Cardholder" = "Missing translation (Chinese)";
+
+"Expires" = "Missing translation (Chinese)";

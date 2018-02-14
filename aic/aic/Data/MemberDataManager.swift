@@ -9,7 +9,6 @@ import SWXMLHash
 protocol MemberDataManagerDelegate : class {
 	func memberCardDidLoadForMember(memberCard: AICMemberCardModel)
 	func memberCardDataLoadingFailed()
-	func memberCardDataLoadingFailedWithError(error: String)
 }
 
 class MemberDataManager {
@@ -91,81 +90,67 @@ class MemberDataManager {
 	}
 	
 	func parse(memberXML response: XMLIndexer, zipCode: String) -> AICMemberCardModel? {
-		// See if we had an error
 		do {
-			let faultCode = try response.byKey("Envelope").byKey("Body").byKey("Fault").byKey("faultcode").element?.text
+			let mainXML = try response.byKey("Envelope").byKey("Body").byKey("member_soap_retrieveResponse").byKey("response_object")
 			
-			if faultCode != nil {
-				delegate?.memberCardDataLoadingFailedWithError(error: faultCode!)
-			} else {
-				delegate?.memberCardDataLoadingFailedWithError(error: "Unknown Error")
-			}
-			return nil
-		}
-		// Error doees not exist, try to parse out the member info
-		catch {
-			do {
-				let mainXML = try response.byKey("Envelope").byKey("Body").byKey("member_soap_retrieveResponse").byKey("response_object")
+			let resultCode = try mainXML.byKey("ResultCode").element?.text
+			
+			if Int(resultCode!) == 0 {
+				let memberships = try mainXML.byKey("Memberships")
 				
-				let resultCode = try mainXML.byKey("ResultCode").element?.text
-				
-				if Int(resultCode!) == 0 {
-					let memberships = try mainXML.byKey("Memberships")
+				if memberships.children.count != 0 {
+					// Get first member info
+					let memberInfo = try memberships.byKey("Member-1")
 					
-					if memberships.children.count != 0 {
-						// Get first member info
-						let memberInfo = try memberships.byKey("Member-1")
-						
-						let primaryConstituentID = try memberInfo.byKey("PrimaryConstituentID").element?.text
-						let memberLevel = try memberInfo.byKey("MemberLevel").element?.text
-						let expirationDateString = try memberInfo.byKey("Expiration").element?.text
-						
-						let dateFormatter = DateFormatter()
-						dateFormatter.locale = Locale(identifier: "en_US")
-						dateFormatter.dateFormat = "MM/dd/yyyy"
-						dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-						
-						// TODO: fix the timezone
-						
-						let expirationDate = dateFormatter.date(from: expirationDateString!)
-						
-						var memberNames:[String] = []
-						
-						let mainMemberName = try memberInfo.byKey("CardHolder").element?.text
-						if mainMemberName != nil {
-							memberNames.append(mainMemberName!)
-						}
-						
-						// Try to get second member info
-						// some cards have multiple names attached
-						do {
-							let member2Info:XMLIndexer? = try memberships.byKey("Member-2")
-							
-							if member2Info != nil {
-								let member2Name = try member2Info!.byKey("CardHolder").element?.text
-								if member2Name != nil {
-									memberNames.append(member2Name!)
-								}
-							}
-						} catch {}
-						
-						if (primaryConstituentID != nil && (memberNames.count > 0) && memberLevel != nil && expirationDate != nil) {
-							return AICMemberCardModel(cardId: primaryConstituentID!,
-													  memberNames: memberNames,
-													  memberLevel: memberLevel!,
-													  memberZip: zipCode,
-													  expirationDate: expirationDate!)
-						}
+					let primaryConstituentID = try memberInfo.byKey("PrimaryConstituentID").element?.text
+					let memberLevel = try memberInfo.byKey("MemberLevel").element?.text
+					let expirationDateString = try memberInfo.byKey("Expiration").element?.text
+					
+					let dateFormatter = DateFormatter()
+					dateFormatter.locale = Locale(identifier: "en_US")
+					dateFormatter.dateFormat = "MM/dd/yyyy"
+					dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+					
+					// TODO: fix the timezone
+					
+					let expirationDate = dateFormatter.date(from: expirationDateString!)
+					
+					var memberNames:[String] = []
+					
+					let mainMemberName = try memberInfo.byKey("CardHolder").element?.text
+					if mainMemberName != nil {
+						memberNames.append(mainMemberName!)
 					}
-					delegate?.memberCardDataLoadingFailed()
-					return nil
+					
+					// Try to get second member info
+					// some cards have multiple names attached
+					do {
+						let member2Info:XMLIndexer? = try memberships.byKey("Member-2")
+						
+						if member2Info != nil {
+							let member2Name = try member2Info!.byKey("CardHolder").element?.text
+							if member2Name != nil {
+								memberNames.append(member2Name!)
+							}
+						}
+					} catch {}
+					
+					if (primaryConstituentID != nil && (memberNames.count > 0) && memberLevel != nil && expirationDate != nil) {
+						return AICMemberCardModel(cardId: primaryConstituentID!,
+												  memberNames: memberNames,
+												  memberLevel: memberLevel!,
+												  memberZip: zipCode,
+												  expirationDate: expirationDate!)
+					}
 				}
 				delegate?.memberCardDataLoadingFailed()
 				return nil
-			} catch {
-				delegate?.memberCardDataLoadingFailed()
-				return nil
 			}
+			delegate?.memberCardDataLoadingFailed()
+			return nil
+		} catch {
+			delegate?.memberCardDataLoadingFailed()
+			return nil
 		}
 	}
 	

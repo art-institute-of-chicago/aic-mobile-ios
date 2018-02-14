@@ -23,6 +23,7 @@
 		2915B0F7202D3A2100DEBB03 /* Map.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2915B0F9202D3A2100DEBB03 /* Map.strings */; };
 		2915B0FE202D3ACD00DEBB03 /* ContentCard.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2915B100202D3ACD00DEBB03 /* ContentCard.strings */; };
 		2915B107202D433C00DEBB03 /* Search.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2915B109202D433C00DEBB03 /* Search.strings */; };
+		291AF3332033B2BE001099C7 /* MemberCard.strings in Resources */ = {isa = PBXBuildFile; fileRef = 291AF3352033B2BE001099C7 /* MemberCard.strings */; };
 		291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */; };
 		291FB71F1FDA0905007794E0 /* SearchNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */; };
 		2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293127791FDEF2C5008BFAB1 /* MapItemCell.swift */; };
@@ -304,6 +305,9 @@
 		2915B108202D433C00DEBB03 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Search.strings; sourceTree = "<group>"; };
 		2915B10A202D433E00DEBB03 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Search.strings; sourceTree = "<group>"; };
 		2915B10B202D433E00DEBB03 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Search.strings"; sourceTree = "<group>"; };
+		291AF3342033B2BE001099C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MemberCard.strings; sourceTree = "<group>"; };
+		291AF3362033B2C1001099C7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/MemberCard.strings; sourceTree = "<group>"; };
+		291AF3372033B2C3001099C7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MemberCard.strings"; sourceTree = "<group>"; };
 		291EC72B1FE1E48600A43186 /* ResultsFilterMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsFilterMenuView.swift; sourceTree = "<group>"; };
 		291FB71E1FDA0905007794E0 /* SearchNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigationController.swift; sourceTree = "<group>"; };
 		293127791FDEF2C5008BFAB1 /* MapItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemCell.swift; sourceTree = "<group>"; };
@@ -802,6 +806,7 @@
 				2915B0F9202D3A2100DEBB03 /* Map.strings */,
 				2915B100202D3ACD00DEBB03 /* ContentCard.strings */,
 				2915B109202D433C00DEBB03 /* Search.strings */,
+				291AF3352033B2BE001099C7 /* MemberCard.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -1506,6 +1511,7 @@
 				29F8997F202A3CA90081BA22 /* IdealSans-Light.otf in Resources */,
 				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
 				2968F6932012B33000638153 /* TabMenu.strings in Resources */,
+				291AF3332033B2BE001099C7 /* MemberCard.strings in Resources */,
 				29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */,
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
 				E47A97381CF607990041D0A6 /* Settings.bundle in Resources */,
@@ -1965,6 +1971,16 @@
 				2915B10B202D433E00DEBB03 /* zh-Hans */,
 			);
 			name = Search.strings;
+			sourceTree = "<group>";
+		};
+		291AF3352033B2BE001099C7 /* MemberCard.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				291AF3342033B2BE001099C7 /* en */,
+				291AF3362033B2C1001099C7 /* es */,
+				291AF3372033B2C3001099C7 /* zh-Hans */,
+			);
+			name = MemberCard.strings;
 			sourceTree = "<group>";
 		};
 		294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */ = {
