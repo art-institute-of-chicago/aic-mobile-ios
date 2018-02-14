@@ -153,19 +153,19 @@ class AppDataManager {
 		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]! + "/search?limit=99")!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
-			"_source": true,
-			"sort": ["aic_start_at", "aic_end_at"],
+			"fields": true,
+			"sort": ["start_at", "end_at"],
 			"query": [
 				"bool": [
 					"must": [
 						[
 							"range": [
-								"aic_start_at": ["lte": "now+1w"]
+								"start_at": ["lte": "now+2w"]
 							]
 						],
 						[
 							"range": [
-								"aic_end_at": ["gte": "now"]
+								"end_at": ["gte": "now"]
 							]
 						]
 					],

@@ -96,8 +96,8 @@ class AppDataParser {
 		catch{}
         
 		// Get date exibition ends
-		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
-		let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_end_at")
+		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "start_at")
+		let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "end_at")
 		
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "en_US")
