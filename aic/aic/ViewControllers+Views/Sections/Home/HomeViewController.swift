@@ -182,7 +182,15 @@ class HomeViewController : SectionViewController {
 	// MARK: Language
 	
 	@objc func updateLanguage() {
-		memberPromptView.promptTextView.text = "Member Card Prompt".localized(using: "Home")
+		let generalInfo = AppDataManager.sharedInstance.app.generalInfo
+		var language: Common.Language = .english
+		if generalInfo.availableLanguages.contains(Common.currentLanguage) {
+			language = Common.currentLanguage
+		}
+		
+		let homeMemberPromptText: String = generalInfo.translations[language]!.homeMemberPrompt
+		memberPromptView.promptTextView.text = homeMemberPromptText.stringByDecodingHTMLEntities
+		
 		memberPromptView.accessMemberCardTextView.text = "Member Card Button Title".localized(using: "Home")
 		
 		toursTitleView.contentTitleLabel.text = "Tours".localized(using: "Sections")
