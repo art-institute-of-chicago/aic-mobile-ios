@@ -59,7 +59,7 @@ class HomeViewController : SectionViewController {
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
 		
-		memberPromptView.delegate = self
+		memberPromptView.accessMemberCardButton.addTarget(self, action: #selector(accessMemberCardButtonPressed(button:)), for: .touchUpInside)
 		
 		toursCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
 		toursCollectionView.delegate = self
@@ -205,6 +205,10 @@ class HomeViewController : SectionViewController {
 	
 	// MARK: Buttons
 	
+	@objc private func accessMemberCardButtonPressed(button: UIButton) {
+		self.delegate?.homeDidSelectAccessMemberCard()
+	}
+	
 	@objc private func seeAllToursButtonPressed(button: UIButton) {
 		self.delegate?.homeDidSelectSeeAllTours()
 	}
@@ -215,14 +219,6 @@ class HomeViewController : SectionViewController {
 	
 	@objc private func seeAllEventsButtonPressed(button: UIButton) {
 		self.delegate?.homeDidSelectSeeAllEvents()
-	}
-}
-
-// MARK: HomeMemberPromptViewDelegate
-
-extension HomeViewController : HomeMemberPromptViewDelegate {
-	func memberPromptDidSelectAccessMemberCard() {
-		self.delegate?.homeDidSelectAccessMemberCard()
 	}
 }
 
