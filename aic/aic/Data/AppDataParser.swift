@@ -61,7 +61,13 @@ class AppDataParser {
     private func parse(exhibitionJSON: JSON) throws -> AICExhibitionModel {
 		let id = try getInt(fromJSON: exhibitionJSON, forKey: "id")
         let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
-        let description = try getString(fromJSON: exhibitionJSON, forKey: "short_description")
+		
+		// optional description
+		var description: String = ""
+		do {
+			description = try getString(fromJSON: exhibitionJSON, forKey: "short_description")
+		}
+		catch{}
 		
 		// optional image
 		var imageURL: URL?
