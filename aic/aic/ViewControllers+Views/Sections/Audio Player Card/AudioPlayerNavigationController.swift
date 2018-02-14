@@ -18,13 +18,6 @@ class AudioPlayerNavigationController : CardNavigationController {
 	
 	let remoteSkipTime: Int = 10 // Number of seconds to skip forward/back wiht MPRemoteCommandCenter seek
     
-    // Message Localized Strings
-    let loadingMessage = "Loading Message"
-    let loadFailureTitle = "Load Failure Title"
-    let loadFailureMessage = "Load Failure Message"
-    let reloadButtonTitle = "Load Failure Reload Button Title"
-    let cancelButtonTitle = "Load Failure Cancel Button Title"
-    
     // AVPlayer
     fileprivate let avPlayer = AVPlayer()
     private var audioProgressTimer: Timer?
@@ -237,19 +230,19 @@ class AudioPlayerNavigationController : CardNavigationController {
     
     private func showLoadError(forAudioFile audioFile:AICAudioFileModel, coverImageURL:URL) {
         // Preset a UIAlertView that allows the user to try to load the file.
-        let alertView = UIAlertController(title: loadFailureTitle, message: loadFailureMessage, preferredStyle: .alert)
-        alertView.addAction(UIAlertAction(title: reloadButtonTitle, style: .default, handler: { (alertAction) -> Void in
+        let alertView = UIAlertController(title: "Load Failure Title".localized(using: "AudioPlayer"), message: "Load Failure Message".localized(using: "AudioPlayer"), preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "Load Failure Reload Button Title".localized(using: "AudioPlayer"), style: .default, handler: { (alertAction) -> Void in
             self.currentAudioFile = nil
             _ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
         }))
         
-        alertView.addAction(UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: nil))
+        alertView.addAction(UIAlertAction(title: "Load Failure Cancel Button Title".localized(using: "AudioPlayer"), style: .cancel, handler: nil))
         self.present(alertView, animated: true, completion: nil)
     }
     
     // Set the loading status as the track title
     private func showLoadingMessage() {
-        let localizedLoadingMessage = loadingMessage.localized(using: "AudioPlayer")
+        let localizedLoadingMessage = "Loading Message".localized(using: "AudioPlayer")
         miniAudioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
         audioInfoVC.audioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
     }
