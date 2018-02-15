@@ -704,14 +704,14 @@ extension MapViewController : MapFloorSelectorViewControllerDelegate {
     
     func floorSelectorLocationButtonTapped() {
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
-//            // Show message to enable location
+            // Show message to enable location
 //            locationDisabledMessage = MessageSmallView(model: Common.Messages.locationDisabled)
 //            locationDisabledMessage!.delegate = self
 //
 //            self.view.window?.addSubview(locationDisabledMessage!)
         }
         else if floorSelectorVC.locationMode == .Offsite {
-//            // Show offsite message
+            // Show offsite message
 //            locationOffsiteMessage = MessageSmallView(model: Common.Messages.locationOffsite)
 //            locationOffsiteMessage?.delegate = self
 //            self.view.window?.addSubview(locationOffsiteMessage!)
@@ -725,7 +725,7 @@ extension MapViewController : MapFloorSelectorViewControllerDelegate {
                 floorSelectorVC.enableUserHeading()
                 
                 // Log Analytics
-                AICAnalytics.sendMapDidEnableHeadingEvent()
+//                AICAnalytics.sendMapDidEnableHeadingEvent()
             }
         }
     }

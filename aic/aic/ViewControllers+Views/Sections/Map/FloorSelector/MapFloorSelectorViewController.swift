@@ -39,12 +39,10 @@ class MapFloorSelectorViewController: UIViewController {
 
         // Add Gestures
         for button in floorSelectorView.floorButtons {
-            let buttonTapGesture = UITapGestureRecognizer(target: self, action: #selector(MapFloorSelectorViewController.floorButtonWasTapped(_:)))
-            button.addGestureRecognizer(buttonTapGesture)
+			button.addTarget(self, action: #selector(floorButtonPressed(button:)), for: .touchUpInside)
         }
-        
-        let locationTapGesture = UITapGestureRecognizer(target: self, action: #selector(MapFloorSelectorViewController.locationButtonWasTapped))
-        floorSelectorView.locationButton.addGestureRecognizer(locationTapGesture)
+		
+		floorSelectorView.locationButton.addTarget(self, action: #selector(locationButtonPressed(button:)), for: .touchUpInside)
         
         // Load the default location image
         updateLocationImageForCurrentMode()
@@ -109,13 +107,11 @@ class MapFloorSelectorViewController: UIViewController {
 
 // MARK: Gesture Recognizers
 extension MapFloorSelectorViewController {
-    @objc func floorButtonWasTapped(_ gesture:UITapGestureRecognizer) {
-        if let button = gesture.view {
-            delegate?.floorSelectorDidSelectFloor(button.tag)
-        }
+    @objc func floorButtonPressed(button: UIButton) {
+		delegate?.floorSelectorDidSelectFloor(button.tag)
     }
     
-    @objc func locationButtonWasTapped() {
+    @objc func locationButtonPressed(button: UIButton) {
         delegate?.floorSelectorLocationButtonTapped()
     }
 }
