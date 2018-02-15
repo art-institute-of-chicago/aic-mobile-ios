@@ -127,7 +127,7 @@ class SearchNavigationController : CardNavigationController {
 		resultsTopMarginConstraint = resultsVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: resultsTopMargin)
 		resultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
 		resultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-		resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view, withOffset: -Common.Layout.tabBarHeight - ResultsFilterMenuView.menuHeight)
+		resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view, withOffset: -Common.Layout.tabBarHeight)
 		
 		filterMenuView.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: resultsTopMargin)
 		filterMenuView.autoPinEdge(.leading, to: .leading, of: rootVC.view)
@@ -183,12 +183,26 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.artworkItems.removeAll()
 		resultsVC.tourItems.removeAll()
 		resultsVC.exhibitionItems.removeAll()
+		
+		// Reset perform requests in SearchDataManager
+		NSObject.cancelPreviousPerformRequests(withTarget: SearchDataManager.sharedInstance)
+		
 		if showAutocomplete == true {
-			SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
+			// Autocomplete request sent immediately
+			SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadAutocompleteStrings(searchText:)), with: searchText, afterDelay: 0.4)
+			//SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
 		}
-		SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
-		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
-		SearchDataManager.sharedInstance.loadExhibitions(searchText: searchText)
+		
+		// Artworks/Tours/Exhibitions requests sent with delay
+		// to avoid making too many requests to the api while typing
+		SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadArtworks(searchText:)), with: searchText, afterDelay: 1.0)
+		SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadTours(searchText:)), with: searchText, afterDelay: 1.0)
+		SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadExhibitions(searchText:)), with: searchText, afterDelay: 1.0)
+		
+//		SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
+//		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
+//		SearchDataManager.sharedInstance.loadExhibitions(searchText: searchText)
+		
 		if resultsVC.filter == .empty {
 			resultsTopMarginConstraint?.constant = resultsWithFilterMenuTopMargin
 			self.view.setNeedsLayout()

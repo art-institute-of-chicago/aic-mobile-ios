@@ -17,7 +17,7 @@ protocol SearchDataManagerDelegate : class {
 	func searchDataFailure(withMessage: String)
 }
 
-class SearchDataManager {
+class SearchDataManager : NSObject {
 	static let sharedInstance = SearchDataManager()
 	
 	weak var delegate: SearchDataManagerDelegate? = nil
@@ -26,14 +26,23 @@ class SearchDataManager {
 	
 	private var loadFailure: Bool = false
 	
-	func loadAutocompleteStrings(searchText: String) {
+	private var autocompleteRequest: DataRequest? = nil
+	private var toursRequest: DataRequest? = nil
+	private var artworksRequest: DataRequest? = nil
+	private var exhibitionsRequest: DataRequest? = nil
+	
+	@objc func loadAutocompleteStrings(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.autocompleteEndpoint]!
 		url += "?q=" + searchText
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
-		Alamofire.request(request as URLRequestConvertible)
+		if let previousRequest = autocompleteRequest {
+			previousRequest.cancel()
+		}
+		
+		autocompleteRequest = Alamofire.request(request as URLRequestConvertible)
 			.validate()
 			.responseData { response in
 				switch response.result {
@@ -47,7 +56,7 @@ class SearchDataManager {
 		}
 	}
 	
-	func loadArtworks(searchText: String) {
+	@objc func loadArtworks(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.artworksEndpoint]!
 		url += "/search?limit=20"
@@ -61,11 +70,10 @@ class SearchDataManager {
 				"bool": [
 					"must": [
 						[
-							"match": [
-								"title": [
-									"query": searchText,
-									"operator": "or"
-								]
+							"multi_match": [
+								"query": searchText,
+								"fields": ["title", "artist_display"],
+								"operator": "or"
 							]
 						],
 						[
@@ -78,7 +86,11 @@ class SearchDataManager {
 			]
 		]
 		
-		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+		if let previousRequest = artworksRequest {
+			previousRequest.cancel()
+		}
+		
+		artworksRequest = Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
 			.validate()
 			.responseData { response in
 				switch response.result {
@@ -92,14 +104,18 @@ class SearchDataManager {
 		}
 	}
 	
-	func loadTours(searchText: String) {
+	@objc func loadTours(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.toursEndpoint]!
 		url += "/search?q=" + searchText + "&limit=20"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
-		Alamofire.request(request as URLRequestConvertible)
+		if let previousRequest = toursRequest {
+			previousRequest.cancel()
+		}
+		
+		toursRequest = Alamofire.request(request as URLRequestConvertible)
 			.validate()
 			.responseData { response in
 				switch response.result {
@@ -119,7 +135,7 @@ class SearchDataManager {
 		}
 	}
 	
-	func loadExhibitions(searchText: String) {
+	@objc func loadExhibitions(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.exhibitionsEndpoint]!
 		url += "/search?limit=20"
@@ -161,7 +177,11 @@ class SearchDataManager {
 			]
 		]
 		
-		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+		if let previousRequest = exhibitionsRequest {
+			previousRequest.cancel()
+		}
+		
+		exhibitionsRequest = Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
 			.validate()
 			.responseData { response in
 				switch response.result {
