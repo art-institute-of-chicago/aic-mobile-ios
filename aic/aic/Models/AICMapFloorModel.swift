@@ -78,6 +78,6 @@ class AICMapFloorModel {
     }
     
     private func getAnnotationForObject(object:AICObjectModel) -> MapObjectAnnotation? {
-        return objectAnnotations.filter({ $0.object.nid == object.nid }).first
+        return objectAnnotations.filter({ $0.nid == object.nid }).first
     }
 }

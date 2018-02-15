@@ -37,7 +37,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obB-RP-FmZ">
                         <rect key="frame" x="103" y="16" width="93.5" height="19"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="230" id="KX4-UZ-1rd"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="215" id="KX4-UZ-1rd"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,21 +46,12 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSQ-jq-bJZ">
                         <rect key="frame" x="103" y="35" width="112.5" height="19"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="230" id="VDv-rE-q7B"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="215" id="VDv-rE-q7B"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="16"/>
                         <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmE-go-sZd">
-                        <rect key="frame" x="325" y="14.5" width="44" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="44" id="OIB-wh-Xe6"/>
-                            <constraint firstAttribute="width" constant="44" id="Qpf-5O-4aH"/>
-                        </constraints>
-                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                        <state key="normal" image="rightArrow"/>
-                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="keQ-yX-WoR">
                         <rect key="frame" x="16" y="0.0" width="343" height="1"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -75,27 +66,44 @@
                             <constraint firstAttribute="height" constant="1" id="Eep-iI-93E"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="6bk-Zu-vbL">
+                        <rect key="frame" x="341" y="25" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="K0e-TI-xg1"/>
+                            <constraint firstAttribute="height" constant="24" id="f5w-if-21D"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="artworkWithAudioIcon" translatesAutoresizingMaskIntoConstraints="NO" id="91h-uy-nnK">
+                        <rect key="frame" x="323" y="30" width="13" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13" id="5tU-ac-bJI"/>
+                            <constraint firstAttribute="width" constant="13" id="MtM-w7-zLl"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="KSQ-jq-bJZ" firstAttribute="top" secondItem="obB-RP-FmZ" secondAttribute="bottom" id="394-Yu-HNR"/>
                     <constraint firstItem="KSQ-jq-bJZ" firstAttribute="leading" secondItem="obB-RP-FmZ" secondAttribute="leading" id="5gg-gw-KFl"/>
                     <constraint firstItem="obB-RP-FmZ" firstAttribute="leading" secondItem="SQJ-b1-Of7" secondAttribute="trailing" constant="15" id="70p-Ve-48O"/>
                     <constraint firstItem="obB-RP-FmZ" firstAttribute="top" secondItem="9Ig-a1-t1e" secondAttribute="top" constant="16" id="8B1-eI-X8o"/>
+                    <constraint firstItem="91h-uy-nnK" firstAttribute="centerY" secondItem="SQJ-b1-Of7" secondAttribute="centerY" id="AA6-xl-OM4"/>
+                    <constraint firstItem="6bk-Zu-vbL" firstAttribute="centerY" secondItem="SQJ-b1-Of7" secondAttribute="centerY" id="CZA-7E-mRD"/>
                     <constraint firstItem="SQJ-b1-Of7" firstAttribute="top" secondItem="9Ig-a1-t1e" secondAttribute="top" constant="14" id="DFh-6z-F8W"/>
                     <constraint firstItem="keQ-yX-WoR" firstAttribute="leading" secondItem="9Ig-a1-t1e" secondAttribute="leading" constant="16" id="FOA-5l-fb5"/>
                     <constraint firstAttribute="trailing" secondItem="keQ-yX-WoR" secondAttribute="trailing" constant="16" id="G5r-iB-pLe"/>
+                    <constraint firstItem="6bk-Zu-vbL" firstAttribute="leading" secondItem="91h-uy-nnK" secondAttribute="trailing" constant="5" id="GxF-px-uAQ"/>
                     <constraint firstItem="dpI-vP-IbP" firstAttribute="top" secondItem="KSQ-jq-bJZ" secondAttribute="bottom" constant="17" id="NXZ-6d-mi1"/>
                     <constraint firstItem="SQJ-b1-Of7" firstAttribute="leading" secondItem="9Ig-a1-t1e" secondAttribute="leading" constant="16" id="OR4-lU-Noo"/>
+                    <constraint firstAttribute="trailing" secondItem="6bk-Zu-vbL" secondAttribute="trailing" constant="10" id="ObX-cb-9gb"/>
                     <constraint firstItem="dpI-vP-IbP" firstAttribute="leading" secondItem="9Ig-a1-t1e" secondAttribute="leading" constant="16" id="Ots-4E-TPb"/>
                     <constraint firstItem="keQ-yX-WoR" firstAttribute="top" secondItem="9Ig-a1-t1e" secondAttribute="top" id="QXe-mS-y03"/>
                     <constraint firstAttribute="trailing" secondItem="dpI-vP-IbP" secondAttribute="trailing" constant="16" id="SrS-uO-HTO"/>
-                    <constraint firstItem="LmE-go-sZd" firstAttribute="centerY" secondItem="SQJ-b1-Of7" secondAttribute="centerY" id="fCV-l2-Urm"/>
-                    <constraint firstAttribute="trailing" secondItem="LmE-go-sZd" secondAttribute="trailing" constant="6" id="l6I-97-4FG"/>
                     <constraint firstAttribute="bottom" secondItem="KSQ-jq-bJZ" secondAttribute="bottom" constant="17.5" id="qW1-Ki-sMG"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="audioIcon" destination="91h-uy-nnK" id="yip-Vd-GkX"/>
                 <outlet property="dividerLineBottom" destination="dpI-vP-IbP" id="jb9-Uo-psR"/>
                 <outlet property="dividerLineTop" destination="keQ-yX-WoR" id="JN1-fR-FaL"/>
                 <outlet property="itemImageView" destination="SQJ-b1-Of7" id="eor-8v-LMG"/>
@@ -106,6 +114,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="artworkWithAudioIcon" width="13" height="13"/>
         <image name="rightArrow" width="24" height="24"/>
     </resources>
 </document>

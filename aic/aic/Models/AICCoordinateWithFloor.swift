@@ -5,6 +5,6 @@
 import CoreLocation
 
 struct CoordinateWithFloor {
-    let coordinate:CLLocationCoordinate2D
-    let floor:Int
+    let coordinate: CLLocationCoordinate2D
+    let floor: Int
 }

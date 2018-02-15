@@ -8,8 +8,15 @@
 
 import UIKit
 
+protocol ArtworkTableViewControllerDelegate : class {
+	func artworkPlayAudioSelected(artwork: AICObjectModel)
+	func artworkShowOnMapSelected(artwork: AICSearchedArtworkModel)
+}
+
 class ArtworkTableViewController : UITableViewController {
 	var artworkModel: AICSearchedArtworkModel
+	
+	weak var artworkTableDelegate: ArtworkTableViewControllerDelegate? = nil
 	
 	init(artwork: AICSearchedArtworkModel) {
 		artworkModel = artwork
@@ -36,6 +43,18 @@ class ArtworkTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "ArtworkContentCell", bundle: Bundle.main), forCellReuseIdentifier: ArtworkContentCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
 	}
+	
+	// Button Events
+	
+	@objc func artworkPlayButtonPressed(button: UIButton) {
+		if let artworkWithAudio = artworkModel.audioObject {
+			self.artworkTableDelegate?.artworkPlayAudioSelected(artwork: artworkWithAudio)
+		}
+	}
+	
+	@objc func artworkShowOnMapButtonPressed(button: UIButton) {
+		self.artworkTableDelegate?.artworkShowOnMapSelected(artwork: artworkModel)
+	}
 }
 
 // MARK: Data Source
@@ -52,6 +71,10 @@ extension ArtworkTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ArtworkContentCell.reuseIdentifier, for: indexPath) as! ArtworkContentCell
 			cell.artworkModel = artworkModel
+			cell.playAudioButton.setTitle("Play Audio".localized(using: "ContentCard"), for: .normal)
+			cell.playAudioButton.addTarget(self, action: #selector(artworkPlayButtonPressed(button:)), for: .touchUpInside)
+			cell.showOnMapButton.setTitle("Show On Map".localized(using: "ContentCard"), for: .normal)
+			cell.showOnMapButton.addTarget(self, action: #selector(artworkShowOnMapButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}
 		return UITableViewCell()

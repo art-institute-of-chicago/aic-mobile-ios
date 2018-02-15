@@ -148,6 +148,7 @@ extension ResultsTableViewController {
 				let artwork = artworkItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
 				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title)
+				cell.audioIcon.isHidden = artwork.audioObject == nil
 				return cell
 			}
 			else if indexPath.section == 2 {
@@ -180,6 +181,7 @@ extension ResultsTableViewController {
 			let artwork = artworkItems[indexPath.row]
 			setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
 			cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title)
+			cell.audioIcon.isHidden = artwork.audioObject == nil
 			return cell
 		}
 		else if filter == .tours {

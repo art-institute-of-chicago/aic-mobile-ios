@@ -45,7 +45,8 @@ class AudioGuideNavigationController : SectionNavigationController {
 		super.viewDidLoad()
 		
 		self.view.backgroundColor = sectionModel.color
-		sectionNavigationBar.backgroundColor = .clear
+		
+		sectionNavigationBar.headerView.backgroundColor = .clear
 		
 		// Setup Collection view
 		collectionView.delaysContentTouches = false

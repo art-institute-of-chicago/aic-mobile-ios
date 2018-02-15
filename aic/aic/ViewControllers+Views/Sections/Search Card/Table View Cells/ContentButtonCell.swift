@@ -20,6 +20,7 @@ class ContentButtonCell : UITableViewCell {
 	@IBOutlet var itemSubtitleLabel: UILabel!
 	@IBOutlet var dividerLineTop: UIView!
 	@IBOutlet var dividerLineBottom: UIView!
+	@IBOutlet weak var audioIcon: UIImageView!
 	
 	var contentLoaded: Bool = false
 	
@@ -38,6 +39,7 @@ class ContentButtonCell : UITableViewCell {
 		itemSubtitleLabel.textColor = .aicCardDarkTextColor
 		dividerLineTop.backgroundColor = .aicDividerLineDarkColor
 		dividerLineBottom.backgroundColor = .aicDividerLineDarkColor
+		audioIcon.isHidden = true
 	}
 	
 	func setContent(imageUrl: URL?, title: String, subtitle: String) {

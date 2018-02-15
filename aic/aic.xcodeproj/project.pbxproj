@@ -97,7 +97,6 @@
 		294C0B68201A770E00F2ABB1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B63201A770D00F2ABB1 /* MapViewController.swift */; };
 		294C0B69201A770E00F2ABB1 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B64201A770D00F2ABB1 /* MapView.swift */; };
 		294C0B6A201A770E00F2ABB1 /* MapFloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B65201A770D00F2ABB1 /* MapFloorModel.swift */; };
-		294C0B6B201A770E00F2ABB1 /* MapState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B66201A770E00F2ABB1 /* MapState.swift */; };
 		295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */; };
 		295AC0931FDF8FBA009A0FAF /* MuseumInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */; };
 		295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */; };
@@ -383,7 +382,6 @@
 		294C0B63201A770D00F2ABB1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		294C0B64201A770D00F2ABB1 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		294C0B65201A770D00F2ABB1 /* MapFloorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFloorModel.swift; sourceTree = "<group>"; };
-		294C0B66201A770E00F2ABB1 /* MapState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapState.swift; sourceTree = "<group>"; };
 		295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationBar.swift; sourceTree = "<group>"; };
 		295AC0921FDF8FBA009A0FAF /* MuseumInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumInfoViewController.swift; sourceTree = "<group>"; };
 		295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -621,10 +619,12 @@
 		291221951FDB2D490096BB75 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				291221961FDB35650096BB75 /* SuggestedSearchCell.swift */,
-				2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */,
+				293127801FDF0EC5008BFAB1 /* ContentButtonCell.swift */,
+				2931277E1FDF0EB5008BFAB1 /* ContentButtonCell.xib */,
 				294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */,
 				294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */,
+				291221961FDB35650096BB75 /* SuggestedSearchCell.swift */,
+				2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */,
 			);
 			path = "Table View Cells";
 			sourceTree = "<group>";
@@ -650,15 +650,6 @@
 				2931277B1FDEF327008BFAB1 /* MapItemCell.xib */,
 			);
 			path = "Map Item Cell";
-			sourceTree = "<group>";
-		};
-		2931277D1FDF0E71008BFAB1 /* Table View Cells */ = {
-			isa = PBXGroup;
-			children = (
-				293127801FDF0EC5008BFAB1 /* ContentButtonCell.swift */,
-				2931277E1FDF0EB5008BFAB1 /* ContentButtonCell.xib */,
-			);
-			path = "Table View Cells";
 			sourceTree = "<group>";
 		};
 		293D00731FA7C7EF00BF2C26 /* Assets */ = {
@@ -935,7 +926,6 @@
 				294C0B44201A76F700F2ABB1 /* Footprint */,
 				294C0B62201A770C00F2ABB1 /* MapDepartmentHUDView.swift */,
 				294C0B65201A770D00F2ABB1 /* MapFloorModel.swift */,
-				294C0B66201A770E00F2ABB1 /* MapState.swift */,
 				294C0B64201A770D00F2ABB1 /* MapView.swift */,
 				294C0B63201A770D00F2ABB1 /* MapViewController.swift */,
 				294C0B24201A756900F2ABB1 /* MapNavigationController.swift */,
@@ -1318,7 +1308,6 @@
 		E4F82F681CA45EF000E4224B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				2931277D1FDF0E71008BFAB1 /* Table View Cells */,
 				296D559420239F3E00442A60 /* CardNavigationController.swift */,
 				2915B0F3202CA0BE00DEBB03 /* LanguageSelectorButton.swift */,
 				2915B0F1202CA08B00DEBB03 /* LanguageSelectorView.swift */,
@@ -1869,7 +1858,6 @@
 				294C0B61201A76F700F2ABB1 /* MKMapRectRotated.swift in Sources */,
 				2915B0F4202CA0BE00DEBB03 /* LanguageSelectorButton.swift in Sources */,
 				2941CE801FE09F6000B7CCEE /* SearchContentViewController.swift in Sources */,
-				294C0B6B201A770E00F2ABB1 /* MapState.swift in Sources */,
 				E4F7C14D1CA201B6005976D1 /* ObjectTranscriptView.swift in Sources */,
 				294338521FDC849E00ECF321 /* SearchDataManager.swift in Sources */,
 				E415ABDA1C7298420093B719 /* ToursSectionViewController.swift in Sources */,

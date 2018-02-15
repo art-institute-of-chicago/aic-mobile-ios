@@ -362,6 +362,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	
 	func resultsTableDidSelect(artwork: AICSearchedArtworkModel) {
 		let artworkVC = ArtworkTableViewController(artwork: artwork)
+		artworkVC.artworkTableDelegate = self.sectionsVC
 		showSearchContentViewController(tableVC: artworkVC)
 	}
 	

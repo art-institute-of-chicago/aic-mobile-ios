@@ -144,6 +144,14 @@ class MapNavigationController : SectionNavigationController {
 		}
 	}
 	
+	func showArtwork(artwork: AICSearchedArtworkModel) {
+		if sectionNavigationBar.currentState != .hidden {
+			sectionNavigationBar.hide()
+		}
+		
+		mapVC.showArtwork(artwork: artwork)
+	}
+	
 	private func showTourCard() {
 		tourStopsVC.setTourContent(tour: tourModel!, language: tourLanguage)
 		tourStopsVC.setCurrentStop(stopIndex: tourStopIndex)
@@ -180,7 +188,15 @@ extension MapNavigationController : MapViewControllerDelegate {
 	}
 	
 	func mapDidSelectTourStop(artwork: AICObjectModel) {
-		//showTourStop(forStopObjectModel: stopObject)
+		if let tour = tourModel {
+			var stopIndex: Int? = nil
+			for index in 0...tour.stops.count-1 {
+				if tour.stops[index].object.nid == artwork.nid {
+					stopIndex = index
+				}
+			}
+			tourStopsVC.setCurrentStop(stopIndex: stopIndex)
+		}
 	}
 }
 

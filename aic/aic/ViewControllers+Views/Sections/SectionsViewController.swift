@@ -194,6 +194,8 @@ class SectionsViewController : UIViewController {
         Common.DeepLinks.loadedEnoughToLink = true
         (UIApplication.shared.delegate as? AppDelegate)?.triggerDeepLinkIfPresent()
     }
+	
+	// MARK: Show On Map
     
 	func showTourOnMap(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
         /*if toursVC.currentTour != nil {
@@ -202,7 +204,9 @@ class SectionsViewController : UIViewController {
             return
         }*/
 		
-        setSelectedSection(sectionVC: mapVC)
+		if currentViewController != mapVC {
+			setSelectedSection(sectionVC: mapVC)
+		}
 		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
 		sectionTabBarController.selectedIndex = 2
 		
@@ -215,9 +219,18 @@ class SectionsViewController : UIViewController {
         // Log Analytics
 //        AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)
     }
+	
+	func showOnMap(artwork: AICSearchedArtworkModel) {
+		if currentViewController != mapVC {
+			setSelectedSection(sectionVC: mapVC)
+		}
+		mapVC.showArtwork(artwork: artwork)
+		sectionTabBarController.selectedIndex = 2
+	}
     
-    // MARK: Audio Player showing methods
-    func playObject(object:AICObjectModel, audioGuideID: Int?) {
+    // MARK: Play Audio
+	
+	func playObject(object:AICObjectModel, audioGuideID: Int?) {
 //        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
 //        self.objectVC.showFullscreen()
 		
@@ -436,7 +449,7 @@ extension SectionsViewController : ToursSectionViewControllerDelegate {
         //mapVC.showTourOverview(forTourModel: tour)
     }
     
-    func toursSectionDidFocusOnTourStop(tour: AICTourModel, stopIndex:Int) {
+    func toursSectionDidFocusOnTourStop(tour: AICTourModel, stopIndex: Int) {
         //mapVC.highlightTourStop(forTour: tour, atStopIndex: stopIndex)
     }
     
@@ -541,3 +554,23 @@ extension SectionsViewController : TourTableViewControllerDelegate {
 		showTourOnMap(tour: tour, language: language, stopIndex: stopIndex)
 	}
 }
+
+// MARK: ArtworkTableViewControllerDelegate
+extension SectionsViewController : ArtworkTableViewControllerDelegate {
+	// Pressed "Start Tour" or tour stop in content card
+	func artworkPlayAudioSelected(artwork: AICObjectModel) {
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		playArtwork(artwork: artwork)
+	}
+	
+	func artworkShowOnMapSelected(artwork: AICSearchedArtworkModel) {
+		// TODO: temporarily disabling this
+//		if searchVC.currentState == .fullscreen {
+//			searchVC.hide()
+//		}
+//		showOnMap(artwork: artwork)
+	}
+}
+

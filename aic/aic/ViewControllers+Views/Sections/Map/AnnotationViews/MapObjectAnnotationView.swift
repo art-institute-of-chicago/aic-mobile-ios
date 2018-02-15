@@ -6,6 +6,7 @@
 import UIKit
 import Alamofire
 import MapKit
+import Kingfisher
 
 protocol MapObjectAnnotationViewDelegate : class {
     func mapObjectAnnotationViewPlayPressed(_ object:MapObjectAnnotationView)
@@ -68,7 +69,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         
         // Configure
         backgroundColor = .clear
-        layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.object.location.floor)
+        layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
         
 //        self.layer.masksToBounds = false
 //        self.layer.shadowOffset = CGSizeMake(0, 0)
@@ -156,7 +157,9 @@ class MapObjectAnnotationView: MapAnnotationView {
             if selected {
                 addSubview(thumbHolderTailView)
                 addSubview(thumbImageView)
-                addSubview(headphonesIcon)
+				if objectAnnotation?.nid != nil {
+					addSubview(headphonesIcon)
+				}
                 addSubview(titleLabel)
                 
                 headphonesIcon.alpha = 0.0
@@ -179,7 +182,7 @@ class MapObjectAnnotationView: MapAnnotationView {
                     }, completion: { _ in }
                 )
                 
-                layer.zPosition = Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.object.location.floor)
+                layer.zPosition = Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.floor)
             } else {
                 setContentForCurrentMode(withAnimation: true)
             }
@@ -194,8 +197,9 @@ class MapObjectAnnotationView: MapAnnotationView {
     private func loadImage() {
         if !imageLoaded {
             if let annotation = objectAnnotation {
-                thumbImageView.loadImageAsynchronously(fromUrl: annotation.object.thumbnailUrl, withCropRect: annotation.object.thumbnailCropRect)
-                imageLoaded = true
+                //thumbImageView.loadImageAsynchronously(fromUrl: annotation.imageUrl, withCropRect: annotation.object.thumbnailCropRect)
+				thumbImageView.kf.setImage(with: annotation.thumbnailUrl)
+				imageLoaded = true
             }
         }
     }
@@ -215,7 +219,7 @@ class MapObjectAnnotationView: MapAnnotationView {
             imageLoaded = false
             
             
-            layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.object.location.floor)
+            layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
             break
             
         case .maximized:
@@ -224,7 +228,7 @@ class MapObjectAnnotationView: MapAnnotationView {
             
             loadImage()
             
-            layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.object.location.floor)
+            layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
             break
         }
         

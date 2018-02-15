@@ -18,6 +18,7 @@ class MapViewController: UIViewController {
     
     enum Mode {
         case allInformation
+		case artwork
         case location
         case tour
     }
@@ -50,9 +51,6 @@ class MapViewController: UIViewController {
     // Map View
     let mapView:MapView
     let mapViewBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
-    
-    var tourMapState:MapState? = nil
-    var allInformationMapState:MapState? = nil
 
     // Floor Selector
     let floorSelectorVC = MapFloorSelectorViewController()
@@ -154,11 +152,7 @@ class MapViewController: UIViewController {
         // Switch modes
         mode = .allInformation
         
-        if let mapState = allInformationMapState {
-            //restoreMapState(toState: mapState)
-        } else {
-            mapView.showFullMap(useDefaultHeading: true)
-        }
+		mapView.showFullMap(useDefaultHeading: true)
     }
     
     // Show a news item (location) on the map
@@ -178,10 +172,28 @@ class MapViewController: UIViewController {
         // Zoom in on the item
         mapView.zoomIn(onCenterCoordinate: item.location!.coordinate);
     }
+	
+	func showArtwork(artwork: AICSearchedArtworkModel) {
+		mode = .artwork
+		
+		// Add location annotation the floor model
+		let floor = model.floors[artwork.location.floor]
+		let artworkAnnotation = MapObjectAnnotation(searchedArtwork: artwork)
+		
+		setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
+		
+		mapView.addAnnotation(artworkAnnotation)
+		
+		// Zoom in on the item
+		mapView.zoomIn(onCenterCoordinate: artwork.location.coordinate)
+		
+		// Select the annotation (which eventually updates it's view)
+		mapView.selectAnnotation(artworkAnnotation, animated: true)
+	}
     
     // Shows all the objects on a tour, with active/inactive
     // states depending on which floor is selected.
-    func showTour(forTour tourModel:AICTourModel, andRestoreState:Bool = false) {
+    func showTour(forTour tourModel:AICTourModel) {
         mode = .tour
         
         // Find the stops for this floor and set them on the model
@@ -200,16 +212,14 @@ class MapViewController: UIViewController {
         setCurrentFloor(forFloorNum: startFloor, andResetMap: false)
         mapView.showAnnotations(annotations, animated: false)
         
-        if andRestoreState && tourMapState != nil {
-            restoreMapState(toState: tourMapState!)
-        } else {
-            showTourOverview(forTourModel: tourModel)
-        }
+        showTourOverview(forTourModel: tourModel)
     }
     
     private func updateMapForModeChange(andStorePreviousMode previousMode:Mode) {
         // Save our state
-        saveMapState(forMode: previousMode);
+		if let selectedAnnotation = mapView.selectedAnnotations.first {
+			mapView.deselectAnnotation(selectedAnnotation, animated: false)
+		}
         
         // Clear the active annotations from the previous mode
         clearActiveAnnotations()
@@ -219,42 +229,12 @@ class MapViewController: UIViewController {
         mapView.removeAnnotations(mapView.annotations)
         
         isSwitchingModes = true
-        
     }
     
     // Go through each floor and clear out it's location + tour objects
     private func clearActiveAnnotations() {
         for floor in model.floors {
             floor.clearActiveAnnotations()
-        }
-    }
-    
-    // Take a snapshot for restoring map state when returning to mode
-    private func saveMapState(forMode mode:Mode) {
-        let selectedAnnotation = mapView.selectedAnnotations.first
-        if selectedAnnotation != nil {
-            mapView.deselectAnnotation(selectedAnnotation, animated: false)
-        }
-        
-        switch mode {
-        case .tour:
-            tourMapState = MapState(camera:mapView.camera.copy() as! MKMapCamera, floor: currentFloor, selectedAnnotation: selectedAnnotation)
-            
-        case .allInformation:
-            allInformationMapState = MapState(camera:mapView.camera.copy() as! MKMapCamera, floor: currentFloor, selectedAnnotation: selectedAnnotation)
-            print("Save altitude: \(allInformationMapState!.camera.altitude)")
-        default:
-            return
-        }
-    }
-    
-    private func restoreMapState(toState state:MapState) {
-        mapView.camera = state.camera
-        
-        setCurrentFloor(forFloorNum: state.floor)
-        
-        if let annotation = state.selectedAnnotation {
-            mapView.selectAnnotation(annotation, animated: false)
         }
     }
     
@@ -288,7 +268,7 @@ class MapViewController: UIViewController {
         // Select the annotation
         for floor in model.floors {
             for annotation in floor.tourStopAnnotations {
-                if annotation.object.nid == stop.object.nid {
+                if annotation.nid == stop.object.nid {
                     // Go to that floor
                     setCurrentFloor(forFloorNum: stop.object.location.floor, andResetMap: false)
                     
@@ -381,11 +361,15 @@ class MapViewController: UIViewController {
             updateAllInformationAnnotations(isSwitchingFloors: forceUpdate)
             updateAllInformationAnnotationViews()
             break
-            
+			
         case .tour:
             updateTourAnnotationViews()
             break
-            
+			
+		case .artwork:
+			updateArtworkAnnotationView()
+			break
+			
         case .location:
             updateNewsLocationAnnotationViews()
             break
@@ -454,7 +438,7 @@ class MapViewController: UIViewController {
             for annotation in model.floors[currentFloor].objectAnnotations {
                 //if let annotation = annotation as? MKAnnotation {
                     if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-                        let distance = centerCoord.distance(from: annotation.location)
+						let distance = centerCoord.distance(from: annotation.clLocation)
                         if distance < 10 {
                             if view.isSelected == false {
                                 view.mode = .maximized
@@ -505,6 +489,10 @@ class MapViewController: UIViewController {
             }
         }
     }
+	
+	private func updateArtworkAnnotationView() {
+		
+	}
 
     private func updateNewsLocationAnnotationViews() {
         for floor in model.floors {
@@ -652,14 +640,18 @@ extension MapViewController : MKMapViewDelegate {
             let annotation = view.annotation as! MapObjectAnnotation
             
             // Switch floors
-            if currentFloor != annotation.object.location.floor {
-                setCurrentFloor(forFloorNum: annotation.object.location.floor, andResetMap: false)
+            if currentFloor != annotation.floor {
+                setCurrentFloor(forFloorNum: annotation.floor, andResetMap: false)
             }
             
             mapView.setCenter(annotation.coordinate, animated: true)
             
             if mode == .tour {
-                delegate?.mapDidSelectTourStop(artwork: annotation.object)
+				if let objectId = annotation.nid {
+					if let object = AppDataManager.sharedInstance.getObject(forID: objectId) {
+						delegate?.mapDidSelectTourStop(artwork: object)
+					}
+				}
             }
         }
         
@@ -755,9 +747,13 @@ extension MapViewController : MessageViewControllerDelegate {
 
 // MARK: Object Annotation View Delegate Methods
 extension MapViewController : MapObjectAnnotationViewDelegate {
-    func mapObjectAnnotationViewPlayPressed(_ object: MapObjectAnnotationView) {
-        if let annotation = object.annotation as? MapObjectAnnotation {
-            delegate?.mapDidPressArtworkPlayButton(artwork: annotation.object)
+    func mapObjectAnnotationViewPlayPressed(_ annotationView: MapObjectAnnotationView) {
+        if let annotation = annotationView.annotation as? MapObjectAnnotation {
+			if let objectId = annotation.nid {
+				if let object = AppDataManager.sharedInstance.getObject(forID: objectId) {
+					delegate?.mapDidPressArtworkPlayButton(artwork: object)
+				}
+			}
         }
     }
 }

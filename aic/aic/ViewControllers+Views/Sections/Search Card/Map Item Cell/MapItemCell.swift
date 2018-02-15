@@ -26,6 +26,9 @@ class MapItemCell : UICollectionViewCell {
 		iconImageView.backgroundColor = .clear
 		iconImageView.contentMode = .scaleAspectFill
 		iconImageView.clipsToBounds = true
+		iconImageView.layer.cornerRadius = 24
+		iconImageView.layer.borderColor = UIColor.white.cgColor
+		iconImageView.layer.borderWidth = 1
 	}
 	
 	func setItemIcon(image: UIImage) {
