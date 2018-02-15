@@ -16,10 +16,11 @@ protocol FilterMenuDelegate: class {
 ///
 /// View for filter buttons by content category (Suggested, Artworks, Tours, Exhibitions)
 class ResultsFilterMenuView : UIView {
-	private let suggestedButton: UIButton = UIButton()
-	private let artworksButton: UIButton = UIButton()
-	private let toursButton: UIButton = UIButton()
-	private let exhibitionsButton: UIButton = UIButton()
+	private let scrollView: UIScrollView = UIScrollView()
+	let suggestedButton: UIButton = UIButton()
+	let artworksButton: UIButton = UIButton()
+	let toursButton: UIButton = UIButton()
+	let exhibitionsButton: UIButton = UIButton()
 	
 	static let menuHeight: CGFloat = 45
 	
@@ -29,6 +30,10 @@ class ResultsFilterMenuView : UIView {
 		super.init(frame: CGRect.zero)
 		
 		self.backgroundColor = .aicDarkGrayColor
+		
+		scrollView.backgroundColor = .clear
+		scrollView.showsHorizontalScrollIndicator = false
+		scrollView.contentInset = UIEdgeInsetsMake(0, 16, 0, 16)
 		
 		suggestedButton.setTitle("Suggested", for: .normal)
 		suggestedButton.titleLabel?.font = .aicSearchResultsFilterFont
@@ -59,12 +64,17 @@ class ResultsFilterMenuView : UIView {
 		toursButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
 		exhibitionsButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
 		
-		self.addSubview(suggestedButton)
-		self.addSubview(artworksButton)
-		self.addSubview(toursButton)
-		self.addSubview(exhibitionsButton)
+		self.addSubview(scrollView)
+		scrollView.addSubview(suggestedButton)
+		scrollView.addSubview(artworksButton)
+		scrollView.addSubview(toursButton)
+		scrollView.addSubview(exhibitionsButton)
 		
 		createConstraints()
+		
+		self.layoutIfNeeded()
+		scrollView.contentSize.width = exhibitionsButton.frame.origin.x + exhibitionsButton.frame.width
+		scrollView.contentSize.height = self.frame.height
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -72,21 +82,30 @@ class ResultsFilterMenuView : UIView {
 	}
 	
 	func createConstraints() {
-		suggestedButton.autoPinEdge(.top, to: .top, of: self, withOffset: 0)
-		suggestedButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		scrollView.autoPinEdgesToSuperviewEdges()
+		
+		suggestedButton.autoPinEdge(.top, to: .top, of: scrollView, withOffset: 0)
+		suggestedButton.autoPinEdge(.leading, to: .leading, of: scrollView)
 		suggestedButton.autoSetDimension(.height, toSize: 40)
 		suggestedButton.autoPinEdge(.trailing, to: .leading, of: artworksButton, withOffset: -22)
 		
-		artworksButton.autoPinEdge(.top, to: .top, of: self, withOffset: 0)
+		artworksButton.autoPinEdge(.top, to: .top, of: scrollView, withOffset: 0)
 		artworksButton.autoSetDimension(.height, toSize: 40)
 		artworksButton.autoPinEdge(.trailing, to: .leading, of: toursButton, withOffset: -22)
 		
-		toursButton.autoPinEdge(.top, to: .top, of: self, withOffset: 0)
+		toursButton.autoPinEdge(.top, to: .top, of: scrollView, withOffset: 0)
 		toursButton.autoSetDimension(.height, toSize: 40)
 		toursButton.autoPinEdge(.trailing, to: .leading, of: exhibitionsButton, withOffset: -22)
 		
-		exhibitionsButton.autoPinEdge(.top, to: .top, of: self, withOffset: 0)
+		exhibitionsButton.autoPinEdge(.top, to: .top, of: scrollView, withOffset: 0)
 		exhibitionsButton.autoSetDimension(.height, toSize: 40)
+	}
+	
+	override func updateConstraints() {
+		super.updateConstraints()
+		
+		scrollView.contentSize.width = exhibitionsButton.frame.origin.x + exhibitionsButton.frame.width
+		scrollView.contentSize.height = self.frame.height
 	}
 	
 	func setSelected(filter: Common.Search.Filter) {

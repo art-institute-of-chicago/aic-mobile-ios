@@ -140,6 +140,11 @@ class SearchNavigationController : CardNavigationController {
 	@objc func updateLanguage() {
 		searchBar.placeholder = "Search Prompt".localized(using: "Search")
 		resultsVC.tableView.reloadData()
+		filterMenuView.suggestedButton.setTitle("Suggested".localized(using: "Search"), for: .normal)
+		filterMenuView.artworksButton.setTitle("Artworks".localized(using: "Search"), for: .normal)
+		filterMenuView.toursButton.setTitle("Tours".localized(using: "Search"), for: .normal)
+		filterMenuView.exhibitionsButton.setTitle("Exhibitions".localized(using: "Search"), for: .normal)
+		filterMenuView.updateConstraints()
 	}
 	
 	// MARK: Show/Hide
