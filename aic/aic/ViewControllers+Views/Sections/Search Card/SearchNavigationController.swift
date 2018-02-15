@@ -14,16 +14,19 @@ class SearchNavigationController : CardNavigationController {
 	let searchBar: UISearchBar = UISearchBar()
 	let searchButton: UIButton = UIButton()
 	let dividerLine: UIView = UIView()
+	let filterMenuView: ResultsFilterMenuView = ResultsFilterMenuView()
 	let resultsVC: ResultsTableViewController = ResultsTableViewController()
 	var currentTableView: UITableView
     
-    let slideAnimator: SearchSlideAnimator = SearchSlideAnimator()
+    private let slideAnimator: SearchSlideAnimator = SearchSlideAnimator()
 	
-	let searchResultsTopMargin: CGFloat = 80
+	private var searchBarLeadingConstraint: NSLayoutConstraint? = nil
+	private var searchBarActiveLeading: CGFloat = 2
+	private var searchBarInactiveLeading: CGFloat = 32
 	
-	var searchBarLeadingConstraint: NSLayoutConstraint? = nil
-	var searchBarActiveLeading: CGFloat = 2
-	var searchBarInactiveLeading: CGFloat = 32
+	private var resultsTopMarginConstraint: NSLayoutConstraint? = nil
+	private let resultsTopMargin: CGFloat = 80
+	private let resultsWithFilterMenuTopMargin: CGFloat = 80 + ResultsFilterMenuView.menuHeight
 	
 	weak var sectionsVC: SectionsViewController? = nil
 	
@@ -75,6 +78,10 @@ class SearchNavigationController : CardNavigationController {
 		
 		dividerLine.backgroundColor = .white
 		
+		filterMenuView.isHidden = true
+		filterMenuView.delegate = self
+		filterMenuView.setSelected(filter: .empty)
+		
 		resultsVC.searchDelegate = self
 		
 		// Add subviews
@@ -87,8 +94,11 @@ class SearchNavigationController : CardNavigationController {
         resultsVC.willMove(toParentViewController: rootVC)
         rootVC.view.addSubview(resultsVC.view)
         resultsVC.didMove(toParentViewController: rootVC)
-        
-        createViewConstraints()
+		
+		// Add filter menu
+		rootVC.view.insertSubview(filterMenuView, aboveSubview: resultsVC.view)
+		
+		createViewConstraints()
         
         // NavigationController Delegate
         self.delegate = self
@@ -114,10 +124,15 @@ class SearchNavigationController : CardNavigationController {
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
 		
-        resultsVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: searchResultsTopMargin)
-        resultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
-        resultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-        resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view, withOffset: -Common.Layout.tabBarHeight)
+		resultsTopMarginConstraint = resultsVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: resultsTopMargin)
+		resultsVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
+		resultsVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
+		resultsVC.view.autoPinEdge(.bottom, to: .bottom, of: rootVC.view, withOffset: -Common.Layout.tabBarHeight - ResultsFilterMenuView.menuHeight)
+		
+		filterMenuView.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: resultsTopMargin)
+		filterMenuView.autoPinEdge(.leading, to: .leading, of: rootVC.view)
+		filterMenuView.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
+		filterMenuView.autoPinEdge(.bottom, to: .top, of: rootVC.view, withOffset: resultsTopMargin + ResultsFilterMenuView.menuHeight)
 	}
 	
 	// MARK: Language
@@ -170,6 +185,13 @@ class SearchNavigationController : CardNavigationController {
 		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
 		SearchDataManager.sharedInstance.loadExhibitions(searchText: searchText)
 		if resultsVC.filter == .empty {
+			resultsTopMarginConstraint?.constant = resultsWithFilterMenuTopMargin
+			self.view.setNeedsLayout()
+			self.view.layoutIfNeeded()
+			
+			filterMenuView.isHidden = false
+			filterMenuView.setSelected(filter: .suggested)
+			
 			resultsVC.filter = .suggested
 		}
 		else {
@@ -244,6 +266,12 @@ extension SearchNavigationController : UISearchBarDelegate {
 			loadSearch(searchText: searchText, showAutocomplete: true)
 		}
 		else {
+			resultsTopMarginConstraint?.constant = resultsTopMargin
+			self.view.setNeedsLayout()
+			self.view.layoutIfNeeded()
+			
+			filterMenuView.isHidden = true
+			
 			resultsVC.filter = .empty
 		}
 	}
@@ -330,6 +358,15 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {
+		filterMenuView.setSelected(filter: filter)
+		resultsVC.filter = filter
+	}
+}
+
+// MARK: Filter Menu Delegate
+extension SearchNavigationController : FilterMenuDelegate {
+	func filterMenuSelected(filter: Common.Search.Filter) {
+		filterMenuView.setSelected(filter: filter)
 		resultsVC.filter = filter
 	}
 }

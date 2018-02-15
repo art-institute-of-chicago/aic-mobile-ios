@@ -14,24 +14,21 @@ protocol FilterMenuDelegate: class {
 
 /// ResultsFilterMenuView
 ///
-/// View for TableView section title in the results page with buttons to filter by content category (Suggested, Artworks, Tours, Exhibitions)
-/// Example: 'On the map' section
-class ResultsFilterMenuView : UITableViewHeaderFooterView {
-	static let reuseIdentifier = "resultsFilterMenuView"
-	
-	weak var delegate: FilterMenuDelegate? = nil
-	
+/// View for filter buttons by content category (Suggested, Artworks, Tours, Exhibitions)
+class ResultsFilterMenuView : UIView {
 	private let suggestedButton: UIButton = UIButton()
 	private let artworksButton: UIButton = UIButton()
 	private let toursButton: UIButton = UIButton()
 	private let exhibitionsButton: UIButton = UIButton()
 	
-	static let cellHeight: CGFloat = 55
+	static let menuHeight: CGFloat = 45
 	
-	override init(reuseIdentifier: String?) {
-		super.init(reuseIdentifier: reuseIdentifier)
+	weak var delegate: FilterMenuDelegate? = nil
+	
+	init() {
+		super.init(frame: CGRect.zero)
 		
-		self.contentView.backgroundColor = .aicDarkGrayColor
+		self.backgroundColor = .aicDarkGrayColor
 		
 		suggestedButton.setTitle("Suggested", for: .normal)
 		suggestedButton.titleLabel?.font = .aicSearchResultsFilterFont
@@ -62,10 +59,10 @@ class ResultsFilterMenuView : UITableViewHeaderFooterView {
 		toursButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
 		exhibitionsButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
 		
-		self.contentView.addSubview(suggestedButton)
-		self.contentView.addSubview(artworksButton)
-		self.contentView.addSubview(toursButton)
-		self.contentView.addSubview(exhibitionsButton)
+		self.addSubview(suggestedButton)
+		self.addSubview(artworksButton)
+		self.addSubview(toursButton)
+		self.addSubview(exhibitionsButton)
 		
 		createConstraints()
 	}

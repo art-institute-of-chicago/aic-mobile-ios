@@ -17,6 +17,8 @@ class ResultsSectionTitleView : UITableViewHeaderFooterView {
 	
 	let titleLabel: UILabel = UILabel()
 	
+	static let titleHeight: CGFloat = 50
+	
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 		

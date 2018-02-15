@@ -15,6 +15,8 @@ class ResultsContentTitleView : UITableViewHeaderFooterView {
 	let contentTitleLabel: UILabel = UILabel()
 	let seeAllButton: UIButton = UIButton()
 	
+	static let titleHeight: CGFloat = 65
+	
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 		
@@ -41,15 +43,15 @@ class ResultsContentTitleView : UITableViewHeaderFooterView {
 	}
 	
 	override func updateConstraints() {
-		dividerLine.autoPinEdge(.top, to: .top, of: self)
+		dividerLine.autoPinEdge(.top, to: .top, of: self, withOffset: 8)
 		dividerLine.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
 		
-		contentTitleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 17)
+		contentTitleLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 17)
 		contentTitleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		
-		seeAllButton.autoAlignAxis(toSuperviewMarginAxis: .horizontal)
+		seeAllButton.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 21)
 		seeAllButton.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -8)
 		
 		super.updateConstraints()
