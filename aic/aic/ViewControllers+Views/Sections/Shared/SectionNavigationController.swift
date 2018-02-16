@@ -98,7 +98,7 @@ class SectionNavigationController : UINavigationController {
 		if isRootVC {
 			if sectionModel.nid == Section.home.rawValue {
 				if let firstName = UserDefaults.standard.object(forKey: Common.UserDefaults.memberFirstNameUserDefaultsKey) as? String {
-					titleText = "Welcome".localized(using: "Home") + ", " + firstName
+					titleText = "Welcome".localized(using: "Sections") + ", " + firstName
 				}
 			}
 			else {
