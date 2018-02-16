@@ -19,5 +19,6 @@ struct AICEventModel {
 	let startDate: Date
 	let endDate: Date
 	
-	let isTicketed: Bool
+	let eventUrl: URL?
+	let buttonText: String
 }

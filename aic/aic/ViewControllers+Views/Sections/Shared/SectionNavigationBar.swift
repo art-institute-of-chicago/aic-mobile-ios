@@ -61,7 +61,7 @@ class SectionNavigationBar : UIView {
         
         addParallexEffect(toView: backdropImageView, left: 0, right: 0, top: -30, bottom: 30)
 		
-		titleLabel.numberOfLines = 0
+		titleLabel.numberOfLines = 1
 		if section.nid == Section.home.rawValue {
 			titleLabel.font = .aicSectionBigTitleFont
 			titleBottomMargin = -1
@@ -71,6 +71,7 @@ class SectionNavigationBar : UIView {
 		}
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = NSTextAlignment.center
+		titleLabel.lineBreakMode = .byClipping
 		titleLabel.adjustsFontSizeToFitWidth = true
 		titleLabel.minimumScaleFactor = 0.2
 		titleLabel.text = section.title
@@ -194,8 +195,8 @@ class SectionNavigationBar : UIView {
 		NSLayoutConstraint.autoSetPriority(.defaultLow) {
 			titleLabel.autoPinEdge(.top, to: .top, of: headerView, withOffset: titleTopMargin)
 		}
-		titleLabel.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 0)
-		titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView, withOffset: 0)
+		titleLabel.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 16)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView, withOffset: -16)
 		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
 			titleLabel.autoPinEdge(.bottom, to: .bottom, of: headerView, withOffset: -titleBottomMargin, relation: .lessThanOrEqual)
 		}

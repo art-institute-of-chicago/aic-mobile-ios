@@ -34,7 +34,7 @@ class SearchDataManager : NSObject {
 	@objc func loadAutocompleteStrings(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.autocompleteEndpoint]!
-		url += "?q=" + searchText
+		url += "?q=" + searchText + "&resources=artworks,tours,exhibitions"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
@@ -64,7 +64,15 @@ class SearchDataManager : NSObject {
 		let urlRequest = URLRequest(url:  URL(string: url)!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
-			"_source": true,
+			"fields": [
+				"id",
+				"is_on_view",
+				"title",
+				"artist_display",
+				"image_iiif_url",
+				"gallery_id",
+				"latlon"
+			],
 			"sort": ["_score"],
 			"query": [
 				"bool": [
@@ -107,7 +115,7 @@ class SearchDataManager : NSObject {
 	@objc func loadTours(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.toursEndpoint]!
-		url += "/search?q=" + searchText + "&limit=20"
+		url += "/search?q=" + searchText + "&limit=20&fields=id"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
@@ -143,7 +151,16 @@ class SearchDataManager : NSObject {
 		let urlRequest = URLRequest(url:  URL(string: url)!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
-			"_source": true,
+			"fields": [
+				"id",
+				"title",
+				"short_description",
+				"image",
+				"gallery_id",
+				"web_url",
+				"start_at",
+				"end_at"
+			],
 			"sort": ["_score"],
 			"query": [
 				"bool": [

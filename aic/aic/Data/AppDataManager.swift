@@ -153,7 +153,16 @@ class AppDataManager {
 		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]! + "/search?limit=99")!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
-			"fields": true,
+			"fields": [
+				"id",
+				"title",
+				"short_description",
+				"image",
+				"gallery_id",
+				"web_url",
+				"start_at",
+				"end_at"
+			],
 			"sort": ["start_at", "end_at"],
 			"query": [
 				"bool": [
@@ -260,17 +269,27 @@ class AppDataManager {
 //    }
 	
 	func downloadEvents() {
-		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]! + "/search?limit=200")!)
+		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]! + "/search?limit=500")!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
-			"_source": true,
+			"fields": [
+				"id",
+				"title",
+				"description",
+				"short_description",
+				"image",
+				"start_at",
+				"end_at",
+				"button_text",
+				"button_url"
+			],
 			"sort": ["start_at", "end_at"],
 			"query": [
 				"bool": [
 					"must": [
 						[
 							"range": [
-								"start_at": ["lte": "now+1w"]
+								"start_at": ["lte": "now+2w"]
 							]
 						],
 						[
@@ -426,23 +445,6 @@ class AppDataManager {
 		return eventItems
 	}
 	
-	func getEventBuyTicketURL(event: AICEventModel) -> URL? {
-		if event.isTicketed {
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "M/d/yyyy"
-			//DateFormatter.localizedString(from: endDate, dateStyle: .medium, timeStyle: .medium)
-			let dateFormatted = dateFormatter.string(from: event.startDate)
-			
-			var url: String = "https://sales.artic.edu/Events/Event/"
-			url += String(event.eventId)
-			url += "?date="
-			url += dateFormatted
-			
-			return URL(string: url)
-		}
-		return nil
-	}
-    
     // Find the tours this object is on, and filter out a tour if sepecified
     func getRelatedTours(forObject object:AICObjectModel, excludingTour:AICTourModel? = nil) -> [AICTourModel] {
         var relatedTours:[AICTourModel] = []

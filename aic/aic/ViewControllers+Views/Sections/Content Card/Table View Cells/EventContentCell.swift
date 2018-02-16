@@ -22,8 +22,6 @@ class EventContentCell : UITableViewCell {
 	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
 	let descriptionVerticalSpacingMin: CGFloat = 32
 	
-	var buyTicketsUrl: URL? = nil
-	
 	weak var delegate: EventContentCellDelegate? = nil
 	
 	override func awakeFromNib() {
@@ -49,13 +47,13 @@ class EventContentCell : UITableViewCell {
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: descriptionText.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
 			
-			buyTicketsUrl = AppDataManager.sharedInstance.getEventBuyTicketURL(event: eventModel)
-			if buyTicketsUrl == nil {
+			if eventModel.eventUrl == nil {
 				buyTicketsButton.isEnabled = false
 				buyTicketsButton.isHidden = true
 				descriptionToImageVerticalSpacing.constant = descriptionVerticalSpacingMin
 			}
 			else {
+				buyTicketsButton.setTitle(eventModel.buttonText, for: .normal)
 				buyTicketsButton.addTarget(self, action: #selector(buyTicketsButtonPressed(button:)), for: .touchUpInside)
 			}
 			
@@ -65,6 +63,6 @@ class EventContentCell : UITableViewCell {
 	}
 	
 	@objc func buyTicketsButtonPressed(button: UIButton) {
-		self.delegate?.eventBuyTicketsButtonPressed(url: buyTicketsUrl!)
+		self.delegate?.eventBuyTicketsButtonPressed(url: eventModel!.eventUrl!)
 	}
 }

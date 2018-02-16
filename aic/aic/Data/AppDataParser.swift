@@ -13,6 +13,7 @@ class AppDataParser {
         case objectParseFailure
         case missingKey(key:String)
         case badURLString(string:String)
+		case badBoolString(string:String)
 		case badFloatString(string:String)
         case badIntString(string:String)
         case badCLLocationString(string:String)
@@ -154,8 +155,9 @@ class AppDataParser {
 		let title = try getString(fromJSON: eventJson, forKey: "title")
 		let longDescription = try getString(fromJSON: eventJson, forKey: "description")
 		let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description")
-		let imageURL = try getURL(fromJSON: eventJson, forKey: "image")
-		let isTicketed = try getBool(fromJSON: eventJson, forKey: "is_ticketed")
+		let imageUrl: URL = try getURL(fromJSON: eventJson, forKey: "image")!
+		let eventUrl = try getURL(fromJSON: eventJson, forKey: "button_url", optional: true)
+		let buttonText = try getString(fromJSON: eventJson, forKey: "button_text", optional: true)
 		
 		// Get date exibition ends
 		let startDateString = try getString(fromJSON: eventJson, forKey: "start_at")
@@ -180,10 +182,11 @@ class AppDataParser {
 							 title: title,
 							 shortDescription: shortDescription,
 							 longDescription: longDescription,
-							 imageUrl: imageURL,
+							 imageUrl: imageUrl,
 							 startDate: startDate,
 							 endDate: endDate,
-							 isTicketed: isTicketed
+							 eventUrl: eventUrl,
+							 buttonText: buttonText
 		)
 	}
     
@@ -237,7 +240,7 @@ class AppDataParser {
 			var translations: [Common.Language : AICGeneralInfoTranslationModel] = [:]
 			let translationsJSON = generalInfoJSON["translations"].array
 			
-			let translationEng = try parseTranslation(generalInfoJSON: generalInfoJSON)
+			let translationEng = try parseTranslation(generalInfoJSON: generalInfoJSON, optional: true)
 			translations[.english] = translationEng
 			
 			for translationJSON in translationsJSON! {
@@ -263,15 +266,15 @@ class AppDataParser {
 		return AICGeneralInfoModel(nid: 0, translations: [Common.Language : AICGeneralInfoTranslationModel]())
 	}
 	
-	func parseTranslation(generalInfoJSON: JSON) throws -> AICGeneralInfoTranslationModel {
-		let museumHours	= try getString(fromJSON: generalInfoJSON, forKey: "museum_hours")
-		let homeMemberPrompt = try getString(fromJSON: generalInfoJSON, forKey: "home_member_prompt_text")
-		let audioTitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_title")
-		let audioSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_subtitle")
-		let mapTitle = try getString(fromJSON: generalInfoJSON, forKey: "map_title")
-		let mapSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "map_subtitle")
-		let infoTitle = try getString(fromJSON: generalInfoJSON, forKey: "info_title")
-		let infoSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "info_subtitle")
+	func parseTranslation(generalInfoJSON: JSON, optional: Bool = false) throws -> AICGeneralInfoTranslationModel {
+		let museumHours	= try getString(fromJSON: generalInfoJSON, forKey: "museum_hours", optional: optional)
+		let homeMemberPrompt = try getString(fromJSON: generalInfoJSON, forKey: "home_member_prompt_text", optional: optional)
+		let audioTitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_title", optional: optional)
+		let audioSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_subtitle", optional: optional)
+		let mapTitle = try getString(fromJSON: generalInfoJSON, forKey: "map_title", optional: optional)
+		let mapSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "map_subtitle", optional: optional)
+		let infoTitle = try getString(fromJSON: generalInfoJSON, forKey: "info_title", optional: optional)
+		let infoSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "info_subtitle", optional: optional)
 		
 		return AICGeneralInfoTranslationModel(museumHours: museumHours,
 								   homeMemberPrompt: homeMemberPrompt,
@@ -315,7 +318,7 @@ class AppDataParser {
         displayTitle = displayTitle.replacingOccurrences(of: "Galleries ", with: "")
         
         //Check for gallery disabled
-        let isOpen:Bool = !(try getBool(fromJSON: galleryJSON!, forKey:"closed"))
+		let isOpen: Bool = !(try getBool(fromJSON: galleryJSON!, forKey:"closed"))
         
         let location = try getCLLocation2d(fromJSON: galleryJSON!, forKey: "location")
         
@@ -518,7 +521,7 @@ class AppDataParser {
 	}
 	
 	func parseTranslation(audioFileJSON: JSON) throws -> AICAudioFileTranslationModel {
-		let url         = try getURL(fromJSON: audioFileJSON, forKey: "audio_file_url")
+		let url: URL    = try getURL(fromJSON: audioFileJSON, forKey: "audio_file_url")!
 		let transcript  = try getString(fromJSON: audioFileJSON, forKey: "audio_transcript")
 		
 		var trackTitle: String?
@@ -558,7 +561,7 @@ class AppDataParser {
     
     fileprivate func parse(tourJSON: JSON) throws -> AICTourModel {
         let nid                 = try getInt(fromJSON: tourJSON, forKey: "nid")
-        let imageUrl            = try getURL(fromJSON: tourJSON, forKey: "image_url")
+		let imageUrl: URL       = try getURL(fromJSON: tourJSON, forKey: "image_url")!
         
         let audioFileID         = try getInt(fromJSON: tourJSON, forKey: "tour_audio")
         let audioFile           = try getAudioFile(forNID:audioFileID)
@@ -672,7 +675,7 @@ class AppDataParser {
 		for (exhibitionId, exhibitionImageJSON):(String, JSON) in exhibitionImagesJSON.dictionaryValue {
 			do {
 				try handleParseError({
-					let imageUrl: URL = try getURL(fromJSON: exhibitionImageJSON, forKey: "image_url")
+					let imageUrl: URL = try getURL(fromJSON: exhibitionImageJSON, forKey: "image_url")!
 					exhibitionImages[Int(exhibitionId)!] = imageUrl
 				})
 			}
@@ -852,22 +855,28 @@ class AppDataParser {
     // MARK: Error-Throwing data parsing functions
     
     // Try to unwrap a string from JSON
-    private func getString(fromJSON json:JSON, forKey key:String) throws -> String {
+	private func getString(fromJSON json:JSON, forKey key:String, optional: Bool = false) throws -> String {
         guard let str = json[key].string else {
-            throw ParseError.missingKey(key: key)
+			if optional == false {
+            	throw ParseError.missingKey(key: key)
+			}
+			else {
+				return ""
+			}
         }
         
         return str
     }
     
-    private func getBool(fromJSON json:JSON, forKey key:String) throws -> Bool {
-        
+	private func getBool(fromJSON json:JSON, forKey key:String, optional: Bool = false, optionalValue: Bool = false) throws -> Bool {
         guard let bool = json[key].bool else {
-            
-            let bool = try getString(fromJSON: json, forKey: key)
-            
-            return bool == "True"
-            
+			if optional == false {
+				let str = try getString(fromJSON: json, forKey: key)
+				throw ParseError.badBoolString(string: str)
+			}
+			else {
+				return optionalValue
+			}
         }
         
         return bool
@@ -947,44 +956,22 @@ class AppDataParser {
     }
     
     // Try to get a URL from a string
-    private func getURL(fromJSON json:JSON, forKey key:String) throws -> URL {
+	private func getURL(fromJSON json:JSON, forKey key:String, optional: Bool = false) throws -> URL? {
         // Get string val and replace URL with public URL (needs to be fixed in data)
         var stringVal   = try getString(fromJSON: json, forKey: key)
         stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataInternalPrefix, with: Common.DataConstants.appDataExternalPrefix)
 		stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataLocalPrefix, with: Common.DataConstants.appDataExternalPrefix)
         
-        var url = URL(string: stringVal)
-        
-		// TODO: Remove this if unecessary
-		// If we couldn't load the URL, try to parse it out from junk
-        // (Again, needs to be fixed in data, news feeds namely)
-        if url == nil {
-            // Find URL in string
-            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            let matches = detector.matches(in: stringVal, options: [], range: NSMakeRange(0, stringVal.count))
-            
-            if matches.count != 1 {
-                throw ParseError.badURLString(string: stringVal)
-            }
-            
-            // Get the URL from the string
-            var matchString = (stringVal as NSString).substring(with: matches[0].range)
-			
-            // Take out backslashes, replace URLs
-            matchString = matchString.replacingOccurrences(of: "\\", with: "")
-            
-            // Create NSURL
-            url = URL(string: matchString)
-            
-            // No URL here, throw an error
-            if url == nil {
-                throw ParseError.badURLString(string: stringVal)
-            }
-            
-            return url!
-        } else {
-            return url!
-        }
+        guard let url = URL(string: stringVal) else {
+			if optional == false {
+				throw ParseError.badURLString(string: stringVal)
+			}
+			else {
+				return nil
+			}
+		}
+		
+		return url
     }
     
     // Try to Parse out the lat + long from a CMS location string,
@@ -1092,6 +1079,10 @@ class AppDataParser {
         catch ParseError.missingKey(let key) {
             errorMessage = "The key \"\(key)\" trying to be retrieved does not exist."
         }
+			
+		catch ParseError.badBoolString(let string) {
+			errorMessage = "Could not cast string \"\(string)\" to Bool"
+		}
             
         catch ParseError.badIntString(let string) {
             errorMessage = "Could not cast string \"\(string)\" to Int"
