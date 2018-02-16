@@ -123,6 +123,7 @@ struct Common {
 
         static let memberInfoIDUserDefaultsKey = "AICMemberInfoName"
         static let memberInfoZipUserDefaultsKey = "AICMemberInfoZip"
+		static let memberFirstNameUserDefaultsKey = "AICMemberFirstName"
         static let memberInfoSelectedMemberDefaultsKey = "AICMemberInfoSelectedMember"
 
         static let onDiskAppDataLastModifiedString = "AICAppDataLastModified"

@@ -14,8 +14,6 @@ class MemberCardViewController : UIViewController {
 	let loadingIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
 	let cardView: MemberCardView = MemberCardView()
 	
-	let memberDataManager: MemberDataManager = MemberDataManager()
-	
 	init() {
 		super.init(nibName: nil, bundle: nil)
 		
@@ -33,7 +31,7 @@ class MemberCardViewController : UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		memberDataManager.delegate = self
+		MemberDataManager.sharedInstance.delegate = self
 		
 		self.view.backgroundColor = .white
 		
@@ -120,7 +118,7 @@ class MemberCardViewController : UIViewController {
 	// MARK: Load Member
 	
 	private func loadMemberFromUserDefaults() {
-		if let memberInfo = memberDataManager.getSavedMember() {
+		if let memberInfo = MemberDataManager.sharedInstance.getSavedMember() {
 			loadMember(memberId: memberInfo.memberID, zipCode: memberInfo.memberZip)
 		} else {
 			showLogin()
@@ -128,7 +126,7 @@ class MemberCardViewController : UIViewController {
 	}
 	
 	private func loadMember(memberId: String, zipCode: String) {
-		memberDataManager.validateMember(memberID: memberId, zipCode: zipCode)
+		MemberDataManager.sharedInstance.validateMember(memberID: memberId, zipCode: zipCode)
 		showLoading()
 	}
 	
@@ -144,7 +142,7 @@ class MemberCardViewController : UIViewController {
 	}
 	
 	@objc private func changeInfoButtonPressed(button: UIButton) {
-		if let memberInfo = memberDataManager.getSavedMember() {
+		if let memberInfo = MemberDataManager.sharedInstance.getSavedMember() {
 			loginView.memberIDTextField.text = memberInfo.memberID
 			loginView.memberZipCodeTextField.text = memberInfo.memberZip
 		}
@@ -152,11 +150,11 @@ class MemberCardViewController : UIViewController {
 	}
 	
 	@objc private func switchCardholderButtonPressed(button: UIButton) {
-		if let memberCard = memberDataManager.currentMemberCard {
-			memberDataManager.currentMemberNameIndex = memberDataManager.currentMemberNameIndex < memberCard.memberNames.count - 1 ? memberDataManager.currentMemberNameIndex + 1 : 0
-			cardView.memberNameLabel.text = memberCard.memberNames[memberDataManager.currentMemberNameIndex]
+		if let memberCard = MemberDataManager.sharedInstance.currentMemberCard {
+			MemberDataManager.sharedInstance.currentMemberNameIndex = MemberDataManager.sharedInstance.currentMemberNameIndex < memberCard.memberNames.count - 1 ? MemberDataManager.sharedInstance.currentMemberNameIndex + 1 : 0
+			cardView.memberNameLabel.text = memberCard.memberNames[MemberDataManager.sharedInstance.currentMemberNameIndex]
 			
-			memberDataManager.saveCurrentMember()
+			MemberDataManager.sharedInstance.saveCurrentMember()
 		}
 	}
 	
@@ -171,7 +169,7 @@ class MemberCardViewController : UIViewController {
 
 extension MemberCardViewController : MemberDataManagerDelegate {
 	func memberCardDidLoadForMember(memberCard: AICMemberCardModel) {
-		cardView.setContent(memberCard: memberCard, memberNameIndex: memberDataManager.currentMemberNameIndex)
+		cardView.setContent(memberCard: memberCard, memberNameIndex: MemberDataManager.sharedInstance.currentMemberNameIndex)
 		showCard()
 	}
 	

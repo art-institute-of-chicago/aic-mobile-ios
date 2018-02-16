@@ -71,6 +71,8 @@ class SectionNavigationBar : UIView {
 		}
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = NSTextAlignment.center
+		titleLabel.adjustsFontSizeToFitWidth = true
+		titleLabel.minimumScaleFactor = 0.2
 		titleLabel.text = section.title
 		
 		if section.nid == Section.home.rawValue {

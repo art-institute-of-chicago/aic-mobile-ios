@@ -111,7 +111,7 @@ class AudioGuideNavigationController : SectionNavigationController {
 		let curNumInputChars = currentInputValue.count
 		
 		if curNumInputChars == 0 {
-			sectionNavigationBar.titleLabel.text = rootViewController.navigationItem.title?.localized(using: "Sections")
+			updateLanguage() // resets to title for current language
 		} else {
 			sectionNavigationBar.titleLabel.text = currentInputValue
 		}

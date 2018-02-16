@@ -12,6 +12,8 @@ protocol MemberDataManagerDelegate : class {
 }
 
 class MemberDataManager {
+	static let sharedInstance = MemberDataManager()
+	
 	private (set) var currentMemberCard: AICMemberCardModel? = nil
 	var currentMemberNameIndex: Int = 0
 	
@@ -203,9 +205,16 @@ class MemberDataManager {
 		
 		let defaults = UserDefaults.standard
 		
+		var firstName: String = ""
+		if currentMemberNameIndex < memberCard.memberNames.count {
+			let fullName: String = memberCard.memberNames[currentMemberNameIndex]
+			firstName = String(describing: fullName.split(separator: " ").first!)
+		}
+			
 		// Store
 		defaults.set(memberCard.cardId, forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey)
 		defaults.set(memberCard.memberZip, forKey: Common.UserDefaults.memberInfoZipUserDefaultsKey)
+		defaults.set(firstName, forKey: Common.UserDefaults.memberFirstNameUserDefaultsKey)
 		defaults.set(currentMemberNameIndex, forKey: Common.UserDefaults.memberInfoSelectedMemberDefaultsKey)
 		
 		defaults.synchronize()

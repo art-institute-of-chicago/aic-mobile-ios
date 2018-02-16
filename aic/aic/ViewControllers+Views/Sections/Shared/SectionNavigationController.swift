@@ -96,19 +96,26 @@ class SectionNavigationController : UINavigationController {
 		
 		// Set text from CMS for rootViewControllers of audio, map and info sections
 		if isRootVC {
-			let generalInfo = AppDataManager.sharedInstance.app.generalInfo
-			if generalInfo.availableLanguages.contains(Common.currentLanguage) {
-				if sectionModel.nid == Section.audioGuide.rawValue {
-					titleText = generalInfo.translations[Common.currentLanguage]!.audioTitle
-					subtitleText = generalInfo.translations[Common.currentLanguage]!.audioSubtitle
+			if sectionModel.nid == Section.home.rawValue {
+				if let firstName = UserDefaults.standard.object(forKey: Common.UserDefaults.memberFirstNameUserDefaultsKey) as? String {
+					titleText = "Welcome".localized(using: "Home") + ", " + firstName
 				}
-				else if sectionModel.nid == Section.map.rawValue {
-					titleText = generalInfo.translations[Common.currentLanguage]!.mapTitle
-					subtitleText = generalInfo.translations[Common.currentLanguage]!.mapSubtitle
-				}
-				else if sectionModel.nid == Section.info.rawValue {
-					titleText = generalInfo.translations[Common.currentLanguage]!.infoTitle
-					subtitleText = generalInfo.translations[Common.currentLanguage]!.infoSubtitle
+			}
+			else {
+				let generalInfo = AppDataManager.sharedInstance.app.generalInfo
+				if generalInfo.availableLanguages.contains(Common.currentLanguage) {
+					if sectionModel.nid == Section.audioGuide.rawValue {
+						titleText = generalInfo.translations[Common.currentLanguage]!.audioTitle
+						subtitleText = generalInfo.translations[Common.currentLanguage]!.audioSubtitle
+					}
+					else if sectionModel.nid == Section.map.rawValue {
+						titleText = generalInfo.translations[Common.currentLanguage]!.mapTitle
+						subtitleText = generalInfo.translations[Common.currentLanguage]!.mapSubtitle
+					}
+					else if sectionModel.nid == Section.info.rawValue {
+						titleText = generalInfo.translations[Common.currentLanguage]!.infoTitle
+						subtitleText = generalInfo.translations[Common.currentLanguage]!.infoSubtitle
+					}
 				}
 			}
 		}

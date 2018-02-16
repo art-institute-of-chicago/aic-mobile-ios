@@ -67,9 +67,9 @@ class InfoSectionMemberCardViewController: UIViewController {
     fileprivate func loadMemberFromInputFields() {
         let id = memberCardView.memberIDTextField.text
         let zip = memberCardView.memberZipCodeTextField.text
-        
+		
         if id != nil && zip != nil {
-            loadMember(fromMemberInfoModel: AICMemberInfoModel(memberID: id!, memberZip: zip!))
+			loadMember(fromMemberInfoModel: AICMemberInfoModel(memberID: id!, memberZip: zip!))
         }
     }
     
