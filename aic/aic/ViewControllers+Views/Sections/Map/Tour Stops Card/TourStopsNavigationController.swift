@@ -13,7 +13,7 @@ class TourStopsNavigationController: CardNavigationController {
 	
 	private let titleLabel: UILabel = UILabel()
 	private let dividerLine: UIView = UIView()
-	private let tourStopPageVC: TourStopPageViewController = TourStopPageViewController()
+	let tourStopPageVC: TourStopPageViewController = TourStopPageViewController()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

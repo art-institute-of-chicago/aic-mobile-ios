@@ -42,6 +42,7 @@ class MapNavigationController : SectionNavigationController {
 		// Setup delegates
 		mapVC.delegate = self
 		tourStopsVC.cardDelegate = self
+		tourStopsVC.tourStopPageVC.tourStopPageDelegate = self
 		Common.Map.locationManager.delegate = self.mapVC
 		
 		// Add root viewcontroller
@@ -212,6 +213,21 @@ extension MapNavigationController : CardNavigationControllerDelegate {
 			tourModel = nil
 			tourLanguage = .english
 			tourStopIndex = nil
+		}
+	}
+}
+
+extension MapNavigationController : TourStopPageViewControllerDelegate {
+	func tourStopPageDidChangeTo(tour: AICTourModel, stopIndex: Int) {
+		if stopIndex < tour.stops.count && stopIndex >= 0 {
+			mapVC.highlightTourStop(forTour: tour, atStopIndex: stopIndex)
+		}
+	}
+	
+	func tourStopPageDidPressPlayAudio(tour: AICTourModel, stopIndex: Int) {
+		if stopIndex < tour.stops.count && stopIndex >= 0 {
+			let object = tour.stops[stopIndex].object
+			self.sectionDelegate?.playArtwork(artwork: object)
 		}
 	}
 }

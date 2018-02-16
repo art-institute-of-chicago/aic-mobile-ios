@@ -264,8 +264,16 @@ class SectionsViewController : UIViewController {
 //
 //            showTourStop(forTourModel: currentTour, atStopIndex: tourStopIndex)
 //        } else {
-            playObject(object: object, audioGuideID: nil)
+//            playObject(object: object, audioGuideID: nil)
 //        }
+		
+		audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: nil)
+		if audioPlayerVC.currentState != .mini_player {
+			audioPlayerVC.showMiniPlayer()
+		}
+		showHeadphonesMessage()
+		
+		updateTabBarHeightWithMiniPlayer()
 		
         // Log analytics
         AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
