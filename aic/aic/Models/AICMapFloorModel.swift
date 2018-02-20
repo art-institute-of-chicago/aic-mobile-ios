@@ -38,6 +38,9 @@ class AICMapFloorModel {
     
     var tourStopAnnotations:[MapObjectAnnotation] = []
     var locationAnnotations:[MapLocationAnnotation] = []
+	
+	var restroomAnnotations:[MapAmenityAnnotation] = []
+	var diningAnnotations:[MapAmenityAnnotation] = []
     
     let floorNumber:Int
     
@@ -56,6 +59,15 @@ class AICMapFloorModel {
         self.departmentAnnotations = departments
         self.galleryAnnotations = galleries
         self.spaceAnnotations = spaces
+		
+		for amenity in amenities {
+			if amenity.type == .Dining {
+				diningAnnotations.append(amenity)
+			}
+			else if amenity.type == .MensRoom || amenity.type == .WomensRoom || amenity.type == .FamilyRestroom {
+				restroomAnnotations.append(amenity)
+			}
+		}
     }
     
     func setTourStopAnnotations(forTourStopModels tourStopmodels:[AICTourStopModel]) {

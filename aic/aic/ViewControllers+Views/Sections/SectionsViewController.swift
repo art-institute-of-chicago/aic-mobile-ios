@@ -12,14 +12,12 @@ protocol SectionsViewControllerDelegate : class {
 }
 
 class SectionsViewController : UIViewController {
-    weak var delegate:SectionsViewControllerDelegate? = nil
-    
-    //let locationManager: CLLocationManager = CLLocationManager()
+    weak var delegate: SectionsViewControllerDelegate? = nil
 	
-	// Object Audio Card
-    //let objectVC: ObjectViewController = ObjectViewController();
+	// AudioPlayer Card
     let audioPlayerVC: AudioPlayerNavigationController = AudioPlayerNavigationController()
 	
+	// Content Card
 	var contentCardVC: ContentCardNavigationController? = nil
 	
 	// Search Card
@@ -29,22 +27,21 @@ class SectionsViewController : UIViewController {
     var sectionTabBarController: UITabBarController = UITabBarController()
     
     // Sections
+	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
+	var audioGuideVC: AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
+	var mapVC: MapNavigationController = MapNavigationController(section: Common.Sections[.map]!)
+	var infoVC: InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
+	
     var sectionViewControllers: [SectionNavigationController] = []
     
     var currentViewController: SectionNavigationController
     var previousViewController: SectionNavigationController? = nil
-	
-	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
-    var audioGuideVC: AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
-	var mapVC: MapNavigationController = MapNavigationController(section: Common.Sections[.map]!)
-	var infoVC:InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
     
     // Messages
-    fileprivate var requestedTour:AICTourModel? = nil
-    fileprivate var leaveCurrentTourMessageView:UIView? = nil
-
-    //fileprivate var enableLocationMessageView:UIView? = nil
-    fileprivate var headphonesMessageView: MessageViewController? = nil
+	fileprivate var headphonesMessageView: MessageViewController? = nil
+	fileprivate var leaveCurrentTourMessageView: MessageViewController? = nil
+	
+    fileprivate var requestedTour: AICTourModel? = nil
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		currentViewController = homeVC
@@ -74,18 +71,12 @@ class SectionsViewController : UIViewController {
         sectionTabBarController.tabBar.backgroundColor = .aicTabbarColor
         sectionTabBarController.tabBar.barStyle = UIBarStyle.black
 		sectionTabBarController.viewControllers = sectionViewControllers
-		
-        // Setup and add contentView
-        //mapVC.view.alpha = 0.0
         
         // Add Views
 		sectionTabBarController.willMove(toParentViewController: self)
         view.addSubview(sectionTabBarController.view)
 		sectionTabBarController.didMove(toParentViewController: self)
 		
-//        objectVC.willMove(toParentViewController: sectionTabBarController)
-//        sectionTabBarController.view.insertSubview(objectVC.view, belowSubview: sectionTabBarController.tabBar)
-//        objectVC.didMove(toParentViewController: sectionTabBarController)
         audioPlayerVC.willMove(toParentViewController: sectionTabBarController)
         sectionTabBarController.view.insertSubview(audioPlayerVC.view, belowSubview: sectionTabBarController.tabBar)
         audioPlayerVC.didMove(toParentViewController: sectionTabBarController)
@@ -101,6 +92,7 @@ class SectionsViewController : UIViewController {
         sectionTabBarController.delegate = self
 		searchVC.cardDelegate = self
 		searchVC.sectionsVC = self
+		searchVC.resultsVC.sectionsVC = self
         audioPlayerVC.cardDelegate = self
 		
 		// Search Buttons
@@ -117,8 +109,10 @@ class SectionsViewController : UIViewController {
 		
 		updateLanguage()
 	}
-    
-    func setSelectedSection(sectionVC: SectionNavigationController) {
+	
+	// MARK: Section Navigation
+	
+    private func setSelectedSection(sectionVC: SectionNavigationController) {
         // If tours tab was pressed when on a tour
         /*if sectionVC == currentViewController && sectionVC == toursVC {
             if toursVC.currentTour != nil {
@@ -143,26 +137,6 @@ class SectionsViewController : UIViewController {
 				contentCardVC.hide()
 			}
 		}
-        
-        // Set the map mode
-//        switch sectionVC {
-//        //case nearbyVC:
-//            //locationManager.delegate = mapVC
-//            //mapVC.showAllInformation()
-//
-//        /*case toursVC:
-//            // If we were previously showing a tour,
-//            // show it on the map again
-//            if let currentTour = toursVC.currentTour {
-//                mapVC.showTour(forTour: currentTour, andRestoreState: true)
-//                locationManager.delegate = mapVC
-//            } else {
-//                disableMap(locationManagerDelegate:toursVC)
-//            }
-//          */
-//        default:
-//            disableMap(locationManagerDelegate: nil)
-//        }
 		
         sectionVC.view.setNeedsUpdateConstraints()
     }
@@ -173,12 +147,7 @@ class SectionsViewController : UIViewController {
         toursVC.reset()
     }*/
     
-    func disableMap(locationManagerDelegate:CLLocationManagerDelegate?) {
-        //locationManager.delegate = locationManagerDelegate
-        //mapVC.showDisabled()
-    }
-    
-	// MARK: Intro animation
+	// MARK: Intro animation (deprecated)
 	// TODO: remove function but keep deep link to related tour
     func animateInInitialView() {
 		sectionTabBarController.view.alpha = 0.0
@@ -220,17 +189,25 @@ class SectionsViewController : UIViewController {
 //        AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)
     }
 	
-	func showOnMap(artwork: AICSearchedArtworkModel) {
+	func showArtworkOnMap(artwork: AICSearchedArtworkModel) {
 		if currentViewController != mapVC {
 			setSelectedSection(sectionVC: mapVC)
 		}
 		mapVC.showArtwork(artwork: artwork)
 		sectionTabBarController.selectedIndex = 2
 	}
+	
+	func showRestroomsOnMap() {
+		if currentViewController != mapVC {
+			setSelectedSection(sectionVC: mapVC)
+		}
+		mapVC.showRestrooms()
+		sectionTabBarController.selectedIndex = 2
+	}
     
     // MARK: Play Audio
 	
-	func playObject(object:AICObjectModel, audioGuideID: Int?) {
+	private func playObject(object:AICObjectModel, audioGuideID: Int?) {
 //        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
 //        self.objectVC.showFullscreen()
 		
@@ -239,8 +216,6 @@ class SectionsViewController : UIViewController {
         audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: audioGuideID)
         audioPlayerVC.showFullscreen()
         showHeadphonesMessage()
-        
-        updateTabBarHeightWithMiniPlayer()
     }
     
     func playAudioGuideObject(object:AICObjectModel, audioGuideID: Int) {
@@ -273,8 +248,6 @@ class SectionsViewController : UIViewController {
 		}
 		showHeadphonesMessage()
 		
-		updateTabBarHeightWithMiniPlayer()
-		
         // Log analytics
         AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
     }
@@ -283,8 +256,6 @@ class SectionsViewController : UIViewController {
 //        self.objectVC.setContent(forTourOverviewModel: tour.overview)
 //        self.objectVC.showMiniPlayer()
         self.showHeadphonesMessage()
-        
-        updateTabBarHeightWithMiniPlayer()
         
         // Log analytics
         AICAnalytics.sendTourDidShowOverviewEvent(forTour: tour)
@@ -295,20 +266,11 @@ class SectionsViewController : UIViewController {
 //        self.objectVC.showMiniPlayer()
         self.showHeadphonesMessage()
         
-        updateTabBarHeightWithMiniPlayer()
-        
         // Log analytics
         AICAnalytics.sendTourDidShowObjectEvent(forObject: tour.stops[stopIndex].object)
     }
-    
-    // Update bottom margin for tab bar + audio player in case any views need to adjust
-    private func updateTabBarHeightWithMiniPlayer() {
-//        if Common.Layout.tabBarHeight == Common.Layout.tabBarHeightWithMiniAudioPlayerHeight {
-//            Common.Layout.miniAudioPlayerHeight = objectVC.getMiniPlayerHeight()
-//        }
-    }
 	
-	// Show/Hide Search Buttons
+	// MARK: Show/Hide Search Button
 	
 	private func setSearchButtonEnabled(_ enabled: Bool) {
 		for sectionVC in sectionViewControllers {
@@ -329,7 +291,7 @@ class SectionsViewController : UIViewController {
     
     fileprivate func hideLeaveTourMessage() {
         if let leaveCurrentTourMessageView = leaveCurrentTourMessageView {
-            leaveCurrentTourMessageView.removeFromSuperview()
+            //leaveCurrentTourMessageView.removeFromSuperview()
 //            self.leaveCurrentTourMessageView = nil
         }
     }
@@ -429,17 +391,10 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 	}
 }
 
-// MARK: AudioGuide delegate
+// MARK: AudioGuide Delegate
 extension SectionsViewController : AudioGuideNavigationControllerDelegate {
     func audioGuideDidSelectObject(object: AICObjectModel, audioGuideID: Int) {
         playAudioGuideObject(object: object, audioGuideID: audioGuideID)
-    }
-}
-
-// NewsTours Delegate methods
-extension SectionsViewController : NewsToursSectionViewControllerDelegate {
-    func newsToursSectionViewController(_ controller: NewsToursSectionViewController, didCloseReveal reveal: NewsToursRevealView) {
-        //mapVC.showDisabled()
     }
 }
 
@@ -475,14 +430,18 @@ extension SectionsViewController : ToursSectionViewControllerDelegate {
     }
 }
 
-// MARK: Map Delegate Methods
+// MARK: Map Delegate
 extension SectionsViewController : MapNavigationControllerDelegate {
-	func playArtwork(artwork: AICObjectModel) {
+	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel) {
 		playMapObject(forObjectModel: artwork)
+	}
+	
+	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel) {
+		playMapObject(forObjectModel: tourStop.object)
 	}
 }
 
-// MARK: Message Delegate Methods
+// MARK: Message Delegate
 extension SectionsViewController : MessageViewControllerDelegate {
     func messageViewActionSelected(messageVC: MessageViewController) {
         if messageVC.view == leaveCurrentTourMessageView {
@@ -552,10 +511,10 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 	}
 }
 
-// MARK: TourTableViewControllerDelegate
+// MARK: Tour Content Card Delegate
 extension SectionsViewController : TourTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
-	func tourStartSelected(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
+	func tourContentCardDidPressStartTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
 		if searchVC.currentState == .fullscreen {
 			searchVC.hide()
 		}
@@ -563,22 +522,43 @@ extension SectionsViewController : TourTableViewControllerDelegate {
 	}
 }
 
-// MARK: ArtworkTableViewControllerDelegate
+// MARK: Artwork Content Card Delegate
 extension SectionsViewController : ArtworkTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
-	func artworkPlayAudioSelected(artwork: AICObjectModel) {
+	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel) {
 		if searchVC.currentState == .fullscreen {
 			searchVC.hide()
 		}
-		playArtwork(artwork: artwork)
+		playMapObject(forObjectModel: artwork)
 	}
 	
-	func artworkShowOnMapSelected(artwork: AICSearchedArtworkModel) {
-		// TODO: temporarily disabling this
-//		if searchVC.currentState == .fullscreen {
-//			searchVC.hide()
-//		}
-//		showOnMap(artwork: artwork)
+	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel) {
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		showArtworkOnMap(artwork: artwork)
+	}
+}
+
+// MARK: Search Map Items Collection Delegate
+extension SectionsViewController : MapItemsCollectionContainerDelegate {
+	func mapItemDiningSelected() {
+		
+	}
+	
+	func mapItemGiftShopSelected() {
+		
+	}
+	
+	func mapItemRestroomSelected() {
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		showRestroomsOnMap()
+	}
+	
+	func mapItemObjectSelected(object: AICObjectModel) {
+		
 	}
 }
 

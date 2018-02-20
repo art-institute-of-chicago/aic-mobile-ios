@@ -32,6 +32,8 @@ class ResultsTableViewController : UITableViewController {
 	
 	weak var searchDelegate: ResultsTableViewControllerDelegate? = nil
 	
+	weak var sectionsVC: SectionsViewController? = nil
+	
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -130,7 +132,9 @@ extension ResultsTableViewController {
 				return cell
 			}
 			else if indexPath.section == 1 {
+				// map items cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: MapItemsCollectionContainerCell.reuseIdentifier, for: indexPath) as! MapItemsCollectionContainerCell
+				cell.delegate = sectionsVC
 				cell.innerCollectionView.reloadData()
 				return cell
 			}
@@ -147,8 +151,7 @@ extension ResultsTableViewController {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title)
-				cell.audioIcon.isHidden = artwork.audioObject == nil
+				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 				return cell
 			}
 			else if indexPath.section == 2 {
@@ -171,7 +174,9 @@ extension ResultsTableViewController {
 				return cell
 			}
 			else if indexPath.section == 4 {
+				// map items cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: MapItemsCollectionContainerCell.reuseIdentifier, for: indexPath) as! MapItemsCollectionContainerCell
+				cell.delegate = sectionsVC
 				cell.innerCollectionView.reloadData()
 				return cell
 			}
@@ -180,8 +185,7 @@ extension ResultsTableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 			let artwork = artworkItems[indexPath.row]
 			setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-			cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title)
-			cell.audioIcon.isHidden = artwork.audioObject == nil
+			cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 			return cell
 		}
 		else if filter == .tours {

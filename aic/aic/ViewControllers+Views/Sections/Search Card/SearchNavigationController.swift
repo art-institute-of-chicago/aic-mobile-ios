@@ -177,7 +177,45 @@ class SearchNavigationController : CardNavigationController {
 		super.handlePanGesture(recognizer: recognizer)
 	}
 	
-	// Start New Search
+	func showBackButton() {
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.clearButtonMode = .never
+		searchBar.isUserInteractionEnabled = false
+		searchButton.isHidden = true
+		backButton.isEnabled = true
+		UIView.animate(withDuration: 0.3) {
+			self.searchBarLeadingConstraint?.constant = self.searchBarInactiveLeading
+			self.view.layoutIfNeeded()
+		}
+	}
+	
+	func hideBackButton() {
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.clearButtonMode = .always
+		searchBar.isUserInteractionEnabled = true
+		searchButton.isHidden = false
+		backButton.isEnabled = false
+		UIView.animate(withDuration: 0.3) {
+			self.searchBarLeadingConstraint?.constant = self.searchBarActiveLeading
+			self.view.layoutIfNeeded()
+		}
+	}
+	
+	func showSearchContentViewController(tableVC: UITableViewController) {
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
+		
+		showBackButton()
+		
+		currentTableView = tableVC.tableView
+		
+		let contentVC = SearchContentViewController(tableVC: tableVC)
+		self.pushViewController(contentVC, animated: true)
+	}
+	
+	// MARK: Load Search
+	
 	func loadSearch(searchText: String, showAutocomplete: Bool) {
 		resultsVC.autocompleteStringItems.removeAll()
 		resultsVC.artworkItems.removeAll()
@@ -218,7 +256,8 @@ class SearchNavigationController : CardNavigationController {
 		}
 	}
 	
-	// Search Button Pressed
+	// MARK: Buttons
+	
 	@objc func searchButtonPressed(button: UIButton) {
 		if let searchText = searchBar.text {
 			if searchText.isEmpty == false {
@@ -232,53 +271,16 @@ class SearchNavigationController : CardNavigationController {
 		}
 	}
 	
-	// Back Button Pressed
 	@objc func backButtonPressed(button: UIButton) {
 		currentTableView = resultsVC.tableView
 		hideBackButton()
 		self.popViewController(animated: true)
 		self.view.layoutIfNeeded()
 	}
-	
-	func showBackButton() {
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.clearButtonMode = .never
-		searchBar.isUserInteractionEnabled = false
-		searchButton.isHidden = true
-		backButton.isEnabled = true
-		UIView.animate(withDuration: 0.3) {
-			self.searchBarLeadingConstraint?.constant = self.searchBarInactiveLeading
-			self.view.layoutIfNeeded()
-		}
-	}
-	
-	func hideBackButton() {
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.clearButtonMode = .always
-		searchBar.isUserInteractionEnabled = true
-		searchButton.isHidden = false
-		backButton.isEnabled = false
-		UIView.animate(withDuration: 0.3) {
-			self.searchBarLeadingConstraint?.constant = self.searchBarActiveLeading
-			self.view.layoutIfNeeded()
-		}
-	}
-	
-	func showSearchContentViewController(tableVC: UITableViewController) {
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.resignFirstResponder()
-		searchTextField?.layoutIfNeeded()
-		
-		showBackButton()
-		
-		currentTableView = tableVC.tableView
-		
-		let contentVC = SearchContentViewController(tableVC: tableVC)
-		self.pushViewController(contentVC, animated: true)
-	}
 }
 
-// MARK: UISearchBarDelegate
+// MARK: Search Bar Delegate
+
 extension SearchNavigationController : UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count > 0 {
@@ -309,7 +311,7 @@ extension SearchNavigationController : UISearchBarDelegate {
 	}
 }
 
-// MARK: SearchDataManagerDelegate
+// MARK: Search Data Manager Delegate
 
 extension SearchNavigationController : SearchDataManagerDelegate {
 	func searchDataDidFinishLoading(autocompleteStrings: [String]) {
@@ -344,13 +346,6 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 // MARK: ResultsTableViewControllerDelegate
 
 extension SearchNavigationController : ResultsTableViewControllerDelegate {
-	func resultsTableViewWillScroll() {
-		// dismiss the keyboard when the user scrolls results
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.resignFirstResponder()
-		searchTextField?.layoutIfNeeded()
-	}
-	
 	func resultsTableDidSelect(searchText: String) {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.text = searchText
@@ -362,7 +357,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	
 	func resultsTableDidSelect(artwork: AICSearchedArtworkModel) {
 		let artworkVC = ArtworkTableViewController(artwork: artwork)
-		artworkVC.artworkTableDelegate = self.sectionsVC
+		artworkVC.artworkTableDelegate = self.sectionsVC // set tourTableDelegate to the parent SectionsViewController
 		showSearchContentViewController(tableVC: artworkVC)
 	}
 	
@@ -380,6 +375,13 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	func resultsTableDidSelect(filter: Common.Search.Filter) {
 		filterMenuView.setSelected(filter: filter)
 		resultsVC.filter = filter
+	}
+	
+	func resultsTableViewWillScroll() {
+		// dismiss the keyboard when the user scrolls results
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
 	}
 }
 

@@ -9,18 +9,20 @@
 import UIKit
 
 protocol TourStopPageViewControllerDelegate : class {
-	func tourStopPageDidChangeTo(tour: AICTourModel, stopIndex: Int)
-	func tourStopPageDidPressPlayAudio(tour: AICTourModel, stopIndex: Int)
+	func tourStopPageDidChangeTo(tourOverview: AICTourOverviewModel)
+	func tourStopPageDidChangeTo(tourStop: AICTourStopModel)
+	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel)
 }
 
 class TourStopPageViewController : UIPageViewController {
-	private var tourModel: AICTourModel? = nil
+	private var tourModel: AICTourModel
 	
 	private var currentIndex = 0
 	
 	weak var tourStopPageDelegate: TourStopPageViewControllerDelegate? = nil
 	
-	init() {
+	init(tour: AICTourModel) {
+		tourModel = tour
 		super.init(transitionStyle: UIPageViewControllerTransitionStyle.scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal, options: nil)
 	}
 	
@@ -45,45 +47,40 @@ class TourStopPageViewController : UIPageViewController {
 		pageControl.currentPageIndicatorTintColor = .white
 		pageControl.layer.borderColor = UIColor.white.cgColor
 		pageControl.layer.borderWidth = 1
+		
+		setCurrentPage(pageIndex: 0)
 	}
 	
-	func tourStopController(_ index: Int) -> TourStopViewController? {
-		if let tour = tourModel {
-			if index < tour.stops.count {
-				let page = TourStopViewController()
-				page.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
-				page.audioButton.tag = index
-				
+	func tourStopController(_ index: Int) -> UIViewController? {
+		if index < tourModel.stops.count {
+			let page = UIViewController()
+			
 //				if index == 0 {
 //					// Tour Overview
 //					page.titleLabel.text = tour.overview.title
 //					page.imageView.kf.setImage(with: tour.overview.imageUrl)
 //					page.locationLabel.text = Common.Map.stringForFloorNumber[tour.stops.first!.object.location.floor]
-//					page.stopIndex = index
+//					page.view.tag = index
 //
 //					page.audioButton.tag = -1
 //				}
 //				else {
-					// Stop
+				// Stop
 //					if index < tour.stops.count {
-						let stop = tour.stops[index]
-						page.titleLabel.text = stop.object.title
-						page.imageView.kf.setImage(with: stop.object.imageUrl)
-						page.locationLabel.text = Common.Map.stringForFloorNumber[stop.object.location.floor]
-						page.stopIndex = index
+			let stop = tourModel.stops[index]
+			
+			let artworkContentView = MapArtworkContentView(artwork: stop.object)
+			artworkContentView.audioButton.tag = index
+			page.view.addSubview(artworkContentView)
+			artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
+			page.view.tag = index
 //					}
 //
 //				}
-				
-				return page
-			}
+			
+			return page
 		}
 		return nil
-	}
-	
-	func setTour(tour: AICTourModel) {
-		tourModel = tour
-		setCurrentPage(pageIndex: 0)
 	}
 	
 	func setCurrentPage(pageIndex: Int) {
@@ -103,7 +100,9 @@ class TourStopPageViewController : UIPageViewController {
 	}
 	
 	@objc func audioButtonPressed(button: UIButton) {
-		self.tourStopPageDelegate?.tourStopPageDidPressPlayAudio(tour: tourModel!, stopIndex: button.tag)
+		if tourModel.stops.indices.contains(button.tag) {
+			self.tourStopPageDelegate?.tourStopPageDidPressPlayAudio(tourStop: tourModel.stops[button.tag])
+		}
 	}
 }
 
@@ -111,39 +110,26 @@ class TourStopPageViewController : UIPageViewController {
 extension TourStopPageViewController: UIPageViewControllerDataSource {
 	func pageViewController(_ pageViewController: UIPageViewController,
 							viewControllerBefore viewController: UIViewController) -> UIViewController? {
-		if let viewController = viewController as? TourStopViewController {
-			var index = viewController.stopIndex
-			currentIndex = index
-			guard index != NSNotFound && index != 0 else { return nil }
-			index = index - 1
-			return tourStopController(index)
-		}
-		
-		return nil
+		var index = viewController.view.tag
+		currentIndex = index
+		guard index != NSNotFound && index != 0 else { return nil }
+		index = index - 1
+		return tourStopController(index)
 	}
 	
 	func pageViewController(_ pageViewController: UIPageViewController,
 							viewControllerAfter viewController: UIViewController) -> UIViewController? {
-		if let viewController = viewController as? TourStopViewController {
-			if let tour = tourModel {
-				var index = viewController.stopIndex
-				currentIndex = index
-				guard index != NSNotFound else { return nil }
-				index = index + 1
-				guard index != tour.stops.count else {return nil}
-				return tourStopController(index)
-			}
-		}
-		
-		return nil
+		var index = viewController.view.tag
+		currentIndex = index
+		guard index != NSNotFound else { return nil }
+		index = index + 1
+		guard index != tourModel.stops.count else {return nil}
+		return tourStopController(index)
 	}
 	
 	// MARK: UIPageControl
 	func presentationCount(for pageViewController: UIPageViewController) -> Int {
-		if let tour = tourModel {
-			return tour.stops.count
-		}
-		return 0
+		return tourModel.stops.count
 	}
 	
 	func presentationIndex(for pageViewController: UIPageViewController) -> Int {
@@ -160,7 +146,7 @@ extension TourStopPageViewController : UIPageViewControllerDelegate {
 	func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
 //		if completed == true {
 //			if let viewController = self.viewControllers!.first as? TourStopViewController {
-//				self.tourStopPageDelegate?.tourStopPageDidChangeTo(tour: tourModel!, stopIndex: viewController.stopIndex)
+//				self.tourStopPageDelegate?.tourStopPageDidChangeTo(tour: tourModel!, stopIndex: viewController.view.tag)
 //			}
 //		}
 	}

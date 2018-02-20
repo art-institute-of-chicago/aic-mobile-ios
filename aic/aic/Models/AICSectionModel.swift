@@ -8,8 +8,6 @@ import UIKit
 enum Section : Int {
 	case home
 	case audioGuide
-    case whatsOn
-    case tours
     case map
     case info
 }

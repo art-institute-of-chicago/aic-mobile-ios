@@ -19,6 +19,7 @@ class MapViewController: UIViewController {
     enum Mode {
         case allInformation
 		case artwork
+		case restrooms
         case location
         case tour
     }
@@ -44,7 +45,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    let model = AICMapModel()
+    let mapModel = AICMapModel()
     
     // Layout
 
@@ -56,8 +57,8 @@ class MapViewController: UIViewController {
     let floorSelectorVC = MapFloorSelectorViewController()
     let floorSelectorMargin = CGPoint(x: 20, y: 40)
     
-    fileprivate(set) var previousFloor:Int = Common.Map.startFloor
-    fileprivate(set) var currentFloor:Int = Common.Map.startFloor
+    fileprivate(set) var previousFloor: Int = Common.Map.startFloor
+    fileprivate(set) var currentFloor: Int = Common.Map.startFloor
 	
 	// TODO: move these to SectionsViewController
     var locationDisabledMessage: UIView? = nil
@@ -84,7 +85,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         // Load in floorplans + annoations from app data
         // (app data should be loaded if this function is firing)
-        model.loadData()
+        mapModel.loadData()
         
         // Add Subviews
         view.addSubview(mapView)
@@ -95,7 +96,7 @@ class MapViewController: UIViewController {
         
         mapView.camera.heading = mapView.defaultHeading
         mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomedOut.rawValue
-        mapView.camera.centerCoordinate = model.floors.first!.overlay.coordinate
+        mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
         
         // Set Delegates
         mapView.delegate = self
@@ -123,7 +124,7 @@ class MapViewController: UIViewController {
                                                repeats: true)
 		
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +137,7 @@ class MapViewController: UIViewController {
 		
 	}
     
-    //Set the color of the background overlay
+    // Set the color of the background overlay
     func updateColors() {
         // Set the background color
         if let renderer = mapView.renderer(for: mapViewBackgroundOverlay) as? MKPolygonRenderer {
@@ -161,7 +162,7 @@ class MapViewController: UIViewController {
         mode = .location
         
         // Add location annotation the floor model
-        let floor = model.floors[item.location!.floor]
+        let floor = mapModel.floors[item.location!.floor]
         let locationAnnotation = MapLocationAnnotation(coordinate: item.location!.coordinate)
         
         floor.locationAnnotations = [locationAnnotation]
@@ -177,7 +178,7 @@ class MapViewController: UIViewController {
 		mode = .artwork
 		
 		// Add location annotation the floor model
-		let floor = model.floors[artwork.location.floor]
+		let floor = mapModel.floors[artwork.location.floor]
 		let artworkAnnotation = MapObjectAnnotation(searchedArtwork: artwork)
 		
 		setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
@@ -190,29 +191,34 @@ class MapViewController: UIViewController {
 		// Select the annotation (which eventually updates it's view)
 		mapView.selectAnnotation(artworkAnnotation, animated: true)
 	}
-    
+	
+	func showRestrooms() {
+		mode = .restrooms
+		
+		updateRestroomAnnotations()
+	}
+	
     // Shows all the objects on a tour, with active/inactive
     // states depending on which floor is selected.
-    func showTour(forTour tourModel:AICTourModel) {
+    func showTour(forTour tourModel: AICTourModel) {
         mode = .tour
         
         // Find the stops for this floor and set them on the model
-        var startFloor:Int = 1
-        var annotations:[MKAnnotation] = []
-        for floor in model.floors {
+        var annotations: [MKAnnotation] = []
+        for floor in mapModel.floors {
             let floorStops = tourModel.stops.filter({ $0.object.location.floor == floor.floorNumber })
-            if floorStops.count > 0 {
-                startFloor = floor.floorNumber
-            }
+			
             // Set their objects as active on the map floor
-            floor.setTourStopAnnotations(forTourStopModels: floorStops);
+            floor.setTourStopAnnotations(forTourStopModels: floorStops)
             annotations.append(contentsOf: floor.tourStopAnnotations as [MKAnnotation])
         }
-        
+		
+		let startFloor: Int = tourModel.stops.first!.object.location.floor
         setCurrentFloor(forFloorNum: startFloor, andResetMap: false)
+		
         mapView.showAnnotations(annotations, animated: false)
         
-        showTourOverview(forTourModel: tourModel)
+        showTourOverview()
     }
     
     private func updateMapForModeChange(andStorePreviousMode previousMode:Mode) {
@@ -233,7 +239,7 @@ class MapViewController: UIViewController {
     
     // Go through each floor and clear out it's location + tour objects
     private func clearActiveAnnotations() {
-        for floor in model.floors {
+        for floor in mapModel.floors {
             floor.clearActiveAnnotations()
         }
     }
@@ -241,7 +247,7 @@ class MapViewController: UIViewController {
     // MARK: Tour Mode functions
     // Functions for manipulating the map while in .Tour mode
     // Show all annotations for the tour in view
-    func showTourOverview(forTourModel tourModel:AICTourModel) {
+    func showTourOverview() {
         // Deselect all annotations
         for annotation in mapView.selectedAnnotations {
             mapView.deselectAnnotation(annotation, animated: true)
@@ -251,7 +257,7 @@ class MapViewController: UIViewController {
         floorSelectorVC.disableUserHeading()
         
         // Zoom in on the tour's stops
-        mapView.showAnnotations(model.floors[currentFloor].tourStopAnnotations, animated: false)
+        mapView.showAnnotations(mapModel.floors[currentFloor].tourStopAnnotations, animated: false)
         
         // Show all annotations messes with the pitch + heading,
         // so reset our pitch + heading to preferred defaults
@@ -262,15 +268,13 @@ class MapViewController: UIViewController {
     // Highlights a specific tour object
     // Highlights item, switches to it's floor
     // and centers the map around it
-    func highlightTourStop(forTour tour:AICTourModel, atStopIndex stopIndex:Int) {
-        let stop = tour.stops[stopIndex]
-        
+    func highlightTourStop(tourStop: AICTourStopModel) {
         // Select the annotation
-        for floor in model.floors {
+        for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
-                if annotation.nid == stop.object.nid {
+                if annotation.nid == tourStop.object.nid {
                     // Go to that floor
-                    setCurrentFloor(forFloorNum: stop.object.location.floor, andResetMap: false)
+                    setCurrentFloor(forFloorNum: tourStop.object.location.floor, andResetMap: false)
                     
                     // Select the annotation (which eventually updates it's view)
                     mapView.selectAnnotation(annotation, animated: true)
@@ -282,26 +286,26 @@ class MapViewController: UIViewController {
         floorSelectorVC.disableUserHeading()
         
         // Zoom in on the item
-        mapView.zoomIn(onCenterCoordinate: stop.object.location.coordinate);
+        mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
     }
     
     // MARK: Viewable Area
     // Sets the viewable area of our map and repositions the floor selector
     func setViewableArea(frame:CGRect) {
+		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
+		var floorSelectorY = frame.origin.y + frame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y
+		
         // Set the layout margins to center map in visible area
         let mapInsets = UIEdgeInsetsMake(abs(frame.minY - mapView.frame.minY),
                                          0,
                                          abs(frame.maxY - mapView.frame.maxY),
-                                         self.view.frame.width - floorSelectorVC.view.frame.origin.x
+                                         UIScreen.main.bounds.width - floorSelectorX
         )
         
         mapView.layoutMargins = mapInsets
         
         // Update the floor selector with new position
         let frame = UIEdgeInsetsInsetRect(mapView.frame, mapView.layoutMargins)
-        
-        let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
-        var floorSelectorY = frame.origin.y + frame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y
         
         // Try to bottom align, if that pushes it out of the viewable area, push it down below area
         if floorSelectorY < 0 {
@@ -324,12 +328,15 @@ class MapViewController: UIViewController {
         floorSelectorVC.setSelectedFloor(forFloorNum: currentFloor)
         
         // Set the overlay
-        mapView.floorplanOverlay = model.floors[floorNum].overlay
+        mapView.floorplanOverlay = mapModel.floors[floorNum].overlay
         
         // Add annotations
         if mode == .allInformation {
             updateAllInformationAnnotations(isSwitchingFloors: true)
         }
+		else if mode == .restrooms {
+			updateRestroomAnnotations()
+		}
         
         // Snap back to full view
         if andResetMap == true {
@@ -370,6 +377,11 @@ class MapViewController: UIViewController {
 			updateArtworkAnnotationView()
 			break
 			
+		case .restrooms:
+			updateRestroomAnnotations()
+			updateRestroomAnnotationViews()
+			break
+			
         case .location:
             updateNewsLocationAnnotationViews()
             break
@@ -384,8 +396,8 @@ class MapViewController: UIViewController {
             }
             
             // If we are going between Detail and Max Zoom, stay the same
-            if mapView.currentZoomLevel == .zoomedDetail && mapView.previousZoomLevel == .zoomedMax ||
-                mapView.currentZoomLevel == .zoomedMax && mapView.previousZoomLevel == .zoomedDetail {
+            if (mapView.currentZoomLevel == .zoomedDetail && mapView.previousZoomLevel == .zoomedMax) ||
+                (mapView.currentZoomLevel == .zoomedMax && mapView.previousZoomLevel == .zoomedDetail) {
                 return
             }
         }
@@ -394,35 +406,35 @@ class MapViewController: UIViewController {
             mapView.removeAnnotations(mapView.annotations)
         } else {
             var annotationFilter:[MKAnnotation] = []
-            annotationFilter.append(contentsOf: model.lionAnnotations as [MKAnnotation])
+            annotationFilter.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
             annotationFilter.append(contentsOf: mapView.selectedAnnotations)
             annotationFilter.append(mapView.userLocation)
             
-            let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter);
+            let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
         
             mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
         }
         
         // Lions always present
-        mapView.addAnnotations(model.lionAnnotations)
+        mapView.addAnnotations(mapModel.lionAnnotations)
         
         // Set the annotations for this zoom level
         switch mapView.currentZoomLevel {
         case .zoomedOut:
             mapView.departmentHud.hide()
-            mapView.addAnnotations(model.landmarkAnnotations)
+            mapView.addAnnotations(mapModel.landmarkAnnotations)
             break
             
         case .zoomedIn:
             mapView.departmentHud.hide()
-            mapView.addAnnotations(model.floors[currentFloor].amenityAnnotations)
-            mapView.addAnnotations(model.floors[currentFloor].departmentAnnotations)
+            mapView.addAnnotations(mapModel.floors[currentFloor].amenityAnnotations)
+            mapView.addAnnotations(mapModel.floors[currentFloor].departmentAnnotations)
             break
             
         case .zoomedDetail, .zoomedMax:
             mapView.departmentHud.show()
-            mapView.addAnnotations(model.floors[currentFloor].galleryAnnotations)
-            mapView.addAnnotations(model.floors[currentFloor].objectAnnotations)
+            mapView.addAnnotations(mapModel.floors[currentFloor].galleryAnnotations)
+            mapView.addAnnotations(mapModel.floors[currentFloor].objectAnnotations)
             
             break
         }
@@ -435,7 +447,7 @@ class MapViewController: UIViewController {
             //let annotationsInRect = mapView.annotationsInMapRect(mapView.visibleMapRect)
             let centerCoord = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
             
-            for annotation in model.floors[currentFloor].objectAnnotations {
+            for annotation in mapModel.floors[currentFloor].objectAnnotations {
                 //if let annotation = annotation as? MKAnnotation {
                     if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
 						let distance = centerCoord.distance(from: annotation.clLocation)
@@ -457,7 +469,7 @@ class MapViewController: UIViewController {
             
             let mapCenterPoint = MKMapPointForCoordinate(mapView.centerCoordinate)
             
-            for annotation in model.floors[currentFloor].departmentAnnotations {
+            for annotation in mapModel.floors[currentFloor].departmentAnnotations {
                 let annotationPoint = MKMapPointForCoordinate(annotation.coordinate)
                 let distance = MKMetersBetweenMapPoints(mapCenterPoint, annotationPoint)
                 
@@ -474,7 +486,7 @@ class MapViewController: UIViewController {
     }
 
     private func updateTourAnnotationViews() {
-        for floor in model.floors {
+        for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
                     if floor.floorNumber == currentFloor {
@@ -491,11 +503,54 @@ class MapViewController: UIViewController {
     }
 	
 	private func updateArtworkAnnotationView() {
+		for floor in mapModel.floors {
+			for annotation in floor.objectAnnotations {
+				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
+					if floor.floorNumber == currentFloor {
+						view.alpha = 1.0
+					} else {
+						view.alpha = 0.5
+					}
+				}
+			}
+		}
+	}
+	
+	private func updateRestroomAnnotations() {
+		let floor = mapModel.floors[currentFloor]
 		
+		var annotationFilter:[MKAnnotation] = []
+		annotationFilter.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotationFilter.append(contentsOf: floor.restroomAnnotations as [MKAnnotation])
+		annotationFilter.append(mapView.userLocation)
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
+		
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		var annotations: [MKAnnotation] = []
+		annotations.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: floor.restroomAnnotations as [MKAnnotation])
+		annotations.append(mapView.userLocation)
+		
+		mapView.addAnnotations(annotations)
+	}
+	
+	private func updateRestroomAnnotationViews() {
+		for floor in mapModel.floors {
+			for annotation in floor.restroomAnnotations {
+				if let view = mapView.view(for: annotation) as? MapAmenityAnnotationView {
+					if floor.floorNumber == currentFloor {
+						view.alpha = 1.0
+					} else {
+						view.alpha = 0.5
+					}
+				}
+			}
+		}
 	}
 
     private func updateNewsLocationAnnotationViews() {
-        for floor in model.floors {
+        for floor in mapModel.floors {
             for annotation in floor.locationAnnotations {
                 if let view = mapView.view(for: annotation) as? MapLocationAnnotationView {
                     if floor.floorNumber == currentFloor {
@@ -582,7 +637,6 @@ extension MapViewController : MKMapViewDelegate {
             }
             
             view.annotation = amenityAnnotation
-            view.color = self.color
             return view
         }
         
@@ -732,7 +786,7 @@ extension MapViewController : MessageViewControllerDelegate {
         if messageVC.view == locationDisabledMessage {
             // Go to settings
             if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.openURL(appSettings)
+				UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
             }
         }
         

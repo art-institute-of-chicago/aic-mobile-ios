@@ -42,7 +42,7 @@ class ContentButtonCell : UITableViewCell {
 		audioIcon.isHidden = true
 	}
 	
-	func setContent(imageUrl: URL?, title: String, subtitle: String) {
+	func setContent(imageUrl: URL?, title: String, subtitle: String, showAudioIcon: Bool = false) {
 		// TODO: cache and don't load unless necessary
 //		if contentLoaded == true {
 //			return
@@ -59,6 +59,8 @@ class ContentButtonCell : UITableViewCell {
 		
 		itemTitleLabel.text = title
 		itemSubtitleLabel.text = subtitle
+		
+		audioIcon.isHidden = !showAudioIcon
 		
 		contentLoaded = true
 	}

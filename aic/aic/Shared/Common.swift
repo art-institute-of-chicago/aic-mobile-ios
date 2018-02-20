@@ -24,7 +24,7 @@ struct Common {
         static var filterOutRelatedTours = true
 
         // Fake the current floor
-        static var useTestFloorLocation = false
+        static var useTestFloorLocation = true
         static var testFloorNumber = 1
 
         // Test out news distance regardless of museum proximity

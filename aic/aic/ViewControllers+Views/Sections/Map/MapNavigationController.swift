@@ -11,16 +11,16 @@ import CoreLocation
 import Localize_Swift
 
 protocol MapNavigationControllerDelegate : class {
-	func playArtwork(artwork: AICObjectModel)
+	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel)
+	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel)
 }
 
 class MapNavigationController : SectionNavigationController {
 	var tourModel: AICTourModel? = nil
-	var tourLanguage: Common.Language = .english
-	var tourStopIndex: Int? = nil
 	
 	let mapVC: MapViewController = MapViewController()
-	let tourStopsVC: TourStopsNavigationController = TourStopsNavigationController()
+	var mapContentCardVC: MapContentCardNavigationController? = nil
+	var tourStopPageVC: TourStopPageViewController? = nil
 	
 	fileprivate var enableLocationMessageView: MessageViewController? = nil
 	
@@ -41,20 +41,13 @@ class MapNavigationController : SectionNavigationController {
 		
 		// Setup delegates
 		mapVC.delegate = self
-		tourStopsVC.cardDelegate = self
-		tourStopsVC.tourStopPageVC.tourStopPageDelegate = self
 		Common.Map.locationManager.delegate = self.mapVC
 		
 		// Add root viewcontroller
 		self.pushViewController(mapVC, animated: false)
 		
-		// Add Tour Stops Card
-		tourStopsVC.willMove(toParentViewController: self)
-		self.view.addSubview(tourStopsVC.view)
-		tourStopsVC.didMove(toParentViewController: self)
-		
 		// Initial map state
-//		self.mapVC.showAllInformation()
+		self.mapVC.showAllInformation()
 		
 		// Location
 		startLocationManager()
@@ -69,11 +62,14 @@ class MapNavigationController : SectionNavigationController {
 		
 		isMapTabOpen = true
 		
-		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
-		
 		// If there's a tour to show, show tour card
-		if mapVC.mode == .tour {
-			showTourCard()
+		if mapVC.mode == .tour || mapVC.mode == .artwork || mapVC.mode == .restrooms {
+			showMapContentCard()
+			
+			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
+		}
+		else {
+			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
 		}
 	}
 	
@@ -133,15 +129,47 @@ class MapNavigationController : SectionNavigationController {
 		}
 		
 		tourModel = tour
-		tourLanguage = language
-		tourStopIndex = stopIndex
+		if tourModel!.availableLanguages.contains(language) {
+			tourModel!.language = language
+		}
 		
+		// Creeate Tour Stops card
+		tourStopPageVC = TourStopPageViewController(tour: tourModel!)
+		if let index = stopIndex {
+			tourStopPageVC!.setCurrentPage(pageIndex: index)
+		}
+		else {
+			tourStopPageVC!.setCurrentPage(pageIndex: 0)
+		}
+		
+		// Crate Content Card
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
+		}
+		mapContentCardVC = MapContentCardNavigationController(contentVC: tourStopPageVC!)
+		
+		// Add card to view
+		mapContentCardVC!.willMove(toParentViewController: self)
+		self.view.addSubview(mapContentCardVC!.view)
+		mapContentCardVC!.didMove(toParentViewController: self)
+		
+		// Set delegates
+		mapContentCardVC!.cardDelegate = self
+		tourStopPageVC!.tourStopPageDelegate = self
+		
+		// Tour title
+		mapContentCardVC!.titleLabel.text = tourModel!.title
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
+		
+		// Set map state
 		mapVC.showTour(forTour: tour)
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
 		if isMapTabOpen {
-			showTourCard()
+			showMapContentCard()
 		}
 	}
 	
@@ -150,14 +178,77 @@ class MapNavigationController : SectionNavigationController {
 			sectionNavigationBar.hide()
 		}
 		
+		// Crate Content Card
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
+		}
+		let artworkVC = UIViewController()
+		let artworkContentView = MapArtworkContentView(searchedArtwork: artwork)
+		artworkVC.view.addSubview(artworkContentView)
+		mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
+		
+		// Add card to view
+		mapContentCardVC!.willMove(toParentViewController: self)
+		self.view.addSubview(mapContentCardVC!.view)
+		mapContentCardVC!.didMove(toParentViewController: self)
+		
+		// Set delegates
+		mapContentCardVC!.cardDelegate = self
+		
+		// Artwork title
+		mapContentCardVC!.titleLabel.text = artwork.title
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
+		
+		// Set map state
 		mapVC.showArtwork(artwork: artwork)
+		
+		// if we are on the Map tab, open tour immediately
+		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
+		if isMapTabOpen {
+			showMapContentCard()
+		}
 	}
 	
-	private func showTourCard() {
-		tourStopsVC.setTourContent(tour: tourModel!, language: tourLanguage)
-		tourStopsVC.setCurrentStop(stopIndex: tourStopIndex)
-		if tourStopsVC.currentState == .hidden {
-			tourStopsVC.showMinimized()
+	func showRestrooms() {
+		if sectionNavigationBar.currentState != .hidden {
+			sectionNavigationBar.hide()
+		}
+		
+		// Crate Content Card
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
+		}
+		mapContentCardVC = MapContentCardNavigationController(contentVC: UIViewController())
+		
+		// Add card to view
+		mapContentCardVC!.willMove(toParentViewController: self)
+		self.view.addSubview(mapContentCardVC!.view)
+		mapContentCardVC!.didMove(toParentViewController: self)
+		
+		// Set delegates
+		mapContentCardVC!.cardDelegate = self
+		
+		// Artwork title
+		mapContentCardVC!.titleLabel.text = "Restrooms"
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
+		
+		// Set map state
+		mapVC.showRestrooms()
+		
+		// if we are on the Map tab, open tour immediately
+		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
+		if isMapTabOpen {
+			showMapContentCard()
+		}
+	}
+	
+	private func showMapContentCard() {
+		if mapContentCardVC!.currentState == .hidden {
+			mapContentCardVC!.showMinimized()
 		}
 	}
 }
@@ -185,18 +276,13 @@ extension MapNavigationController : MapViewControllerDelegate {
 	}
 	
 	func mapDidPressArtworkPlayButton(artwork: AICObjectModel) {
-		self.sectionDelegate?.playArtwork(artwork: artwork)
+		self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork)
 	}
 	
 	func mapDidSelectTourStop(artwork: AICObjectModel) {
 		if let tour = tourModel {
-			var stopIndex: Int? = nil
-			for index in 0...tour.stops.count-1 {
-				if tour.stops[index].object.nid == artwork.nid {
-					stopIndex = index
-				}
-			}
-			tourStopsVC.setCurrentStop(stopIndex: stopIndex)
+			let pageIndex = tour.getIndex(forStopObject: artwork)
+			tourStopPageVC!.setCurrentPage(pageIndex: pageIndex!)
 		}
 	}
 }
@@ -208,27 +294,27 @@ extension MapNavigationController : CardNavigationControllerDelegate {
 	}
 	
 	func cardDidHide(cardVC: CardNavigationController) {
-		if cardVC == tourStopsVC {
-			mapVC.showAllInformation()
-			tourModel = nil
-			tourLanguage = .english
-			tourStopIndex = nil
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
 		}
+		mapVC.showAllInformation()
+		mapContentCardVC = nil
+		tourModel = nil
+		tourStopPageVC = nil
 	}
 }
 
 extension MapNavigationController : TourStopPageViewControllerDelegate {
-	func tourStopPageDidChangeTo(tour: AICTourModel, stopIndex: Int) {
-		if stopIndex < tour.stops.count && stopIndex >= 0 {
-			mapVC.highlightTourStop(forTour: tour, atStopIndex: stopIndex)
-		}
+	func tourStopPageDidChangeTo(tourOverview: AICTourOverviewModel) {
+		mapVC.showTourOverview()
 	}
 	
-	func tourStopPageDidPressPlayAudio(tour: AICTourModel, stopIndex: Int) {
-		if stopIndex < tour.stops.count && stopIndex >= 0 {
-			let object = tour.stops[stopIndex].object
-			self.sectionDelegate?.playArtwork(artwork: object)
-		}
+	func tourStopPageDidChangeTo(tourStop: AICTourStopModel) {
+		mapVC.highlightTourStop(tourStop: tourStop)
+	}
+	
+	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel) {
+		self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop)
 	}
 }
 

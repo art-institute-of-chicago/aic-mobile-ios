@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ArtworkTableViewControllerDelegate : class {
-	func artworkPlayAudioSelected(artwork: AICObjectModel)
-	func artworkShowOnMapSelected(artwork: AICSearchedArtworkModel)
+	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel)
+	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel)
 }
 
 class ArtworkTableViewController : UITableViewController {
@@ -48,12 +48,12 @@ class ArtworkTableViewController : UITableViewController {
 	
 	@objc func artworkPlayButtonPressed(button: UIButton) {
 		if let artworkWithAudio = artworkModel.audioObject {
-			self.artworkTableDelegate?.artworkPlayAudioSelected(artwork: artworkWithAudio)
+			self.artworkTableDelegate?.artworkContentCardDidPressPlayAudio(artwork: artworkWithAudio)
 		}
 	}
 	
 	@objc func artworkShowOnMapButtonPressed(button: UIButton) {
-		self.artworkTableDelegate?.artworkShowOnMapSelected(artwork: artworkModel)
+		self.artworkTableDelegate?.artworkContentCardDidPressShowOnMap(artwork: artworkModel)
 	}
 }
 

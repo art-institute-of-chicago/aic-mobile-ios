@@ -20,14 +20,17 @@ protocol MapItemsCollectionContainerDelegate: class {
 class MapItemsCollectionContainerCell : UITableViewCell {
 	static let reuseIdentifier = "mapItemsCollectionContainerCell"
 	
-	static let cellHeight: CGFloat = 160.0
+	@IBOutlet var innerCollectionView: UICollectionView!
+	
+	weak var delegate: MapItemsCollectionContainerDelegate? = nil
 	
 	var objectModels: [AICObjectModel] = [] {
 		didSet {
 			innerCollectionView.reloadData()
 		}
 	}
-	@IBOutlet var innerCollectionView:UICollectionView!
+	
+	static let cellHeight: CGFloat = 160.0
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -55,7 +58,17 @@ extension MapItemsCollectionContainerCell : UICollectionViewDelegate {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		
+		if indexPath.section == 0 {
+			if indexPath.row == 0 {
+				self.delegate?.mapItemDiningSelected()
+			}
+			else if indexPath.row == 1 {
+				self.delegate?.mapItemGiftShopSelected()
+			}
+			else if indexPath.row == 2 {
+				self.delegate?.mapItemRestroomSelected()
+			}
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {

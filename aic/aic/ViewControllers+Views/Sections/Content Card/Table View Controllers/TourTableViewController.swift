@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TourTableViewControllerDelegate : class {
-	func tourStartSelected(tour: AICTourModel, language: Common.Language, stopIndex: Int?)
+	func tourContentCardDidPressStartTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?)
 }
 
 class TourTableViewController : UITableViewController {
@@ -116,19 +116,19 @@ extension TourTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// tour overview stop
 		if indexPath.row == 1 {
-			self.tourTableDelegate?.tourStartSelected(tour: tourModel, language: language, stopIndex: nil)
+			self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: nil)
 		}
 		// tour stop
 		else if indexPath.row > 1 {
 			let stopIndex: Int = indexPath.row - 2
 			if stopIndex < tourModel.stops.count {
-				self.tourTableDelegate?.tourStartSelected(tour: tourModel, language: language, stopIndex: stopIndex)
+				self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: stopIndex)
 			}
 		}
 	}
 	
 	@objc func tourStartButtonPressed(button: UIButton) {
-		self.tourTableDelegate?.tourStartSelected(tour: tourModel, language: language, stopIndex: nil)
+		self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: nil)
 	}
 }
 

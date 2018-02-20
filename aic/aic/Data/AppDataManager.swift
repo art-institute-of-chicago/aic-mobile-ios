@@ -157,7 +157,7 @@ class AppDataManager {
 				"id",
 				"title",
 				"short_description",
-				"image",
+				"image_iiif_url",
 				"gallery_id",
 				"web_url",
 				"start_at",

@@ -10,14 +10,6 @@ class MapAmenityAnnotationView: MapAnnotationView {
     
     var baseImage:UIImage? = nil
     
-    var color:UIColor = .white {
-        didSet {
-            if oldValue != color {
-                setImageColorized()
-            }
-        }
-    }
-    
     init(annotation: MKAnnotation?, reuseIdentifier: String?, color:UIColor) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
@@ -28,21 +20,25 @@ class MapAmenityAnnotationView: MapAnnotationView {
         
         // Load in the base image (white image we colorize based on section)
         if let amenityAnnotation = annotation as? MapAmenityAnnotation {
-            baseImage = (UIImage(named: String(describing: amenityAnnotation.type))?.withRenderingMode(.alwaysTemplate))!
+			if amenityAnnotation.type == .FamilyRestroom ||
+				amenityAnnotation.type == .WomensRoom ||
+				amenityAnnotation.type == .MensRoom {
+				image = #imageLiteral(resourceName: "restroom")
+			}
+			else if amenityAnnotation.type == .Information {
+				image = #imageLiteral(resourceName: "information")
+			}
+			else if amenityAnnotation.type == .Dining {
+				image = #imageLiteral(resourceName: "restaurant")
+			}
+			else {
+            	image = (UIImage(named: String(describing: amenityAnnotation.type))?.withRenderingMode(.alwaysTemplate))!
+			}
         }
-        
-        // Init image with colorized version
-        self.color = color
-        setImageColorized()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // Set image as colorized version
-    private func setImageColorized() {
-        image = baseImage!.colorized(color)
     }
 
 }

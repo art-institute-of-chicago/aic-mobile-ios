@@ -73,7 +73,9 @@ class AppDataParser {
 		// optional image
 		var imageURL: URL?
 		do {
-			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "image")
+			var urlString = try getString(fromJSON: exhibitionJSON, forKey: "image_iiif_url")
+			urlString += "/full/!338,450/0/default.jpg"
+			imageURL = URL(string: urlString)!
 		}
 		catch{}
 		
@@ -90,11 +92,7 @@ class AppDataParser {
 		catch{}
 		
 		// optional weburl
-		var webURL: URL?
-		do {
-			webURL = try getURL(fromJSON: exhibitionJSON, forKey: "web_url")
-		}
-		catch{}
+		let webURL = try getURL(fromJSON: exhibitionJSON, forKey: "web_url", optional: true)
         
 		// Get date exibition ends
 		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "start_at")
@@ -479,12 +477,8 @@ class AppDataParser {
     }
     
     fileprivate func parse(audioFileJSON: JSON) throws -> AICAudioFileModel {
-        let nid         = try getInt(fromJSON: audioFileJSON, forKey: "nid")
-		let title		= try getString(fromJSON: audioFileJSON, forKey: "title")
-		
-		if nid == 1458 {
-			print("1458")
-		}
+        let nid 	= try getInt(fromJSON: audioFileJSON, forKey: "nid")
+		let title	= try getString(fromJSON: audioFileJSON, forKey: "title")
 		
 		var translations: [Common.Language : AICAudioFileTranslationModel] = [:]
 		let translationsJSON = audioFileJSON["translations"].array
@@ -523,16 +517,9 @@ class AppDataParser {
 	func parseTranslation(audioFileJSON: JSON) throws -> AICAudioFileTranslationModel {
 		let url: URL    = try getURL(fromJSON: audioFileJSON, forKey: "audio_file_url")!
 		let transcript  = try getString(fromJSON: audioFileJSON, forKey: "audio_transcript")
+		let trackTitle = try getString(fromJSON: audioFileJSON, forKey: "track_title", optional: true)
 		
-		var trackTitle: String?
-		do {
-			trackTitle = try getString(fromJSON: audioFileJSON, forKey: "track_title")
-		}
-		catch{
-			trackTitle = ""
-		}
-		
-		return AICAudioFileTranslationModel(trackTitle: trackTitle!,
+		return AICAudioFileTranslationModel(trackTitle: trackTitle,
 											url: url,
 											transcript: transcript
 		)
@@ -957,14 +944,23 @@ class AppDataParser {
     
     // Try to get a URL from a string
 	private func getURL(fromJSON json:JSON, forKey key:String, optional: Bool = false) throws -> URL? {
-        // Get string val and replace URL with public URL (needs to be fixed in data)
-        var stringVal   = try getString(fromJSON: json, forKey: key)
-        stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataInternalPrefix, with: Common.DataConstants.appDataExternalPrefix)
-		stringVal = stringVal.replacingOccurrences(of: Common.DataConstants.appDataLocalPrefix, with: Common.DataConstants.appDataExternalPrefix)
-        
-        guard let url = URL(string: stringVal) else {
+		var stringVal = json[key].string
+		if stringVal == nil {
 			if optional == false {
-				throw ParseError.badURLString(string: stringVal)
+				throw ParseError.badURLString(string: "null")
+			}
+			else {
+				return nil
+			}
+		}
+		
+		// Get string val and replace URL with public URL (needs to be fixed in data)
+        stringVal = stringVal!.replacingOccurrences(of: Common.DataConstants.appDataInternalPrefix, with: Common.DataConstants.appDataExternalPrefix)
+		stringVal = stringVal!.replacingOccurrences(of: Common.DataConstants.appDataLocalPrefix, with: Common.DataConstants.appDataExternalPrefix)
+        
+		guard let url: URL = URL(string: stringVal!) else {
+			if optional == false {
+				throw ParseError.badURLString(string: stringVal!)
 			}
 			else {
 				return nil
