@@ -84,7 +84,6 @@ class MapArtworkContentView : UIView {
 		titleLabel.autoPinEdge(.top, to: .top, of: imageView)
 		titleLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 16)
 		titleLabel.autoPinEdge(.trailing, to: .leading, of: audioButton, withOffset: -16)
-		//titleLabel.autoSetDimension(.height, toSize: 50, relation: .lessThanOrEqual)
 		
 		locationLabel.autoPinEdge(.top, to: .bottom, of: titleLabel)
 		locationLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 16)

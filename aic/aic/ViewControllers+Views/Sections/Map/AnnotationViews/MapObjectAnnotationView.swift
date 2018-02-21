@@ -116,9 +116,10 @@ class MapObjectAnnotationView: MapAnnotationView {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        mode = .minimized
-        isSelected = false
-        
+		
+//        mode = .minimized
+//        isSelected = false
+
         thumbImageView.image = nil
         imageLoaded = false
     }

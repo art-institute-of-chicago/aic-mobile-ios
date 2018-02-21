@@ -305,20 +305,20 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if annotation.nid == tourStop.object.nid {
+					// Turn off user heading since we want to jump to a specific place
+					floorSelectorVC.disableUserHeading()
+					
                     // Go to that floor
                     setCurrentFloor(forFloorNum: tourStop.object.location.floor, andResetMap: false)
+					
+					// Zoom in on the item
+					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
                     
                     // Select the annotation (which eventually updates it's view)
                     mapView.selectAnnotation(annotation, animated: true)
                 }
             }
         }
-        
-        // Turn off user heading since we want to jump to a specific place
-        floorSelectorVC.disableUserHeading()
-        
-        // Zoom in on the item
-        mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
     }
     
     // MARK: Viewable Area
