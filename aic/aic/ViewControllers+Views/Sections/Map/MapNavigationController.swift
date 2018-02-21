@@ -63,7 +63,7 @@ class MapNavigationController : SectionNavigationController {
 		isMapTabOpen = true
 		
 		// If there's a tour to show, show tour card
-		if mapVC.mode == .tour || mapVC.mode == .artwork || mapVC.mode == .restrooms {
+		if mapVC.mode == .tour || mapVC.mode == .artwork || mapVC.mode == .restrooms || mapVC.mode == .giftshop {
 			showMapContentCard()
 			
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
@@ -238,6 +238,41 @@ class MapNavigationController : SectionNavigationController {
 		
 		// Set map state
 		mapVC.showRestrooms()
+		
+		// if we are on the Map tab, open tour immediately
+		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
+		if isMapTabOpen {
+			showMapContentCard()
+		}
+	}
+	
+	func showGiftShop() {
+		if sectionNavigationBar.currentState != .hidden {
+			sectionNavigationBar.hide()
+		}
+		
+		// Crate Content Card
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
+		}
+		mapContentCardVC = MapContentCardNavigationController(contentVC: UIViewController())
+		
+		// Add card to view
+		mapContentCardVC!.willMove(toParentViewController: self)
+		self.view.addSubview(mapContentCardVC!.view)
+		mapContentCardVC!.didMove(toParentViewController: self)
+		
+		// Set delegates
+		mapContentCardVC!.cardDelegate = self
+		
+		// Artwork title
+		mapContentCardVC!.titleLabel.text = "Gift Shops"
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
+		
+		// Set map state
+		mapVC.showGiftShop()
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed

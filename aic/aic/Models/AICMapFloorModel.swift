@@ -39,8 +39,9 @@ class AICMapFloorModel {
     var tourStopAnnotations:[MapObjectAnnotation] = []
     var locationAnnotations:[MapLocationAnnotation] = []
 	
-	var restroomAnnotations:[MapAmenityAnnotation] = []
-	var diningAnnotations:[MapAmenityAnnotation] = []
+	private (set) var restroomAnnotations:[MapAmenityAnnotation] = []
+	private (set) var giftShopAnnotations:[MapAmenityAnnotation] = []
+	private (set) var diningAnnotations:[MapAmenityAnnotation] = []
     
     let floorNumber:Int
     
@@ -63,6 +64,9 @@ class AICMapFloorModel {
 		for amenity in amenities {
 			if amenity.type == .Dining {
 				diningAnnotations.append(amenity)
+			}
+			else if amenity.type == .Giftshop {
+				giftShopAnnotations.append(amenity)
 			}
 			else if amenity.type == .MensRoom || amenity.type == .WomensRoom || amenity.type == .FamilyRestroom {
 				restroomAnnotations.append(amenity)

@@ -157,7 +157,8 @@ class AppDataManager {
 				"id",
 				"title",
 				"short_description",
-				"image_iiif_url",
+				"legacy_image_mobile",
+				"legacy_image_desktop",
 				"gallery_id",
 				"web_url",
 				"start_at",
@@ -198,10 +199,8 @@ class AppDataManager {
 					
 					// Assign to exhibitions optional images from CMS, if available
 					for index in 0...self.exhibitions.count-1 {
-						if self.exhibitions[index].imageUrl == nil {
-							if let image = self.app.exhibitionOptionalImages[self.exhibitions[index].id] {
-								self.exhibitions[index].imageUrl = image
-							}
+						if let imageUrl = self.app.exhibitionOptionalImages[self.exhibitions[index].id] {
+							self.exhibitions[index].imageUrl = imageUrl
 						}
 					}
 					

@@ -5,16 +5,16 @@
 
 import UIKit
 
-class MapFloorSelectorUIButton: UIButton {
+class MapFloorSelectorButton: UIButton {
     private struct ColorScheme {
         let labelColor:UIColor
         let deselectedColor:UIColor
         let selectedColor:UIColor
     }
     
-    private let defaultColorScheme = ColorScheme(labelColor: .black, deselectedColor: .white, selectedColor: .lightGray)
+    private let defaultColorScheme = ColorScheme(labelColor: .black, deselectedColor: .aicFloorUnselectedColor, selectedColor: .aicFloorColor)
     
-    private let userLocationColorScheme = ColorScheme(labelColor: .white, deselectedColor: .aicBluedotColor, selectedColor: .aicBluedotColor)
+    private let userLocationColorScheme = ColorScheme(labelColor: .white, deselectedColor: .aicBluedotUnselectedColor, selectedColor: .aicBluedotColor)
 
     var isUserLocationFloor = false {
         didSet {

@@ -83,7 +83,7 @@
 		294C0B55201A76F700F2ABB1 /* MapTextAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B3D201A76F700F2ABB1 /* MapTextAnnotation.swift */; };
 		294C0B56201A76F700F2ABB1 /* MapDepartmentAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B3E201A76F700F2ABB1 /* MapDepartmentAnnotation.swift */; };
 		294C0B57201A76F700F2ABB1 /* MapImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B3F201A76F700F2ABB1 /* MapImageAnnotation.swift */; };
-		294C0B58201A76F700F2ABB1 /* MapFloorSelectorUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B41201A76F700F2ABB1 /* MapFloorSelectorUIButton.swift */; };
+		294C0B58201A76F700F2ABB1 /* MapFloorSelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B41201A76F700F2ABB1 /* MapFloorSelectorButton.swift */; };
 		294C0B59201A76F700F2ABB1 /* MapFloorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B42201A76F700F2ABB1 /* MapFloorSelectorView.swift */; };
 		294C0B5A201A76F700F2ABB1 /* MapFloorSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B43201A76F700F2ABB1 /* MapFloorSelectorViewController.swift */; };
 		294C0B5B201A76F700F2ABB1 /* FloorplanOverlayRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B45201A76F700F2ABB1 /* FloorplanOverlayRenderer.swift */; };
@@ -369,7 +369,7 @@
 		294C0B3D201A76F700F2ABB1 /* MapTextAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTextAnnotation.swift; sourceTree = "<group>"; };
 		294C0B3E201A76F700F2ABB1 /* MapDepartmentAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDepartmentAnnotation.swift; sourceTree = "<group>"; };
 		294C0B3F201A76F700F2ABB1 /* MapImageAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapImageAnnotation.swift; sourceTree = "<group>"; };
-		294C0B41201A76F700F2ABB1 /* MapFloorSelectorUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFloorSelectorUIButton.swift; sourceTree = "<group>"; };
+		294C0B41201A76F700F2ABB1 /* MapFloorSelectorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFloorSelectorButton.swift; sourceTree = "<group>"; };
 		294C0B42201A76F700F2ABB1 /* MapFloorSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFloorSelectorView.swift; sourceTree = "<group>"; };
 		294C0B43201A76F700F2ABB1 /* MapFloorSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFloorSelectorViewController.swift; sourceTree = "<group>"; };
 		294C0B45201A76F700F2ABB1 /* FloorplanOverlayRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorplanOverlayRenderer.swift; sourceTree = "<group>"; };
@@ -756,7 +756,7 @@
 		294C0B40201A76F700F2ABB1 /* FloorSelector */ = {
 			isa = PBXGroup;
 			children = (
-				294C0B41201A76F700F2ABB1 /* MapFloorSelectorUIButton.swift */,
+				294C0B41201A76F700F2ABB1 /* MapFloorSelectorButton.swift */,
 				294C0B42201A76F700F2ABB1 /* MapFloorSelectorView.swift */,
 				294C0B43201A76F700F2ABB1 /* MapFloorSelectorViewController.swift */,
 			);
@@ -1846,7 +1846,7 @@
 				29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */,
 				E4CD3FD31CA9CDB200013E75 /* _NewsToursTableViewCell.swift in Sources */,
 				291221941FDB2BAD0096BB75 /* ResultsTableViewController.swift in Sources */,
-				294C0B58201A76F700F2ABB1 /* MapFloorSelectorUIButton.swift in Sources */,
+				294C0B58201A76F700F2ABB1 /* MapFloorSelectorButton.swift in Sources */,
 				E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */,
 				E425B3CE1C97649300A19F6F /* AICObjectModel.swift in Sources */,
 				294C0B55201A76F700F2ABB1 /* MapTextAnnotation.swift in Sources */,

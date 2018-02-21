@@ -124,7 +124,7 @@ class MapView: MKMapView {
 //    }
 
     func zoomIn(onCenterCoordinate centerCoordinate:CLLocationCoordinate2D) {
-        zoomIn(onCenterCoordinate: centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedMax.rawValue, heading:camera.heading)
+        zoomIn(onCenterCoordinate: centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedMax.rawValue, heading: camera.heading)
     }
     
     func showFullMap(useDefaultHeading: Bool = false, animated: Bool = true) {
@@ -153,13 +153,7 @@ class MapView: MKMapView {
     }
     
     func zoomIn(onCenterCoordinate centerCoordinate: CLLocationCoordinate2D, altitude: Double, withAnimation animated: Bool = true, heading: Double? = nil, pitch: CGFloat? = nil) {
-		
-//		let overlayRenderer: FloorplanOverlayRenderer = self.delegate?.mapView!(self, rendererFor: self.floorplanOverlay!) as! FloorplanOverlayRenderer
-//		let mapPoint = self.floorplanOverlay!.pdfOrigin //mapPoint(for: CGPoint(x: 1200, y: 1200))
-//		let coordinate = MKCoordinateForMapPoint(mapPoint)
-		
-		
-        //let newCamera = MKMapCamera(lookingAtCenterCoordinate: centerCoordinate, fromEyeCoordinate: centerCoordinate, eyeAltitude: altitude)
+		//let newCamera = MKMapCamera(lookingAtCenterCoordinate: centerCoordinate, fromEyeCoordinate: centerCoordinate, eyeAltitude: altitude)
         let newCamera = camera.copy() as! MKMapCamera
         newCamera.centerCoordinate = centerCoordinate
         newCamera.altitude = altitude
@@ -175,13 +169,6 @@ class MapView: MKMapView {
         }
         
         setCamera(newCamera, animated: animated)
-		
-		// DEBUG
-		
-		print("---------------------------")
-		print("centerCoordinate: \(centerCoordinate)")
-//		print("centerOfOverlay: \(coordinate)")
-		print("---------------------------")
     }
     
     // Find the altitude based on our start value and the current map visible to bounds ratio

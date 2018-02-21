@@ -52,7 +52,7 @@ class ResultsTableViewController : UITableViewController {
 //		self.tableView.estimatedRowHeight = 30
 		self.tableView.alwaysBounceVertical = false
 		//self.tableView.bounces = false
-		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 120, right: 0)
 		self.tableView.register(UINib(nibName: "SuggestedSearchCell", bundle: Bundle.main), forCellReuseIdentifier: SuggestedSearchCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "MapItemsCollectionContainerCell", bundle: Bundle.main), forCellReuseIdentifier: MapItemsCollectionContainerCell.reuseIdentifier)

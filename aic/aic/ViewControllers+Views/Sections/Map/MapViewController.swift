@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
         case allInformation
 		case artwork
 		case restrooms
+		case giftshop
         case location
         case tour
     }
@@ -57,8 +58,9 @@ class MapViewController: UIViewController {
     let floorSelectorVC = MapFloorSelectorViewController()
     let floorSelectorMargin = CGPoint(x: 20, y: 40)
     
-    fileprivate(set) var previousFloor: Int = Common.Map.startFloor
-    fileprivate(set) var currentFloor: Int = Common.Map.startFloor
+    fileprivate (set) var previousFloor: Int = Common.Map.startFloor
+    fileprivate (set) var currentFloor: Int = Common.Map.startFloor
+	fileprivate (set) var currentUserFloor: Int? = nil
 	
 	// TODO: move these to SectionsViewController
     var locationDisabledMessage: UIView? = nil
@@ -196,6 +198,36 @@ class MapViewController: UIViewController {
 		mode = .restrooms
 		
 		updateRestroomAnnotations()
+		
+		floorSelectorVC.disableUserHeading()
+		
+		let currentPitch = mapView.camera.pitch
+		
+		// Zoom in on the gift shop annotations
+		mapView.showAnnotations(mapModel.floors[currentFloor].restroomAnnotations, animated: false)
+		
+		// Show all annotations messes with the pitch + heading,
+		// so reset our pitch + heading to preferred defaults
+		mapView.camera.heading = mapView.defaultHeading
+		mapView.camera.pitch = currentPitch
+	}
+	
+	func showGiftShop() {
+		mode = .giftshop
+		
+		updateGiftShopAnnotations()
+		
+		floorSelectorVC.disableUserHeading()
+		
+		let currentPitch = mapView.camera.pitch
+		
+		// Zoom in on the gift shop annotations
+		mapView.showAnnotations(mapModel.floors[currentFloor].giftShopAnnotations, animated: false)
+		
+		// Show all annotations messes with the pitch + heading,
+		// so reset our pitch + heading to preferred defaults
+		mapView.camera.heading = mapView.defaultHeading
+		mapView.camera.pitch = currentPitch
 	}
 	
     // Shows all the objects on a tour, with active/inactive
@@ -291,31 +323,31 @@ class MapViewController: UIViewController {
     
     // MARK: Viewable Area
     // Sets the viewable area of our map and repositions the floor selector
-    func setViewableArea(frame:CGRect) {
-		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
-		var floorSelectorY = frame.origin.y + frame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y
+    func setViewableArea(frame: CGRect) {
+		// Set the layout margins to center map in visible area
+		let mapInsets = UIEdgeInsetsMake(abs(frame.minY - mapView.frame.minY),
+										 0,
+										 abs(frame.maxY - mapView.frame.maxY),
+										 self.view.frame.width - floorSelectorVC.view.frame.origin.x
+		)
 		
-        // Set the layout margins to center map in visible area
-        let mapInsets = UIEdgeInsetsMake(abs(frame.minY - mapView.frame.minY),
-                                         0,
-                                         abs(frame.maxY - mapView.frame.maxY),
-                                         UIScreen.main.bounds.width - floorSelectorX
-        )
-        
-        mapView.layoutMargins = mapInsets
-        
-        // Update the floor selector with new position
-        let frame = UIEdgeInsetsInsetRect(mapView.frame, mapView.layoutMargins)
-        
-        // Try to bottom align, if that pushes it out of the viewable area, push it down below area
-        if floorSelectorY < 0 {
-            floorSelectorY = frame.origin.y + 5
-        }
-        
-        floorSelectorVC.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
-        mapView.departmentHud.frame.origin = frame.origin
-        
-        mapView.calculateStartingHeight()
+		mapView.layoutMargins = mapInsets
+		
+		// Update the floor selector with new position
+		let mapFrame = UIEdgeInsetsInsetRect(mapView.frame, mapView.layoutMargins)
+		
+		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
+		var floorSelectorY = mapFrame.origin.y + mapFrame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y
+		
+		// Try to bottom align, if that pushes it out of the viewable area, push it down below area
+		if floorSelectorY < 0 {
+			floorSelectorY = mapFrame.origin.y + 5
+		}
+		
+		floorSelectorVC.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
+		mapView.departmentHud.frame.origin = mapFrame.origin
+		
+		mapView.calculateStartingHeight()
     }
     
     // MARK: Change floor
@@ -336,6 +368,9 @@ class MapViewController: UIViewController {
         }
 		else if mode == .restrooms {
 			updateRestroomAnnotations()
+		}
+		else if mode == .giftshop {
+			updateGiftShopAnnotations()
 		}
         
         // Snap back to full view
@@ -367,23 +402,34 @@ class MapViewController: UIViewController {
         case .allInformation:
             updateAllInformationAnnotations(isSwitchingFloors: forceUpdate)
             updateAllInformationAnnotationViews()
+			updateUserLocationAnnotationView()
             break
 			
         case .tour:
             updateTourAnnotationViews()
+			updateUserLocationAnnotationView()
             break
 			
 		case .artwork:
 			updateArtworkAnnotationView()
+			updateUserLocationAnnotationView()
 			break
 			
 		case .restrooms:
 			updateRestroomAnnotations()
 			updateRestroomAnnotationViews()
+			updateUserLocationAnnotationView()
+			break
+			
+		case .giftshop:
+			updateGiftShopAnnotations()
+			updateGiftShopAnnotationViews()
+			updateUserLocationAnnotationView()
 			break
 			
         case .location:
             updateNewsLocationAnnotationViews()
+			updateUserLocationAnnotationView()
             break
         }
     }
@@ -548,6 +594,39 @@ class MapViewController: UIViewController {
 			}
 		}
 	}
+	
+	private func updateGiftShopAnnotations() {
+		let floor = mapModel.floors[currentFloor]
+		
+		var annotationFilter:[MKAnnotation] = []
+		annotationFilter.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotationFilter.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
+		annotationFilter.append(mapView.userLocation)
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
+		
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		var annotations: [MKAnnotation] = []
+		annotations.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
+		annotations.append(mapView.userLocation)
+		
+		mapView.addAnnotations(annotations)
+	}
+	
+	private func updateGiftShopAnnotationViews() {
+		for floor in mapModel.floors {
+			for annotation in floor.giftShopAnnotations {
+				if let view = mapView.view(for: annotation) as? MapAmenityAnnotationView {
+					if floor.floorNumber == currentFloor {
+						view.alpha = 1.0
+					} else {
+						view.alpha = 0.5
+					}
+				}
+			}
+		}
+	}
 
     private func updateNewsLocationAnnotationViews() {
         for floor in mapModel.floors {
@@ -562,6 +641,17 @@ class MapViewController: UIViewController {
             }
         }
     }
+	
+	private func updateUserLocationAnnotationView() {
+		if let locationView = mapView.view(for: mapView.userLocation) {
+			if currentUserFloor == currentFloor {
+				locationView.alpha = 1.0
+			}
+			else {
+				locationView.alpha = 0.5
+			}
+		}
+	}
     
     // Deselect any open annotations
     private func deselectAllAnnotations() {
@@ -739,7 +829,10 @@ extension MapViewController : MKMapViewDelegate {
             updateAnnotations(andForceUpdate: true) // Force annotation update
         }
     }
-    
+	
+	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+		
+	}
 }
 
 // MARK: Floor Selector Delegate Methods
@@ -848,18 +941,16 @@ extension MapViewController : CLLocationManagerDelegate {
                 mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: mapView.camera.altitude)
             }
             
-            var userFloorNumber:Int? = nil
-            
             // Update our floor if it is found
             if Common.Testing.useTestFloorLocation {
-                userFloorNumber = Common.Testing.testFloorNumber
+                currentUserFloor = Common.Testing.testFloorNumber
             } else {
                 if let floor = location.floor {
-                    userFloorNumber = floor.level
+                    currentUserFloor = floor.level
                 }
             }
             
-            if let userFloor = userFloorNumber {
+            if let userFloor = currentUserFloor {
                 floorSelectorVC.setUserLocation(forFloorNum: userFloor)
                 
                 if currentFloor == userFloor {

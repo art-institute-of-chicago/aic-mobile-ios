@@ -59,7 +59,7 @@ class SearchDataManager : NSObject {
 	@objc func loadArtworks(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.artworksEndpoint]!
-		url += "/search?limit=20"
+		url += "/search?limit=99"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let urlRequest = URLRequest(url:  URL(string: url)!)
 		let urlString = urlRequest.url?.absoluteString
@@ -115,7 +115,7 @@ class SearchDataManager : NSObject {
 	@objc func loadTours(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.toursEndpoint]!
-		url += "/search?q=" + searchText + "&limit=20&fields=id"
+		url += "/search?q=" + searchText + "&limit=99&fields=id"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		
@@ -146,7 +146,7 @@ class SearchDataManager : NSObject {
 	@objc func loadExhibitions(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.exhibitionsEndpoint]!
-		url += "/search?limit=20"
+		url += "/search?limit=99"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let urlRequest = URLRequest(url:  URL(string: url)!)
 		let urlString = urlRequest.url?.absoluteString
@@ -168,16 +168,14 @@ class SearchDataManager : NSObject {
 						[
 							"range": [
 								"aic_start_at": [
-									"gte": "now-10y",
-									"lte": "now+10y"
+									"lte": "now+1y"
 								]
 							]
 						],
 						[
 							"range": [
 								"aic_end_at": [
-									"gte": "now-10y",
-									"lte": "now+10y"
+									"gte": "now"
 								]
 							]
 						],
@@ -185,6 +183,7 @@ class SearchDataManager : NSObject {
 							"match": [
 								"title": [
 									"query": searchText,
+									"fields": ["title", "short_description"],
 									"operator": "or"
 								]
 							]

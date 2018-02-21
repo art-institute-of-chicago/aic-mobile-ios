@@ -10,8 +10,8 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         return "mapDepartment"
     }
     
-    let insets:UIEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 10)
-    let labelMargin:CGFloat = 10
+    let insets:UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10)
+    let labelMargin: CGFloat = 10
     
     let holderView = UIView()
     let holderTailImageView = UIImageView()
@@ -83,7 +83,8 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         label.numberOfLines = 0
         
         label.text = annotation.title
-        label.font = .aicSystemTextFont
+        label.font = .aicTextFont
+		label.textAlignment = .center
         label.textColor = .white
         label.sizeToFit()
         label.frame.origin.x = image.frame.maxX + labelMargin

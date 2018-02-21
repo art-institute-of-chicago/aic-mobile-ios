@@ -64,30 +64,20 @@ class AppDataParser {
         let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
 		
 		// optional description
-		var description: String = ""
-		do {
-			description = try getString(fromJSON: exhibitionJSON, forKey: "short_description")
-		}
-		catch{}
+		let description: String = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
 		
 		// optional image
-		var imageURL: URL?
-		do {
-			var urlString = try getString(fromJSON: exhibitionJSON, forKey: "image_iiif_url")
-			urlString += "/full/!338,450/0/default.jpg"
-			imageURL = URL(string: urlString)!
+		var imageURL: URL? = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_mobile", optional: true)
+		if imageURL == nil {
+			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_desktop", optional: true)
 		}
-		catch{}
-		
-        // Parse out first gallery listed for exhibition
-        var location: CoordinateWithFloor? = nil
 		
 		// optional location
-		var gallery: AICGalleryModel?
+        var location: CoordinateWithFloor? = nil
 		do {
 			let galleryId = try getInt(fromJSON: exhibitionJSON, forKey: "gallery_id")
-			gallery = try getGallery(forGalleryId: galleryId)
-			location = gallery!.location
+			let gallery = try getGallery(forGalleryId: galleryId)
+			location = gallery.location
 		}
 		catch{}
 		
@@ -201,7 +191,7 @@ class AppDataParser {
 		let featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
 		let exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
 		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
-			
+		
 		let appData = AICAppDataModel(generalInfo: generalInfo,
 									  galleries: self.galleries,
 									  objects: self.objects,
@@ -701,24 +691,23 @@ class AppDataParser {
 	// MARK: Search data
 	
 	func parse(autocompleteData: Data) -> [String] {
-		var autocompleteStrings = [String]() // TODO: create model for autocomplete and add score
-		
-		let json = JSON(data: autocompleteData)
+		var autocompleteStrings = [String]()
 		
 		do {
 			try handleParseError({ [unowned self] in
 				
-				let optionsJson: JSON = json["suggest"]["autocomplete"][0]["options"]
-				
-				for optionJson: JSON in optionsJson.arrayValue {
-					let text = try self.getString(fromJSON: optionJson, forKey: "text")
-					autocompleteStrings.append(text)
+				let json = JSON(data: autocompleteData)
+				if let jsonArray: [JSON] = json.array {
+					for index in 0...jsonArray.count-1 {
+						let autocompleteString = jsonArray[index].string
+						autocompleteStrings.append(autocompleteString!)
+					}
 				}
 			})
 		}
 		catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Search Autocomplete:\n\(json)\n")
+				print("Could not parse AIC Search Autocomplete\n")
 			}
 		}
 		
@@ -912,7 +901,7 @@ class AppDataParser {
         }
         
         var intArray = [Int]()
-        
+		
         for index in 0 ..< jsonArray.count {
                 let arrayInt = try self.getInt(fromJSON: json, forArrayKey: key, atIndex: index)
                 intArray.append(arrayInt)

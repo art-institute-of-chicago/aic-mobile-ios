@@ -18,7 +18,7 @@ class MapFloorSelectorView: UIView {
     
     
     // Subviews
-    var floorButtons:[MapFloorSelectorUIButton] = []
+    var floorButtons:[MapFloorSelectorButton] = []
     
     init(totalFloors:Int) {
         buttonSize = UIScreen.main.bounds.width * buttonSizeRatio
@@ -27,13 +27,13 @@ class MapFloorSelectorView: UIView {
         
         // Set Drop Shadow
         layer.masksToBounds = false;
-        layer.shadowOffset = CGSize(width: 0, height: 0);
-        layer.shadowRadius = 5;
-        layer.shadowOpacity = 0.5;
-        
+//        layer.shadowOffset = CGSize(width: 0, height: 0)
+//        layer.shadowRadius = 5;
+//        layer.shadowOpacity = 0.5;
+		
         // Create floor buttons
         for floorNum in 0..<totalFloors {
-            let btn = MapFloorSelectorUIButton(size:buttonSize, floorNum: floorNum, floorLabel: floorButtonLabels[floorNum])
+            let btn = MapFloorSelectorButton(size:buttonSize, floorNum: floorNum, floorLabel: floorButtonLabels[floorNum])
             floorButtons.append(btn)
         }
         

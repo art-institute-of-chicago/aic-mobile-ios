@@ -204,6 +204,14 @@ class SectionsViewController : UIViewController {
 		mapVC.showRestrooms()
 		sectionTabBarController.selectedIndex = 2
 	}
+	
+	func showGiftShopOnMap() {
+		if currentViewController != mapVC {
+			setSelectedSection(sectionVC: mapVC)
+		}
+		mapVC.showGiftShop()
+		sectionTabBarController.selectedIndex = 2
+	}
     
     // MARK: Play Audio
 	
@@ -547,7 +555,10 @@ extension SectionsViewController : MapItemsCollectionContainerDelegate {
 	}
 	
 	func mapItemGiftShopSelected() {
-		
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		showGiftShopOnMap()
 	}
 	
 	func mapItemRestroomSelected() {

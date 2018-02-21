@@ -441,7 +441,7 @@ struct Common {
         static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
 
         enum ZoomLevelAltitude : Double {
-            case zoomedOut = 400.0
+            case zoomedOut = 800.0
             case zoomedIn = 200.0
             case zoomedDetail = 40.0
             case zoomedMax = 25.0

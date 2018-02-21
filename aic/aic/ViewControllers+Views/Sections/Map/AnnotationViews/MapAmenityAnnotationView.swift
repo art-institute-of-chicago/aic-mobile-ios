@@ -31,6 +31,9 @@ class MapAmenityAnnotationView: MapAnnotationView {
 			else if amenityAnnotation.type == .Dining {
 				image = #imageLiteral(resourceName: "restaurant")
 			}
+			else if amenityAnnotation.type == .Giftshop {
+				image = #imageLiteral(resourceName: "giftshop")
+			}
 			else {
             	image = (UIImage(named: String(describing: amenityAnnotation.type))?.withRenderingMode(.alwaysTemplate))!
 			}

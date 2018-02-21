@@ -17,7 +17,7 @@ protocol TourStopPageViewControllerDelegate : class {
 class TourStopPageViewController : UIPageViewController {
 	private var tourModel: AICTourModel
 	
-	private var currentIndex = 0
+	private var currentIndex = -1
 	
 	weak var tourStopPageDelegate: TourStopPageViewControllerDelegate? = nil
 	
@@ -53,6 +53,7 @@ class TourStopPageViewController : UIPageViewController {
 	
 	func tourStopController(_ index: Int) -> UIViewController? {
 		if index < tourModel.stops.count {
+			currentIndex = index
 			let page = UIViewController()
 			
 //				if index == 0 {
@@ -84,10 +85,12 @@ class TourStopPageViewController : UIPageViewController {
 	}
 	
 	func setCurrentPage(pageIndex: Int) {
+		if currentIndex == pageIndex {
+			return
+		}
+		
 		// Set Tour Stop Page
 		if let viewController = tourStopController(pageIndex) {
-			currentIndex = pageIndex
-			
 			let viewControllers = [viewController]
 			
 			setViewControllers(
@@ -111,7 +114,6 @@ extension TourStopPageViewController: UIPageViewControllerDataSource {
 	func pageViewController(_ pageViewController: UIPageViewController,
 							viewControllerBefore viewController: UIViewController) -> UIViewController? {
 		var index = viewController.view.tag
-		currentIndex = index
 		guard index != NSNotFound && index != 0 else { return nil }
 		index = index - 1
 		return tourStopController(index)
@@ -120,7 +122,6 @@ extension TourStopPageViewController: UIPageViewControllerDataSource {
 	func pageViewController(_ pageViewController: UIPageViewController,
 							viewControllerAfter viewController: UIViewController) -> UIViewController? {
 		var index = viewController.view.tag
-		currentIndex = index
 		guard index != NSNotFound else { return nil }
 		index = index + 1
 		guard index != tourModel.stops.count else {return nil}
@@ -144,10 +145,15 @@ extension TourStopPageViewController : UIPageViewControllerDelegate {
 	}
 	
 	func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-//		if completed == true {
-//			if let viewController = self.viewControllers!.first as? TourStopViewController {
-//				self.tourStopPageDelegate?.tourStopPageDidChangeTo(tour: tourModel!, stopIndex: viewController.view.tag)
-//			}
-//		}
+		if completed == true {
+			if let viewController = self.viewControllers!.first {
+				currentIndex = viewController.view.tag
+				if let tour = tourModel as AICTourModel? {
+					if currentIndex <= tour.stops.count-1 {
+						self.tourStopPageDelegate?.tourStopPageDidChangeTo(tourStop: tour.stops[currentIndex])
+					}
+				}
+			}
+		}
 	}
 }
