@@ -217,10 +217,7 @@ class SearchNavigationController : CardNavigationController {
 	// MARK: Load Search
 	
 	func loadSearch(searchText: String, showAutocomplete: Bool) {
-		resultsVC.autocompleteStringItems.removeAll()
-		resultsVC.artworkItems.removeAll()
-		resultsVC.tourItems.removeAll()
-		resultsVC.exhibitionItems.removeAll()
+		resultsVC.resetContentLoaded()
 		
 		// Reset perform requests in SearchDataManager
 		NSObject.cancelPreviousPerformRequests(withTarget: SearchDataManager.sharedInstance)
@@ -321,25 +318,30 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 	}
 	
 	func searchDataDidFinishLoading(searchedArtworks: [AICSearchedArtworkModel]) {
+		resultsVC.setContentLoadedForFilter(filter: .artworks, loaded: true)
 		resultsVC.artworkItems = searchedArtworks
 		resultsVC.tableView.reloadData()
 		self.view.layoutIfNeeded()
 	}
 	
 	func searchDataDidFinishLoading(tours: [AICTourModel]) {
+		resultsVC.setContentLoadedForFilter(filter: .tours, loaded: true)
 		resultsVC.tourItems = tours
 		resultsVC.tableView.reloadData()
 		self.view.layoutIfNeeded()
 	}
 	
 	func searchDataDidFinishLoading(exhibitions: [AICExhibitionModel]) {
+		resultsVC.setContentLoadedForFilter(filter: .exhibitions, loaded: true)
 		resultsVC.exhibitionItems = exhibitions
 		resultsVC.tableView.reloadData()
 		self.view.layoutIfNeeded()
 	}
 	
-	func searchDataFailure(withMessage: String) {
-		
+	func searchDataFailure(filter: Common.Search.Filter) {
+		resultsVC.setContentLoadedForFilter(filter: filter, loaded: true)
+		resultsVC.tableView.reloadData()
+		self.view.layoutIfNeeded()
 	}
 }
 
@@ -386,6 +388,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 }
 
 // MARK: Filter Menu Delegate
+
 extension SearchNavigationController : FilterMenuDelegate {
 	func filterMenuSelected(filter: Common.Search.Filter) {
 		filterMenuView.setSelected(filter: filter)
@@ -402,7 +405,8 @@ extension SearchNavigationController : UINavigationControllerDelegate {
     }
 }
 
-// Pan Gesture
+// MARK: Pan Gesture
+
 extension SearchNavigationController {
 	override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		if gestureRecognizer == cardPanGesture {

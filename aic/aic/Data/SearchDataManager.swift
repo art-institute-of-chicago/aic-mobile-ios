@@ -14,7 +14,7 @@ protocol SearchDataManagerDelegate : class {
 	func searchDataDidFinishLoading(searchedArtworks: [AICSearchedArtworkModel])
 	func searchDataDidFinishLoading(tours: [AICTourModel])
 	func searchDataDidFinishLoading(exhibitions: [AICExhibitionModel])
-	func searchDataFailure(withMessage: String)
+	func searchDataFailure(filter: Common.Search.Filter)
 }
 
 class SearchDataManager : NSObject {
@@ -50,7 +50,6 @@ class SearchDataManager : NSObject {
 					let autocompleteStrings = self.dataParser.parse(autocompleteData: value)
 					self.delegate?.searchDataDidFinishLoading(autocompleteStrings: autocompleteStrings)
 				case .failure(let error):
-					//self.notifyLoadFailure(withMessage: "Failed to load autocomplete search data.")
 					print(error)
 				}
 		}
@@ -106,7 +105,7 @@ class SearchDataManager : NSObject {
 					let searchedArtworks = self.dataParser.parse(searchedArtworksData: value)
 					self.delegate?.searchDataDidFinishLoading(searchedArtworks: searchedArtworks)
 				case .failure(let error):
-					//self.notifyLoadFailure(withMessage: "Failed to load search data.")
+					self.delegate?.searchDataFailure(filter: .artworks)
 					print(error)
 				}
 		}
@@ -137,7 +136,7 @@ class SearchDataManager : NSObject {
 					}
 					self.delegate?.searchDataDidFinishLoading(tours: tours)
 				case .failure(let error):
-					//self.notifyLoadFailure(withMessage: "Failed to load search data.")
+					self.delegate?.searchDataFailure(filter: .tours)
 					print(error)
 				}
 		}
@@ -155,7 +154,8 @@ class SearchDataManager : NSObject {
 				"id",
 				"title",
 				"short_description",
-				"image",
+				"legacy_image_mobile",
+				"legacy_image_desktop",
 				"gallery_id",
 				"web_url",
 				"start_at",
@@ -183,7 +183,6 @@ class SearchDataManager : NSObject {
 							"match": [
 								"title": [
 									"query": searchText,
-									"fields": ["title", "short_description"],
 									"operator": "or"
 								]
 							]
@@ -215,7 +214,7 @@ class SearchDataManager : NSObject {
 					}
 					self.delegate?.searchDataDidFinishLoading(exhibitions: exhibitions)
 				case .failure(let error):
-					//self.notifyLoadFailure(withMessage: "Failed to load search data.")
+					self.delegate?.searchDataFailure(filter: .exhibitions)
 					print(error)
 				}
 		}

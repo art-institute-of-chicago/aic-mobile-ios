@@ -117,6 +117,8 @@
 		2984611C203A045C001E5378 /* MapArtworkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2984611B203A045C001E5378 /* MapArtworkContentView.swift */; };
 		2984611E203A046C001E5378 /* MapRestroomsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2984611D203A046C001E5378 /* MapRestroomsContentView.swift */; };
 		29846120203C6D5C001E5378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2984611F203C6D5C001E5378 /* Assets.xcassets */; };
+		29846122203E3B0E001E5378 /* NoResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29846121203E3B0E001E5378 /* NoResultsCell.swift */; };
+		29846124203E3B19001E5378 /* NoResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29846123203E3B19001E5378 /* NoResultsCell.xib */; };
 		2986A5881FBCBD5B00029E74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5871FBCBD5B00029E74 /* HomeViewController.swift */; };
 		2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */; };
 		2986A58C1FBCD38C00029E74 /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */; };
@@ -407,6 +409,8 @@
 		2984611B203A045C001E5378 /* MapArtworkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapArtworkContentView.swift; sourceTree = "<group>"; };
 		2984611D203A046C001E5378 /* MapRestroomsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestroomsContentView.swift; sourceTree = "<group>"; };
 		2984611F203C6D5C001E5378 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		29846121203E3B0E001E5378 /* NoResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsCell.swift; sourceTree = "<group>"; };
+		29846123203E3B19001E5378 /* NoResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultsCell.xib; sourceTree = "<group>"; };
 		2986A5871FBCBD5B00029E74 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationController.swift; sourceTree = "<group>"; };
 		2986A58B1FBCD38B00029E74 /* HomeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
@@ -625,6 +629,8 @@
 				2931277E1FDF0EB5008BFAB1 /* ContentButtonCell.xib */,
 				294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */,
 				294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */,
+				29846121203E3B0E001E5378 /* NoResultsCell.swift */,
+				29846123203E3B19001E5378 /* NoResultsCell.xib */,
 				291221961FDB35650096BB75 /* SuggestedSearchCell.swift */,
 				2912219A1FDB43040096BB75 /* SuggestedSearchCell.xib */,
 			);
@@ -1478,6 +1484,7 @@
 				29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */,
 				29846120203C6D5C001E5378 /* Assets.xcassets in Resources */,
 				29F89986202A3CA90081BA22 /* IdealSans-BookItalic.otf in Resources */,
+				29846124203E3B19001E5378 /* NoResultsCell.xib in Resources */,
 				293D00A81FA7C82200BF2C26 /* map in Resources */,
 				29A7BCFB1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-BoldItalic.otf in Resources */,
 				29872A01201684CD00BB3B6A /* Info.strings in Resources */,
@@ -1786,6 +1793,7 @@
 				E4F519C71C87B2F200226188 /* Helpers.swift in Sources */,
 				E49BAB8A1CB1968900AE0678 /* ToursSectionStopView.swift in Sources */,
 				E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */,
+				29846122203E3B0E001E5378 /* NoResultsCell.swift in Sources */,
 				E49BAB881CAEF13E00AE0678 /* ToursSectionStopsScrollerView.swift in Sources */,
 				E4F7C1491CA1FE3E005976D1 /* ObjectRelatedToursView.swift in Sources */,
 				29B9B58B1FCFC5660095FE52 /* HomeContentTitleView.swift in Sources */,

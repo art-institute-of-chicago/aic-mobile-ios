@@ -34,6 +34,8 @@ class ResultsTableViewController : UITableViewController {
 	
 	weak var sectionsVC: SectionsViewController? = nil
 	
+	private var contentLoadedForFilter: [Common.Search.Filter : Bool] = [:]
+	
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -56,10 +58,39 @@ class ResultsTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "SuggestedSearchCell", bundle: Bundle.main), forCellReuseIdentifier: SuggestedSearchCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "MapItemsCollectionContainerCell", bundle: Bundle.main), forCellReuseIdentifier: MapItemsCollectionContainerCell.reuseIdentifier)
+		self.tableView.register(UINib(nibName: "NoResultsCell", bundle: Bundle.main), forCellReuseIdentifier: NoResultsCell.reuseIdentifier)
 		self.tableView.register(ResultsSectionTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsSectionTitleView.reuseIdentifier)
 		self.tableView.register(ResultsContentTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsContentTitleView.reuseIdentifier)
         
         self.filter = .empty
+		
+		resetContentLoaded()
+	}
+	
+	// MARK: Content Loaded
+	
+	public func setContentLoadedForFilter(filter: Common.Search.Filter, loaded: Bool) {
+		contentLoadedForFilter[filter] = loaded
+	}
+	
+	private func isContentLoadedForFilter(filter: Common.Search.Filter) -> Bool {
+		guard let loaded = contentLoadedForFilter[filter] else {
+			return false
+		}
+		return loaded
+	}
+	
+	public func resetContentLoaded() {
+		autocompleteStringItems.removeAll()
+		artworkItems.removeAll()
+		tourItems.removeAll()
+		exhibitionItems.removeAll()
+		
+		contentLoadedForFilter = [
+			.tours : false,
+			.artworks : false,
+			.exhibitions : false
+		]
 	}
 }
 
@@ -112,13 +143,22 @@ extension ResultsTableViewController {
 			}
 		}
 		else if filter == .artworks {
-			return artworkItems.count
+			if contentLoadedForFilter[.tours]! {
+				return max(artworkItems.count, 1)
+			}
+			return 0
 		}
 		else if filter == .tours {
-			return tourItems.count
+			if contentLoadedForFilter[.tours]! {
+				return max(tourItems.count, 1)
+			}
+			return 0
 		}
 		else if filter == .exhibitions {
-			return exhibitionItems.count
+			if contentLoadedForFilter[.exhibitions]! {
+				return max(exhibitionItems.count, 1)
+			}
+			return 0
 		}
 		return 0
 	}
@@ -182,27 +222,39 @@ extension ResultsTableViewController {
 			}
 		}
 		else if filter == .artworks {
-			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-			let artwork = artworkItems[indexPath.row]
-			setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-			cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
+			if artworkItems.count > 0 {
+				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+				let artwork = artworkItems[indexPath.row]
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
+				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
+				return cell
+			}
+			let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
 			return cell
 		}
 		else if filter == .tours {
-			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-			var tour = tourItems[indexPath.row]
-			if tour.availableLanguages.contains(Common.currentLanguage) {
-				tour.language = Common.currentLanguage
+			if tourItems.count > 0 {
+				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+				var tour = tourItems[indexPath.row]
+				if tour.availableLanguages.contains(Common.currentLanguage) {
+					tour.language = Common.currentLanguage
+				}
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
+				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
+				return cell
 			}
-			setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
-			cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
+			let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
 			return cell
 		}
 		else if filter == .exhibitions {
-			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-			let exhibition = exhibitionItems[indexPath.row]
-			setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
-			cell.setContent(imageUrl: exhibition.imageUrl, title: exhibition.title, subtitle: "")
+			if exhibitionItems.count  > 0 {
+				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
+				let exhibition = exhibitionItems[indexPath.row]
+				setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
+				cell.setContent(imageUrl: exhibition.imageUrl, title: exhibition.title, subtitle: "")
+				return cell
+			}
+			let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
 			return cell
 		}
 		return UITableViewCell()
@@ -322,8 +374,23 @@ extension ResultsTableViewController {
 				return MapItemsCollectionContainerCell.cellHeight
 			}
 		}
-		else if filter == .artworks || filter == .tours || filter == .exhibitions {
-			return ContentButtonCell.cellHeight
+		else if filter == .artworks {
+			if artworkItems.count > 0 {
+				return ContentButtonCell.cellHeight
+			}
+			return NoResultsCell.cellHeight
+		}
+		else if filter == .tours {
+			if tourItems.count > 0 {
+				return ContentButtonCell.cellHeight
+			}
+			return NoResultsCell.cellHeight
+		}
+		else if filter == .exhibitions {
+			if exhibitionItems.count > 0 {
+				return ContentButtonCell.cellHeight
+			}
+			return NoResultsCell.cellHeight
 		}
 		return 0
 	}
