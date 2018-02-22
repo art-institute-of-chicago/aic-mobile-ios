@@ -67,9 +67,9 @@ class AppDataParser {
 		let description: String = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
 		
 		// optional image
-		var imageURL: URL? = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_mobile", optional: true)
+		var imageURL: URL? = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_mobile_url", optional: true)
 		if imageURL == nil {
-			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_desktop", optional: true)
+			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_desktop_url", optional: true)
 		}
 		
 		// optional location

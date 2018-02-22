@@ -109,6 +109,9 @@
 		2968F68B2012942800638153 /* LanguageSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F68D2012942800638153 /* LanguageSettings.strings */; };
 		2968F6932012B33000638153 /* TabMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F6952012B33000638153 /* TabMenu.strings */; };
 		296D559520239F3E00442A60 /* CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D559420239F3E00442A60 /* CardNavigationController.swift */; };
+		2975A053203F2E120014017C /* TooltipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2975A052203F2E120014017C /* TooltipViewController.swift */; };
+		2975A055203F61150014017C /* MapExhibitionAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2975A054203F61150014017C /* MapExhibitionAnnotation.swift */; };
+		2975A057203F61250014017C /* MapExhibitionAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2975A056203F61250014017C /* MapExhibitionAnnotationView.swift */; };
 		2981454520322BA10055F016 /* MemberCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981454420322BA10055F016 /* MemberCardViewController.swift */; };
 		29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */; };
 		29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */; };
@@ -401,6 +404,9 @@
 		2968F6962012B36000638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TabMenu.strings; sourceTree = "<group>"; };
 		2968F6972012B36400638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TabMenu.strings"; sourceTree = "<group>"; };
 		296D559420239F3E00442A60 /* CardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNavigationController.swift; sourceTree = "<group>"; };
+		2975A052203F2E120014017C /* TooltipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipViewController.swift; sourceTree = "<group>"; };
+		2975A054203F61150014017C /* MapExhibitionAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapExhibitionAnnotation.swift; sourceTree = "<group>"; };
+		2975A056203F61250014017C /* MapExhibitionAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapExhibitionAnnotationView.swift; sourceTree = "<group>"; };
 		2981454420322BA10055F016 /* MemberCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardViewController.swift; sourceTree = "<group>"; };
 		29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCardNavigationController.swift; sourceTree = "<group>"; };
 		29824BCD200D86F6003B6DB5 /* ExhibitionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionTableViewController.swift; sourceTree = "<group>"; };
@@ -742,6 +748,7 @@
 				294C0B36201A76F600F2ABB1 /* MapObjectAnnotationView.swift */,
 				294C0B37201A76F600F2ABB1 /* MapDepartmentAnnotationView.swift */,
 				294C0B38201A76F600F2ABB1 /* MapAnnotationView.swift */,
+				2975A056203F61250014017C /* MapExhibitionAnnotationView.swift */,
 			);
 			path = AnnotationViews;
 			sourceTree = "<group>";
@@ -755,6 +762,7 @@
 				294C0B3D201A76F700F2ABB1 /* MapTextAnnotation.swift */,
 				294C0B3E201A76F700F2ABB1 /* MapDepartmentAnnotation.swift */,
 				294C0B3F201A76F700F2ABB1 /* MapImageAnnotation.swift */,
+				2975A054203F61150014017C /* MapExhibitionAnnotation.swift */,
 			);
 			path = Annotations;
 			sourceTree = "<group>";
@@ -808,6 +816,14 @@
 				291AF3352033B2BE001099C7 /* MemberCard.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		2975A051203F2DE90014017C /* Tooltips */ = {
+			isa = PBXGroup;
+			children = (
+				2975A052203F2E120014017C /* TooltipViewController.swift */,
+			);
+			path = Tooltips;
 			sourceTree = "<group>";
 		};
 		298145422032173E0055F016 /* Views */ = {
@@ -1138,6 +1154,7 @@
 				2968F67A2012607800638153 /* Language */,
 				E433BAD11CFDD65B0086F2ED /* Messages */,
 				E415ABC61C7298420093B719 /* Sections */,
+				2975A051203F2DE90014017C /* Tooltips */,
 				E47306E61D23076900A77254 /* _Instructions */,
 				E415ABC21C7298420093B719 /* _ObjectView */,
 				E433BACE1CFDD64A0086F2ED /* RootViewController.swift */,
@@ -1850,6 +1867,7 @@
 				29C91B0D1FC4A31C008C3E9E /* InfoFooterView.swift in Sources */,
 				29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */,
 				29BF45D820333F7D00919FE8 /* MemberLoginView.swift in Sources */,
+				2975A055203F61150014017C /* MapExhibitionAnnotation.swift in Sources */,
 				E4D1592D1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift in Sources */,
 				29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */,
 				E4CD3FD31CA9CDB200013E75 /* _NewsToursTableViewCell.swift in Sources */,
@@ -1888,6 +1906,7 @@
 				E4223CE51CC7FE6600503D43 /* MemberDataManager.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,
 				29C7D0D220260AD50015984B /* AudioInfoViewController.swift in Sources */,
+				2975A053203F2E120014017C /* TooltipViewController.swift in Sources */,
 				29A67F872027D74B003C630A /* AudioInfoSectionView.swift in Sources */,
 				29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */,
 				294C0B5B201A76F700F2ABB1 /* FloorplanOverlayRenderer.swift in Sources */,
@@ -1911,6 +1930,7 @@
 				2902E0B01FC47FF60070C78C /* InfoButton.swift in Sources */,
 				29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */,
 				E47306EE1D23076900A77254 /* InstructionsItemViewController.swift in Sources */,
+				2975A057203F61250014017C /* MapExhibitionAnnotationView.swift in Sources */,
 				E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */,
 				29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */,
 				2994891F1FA3849C00943197 /* AICGeneralInfoModel.swift in Sources */,

@@ -193,9 +193,13 @@ class AudioPlayerNavigationController : CardNavigationController {
 					
 					// Retrieve cover image
 					KingfisherManager.shared.retrieveImage(with: ImageResource(downloadURL: coverImageURL, cacheKey: coverImageURL.absoluteString), options: KingfisherManager.shared.defaultOptions, progressBlock: nil, completionHandler: { (image, error, cacheType, imageUrl) in
+						if image == nil {
+							self.audioInfoVC.imageView.image = nil
+							return
+						}
 						
 						// MPMediaItemPropertyArtwork
-						let artwork = MPMediaItemArtwork.init(boundsSize: image!.size, requestHandler: { (size) -> UIImage in
+						let artworkMediaItem = MPMediaItemArtwork.init(boundsSize: image!.size, requestHandler: { (size) -> UIImage in
 							return image!
 						})
 						
@@ -203,7 +207,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 						let songInfo: [String : AnyObject] = [
 							MPMediaItemPropertyTitle: NSString(string: self.currentAudioFile!.trackTitle),
 							MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
-							MPMediaItemPropertyArtwork: artwork,
+							MPMediaItemPropertyArtwork: artworkMediaItem,
 							MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
 							MPMediaItemPropertyAlbumTrackCount: NSNumber(floatLiteral: 0),
 							MPNowPlayingInfoPropertyPlaybackQueueIndex: NSNumber(floatLiteral: 0),
@@ -229,14 +233,20 @@ class AudioPlayerNavigationController : CardNavigationController {
     }
     
     private func showLoadError(forAudioFile audioFile:AICAudioFileModel, coverImageURL:URL) {
-        // Preset a UIAlertView that allows the user to try to load the file.
+		// Preset a UIAlertView that allows the user to try to load the file.
         let alertView = UIAlertController(title: "Load Failure Title".localized(using: "AudioPlayer"), message: "Load Failure Message".localized(using: "AudioPlayer"), preferredStyle: .alert)
+		
+		// Retry Action
         alertView.addAction(UIAlertAction(title: "Load Failure Reload Button Title".localized(using: "AudioPlayer"), style: .default, handler: { (alertAction) -> Void in
             self.currentAudioFile = nil
             _ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
         }))
-        
-        alertView.addAction(UIAlertAction(title: "Load Failure Cancel Button Title".localized(using: "AudioPlayer"), style: .cancel, handler: nil))
+		
+		// Cancel Action
+		alertView.addAction(UIAlertAction(title: "Load Failure Cancel Button Title".localized(using: "AudioPlayer"), style: .cancel, handler: { (alertAction) -> Void in
+			self.hide()
+		}))
+		
         self.present(alertView, animated: true, completion: nil)
     }
     

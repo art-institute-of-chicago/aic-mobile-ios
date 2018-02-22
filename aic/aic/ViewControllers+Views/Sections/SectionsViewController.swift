@@ -496,6 +496,19 @@ extension SectionsViewController : CardNavigationControllerDelegate {
         }
     }
 	
+	func cardWillShowFullscreen(cardVC: CardNavigationController) {
+		setSearchButtonEnabled(false)
+		
+		// close content card, if open
+		if cardVC == audioPlayerVC {
+			if let contentCard = contentCardVC {
+				if contentCard.currentState == .fullscreen {
+					contentCard.hide()
+				}
+			}
+		}
+	}
+	
 	func cardDidShowMiniplayer(cardVC: CardNavigationController) {
 		if cardVC == audioPlayerVC {
 			setSearchButtonEnabled(true)
@@ -503,7 +516,10 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 	}
     
 	func cardDidHide(cardVC: CardNavigationController) {
-		setSearchButtonEnabled(true)
+		// make sure there's no other card fullscreen, befiore you reenable the search button
+		if audioPlayerVC.currentState != .fullscreen {
+			setSearchButtonEnabled(true)
+		}
 		if cardVC.isKind(of: ContentCardNavigationController.self) {
 			cardVC.view.removeFromSuperview()
 		}

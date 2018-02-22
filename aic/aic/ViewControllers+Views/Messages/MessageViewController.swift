@@ -15,7 +15,6 @@ import Localize_Swift
 }
 
 class MessageViewController : UIViewController {
-	
 	let blurBGView:UIView = getBlurEffectView(frame: UIScreen.main.bounds)
 	let contentView = UIView()
     let iconImageView = UIImageView()

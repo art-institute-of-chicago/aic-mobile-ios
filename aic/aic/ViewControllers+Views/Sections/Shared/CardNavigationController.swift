@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol CardNavigationControllerDelegate : class {
     @objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)
+	@objc optional func cardWillShowFullscreen(cardVC: CardNavigationController)
 	@objc optional func cardDidShowMiniplayer(cardVC: CardNavigationController)
     @objc optional func cardDidHide(cardVC: CardNavigationController)
 }
@@ -106,6 +107,7 @@ class CardNavigationController : UINavigationController {
     
     func showFullscreen() {
         cardWillShowFullscreen()
+		self.cardDelegate?.cardWillShowFullscreen?(cardVC: self)
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
             self.setCardPosition(self.positionForState[.fullscreen]!)
             self.view.layer.cornerRadius = 10

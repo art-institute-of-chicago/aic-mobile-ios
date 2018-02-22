@@ -312,7 +312,9 @@ class MapViewController: UIViewController {
                     setCurrentFloor(forFloorNum: tourStop.object.location.floor, andResetMap: false)
 					
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
+//					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
+//					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue)
+					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
                     
                     // Select the annotation (which eventually updates it's view)
                     mapView.selectAnnotation(annotation, animated: true)
@@ -334,7 +336,7 @@ class MapViewController: UIViewController {
 		mapView.layoutMargins = mapInsets
 		
 		// Update the floor selector with new position
-		let mapFrame = UIEdgeInsetsInsetRect(mapView.frame, mapView.layoutMargins)
+		let mapFrame = UIEdgeInsetsInsetRect(mapView.frame, mapInsets)
 		
 		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
 		var floorSelectorY = mapFrame.origin.y + mapFrame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y
