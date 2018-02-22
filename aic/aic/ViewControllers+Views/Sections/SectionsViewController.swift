@@ -398,36 +398,36 @@ extension SectionsViewController : AudioGuideNavigationControllerDelegate {
 }
 
 // Tours Delegate Methods
-extension SectionsViewController : ToursSectionViewControllerDelegate {
-    func toursSectionDidShowTour(tour: AICTourModel) {
-        //locationManager.delegate = mapVC
-        //mapVC.showTour(forTour: tour)
-        
-        // Log Analytics
-        AICAnalytics.sendTourDidStartEvent(forTour: tour)
-    }
-    
-    func toursSectionDidFocusOnTourOverview(tour: AICTourModel) {
-        //mapVC.showTourOverview(forTourModel: tour)
-    }
-    
-    func toursSectionDidFocusOnTourStop(tour: AICTourModel, stopIndex: Int) {
-        //mapVC.highlightTourStop(forTour: tour, atStopIndex: stopIndex)
-    }
-    
-    func toursSectionDidSelectTourOverview(tour:AICTourModel) {
-        playTourOverview(forTourModel: tour)
-    }
-    
-    func toursSectionDidSelectTourStop(tour: AICTourModel, stopIndex:Int) {
-        playTourStop(forTourModel: tour, atStopIndex:stopIndex)
-    }
-    
-    func toursSectionDidLeaveTour(tour: AICTourModel) {
-        // Log analytics
-        AICAnalytics.sendTourDidLeaveEvent(forTour: tour)
-    }
-}
+//extension SectionsViewController : ToursSectionViewControllerDelegate {
+//    func toursSectionDidShowTour(tour: AICTourModel) {
+//        //locationManager.delegate = mapVC
+//        //mapVC.showTour(forTour: tour)
+//
+//        // Log Analytics
+//        AICAnalytics.sendTourDidStartEvent(forTour: tour)
+//    }
+//
+//    func toursSectionDidFocusOnTourOverview(tour: AICTourModel) {
+//        //mapVC.showTourOverview(forTourModel: tour)
+//    }
+//
+//    func toursSectionDidFocusOnTourStop(tour: AICTourModel, stopIndex: Int) {
+//        //mapVC.highlightTourStop(forTour: tour, atStopIndex: stopIndex)
+//    }
+//
+//    func toursSectionDidSelectTourOverview(tour:AICTourModel) {
+//        playTourOverview(forTourModel: tour)
+//    }
+//
+//    func toursSectionDidSelectTourStop(tour: AICTourModel, stopIndex:Int) {
+//        playTourStop(forTourModel: tour, atStopIndex:stopIndex)
+//    }
+//
+//    func toursSectionDidLeaveTour(tour: AICTourModel) {
+//        // Log analytics
+//        AICAnalytics.sendTourDidLeaveEvent(forTour: tour)
+//    }
+//}
 
 // MARK: Map Delegate
 extension SectionsViewController : MapNavigationControllerDelegate {

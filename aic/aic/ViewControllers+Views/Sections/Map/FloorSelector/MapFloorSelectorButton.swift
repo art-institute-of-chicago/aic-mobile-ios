@@ -12,7 +12,7 @@ class MapFloorSelectorButton: UIButton {
         let selectedColor:UIColor
     }
     
-    private let defaultColorScheme = ColorScheme(labelColor: .black, deselectedColor: .aicFloorUnselectedColor, selectedColor: .aicFloorColor)
+    private let defaultColorScheme = ColorScheme(labelColor: .aicFloorTextColor, deselectedColor: .aicFloorUnselectedColor, selectedColor: .aicFloorColor)
     
     private let userLocationColorScheme = ColorScheme(labelColor: .white, deselectedColor: .aicBluedotUnselectedColor, selectedColor: .aicBluedotColor)
 

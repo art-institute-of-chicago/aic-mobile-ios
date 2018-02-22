@@ -28,13 +28,15 @@ extension UIColor {
 
 	static let aicButtonsColor: UIColor = UIColor(red: 236.0 / 255.0, green: 101.0 / 255.0, blue: 101.0 / 255.0, alpha: 1.0)
 	
+	static let aicFloorTextColor: UIColor = UIColor(red: 26.0 / 255.0, green: 69.0 / 255.0, blue: 110.0 / 255.0, alpha: 1.0)
+	
 	static let aicFloorColor: UIColor = UIColor(white: 1.0, alpha: 1.0)
 	
-	static let aicFloorUnselectedColor: UIColor = UIColor(white: 1.0, alpha: 0.5)
+	static let aicFloorUnselectedColor: UIColor = UIColor(red: 206.0 / 255.0, green: 217.0 / 255.0, blue: 226.0 / 255.0, alpha: 0.9)
 
 	static let aicBluedotColor: UIColor = UIColor(red: 0.0, green: 174.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
 	
-	static let aicBluedotUnselectedColor: UIColor = UIColor(red: 0.0, green: 174.0 / 255.0, blue: 239.0 / 255.0, alpha: 0.35)
+	static let aicBluedotUnselectedColor: UIColor = UIColor(red: 79.0 / 255.0, green: 207.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.9)
 
 	static let aicGrayColor: UIColor = UIColor(white: 216.0 / 255.0, alpha: 1.0)
 	
