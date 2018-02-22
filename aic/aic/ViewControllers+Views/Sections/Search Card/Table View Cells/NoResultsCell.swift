@@ -16,10 +16,11 @@ class NoResultsCell : UITableViewCell {
 	static let reuseIdentifier = "noResultsCell"
 	
 	@IBOutlet weak var noResultsLabel: UILabel!
+	@IBOutlet weak var visitOurWebsiteLabel: UILabel!
 	
 	var contentLoaded: Bool = false
 	
-	static let cellHeight: CGFloat = 90.0
+	static let cellHeight: CGFloat = 100.0
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -31,5 +32,10 @@ class NoResultsCell : UITableViewCell {
 		noResultsLabel.numberOfLines = 0
 		noResultsLabel.lineBreakMode = .byWordWrapping
 		noResultsLabel.textColor = .aicCardDarkTextColor
+		
+		visitOurWebsiteLabel.numberOfLines = 2
+		visitOurWebsiteLabel.lineBreakMode = .byWordWrapping
+		visitOurWebsiteLabel.textColor = .aicCardDarkLinkColor
+		visitOurWebsiteLabel.text = "For help, visit the nearest museum representative\nor visit our website."
 	}
 }

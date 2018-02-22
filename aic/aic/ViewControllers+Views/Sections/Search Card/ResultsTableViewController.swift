@@ -17,6 +17,35 @@ protocol ResultsTableViewControllerDelegate : class {
 	func resultsTableViewWillScroll()
 }
 
+/// ResultsTableViewController
+///
+/// TableViewController showing results for all content types and filters.
+/// Different number of sections and rows are shown based on the active filter and the results.
+///
+/// - Filter: .empty
+///   - Section 0: Promoted searches
+///   - Section 1: Map Items
+///
+/// - Filter: .suggested
+///   - Section 0: Autocomplete strings
+///   - Section 1: No Results
+///   - Section 2: Artworks
+///   - Section 3: Tours
+///   - Section 4: Exhibitions
+///   - Section 5: Map Items
+///
+/// - Filter: .artworks
+///   - Section 0: No Results
+///   - Section 1: Artworks
+///
+/// - Filter: .tours
+///   - Section 0: No Results
+///   - Section 1: Tours
+///
+/// - Filter: .exhibitions
+///   - Section 0: No Results
+///   - Section 1: Exhibitions
+///
 class ResultsTableViewController : UITableViewController {
 	var promotedSearchStringItems: [String] = ["Essentials Tour", "Impressionism", "American Gothic"]
 	var autocompleteStringItems: [String] = []
@@ -73,13 +102,6 @@ class ResultsTableViewController : UITableViewController {
 		contentLoadedForFilter[filter] = loaded
 	}
 	
-	private func isContentLoadedForFilter(filter: Common.Search.Filter) -> Bool {
-		guard let loaded = contentLoadedForFilter[filter] else {
-			return false
-		}
-		return loaded
-	}
-	
 	public func resetContentLoaded() {
 		autocompleteStringItems.removeAll()
 		artworkItems.removeAll()
@@ -91,6 +113,22 @@ class ResultsTableViewController : UITableViewController {
 			.artworks : false,
 			.exhibitions : false
 		]
+	}
+	
+	private func isContentLoadedForFilter(filter: Common.Search.Filter) -> Bool {
+		guard let loaded = contentLoadedForFilter[filter] else {
+			return false
+		}
+		return loaded
+	}
+	
+	private func isAllContentLoadedWithNoResults() -> Bool {
+		return contentLoadedForFilter[.artworks] == true
+			&& contentLoadedForFilter[.tours] == true
+			&& contentLoadedForFilter[.exhibitions] == true
+			&& artworkItems.count == 0
+			&& tourItems.count == 0
+			&& exhibitionItems.count == 0
 	}
 }
 
@@ -108,10 +146,10 @@ extension ResultsTableViewController {
 			return 2
 		}
 		else if filter == .suggested {
-			return 5
+			return 6
 		}
 		else if filter == .artworks || filter == .tours || filter == .exhibitions {
-			return 1
+			return 2
 		}
 		return 0
 	}
@@ -130,33 +168,54 @@ extension ResultsTableViewController {
 				return min(autocompleteStringItems.count, 3)
 			}
 			else if section == 1 {
-				return min(artworkItems.count, 3)
+				if isAllContentLoadedWithNoResults() {
+					return 1
+				}
+				return 0
 			}
 			else if section == 2 {
-				return min(tourItems.count, 3)
+				return min(artworkItems.count, 3)
 			}
 			else if section == 3 {
-				return min(exhibitionItems.count, 3)
+				return min(tourItems.count, 3)
 			}
 			else if section == 4 {
+				return min(exhibitionItems.count, 3)
+			}
+			else if section == 5 {
 				return 1
 			}
 		}
 		else if filter == .artworks {
-			if contentLoadedForFilter[.tours]! {
-				return max(artworkItems.count, 1)
+			if section == 0 {
+				if contentLoadedForFilter[.artworks] == true && artworkItems.count == 0 {
+					return 1
+				}
+			}
+			else if section == 1 {
+				return artworkItems.count
 			}
 			return 0
 		}
 		else if filter == .tours {
-			if contentLoadedForFilter[.tours]! {
-				return max(tourItems.count, 1)
+			if section == 0 {
+				if contentLoadedForFilter[.tours] == true && tourItems.count == 0 {
+					return 1
+				}
+			}
+			else if section == 1 {
+				return tourItems.count
 			}
 			return 0
 		}
 		else if filter == .exhibitions {
-			if contentLoadedForFilter[.exhibitions]! {
-				return max(exhibitionItems.count, 1)
+			if section == 0 {
+				if contentLoadedForFilter[.exhibitions] == true && exhibitionItems.count == 0 {
+					return 1
+				}
+			}
+			else if section == 1 {
+				return exhibitionItems.count
 			}
 			return 0
 		}
@@ -187,6 +246,10 @@ extension ResultsTableViewController {
 				return cell
 			}
 			else if indexPath.section == 1 {
+				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				return cell
+			}
+			else if indexPath.section == 2 {
 				// artwork cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
@@ -194,7 +257,7 @@ extension ResultsTableViewController {
 				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 				return cell
 			}
-			else if indexPath.section == 2 {
+			else if indexPath.section == 3 {
 				// tour cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				var tour = tourItems[indexPath.row]
@@ -205,7 +268,7 @@ extension ResultsTableViewController {
 				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
 				return cell
 			}
-			else if indexPath.section == 3 {
+			else if indexPath.section == 4 {
 				// exhibition cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let exhibition = exhibitionItems[indexPath.row]
@@ -213,7 +276,7 @@ extension ResultsTableViewController {
 				cell.setContent(imageUrl: exhibition.imageUrl, title: exhibition.title, subtitle: "")
 				return cell
 			}
-			else if indexPath.section == 4 {
+			else if indexPath.section == 5 {
 				// map items cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: MapItemsCollectionContainerCell.reuseIdentifier, for: indexPath) as! MapItemsCollectionContainerCell
 				cell.delegate = sectionsVC
@@ -222,18 +285,24 @@ extension ResultsTableViewController {
 			}
 		}
 		else if filter == .artworks {
-			if artworkItems.count > 0 {
+			if indexPath.section == 0 {
+				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				return cell
+			}
+			else if indexPath.section == 1 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
 				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 				return cell
 			}
-			let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
-			return cell
 		}
 		else if filter == .tours {
-			if tourItems.count > 0 {
+			if indexPath.section == 0 {
+				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				return cell
+			}
+			else if indexPath.section == 1 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				var tour = tourItems[indexPath.row]
 				if tour.availableLanguages.contains(Common.currentLanguage) {
@@ -243,19 +312,19 @@ extension ResultsTableViewController {
 				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
 				return cell
 			}
-			let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
-			return cell
 		}
 		else if filter == .exhibitions {
-			if exhibitionItems.count  > 0 {
+			if indexPath.section == 0 {
+				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				return cell
+			}
+			else if indexPath.section == 1 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let exhibition = exhibitionItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
 				cell.setContent(imageUrl: exhibition.imageUrl, title: exhibition.title, subtitle: "")
 				return cell
 			}
-			let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
-			return cell
 		}
 		return UITableViewCell()
 	}
@@ -294,7 +363,7 @@ extension ResultsTableViewController {
 			}
 		}
 		if filter == .suggested {
-			if section == 1 && artworkItems.count > 0 {
+			if section == 2 && artworkItems.count > 0 {
 				// artworks header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Artworks".localized(using: "Search")
@@ -302,7 +371,7 @@ extension ResultsTableViewController {
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllArtworksButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
-			else if section == 2 && tourItems.count > 0 {
+			else if section == 3 && tourItems.count > 0 {
 				// tours header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Tours".localized(using: "Search")
@@ -310,7 +379,7 @@ extension ResultsTableViewController {
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
-			else if section == 3 && exhibitionItems.count > 0 {
+			else if section == 4 && exhibitionItems.count > 0 {
 				// exhibitions header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
 				titleView.contentTitleLabel.text = "Exhibitions".localized(using: "Search")
@@ -318,7 +387,7 @@ extension ResultsTableViewController {
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllExhibitionsButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			}
-			else if section == 4 {
+			else if section == 5 {
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
 				titleView.titleLabel.text = "On the Map".localized(using: "Search")
 				return titleView
@@ -332,16 +401,16 @@ extension ResultsTableViewController {
 			return ResultsSectionTitleView.titleHeight
 		}
 		if filter == .suggested {
-			if section == 1 && artworkItems.count > 0 {
+			if section == 2 && artworkItems.count > 0 {
 				return ResultsContentTitleView.titleHeight
 			}
-			else if section == 2 && tourItems.count > 0 {
+			else if section == 3 && tourItems.count > 0 {
 				return ResultsContentTitleView.titleHeight
 			}
-			else if section == 3 && exhibitionItems.count > 0 {
+			else if section == 4 && exhibitionItems.count > 0 {
 				return ResultsContentTitleView.titleHeight
 			}
-			else if section == 4 {
+			else if section == 5 {
 				return ResultsSectionTitleView.titleHeight
 			}
 		}
@@ -362,7 +431,7 @@ extension ResultsTableViewController {
 				return SuggestedSearchCell.cellHeight
 			}
 			else if indexPath.section == 1 {
-				return ContentButtonCell.cellHeight
+				return NoResultsCell.cellHeight
 			}
 			else if indexPath.section == 2 {
 				return ContentButtonCell.cellHeight
@@ -371,26 +440,41 @@ extension ResultsTableViewController {
 				return ContentButtonCell.cellHeight
 			}
 			else if indexPath.section == 4 {
+				return ContentButtonCell.cellHeight
+			}
+			else if indexPath.section == 5 {
 				return MapItemsCollectionContainerCell.cellHeight
 			}
 		}
 		else if filter == .artworks {
-			if artworkItems.count > 0 {
-				return ContentButtonCell.cellHeight
+			if indexPath.section == 0 {
+				return NoResultsCell.cellHeight
 			}
-			return NoResultsCell.cellHeight
+			else if indexPath.section == 1 {
+				if artworkItems.count > 0 {
+					return ContentButtonCell.cellHeight
+				}
+			}
 		}
 		else if filter == .tours {
-			if tourItems.count > 0 {
-				return ContentButtonCell.cellHeight
+			if indexPath.section == 0 {
+				return NoResultsCell.cellHeight
 			}
-			return NoResultsCell.cellHeight
+			else if indexPath.section == 1 {
+				if tourItems.count > 0 {
+					return ContentButtonCell.cellHeight
+				}
+			}
 		}
 		else if filter == .exhibitions {
-			if exhibitionItems.count > 0 {
-				return ContentButtonCell.cellHeight
+			if indexPath.section == 0 {
+				return NoResultsCell.cellHeight
 			}
-			return NoResultsCell.cellHeight
+			else if indexPath.section == 1 {
+				if exhibitionItems.count > 0 {
+					return ContentButtonCell.cellHeight
+				}
+			}
 		}
 		return 0
 	}
@@ -410,30 +494,36 @@ extension ResultsTableViewController {
 				let searchText = autocompleteStringItems[indexPath.row]
 				self.searchDelegate?.resultsTableDidSelect(searchText: searchText)
 			}
-			else if indexPath.section == 1 {
+			else if indexPath.section == 2 {
 				let artwork = artworkItems[indexPath.row]
 				self.searchDelegate?.resultsTableDidSelect(artwork: artwork)
 			}
-			else if indexPath.section == 2 {
+			else if indexPath.section == 3 {
 				let tour = tourItems[indexPath.row]
 				self.searchDelegate?.resultsTableDidSelect(tour: tour)
 			}
-			else if indexPath.section == 3 {
+			else if indexPath.section == 4 {
 				let exhibition = exhibitionItems[indexPath.row]
 				self.searchDelegate?.resultsTableDidSelect(exhibition: exhibition)
 			}
 		}
 		else if filter == .artworks {
-			let artwork = artworkItems[indexPath.row]
-			self.searchDelegate?.resultsTableDidSelect(artwork: artwork)
+			if indexPath.section == 1 {
+				let artwork = artworkItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(artwork: artwork)
+			}
 		}
 		else if filter == .tours {
-			let tour = tourItems[indexPath.row]
-			self.searchDelegate?.resultsTableDidSelect(tour: tour)
+			if indexPath.section == 1 {
+				let tour = tourItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(tour: tour)
+			}
 		}
 		else if filter == .exhibitions {
-			let exhibition = exhibitionItems[indexPath.row]
-			self.searchDelegate?.resultsTableDidSelect(exhibition: exhibition)
+			if indexPath.section == 1 {
+				let exhibition = exhibitionItems[indexPath.row]
+				self.searchDelegate?.resultsTableDidSelect(exhibition: exhibition)
+			}
 		}
 	}
 }

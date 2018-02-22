@@ -16,31 +16,41 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="noResultsCell" rowHeight="90" id="atJ-Fl-YrX" customClass="NoResultsCell" customModule="aic" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="noResultsCell" rowHeight="103" id="atJ-Fl-YrX" customClass="NoResultsCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="atJ-Fl-YrX" id="lmn-Uj-WVn">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, there are no results for your search." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQl-JX-nu4">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, we couldn't find that." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQl-JX-nu4">
                         <rect key="frame" x="16" y="16" width="343" height="19"/>
                         <fontDescription key="fontDescription" name="IdealSans-BookItalic" family="Ideal Sans" pointSize="16"/>
                         <color key="textColor" red="0.63137254901960782" green="0.63137254901960782" blue="0.63137254901960782" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For help, visit the nearest museum representative " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="79T-x4-z6t">
+                        <rect key="frame" x="16" y="51" width="284" height="16"/>
+                        <fontDescription key="fontDescription" name="IdealSans-BookItalic" family="Ideal Sans" pointSize="13"/>
+                        <color key="textColor" red="0.18823529411764706" green="0.63529411764705879" blue="0.65098039215686276" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="79T-x4-z6t" firstAttribute="leading" secondItem="lmn-Uj-WVn" secondAttribute="leading" constant="16" id="6XF-3W-Bqf"/>
+                    <constraint firstAttribute="trailing" secondItem="79T-x4-z6t" secondAttribute="trailing" constant="75" id="70R-DY-cIe"/>
                     <constraint firstAttribute="trailing" secondItem="PQl-JX-nu4" secondAttribute="trailing" constant="16" id="DuS-Zp-IIY"/>
                     <constraint firstItem="PQl-JX-nu4" firstAttribute="top" secondItem="lmn-Uj-WVn" secondAttribute="top" constant="16" id="GCf-gE-qzK"/>
+                    <constraint firstItem="79T-x4-z6t" firstAttribute="top" secondItem="PQl-JX-nu4" secondAttribute="bottom" constant="16" id="mU8-J0-Xfr"/>
                     <constraint firstItem="PQl-JX-nu4" firstAttribute="leading" secondItem="lmn-Uj-WVn" secondAttribute="leading" constant="16" id="t08-Sg-ITo"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="noResultsLabel" destination="PQl-JX-nu4" id="0bD-K8-A25"/>
+                <outlet property="visitOurWebsiteLabel" destination="79T-x4-z6t" id="GN1-Ai-ejd"/>
             </connections>
-            <point key="canvasLocation" x="35.5" y="49"/>
+            <point key="canvasLocation" x="35.5" y="55.5"/>
         </tableViewCell>
     </objects>
 </document>

@@ -393,6 +393,9 @@ extension SearchNavigationController : FilterMenuDelegate {
 	func filterMenuSelected(filter: Common.Search.Filter) {
 		filterMenuView.setSelected(filter: filter)
 		resultsVC.filter = filter
+		
+		// Remove autocomplete, since the user has shown intention to look for results on this search string
+		resultsVC.autocompleteStringItems.removeAll()
 	}
 }
 

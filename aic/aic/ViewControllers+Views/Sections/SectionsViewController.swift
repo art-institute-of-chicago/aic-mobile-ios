@@ -216,54 +216,45 @@ class SectionsViewController : UIViewController {
     // MARK: Play Audio
 	
 	private func playObject(object:AICObjectModel, audioGuideID: Int?) {
-//        self.objectVC.setContent(forObjectModel: object, audioGuideID: audioGuideID)
-//        self.objectVC.showFullscreen()
-		
-		setSearchButtonEnabled(false)
-		
         audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: audioGuideID)
-        audioPlayerVC.showFullscreen()
+		
         showHeadphonesMessage()
     }
     
     func playAudioGuideObject(object:AICObjectModel, audioGuideID: Int) {
         playObject(object: object, audioGuideID: audioGuideID)
+		
+		setSearchButtonEnabled(false)
+		audioPlayerVC.showFullscreen()
         
         // Log analytics
-        AICAnalytics.sendAudioGuideDidShowObjectEvent(forObject: object)
+//        AICAnalytics.sendAudioGuideDidShowObjectEvent(forObject: object)
     }
     
     func playMapObject(forObjectModel object:AICObjectModel) {
-//        if currentViewController == toursVC {
-//            guard let currentTour = toursVC.currentTour else {
-//                print("Could not display object because it isn't on currently displayed tour.")
-//                return
-//            }
-//
-//            guard let tourStopIndex = currentTour.getIndex(forStopObject: object) else {
-//                print("Could not get index for tour object.")
-//                return
-//            }
-//
-//            showTourStop(forTourModel: currentTour, atStopIndex: tourStopIndex)
-//        } else {
-//            playObject(object: object, audioGuideID: nil)
-//        }
+		playObject(object: object, audioGuideID: nil)
 		
-		audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: nil)
-		if audioPlayerVC.currentState != .mini_player {
-			audioPlayerVC.showMiniPlayer()
-		}
-		showHeadphonesMessage()
+		audioPlayerVC.showMiniPlayer()
 		
         // Log analytics
-        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
+		// TODO: Log as played map object
+//        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
     }
+	
+	func playSearchedObject(forObjectModel object:AICObjectModel) {
+		playObject(object: object, audioGuideID: nil)
+		
+		audioPlayerVC.showMiniPlayer()
+		
+		// Log analytics
+		// TODO: Log as played search object
+//        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
+	}
     
     fileprivate func playTourOverview(forTourModel tour:AICTourModel) {
-//        self.objectVC.setContent(forTourOverviewModel: tour.overview)
-//        self.objectVC.showMiniPlayer()
-        self.showHeadphonesMessage()
+//		playObject(object: tour.audio, audioGuideID: nil)
+		
+		audioPlayerVC.showMiniPlayer()
         
         // Log analytics
         AICAnalytics.sendTourDidShowOverviewEvent(forTour: tour)
@@ -534,10 +525,7 @@ extension SectionsViewController : TourTableViewControllerDelegate {
 extension SectionsViewController : ArtworkTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel) {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
-		playMapObject(forObjectModel: artwork)
+		playSearchedObject(forObjectModel: artwork)
 	}
 	
 	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel) {
