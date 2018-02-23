@@ -239,18 +239,22 @@ class MapViewController: UIViewController {
         var annotations: [MKAnnotation] = []
         for floor in mapModel.floors {
             let floorStops = tourModel.stops.filter({ $0.object.location.floor == floor.floorNumber })
-			
+
             // Set their objects as active on the map floor
             floor.setTourStopAnnotations(forTourStopModels: floorStops)
             annotations.append(contentsOf: floor.tourStopAnnotations as [MKAnnotation])
         }
-		
+
 		let startFloor: Int = tourModel.stops.first!.object.location.floor
         setCurrentFloor(forFloorNum: startFloor, andResetMap: false)
+
+//        mapView.showAnnotations(annotations, animated: false)
+//
+//        showTourOverview()
 		
-        mapView.showAnnotations(annotations, animated: false)
-        
-        showTourOverview()
+		mapView.addAnnotations(annotations)
+		
+		highlightTourStop(tourStop: tourModel.stops.first!)
     }
     
     private func updateMapForModeChange(andStorePreviousMode previousMode:Mode) {

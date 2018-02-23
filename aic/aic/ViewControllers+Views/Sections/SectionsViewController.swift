@@ -215,14 +215,17 @@ class SectionsViewController : UIViewController {
     
     // MARK: Play Audio
 	
-	private func playObject(object:AICObjectModel, audioGuideID: Int?) {
-        audioPlayerVC.playArtwork(artwork: object, forAudioGuideID: audioGuideID)
-		
-        showHeadphonesMessage()
+	private func playArtwork(artwork: AICObjectModel, audio: AICAudioFileModel) {
+		audioPlayerVC.playArtworkAudio(artwork: artwork, audio: audio)
+	
+		showHeadphonesMessage()
     }
     
-    func playAudioGuideObject(object:AICObjectModel, audioGuideID: Int) {
-        playObject(object: object, audioGuideID: audioGuideID)
+    private func playAudioGuideArtwork(artwork: AICObjectModel, audioGuideID: Int) {
+		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: audioGuideID)
+		audio.language = Common.currentLanguage
+		
+		playArtwork(artwork: artwork, audio: audio)
 		
 		audioPlayerVC.showFullscreen()
         
@@ -230,8 +233,11 @@ class SectionsViewController : UIViewController {
 //        AICAnalytics.sendAudioGuideDidShowObjectEvent(forObject: object)
     }
     
-    func playMapObject(forObjectModel object:AICObjectModel) {
-		playObject(object: object, audioGuideID: nil)
+    private func playMapArtwork(artwork: AICObjectModel) {
+		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
+		audio.language = Common.currentLanguage
+		
+		playArtwork(artwork: artwork, audio: audio)
 		
 		audioPlayerVC.showMiniPlayer()
 		
@@ -240,8 +246,11 @@ class SectionsViewController : UIViewController {
 //        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
     }
 	
-	func playSearchedObject(forObjectModel object:AICObjectModel) {
-		playObject(object: object, audioGuideID: nil)
+	private func playSearchedArtwork(artwork: AICObjectModel) {
+		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
+		audio.language = Common.currentLanguage
+		
+		playArtwork(artwork: artwork, audio: audio)
 		
 		audioPlayerVC.showMiniPlayer()
 		
@@ -249,23 +258,29 @@ class SectionsViewController : UIViewController {
 		// TODO: Log as played search object
 //        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
 	}
-    
-    fileprivate func playTourOverview(forTourModel tour:AICTourModel) {
-//		playObject(object: tour.audio, audioGuideID: nil)
+	
+	private func playTourStop(tourStop: AICTourStopModel, language: Common.Language) {
+		var audio = tourStop.audio
+		audio.language = language
+		
+		playArtwork(artwork: tourStop.object, audio: audio)
 		
 		audioPlayerVC.showMiniPlayer()
-        
+		
+		// Log analytics
+		//        AICAnalytics.sendTourDidShowObjectEvent(forObject: tour.stops[stopIndex].object)
+	}
+    
+    private func playTourOverview(tour: AICTourModel, language: Common.Language) {
+//		var audio = tour.audio
+//		audio.language = Common.currentLanguage
+//
+//		playArtwork(artwork: tour.audio, audio: audio)
+//
+//		audioPlayerVC.showMiniPlayer()
+		
         // Log analytics
         AICAnalytics.sendTourDidShowOverviewEvent(forTour: tour)
-    }
-    
-    fileprivate func playTourStop(forTourModel tour:AICTourModel, atStopIndex stopIndex:Int) {
-//        self.objectVC.setContent(forTour: tour, atStopIndex: stopIndex)
-//        self.objectVC.showMiniPlayer()
-        self.showHeadphonesMessage()
-        
-        // Log analytics
-        AICAnalytics.sendTourDidShowObjectEvent(forObject: tour.stops[stopIndex].object)
     }
 	
 	// MARK: Show/Hide Search Button
@@ -389,7 +404,7 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 // MARK: AudioGuide Delegate
 extension SectionsViewController : AudioGuideNavigationControllerDelegate {
     func audioGuideDidSelectObject(object: AICObjectModel, audioGuideID: Int) {
-        playAudioGuideObject(object: object, audioGuideID: audioGuideID)
+        playAudioGuideArtwork(artwork: object, audioGuideID: audioGuideID)
     }
 }
 
@@ -428,11 +443,11 @@ extension SectionsViewController : AudioGuideNavigationControllerDelegate {
 // MARK: Map Delegate
 extension SectionsViewController : MapNavigationControllerDelegate {
 	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel) {
-		playMapObject(forObjectModel: artwork)
+		playMapArtwork(artwork: artwork)
 	}
 	
-	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel) {
-		playMapObject(forObjectModel: tourStop.object)
+	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, language: Common.Language) {
+		playTourStop(tourStop: tourStop, language: language)
 	}
 }
 
@@ -544,7 +559,7 @@ extension SectionsViewController : TourTableViewControllerDelegate {
 extension SectionsViewController : ArtworkTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel) {
-		playSearchedObject(forObjectModel: artwork)
+		playSearchedArtwork(artwork: artwork)
 	}
 	
 	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel) {

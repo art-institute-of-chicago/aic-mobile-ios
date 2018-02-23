@@ -11,7 +11,7 @@ import UIKit
 protocol TourStopPageViewControllerDelegate : class {
 	func tourStopPageDidChangeTo(tourOverview: AICTourOverviewModel)
 	func tourStopPageDidChangeTo(tourStop: AICTourStopModel)
-	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel)
+	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel, language: Common.Language)
 }
 
 class TourStopPageViewController : UIPageViewController {
@@ -70,7 +70,7 @@ class TourStopPageViewController : UIPageViewController {
 //					if index < tour.stops.count {
 			let stop = tourModel.stops[index]
 			
-			let artworkContentView = MapArtworkContentView(artwork: stop.object)
+			let artworkContentView = MapArtworkContentView(tourStop: stop, language: tourModel.language)
 			artworkContentView.audioButton.tag = index
 			page.view.addSubview(artworkContentView)
 			artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
@@ -104,7 +104,7 @@ class TourStopPageViewController : UIPageViewController {
 	
 	@objc func audioButtonPressed(button: UIButton) {
 		if tourModel.stops.indices.contains(button.tag) {
-			self.tourStopPageDelegate?.tourStopPageDidPressPlayAudio(tourStop: tourModel.stops[button.tag])
+			self.tourStopPageDelegate?.tourStopPageDidPressPlayAudio(tourStop: tourModel.stops[button.tag], language: tourModel.language)
 		}
 	}
 }

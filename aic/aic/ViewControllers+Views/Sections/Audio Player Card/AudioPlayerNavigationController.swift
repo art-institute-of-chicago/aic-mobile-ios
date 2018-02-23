@@ -90,38 +90,30 @@ class AudioPlayerNavigationController : CardNavigationController {
     
     // MARK: Play Audio
     
-    func playArtwork(artwork: AICObjectModel, forAudioGuideID selectorNumber: Int? = nil) {
+	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel) {
 		currentArtwork = artwork
-        var audioFile: AICAudioFileModel = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: selectorNumber)
-		// Default to English Audio, then check if current language is aavailable in translations
-		if audioFile.availableLanguages.contains(Common.currentLanguage) {
-			audioFile.language = Common.currentLanguage
-		}
-        if load(audioFile: audioFile, coverImageURL: artwork.imageUrl as URL) {
+		
+        if load(audioFile: audio, coverImageURL: artwork.imageUrl as URL) {
 			miniAudioPlayerView.reset()
-			audioInfoVC.setArtworkContent(artwork: artwork, audio: audioFile)
+			audioInfoVC.setArtworkContent(artwork: artwork, audio: audio)
         }
     }
 	
-	func playTourOverview(tourOverview: AICTourOverviewModel) {
-		if load(audioFile: tourOverview.audio, coverImageURL: tourOverview.imageUrl as URL) {
+	func playTourOverviewAudio(tour: AICTourModel) {
+		// set correct language on audio
+		var audio = tour.overview.audio
+		audio.language = tour.language
+		
+		if load(audioFile: audio, coverImageURL: tour.imageUrl as URL) {
 			miniAudioPlayerView.reset()
-			audioInfoVC.setTourOverviewContent(tourOverview: tourOverview)
-		}
-	}
-	
-	func playTourStop(tour: AICTourModel, stopIndex:Int) {
-		let stop = tour.stops[stopIndex]
-		if load(audioFile: stop.audio, coverImageURL: stop.object.imageUrl as URL) {
-			miniAudioPlayerView.reset()
-			audioInfoVC.setTourStopContent(tour: tour, stopIndex: stopIndex)
+			audioInfoVC.setTourOverviewContent(tourOverview: tour.overview)
 		}
 	}
     
     // MARK: Load Audio
     
     private func load(audioFile: AICAudioFileModel, coverImageURL: URL) -> Bool {
-        
+		
         if let currentAudioFile = currentAudioFile {
             // If it's a new artwork, log analytics
             if (audioFile.nid != currentAudioFile.nid) {
@@ -139,12 +131,10 @@ class AudioPlayerNavigationController : CardNavigationController {
         currentAudioFile = audioFile
         currentAudioFileMaxProgress = 0
 		
-		// Set Audio Translation
+		// even if the player defaults to a language
+		// check to see if the user changed it
 		if selectedLanguage != nil {
 			currentAudioFile!.language = selectedLanguage!
-		}
-		else if audioFile.availableLanguages.contains(Common.currentLanguage) {
-			currentAudioFile!.language = Common.currentLanguage
 		}
         
         // Clear out current player
@@ -540,14 +530,12 @@ extension AudioPlayerNavigationController {
 extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
 	func languageSelectorDidSelect(language: Common.Language) {
 		if let _ = currentAudioFile {
-			if currentAudioFile!.availableLanguages.contains(language) {
-				selectedLanguage = language // set the language to indicate the language has been selected using the LanguageSelector
-				if load(audioFile: currentAudioFile!, coverImageURL: currentArtwork!.imageUrl as URL) {
-					miniAudioPlayerView.reset()
-					audioInfoVC.setArtworkContent(artwork: currentArtwork!, audio: currentAudioFile!)
-				}
-				selectedLanguage = nil
+			selectedLanguage = language // set the language to indicate the language has been selected using the LanguageSelector
+			if load(audioFile: currentAudioFile!, coverImageURL: currentArtwork!.imageUrl as URL) {
+				miniAudioPlayerView.reset()
+				audioInfoVC.setArtworkContent(artwork: currentArtwork!, audio: currentAudioFile!)
 			}
+			selectedLanguage = nil
 		}
 	}
 }

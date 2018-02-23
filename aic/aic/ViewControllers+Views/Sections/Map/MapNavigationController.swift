@@ -12,7 +12,7 @@ import Localize_Swift
 
 protocol MapNavigationControllerDelegate : class {
 	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel)
-	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel)
+	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, language: Common.Language)
 }
 
 class MapNavigationController : SectionNavigationController {
@@ -311,7 +311,17 @@ extension MapNavigationController : MapViewControllerDelegate {
 	}
 	
 	func mapDidPressArtworkPlayButton(artwork: AICObjectModel) {
-		self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork)
+		if mapVC.mode == .tour {
+			if let tour = tourModel {
+				if let stopIndex = tour.getIndex(forStopObject: artwork) {
+					let tourStop = tour.stops[stopIndex]
+					self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, language: tour.language)
+				}
+			}
+		}
+		else {
+			self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork)
+		}
 	}
 	
 	func mapDidSelectTourStop(artwork: AICObjectModel) {
@@ -348,8 +358,8 @@ extension MapNavigationController : TourStopPageViewControllerDelegate {
 		mapVC.highlightTourStop(tourStop: tourStop)
 	}
 	
-	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel) {
-		self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop)
+	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel, language: Common.Language) {
+		self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, language: language)
 	}
 }
 

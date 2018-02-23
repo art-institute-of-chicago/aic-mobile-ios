@@ -14,36 +14,44 @@ class MapArtworkContentView : UIView {
 	private let locationLabel: UILabel = UILabel()
 	let audioButton: UIButton = UIButton()
 	
+	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.height, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight)
+	
 	init(artwork: AICObjectModel) {
-		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight))
-		setup(artwork: artwork)
-	}
-	
-	init (searchedArtwork: AICSearchedArtworkModel) {
-		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight))
-		
-		if let object = searchedArtwork.audioObject {
-			setup(artwork: object)
-		}
-		else {
-			setup(searchedArtwork: searchedArtwork)
-		}
-	}
-	
-	private func setup(artwork: AICObjectModel) {
+		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
 		setup()
+		
 		titleLabel.text = artwork.title
 		imageView.kf.setImage(with: artwork.imageUrl)
 		locationLabel.text = Common.Map.stringForFloorNumber[artwork.location.floor]
 	}
 	
-	private func setup(searchedArtwork: AICSearchedArtworkModel) {
+	init(searchedArtwork: AICSearchedArtworkModel) {
+		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
 		setup()
-		titleLabel.text = searchedArtwork.title
-		imageView.kf.setImage(with: searchedArtwork.imageUrl)
-		locationLabel.text = Common.Map.stringForFloorNumber[searchedArtwork.location.floor]
-		audioButton.isHidden = true
-		audioButton.isEnabled = false
+		
+		if let object = searchedArtwork.audioObject {
+			titleLabel.text = object.title
+			imageView.kf.setImage(with: object.imageUrl)
+			locationLabel.text = Common.Map.stringForFloorNumber[object.location.floor]
+		}
+		else {
+			titleLabel.text = searchedArtwork.title
+			imageView.kf.setImage(with: searchedArtwork.imageUrl)
+			locationLabel.text = Common.Map.stringForFloorNumber[searchedArtwork.location.floor]
+			audioButton.isHidden = true
+			audioButton.isEnabled = false
+		}
+	}
+	
+	init(tourStop: AICTourStopModel, language: Common.Language) {
+		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
+		setup()
+		
+		var audio = tourStop.audio
+		audio.language = language
+		
+		titleLabel.text = audio.trackTitle
+		imageView.kf.setImage(with: tourStop.object.imageUrl)
 	}
 	
 	private func setup() {
