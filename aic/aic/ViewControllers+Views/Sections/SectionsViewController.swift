@@ -224,7 +224,6 @@ class SectionsViewController : UIViewController {
     func playAudioGuideObject(object:AICObjectModel, audioGuideID: Int) {
         playObject(object: object, audioGuideID: audioGuideID)
 		
-		setSearchButtonEnabled(false)
 		audioPlayerVC.showFullscreen()
         
         // Log analytics
@@ -326,7 +325,6 @@ class SectionsViewController : UIViewController {
     }
 	
 	@objc func searchButtonPressed(button: UIButton) {
-		setSearchButtonEnabled(false)
 		searchVC.showFullscreen()
 	}
 	
@@ -379,8 +377,6 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 		}
 		self.contentCardVC = contentCardVC
 		contentCardVC.cardDelegate = self
-		
-		setSearchButtonEnabled(false)
 		
 		contentCardVC.willMove(toParentViewController: sectionTabBarController)
 		sectionTabBarController.view.insertSubview(contentCardVC.view, aboveSubview: searchVC.view)
@@ -499,24 +495,31 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 	func cardWillShowFullscreen(cardVC: CardNavigationController) {
 		setSearchButtonEnabled(false)
 		
-		// close content card, if open
+		// close content card or search card, if open
 		if cardVC == audioPlayerVC {
 			if let contentCard = contentCardVC {
 				if contentCard.currentState == .fullscreen {
 					contentCard.hide()
 				}
 			}
+			if searchVC.currentState == .fullscreen {
+				searchVC.hide()
+			}
 		}
 	}
 	
 	func cardDidShowMiniplayer(cardVC: CardNavigationController) {
 		if cardVC == audioPlayerVC {
-			setSearchButtonEnabled(true)
+			// when you play artwork for an artwork you found on the search
+			// make sure search is not fullscreen before you re-enable the search button
+			if searchVC.currentState != .fullscreen {
+				setSearchButtonEnabled(true)
+			}
 		}
 	}
     
 	func cardDidHide(cardVC: CardNavigationController) {
-		// make sure there's no other card fullscreen, befiore you reenable the search button
+		// make sure there's no other card fullscreen, befiore you re-enable the search button
 		if audioPlayerVC.currentState != .fullscreen {
 			setSearchButtonEnabled(true)
 		}

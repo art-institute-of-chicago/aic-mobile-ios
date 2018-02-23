@@ -9,21 +9,24 @@
 import UIKit
 
 class LinkedTextView : UITextView {
-	let linkTapGestureRecognizer: UITapGestureRecognizer
+	let linkTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
 	
 	override init(frame: CGRect, textContainer: NSTextContainer?) {
-		linkTapGestureRecognizer = UITapGestureRecognizer()
 		super.init(frame: frame, textContainer: textContainer)
-		
+		setup()
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		setup()
+	}
+	
+	private func setup() {
 		linkTapGestureRecognizer.cancelsTouchesInView = false
 		linkTapGestureRecognizer.delaysTouchesBegan = false
 		linkTapGestureRecognizer.delaysTouchesEnded = false
 		linkTapGestureRecognizer.addTarget(self, action: #selector(handleLinkTapGestureRecognizer))
 		self.addGestureRecognizer(linkTapGestureRecognizer)
-	}
-	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
 	}
 	
 	@objc func handleLinkTapGestureRecognizer(tapGestureRecognizer: UITapGestureRecognizer) {

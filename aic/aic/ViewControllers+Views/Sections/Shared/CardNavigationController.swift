@@ -108,7 +108,7 @@ class CardNavigationController : UINavigationController {
     func showFullscreen() {
         cardWillShowFullscreen()
 		self.cardDelegate?.cardWillShowFullscreen?(cardVC: self)
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.fullscreen]!)
             self.view.layer.cornerRadius = 10
         }, completion: { (completed) in
@@ -119,7 +119,7 @@ class CardNavigationController : UINavigationController {
     
     func showMinimized() {
         cardWillShowMinimized()
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.minimized]!)
             self.view.layer.cornerRadius = 10
         }, completion: { (completed) in
@@ -130,7 +130,7 @@ class CardNavigationController : UINavigationController {
     
     func showMiniPlayer() {
         cardWillShowMiniPlayer()
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.mini_player]!)
             self.view.layer.cornerRadius = 0
         }, completion: { (completed) in
@@ -142,7 +142,7 @@ class CardNavigationController : UINavigationController {
     
     func hide() {
         cardWillHide()
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.hidden]!)
             self.view.layer.cornerRadius = 0
         }, completion: { (completed) in

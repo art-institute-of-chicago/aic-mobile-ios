@@ -24,7 +24,7 @@ struct Common {
         static var filterOutRelatedTours = true
 
         // Fake the current floor
-        static var useTestFloorLocation = true
+        static var useTestFloorLocation = false
         static var testFloorNumber = 1
 
         // Test out news distance regardless of museum proximity
@@ -602,6 +602,9 @@ struct Common {
 	
 	// MARK: Search
 	struct Search {
+		static let museumWebsiteURL = "http://www.artic.edu"
+		static let visitWebsiteText = "For help, visit the nearest museum representative\nor visit our website."
+		
 		enum Filter {
 			case empty
 			case suggested

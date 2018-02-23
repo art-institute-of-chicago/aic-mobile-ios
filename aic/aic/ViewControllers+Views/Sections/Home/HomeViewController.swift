@@ -191,7 +191,7 @@ class HomeViewController : SectionViewController {
 		let homeMemberPromptText: String = generalInfo.translations[language]!.homeMemberPrompt
 		memberPromptView.promptTextView.text = homeMemberPromptText.stringByDecodingHTMLEntities
 		
-		memberPromptView.accessMemberCardTextView.text = "Member Card Button Title".localized(using: "Home")
+		memberPromptView.accessMemberCardButton.setTitle("Member Card Button Title".localized(using: "Home"), for: .normal)
 		
 		toursTitleView.contentTitleLabel.text = "Tours".localized(using: "Sections")
 		toursTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
