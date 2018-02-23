@@ -222,7 +222,7 @@ class AudioPlayerNavigationController : CardNavigationController {
         return true
     }
     
-    private func showLoadError(forAudioFile audioFile:AICAudioFileModel, coverImageURL:URL) {
+    private func showLoadError(forAudioFile audioFile: AICAudioFileModel, coverImageURL: URL) {
 		// Preset a UIAlertView that allows the user to try to load the file.
         let alertView = UIAlertController(title: "Load Failure Title".localized(using: "AudioPlayer"), message: "Load Failure Message".localized(using: "AudioPlayer"), preferredStyle: .alert)
 		
@@ -298,7 +298,16 @@ class AudioPlayerNavigationController : CardNavigationController {
             // If we are at the end, start from the beginning
             let currentTime = floor(CMTimeGetSeconds(currentItem.currentTime()))
             let duration = floor(CMTimeGetSeconds(currentItem.asset.duration))
-            
+			
+			if duration < 1 {
+				if let audio = currentAudioFile {
+					if let artwork = currentArtwork {
+						showLoadError(forAudioFile: audio, coverImageURL: artwork.imageUrl)
+					}
+				}
+				return
+			}
+			
             if currentTime >= duration {
                 currentItem.seek(to: CMTime(seconds: 0.0, preferredTimescale: avPlayer.currentItem!.duration.timescale))
             }

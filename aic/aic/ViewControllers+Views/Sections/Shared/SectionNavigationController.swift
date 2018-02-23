@@ -92,7 +92,7 @@ class SectionNavigationController : UINavigationController {
 	@objc func updateLanguage() {
 		let isRootVC: Bool = self.viewControllers.count <= 1
 		var titleText = self.topViewController?.navigationItem.title?.localized(using: "Sections")
-		var subtitleText = sectionModel.description.localized(using: "Sections")
+		var subtitleText = ""
 		
 		// Set text from CMS for rootViewControllers of audio, map and info sections
 		if isRootVC {

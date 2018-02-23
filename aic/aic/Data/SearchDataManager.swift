@@ -34,7 +34,7 @@ class SearchDataManager : NSObject {
 	@objc func loadAutocompleteStrings(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.autocompleteEndpoint]!
-		url += "?q=" + searchText + "&resources=artworks,tours,exhibitions"
+		url += "?q=" + searchText + "&resources=artworks,tours,exhibitions,artists"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
 		

@@ -67,6 +67,7 @@
 		294338521FDC849E00ECF321 /* SearchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294338511FDC849E00ECF321 /* SearchDataManager.swift */; };
 		294338541FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */; };
 		294338561FDD656500ECF321 /* MapItemsCollectionContainerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */; };
+		294826D92040B926009D1122 /* Global.strings in Resources */ = {isa = PBXBuildFile; fileRef = 294826DB2040B926009D1122 /* Global.strings */; };
 		294C0B1B20193AC800F2ABB1 /* LocationSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */; };
 		294C0B21201A52BC00F2ABB1 /* EventContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B20201A52BC00F2ABB1 /* EventContentCell.swift */; };
 		294C0B23201A52CB00F2ABB1 /* EventContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 294C0B22201A52CB00F2ABB1 /* EventContentCell.xib */; };
@@ -356,6 +357,9 @@
 		294338511FDC849E00ECF321 /* SearchDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataManager.swift; sourceTree = "<group>"; };
 		294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItemsCollectionContainerCell.swift; sourceTree = "<group>"; };
 		294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapItemsCollectionContainerCell.xib; sourceTree = "<group>"; };
+		294826DA2040B926009D1122 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Global.strings; sourceTree = "<group>"; };
+		294826DC2040B929009D1122 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Global.strings; sourceTree = "<group>"; };
+		294826DD2040B92A009D1122 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Global.strings"; sourceTree = "<group>"; };
 		294C0B1C20193AC800F2ABB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LocationSettings.strings; sourceTree = "<group>"; };
 		294C0B1E20193AE400F2ABB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LocationSettings.strings; sourceTree = "<group>"; };
 		294C0B1F20193AE500F2ABB1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LocationSettings.strings"; sourceTree = "<group>"; };
@@ -802,6 +806,7 @@
 		2968F683201292D100638153 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
+				294826DB2040B926009D1122 /* Global.strings */,
 				2968F6952012B33000638153 /* TabMenu.strings */,
 				298729F520155E2C00BB3B6A /* Sections.strings */,
 				298729FC2016378000BB3B6A /* Home.strings */,
@@ -1547,6 +1552,7 @@
 				293D00A31FA7C80D00BF2C26 /* SourceSansPro-LightItalic.ttf in Resources */,
 				29F89987202A3CA90081BA22 /* IdealSans-MediumItalic.otf in Resources */,
 				293D00A11FA7C80D00BF2C26 /* SourceSansPro-Italic.ttf in Resources */,
+				294826D92040B926009D1122 /* Global.strings in Resources */,
 				29412AEC1FCE1F44005A7172 /* HomeExhibitionCell.xib in Resources */,
 				29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */,
 				E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */,
@@ -2009,6 +2015,16 @@
 				291AF3372033B2C3001099C7 /* zh-Hans */,
 			);
 			name = MemberCard.strings;
+			sourceTree = "<group>";
+		};
+		294826DB2040B926009D1122 /* Global.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				294826DA2040B926009D1122 /* en */,
+				294826DC2040B929009D1122 /* es */,
+				294826DD2040B92A009D1122 /* zh-Hans */,
+			);
+			name = Global.strings;
 			sourceTree = "<group>";
 		};
 		294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */ = {

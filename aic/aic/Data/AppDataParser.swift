@@ -698,6 +698,9 @@ class AppDataParser {
 				
 				let json = JSON(data: autocompleteData)
 				if let jsonArray: [JSON] = json.array {
+					if jsonArray.count == 0 {
+						return
+					}
 					for index in 0...jsonArray.count-1 {
 						let autocompleteString = jsonArray[index].string
 						autocompleteStrings.append(autocompleteString!)

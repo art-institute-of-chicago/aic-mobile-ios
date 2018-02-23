@@ -560,26 +560,31 @@ struct Common {
 		// Date formats
 		static func throughDateString(endDate: Date) -> String {
 			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "MMMM d, yyyy"
+//			dateFormatter.dateFormat = "MMMM d, yyyy"
 			//DateFormatter.localizedString(from: endDate, dateStyle: .medium, timeStyle: .medium)
+			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
+			dateFormatter.setLocalizedDateFormatFromTemplate("MMMM d, yyyy")
 			let endDateFormatted = dateFormatter.string(from: endDate)
-			return "Through \(endDateFormatted)"
+			let throughString = "Through Date".localized(using: "Global")
+			return throughString + " " + endDateFormatted
 		}
 		
 		static func monthDayString(date: Date) -> String {
 			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "MMMM d"
-			let dateFormatted = dateFormatter.string(from: date)
-			return dateFormatted
+			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
+			dateFormatter.setLocalizedDateFormatFromTemplate("MMMM d")
+			let monthDayString = dateFormatter.string(from: date)
+			return monthDayString
 		}
 		
 		static func hoursMinutesString(date: Date) -> String {
 			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = "h:mma"
+			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
+			dateFormatter.setLocalizedDateFormatFromTemplate("h:mma")
 			dateFormatter.amSymbol = "am"
 			dateFormatter.pmSymbol = "pm"
-			let dateFormatted = dateFormatter.string(from: date)
-			return dateFormatted
+			let hoursMinutesString = dateFormatter.string(from: date)
+			return hoursMinutesString
 		}
 		
         // Background images

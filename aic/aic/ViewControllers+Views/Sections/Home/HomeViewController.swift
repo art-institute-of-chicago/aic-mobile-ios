@@ -201,6 +201,10 @@ class HomeViewController : SectionViewController {
 		
 		eventsTitleView.contentTitleLabel.text = "Events".localized(using: "Sections")
 		eventsTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+		
+		toursCollectionView.reloadData()
+		exhibitionsCollectionView.reloadData()
+		eventsCollectionView.reloadData()
 	}
 	
 	// MARK: Buttons
