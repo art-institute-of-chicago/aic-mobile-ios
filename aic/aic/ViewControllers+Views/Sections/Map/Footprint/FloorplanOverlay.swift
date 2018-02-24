@@ -25,9 +25,6 @@ import MapKit
     */
     var transformerFromPDFToMk = CGAffineTransform()
 
-    /// Current floor level
-    var floorLevel = 0
-
     /** 
         Reference to the internal page data of the selected page of the PDF you
         are drawing. It is very likely that the PDF of your floorplan is a 
@@ -77,7 +74,7 @@ import MapKit
                         -- opposite corners.
         - parameter forFloorLevel: which floor is it on?
     */
-    init(floorplanUrl: URL, withPDFBox pdfBox: CGPDFBox, andAnchors anchors: GeoAnchorPair, forFloorLevel level: NSInteger) {
+    init(floorplanUrl: URL, withPDFBox pdfBox: CGPDFBox, andAnchors anchors: GeoAnchorPair) {
         assert(floorplanUrl.absoluteString.hasSuffix("pdf"), "Sanity check: The URL should point to a PDF file")
 
         /*
@@ -100,7 +97,6 @@ import MapKit
         */
         coordinateConverter = CoordinateConverter(anchors: anchors)
         transformerFromPDFToMk = coordinateConverter.transformerFromPDFToMk()
-        floorLevel = level
 
         /*
             Read the PDF file from disk into memory. Remember to CFRelease it

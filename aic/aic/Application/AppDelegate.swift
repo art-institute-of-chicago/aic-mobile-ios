@@ -7,6 +7,8 @@ import UIKit
 
 import CoreData
 import MediaPlayer
+import CoreLocation
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,27 +16,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var deepLinkString: String? = nil
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        AICAnalytics.configure()
-        
-        //Check for member and log open
-        let defaults = UserDefaults.standard
-        let storedID = (defaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) as? NSNumber)?.int64Value
-        AICAnalytics.appOpenEvent(isMember: (storedID != nil))
-        
-        // Turn off caching
-        let sharedCache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
-        URLCache.shared = sharedCache
-        
-        setStatusBar()
-        
-        // Register for rental app restart
-        #if RENTAL
-            registerForAppRestartTomorrowMorning()
-        #endif
-        
-        return true
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+		
+		// DEBUG find coordinates for pdf overlay anchor points
+//		let mapPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 801, y: 801)) // 1061.635
+//		let coordinate = MKCoordinateForMapPoint(mapPoint)
+//		print("-------------")
+//		print(mapPoint)
+//		print(coordinate)
+//		print("-------------")
+		
+		AICAnalytics.configure()
+		
+		//Check for member and log open
+		let defaults = UserDefaults.standard
+		let storedID = (defaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) as? NSNumber)?.int64Value
+		AICAnalytics.appOpenEvent(isMember: (storedID != nil))
+		
+		// Turn off caching
+		let sharedCache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
+		URLCache.shared = sharedCache
+		
+		setStatusBar()
+		
+		// Register for rental app restart
+		#if RENTAL
+			registerForAppRestartTomorrowMorning()
+		#endif
+		
+		return true
     }
     
     func registerForAppRestartTomorrowMorning() {

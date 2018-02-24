@@ -74,7 +74,6 @@ struct Common {
 										 background: #imageLiteral(resourceName: "backgroundHome"),
 										 icon: #imageLiteral(resourceName: "iconHome"),
 										 title: "Welcome",
-										 description: "",
 										 tabBarTitle: "Home",
 										 tabBarIcon: #imageLiteral(resourceName: "navHome")
 		),
@@ -83,7 +82,6 @@ struct Common {
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconNumPad"),
             title: "Audio Title",
-            description: "Audio Subtitle",
             tabBarTitle: "Audio",
             tabBarIcon: #imageLiteral(resourceName: "navNumPad")
         ),
@@ -92,7 +90,6 @@ struct Common {
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconMap"),
             title: "Map Title",
-			description: "Map Subtitle",
             tabBarTitle: "Map",
             tabBarIcon: #imageLiteral(resourceName: "navMap")
         ),
@@ -101,7 +98,6 @@ struct Common {
 			background: #imageLiteral(resourceName: "backgroundInfo"),
             icon: #imageLiteral(resourceName: "iconInfo"),
             title: "Information Title",
-			description: "Information Subtitle",
             tabBarTitle: "Info",
             tabBarIcon: #imageLiteral(resourceName: "navInfo")
         )
@@ -427,21 +423,21 @@ struct Common {
         static let mapSVGFileURL = Bundle.main.url(forResource: Common.Map.amenityLandmarkSVGFileName, withExtension: "svg", subdirectory:Common.Map.mapsDirectory)
 
         // Anchor pair for mapping GeoCoords to PDF Coords
-        static let pdfSize = CGSize(width: 2400, height: 2400)
+        static let pdfSize = CGSize(width: 800, height: 800)
         static let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.88002009571711,-87.62398928403854),
-                                       pdfPoint: CGPoint(x: 855.955, y: pdfSize.height-1061.635)
+                                       pdfPoint: CGPoint(x: 55.955, y: pdfSize.height-261.635)
         )
 
         static let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.8800240897643,-87.62334823608397),
-                                       pdfPoint: CGPoint(x: 1011.94, y: pdfSize.height-1061.635)
+                                       pdfPoint: CGPoint(x: 211.94, y: pdfSize.height-261.635)
         )
-
+		
         static let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
 
         static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
 
         enum ZoomLevelAltitude : Double {
-            case zoomedOut = 800.0
+            case zoomedOut = 1200.0
             case zoomedIn = 200.0
             case zoomedDetail = 40.0
             case zoomedMax = 25.0

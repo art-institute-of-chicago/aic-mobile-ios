@@ -18,8 +18,8 @@ struct SVGImage : SVGAnnotationProtocol {
     var imageName: String
 }
 struct SVGAmenity : SVGAnnotationProtocol {
-    var positionInSVG:CGPoint
-    var type:MapAmenityAnnotationType
+    var positionInSVG: CGPoint
+    var type: MapAmenityAnnotationType
 }
 
 struct SVGDepartment : SVGAnnotationProtocol {

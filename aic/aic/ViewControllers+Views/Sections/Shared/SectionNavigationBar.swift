@@ -84,17 +84,15 @@ class SectionNavigationBar : UIView {
 		if section.nid != Section.home.rawValue {
 			let paragraphStyle = NSMutableParagraphStyle()
 			paragraphStyle.lineSpacing = 6
-			let descriptonAttrString = NSMutableAttributedString(string: section.description)
+			let descriptonAttrString = NSMutableAttributedString(string:"")
 			descriptonAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, descriptonAttrString.length))
-			
-			let preferredLabelWidth = UIScreen.main.bounds.width - margins.right - margins.left
 			
 			descriptionLabel.numberOfLines = 2
 			descriptionLabel.font = .aicSectionDescriptionFont
 			descriptionLabel.textColor = .white
 			descriptionLabel.attributedText = descriptonAttrString
 			descriptionLabel.textAlignment = NSTextAlignment.center
-			descriptionLabel.preferredMaxLayoutWidth = preferredLabelWidth
+			descriptionLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - margins.right - margins.left
 			descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
 		}
 		

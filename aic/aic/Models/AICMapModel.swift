@@ -13,6 +13,8 @@ class AICMapModel {
     private (set) var lionAnnotations:[MapImageAnnotation] = []
     private (set) var landmarkAnnotations:[MapTextAnnotation] = []
     private (set) var gardenAnnotations:[MapTextAnnotation] = []
+	
+	private (set) var backgroundOverlay: FloorplanOverlay? = nil
     
     // Floors
     private (set) var floors:[AICMapFloorModel] = []
@@ -20,6 +22,12 @@ class AICMapModel {
     // Go through the SVG file (XML) and create all of our
     // annotations up front
     func loadData() {
+		
+		// Background
+		let backgroundPdfUrl = Bundle.main.url(forResource: "map_bg", withExtension: "pdf", subdirectory:Common.Map.mapsDirectory)!
+		
+		backgroundOverlay = FloorplanOverlay(floorplanUrl: backgroundPdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: Common.Map.anchorPair)
+		
         // Create parser with SVG File
         let svgParser = MapSVGParser(svgFile: Common.Map.mapSVGFileURL!,
                                      totalFloors: Common.Map.totalFloors
@@ -36,12 +44,12 @@ class AICMapModel {
             
             // Get the gallery annotations for this floor
             let galleryAnnotations = getGalleryAnnotations(forFloorNumber: i)
-            
-            // Convert SVG Annotations for this floor (amenities, departments, spaces) to map annotations
-            let amenityAnnotations:[MapAmenityAnnotation]           = getAmenityAnnotations(fromSVGAmenities: svgFloor.amenities)
-            let departmentAnnotations:[MapDepartmentAnnotation]     = getDepartmentAnnotations(fromSVGDepartments: svgFloor.departments)
-            let spaceAnnotations:[MapTextAnnotation]                = getTextAnnotations(fromSVGTextLabels: svgFloor.spaces, type: MapTextAnnotation.AnnotationType.Space)
-            
+
+//            // Convert SVG Annotations for this floor (amenities, departments, spaces) to map annotations
+//            let amenityAnnotations:[MapAmenityAnnotation]           = getAmenityAnnotations(fromSVGAmenities: svgFloor.amenities)
+//            let departmentAnnotations:[MapDepartmentAnnotation]     = getDepartmentAnnotations(fromSVGDepartments: svgFloor.departments)
+//            let spaceAnnotations:[MapTextAnnotation]                = getTextAnnotations(fromSVGTextLabels: svgFloor.spaces, type: MapTextAnnotation.AnnotationType.Space)
+			
             
             // Create annotations for objects on this floor from app data
             var objectAnnotations:[MapObjectAnnotation] = []
@@ -52,16 +60,16 @@ class AICMapModel {
             // Load Floorplan Overlay (Part of Apple Footprint) from PDF
             let pdfUrl = Bundle.main.url(forResource: Common.Map.floorplanFileNamePrefix + String(i), withExtension: "pdf", subdirectory:Common.Map.mapsDirectory)!
             
-            let overlay = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: Common.Map.anchorPair, forFloorLevel: i)
+            let overlay = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: Common.Map.anchorPair)
             
             // Create this floor
             let floor = AICMapFloorModel(floorNumber: i,
                                          overlay: overlay,
                                          objects:objectAnnotations,
-                                         amenities: amenityAnnotations,
-                                         departments: departmentAnnotations,
-                                         galleries: galleryAnnotations,
-                                         spaces: spaceAnnotations
+                                         amenities: [MapAmenityAnnotation](),
+                                         departments: [MapDepartmentAnnotation](),
+                                         galleries: [MapTextAnnotation](),
+                                         spaces: [MapTextAnnotation]()
             )
             
             floors.append(floor)

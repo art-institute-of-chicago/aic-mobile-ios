@@ -22,7 +22,6 @@ struct AICSectionModel {
 	let background: UIImage?
 	let icon: UIImage
     let title: String
-    let description: String
     
     // Tab Bar item info
     let tabBarTitle: String

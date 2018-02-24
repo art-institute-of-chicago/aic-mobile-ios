@@ -52,7 +52,7 @@ class MapViewController: UIViewController {
 
     // Map View
     let mapView:MapView
-    let mapViewBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
+    let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
 
     // Floor Selector
     let floorSelectorVC = MapFloorSelectorViewController()
@@ -94,7 +94,8 @@ class MapViewController: UIViewController {
         view.addSubview(floorSelectorVC.view)
         
         // Set the overlay for the background
-        mapView.add(mapViewBackgroundOverlay, level: .aboveRoads)
+        mapView.add(mapViewHideBackgroundOverlay, level: .aboveRoads)
+		mapView.add(mapModel.backgroundOverlay!)
         
         mapView.camera.heading = mapView.defaultHeading
         mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomedOut.rawValue
@@ -142,7 +143,7 @@ class MapViewController: UIViewController {
     // Set the color of the background overlay
     func updateColors() {
         // Set the background color
-        if let renderer = mapView.renderer(for: mapViewBackgroundOverlay) as? MKPolygonRenderer {
+        if let renderer = mapView.renderer(for: mapViewHideBackgroundOverlay) as? MKPolygonRenderer {
             renderer.fillColor = self.color
         }
     }
