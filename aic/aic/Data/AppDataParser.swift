@@ -17,6 +17,7 @@ class AppDataParser {
 		case badFloatString(string:String)
         case badIntString(string:String)
         case badCLLocationString(string:String)
+		case badPointString(string:String)
         case newsBadDateString(dateString:String)
         case audioFileNotFound(nid:Int)
         case objectNotFound(nid:Int)
@@ -32,6 +33,8 @@ class AppDataParser {
 	private var galleries = [AICGalleryModel]()
 	private var audioFiles = [AICAudioFileModel]()
 	private var objects = [AICObjectModel]()
+	
+	private var mapFloors: [FloorplanOverlay] = []
     
     // MARK: Exhibitions
     func parse(exhibitionsData data: Data) -> [AICExhibitionModel] {
@@ -187,6 +190,7 @@ class AppDataParser {
 		self.audioFiles = parse(audioFilesJSON: appDataJson["audio_files"])
         self.objects 	= parse(objectsJSON: appDataJson["objects"])
 		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
+		let map: AICMapModel = parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
 		let featuredTours = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
 		let featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
 		let exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
@@ -197,6 +201,7 @@ class AppDataParser {
 									  objects: self.objects,
 									  audioFiles: self.audioFiles,
 									  tours: tours,
+									  map: map,
 									  featuredTours: featuredTours,
 									  featuredExhibitions: featuredExhibitions,
 									  exhibitionOptionalImages: exhibitionOptionalImages,
@@ -645,6 +650,215 @@ class AppDataParser {
 		)
 	}
 	
+	// MARK: Map
+	
+	func parse(mapFloorsJSON: JSON, mapAnnotationsJSON: JSON) -> AICMapModel {
+		// Background
+		let backgroundPdfUrl = Bundle.main.url(forResource: "map_bg", withExtension: "pdf", subdirectory:Common.Map.mapsDirectory)!
+		
+		let backgroundOverlay = FloorplanOverlay(floorplanUrl: backgroundPdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: Common.Map.anchorPair)
+		
+		do {
+			var floorOverlays: [FloorplanOverlay] = []
+			var floorGalleryAnnotations: [Int : [MapTextAnnotation]] = [:]
+			var floorObjectAnnotations: [Int : [MapObjectAnnotation]] = [:]
+			
+			// Floors
+			for floorNumber in 0..<Common.Map.totalFloors {
+				let mapFloorJSON = mapFloorsJSON["map_floor\(floorNumber)"]
+				
+				let floorPdfURL: URL = try getURL(fromJSON: mapFloorJSON, forKey: "floor_plan")!
+				let anchorPixel1 = try getPoint(fromJSON: mapFloorJSON, forKey: "anchor_pixel_1")
+				let anchorPixel2 = try getPoint(fromJSON: mapFloorJSON, forKey: "anchor_pixel_2")
+				let anchorLocation1 = try getCLLocation2d(fromJSON: mapFloorJSON, forKey: "anchor_location_1")
+				let anchorLocation2 = try getCLLocation2d(fromJSON: mapFloorJSON, forKey: "anchor_location_2")
+				let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: anchorLocation1, pdfPoint: anchorPixel1)
+				let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: anchorLocation2, pdfPoint: anchorPixel2)
+				
+				let floorOverlay = FloorplanOverlay(floorplanUrl: floorPdfURL,
+											 withPDFBox: CGPDFBox.trimBox,
+											 andAnchors: GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2))
+				floorOverlays.append(floorOverlay)
+				
+				// Galleries
+				let galleryAnnotations = getGalleryAnnotations(forFloorNumber: floorNumber)
+				floorGalleryAnnotations[floorNumber] = galleryAnnotations
+				
+				// Artworks
+				let floorObjects = self.objects.filter( { $0.location.floor == floorNumber })
+				var objectAnnotations: [MapObjectAnnotation] = []
+				for object in floorObjects {
+					objectAnnotations.append(MapObjectAnnotation(object: object))
+				}
+				floorObjectAnnotations[floorNumber] = objectAnnotations
+				
+			}
+			
+			// Annotations
+			var floorAmenityAnnotations: [Int : [MapAmenityAnnotation]] = [
+				0 : [MapAmenityAnnotation](),
+				1 : [MapAmenityAnnotation](),
+				2 : [MapAmenityAnnotation](),
+				3 : [MapAmenityAnnotation]()
+			]
+			var floorDepartmentAnnotations: [Int : [MapDepartmentAnnotation]] = [
+				0 : [MapDepartmentAnnotation](),
+				1 : [MapDepartmentAnnotation](),
+				2 : [MapDepartmentAnnotation](),
+				3 : [MapDepartmentAnnotation]()
+			]
+			var floorSpaceAnnotations: [Int : [MapTextAnnotation]] = [
+				0 : [MapTextAnnotation](),
+				1 : [MapTextAnnotation](),
+				2 : [MapTextAnnotation](),
+				3 : [MapTextAnnotation]()
+			]
+			for (_, annotationJSON):(String, JSON) in mapAnnotationsJSON.dictionaryValue {
+				do {
+					let floorNumber = try getInt(fromJSON: annotationJSON, forKey: "floor")
+					let type = try getString(fromJSON: annotationJSON, forKey: "annotation_type")
+					
+					if type == "Amenity" {
+						let amenityAnnotation = try parse(amenityAnnotationJSON: annotationJSON)
+						floorAmenityAnnotations[floorNumber]!.append(amenityAnnotation)
+					}
+					else if type == "Text" {
+						let textType = try getString(fromJSON: annotationJSON, forKey: "text_type")
+						if textType == MapTextAnnotation.AnnotationType.Space.rawValue {
+							let textAnnotation = try parse(textAnnotationJSON: annotationJSON, type: MapTextAnnotation.AnnotationType.Space)
+							floorSpaceAnnotations[floorNumber]!.append(textAnnotation)
+						}
+					}
+					else if type == "Department" {
+						let departmentAnnotation = try parse(departmentAnnotationJSON: annotationJSON)
+						floorDepartmentAnnotations[floorNumber]!.append(departmentAnnotation)
+					}
+					else if type == "Landmark" {
+						
+					}
+					else if type == "Image" {
+						
+					}
+				}
+				catch {
+					if Common.Testing.printDataErrors {
+						print("Could not parse AIC Map Annotations for node: \(annotationJSON)\n")
+					}
+				}
+			}
+			
+			var floors: [AICMapFloorModel] = []
+			for floorNumber in 0..<Common.Map.totalFloors {
+				let floor = AICMapFloorModel(floorNumber: floorNumber,
+											 overlay: floorOverlays[floorNumber],
+											 objects: floorObjectAnnotations[floorNumber]!,
+											 amenities: floorAmenityAnnotations[floorNumber]!,
+											 departments: floorDepartmentAnnotations[floorNumber]!,
+											 galleries: floorGalleryAnnotations[floorNumber]!,
+											 spaces: floorSpaceAnnotations[floorNumber]!
+				)
+				floors.append(floor)
+			}
+			
+			return AICMapModel(backgroundOverlay: backgroundOverlay,
+							   lionAnnotations: [MapImageAnnotation](),
+							   landmarkAnnotations: [MapTextAnnotation](),
+							   gardenAnnotations: [MapTextAnnotation](),
+							   floors: floors)
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse AIC Map\n")
+			}
+		}
+		
+		return AICMapModel(backgroundOverlay: backgroundOverlay,
+						   lionAnnotations: [MapImageAnnotation](),
+						   landmarkAnnotations: [MapTextAnnotation](),
+						   gardenAnnotations: [MapTextAnnotation](),
+						   floors: [AICMapFloorModel]())
+		
+		// Global Annotations
+//		lionAnnotations     = getImageAnnotations(fromSvgImages: svgParser.lions)
+//		landmarkAnnotations = getTextAnnotations(fromSVGTextLabels: svgParser.landmarks, type: MapTextAnnotation.AnnotationType.LandmarkGarden)
+//		gardenAnnotations   = getTextAnnotations(fromSVGTextLabels: svgParser.gardens, type: MapTextAnnotation.AnnotationType.LandmarkGarden)
+		
+		// Floors
+//		for i in 0..<Common.Map.totalFloors {
+//			let svgFloor = svgParser.floors[i]
+//
+//			// Get the gallery annotations for this floor
+//			let galleryAnnotations = getGalleryAnnotations(forFloorNumber: i)
+//
+//			//            // Convert SVG Annotations for this floor (amenities, departments, spaces) to map annotations
+//			//            let amenityAnnotations:[MapAmenityAnnotation]           = getAmenityAnnotations(fromSVGAmenities: svgFloor.amenities)
+//			//            let departmentAnnotations:[MapDepartmentAnnotation]     = getDepartmentAnnotations(fromSVGDepartments: svgFloor.departments)
+//			//            let spaceAnnotations:[MapTextAnnotation]                = getTextAnnotations(fromSVGTextLabels: svgFloor.spaces, type: MapTextAnnotation.AnnotationType.Space)
+//
+//
+//			// Create annotations for objects on this floor from app data
+//			var objectAnnotations:[MapObjectAnnotation] = []
+//			for object in AppDataManager.sharedInstance.getObjects(forFloor: i) {
+//				objectAnnotations.append(MapObjectAnnotation(object: object))
+//			}
+//
+//			// Load Floorplan Overlay (Part of Apple Footprint) from PDF
+//			let pdfUrl = Bundle.main.url(forResource: Common.Map.floorplanFileNamePrefix + String(i), withExtension: "pdf", subdirectory:Common.Map.mapsDirectory)!
+//
+//			let overlay = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: Common.Map.anchorPair)
+//
+//			// Create this floor
+//			let floor = AICMapFloorModel(floorNumber: i,
+//										 overlay: overlay,
+//										 objects:objectAnnotations,
+//										 amenities: [MapAmenityAnnotation](),
+//										 departments: [MapDepartmentAnnotation](),
+//										 galleries: [MapTextAnnotation](),
+//										 spaces: [MapTextAnnotation]()
+//			)
+//
+//			floors.append(floor)
+//		}
+	}
+	
+	// Gallery annotations
+	private func getGalleryAnnotations(forFloorNumber floorNumber: Int) -> [MapTextAnnotation] {
+		var galleryAnnotations: [MapTextAnnotation] = []
+		
+		let galleriesForThisFloor = self.galleries.filter( { $0.location.floor == floorNumber })
+		for gallery in galleriesForThisFloor {
+			galleryAnnotations.append(MapTextAnnotation(coordinate: gallery.location.coordinate, text: gallery.displayTitle, type: MapTextAnnotation.AnnotationType.Gallery))
+		}
+		
+		return galleryAnnotations
+	}
+	
+	// Amenity Annotations
+	private func parse(amenityAnnotationJSON: JSON) throws -> MapAmenityAnnotation {
+		let coordinate = try getCLLocation2d(fromJSON: amenityAnnotationJSON, forKey: "location")
+		
+		let typeString = try getString(fromJSON: amenityAnnotationJSON, forKey: "amenity_type")
+		let type: MapAmenityAnnotationType = MapAmenityAnnotationType(rawValue: typeString)!
+		
+		return MapAmenityAnnotation(coordinate: coordinate, type: type)
+	}
+	
+	// Department Annotations
+	private func parse(departmentAnnotationJSON: JSON) throws -> MapDepartmentAnnotation {
+		let coordinate = try getCLLocation2d(fromJSON: departmentAnnotationJSON, forKey: "location")
+		let title = try getString(fromJSON: departmentAnnotationJSON, forKey: "label")
+		
+		return MapDepartmentAnnotation(coordinate: coordinate, title: title, imageName: "islamic")
+	}
+	
+	// Text Annotations
+	private func parse(textAnnotationJSON: JSON, type: MapTextAnnotation.AnnotationType) throws -> MapTextAnnotation {
+		let coordinate = try getCLLocation2d(fromJSON: textAnnotationJSON, forKey: "location")
+		let text = try getString(fromJSON: textAnnotationJSON, forKey: "label")
+		
+		return MapTextAnnotation(coordinate: coordinate, text: text, type: type)
+	}
+	
 	// MARK: Exhibition Images
 	
 	func parse(exhibitionImagesJSON: JSON) -> [Int : URL] {
@@ -964,7 +1178,7 @@ class AppDataParser {
     
     // Try to Parse out the lat + long from a CMS location string,
     // i.e. "location": "41.879225,-87.622289"
-    private func getCLLocation2d(fromJSON json:JSON, forKey key:String) throws -> CLLocationCoordinate2D {
+    private func getCLLocation2d(fromJSON json: JSON, forKey key: String) throws -> CLLocationCoordinate2D {
         let stringVal   = try getString(fromJSON: json, forKey: key)
         
         let latLongString = stringVal.replacingOccurrences(of: " ", with: "")
@@ -980,6 +1194,21 @@ class AppDataParser {
         
         throw ParseError.badCLLocationString(string: stringVal)
     }
+	
+	private func getPoint(fromJSON json: JSON, forKey key: String) throws -> CGPoint {
+		var stringVal = try getString(fromJSON: json, forKey: key)
+		
+		stringVal = stringVal.replacingOccurrences(of: " ", with: "")
+		let xyStrings: [String] = stringVal.components(separatedBy: ",")
+		if xyStrings.count == 2 {
+			let x = CGFloat(Float(xyStrings[0])!)
+			let y = CGFloat(Float(xyStrings[1])!)
+			
+			return CGPoint(x: x, y: y)
+		}
+		
+		throw ParseError.badPointString(string: stringVal)
+	}
     
     private func getInt(fromJSON json:JSON, forArrayKey arrayKey:String, atIndex index:Int) throws -> Int {
         
@@ -1083,6 +1312,10 @@ class AppDataParser {
         catch ParseError.badCLLocationString(let string) {
             errorMessage = "Could not create CLLocationCoordinate2D from string \"\(string)\""
         }
+			
+		catch ParseError.badPointString(let string) {
+			errorMessage = "Could not create CGPoint from string \"\(string)\""
+		}
             
         catch ParseError.audioFileNotFound(let nid) {
             errorMessage = "Could not find Audio File for nid \(nid)"

@@ -423,13 +423,13 @@ struct Common {
         static let mapSVGFileURL = Bundle.main.url(forResource: Common.Map.amenityLandmarkSVGFileName, withExtension: "svg", subdirectory:Common.Map.mapsDirectory)
 
         // Anchor pair for mapping GeoCoords to PDF Coords
-        static let pdfSize = CGSize(width: 800, height: 800)
+        static let pdfSize = CGSize(width: 2400, height: 2400)
         static let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.88002009571711,-87.62398928403854),
-                                       pdfPoint: CGPoint(x: 55.955, y: pdfSize.height-261.635)
+                                       pdfPoint: CGPoint(x: 855.955, y: pdfSize.height-1061.635)
         )
 
         static let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.8800240897643,-87.62334823608397),
-                                       pdfPoint: CGPoint(x: 211.94, y: pdfSize.height-261.635)
+                                       pdfPoint: CGPoint(x: 1011.94, y: pdfSize.height-1061.635)
         )
 		
         static let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)

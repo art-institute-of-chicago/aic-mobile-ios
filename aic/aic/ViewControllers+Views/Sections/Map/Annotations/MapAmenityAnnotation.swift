@@ -6,18 +6,18 @@
 import MapKit
 
 enum MapAmenityAnnotationType : String {
-    case Checkroom = "Checkroom"
+    case Checkroom = "Check Room"
     case Dining = "Dining"
     case Escalator = "Escalator"
     case Elevator = "Elevator"
-    case WomensRoom = "WomensRoom"
-    case MensRoom   = "MensRoom"
-    case WheelchairRamp = "WheelchairRamp"
-    case FamilyRestroom = "FamilyRestroom"
+    case WomensRoom = "Women's Room"
+    case MensRoom   = "Men's Room"
+    case WheelchairRamp = "Wheelchair Ramp"
+    case FamilyRestroom = "Family Restroom"
     case Information = "Information"
     case Tickets = "Tickets"
-    case Giftshop = "Giftshop"
-    case AudioGuide = "AudioGuide"
+    case Giftshop = "Gift Shop"
+    case AudioGuide = "Audio Guide"
 }
 
 class MapAmenityAnnotation: NSObject, MKAnnotation {

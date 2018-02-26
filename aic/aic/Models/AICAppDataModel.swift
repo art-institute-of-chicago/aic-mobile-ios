@@ -9,6 +9,8 @@ struct AICAppDataModel {
     var objects: [AICObjectModel]		= []
     var audioFiles: [AICAudioFileModel] = []
     var tours: [AICTourModel]			= []
+	var map: AICMapModel
+	
 	var featuredTours: [Int]			= []
 	var featuredExhibitions: [Int]		= []
 	var exhibitionOptionalImages: [Int : URL] = [:]

@@ -46,7 +46,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    let mapModel = AICMapModel()
+    let mapModel = AppDataManager.sharedInstance.app.map
     
     // Layout
 
@@ -87,15 +87,15 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         // Load in floorplans + annoations from app data
         // (app data should be loaded if this function is firing)
-        mapModel.loadData()
-        
+//        mapModel.loadData()
+		
         // Add Subviews
         view.addSubview(mapView)
         view.addSubview(floorSelectorVC.view)
         
         // Set the overlay for the background
         mapView.add(mapViewHideBackgroundOverlay, level: .aboveRoads)
-		mapView.add(mapModel.backgroundOverlay!)
+		mapView.add(mapModel.backgroundOverlay)
         
         mapView.camera.heading = mapView.defaultHeading
         mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomedOut.rawValue
