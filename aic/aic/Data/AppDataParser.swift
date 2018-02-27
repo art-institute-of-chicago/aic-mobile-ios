@@ -915,6 +915,7 @@ class AppDataParser {
 			dataSettings[.eventsEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.eventsEndpoint.rawValue)
 			dataSettings[.autocompleteEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.autocompleteEndpoint.rawValue)
 			dataSettings[.toursEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.toursEndpoint.rawValue)
+			dataSettings[.ticketsUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.ticketsUrl.rawValue)
 		}
 		catch {
 			if Common.Testing.printDataErrors {
@@ -924,7 +925,7 @@ class AppDataParser {
 		return dataSettings
 	}
 	
-	// MARK: Search data
+	// MARK: Search
 	
 	func parse(autocompleteData: Data) -> [String] {
 		var autocompleteStrings = [String]()

@@ -47,6 +47,7 @@ class ExhibitionContentCell : UITableViewCell {
 			}
 			
 			// TODO: temporary fix for missing image
+			exhibitionImageView.kf.indicatorType = .activity
 			if let _ = exhibitionModel.imageUrl {
 				exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			}
@@ -75,14 +76,7 @@ class ExhibitionContentCell : UITableViewCell {
 				buyTicketsButtonHorizontalOffset.constant = 0
 			}
 			
-			if !hasWebUrl {
-				buyTicketsButton.isHidden = true
-				buyTicketsButton.isEnabled = false
-				showOnMapButtonHorizontalOffset.constant = 0
-			}
-			else {
-				buyTicketsButton.addTarget(self, action: #selector(buyTicketsButtonPressed(button:)), for: .touchUpInside)
-			}
+			buyTicketsButton.addTarget(self, action: #selector(buyTicketsButtonPressed(button:)), for: .touchUpInside)
 			
 			if !hasWebUrl && !hasLocation {
 				descriptionToImageVerticalSpacing.constant = descriptionVerticalSpacingMin
@@ -94,6 +88,8 @@ class ExhibitionContentCell : UITableViewCell {
 	}
 	
 	@objc func buyTicketsButtonPressed(button: UIButton) {
-		self.delegate?.exhibitionBuyTicketsButtonPressed(url: exhibitionModel!.webUrl!)
+		if let url = URL(string: AppDataManager.sharedInstance.app.dataSettings[.ticketsUrl]!) {
+			self.delegate?.exhibitionBuyTicketsButtonPressed(url: url)
+		}
 	}
 }
