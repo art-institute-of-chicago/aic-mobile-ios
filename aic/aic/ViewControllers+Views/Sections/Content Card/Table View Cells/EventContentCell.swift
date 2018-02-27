@@ -18,6 +18,9 @@ class EventContentCell : UITableViewCell {
 	@IBOutlet var eventImageView: AICImageView!
 	@IBOutlet var descriptionLabel: UILabel!
 	@IBOutlet weak var buyTicketsButton: AICButton!
+	@IBOutlet weak var transparentOverlayView: UIView!
+	@IBOutlet var monthDayLabel: UILabel!
+	@IBOutlet var hoursMinutesLabel: UILabel!
 	
 	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
 	let descriptionVerticalSpacingMin: CGFloat = 32
@@ -33,6 +36,7 @@ class EventContentCell : UITableViewCell {
 		
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
+		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 	}
 	
 	var eventModel: AICEventModel? = nil {
@@ -46,6 +50,8 @@ class EventContentCell : UITableViewCell {
 			let descriptionText = eventModel.longDescription.replacingOccurrences(of: "<br />", with: "\n")
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: descriptionText.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
+			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
+			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
 			
 			if eventModel.eventUrl == nil {
 				buyTicketsButton.isEnabled = false

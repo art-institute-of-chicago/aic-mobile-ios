@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 protocol SeeAllViewControllerDelegate : class {
 	func seeAllDidSelectTour(tour: AICTourModel)
@@ -47,6 +48,10 @@ class SeeAllViewController : UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -64,6 +69,9 @@ class SeeAllViewController : UIViewController {
 		collectionView.dataSource = self
 		
 		self.view.addSubview(collectionView)
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -126,6 +134,10 @@ class SeeAllViewController : UIViewController {
 		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
 		
 		super.updateViewConstraints()
+	}
+	
+	@objc private func updateLanguage() {
+		collectionView.reloadData()
 	}
 }
 

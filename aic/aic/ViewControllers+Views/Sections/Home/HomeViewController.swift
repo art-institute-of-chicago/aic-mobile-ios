@@ -90,7 +90,7 @@ class HomeViewController : SectionViewController {
 		createViewConstraints()
 		
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -181,7 +181,7 @@ class HomeViewController : SectionViewController {
 	
 	// MARK: Language
 	
-	@objc func updateLanguage() {
+	@objc private func updateLanguage() {
 		let generalInfo = AppDataManager.sharedInstance.app.generalInfo
 		var language: Common.Language = .english
 		if generalInfo.availableLanguages.contains(Common.currentLanguage) {

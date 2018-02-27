@@ -51,13 +51,13 @@ class HomeTourCell : UICollectionViewCell {
 //			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
 			tourTitleLabel.text = self.tourModel!.title.stringByDecodingHTMLEntities
 			shortDescriptionTextView.text = self.tourModel!.shortDescription.stringByDecodingHTMLEntities
-			stopsNumberLabel.text = "\(self.tourModel!.stops.count) Stops"
+			stopsNumberLabel.text = "\(self.tourModel!.stops.count) " + "Stops"
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true
 				durationLabel.isHidden = true
 			}
 			else if let duration: String = self.tourModel!.durationInMinutes {
-				durationLabel.text = "\(duration)min"
+				durationLabel.text = "\(duration)"
 			}
 		}
 	}

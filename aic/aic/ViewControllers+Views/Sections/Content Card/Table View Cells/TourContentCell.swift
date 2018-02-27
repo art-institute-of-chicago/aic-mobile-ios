@@ -16,6 +16,10 @@ class TourContentCell : UITableViewCell {
 	@IBOutlet var descriptionLabel: UILabel!
 	@IBOutlet var startTourButton: AICButton!
 	@IBOutlet weak var languageSelectorView: LanguageSelectorView!
+	@IBOutlet weak var transparentOverlayView: UIView!
+	@IBOutlet weak var stopsNumberLabel: UILabel!
+	@IBOutlet var clockImageView: UIImageView!
+	@IBOutlet var durationLabel: UILabel!
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -26,6 +30,7 @@ class TourContentCell : UITableViewCell {
 		
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
+		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 	}
 	
 	var tourModel: AICTourModel? = nil {
@@ -43,6 +48,14 @@ class TourContentCell : UITableViewCell {
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
+			stopsNumberLabel.text = "\(tourModel.stops.count) " + "Stops"
+			if (tourModel.durationInMinutes ?? "").isEmpty {
+				clockImageView.isHidden = true
+				durationLabel.isHidden = true
+			}
+			else if let duration: String = self.tourModel!.durationInMinutes {
+				durationLabel.text = "\(duration)"
+			}
 		}
 	}
 }
