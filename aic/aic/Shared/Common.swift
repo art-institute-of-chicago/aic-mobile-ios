@@ -552,9 +552,14 @@ struct Common {
 		static func hoursMinutesString(date: Date) -> String {
 			let dateFormatter = DateFormatter()
 			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
-			dateFormatter.setLocalizedDateFormatFromTemplate("h:mma")
-			dateFormatter.amSymbol = "am"
-			dateFormatter.pmSymbol = "pm"
+			if Common.currentLanguage == .english {
+				dateFormatter.setLocalizedDateFormatFromTemplate("h:mma")
+				dateFormatter.amSymbol = "am"
+				dateFormatter.pmSymbol = "pm"
+			}
+			else {
+				dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm")
+			}
 			let hoursMinutesString = dateFormatter.string(from: date)
 			return hoursMinutesString
 		}

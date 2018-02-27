@@ -52,13 +52,13 @@ class SeeAllTourCell : UICollectionViewCell {
 //			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
 			tourTitleLabel.text = self.tourModel!.title.stringByDecodingHTMLEntities
 			shortDescriptionTextView.text = self.tourModel!.shortDescription.stringByDecodingHTMLEntities
-			stopsNumberLabel.text = "\(tourModel.stops.count) Stops"
+			stopsNumberLabel.text = "\(tourModel.stops.count) " + "Stops"
 			
 			if (self.tourModel!.durationInMinutes ?? "").isEmpty {
 				durationLabel.isHidden = true
 			}
 			else if let duration: String = self.tourModel!.durationInMinutes {
-				durationLabel.text = "\(duration)min"
+				durationLabel.text = "\(duration)"
 			}
 		}
 	}
