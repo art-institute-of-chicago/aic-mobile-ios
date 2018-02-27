@@ -31,12 +31,20 @@ class MapArtworkContentView : UIView {
 		
 		if let object = searchedArtwork.audioObject {
 			titleLabel.text = object.title
-			imageView.kf.setImage(with: object.imageUrl)
+			imageView.kf.setImage(with: object.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
+				if image != nil {
+					if let cropRect = object.imageCropRect {
+						self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+					}
+				}
+			})
 			locationLabel.text = Common.Map.stringForFloorNumber[object.location.floor]
 		}
 		else {
 			titleLabel.text = searchedArtwork.title
+			imageView.kf.indicatorType = .activity
 			imageView.kf.setImage(with: searchedArtwork.imageUrl)
+			
 			locationLabel.text = searchedArtwork.gallery.title // Common.Map.stringForFloorNumber[searchedArtwork.location.floor]
 			audioButton.isHidden = true
 			audioButton.isEnabled = false
@@ -51,7 +59,13 @@ class MapArtworkContentView : UIView {
 		audio.language = language
 		
 		titleLabel.text = audio.trackTitle
-		imageView.kf.setImage(with: tourStop.object.imageUrl)
+		imageView.kf.setImage(with: tourStop.object.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
+			if image != nil {
+				if let cropRect = tourStop.object.imageCropRect {
+					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+				}
+			}
+		})
 		locationLabel.text = tourStop.object.gallery.title //Common.Map.stringForFloorNumber[tourStop.object.location.floor]
 	}
 	

@@ -22,8 +22,6 @@ class ContentButtonCell : UITableViewCell {
 	@IBOutlet var dividerLineBottom: UIView!
 	@IBOutlet weak var audioIcon: UIImageView!
 	
-	var contentLoaded: Bool = false
-	
 	static let cellHeight: CGFloat = 72.0
 	
 	override func awakeFromNib() {
@@ -42,15 +40,17 @@ class ContentButtonCell : UITableViewCell {
 		audioIcon.isHidden = true
 	}
 	
-	func setContent(imageUrl: URL?, title: String, subtitle: String, showAudioIcon: Bool = false) {
-		// TODO: cache and don't load unless necessary
-//		if contentLoaded == true {
-//			return
-//		}
-		
+	func setContent(imageUrl: URL?, cropRect: CGRect?, title: String, subtitle: String, showAudioIcon: Bool = false) {
 		// Load image only if URL is not nil
 		if let url = imageUrl {
-			itemImageView.kf.setImage(with: url)
+			itemImageView.kf.indicatorType = .activity
+			itemImageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
+				if image != nil {
+					if cropRect != nil {
+						self.itemImageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.itemImageView.frame.size, cropRect: cropRect!)
+					}
+				}
+			})
 		}
 		// Otherwise show placeholder image
 		else {
@@ -61,8 +61,6 @@ class ContentButtonCell : UITableViewCell {
 		itemSubtitleLabel.text = subtitle
 		
 		audioIcon.isHidden = !showAudioIcon
-		
-		contentLoaded = true
 	}
 }
 

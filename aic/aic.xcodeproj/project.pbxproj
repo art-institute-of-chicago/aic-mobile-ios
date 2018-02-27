@@ -641,11 +641,18 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		291221951FDB2D490096BB75 /* Table View Cells */ = {
+		290A0FB92045C42E000CDA8F /* Content Button Cell */ = {
 			isa = PBXGroup;
 			children = (
 				293127801FDF0EC5008BFAB1 /* ContentButtonCell.swift */,
 				2931277E1FDF0EB5008BFAB1 /* ContentButtonCell.xib */,
+			);
+			path = "Content Button Cell";
+			sourceTree = "<group>";
+		};
+		291221951FDB2D490096BB75 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
 				294338531FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift */,
 				294338551FDD656500ECF321 /* MapItemsCollectionContainerCell.xib */,
 				29846121203E3B0E001E5378 /* NoResultsCell.swift */,
@@ -1345,6 +1352,7 @@
 		E4F82F681CA45EF000E4224B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				290A0FB92045C42E000CDA8F /* Content Button Cell */,
 				296D559420239F3E00442A60 /* CardNavigationController.swift */,
 				2915B0F3202CA0BE00DEBB03 /* LanguageSelectorButton.swift */,
 				2915B0F1202CA08B00DEBB03 /* LanguageSelectorView.swift */,

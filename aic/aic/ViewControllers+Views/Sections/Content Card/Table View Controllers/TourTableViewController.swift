@@ -71,18 +71,20 @@ extension TourTableViewController {
 			return cell
 		}
 		else if indexPath.row == 1 {
+			// tour overview cell
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 			let overviewLocation = tourModel.stops.first!.object.gallery.title
-			cell.setContent(imageUrl: tourModel.imageUrl, title: tourModel.title, subtitle: overviewLocation)
+			cell.setContent(imageUrl: tourModel.imageUrl, cropRect: nil, title: tourModel.title, subtitle: overviewLocation)
 			cell.dividerLineBottom.isHidden = true
 			return cell
 		}
 		else {
+			// tour stop cell
 			let object = tourModel.stops[indexPath.row - 2].object
 			let title = "\(indexPath.row - 1). \(object.title)"
 			
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-			cell.setContent(imageUrl: object.imageUrl, title: title, subtitle: object.gallery.title)
+			cell.setContent(imageUrl: object.imageUrl, cropRect: object.imageCropRect, title: title, subtitle: object.gallery.title)
 			cell.dividerLineBottom.isHidden = true
 			return cell
 		}

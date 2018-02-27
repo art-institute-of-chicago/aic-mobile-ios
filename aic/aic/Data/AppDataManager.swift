@@ -403,34 +403,22 @@ class AppDataManager {
 		return image
 	}
 	
-//	func getCroppedImageForObject(image: UIImage, viewSize: CGSize, cropRect: CGRect) -> UIImage {
-//		let imageSize = image.size
-//		let imageAspect = imageSize.width / imageSize.height
-//		let viewAspect = viewSize.width / viewSize.height
-//		
-//		if imageAspect < viewAspect {
-//			let cropRect = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.width * (viewSize.height / viewSize.width))
-//			let croppedImage = UIImage(cgImage: (image.cgImage!.cropping(to: cropRect))!)
-//			
-//			return croppedImage
-//		}
-//		return image
-//		
-//		if image != nil {
-//			if let object = artworkModel.audioObject {
-//				if let imageCropRect = object.imageCropRect {
-//					let imageRect = CGRect(origin: CGPoint.zero, size: image!.size)
-//					let imageAspect = image!.size.width / image!.size.height
-//					let cropAspect = imageCropRect.width / imageCropRect.height
-//					let frameSize = artworkImageView.frame.size
-//					//							let finalCropSize: CGSize = CGSize(width: min(imageRect.size.width, imageCropRect.width), height: (
-//					if imageRect.contains(imageCropRect) {
-//						self.artworkImageView.image = UIImage(cgImage: (image?.cgImage!.cropping(to: imageCropRect))!)
-//					}
-//				}
-//			}
-//		}
-//	}
+	func getCroppedImage(image: UIImage, viewSize: CGSize, cropRect: CGRect) -> UIImage {
+		let viewAspect = viewSize.width / viewSize.height
+		let cropAspect = cropRect.size.width / cropRect.size.height
+		
+		if cropAspect > viewAspect {
+			let finalCropRect = CGRect(origin: cropRect.origin, size: CGSize(width: cropRect.width, height: cropRect.width * (viewSize.height / viewSize.width)))
+			
+			let imageRect = CGRect(origin: CGPoint.zero, size: image.size)
+			if imageRect.contains(finalCropRect) {
+				let croppedImage = UIImage(cgImage: (image.cgImage!.cropping(to: finalCropRect))!)
+				return croppedImage
+			}
+		}
+		
+		return image
+	}
 	
     // Find the tours this object is on, and filter out a tour if sepecified
     func getRelatedTours(forObject object:AICObjectModel, excludingTour:AICTourModel? = nil) -> [AICTourModel] {

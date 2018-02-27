@@ -253,8 +253,12 @@ extension ResultsTableViewController {
 				// artwork cell
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
+				var cropRect: CGRect? = nil
+				if let object = artwork.audioObject {
+					cropRect = object.imageCropRect
+				}
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
+				cell.setContent(imageUrl: artwork.imageUrl, cropRect: cropRect, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 				return cell
 			}
 			else if indexPath.section == 3 {
@@ -265,7 +269,7 @@ extension ResultsTableViewController {
 					tour.language = Common.currentLanguage
 				}
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
-				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
+				cell.setContent(imageUrl: tour.imageUrl, cropRect: nil, title: tour.title, subtitle: "") // TODO: add Gallery Name
 				return cell
 			}
 			else if indexPath.section == 4 {
@@ -273,7 +277,7 @@ extension ResultsTableViewController {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let exhibition = exhibitionItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
-				cell.setContent(imageUrl: exhibition.imageUrl, title: exhibition.title, subtitle: "")
+				cell.setContent(imageUrl: exhibition.imageUrl, cropRect: nil, title: exhibition.title, subtitle: "")
 				return cell
 			}
 			else if indexPath.section == 5 {
@@ -292,8 +296,12 @@ extension ResultsTableViewController {
 			else if indexPath.section == 1 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let artwork = artworkItems[indexPath.row]
+				var cropRect: CGRect? = nil
+				if let object = artwork.audioObject {
+					cropRect = object.imageCropRect
+				}
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-				cell.setContent(imageUrl: artwork.thumbnailUrl, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
+				cell.setContent(imageUrl: artwork.imageUrl, cropRect: cropRect, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 				return cell
 			}
 		}
@@ -309,7 +317,7 @@ extension ResultsTableViewController {
 					tour.language = Common.currentLanguage
 				}
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: tourItems.count)
-				cell.setContent(imageUrl: tour.imageUrl, title: tour.title, subtitle: "") // TODO: add Gallery Name
+				cell.setContent(imageUrl: tour.imageUrl, cropRect: nil, title: tour.title, subtitle: "") // TODO: add Gallery Name
 				return cell
 			}
 		}
@@ -322,7 +330,7 @@ extension ResultsTableViewController {
 				let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 				let exhibition = exhibitionItems[indexPath.row]
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: exhibitionItems.count)
-				cell.setContent(imageUrl: exhibition.imageUrl, title: exhibition.title, subtitle: "")
+				cell.setContent(imageUrl: exhibition.imageUrl, cropRect: nil, title: exhibition.title, subtitle: "")
 				return cell
 			}
 		}
