@@ -68,27 +68,14 @@ class SearchDataManager : NSObject {
 				"is_on_view",
 				"title",
 				"artist_display",
-				"image_iiif_url",
+				"image_id",
 				"gallery_id",
 				"latlon"
 			],
-			"sort": ["_score"],
+			"q": searchText,
 			"query": [
-				"bool": [
-					"must": [
-						[
-							"multi_match": [
-								"query": searchText,
-								"fields": ["title", "artist_display"],
-								"operator": "or"
-							]
-						],
-						[
-							"term": [
-								"is_on_view": "true"
-							]
-						]
-					]
+				"term": [
+					"is_on_view": "true"
 				]
 			]
 		]
@@ -161,7 +148,7 @@ class SearchDataManager : NSObject {
 				"start_at",
 				"end_at"
 			],
-			"sort": ["_score"],
+			"q": searchText,
 			"query": [
 				"bool": [
 					"must": [
@@ -176,14 +163,6 @@ class SearchDataManager : NSObject {
 							"range": [
 								"aic_end_at": [
 									"gte": "now"
-								]
-							]
-						],
-						[
-							"match": [
-								"title": [
-									"query": searchText,
-									"operator": "or"
 								]
 							]
 						]

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,7 +35,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exhibition Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IV8-FP-nHm">
-                        <rect key="frame" x="0.0" y="254" width="250" height="22"/>
+                        <rect key="frame" x="0.0" y="254" width="280" height="22"/>
                         <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -57,7 +57,7 @@
                 <constraint firstItem="HBm-68-tgR" firstAttribute="top" secondItem="fhx-mH-hvg" secondAttribute="top" id="Jhf-UX-peZ"/>
                 <constraint firstItem="fhx-mH-hvg" firstAttribute="trailing" secondItem="Gvh-W1-y8T" secondAttribute="trailing" id="Rpr-u7-Hgz"/>
                 <constraint firstItem="HBm-68-tgR" firstAttribute="leading" secondItem="fhx-mH-hvg" secondAttribute="leading" id="a5i-CL-2qB"/>
-                <constraint firstItem="fhx-mH-hvg" firstAttribute="trailing" secondItem="IV8-FP-nHm" secondAttribute="trailing" constant="93" id="bYW-uJ-DCq"/>
+                <constraint firstItem="fhx-mH-hvg" firstAttribute="trailing" secondItem="IV8-FP-nHm" secondAttribute="trailing" constant="63" id="bYW-uJ-DCq"/>
                 <constraint firstItem="IV8-FP-nHm" firstAttribute="leading" secondItem="fhx-mH-hvg" secondAttribute="leading" id="ctd-n0-11m"/>
                 <constraint firstItem="Gvh-W1-y8T" firstAttribute="leading" secondItem="fhx-mH-hvg" secondAttribute="leading" id="iv3-Mh-fHD"/>
                 <constraint firstItem="Gvh-W1-y8T" firstAttribute="top" secondItem="IV8-FP-nHm" secondAttribute="bottom" constant="12" id="tt6-oq-FoL"/>
