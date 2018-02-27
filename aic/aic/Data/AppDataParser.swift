@@ -5,7 +5,7 @@
 
 import SwiftyJSON
 import CoreLocation
-
+import Kingfisher
 
 
 class AppDataParser {
@@ -695,6 +695,9 @@ class AppDataParser {
 			}
 			
 			// Annotations
+			var imageAnnotations: [MapImageAnnotation] = []
+			var landmarkAnnotations: [MapTextAnnotation] = []
+			var gardenAnnotations: [MapTextAnnotation] = []
 			var floorAmenityAnnotations: [Int : [MapAmenityAnnotation]] = [
 				0 : [MapAmenityAnnotation](),
 				1 : [MapAmenityAnnotation](),
@@ -715,29 +718,40 @@ class AppDataParser {
 			]
 			for (_, annotationJSON):(String, JSON) in mapAnnotationsJSON.dictionaryValue {
 				do {
-					let floorNumber = try getInt(fromJSON: annotationJSON, forKey: "floor")
+					var floorNumber: Int? = nil
+					do {
+						floorNumber = try getInt(fromJSON: annotationJSON, forKey: "floor")
+					}
+					catch {}
+					
 					let type = try getString(fromJSON: annotationJSON, forKey: "annotation_type")
 					
-					if type == "Amenity" {
+					if type == "Amenity" && floorNumber != nil {
 						let amenityAnnotation = try parse(amenityAnnotationJSON: annotationJSON)
-						floorAmenityAnnotations[floorNumber]!.append(amenityAnnotation)
+						floorAmenityAnnotations[floorNumber!]!.append(amenityAnnotation)
 					}
 					else if type == "Text" {
 						let textType = try getString(fromJSON: annotationJSON, forKey: "text_type")
-						if textType == MapTextAnnotation.AnnotationType.Space.rawValue {
+						if textType == MapTextAnnotation.AnnotationType.Space.rawValue && floorNumber != nil {
 							let textAnnotation = try parse(textAnnotationJSON: annotationJSON, type: MapTextAnnotation.AnnotationType.Space)
-							floorSpaceAnnotations[floorNumber]!.append(textAnnotation)
+							floorSpaceAnnotations[floorNumber!]!.append(textAnnotation)
+						}
+						else if textType == MapTextAnnotation.AnnotationType.Landmark.rawValue {
+							let textAnnotation = try parse(textAnnotationJSON: annotationJSON, type: MapTextAnnotation.AnnotationType.Landmark)
+							landmarkAnnotations.append(textAnnotation)
+						}
+						else if textType == MapTextAnnotation.AnnotationType.Garden.rawValue {
+							let textAnnotation = try parse(textAnnotationJSON: annotationJSON, type: MapTextAnnotation.AnnotationType.Garden)
+							gardenAnnotations.append(textAnnotation)
 						}
 					}
-					else if type == "Department" {
+					else if type == "Department" && floorNumber != nil {
 						let departmentAnnotation = try parse(departmentAnnotationJSON: annotationJSON)
-						floorDepartmentAnnotations[floorNumber]!.append(departmentAnnotation)
-					}
-					else if type == "Landmark" {
-						
+						floorDepartmentAnnotations[floorNumber!]!.append(departmentAnnotation)
 					}
 					else if type == "Image" {
-						
+						let imageAnnotation = try parse(imageAnnotationJSON: annotationJSON)
+						imageAnnotations.append(imageAnnotation)
 					}
 				}
 				catch {
@@ -761,9 +775,9 @@ class AppDataParser {
 			}
 			
 			return AICMapModel(backgroundOverlay: backgroundOverlay,
-							   lionAnnotations: [MapImageAnnotation](),
-							   landmarkAnnotations: [MapTextAnnotation](),
-							   gardenAnnotations: [MapTextAnnotation](),
+							   imageAnnotations: imageAnnotations,
+							   landmarkAnnotations: landmarkAnnotations,
+							   gardenAnnotations: gardenAnnotations,
 							   floors: floors)
 		}
 		catch {
@@ -773,7 +787,7 @@ class AppDataParser {
 		}
 		
 		return AICMapModel(backgroundOverlay: backgroundOverlay,
-						   lionAnnotations: [MapImageAnnotation](),
+						   imageAnnotations: [MapImageAnnotation](),
 						   landmarkAnnotations: [MapTextAnnotation](),
 						   gardenAnnotations: [MapTextAnnotation](),
 						   floors: [AICMapFloorModel]())
@@ -857,6 +871,14 @@ class AppDataParser {
 		let text = try getString(fromJSON: textAnnotationJSON, forKey: "label")
 		
 		return MapTextAnnotation(coordinate: coordinate, text: text, type: type)
+	}
+	
+	// Image Annotations
+	private func parse(imageAnnotationJSON: JSON) throws -> MapImageAnnotation {
+		let coordinate = try getCLLocation2d(fromJSON: imageAnnotationJSON, forKey: "location")
+		let imageUrl = try getURL(fromJSON: imageAnnotationJSON, forKey: "image_url")!
+		
+		return MapImageAnnotation(coordinate: coordinate, imageUrl: imageUrl)
 	}
 	
 	// MARK: Exhibition Images

@@ -32,11 +32,11 @@ extension UIColor {
 	
 	static let aicFloorColor: UIColor = UIColor(white: 1.0, alpha: 1.0)
 	
-	static let aicFloorUnselectedColor: UIColor = UIColor(red: 206.0 / 255.0, green: 217.0 / 255.0, blue: 226.0 / 255.0, alpha: 0.9)
+	static let aicFloorUnselectedColor: UIColor = UIColor(white: 1.0, alpha: 0.25)
 
-	static let aicBluedotColor: UIColor = UIColor(red: 0.0, green: 174.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
+	static let aicBluedotColor: UIColor = UIColor(red: 6.0 / 255.0, green: 50.0 / 255.0, blue: 88.0 / 255.0, alpha: 1.0)
 	
-	static let aicBluedotUnselectedColor: UIColor = UIColor(red: 79.0 / 255.0, green: 207.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.9)
+	static let aicBluedotUnselectedColor: UIColor = UIColor(red: 6.0 / 255.0, green: 50.0 / 255.0, blue: 88.0 / 255.0, alpha: 0.5)
 
 	static let aicGrayColor: UIColor = UIColor(white: 216.0 / 255.0, alpha: 1.0)
 	
@@ -77,6 +77,8 @@ extension UIColor {
 	static let aicMapCardBackgroundColor: UIColor = UIColor(red: 119.0 / 255.0, green: 137.0 / 255.0, blue: 167.0 / 255.0, alpha: 1.0)
 	
 	static let aicMemberCardLoginFieldColor: UIColor = UIColor(white: 240.0 / 255.0, alpha: 1.0)
+	
+	static let aicTooltipBackgroundColor: UIColor = UIColor(red: 94.0 / 255.0, green: 115.0 / 255.0, blue: 178.0 / 255.0, alpha: 1.0)
 	
     func lighter(_ amount : CGFloat = 0.25) -> PXColor {
         return hueColorWithBrightnessAmount(1 + amount)

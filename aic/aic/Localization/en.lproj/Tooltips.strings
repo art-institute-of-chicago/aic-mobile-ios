@@ -1,0 +1,15 @@
+/* 
+  Tooltips.strings
+  aic
+
+  Created by Filippo Vanucci on 2/26/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Map Tooltip Overview Title" = "Explore the Map";
+
+"Map Tooltip Overview Text" = "Pinch to explore the map.";
+
+"Map Tooltip Floor" = "You are on the ";
+
+"Map Tooltip Orientation" = "Tap to Orient Map";

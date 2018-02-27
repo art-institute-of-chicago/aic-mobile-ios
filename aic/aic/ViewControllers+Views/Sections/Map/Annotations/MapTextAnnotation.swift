@@ -7,7 +7,8 @@ import MapKit
 
 class MapTextAnnotation: NSObject, MKAnnotation {
     enum AnnotationType : String {
-        case LandmarkGarden = "Garden"
+        case Landmark = "Landmark"
+		case Garden = "Garden"
         case Space = "Space"
         case Gallery = "Gallery"
     }

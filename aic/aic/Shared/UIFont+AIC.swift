@@ -94,6 +94,8 @@ extension UIFont {
 	
 	static let aicMapCardTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
 	
+	static let aicMapFloorMenuFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	
 	static let aicMemberCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
 	
 	static let aicMemberCardLoginFieldFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!.upperCaseNumbers()
@@ -101,6 +103,10 @@ extension UIFont {
 	static let aicMapDepartmentLabelFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
 	
 	static let aicSearchNoResultsWebsiteFont: UIFont = UIFont(name: "IdealSans-BookItalic", size: 13.0)!
+	
+	static let aicTooltipTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	
+	static let aicTooltipTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
 	
 	/// Font modified to use uppercase numbers
 	///

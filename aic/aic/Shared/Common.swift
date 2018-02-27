@@ -116,6 +116,7 @@ struct Common {
         static let showLanguageSelectionUserDefaultsKey = "AICShowLanguageSelection"
         static let showHeadphonesUserDefaultsKey = "AICShowHeadphones"
         static let showEnableLocationUserDefaultsKey = "AICShowEnableLocation"
+		static let showMapTooltipsDefaultsKey = "AICShowMapTooltips"
 
         static let memberInfoIDUserDefaultsKey = "AICMemberInfoName"
         static let memberInfoZipUserDefaultsKey = "AICMemberInfoZip"
@@ -350,50 +351,25 @@ struct Common {
 		static let maxNumberOfEvents: Int = 8
 	}
 
-    // MARK: Instructions
+    // MARK: Tooltips
 	// TODO: REMOVE instructions
     // Content for each screen
-    struct Instructions {
-        static let screens = [
-			AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
-									   title:"Please Choose Your Preferred Language",
-									   subtitle: "Some content may not be available in your selected language.",
-									   color: .aicHomeColor
-			),
-			
-            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconMapLarge"),
-                title:"Find Your Way",
-                subtitle: "Use the map to explore the museum and find audio-enhanced artworks near you.",
-                color: .aicMapColor
-            ),
-
-
-            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
-                title:"On View Now",
-                subtitle: "Preview the latest exhibitions at the Art Institute.",
-                color: .aicHomeColor
-            ),
-
-
-            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconNumPadLarge"),
-                title:"Look It Up",
-                subtitle: "Find an artwork you like? Use the keypad to access audio-enhanced stories.",
-                color: .aicAudioGuideColor
-            ),
-
-
-            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconInfoLarge"),
-                title:"Member’s Access",
-                subtitle: "Enter your membership ID for easy access to the museum.",
-                color: .aicInfoColor
-            ),
-
-            AICInstructionsScreenModel(iconImage: #imageLiteral(resourceName: "iconToursLarge"),
-                title:"Go on a Tour",
-                subtitle: "Find a story that suits your interests in our ever-expanding portfolio of audio tours.",
-                color: .aicHomeColor
-            )
-        ]
+    struct Tooltips {
+		static var mapPopupTooltip = AICTooltipModel(type: .popup,
+													 title: "Map Tooltip Overview Title",
+													 text: "Map Tooltip Overview Text",
+													 arrowPosition: CGPoint.zero
+		)
+		static var mapFloorTooltip = AICTooltipModel(type: .arrow,
+													 title: "",
+													 text: "Map Tooltip Floor",
+													 arrowPosition: CGPoint.zero
+		)
+		static var mapOrienationTooltip = AICTooltipModel(type: .arrow,
+														  title: "",
+														  text: "Map Tooltip Orientation",
+														  arrowPosition: CGPoint.zero
+		)
     }
 	
     // MARK: Map

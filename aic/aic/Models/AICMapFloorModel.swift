@@ -27,31 +27,31 @@ class AICMapFloorModel {
         }
     }
     
-    let overlay:FloorplanOverlay
+    let overlay: FloorplanOverlay
     
-    let amenityAnnotations:[MapAmenityAnnotation]
-    let departmentAnnotations:[MapDepartmentAnnotation]
-    let spaceAnnotations:[MapTextAnnotation]
-    let galleryAnnotations:[MapTextAnnotation]
+    let amenityAnnotations: [MapAmenityAnnotation]
+    let departmentAnnotations: [MapDepartmentAnnotation]
+    let spaceAnnotations: [MapTextAnnotation]
+    let galleryAnnotations: [MapTextAnnotation]
     
-    let objectAnnotations:[MapObjectAnnotation] // All objects taht exist on this floor
+    let objectAnnotations: [MapObjectAnnotation] // All objects taht exist on this floor
     
-    var tourStopAnnotations:[MapObjectAnnotation] = []
-    var locationAnnotations:[MapLocationAnnotation] = []
+    var tourStopAnnotations: [MapObjectAnnotation] = []
+    var locationAnnotations: [MapLocationAnnotation] = []
 	
-	private (set) var restroomAnnotations:[MapAmenityAnnotation] = []
-	private (set) var giftShopAnnotations:[MapAmenityAnnotation] = []
-	private (set) var diningAnnotations:[MapAmenityAnnotation] = []
+	private (set) var restroomAnnotations: [MapAmenityAnnotation] = []
+	private (set) var giftShopAnnotations: [MapAmenityAnnotation] = []
+	private (set) var diningAnnotations: [MapAmenityAnnotation] = []
     
     let floorNumber:Int
     
-    init(floorNumber:Int,
-         overlay:FloorplanOverlay,
-         objects:[MapObjectAnnotation],
-         amenities:[MapAmenityAnnotation],
-         departments:[MapDepartmentAnnotation],
-         galleries:[MapTextAnnotation],
-         spaces:[MapTextAnnotation])
+    init(floorNumber: Int,
+         overlay: FloorplanOverlay,
+         objects: [MapObjectAnnotation],
+         amenities: [MapAmenityAnnotation],
+         departments: [MapDepartmentAnnotation],
+         galleries: [MapTextAnnotation],
+         spaces: [MapTextAnnotation])
     {
         self.floorNumber = floorNumber
         self.overlay = overlay

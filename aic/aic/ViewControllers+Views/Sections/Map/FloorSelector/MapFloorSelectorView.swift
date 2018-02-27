@@ -7,9 +7,8 @@
 import UIKit
 
 class MapFloorSelectorView: UIView {
-    
-    private let buttonSizeRatio:CGFloat = 0.12
-    private let buttonSize:CGFloat
+	
+	static let buttonSize: CGFloat = 40.0
     
     private let floorButtonLabels = ["LL", "1", "2", "3"]
     
@@ -20,9 +19,7 @@ class MapFloorSelectorView: UIView {
     // Subviews
     var floorButtons:[MapFloorSelectorButton] = []
     
-    init(totalFloors:Int) {
-        buttonSize = UIScreen.main.bounds.width * buttonSizeRatio
-        
+	init(totalFloors:Int) {
         super.init(frame:CGRect.zero)
         
         // Set Drop Shadow
@@ -33,19 +30,19 @@ class MapFloorSelectorView: UIView {
 		
         // Create floor buttons
         for floorNum in 0..<totalFloors {
-            let btn = MapFloorSelectorButton(size:buttonSize, floorNum: floorNum, floorLabel: floorButtonLabels[floorNum])
+			let btn = MapFloorSelectorButton(size:MapFloorSelectorView.buttonSize, floorNum: floorNum, floorLabel: floorButtonLabels[floorNum])
             floorButtons.append(btn)
         }
         
         // Layout floor Buttons in reverse order
-        let totalHeight = buttonSize * CGFloat(floorButtons.count)
+		let totalHeight = MapFloorSelectorView.buttonSize * CGFloat(floorButtons.count)
         for button in floorButtons {
-            button.frame.origin = CGPoint(x: 0, y: totalHeight - CGFloat(button.tag) * buttonSize - buttonSize)
+            button.frame.origin = CGPoint(x: 0, y: totalHeight - CGFloat(button.tag) * MapFloorSelectorView.buttonSize - MapFloorSelectorView.buttonSize)
         }
         
         // Create heading button
         let locationButtonOrigin = CGPoint(x: 0, y: floorButtons.first!.frame.maxY + locationButtonPaddingTop)
-        let locationButtonSize = CGSize(width: buttonSize, height: buttonSize)
+		let locationButtonSize = CGSize(width: MapFloorSelectorView.buttonSize, height: MapFloorSelectorView.buttonSize)
         locationButton.frame =  CGRect(origin: locationButtonOrigin, size: locationButtonSize)
         
         // Add Subviews
@@ -65,7 +62,7 @@ class MapFloorSelectorView: UIView {
     
     func calculateFrame() {
         self.frame.origin = CGPoint(x: 0,y: 0)
-        self.frame.size.width = buttonSize
+        self.frame.size.width = MapFloorSelectorView.buttonSize
         
         var bottomView:UIView! = nil
         if locationButton.superview != nil {

@@ -67,6 +67,32 @@ class MapFloorSelectorViewController: UIViewController {
         
         floorSelectorView.floorButtons[floorNum].isSelectedFloor = true
     }
+	
+	func getCurrentFloorNumber() -> Int {
+		for index in 0..<floorSelectorView.floorButtons.count {
+			if floorSelectorView.floorButtons[index].isSelectedFloor == true {
+				return index
+			}
+		}
+		
+		return 1
+	}
+	
+	func getCurrentFloorPosition() -> CGPoint {
+		let pointX = self.view.frame.origin.x
+		
+		let floorButton = floorSelectorView.floorButtons[getCurrentFloorNumber()]
+		let pointY: CGFloat = self.view.frame.origin.y + floorButton.frame.origin.y + CGFloat(MapFloorSelectorView.buttonSize * 0.5)
+		
+		return CGPoint(x: pointX, y: pointY)
+	}
+	
+	func getOrientationButtonPosition() -> CGPoint {
+		let pointX = self.view.frame.origin.x
+		let pointY: CGFloat = self.view.frame.origin.y + floorSelectorView.locationButton.frame.origin.y + CGFloat(floorSelectorView.locationButton.frame.height * 0.5)
+		
+		return CGPoint(x: pointX, y: pointY)
+	}
     
     // Display the floor the user is currently on
     func setUserLocation(forFloorNum floorNum: Int) {
@@ -101,7 +127,7 @@ class MapFloorSelectorViewController: UIViewController {
     }
     
     private func updateLocationImageForCurrentMode() {
-        floorSelectorView.locationButton.setImage(UIImage(named:locationMode.rawValue), for: UIControlState())
+        floorSelectorView.locationButton.setImage(UIImage(named: locationMode.rawValue), for: UIControlState())
     }
 }
 

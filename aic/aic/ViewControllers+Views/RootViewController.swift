@@ -65,7 +65,8 @@ class RootViewController: UIViewController {
         let defaults = UserDefaults.standard
         let appDefaults = [Common.UserDefaults.showLanguageSelectionUserDefaultsKey: true,
                            Common.UserDefaults.showHeadphonesUserDefaultsKey:true,
-                           Common.UserDefaults.showEnableLocationUserDefaultsKey:true]
+						   Common.UserDefaults.showEnableLocationUserDefaultsKey:true,
+						   Common.UserDefaults.showMapTooltipsDefaultsKey:true]
         
         defaults.register(defaults: appDefaults)
         defaults.synchronize()
@@ -75,6 +76,7 @@ class RootViewController: UIViewController {
             defaults.set(true, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
             defaults.set(true, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
             defaults.set(true, forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
+			defaults.set(true, forKey: Common.UserDefaults.showMapTooltipsDefaultsKey)
             defaults.synchronize()
         }
     }

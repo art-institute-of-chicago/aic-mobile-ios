@@ -69,7 +69,7 @@ class MapViewController: UIViewController {
     var isSwitchingModes = false
     
     init() {
-        self.mapView = MapView(frame: CGRect.zero)
+        self.mapView = MapView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
 		
 		// Navigation Item
@@ -85,11 +85,7 @@ class MapViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        // Load in floorplans + annoations from app data
-        // (app data should be loaded if this function is firing)
-//        mapModel.loadData()
-		
-        // Add Subviews
+		// Add Subviews
         view.addSubview(mapView)
         view.addSubview(floorSelectorVC.view)
         
@@ -459,7 +455,7 @@ class MapViewController: UIViewController {
             mapView.removeAnnotations(mapView.annotations)
         } else {
             var annotationFilter:[MKAnnotation] = []
-            annotationFilter.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+            annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
             annotationFilter.append(contentsOf: mapView.selectedAnnotations)
             annotationFilter.append(mapView.userLocation)
             
@@ -469,7 +465,7 @@ class MapViewController: UIViewController {
         }
         
         // Lions always present
-        mapView.addAnnotations(mapModel.lionAnnotations)
+        mapView.addAnnotations(mapModel.imageAnnotations)
         
         // Set the annotations for this zoom level
         switch mapView.currentZoomLevel {
@@ -573,7 +569,7 @@ class MapViewController: UIViewController {
 		let floor = mapModel.floors[currentFloor]
 		
 		var annotationFilter:[MKAnnotation] = []
-		annotationFilter.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotationFilter.append(contentsOf: floor.restroomAnnotations as [MKAnnotation])
 		annotationFilter.append(mapView.userLocation)
 		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
@@ -581,7 +577,7 @@ class MapViewController: UIViewController {
 		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		var annotations: [MKAnnotation] = []
-		annotations.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotations.append(contentsOf: floor.restroomAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
 		
@@ -606,7 +602,7 @@ class MapViewController: UIViewController {
 		let floor = mapModel.floors[currentFloor]
 		
 		var annotationFilter:[MKAnnotation] = []
-		annotationFilter.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotationFilter.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
 		annotationFilter.append(mapView.userLocation)
 		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
@@ -614,7 +610,7 @@ class MapViewController: UIViewController {
 		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		var annotations: [MKAnnotation] = []
-		annotations.append(contentsOf: mapModel.lionAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotations.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
 		
@@ -716,9 +712,9 @@ extension MapViewController : MKMapViewDelegate {
         
         // Image Annotations
         if let imageAnnotation = annotation as? MapImageAnnotation {
-            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.imageName) else {
-                let view = MKAnnotationView(annotation: imageAnnotation, reuseIdentifier: imageAnnotation.imageName)
-                view.image = UIImage(named:imageAnnotation.imageName)
+            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.identifier) else {
+                let view = MKAnnotationView(annotation: imageAnnotation, reuseIdentifier: imageAnnotation.identifier)
+                view.image = imageAnnotation.image
                 return view
             }
             

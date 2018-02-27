@@ -37,9 +37,12 @@ class MapTextAnnotationView: MapAnnotationView {
         case .Space:
             font = .aicSpacesFont
             
-        case .LandmarkGarden:
+        case .Landmark:
             font = .aicSystemTextFont
-            
+		
+		case .Garden:
+			font = .aicSystemTextFont
+		
         case .Gallery:
             font = .aicSystemTextFont
         }
@@ -74,8 +77,11 @@ class MapTextAnnotationView: MapAnnotationView {
         
         if let annotation = self.annotation as? MapTextAnnotation {
             switch annotation.type {
-            case .LandmarkGarden:
+            case .Landmark:
                 label.textColor = color.darker()
+				
+			case .Garden:
+				label.textColor = color.darker()
                 
             case .Space:
                 label.textColor = color.lighter()
