@@ -44,8 +44,11 @@ class SeeAllEventCell : UICollectionViewCell {
 			}
 			
 			// set up UI
-			eventImageView.kf.setImage(with: eventModel.imageUrl)
-//			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
+			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
+				if image != nil {
+					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
+				}
+			}
 			eventTitleLabel.text = eventModel.title.stringByDecodingHTMLEntities
 			shortDescriptionTextView.text = eventModel.shortDescription.stringByDecodingHTMLEntities
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)

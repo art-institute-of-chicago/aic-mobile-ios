@@ -45,7 +45,11 @@ class EventContentCell : UITableViewCell {
 				return
 			}
 			
-			eventImageView.kf.setImage(with: eventModel.imageUrl)
+			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
+				if image != nil {
+					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
+				}
+			}
 			
 			let descriptionText = eventModel.longDescription.replacingOccurrences(of: "<br />", with: "\n")
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: descriptionText.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)

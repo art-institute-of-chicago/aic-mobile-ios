@@ -42,7 +42,11 @@ class HomeEventCell : UICollectionViewCell {
 			}
 			
 			// set up UI
-			eventImageView.kf.setImage(with: eventModel.imageUrl)
+			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
+				if image != nil {
+					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
+				}
+			}
 //			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
 			eventTitleLabel.text = eventModel.title.stringByDecodingHTMLEntities
 			shortDescriptionTextView.text = eventModel.shortDescription.stringByDecodingHTMLEntities

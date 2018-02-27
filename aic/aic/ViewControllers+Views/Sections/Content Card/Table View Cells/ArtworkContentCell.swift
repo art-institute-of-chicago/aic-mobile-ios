@@ -39,6 +39,7 @@ class ArtworkContentCell : UITableViewCell {
 			}
 			
 			// Image
+			artworkImageView.kf.indicatorType = .activity
 			artworkImageView.kf.setImage(with: artworkModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
 				// calculate image dimension to adjust height of imageview
 //				if let _ = image {
@@ -46,9 +47,12 @@ class ArtworkContentCell : UITableViewCell {
 //					let viewAspectRatio = self.artworkImageView.frame.width / self.artworkImageHeight.constant
 //
 //					if imageAspectRatio > viewAspectRatio {
-//						self.artworkImageHeight.constant =  self.artworkImageView.frame.width * (image!.size.height / image!.size.width)
-//						self.setNeedsLayout()
-//						self.layoutIfNeeded()
+//						UIView.animate(withDuration: 0.3, animations: {
+//							self.artworkImageHeight.constant =  self.artworkImageView.frame.width * (image!.size.height / image!.size.width)
+//							self.setNeedsLayout()
+//							self.layoutIfNeeded()
+//							self.layoutSubviews()
+//						})
 //					}
 //				}
 			}
