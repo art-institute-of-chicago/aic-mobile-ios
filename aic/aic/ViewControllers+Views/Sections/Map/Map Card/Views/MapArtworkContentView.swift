@@ -22,7 +22,7 @@ class MapArtworkContentView : UIView {
 		
 		titleLabel.text = artwork.title
 		imageView.kf.setImage(with: artwork.imageUrl)
-		locationLabel.text = Common.Map.stringForFloorNumber[artwork.location.floor]
+		locationLabel.text = artwork.gallery.title //Common.Map.stringForFloorNumber[artwork.location.floor]
 	}
 	
 	init(searchedArtwork: AICSearchedArtworkModel) {
@@ -37,7 +37,7 @@ class MapArtworkContentView : UIView {
 		else {
 			titleLabel.text = searchedArtwork.title
 			imageView.kf.setImage(with: searchedArtwork.imageUrl)
-			locationLabel.text = Common.Map.stringForFloorNumber[searchedArtwork.location.floor]
+			locationLabel.text = searchedArtwork.gallery.title // Common.Map.stringForFloorNumber[searchedArtwork.location.floor]
 			audioButton.isHidden = true
 			audioButton.isEnabled = false
 		}
@@ -52,6 +52,7 @@ class MapArtworkContentView : UIView {
 		
 		titleLabel.text = audio.trackTitle
 		imageView.kf.setImage(with: tourStop.object.imageUrl)
+		locationLabel.text = tourStop.object.gallery.title //Common.Map.stringForFloorNumber[tourStop.object.location.floor]
 	}
 	
 	private func setup() {

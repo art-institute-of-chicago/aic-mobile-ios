@@ -98,9 +98,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XEv-K2-evg">
-                        <rect key="frame" x="0.0" y="221" width="245" height="75"/>
+                        <rect key="frame" x="0.0" y="221" width="275" height="75"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="245" id="RxD-6w-XwB"/>
+                            <constraint firstAttribute="width" constant="275" id="RxD-6w-XwB"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
