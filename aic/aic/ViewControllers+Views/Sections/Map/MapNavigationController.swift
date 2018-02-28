@@ -12,6 +12,7 @@ import Localize_Swift
 
 protocol MapNavigationControllerDelegate : class {
 	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel)
+	func mapDidSelectPlayAudioForTour(tour: AICTourModel, language: Common.Language)
 	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, language: Common.Language)
 }
 
@@ -259,7 +260,8 @@ class MapNavigationController : SectionNavigationController {
 			// Creeate Tour Stops card
 			tourStopPageVC = TourStopPageViewController(tour: tourModel!)
 			if let index = stopIndex {
-				tourStopPageVC!.setCurrentPage(pageIndex: index)
+				// add +1 for tour overview
+				tourStopPageVC!.setCurrentPage(pageIndex: index + 1)
 			}
 			else {
 				tourStopPageVC!.setCurrentPage(pageIndex: 0)
@@ -458,8 +460,8 @@ extension MapNavigationController : MapViewControllerDelegate {
 	
 	func mapDidSelectTourStop(artwork: AICObjectModel) {
 		if let tour = tourModel {
-			let pageIndex = tour.getIndex(forStopObject: artwork)
-			tourStopPageVC!.setCurrentPage(pageIndex: pageIndex!)
+			let pageIndex = tour.getIndex(forStopObject: artwork)! + 1 // add 1 for the overview
+			tourStopPageVC!.setCurrentPage(pageIndex: pageIndex)
 		}
 	}
 }
@@ -491,12 +493,16 @@ extension MapNavigationController : CardNavigationControllerDelegate {
 // MARK: TourStopPageViewControllerDelegate
 
 extension MapNavigationController : TourStopPageViewControllerDelegate {
-	func tourStopPageDidChangeTo(tourOverview: AICTourOverviewModel) {
-		mapVC.showTourOverview()
+	func tourStopPageDidChangeTo(tour: AICTourModel) {
+		mapVC.highlightTourStop(identifier: tour.nid, location: tour.location)
 	}
 	
 	func tourStopPageDidChangeTo(tourStop: AICTourStopModel) {
-		mapVC.highlightTourStop(tourStop: tourStop)
+		mapVC.highlightTourStop(identifier: tourStop.object.nid, location: tourStop.object.location)
+	}
+	
+	func tourStopPageDidPressPlayAudio(tour: AICTourModel, language: Common.Language) {
+		self.sectionDelegate?.mapDidSelectPlayAudioForTour(tour: tour, language: language)
 	}
 	
 	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel, language: Common.Language) {

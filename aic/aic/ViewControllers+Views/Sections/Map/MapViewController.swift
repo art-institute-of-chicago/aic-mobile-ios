@@ -236,7 +236,11 @@ class MapViewController: UIViewController {
         var annotations: [MKAnnotation] = []
         for floor in mapModel.floors {
             let floorStops = tourModel.stops.filter({ $0.object.location.floor == floor.floorNumber })
-
+			
+			if tourModel.location.floor == floor.floorNumber {
+				floor.tourStopAnnotations.append(MapObjectAnnotation(tour: tourModel))
+			}
+			
             // Set their objects as active on the map floor
             floor.setTourStopAnnotations(forTourStopModels: floorStops)
             annotations.append(contentsOf: floor.tourStopAnnotations as [MKAnnotation])
@@ -251,7 +255,7 @@ class MapViewController: UIViewController {
 		
 		mapView.addAnnotations(annotations)
 		
-		highlightTourStop(tourStop: tourModel.stops.first!)
+		highlightTourStop(identifier: tourModel.nid, location: tourModel.location)
     }
     
     private func updateMapForModeChange(andStorePreviousMode previousMode:Mode) {
@@ -279,7 +283,7 @@ class MapViewController: UIViewController {
     // MARK: Tour Mode functions
     // Functions for manipulating the map while in .Tour mode
     // Show all annotations for the tour in view
-    func showTourOverview() {
+	func showTourOverview() {
         // Deselect all annotations
         for annotation in mapView.selectedAnnotations {
             mapView.deselectAnnotation(annotation, animated: true)
@@ -300,21 +304,21 @@ class MapViewController: UIViewController {
     // Highlights a specific tour object
     // Highlights item, switches to it's floor
     // and centers the map around it
-    func highlightTourStop(tourStop: AICTourStopModel) {
+	func highlightTourStop(identifier: Int, location: CoordinateWithFloor) {
         // Select the annotation
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
-                if annotation.nid == tourStop.object.nid {
+                if annotation.nid == identifier {
 					// Turn off user heading since we want to jump to a specific place
 					floorSelectorVC.disableUserHeading()
 					
                     // Go to that floor
-                    setCurrentFloor(forFloorNum: tourStop.object.location.floor, andResetMap: false)
+                    setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 					
 					// Zoom in on the item
 //					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
 //					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue)
-					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
                     
                     // Select the annotation (which eventually updates it's view)
                     mapView.selectAnnotation(annotation, animated: true)

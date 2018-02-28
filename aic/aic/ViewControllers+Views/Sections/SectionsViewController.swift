@@ -272,15 +272,14 @@ class SectionsViewController : UIViewController {
 	}
     
     private func playTourOverview(tour: AICTourModel, language: Common.Language) {
-//		var audio = tour.audio
-//		audio.language = Common.currentLanguage
-//
-//		playArtwork(artwork: tour.audio, audio: audio)
-//
-//		audioPlayerVC.showMiniPlayer()
+		var audio = tour.overview.audio
+		audio.language = language
+		
+		audioPlayerVC.playTourOverviewAudio(tour: tour)
+		audioPlayerVC.showMiniPlayer()
 		
         // Log analytics
-        AICAnalytics.sendTourDidShowOverviewEvent(forTour: tour)
+//        AICAnalytics.sendTourDidShowOverviewEvent(forTour: tour)
     }
 	
 	// MARK: Show/Hide Search Button
@@ -444,6 +443,10 @@ extension SectionsViewController : AudioGuideNavigationControllerDelegate {
 extension SectionsViewController : MapNavigationControllerDelegate {
 	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel) {
 		playMapArtwork(artwork: artwork)
+	}
+	
+	func mapDidSelectPlayAudioForTour(tour: AICTourModel, language: Common.Language) {
+		playTourOverview(tour: tour, language: language)
 	}
 	
 	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, language: Common.Language) {

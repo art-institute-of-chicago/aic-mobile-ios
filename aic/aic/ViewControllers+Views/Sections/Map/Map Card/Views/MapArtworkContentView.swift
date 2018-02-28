@@ -69,6 +69,18 @@ class MapArtworkContentView : UIView {
 		locationLabel.text = tourStop.object.gallery.title //Common.Map.stringForFloorNumber[tourStop.object.location.floor]
 	}
 	
+	init(tour: AICTourModel, language: Common.Language) {
+		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
+		setup()
+		
+		var audio = tour.overview.audio
+		audio.language = language
+		
+		titleLabel.text = audio.trackTitle
+		imageView.kf.setImage(with: tour.imageUrl)
+		locationLabel.text = tour.stops.first!.object.gallery.title //Common.Map.stringForFloorNumber[tour.location.floor]
+	}
+	
 	private func setup() {
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true

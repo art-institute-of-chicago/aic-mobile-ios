@@ -9,20 +9,23 @@
 import UIKit
 
 protocol TourStopPageViewControllerDelegate : class {
-	func tourStopPageDidChangeTo(tourOverview: AICTourOverviewModel)
+	func tourStopPageDidChangeTo(tour: AICTourModel)
 	func tourStopPageDidChangeTo(tourStop: AICTourStopModel)
+	func tourStopPageDidPressPlayAudio(tour: AICTourModel, language: Common.Language)
 	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel, language: Common.Language)
 }
 
 class TourStopPageViewController : UIPageViewController {
 	private var tourModel: AICTourModel
 	
-	private var currentIndex = -1
+	private var currentPage = -1
+	private var totalPages = 0
 	
 	weak var tourStopPageDelegate: TourStopPageViewControllerDelegate? = nil
 	
 	init(tour: AICTourModel) {
 		tourModel = tour
+		totalPages = tourModel.stops.count + 1 // add overview
 		super.init(transitionStyle: UIPageViewControllerTransitionStyle.scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal, options: nil)
 	}
 	
@@ -51,33 +54,31 @@ class TourStopPageViewController : UIPageViewController {
 		setCurrentPage(pageIndex: 0)
 	}
 	
-	func tourStopController(_ index: Int) -> UIViewController? {
-		if index < tourModel.stops.count {
-			currentIndex = index
+	func tourStopController(_ pageIndex: Int) -> UIViewController? {
+		if pageIndex < totalPages {
+			currentPage = pageIndex
 			let page = UIViewController()
+			page.view.tag = currentPage
 			
-//				if index == 0 {
-//					// Tour Overview
-//					page.titleLabel.text = tour.overview.title
-//					page.imageView.kf.setImage(with: tour.overview.imageUrl)
-//					page.locationLabel.text = Common.Map.stringForFloorNumber[tour.stops.first!.object.location.floor]
-//					page.view.tag = index
-//
-//					page.audioButton.tag = -1
-//				}
-//				else {
+			if currentPage == 0 {
+				// Tour Overview
+				let artworkContentView = MapArtworkContentView(tour: tourModel, language: tourModel.language)
+				artworkContentView.audioButton.tag = currentPage
+				artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
+				page.view.addSubview(artworkContentView)
+			}
+			else {
 				// Stop
-//					if index < tour.stops.count {
-			let stop = tourModel.stops[index]
-			
-			let artworkContentView = MapArtworkContentView(tourStop: stop, language: tourModel.language)
-			artworkContentView.audioButton.tag = index
-			page.view.addSubview(artworkContentView)
-			artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
-			page.view.tag = index
-//					}
-//
-//				}
+				let stopIndex = currentPage-1
+				if stopIndex < tourModel.stops.count {
+					let stop = tourModel.stops[stopIndex]
+					
+					let artworkContentView = MapArtworkContentView(tourStop: stop, language: tourModel.language)
+					artworkContentView.audioButton.tag = currentPage
+					artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
+					page.view.addSubview(artworkContentView)
+				}
+			}
 			
 			return page
 		}
@@ -85,7 +86,7 @@ class TourStopPageViewController : UIPageViewController {
 	}
 	
 	func setCurrentPage(pageIndex: Int) {
-		if currentIndex == pageIndex {
+		if currentPage == pageIndex {
 			return
 		}
 		
@@ -103,8 +104,16 @@ class TourStopPageViewController : UIPageViewController {
 	}
 	
 	@objc func audioButtonPressed(button: UIButton) {
-		if tourModel.stops.indices.contains(button.tag) {
-			self.tourStopPageDelegate?.tourStopPageDidPressPlayAudio(tourStop: tourModel.stops[button.tag], language: tourModel.language)
+		if button.tag < totalPages {
+			if button.tag == 0 {
+				self.tourStopPageDelegate?.tourStopPageDidPressPlayAudio(tour: tourModel, language: tourModel.language)
+			}
+			else {
+				let stopIndex = button.tag-1
+				if stopIndex < tourModel.stops.count {
+					self.tourStopPageDelegate?.tourStopPageDidPressPlayAudio(tourStop: tourModel.stops[stopIndex], language: tourModel.language)
+				}
+			}
 		}
 	}
 }
@@ -113,28 +122,28 @@ class TourStopPageViewController : UIPageViewController {
 extension TourStopPageViewController: UIPageViewControllerDataSource {
 	func pageViewController(_ pageViewController: UIPageViewController,
 							viewControllerBefore viewController: UIViewController) -> UIViewController? {
-		var index = viewController.view.tag
-		guard index != NSNotFound && index != 0 else { return nil }
-		index = index - 1
-		return tourStopController(index)
+		var pageIndex = viewController.view.tag
+		guard pageIndex != NSNotFound && pageIndex != 0 else { return nil }
+		pageIndex = pageIndex - 1
+		return tourStopController(pageIndex)
 	}
 	
 	func pageViewController(_ pageViewController: UIPageViewController,
 							viewControllerAfter viewController: UIViewController) -> UIViewController? {
-		var index = viewController.view.tag
-		guard index != NSNotFound else { return nil }
-		index = index + 1
-		guard index != tourModel.stops.count else {return nil}
-		return tourStopController(index)
+		var pageIndex = viewController.view.tag
+		guard pageIndex != NSNotFound else { return nil }
+		pageIndex = pageIndex + 1
+		guard pageIndex != totalPages else {return nil}
+		return tourStopController(pageIndex)
 	}
 	
 	// MARK: UIPageControl
 	func presentationCount(for pageViewController: UIPageViewController) -> Int {
-		return tourModel.stops.count
+		return totalPages
 	}
 	
 	func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-		return currentIndex
+		return currentPage
 	}
 }
 
@@ -147,10 +156,16 @@ extension TourStopPageViewController : UIPageViewControllerDelegate {
 	func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
 		if completed == true {
 			if let viewController = self.viewControllers!.first {
-				currentIndex = viewController.view.tag
+				currentPage = viewController.view.tag
 				if let tour = tourModel as AICTourModel? {
-					if currentIndex <= tour.stops.count-1 {
-						self.tourStopPageDelegate?.tourStopPageDidChangeTo(tourStop: tour.stops[currentIndex])
+					if currentPage == 0 {
+						self.tourStopPageDelegate?.tourStopPageDidChangeTo(tour: tourModel)
+					}
+					else if currentPage < totalPages {
+						let stopIndex = currentPage-1
+						if stopIndex < tour.stops.count {
+							self.tourStopPageDelegate?.tourStopPageDidChangeTo(tourStop: tour.stops[stopIndex])
+						}
 					}
 				}
 			}
