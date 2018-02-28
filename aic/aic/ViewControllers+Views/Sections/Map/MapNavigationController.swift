@@ -259,13 +259,6 @@ class MapNavigationController : SectionNavigationController {
 			
 			// Creeate Tour Stops card
 			tourStopPageVC = TourStopPageViewController(tour: tourModel!)
-			if let index = stopIndex {
-				// add +1 for tour overview
-				tourStopPageVC!.setCurrentPage(pageIndex: index + 1)
-			}
-			else {
-				tourStopPageVC!.setCurrentPage(pageIndex: 0)
-			}
 			
 			// Crate Content Card
 			if mapContentCardVC != nil {
@@ -283,6 +276,15 @@ class MapNavigationController : SectionNavigationController {
 			
 			// in case the tour card is open, to tell the map to animate the floor selector
 			self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+			
+			// Set TourStopPageVC to the right stop
+			if let index = stopIndex {
+				// add +1 for tour overview
+				tourStopPageVC!.setCurrentPage(pageIndex: index + 1)
+			}
+			else {
+				tourStopPageVC!.setCurrentPage(pageIndex: 0)
+			}
 			
 			// Set map state
 			mapVC.showTour(forTour: tour)
