@@ -595,8 +595,18 @@ class AppDataParser {
         if stops.count == 0 {
             throw ParseError.noValidTourStops
         }
-
-        let bannerString = try? getString(fromJSON: tourJSON, forKey: "tour_banner")
+		
+		let location = try getCLLocation2d(fromJSON: tourJSON, forKey: "location")
+		
+		var floor: Int? = nil
+		do {
+			floor = try getInt(fromJSON: tourJSON, forKey: "floor")
+		}
+		catch {
+			floor = stops.first!.object.location.floor
+		}
+		
+		let coordinate = CoordinateWithFloor(coordinate: location, floor: floor!)
 		
 		var translations: [Common.Language : AICTourTranslationModel] = [:]
 		let translationsJSON = tourJSON["translations"].array
@@ -617,9 +627,9 @@ class AppDataParser {
 		}
         
         return AICTourModel(nid:nid,
-                            imageUrl: imageUrl,
+							imageUrl: imageUrl,
+							location: coordinate,
                             stops: stops,
-                            bannerString: bannerString,
 							translations: translations,
 							language: .english
         )

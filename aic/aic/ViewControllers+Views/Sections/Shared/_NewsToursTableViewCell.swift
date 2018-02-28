@@ -46,10 +46,7 @@ class NewsToursTableViewCell: UITableViewCell {
     
     // Header
     let headerView = UIView()
-    
-    let newBannerView = UIView()
-    let newBannerGradientLayer = CAGradientLayer()
-    let newBannerLabel = UILabel()
+	
     var imageIsLoaded = false
     let headerImageView = AICImageView()
     let stopsDistanceItemView = NewsToursStopsDistanceView()
@@ -107,33 +104,10 @@ class NewsToursTableViewCell: UITableViewCell {
         // Reveal content Button
         revealContentButton = AICButton(color: .aicInfoColor, isSmall: false)
 		
-        
         revealContentButton.setTitle("", for: UIControlState())
         revealContentButton.isHidden = true
         
         contentView.backgroundColor = .white
-        
-        //New Banner Flag
-        if model.bannerString != nil {
-            newBannerView.isHidden = true
-            newBannerView.alpha = 0.0
-            
-            let bannerFont = UIFont(name: "SourceSansPro-Semibold", size: 18.0)!
-            let attributedBannerString = NSMutableAttributedString.init(string: model.bannerString!, attributes: [
-                NSAttributedStringKey.kern : 1.75,
-                NSAttributedStringKey.foregroundColor : UIColor.darkGray,
-                NSAttributedStringKey.font : bannerFont
-                ])
-            newBannerLabel.attributedText = attributedBannerString
-            newBannerLabel.textAlignment = .right
-            newBannerLabel.adjustsFontSizeToFitWidth = true
-            newBannerLabel.minimumScaleFactor = 0.5
-            newBannerLabel.sizeToFit()
-            newBannerView.frame = CGRect(x: 0, y: 0, width: newBannerLabel.frame.size.width + 20, height: 40)
-            
-            newBannerView.addSubview(newBannerLabel)
-            headerImageView.addSubview(newBannerView)
-        }
         
         // Add subviews
         headerView.addSubview(headerImageView)
@@ -198,14 +172,8 @@ class NewsToursTableViewCell: UITableViewCell {
             
             if shouldAnimateModeChange {
                 UIView.animate(withDuration: animationDuration, animations: {
-                    if self.imageIsLoaded {
-                        self.newBannerView.alpha = 1.0
-                    }
                     self.revealContentButton.alpha = 0.0
                     }, completion: {(value:Bool) in
-                        if self.imageIsLoaded{
-                            self.newBannerView.isHidden = false
-                        }
                         self.revealContentButton.isHidden = true
                 })
             }
@@ -222,21 +190,15 @@ class NewsToursTableViewCell: UITableViewCell {
                                                                                 lineHeight:descriptionLineHeight)
             revealContentButton.isHidden = false
             descriptionLabel.isHidden = false
-            newBannerView.isHidden = true
             
             if shouldAnimateModeChange {
-                if self.imageIsLoaded {
-                    newBannerView.alpha = 1.0
-                }
                 revealContentButton.alpha = 0.0
                 UIView.animate(withDuration: animationDuration, animations: {
-                    self.newBannerView.alpha = 0.0
                     self.revealContentButton.alpha = 1.0
                     self.descriptionLabel.alpha = 1.0
                 })
             }
             else {
-                self.newBannerView.alpha = 0.0
                 self.revealContentButton.alpha = 1.0
                 self.descriptionLabel.alpha = 1.0
             }
@@ -271,30 +233,6 @@ class NewsToursTableViewCell: UITableViewCell {
             
             make.bottom.equalTo(headerImageView.superview!)
         })
-        
-        if model.bannerString != nil{
-            newBannerView.snp.remakeConstraints { (make) -> Void in
-                make.top.right.equalTo(headerView).inset(newBannerMargins)
-                make.width.equalTo(newBannerLabel.frame.size.width + 40)
-                make.height.equalTo(40)
-            }
-            newBannerLabel.snp.remakeConstraints({ (make) -> Void in
-                make.right.equalTo(newBannerView.snp.right).inset(newBannerLabelMargins)
-                make.top.bottom.equalTo(newBannerView)
-                make.height.equalTo(newBannerView)
-            })
-            
-            //Add gradient
-            newBannerGradientLayer.frame = newBannerView.bounds
-            newBannerGradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
-            newBannerGradientLayer.locations = [0.0, 1.0]
-            newBannerGradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-            let endPoint = (newBannerView.frame.size.width - newBannerLabel.frame.size.width) / newBannerView.frame.size.width
-            newBannerGradientLayer.endPoint = CGPoint(x: endPoint, y: 0.5)
-            if newBannerView.layer.sublayers?[0] != newBannerGradientLayer {
-                newBannerView.layer.insertSublayer(newBannerGradientLayer, at: 0)
-            }
-        }
         
         // Details
         if stopsDistanceItemView.superview != nil {
@@ -348,13 +286,5 @@ extension NewsToursTableViewCell : AICImageViewDelegate {
     func aicImageViewDidFinishLoadingImageAsynchronously() {
         imageIsLoaded = true
         updateConstraints()
-        //Animate in banner view if needed
-        if model.bannerString != nil {
-            newBannerView.alpha = 0.0
-            newBannerView.isHidden = false
-            UIView.animate(withDuration: 0.5, animations: { 
-                self.newBannerView.alpha = 1.0
-            })
-        }
     }
 }

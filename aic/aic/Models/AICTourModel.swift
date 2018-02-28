@@ -18,9 +18,9 @@ struct AICTourModel {
     let additionalInformation: String? = nil
     let imageUrl: URL
 	
+	let location: CoordinateWithFloor
+	
     let stops: [AICTourStopModel]
-    
-    let bannerString: String?
 	
 	var translations: [Common.Language : AICTourTranslationModel]
 	
@@ -34,7 +34,7 @@ struct AICTourModel {
 	
 	var availableLanguages: [Common.Language] {
 		var languages: [Common.Language] = []
-		for (key, translation) in translations {
+		for (key, _) in translations {
 			languages.append(key)
 		}
 		return languages

@@ -16,7 +16,7 @@ class MapObjectAnnotation : NSObject, MKAnnotation {
 	var thumbnailCropRect: CGRect?
 	
 	// Objects with audio
-    init(object:AICObjectModel) {
+    init(object: AICObjectModel) {
 		self.nid = object.nid
         self.coordinate = object.location.coordinate
 		self.floor = object.location.floor
@@ -26,7 +26,7 @@ class MapObjectAnnotation : NSObject, MKAnnotation {
     }
 	
 	// Artworks from search
-	init(searchedArtwork:AICSearchedArtworkModel) {
+	init(searchedArtwork: AICSearchedArtworkModel) {
 		if let object = searchedArtwork.audioObject {
 			self.nid = object.nid
 		}
@@ -35,5 +35,15 @@ class MapObjectAnnotation : NSObject, MKAnnotation {
 		self.clLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
 		self.title = searchedArtwork.title
 		self.thumbnailUrl = searchedArtwork.thumbnailUrl
+	}
+	
+	// Tour Overview Stop
+	init(tour: AICTourModel) {
+		self.nid = tour.nid
+		self.coordinate = tour.location.coordinate
+		self.floor = tour.location.floor
+		self.clLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+		self.title = tour.title
+		self.thumbnailUrl = tour.imageUrl
 	}
 }

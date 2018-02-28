@@ -26,7 +26,7 @@ struct AICAudioFileModel {
 	
 	var availableLanguages: [Common.Language] {
 		var languages: [Common.Language] = []
-		for (key, translation) in translations {
+		for (key, _) in translations {
 			languages.append(key)
 		}
 		return languages
