@@ -20,6 +20,12 @@ class MapContentCardNavigationController: CardNavigationController {
 		super.init(nibName: nil, bundle: nil)
 	}
 	
+	init(contentView: UIView) {
+		self.contentVC = UIViewController()
+		self.contentVC.view.addSubview(contentView)
+		super.init(nibName: nil, bundle: nil)
+	}
+	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -58,7 +64,7 @@ class MapContentCardNavigationController: CardNavigationController {
 		contentVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
 		contentVC.view.autoSetDimension(.height, toSize: Common.Layout.cardMinimizedContentHeight - contentTopMargin - Common.Layout.miniAudioPlayerHeight)
 		
-		titleLabel.autoPinEdge(.top, to: .top, of: self.view, withOffset: contentTopMargin + 5)
+		titleLabel.autoPinEdge(.top, to: .top, of: self.view, withOffset: 27)
 		titleLabel.autoPinEdge(.leading, to: .leading, of: self.view,  withOffset: 16)
 		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self.view,  withOffset: -16)
 		

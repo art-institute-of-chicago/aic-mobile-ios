@@ -14,7 +14,7 @@ class MapArtworkContentView : UIView {
 	private let locationLabel: UILabel = UILabel()
 	let audioButton: UIButton = UIButton()
 	
-	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.height, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight)
+	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight)
 	
 	init(artwork: AICObjectModel) {
 		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))

@@ -42,8 +42,6 @@ class MapView: MKMapView {
     private (set) var previousZoomLevel:Common.Map.ZoomLevelAltitude = .zoomedOut
     private (set) var currentZoomLevel:Common.Map.ZoomLevelAltitude = .zoomedOut
     
-    let departmentHud = MapDepartmentHUDView()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -71,8 +69,6 @@ class MapView: MKMapView {
         showsUserLocation = true
         
         tintColor = .white
-        
-        addSubview(departmentHud)
     }
 
     required init?(coder aDecoder: NSCoder) {

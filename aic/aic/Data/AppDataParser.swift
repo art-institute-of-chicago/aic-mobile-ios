@@ -761,6 +761,12 @@ class AppDataParser {
 				}
 			}
 			
+			// Lions
+			let lion1 = MapImageAnnotation(coordinate: CLLocationCoordinate2DMake(41.879678006591391, -87.624091248446064), image: #imageLiteral(resourceName: "Lion1"), identifier: "Lion1")
+			let lion2 = MapImageAnnotation(coordinate: CLLocationCoordinate2DMake(41.879491568164525, -87.624089977901931), image: #imageLiteral(resourceName: "Lion2"), identifier: "Lion2")
+			imageAnnotations.append(lion1)
+			imageAnnotations.append(lion2)
+			
 			var floors: [AICMapFloorModel] = []
 			for floorNumber in 0..<Common.Map.totalFloors {
 				let floor = AICMapFloorModel(floorNumber: floorNumber,

@@ -264,7 +264,6 @@ class MapViewController: UIViewController {
         clearActiveAnnotations()
         
         // Set the new state
-        mapView.departmentHud.hide()
         mapView.removeAnnotations(mapView.annotations)
         
         isSwitchingModes = true
@@ -348,7 +347,6 @@ class MapViewController: UIViewController {
 		}
 		
 		floorSelectorVC.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
-		mapView.departmentHud.frame.origin = mapFrame.origin
 		
 		mapView.calculateStartingHeight()
     }
@@ -470,18 +468,15 @@ class MapViewController: UIViewController {
         // Set the annotations for this zoom level
         switch mapView.currentZoomLevel {
         case .zoomedOut:
-            mapView.departmentHud.hide()
             mapView.addAnnotations(mapModel.landmarkAnnotations)
             break
             
         case .zoomedIn:
-            mapView.departmentHud.hide()
             mapView.addAnnotations(mapModel.floors[currentFloor].amenityAnnotations)
             mapView.addAnnotations(mapModel.floors[currentFloor].departmentAnnotations)
             break
             
         case .zoomedDetail, .zoomedMax:
-            mapView.departmentHud.show()
             mapView.addAnnotations(mapModel.floors[currentFloor].galleryAnnotations)
             mapView.addAnnotations(mapModel.floors[currentFloor].objectAnnotations)
             
@@ -497,7 +492,7 @@ class MapViewController: UIViewController {
             let centerCoord = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
             
             for annotation in mapModel.floors[currentFloor].objectAnnotations {
-                //if let annotation = annotation as? MKAnnotation {
+//                if let annotation = annotation as? MKAnnotation {
                     if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
 						let distance = centerCoord.distance(from: annotation.clLocation)
                         if distance < 10 {
@@ -509,27 +504,7 @@ class MapViewController: UIViewController {
                             view.mode = .minimized
                         }
                     }
-                //}
-            }
-            
-            // Set the department in the HUD
-            var closestDepartmentDistance = Double.greatestFiniteMagnitude
-            var closestDepartment:MapDepartmentAnnotation? = nil
-            
-            let mapCenterPoint = MKMapPointForCoordinate(mapView.centerCoordinate)
-            
-            for annotation in mapModel.floors[currentFloor].departmentAnnotations {
-                let annotationPoint = MKMapPointForCoordinate(annotation.coordinate)
-                let distance = MKMetersBetweenMapPoints(mapCenterPoint, annotationPoint)
-                
-                if distance < closestDepartmentDistance {
-                    closestDepartmentDistance = distance
-                    closestDepartment = annotation
-                }
-            }
-            
-            if let department = closestDepartment {
-                mapView.departmentHud.setDepartment(department.title!)
+//                }
             }
         }
     }

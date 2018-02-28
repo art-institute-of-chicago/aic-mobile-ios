@@ -208,6 +208,10 @@ struct Common {
 			return 20
 		}
 		
+		static var cardMinimizedPositionY: CGFloat {
+			return UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.cardMinimizedContentHeight
+		}
+		
 		static var cardContentHeight: CGFloat {
 			return UIScreen.main.bounds.height - cardFullscreenPositionY - Common.Layout.tabBarHeight
 		}
@@ -276,7 +280,7 @@ struct Common {
                                                         cancelButtonTitle: nil
         )
         
-        static let leavingTour = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageListenIn"),
+		static let leavingTour = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageTours"),
                                                  title: "Message Leaving Tour Title",
                                                  message: "Message Leaving Tour Text",
                                                  actionButtonTitle: "Message Leaving Tour Action Button Title",

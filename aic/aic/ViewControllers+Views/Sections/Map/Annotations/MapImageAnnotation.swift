@@ -25,6 +25,13 @@ class MapImageAnnotation: NSObject, MKAnnotation {
 			}
 		}
     }
+	
+	init(coordinate: CLLocationCoordinate2D, image: UIImage, identifier: String) {
+		self.coordinate = coordinate
+		self.identifier = identifier
+		self.image = image
+		super.init()
+	}
     
 }
 

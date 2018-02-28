@@ -12,6 +12,8 @@ import UIKit
     @objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)
 	@objc optional func cardWillShowFullscreen(cardVC: CardNavigationController)
 	@objc optional func cardDidShowMiniplayer(cardVC: CardNavigationController)
+	@objc optional func cardWillHide(cardVC: CardNavigationController)
+	@objc optional func cardShouldHide(cardVC: CardNavigationController) -> Bool
     @objc optional func cardDidHide(cardVC: CardNavigationController)
 }
 
@@ -36,13 +38,14 @@ class CardNavigationController : UINavigationController {
     let cardPanGesture: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "cardDownArrow"))
+	let closeButton: UIButton = UIButton()
     
     private (set) var downArrowTopMargin: CGFloat = 11.0
     private (set) var contentTopMargin: CGFloat = 30
     
     private let positionForState: [State : CGFloat] = [
         .hidden : UIScreen.main.bounds.height - Common.Layout.tabBarHeight,
-        .minimized : UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.cardMinimizedContentHeight,
+        .minimized : Common.Layout.cardMinimizedPositionY,
         .mini_player : UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.miniAudioPlayerHeight,
         .fullscreen : Common.Layout.cardFullscreenPositionY
     ]
@@ -63,12 +66,23 @@ class CardNavigationController : UINavigationController {
         
         // Add subviews
         self.view.addSubview(downArrowImageView)
+		self.view.addSubview(closeButton)
         
         // Arrow constraints
         downArrowImageView.autoSetDimensions(to: downArrowImageView.image!.size)
         downArrowImageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: downArrowTopMargin)
         downArrowImageView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
-        
+		
+		// Close Button
+		closeButton.setImage(#imageLiteral(resourceName: "closeCard"), for: .normal)
+		closeButton.imageEdgeInsets = UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 11)
+		closeButton.autoSetDimensions(to: CGSize(width: 37, height: 37))
+		closeButton.autoPinEdge(.top, to: .top, of: self.view)
+		closeButton.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		closeButton.addTarget(self, action: #selector(closeButtonPressed(button:)), for: .touchUpInside)
+		closeButton.isEnabled = false
+		closeButton.isHidden = true
+		
         // Root view controller
         rootVC.view.backgroundColor = .clear
         self.pushViewController(rootVC, animated: false)
@@ -107,7 +121,7 @@ class CardNavigationController : UINavigationController {
     
     func showFullscreen() {
         cardWillShowFullscreen()
-		self.cardDelegate?.cardWillShowFullscreen?(cardVC: self)
+		setCloseButtonEnabled(enabled: false)
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.fullscreen]!)
             self.view.layer.cornerRadius = 10
@@ -115,10 +129,12 @@ class CardNavigationController : UINavigationController {
             self.currentState = .fullscreen
             self.cardDidShowFullscreen()
         })
+		self.cardDelegate?.cardWillShowFullscreen?(cardVC: self)
     }
     
     func showMinimized() {
         cardWillShowMinimized()
+		setCloseButtonEnabled(enabled: true)
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.minimized]!)
             self.view.layer.cornerRadius = 10
@@ -130,6 +146,7 @@ class CardNavigationController : UINavigationController {
     
     func showMiniPlayer() {
         cardWillShowMiniPlayer()
+		setCloseButtonEnabled(enabled: false)
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.mini_player]!)
             self.view.layer.cornerRadius = 0
@@ -152,6 +169,7 @@ class CardNavigationController : UINavigationController {
 				self.cardDelegate?.cardDidHide?(cardVC: self)
 			}
         })
+		self.cardDelegate?.cardWillHide?(cardVC: self)
     }
     
     // MARK: Show/Hide Animation Callbacks
@@ -171,6 +189,29 @@ class CardNavigationController : UINavigationController {
     func cardWillHide() {}
     
     func cardDidHide() {}
+	
+	private func setCloseButtonEnabled(enabled: Bool) {
+		cardPanGesture.isEnabled = !enabled
+		downArrowImageView.isHidden = enabled
+		closeButton.isEnabled = enabled
+		closeButton.isHidden = !enabled
+	}
+	
+	@objc private func closeButtonPressed(button: UIButton) {
+		if let delegate = self.cardDelegate {
+			if let cardShouldHide = delegate.cardShouldHide?(cardVC: self) {
+				if cardShouldHide {
+					hide()
+				}
+			}
+			else {
+				hide()
+			}
+		}
+		else {
+			hide()
+		}
+	}
 }
 
 // MARK: Gesture Handlers

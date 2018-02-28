@@ -206,7 +206,7 @@ class LoadingViewController: UIViewController {
 			self.videoView.alpha = 0.0
 			self.buildingImageView.alpha = 1.0
 		}, completion: { (completed1) in
-			UIView.animate(withDuration: 0.4, delay: 0.2, options: .curveEaseIn, animations: {
+			UIView.animate(withDuration: 0.8, delay: 0.2, options: .curveEaseInOut, animations: {
 				self.buildingImageTopMargin!.constant = 0.0
 				self.view.layoutIfNeeded()
 			}, completion: { (completed2) in

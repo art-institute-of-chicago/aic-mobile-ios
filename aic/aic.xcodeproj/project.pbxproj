@@ -97,7 +97,6 @@
 		294C0B5F201A76F700F2ABB1 /* VisibleMapRegionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B49201A76F700F2ABB1 /* VisibleMapRegionDelegate.swift */; };
 		294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B4A201A76F700F2ABB1 /* CoordinateConverter.swift */; };
 		294C0B61201A76F700F2ABB1 /* MKMapRectRotated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B4B201A76F700F2ABB1 /* MKMapRectRotated.swift */; };
-		294C0B67201A770E00F2ABB1 /* MapDepartmentHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B62201A770C00F2ABB1 /* MapDepartmentHUDView.swift */; };
 		294C0B68201A770E00F2ABB1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B63201A770D00F2ABB1 /* MapViewController.swift */; };
 		294C0B69201A770E00F2ABB1 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C0B64201A770D00F2ABB1 /* MapView.swift */; };
 		295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */; };
@@ -121,7 +120,7 @@
 		29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BCF200D870C003B6DB5 /* EventTableViewController.swift */; };
 		29824BD2200D8779003B6DB5 /* ArtworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BD1200D8779003B6DB5 /* ArtworkTableViewController.swift */; };
 		2984611C203A045C001E5378 /* MapArtworkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2984611B203A045C001E5378 /* MapArtworkContentView.swift */; };
-		2984611E203A046C001E5378 /* MapRestroomsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2984611D203A046C001E5378 /* MapRestroomsContentView.swift */; };
+		2984611E203A046C001E5378 /* MapTextContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2984611D203A046C001E5378 /* MapTextContentView.swift */; };
 		29846120203C6D5C001E5378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2984611F203C6D5C001E5378 /* Assets.xcassets */; };
 		29846122203E3B0E001E5378 /* NoResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29846121203E3B0E001E5378 /* NoResultsCell.swift */; };
 		29846124203E3B19001E5378 /* NoResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29846123203E3B19001E5378 /* NoResultsCell.xib */; };
@@ -392,7 +391,6 @@
 		294C0B49201A76F700F2ABB1 /* VisibleMapRegionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisibleMapRegionDelegate.swift; sourceTree = "<group>"; };
 		294C0B4A201A76F700F2ABB1 /* CoordinateConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateConverter.swift; sourceTree = "<group>"; };
 		294C0B4B201A76F700F2ABB1 /* MKMapRectRotated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKMapRectRotated.swift; sourceTree = "<group>"; };
-		294C0B62201A770C00F2ABB1 /* MapDepartmentHUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDepartmentHUDView.swift; sourceTree = "<group>"; };
 		294C0B63201A770D00F2ABB1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		294C0B64201A770D00F2ABB1 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionNavigationBar.swift; sourceTree = "<group>"; };
@@ -420,7 +418,7 @@
 		29824BCF200D870C003B6DB5 /* EventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		29824BD1200D8779003B6DB5 /* ArtworkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkTableViewController.swift; sourceTree = "<group>"; };
 		2984611B203A045C001E5378 /* MapArtworkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapArtworkContentView.swift; sourceTree = "<group>"; };
-		2984611D203A046C001E5378 /* MapRestroomsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestroomsContentView.swift; sourceTree = "<group>"; };
+		2984611D203A046C001E5378 /* MapTextContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextContentView.swift; sourceTree = "<group>"; };
 		2984611F203C6D5C001E5378 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29846121203E3B0E001E5378 /* NoResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsCell.swift; sourceTree = "<group>"; };
 		29846123203E3B19001E5378 /* NoResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultsCell.xib; sourceTree = "<group>"; };
@@ -887,7 +885,7 @@
 			isa = PBXGroup;
 			children = (
 				2984611B203A045C001E5378 /* MapArtworkContentView.swift */,
-				2984611D203A046C001E5378 /* MapRestroomsContentView.swift */,
+				2984611D203A046C001E5378 /* MapTextContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -980,7 +978,6 @@
 				294C0B40201A76F700F2ABB1 /* FloorSelector */,
 				294C0B44201A76F700F2ABB1 /* Footprint */,
 				29A67F882028F74F003C630A /* Map Card */,
-				294C0B62201A770C00F2ABB1 /* MapDepartmentHUDView.swift */,
 				294C0B64201A770D00F2ABB1 /* MapView.swift */,
 				294C0B63201A770D00F2ABB1 /* MapViewController.swift */,
 				294C0B24201A756900F2ABB1 /* MapNavigationController.swift */,
@@ -1816,7 +1813,6 @@
 				29A67F8C20290389003C630A /* TourStopPageViewController.swift in Sources */,
 				E421783C1CC6E1F300815B41 /* String+AIC.swift in Sources */,
 				E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */,
-				294C0B67201A770E00F2ABB1 /* MapDepartmentHUDView.swift in Sources */,
 				E4F519C71C87B2F200226188 /* Helpers.swift in Sources */,
 				E49BAB8A1CB1968900AE0678 /* ToursSectionStopView.swift in Sources */,
 				E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */,
@@ -1945,7 +1941,7 @@
 				E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */,
 				29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */,
 				2994891F1FA3849C00943197 /* AICGeneralInfoModel.swift in Sources */,
-				2984611E203A046C001E5378 /* MapRestroomsContentView.swift in Sources */,
+				2984611E203A046C001E5378 /* MapTextContentView.swift in Sources */,
 				294338541FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
