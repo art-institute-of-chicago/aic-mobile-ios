@@ -161,21 +161,21 @@ class AppDataManager {
 				"legacy_image_desktop_url",
 				"gallery_id",
 				"web_url",
-				"start_at",
-				"end_at"
+				"aic_start_at",
+				"aic_end_at"
 			],
-			"sort": ["start_at", "end_at"],
+			"sort": ["aic_start_at", "aic_end_at"],
 			"query": [
 				"bool": [
 					"must": [
 						[
 							"range": [
-								"start_at": ["lte": "now+2w"]
+								"aic_start_at": ["lte": "now"]
 							]
 						],
 						[
 							"range": [
-								"end_at": ["gte": "now"]
+								"aic_end_at": ["gte": "now"]
 							]
 						]
 					],

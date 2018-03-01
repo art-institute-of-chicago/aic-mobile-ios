@@ -34,6 +34,7 @@ class MapView: MKMapView {
     
     // Rotate the map so that the Michigan Ave entrance faces south
     let defaultHeading = 90.0
+	let defaultZoom = 400.0
     let defaultPitch:CGFloat = 0.0
     
     private (set) var previousAltitude:Double = 0.0
@@ -126,7 +127,7 @@ class MapView: MKMapView {
     func showFullMap(useDefaultHeading: Bool = false, animated: Bool = true) {
         if let overlay = floorplanOverlay {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
-            zoomIn(onCenterCoordinate: overlay.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedOut.rawValue, withAnimation: animated, heading: heading)
+            zoomIn(onCenterCoordinate: overlay.coordinate, altitude: defaultZoom, withAnimation: animated, heading: heading)
         }
     }
     

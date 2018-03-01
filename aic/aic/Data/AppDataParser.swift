@@ -88,8 +88,8 @@ class AppDataParser {
 		let webURL = try getURL(fromJSON: exhibitionJSON, forKey: "web_url", optional: true)
         
 		// Get date exibition ends
-		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "start_at")
-		let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "end_at")
+		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
+		let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_end_at")
 		
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "en_US")
@@ -759,10 +759,10 @@ class AppDataParser {
 						let departmentAnnotation = try parse(departmentAnnotationJSON: annotationJSON)
 						floorDepartmentAnnotations[floorNumber!]!.append(departmentAnnotation)
 					}
-					else if type == "Image" {
-						let imageAnnotation = try parse(imageAnnotationJSON: annotationJSON)
-						imageAnnotations.append(imageAnnotation)
-					}
+//					else if type == "Image" {
+//						let imageAnnotation = try parse(imageAnnotationJSON: annotationJSON)
+//						imageAnnotations.append(imageAnnotation)
+//					}
 				}
 				catch {
 					if Common.Testing.printDataErrors {

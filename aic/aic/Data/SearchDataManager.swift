@@ -145,8 +145,8 @@ class SearchDataManager : NSObject {
 				"legacy_image_desktop_url",
 				"gallery_id",
 				"web_url",
-				"start_at",
-				"end_at"
+				"aic_start_at",
+				"aic_end_at"
 			],
 			"q": searchText,
 			"query": [
@@ -155,7 +155,7 @@ class SearchDataManager : NSObject {
 						[
 							"range": [
 								"aic_start_at": [
-									"lte": "now+1y"
+									"lte": "now"
 								]
 							]
 						],
