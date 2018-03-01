@@ -19,6 +19,7 @@ class MapViewController: UIViewController {
     enum Mode {
         case allInformation
 		case artwork
+		case exhibition
 		case restrooms
 		case giftshop
         case location
@@ -189,6 +190,24 @@ class MapViewController: UIViewController {
 		
 		// Select the annotation (which eventually updates it's view)
 		mapView.selectAnnotation(artworkAnnotation, animated: true)
+	}
+	
+	func showExhibition(exhibition: AICExhibitionModel) {
+		mode = .exhibition
+		
+		// Add location annotation the floor model
+		let floor = mapModel.floors[exhibition.location!.floor]
+		let exhibitionAnnotation = MapExhibitionAnnotation(exhibition: exhibition)
+		
+		setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
+		
+		mapView.addAnnotation(exhibitionAnnotation)
+		
+		// Zoom in on the item
+		mapView.zoomIn(onCenterCoordinate: exhibition.location!.coordinate)
+		
+		// Select the annotation (which eventually updates it's view)
+		mapView.selectAnnotation(exhibitionAnnotation, animated: true)
 	}
 	
 	func showRestrooms() {
@@ -420,6 +439,10 @@ class MapViewController: UIViewController {
 			updateUserLocationAnnotationView()
 			break
 			
+		case .exhibition:
+			updateExhibitionAnnotationView()
+			updateUserLocationAnnotationView()
+			
 		case .restrooms:
 			updateRestroomAnnotations()
 			updateRestroomAnnotationViews()
@@ -531,6 +554,20 @@ class MapViewController: UIViewController {
     }
 	
 	private func updateArtworkAnnotationView() {
+		for floor in mapModel.floors {
+			for annotation in floor.objectAnnotations {
+				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
+					if floor.floorNumber == currentFloor {
+						view.alpha = 1.0
+					} else {
+						view.alpha = 0.5
+					}
+				}
+			}
+		}
+	}
+	
+	private func updateExhibitionAnnotationView() {
 		for floor in mapModel.floors {
 			for annotation in floor.objectAnnotations {
 				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
@@ -741,6 +778,17 @@ extension MapViewController : MKMapViewDelegate {
             view.setAnnotation(forObjectAnnotation: objectAnnotation);
             return view
         }
+		
+		// Object annotations
+		if let exhibitionAnnotation = annotation as? MapExhibitionAnnotation {
+			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapExhibitionAnnotationView.reuseIdentifier) as? MapExhibitionAnnotationView else {
+				let view = MapExhibitionAnnotationView(annotation: exhibitionAnnotation, reuseIdentifier: MapExhibitionAnnotationView.reuseIdentifier)
+				view.exhibitionModel = exhibitionAnnotation.exhibitionModel
+				return view
+			}
+			view.exhibitionModel = exhibitionAnnotation.exhibitionModel
+			return view
+		}
         
         // Location (News Item) annotations
         if let locationAnnotation = annotation as? MapLocationAnnotation {

@@ -39,7 +39,6 @@ class SectionsViewController : UIViewController {
     
     // Messages
 	fileprivate var headphonesMessageView: MessageViewController? = nil
-	fileprivate var leaveCurrentTourMessageView: MessageViewController? = nil
 	
     fileprivate var requestedTour: AICTourModel? = nil
     
@@ -197,6 +196,14 @@ class SectionsViewController : UIViewController {
 		sectionTabBarController.selectedIndex = 2
 	}
 	
+	func showExhibitionOnMap(exhibition: AICExhibitionModel) {
+		if currentViewController != mapVC {
+			setSelectedSection(sectionVC: mapVC)
+		}
+		mapVC.showExhibition(exhibition: exhibition)
+		sectionTabBarController.selectedIndex = 2
+	}
+	
 	func showRestroomsOnMap() {
 		if currentViewController != mapVC {
 			setSelectedSection(sectionVC: mapVC)
@@ -293,21 +300,6 @@ class SectionsViewController : UIViewController {
 	
     // MARK: Messages
     
-    fileprivate func showLeaveTourMessage() {
-		let leaveCurrentTourMessageView = UIView()
-//        leaveCurrentTourMessageView.delegate = self
-		
-        view.addSubview(leaveCurrentTourMessageView)
-//        self.leaveCurrentTourMessageView = leaveCurrentTourMessageView
-    }
-    
-    fileprivate func hideLeaveTourMessage() {
-        if let leaveCurrentTourMessageView = leaveCurrentTourMessageView {
-            //leaveCurrentTourMessageView.removeFromSuperview()
-//            self.leaveCurrentTourMessageView = nil
-        }
-    }
-    
     fileprivate func showHeadphonesMessage() {
         let defaults = UserDefaults.standard
         let showHeadphonesMessage = defaults.bool(forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
@@ -377,6 +369,7 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 	
 	func showExhibitionCard(exhibition: AICExhibitionModel) {
 		let exhibitionTableVC = ExhibitionTableViewController(exhibition: exhibition)
+		exhibitionTableVC.exhibitionTableDelegate = self
 		showContentCard(ContentCardNavigationController(tableVC: exhibitionTableVC))
 	}
 	
@@ -457,41 +450,27 @@ extension SectionsViewController : MapNavigationControllerDelegate {
 // MARK: Message Delegate
 extension SectionsViewController : MessageViewControllerDelegate {
     func messageViewActionSelected(messageVC: MessageViewController) {
-        if messageVC.view == leaveCurrentTourMessageView {
-            hideLeaveTourMessage()
-            
-            if let requestedTour = self.requestedTour {
-                self.requestedTour = nil
-//                toursVC.removeCurrentTour()
-                //startTour(tour: requestedTour)
-            } else {
-//                removeCurrentTour()
-            }
-        }
-            
-        /*else if messageView == enableLocationMessageView {
-            hideEnableLocationMessage()
-            //startLocationManager()
-        }*/
-        
-        else if messageVC == headphonesMessageView {
-            hideHeadphonesMessage()
-        }
-        
-        else {
-            print("Unhandled message view action")
-        }
+		if messageVC == headphonesMessageView {
+			hideHeadphonesMessage()
+		}
+//        if messageVC.view == leaveCurrentTourMessageView {
+//            hideLeaveTourMessage()
+//
+//            if let requestedTour = self.requestedTour {
+//                self.requestedTour = nil
+////                toursVC.removeCurrentTour()
+//                //startTour(tour: requestedTour)
+//            } else {
+////                removeCurrentTour()
+//            }
+//        }
     }
     
     func messageViewCancelSelected(messageVC: MessageViewController) {
-        if messageVC.view == leaveCurrentTourMessageView {
-            hideLeaveTourMessage()
-            requestedTour = nil
-        }
-        
-        /*else if messageView == enableLocationMessageView {
-            hideEnableLocationMessage()
-        }*/
+//        if messageVC.view == leaveCurrentTourMessageView {
+//            hideLeaveTourMessage()
+//            requestedTour = nil
+//        }
     }
 }
 
@@ -570,6 +549,13 @@ extension SectionsViewController : ArtworkTableViewControllerDelegate {
 			searchVC.hide()
 		}
 		showArtworkOnMap(artwork: artwork)
+	}
+}
+
+//MARK: Exhibition Content Card Delegate
+extension SectionsViewController : ExhibitionTableViewControllerDelegate {
+	func exhibitionContentCardDidPressShowOnMap(exhibition: AICExhibitionModel) {
+		showExhibitionOnMap(exhibition: exhibition)
 	}
 }
 

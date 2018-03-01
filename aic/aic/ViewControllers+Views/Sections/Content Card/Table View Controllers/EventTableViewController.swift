@@ -36,6 +36,12 @@ class EventTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "EventContentCell", bundle: Bundle.main), forCellReuseIdentifier: EventContentCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
 	}
+	
+	// MARK: Button Events
+	
+	@objc func buyTicketsButtonPressed(button: UIButton) {
+		UIApplication.shared.open(eventModel.eventUrl!, options: [:], completionHandler: nil)
+	}
 }
 
 // MARK: Data Source
@@ -53,7 +59,7 @@ extension EventTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: EventContentCell.reuseIdentifier, for: indexPath) as! EventContentCell
 			cell.eventModel = eventModel
-			cell.delegate = self
+			cell.buyTicketsButton.addTarget(self, action: #selector(buyTicketsButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}
 		return UITableViewCell()
@@ -87,12 +93,6 @@ extension EventTableViewController {
 extension EventTableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
-	}
-}
-
-extension EventTableViewController : EventContentCellDelegate {
-	func eventBuyTicketsButtonPressed(url: URL) {
-		UIApplication.shared.open(url, options: [:], completionHandler: nil)
 	}
 }
 

@@ -40,7 +40,7 @@ extension UIColor {
 	
 	static let aicFloorColor: UIColor = UIColor(white: 1.0, alpha: 1.0)
 	
-	static let aicFloorUnselectedColor: UIColor = UIColor(white: 1.0, alpha: 0.5)
+	static let aicFloorUnselectedColor: UIColor = UIColor(white: 1.0, alpha: 0.7)
 
 	static let aicBluedotColor: UIColor = UIColor(red: 6.0 / 255.0, green: 50.0 / 255.0, blue: 88.0 / 255.0, alpha: 1.0)
 	

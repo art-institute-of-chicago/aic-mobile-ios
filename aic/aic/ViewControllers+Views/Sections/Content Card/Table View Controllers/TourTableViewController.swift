@@ -48,6 +48,12 @@ class TourTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
 	}
+	
+	// MARK: Button Events
+	
+	@objc func tourStartButtonPressed(button: UIButton) {
+		self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: nil)
+	}
 }
 
 // MARK: Data Source
@@ -128,10 +134,6 @@ extension TourTableViewController {
 				self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: stopIndex)
 			}
 		}
-	}
-	
-	@objc func tourStartButtonPressed(button: UIButton) {
-		self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: nil)
 	}
 }
 

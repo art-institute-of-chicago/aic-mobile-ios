@@ -44,7 +44,7 @@ class ArtworkTableViewController : UITableViewController {
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
 	}
 	
-	// Button Events
+	// MARK: Button Events
 	
 	@objc func artworkPlayButtonPressed(button: UIButton) {
 		if let artworkWithAudio = artworkModel.audioObject {

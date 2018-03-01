@@ -758,13 +758,13 @@
 		294C0B32201A76F600F2ABB1 /* AnnotationViews */ = {
 			isa = PBXGroup;
 			children = (
+				294C0B38201A76F600F2ABB1 /* MapAnnotationView.swift */,
 				294C0B33201A76F600F2ABB1 /* MapAmenityAnnotationView.swift */,
-				294C0B34201A76F600F2ABB1 /* MapTextAnnotationView.swift */,
+				294C0B37201A76F600F2ABB1 /* MapDepartmentAnnotationView.swift */,
+				2975A056203F61250014017C /* MapExhibitionAnnotationView.swift */,
 				294C0B35201A76F600F2ABB1 /* MapLocationAnnotationView.swift */,
 				294C0B36201A76F600F2ABB1 /* MapObjectAnnotationView.swift */,
-				294C0B37201A76F600F2ABB1 /* MapDepartmentAnnotationView.swift */,
-				294C0B38201A76F600F2ABB1 /* MapAnnotationView.swift */,
-				2975A056203F61250014017C /* MapExhibitionAnnotationView.swift */,
+				294C0B34201A76F600F2ABB1 /* MapTextAnnotationView.swift */,
 			);
 			path = AnnotationViews;
 			sourceTree = "<group>";
@@ -773,12 +773,12 @@
 			isa = PBXGroup;
 			children = (
 				294C0B3A201A76F700F2ABB1 /* MapAmenityAnnotation.swift */,
-				294C0B3B201A76F700F2ABB1 /* MapObjectAnnotation.swift */,
-				294C0B3C201A76F700F2ABB1 /* MapLocationAnnotation.swift */,
-				294C0B3D201A76F700F2ABB1 /* MapTextAnnotation.swift */,
 				294C0B3E201A76F700F2ABB1 /* MapDepartmentAnnotation.swift */,
-				294C0B3F201A76F700F2ABB1 /* MapImageAnnotation.swift */,
 				2975A054203F61150014017C /* MapExhibitionAnnotation.swift */,
+				294C0B3F201A76F700F2ABB1 /* MapImageAnnotation.swift */,
+				294C0B3C201A76F700F2ABB1 /* MapLocationAnnotation.swift */,
+				294C0B3B201A76F700F2ABB1 /* MapObjectAnnotation.swift */,
+				294C0B3D201A76F700F2ABB1 /* MapTextAnnotation.swift */,
 			);
 			path = Annotations;
 			sourceTree = "<group>";

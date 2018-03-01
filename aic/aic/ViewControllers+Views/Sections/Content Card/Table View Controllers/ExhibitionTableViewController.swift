@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol ExhibitionTableViewControllerDelegate : class {
+	func exhibitionContentCardDidPressShowOnMap(exhibition: AICExhibitionModel)
+}
+
 class ExhibitionTableViewController : UITableViewController {
 	let exhibitionModel: AICExhibitionModel
+	
+	weak var exhibitionTableDelegate: ExhibitionTableViewControllerDelegate? = nil
 	
 	init(exhibition: AICExhibitionModel) {
 		exhibitionModel = exhibition
@@ -36,6 +42,18 @@ class ExhibitionTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "ExhibitionContentCell", bundle: Bundle.main), forCellReuseIdentifier: ExhibitionContentCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
 	}
+	
+	// MARK: Button Events
+	
+	@objc func exhibitionShowOnMapButtonPressed(button: UIButton) {
+		self.exhibitionTableDelegate?.exhibitionContentCardDidPressShowOnMap(exhibition: exhibitionModel)
+	}
+	
+	@objc func exhibitionBuyTicketsButtonPressed(button: UIButton) {
+		if let url = URL(string: AppDataManager.sharedInstance.app.dataSettings[.ticketsUrl]!) {
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+		}
+	}
 }
 
 // MARK: Data Source
@@ -52,7 +70,8 @@ extension ExhibitionTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ExhibitionContentCell.reuseIdentifier, for: indexPath) as! ExhibitionContentCell
 			cell.exhibitionModel = exhibitionModel
-			cell.delegate = self
+			cell.buyTicketsButton.addTarget(self, action: #selector(exhibitionBuyTicketsButtonPressed(button:)), for: .touchUpInside)
+			cell.showOnMapButton.addTarget(self, action: #selector(exhibitionShowOnMapButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}
 		return UITableViewCell()
@@ -69,13 +88,6 @@ extension ExhibitionTableViewController {
 	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 80
-	}
-}
-
-// MARK: Interaction
-extension ExhibitionTableViewController : ExhibitionContentCellDelegate {
-	func exhibitionBuyTicketsButtonPressed(url: URL) {
-		UIApplication.shared.open(url, options: [:], completionHandler: nil)
 	}
 }
 

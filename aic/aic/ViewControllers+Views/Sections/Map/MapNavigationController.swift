@@ -23,6 +23,7 @@ class MapNavigationController : SectionNavigationController {
 	var tourModel: AICTourModel? = nil
 	var tourStopIndex: Int? = nil
 	var artworkModel: AICSearchedArtworkModel? = nil
+	var exhibitionModel: AICExhibitionModel? = nil
 	
 	let mapVC: MapViewController = MapViewController()
 	var mapContentCardVC: MapContentCardNavigationController? = nil
@@ -101,6 +102,10 @@ class MapNavigationController : SectionNavigationController {
 		else if currentMode == .artwork {
 			showArtwork(artwork: artworkModel!)
 			
+			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
+		}
+		else if currentMode == .exhibition {
+			showExhibition(exhibition: exhibitionModel!)
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 		}
 		else if currentMode == .giftshop {
@@ -240,6 +245,8 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC = nil
 		tourModel = nil
 		tourStopPageVC = nil
+		artworkModel = nil
+		exhibitionModel = nil
 	}
 	
 	func showTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
@@ -327,6 +334,41 @@ class MapNavigationController : SectionNavigationController {
 			// Set map state
 			mapVC.showArtwork(artwork: artwork)
 		
+			showMapContentCard()
+		}
+	}
+	
+	func showExhibition(exhibition: AICExhibitionModel) {
+		currentMode = .exhibition
+		exhibitionModel = exhibition
+		
+		// if we are on the Map tab, open tour immediately
+		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
+		if isMapTabOpen {
+			if sectionNavigationBar.currentState != .hidden {
+				sectionNavigationBar.hide()
+			}
+			
+			// Crate Content Card
+			if mapContentCardVC != nil {
+				mapContentCardVC!.view.removeFromSuperview()
+			}
+			let exhibitionVC = UIViewController()
+			mapContentCardVC = MapContentCardNavigationController(contentVC: exhibitionVC)
+			mapContentCardVC!.titleLabel.text = exhibitionModel!.title
+			mapContentCardVC!.cardDelegate = self
+			
+			// Add card to view
+			mapContentCardVC!.willMove(toParentViewController: self)
+			self.view.addSubview(mapContentCardVC!.view)
+			mapContentCardVC!.didMove(toParentViewController: self)
+			
+			// in case the tour card is open, to tell the map to animate the floor selector
+			self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+			
+			// Set map state
+			mapVC.showExhibition(exhibition: exhibition)
+			
 			showMapContentCard()
 		}
 	}

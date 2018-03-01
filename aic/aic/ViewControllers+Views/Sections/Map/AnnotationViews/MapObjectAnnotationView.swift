@@ -14,7 +14,7 @@ protocol MapObjectAnnotationViewDelegate : class {
 
 class MapObjectAnnotationView: MapAnnotationView {
     
-    class var reuseIdentifier:String {
+    class var reuseIdentifier: String {
         return "mapObject"
     }
     

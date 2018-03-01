@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol EventContentCellDelegate : class {
-	func eventBuyTicketsButtonPressed(url: URL)
-}
-
 class EventContentCell : UITableViewCell {
 	static let reuseIdentifier = "eventContentCell"
 	
@@ -24,8 +20,6 @@ class EventContentCell : UITableViewCell {
 	
 	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
 	let descriptionVerticalSpacingMin: CGFloat = 32
-	
-	weak var delegate: EventContentCellDelegate? = nil
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -64,15 +58,10 @@ class EventContentCell : UITableViewCell {
 			}
 			else {
 				buyTicketsButton.setTitle(eventModel.buttonText, for: .normal)
-				buyTicketsButton.addTarget(self, action: #selector(buyTicketsButtonPressed(button:)), for: .touchUpInside)
 			}
 			
 			self.setNeedsLayout()
 			self.layoutIfNeeded()
 		}
-	}
-	
-	@objc func buyTicketsButtonPressed(button: UIButton) {
-		self.delegate?.eventBuyTicketsButtonPressed(url: eventModel!.eventUrl!)
 	}
 }

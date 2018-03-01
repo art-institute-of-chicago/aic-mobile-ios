@@ -9,10 +9,6 @@
 import UIKit
 import Kingfisher
 
-protocol ExhibitionContentCellDelegate : class {
-	func exhibitionBuyTicketsButtonPressed(url: URL)
-}
-
 class ExhibitionContentCell : UITableViewCell {
 	static let reuseIdentifier = "exhibitionContentCell"
 	
@@ -26,8 +22,6 @@ class ExhibitionContentCell : UITableViewCell {
 	@IBOutlet weak var buyTicketsButtonHorizontalOffset: NSLayoutConstraint!
 	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
 	let descriptionVerticalSpacingMin: CGFloat = 32
-	
-	weak var delegate: ExhibitionContentCellDelegate? = nil
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -60,36 +54,14 @@ class ExhibitionContentCell : UITableViewCell {
 			descriptionLabel.textColor = .white
 			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
 			
-			var hasLocation = exhibitionModel.location != nil
-			var hasWebUrl =  exhibitionModel.webUrl != nil
-			
-			let now = Date()
-			let isOnView = exhibitionModel.startDate < now && exhibitionModel.endDate > now
-			if !isOnView {
-				hasWebUrl = false
-				hasLocation = false
-			}
-			
-			if !hasLocation {
+			if exhibitionModel.location == nil {
 				showOnMapButton.isHidden = true
 				showOnMapButton.isEnabled = false
 				buyTicketsButtonHorizontalOffset.constant = 0
 			}
 			
-			buyTicketsButton.addTarget(self, action: #selector(buyTicketsButtonPressed(button:)), for: .touchUpInside)
-			
-			if !hasWebUrl && !hasLocation {
-				descriptionToImageVerticalSpacing.constant = descriptionVerticalSpacingMin
-			}
-			
 			self.setNeedsLayout()
 			self.layoutIfNeeded()
-		}
-	}
-	
-	@objc func buyTicketsButtonPressed(button: UIButton) {
-		if let url = URL(string: AppDataManager.sharedInstance.app.dataSettings[.ticketsUrl]!) {
-			self.delegate?.exhibitionBuyTicketsButtonPressed(url: url)
 		}
 	}
 }
