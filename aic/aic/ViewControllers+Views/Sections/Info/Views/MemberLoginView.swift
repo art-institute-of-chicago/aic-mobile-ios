@@ -13,7 +13,7 @@ class MemberLoginView : UIView {
 	let memberIDTextField: UITextField = UITextField()
 	let memberZipCodeTitleLabel: UILabel = UILabel()
 	let memberZipCodeTextField: UITextField = UITextField()
-	let loginButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
+	let loginButton: AICButton = AICButton(isSmall: false)
 	
 	init() {
 		super.init(frame: CGRect.zero)
@@ -48,6 +48,7 @@ class MemberLoginView : UIView {
 		memberZipCodeTextField.leftView = UIView(frame: CGRect(x: 0, y:0, width: 10, height: 40))
 		memberZipCodeTextField.keyboardType = .numbersAndPunctuation
 		
+		loginButton.setColorMode(colorMode: AICButton.orangeMode)
 		loginButton.setTitle("Sign In", for: .normal)
 		
 		// Add subviews

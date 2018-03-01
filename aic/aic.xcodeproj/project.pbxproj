@@ -107,7 +107,6 @@
 		295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */; };
 		2968F67920125B5700638153 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67820125B5700638153 /* MessageViewController.swift */; };
 		2968F67C2012612E00638153 /* LanguageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */; };
-		2968F67E201272EA00638153 /* AICTransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F67D201272EA00638153 /* AICTransparentButton.swift */; };
 		2968F68B2012942800638153 /* LanguageSettings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F68D2012942800638153 /* LanguageSettings.strings */; };
 		2968F6932012B33000638153 /* TabMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2968F6952012B33000638153 /* TabMenu.strings */; };
 		296D559520239F3E00442A60 /* CardNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D559420239F3E00442A60 /* CardNavigationController.swift */; };
@@ -401,7 +400,6 @@
 		295AC09A1FE02BF7009A0FAF /* AICEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICEventModel.swift; sourceTree = "<group>"; };
 		2968F67820125B5700638153 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		2968F67B2012612E00638153 /* LanguageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionViewController.swift; sourceTree = "<group>"; };
-		2968F67D201272EA00638153 /* AICTransparentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICTransparentButton.swift; sourceTree = "<group>"; };
 		2968F68C2012942800638153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LanguageSettings.strings; sourceTree = "<group>"; };
 		2968F68F2012944A00638153 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LanguageSettings.strings; sourceTree = "<group>"; };
 		2968F6902012945000638153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LanguageSettings.strings"; sourceTree = "<group>"; };
@@ -1124,7 +1122,6 @@
 				E4F519C61C87B2F200226188 /* Helpers.swift */,
 				E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */,
 				E42677E21CC558060046BB27 /* AICButton.swift */,
-				2968F67D201272EA00638153 /* AICTransparentButton.swift */,
 				E4F518FA1D2586B0004BFB44 /* AICImageView.swift */,
 				29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
@@ -1789,7 +1786,6 @@
 				291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */,
 				294C0B5E201A76F700F2ABB1 /* FloorplanOverlay.swift in Sources */,
 				29412AEE1FCE1F7A005A7172 /* HomeExhibitionCell.swift in Sources */,
-				2968F67E201272EA00638153 /* AICTransparentButton.swift in Sources */,
 				294C0B52201A76F700F2ABB1 /* MapAmenityAnnotation.swift in Sources */,
 				E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */,
 				290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */,

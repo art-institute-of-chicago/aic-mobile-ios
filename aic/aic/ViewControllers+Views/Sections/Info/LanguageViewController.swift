@@ -11,9 +11,9 @@ import Localize_Swift
 
 class LanguageViewController : UIViewController {
 	let pageView: InfoPageView = InfoPageView()
-	let englishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
-	let spanishButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
-	let chineseButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
+	let englishButton: AICButton = AICButton(isSmall: false)
+	let spanishButton: AICButton = AICButton(isSmall: false)
+	let chineseButton: AICButton = AICButton(isSmall: false)
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -34,12 +34,15 @@ class LanguageViewController : UIViewController {
 		
 		self.view.backgroundColor = .white
 		
+		englishButton.setColorMode(colorMode: AICButton.whiteOrangeMode)
 		englishButton.setTitle("English", for: .normal)
 		englishButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
 		
+		spanishButton.setColorMode(colorMode: AICButton.whiteOrangeMode)
 		spanishButton.setTitle("Español", for: .normal)
 		spanishButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
 		
+		chineseButton.setColorMode(colorMode: AICButton.whiteOrangeMode)
 		chineseButton.setTitle("中文", for: .normal)
 		chineseButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
 		
@@ -84,9 +87,18 @@ class LanguageViewController : UIViewController {
 		pageView.titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
 		pageView.textView.text = "Language Settings Text".localized(using: "LanguageSettings")
 		
-		englishButton.isHighlighted = Localize.currentLanguage() != Common.Language.english.rawValue
-		spanishButton.isHighlighted = Localize.currentLanguage() != Common.Language.spanish.rawValue
-		chineseButton.isHighlighted = Localize.currentLanguage() != Common.Language.chinese.rawValue
+		englishButton.setColorMode(colorMode: AICButton.whiteOrangeMode)
+		spanishButton.setColorMode(colorMode: AICButton.whiteOrangeMode)
+		chineseButton.setColorMode(colorMode: AICButton.whiteOrangeMode)
+		if Localize.currentLanguage() == Common.Language.english.rawValue {
+			englishButton.setColorMode(colorMode: AICButton.orangeMode)
+		}
+		else if Localize.currentLanguage() == Common.Language.spanish.rawValue {
+			spanishButton.setColorMode(colorMode: AICButton.orangeMode)
+		}
+		else if Localize.currentLanguage() == Common.Language.chinese.rawValue {
+			chineseButton.setColorMode(colorMode: AICButton.orangeMode)
+		}
 	}
 	
 	@objc func languageButtonPressed(button: UIButton) {

@@ -12,7 +12,7 @@ import Localize_Swift
 
 class LocationSettingsViewController : UIViewController {
 	let pageView: InfoPageView = InfoPageView()
-	let locationButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
+	let locationButton: AICButton = AICButton(isSmall: false)
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -33,6 +33,7 @@ class LocationSettingsViewController : UIViewController {
 		
 		self.view.backgroundColor = .white
 		
+		locationButton.setColorMode(colorMode: AICButton.orangeMode)
 		locationButton.setTitle("Location Enabled", for: .normal)
 		locationButton.addTarget(self, action: #selector(locationButtonPressed(button:)), for: .touchUpInside)
 		

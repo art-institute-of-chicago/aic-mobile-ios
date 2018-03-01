@@ -22,8 +22,8 @@ class MessageViewController : UIViewController {
 	let titleLabel = UILabel()
 	let messageLabel = UILabel()
 	let buttonsView = UIView()
-    let actionButton: AICTransparentButton = AICTransparentButton(color: .aicHomeColor, isSmall: true)
-    var cancelButton: AICTransparentButton? = nil
+    let actionButton: AICButton = AICButton(isSmall: true)
+    var cancelButton: AICButton? = nil
 	
 	let fadeInOutAnimationDuration = 0.4
 	let contentViewFadeInOutAnimationDuration = 0.4
@@ -73,8 +73,8 @@ class MessageViewController : UIViewController {
         actionButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
         
         if (messageModel.cancelButtonTitle ?? "").isEmpty == false {
-            cancelButton = AICTransparentButton(color: .aicHomeColor, isSmall: true)
-            cancelButton?.isHighlighted = true
+            cancelButton = AICButton(isSmall: true)
+            cancelButton?.setColorMode(colorMode: AICButton.transparentMode)
             cancelButton?.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
         }
 		
@@ -158,10 +158,12 @@ class MessageViewController : UIViewController {
         textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
         messageLabel.attributedText = textAttrString
         messageLabel.textAlignment = .center
-        
+		
+		actionButton.setColorMode(colorMode: AICButton.greenBlueMode)
         actionButton.setTitle(messageModel.actionButtonTitle.localized(using: "Messages"), for: .normal)
         
         if cancelButton != nil {
+			cancelButton!.setColorMode(colorMode: AICButton.transparentMode)
             cancelButton?.setTitle(messageModel.cancelButtonTitle?.localized(using: "Messages"), for: .normal)
         }
     }
@@ -171,6 +173,8 @@ class MessageViewController : UIViewController {
             self.delegate?.messageViewActionSelected(messageVC: self)
         }
         else if button == cancelButton {
+			actionButton.setColorMode(colorMode: AICButton.transparentMode)
+			cancelButton!.setColorMode(colorMode: AICButton.greenBlueMode)
             self.delegate?.messageViewCancelSelected?(messageVC: self)
         }
     }

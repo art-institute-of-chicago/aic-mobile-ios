@@ -11,7 +11,7 @@ class InfoBecomeMemberView: BaseView {
 	let joinPromptLabel = UILabel()
 	let joinTextView = LinkedTextView()
 	let accessPromptLabel = UILabel()
-	let accessButton = AICButton(color: .aicInfoColor, isSmall: false)
+	let accessButton = AICButton(isSmall: false)
 	let bottomDividerLine = UIView()
 	
 	let titleLabelHeight: CGFloat = 80
@@ -82,6 +82,7 @@ class InfoBecomeMemberView: BaseView {
 		accessPromptLabel.textColor = .aicDarkGrayColor
 		accessPromptLabel.textAlignment = NSTextAlignment.center
 		
+		accessButton.setColorMode(colorMode: AICButton.orangeMode)
 		accessButton.setTitle(Common.Info.becomeMemberAccessButtonTitle, for: .normal)
 		
 		bottomDividerLine.backgroundColor = .aicDividerLineColor

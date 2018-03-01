@@ -21,9 +21,9 @@ class LanguageSelectionViewController : UIViewController {
 	let titleLabel = UILabel()
 	let dividerLine = UIView()
 	let subtitleLabel = UILabel()
-	let englishButton: AICTransparentButton = AICTransparentButton(color: .aicHomeColor, isSmall: true)
-	let spanishButton: AICTransparentButton = AICTransparentButton(color: .aicHomeColor, isSmall: true)
-	let chineseButton: AICTransparentButton = AICTransparentButton(color: .aicHomeColor, isSmall: true)
+	let englishButton: AICButton = AICButton(isSmall: true)
+	let spanishButton: AICButton = AICButton(isSmall: true)
+	let chineseButton: AICButton = AICButton(isSmall: true)
 	
 	let fadeInOutAnimationDuration = 0.4
 	let contentViewFadeInOutAnimationDuration = 0.4
@@ -56,12 +56,15 @@ class LanguageSelectionViewController : UIViewController {
 		
 		dividerLine.backgroundColor = .aicDividerLineTransparentColor
 		
+		englishButton.setColorMode(colorMode: AICButton.transparentMode)
 		englishButton.setTitle("English", for: .normal)
 		englishButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
 		
+		spanishButton.setColorMode(colorMode: AICButton.transparentMode)
 		spanishButton.setTitle("Español", for: .normal)
 		spanishButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
 		
+		chineseButton.setColorMode(colorMode: AICButton.transparentMode)
 		chineseButton.setTitle("中文", for: .normal)
 		chineseButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
 		
@@ -113,18 +116,15 @@ class LanguageSelectionViewController : UIViewController {
 		let deviceLanguage = NSLocale.preferredLanguages.first!
 		if deviceLanguage.hasPrefix("es") {
 			Localize.setCurrentLanguage(Common.Language.spanish.rawValue)
-			englishButton.isHighlighted = true
-			chineseButton.isHighlighted = true
+			spanishButton.setColorMode(colorMode: AICButton.greenBlueMode)
 		}
 		else if deviceLanguage.hasPrefix("zh") {
 			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
-			englishButton.isHighlighted = true
-			spanishButton.isHighlighted = true
+			chineseButton.setColorMode(colorMode: AICButton.greenBlueMode)
 		}
 		else {
 			Localize.setCurrentLanguage(Common.Language.english.rawValue)
-			spanishButton.isHighlighted = true
-			chineseButton.isHighlighted = true
+			englishButton.setColorMode(colorMode: AICButton.greenBlueMode)
 		}
 		
 		updateLanguage()
@@ -159,23 +159,26 @@ class LanguageSelectionViewController : UIViewController {
 	}
 	
 	@objc func languageButtonPressed(button: UIButton) {
-		englishButton.isHighlighted = button != englishButton
-		spanishButton.isHighlighted = button != spanishButton
-		chineseButton.isHighlighted = button != chineseButton
+		englishButton.setColorMode(colorMode: AICButton.transparentMode)
+		spanishButton.setColorMode(colorMode: AICButton.transparentMode)
+		chineseButton.setColorMode(colorMode: AICButton.transparentMode)
 		
 		englishButton.isEnabled = false
 		spanishButton.isEnabled = false
 		chineseButton.isEnabled = false
 		
 		if button == englishButton {
+			englishButton.setColorMode(colorMode: AICButton.greenBlueMode)
 			Localize.setCurrentLanguage(Common.Language.english.rawValue)
 			selectedLanguage = .english
 		}
 		else if button == spanishButton {
+			spanishButton.setColorMode(colorMode: AICButton.greenBlueMode)
 			Localize.setCurrentLanguage(Common.Language.spanish.rawValue)
 			selectedLanguage = .spanish
 		}
 		else if button == chineseButton {
+			chineseButton.setColorMode(colorMode: AICButton.greenBlueMode)
 			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
 			selectedLanguage = .chinese
 		}

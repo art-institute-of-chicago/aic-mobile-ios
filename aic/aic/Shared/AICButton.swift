@@ -6,50 +6,92 @@
 import UIKit
 
 class AICButton: UIButton {
+	// Set of colors for different elements of the button
+	struct ColorSet {
+		let borderColor: UIColor
+		let backgroundColor: UIColor
+		let textColor: UIColor
+	}
+	
+	// Color sets for the button states (normal and highlighted)
+	struct ButtonColorMode {
+		let normal: ColorSet
+		let highlighted: ColorSet
+	}
+	
+	static let greenBlueMode = ButtonColorMode(
+		normal: ColorSet(borderColor: .aicButtonGreenBlueColor, backgroundColor: .aicButtonGreenBlueColor, textColor: .white),
+		highlighted: ColorSet(borderColor: .aicButtonGreenBlueColor, backgroundColor: .aicButtonGreenBlueDarkColor, textColor: .white)
+	)
+	
+	static let whiteGreenBlueMode = ButtonColorMode(
+		normal: ColorSet(borderColor: .aicButtonGreenBlueColor, backgroundColor: .white, textColor: .aicButtonGreenBlueColor),
+		highlighted: ColorSet(borderColor: .aicButtonGreenBlueColor, backgroundColor: UIColor(white: 0.95, alpha: 1.0), textColor: .aicButtonGreenBlueColor)
+	)
+	
+	static let orangeMode = ButtonColorMode(
+		normal: ColorSet(borderColor: .aicButtonOrangeColor, backgroundColor: .aicButtonOrangeColor, textColor: .white),
+		highlighted: ColorSet(borderColor: .aicButtonOrangeColor, backgroundColor: .aicButtonOrangeDarkColor, textColor: .white)
+	)
+	
+	static let whiteOrangeMode = ButtonColorMode(
+		normal: ColorSet(borderColor: .aicButtonOrangeColor, backgroundColor: .white, textColor: .aicButtonOrangeColor),
+		highlighted: ColorSet(borderColor: .aicButtonOrangeColor, backgroundColor: UIColor(white: 0.95, alpha: 1.0), textColor: .aicButtonOrangeColor)
+	)
+	
+	static let transparentMode = ButtonColorMode(
+		normal: ColorSet(borderColor: .white, backgroundColor: UIColor(white: 1, alpha: 0), textColor: .white),
+		highlighted: ColorSet(borderColor: .white, backgroundColor: UIColor(white: 216.0 / 255.0, alpha: 0.5), textColor: .white)
+	)
+	
     private let insets = UIEdgeInsetsMake(10, 10, 10, 10)
 	private let mediumSize: CGSize = CGSize(width: 190, height: 50)
 	private let smallSize: CGSize = CGSize(width: 140, height: 50)
 	private let borderWidth: CGFloat = 2.0
-	var buttonColor: UIColor = .aicHomeColor
+	private var buttonColorMode: ButtonColorMode = AICButton.greenBlueMode
     
     override var isHighlighted: Bool {
         didSet {
-            if isHighlighted {
-                backgroundColor = .white
-            } else {
-                backgroundColor = buttonColor
-            }
+			if isHighlighted {
+				backgroundColor = buttonColorMode.highlighted.backgroundColor
+				layer.borderColor = buttonColorMode.highlighted.borderColor.cgColor
+			} else {
+				backgroundColor = buttonColorMode.normal.backgroundColor
+				layer.borderColor = buttonColorMode.normal.borderColor.cgColor
+			}
         }
     }
 
-	init(color: UIColor, isSmall: Bool) {
+	init(isSmall: Bool) {
 		super.init(frame:CGRect.zero)
-		
-		setButtonColor(color: color)
 		
 		let frameSize = isSmall ? smallSize : mediumSize
 		self.autoSetDimensions(to: CGSize(width: frameSize.width - (borderWidth), height: frameSize.height - (borderWidth)))
+		setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		buttonColor = .aicHomeColor
     }
 	
-	func setButtonColor(color: UIColor) {
-		buttonColor = color
-		backgroundColor = buttonColor
+	override func awakeFromNib() {
+		setup()
+		setColorMode(colorMode: AICButton.greenBlueMode)
+	}
+	
+	private func setup() {
 		setBackgroundImage(nil, for: .normal)
 		setBackgroundImage(nil, for: .highlighted)
-		setTitleColor(.white, for: .normal)
-		setTitleColor(buttonColor, for: .highlighted)
 		titleLabel!.font = .aicButtonFont
 		layer.borderWidth = borderWidth
-		layer.borderColor = buttonColor.cgColor
 		adjustsImageWhenHighlighted = false
 	}
 	
-	override func awakeFromNib() {
-		setButtonColor(color: buttonColor)
+	func setColorMode(colorMode: ButtonColorMode) {
+		buttonColorMode = colorMode
+		setTitleColor(buttonColorMode.normal.textColor, for: .normal)
+		setTitleColor(buttonColorMode.highlighted.textColor, for: .highlighted)
+		backgroundColor = buttonColorMode.normal.backgroundColor
+		layer.borderColor = buttonColorMode.normal.borderColor.cgColor
 	}
 }

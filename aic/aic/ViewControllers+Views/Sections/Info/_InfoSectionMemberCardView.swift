@@ -61,9 +61,8 @@ class InfoSectionMemberCardView: BaseView {
         }
     }
     
-    let signInUpdateButton = AICButton(color: .aicInfoColor, isSmall: false)
-    
-    let switchMemberCardHolderButton = AICButton(color: .aicInfoColor, isSmall: false)
+    let signInUpdateButton = AICButton(isSmall: false)
+    let switchMemberCardHolderButton = AICButton(isSmall: false)
     
     init() {
         inputInfoDetailInsets = UIEdgeInsetsMake(25, sideMargin, 40, sideMargin)
@@ -115,9 +114,11 @@ class InfoSectionMemberCardView: BaseView {
         
         barcodeReciprocalBadgeImageView.contentMode = .scaleAspectFill
         barcodeReciprocalBadgeImageView.image = #imageLiteral(resourceName: "reciprocal_logo")
-        
+		
+		signInUpdateButton.setColorMode(colorMode: AICButton.orangeMode)
         signInUpdateButton.setTitle(Common.Info.memberSignInTitle, for: UIControlState())
-        
+		
+		switchMemberCardHolderButton.setColorMode(colorMode: AICButton.orangeMode)
         switchMemberCardHolderButton.setTitle(Common.Info.memberSwitchCardHolder, for: UIControlState())
         
         // Add Subviews

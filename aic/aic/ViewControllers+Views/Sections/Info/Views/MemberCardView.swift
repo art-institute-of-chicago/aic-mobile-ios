@@ -13,8 +13,8 @@ class MemberCardView : UIView {
 	let membershipInfoLabel: UILabel = UILabel()
 	let barcodeImageView: UIImageView = UIImageView()
 	let barcodeReciprocalBadgeImageView: UIImageView = UIImageView()
-	let changeInfoButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
-	let switchCardholderButton: AICButton = AICButton(color: .aicInfoColor, isSmall: false)
+	let changeInfoButton: AICButton = AICButton(isSmall: false)
+	let switchCardholderButton: AICButton = AICButton(isSmall: false)
 	
 	private let barcodeWidth: CGFloat = min(UIScreen.main.bounds.width - 10, 365)
 	
@@ -36,8 +36,10 @@ class MemberCardView : UIView {
 		barcodeReciprocalBadgeImageView.contentMode = .scaleAspectFill
 		barcodeReciprocalBadgeImageView.image = #imageLiteral(resourceName: "reciprocal_logo")
 		
+		changeInfoButton.setColorMode(colorMode: AICButton.orangeMode)
 		changeInfoButton.setTitle("Change Information", for: .normal)
 		
+		switchCardholderButton.setColorMode(colorMode: AICButton.orangeMode)
 		switchCardholderButton.setTitle("Switch Cardholder", for: .normal)
 		
 		// Add subviews
