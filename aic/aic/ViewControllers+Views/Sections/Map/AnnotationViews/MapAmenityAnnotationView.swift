@@ -8,34 +8,42 @@ import MapKit
 
 class MapAmenityAnnotationView: MapAnnotationView {
     
-    var baseImage:UIImage? = nil
-    
     init(annotation: MKAnnotation?, reuseIdentifier: String?, color:UIColor) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
         layer.zPosition = Common.Map.AnnotationZPosition.amenities.rawValue
-        isEnabled = false
+		isEnabled = false
 
         self.layer.drawsAsynchronously = true
         
         // Load in the base image (white image we colorize based on section)
         if let amenityAnnotation = annotation as? MapAmenityAnnotation {
-			if amenityAnnotation.type == .FamilyRestroom ||
-				amenityAnnotation.type == .WomensRoom ||
-				amenityAnnotation.type == .MensRoom {
-				image = #imageLiteral(resourceName: "restroom")
-			}
-			else if amenityAnnotation.type == .Information {
-				image = #imageLiteral(resourceName: "information")
-			}
-			else if amenityAnnotation.type == .Dining {
-				image = #imageLiteral(resourceName: "restaurant")
-			}
-			else if amenityAnnotation.type == .Giftshop {
-				image = #imageLiteral(resourceName: "giftshop")
-			}
-			else {
-            	image = (UIImage(named: String(describing: amenityAnnotation.type))?.withRenderingMode(.alwaysTemplate))!
+			switch amenityAnnotation.type {
+				case .Checkroom:
+					image = #imageLiteral(resourceName: "Checkroom")
+				case .Dining:
+					image = #imageLiteral(resourceName: "Dining")
+					isEnabled = true
+				case .Escalator:
+					image = #imageLiteral(resourceName: "Elevator")
+				case .Elevator:
+					image = #imageLiteral(resourceName: "Elevator")
+				case .WomensRoom:
+					image = #imageLiteral(resourceName: "WomensRoom")
+				case .MensRoom:
+					image = #imageLiteral(resourceName: "MensRoom")
+				case .WheelchairRamp:
+					image = #imageLiteral(resourceName: "WheelchairRamp")
+				case .FamilyRestroom:
+					image = #imageLiteral(resourceName: "FamilyRestroom")
+				case .Information:
+					image = #imageLiteral(resourceName: "Information")
+				case .Tickets:
+					image = #imageLiteral(resourceName: "Tickets")
+				case .Giftshop:
+					image = #imageLiteral(resourceName: "Giftshop")
+				case .AudioGuide:
+					image = #imageLiteral(resourceName: "AudioGuide")
 			}
         }
     }
@@ -43,5 +51,20 @@ class MapAmenityAnnotationView: MapAnnotationView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+	
+	override func setSelected(_ selected: Bool, animated: Bool) {
+		if self.isSelected != selected {
+			self.isSelected = selected
+			if selected == true {
+				UIView.animate(withDuration: 0.25, animations: {
+					self.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+				})
+			}
+			else {
+				UIView.animate(withDuration: 0.25, animations: {
+					self.transform = CGAffineTransform(scaleX: 1, y: 1)
+				})
+			}
+		}
+	}
 }

@@ -33,6 +33,7 @@ class AppDataParser {
 	private var galleries = [AICGalleryModel]()
 	private var audioFiles = [AICAudioFileModel]()
 	private var objects = [AICObjectModel]()
+	private var restaurants = [AICRestaurantModel]()
 	
 	private var mapFloors: [FloorplanOverlay] = []
     
@@ -202,11 +203,18 @@ class AppDataParser {
 									  audioFiles: self.audioFiles,
 									  tours: tours,
 									  map: map,
+									  restaurants: self.restaurants,
 									  featuredTours: featuredTours,
 									  featuredExhibitions: featuredExhibitions,
 									  exhibitionOptionalImages: exhibitionOptionalImages,
 									  dataSettings: dataSettings
 		)
+		
+		// TODO: check if you can get rid of all this temp data after initial loading
+//		self.galleries.removeAll()
+//		self.audioFiles.removeAll()
+//		self.objects.removeAll()
+//		self.restaurants.removeAll()
 		
 		return appData
     }
@@ -737,7 +745,7 @@ class AppDataParser {
 					let type = try getString(fromJSON: annotationJSON, forKey: "annotation_type")
 					
 					if type == "Amenity" && floorNumber != nil {
-						let amenityAnnotation = try parse(amenityAnnotationJSON: annotationJSON)
+						let amenityAnnotation = try parse(amenityAnnotationJSON: annotationJSON, floorNumber: floorNumber!)
 						floorAmenityAnnotations[floorNumber!]!.append(amenityAnnotation)
 					}
 					else if type == "Text" {
@@ -763,6 +771,15 @@ class AppDataParser {
 //						let imageAnnotation = try parse(imageAnnotationJSON: annotationJSON)
 //						imageAnnotations.append(imageAnnotation)
 //					}
+					
+					// Restaurant Model
+					if type == "Amenity" && floorNumber != nil {
+						let amenityType = try getString(fromJSON: annotationJSON, forKey: "amenity_type")
+						if amenityType == "Dining" {
+							let restaurant = try parse(restaurantJSON: annotationJSON, floorNumber: floorNumber!)
+							self.restaurants.append(restaurant)
+						}
+					}
 				}
 				catch {
 					if Common.Testing.printDataErrors {
@@ -807,48 +824,6 @@ class AppDataParser {
 						   landmarkAnnotations: [MapTextAnnotation](),
 						   gardenAnnotations: [MapTextAnnotation](),
 						   floors: [AICMapFloorModel]())
-		
-		// Global Annotations
-//		lionAnnotations     = getImageAnnotations(fromSvgImages: svgParser.lions)
-//		landmarkAnnotations = getTextAnnotations(fromSVGTextLabels: svgParser.landmarks, type: MapTextAnnotation.AnnotationType.LandmarkGarden)
-//		gardenAnnotations   = getTextAnnotations(fromSVGTextLabels: svgParser.gardens, type: MapTextAnnotation.AnnotationType.LandmarkGarden)
-		
-		// Floors
-//		for i in 0..<Common.Map.totalFloors {
-//			let svgFloor = svgParser.floors[i]
-//
-//			// Get the gallery annotations for this floor
-//			let galleryAnnotations = getGalleryAnnotations(forFloorNumber: i)
-//
-//			//            // Convert SVG Annotations for this floor (amenities, departments, spaces) to map annotations
-//			//            let amenityAnnotations:[MapAmenityAnnotation]           = getAmenityAnnotations(fromSVGAmenities: svgFloor.amenities)
-//			//            let departmentAnnotations:[MapDepartmentAnnotation]     = getDepartmentAnnotations(fromSVGDepartments: svgFloor.departments)
-//			//            let spaceAnnotations:[MapTextAnnotation]                = getTextAnnotations(fromSVGTextLabels: svgFloor.spaces, type: MapTextAnnotation.AnnotationType.Space)
-//
-//
-//			// Create annotations for objects on this floor from app data
-//			var objectAnnotations:[MapObjectAnnotation] = []
-//			for object in AppDataManager.sharedInstance.getObjects(forFloor: i) {
-//				objectAnnotations.append(MapObjectAnnotation(object: object))
-//			}
-//
-//			// Load Floorplan Overlay (Part of Apple Footprint) from PDF
-//			let pdfUrl = Bundle.main.url(forResource: Common.Map.floorplanFileNamePrefix + String(i), withExtension: "pdf", subdirectory:Common.Map.mapsDirectory)!
-//
-//			let overlay = FloorplanOverlay(floorplanUrl: pdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: Common.Map.anchorPair)
-//
-//			// Create this floor
-//			let floor = AICMapFloorModel(floorNumber: i,
-//										 overlay: overlay,
-//										 objects:objectAnnotations,
-//										 amenities: [MapAmenityAnnotation](),
-//										 departments: [MapDepartmentAnnotation](),
-//										 galleries: [MapTextAnnotation](),
-//										 spaces: [MapTextAnnotation]()
-//			)
-//
-//			floors.append(floor)
-//		}
 	}
 	
 	// Gallery annotations
@@ -864,13 +839,14 @@ class AppDataParser {
 	}
 	
 	// Amenity Annotations
-	private func parse(amenityAnnotationJSON: JSON) throws -> MapAmenityAnnotation {
+	private func parse(amenityAnnotationJSON: JSON, floorNumber: Int) throws -> MapAmenityAnnotation {
+		let nid = try getInt(fromJSON: amenityAnnotationJSON, forKey: "nid")
 		let coordinate = try getCLLocation2d(fromJSON: amenityAnnotationJSON, forKey: "location")
 		
 		let typeString = try getString(fromJSON: amenityAnnotationJSON, forKey: "amenity_type")
 		let type: MapAmenityAnnotationType = MapAmenityAnnotationType(rawValue: typeString)!
 		
-		return MapAmenityAnnotation(coordinate: coordinate, type: type)
+		return MapAmenityAnnotation(nid: nid, coordinate: coordinate, floor: floorNumber, type: type)
 	}
 	
 	// Department Annotations
@@ -895,6 +871,23 @@ class AppDataParser {
 		let imageUrl = try getURL(fromJSON: imageAnnotationJSON, forKey: "image_url")!
 		
 		return MapImageAnnotation(coordinate: coordinate, imageUrl: imageUrl)
+	}
+	
+	// MARK: Restaurants
+	
+	func parse(restaurantJSON: JSON, floorNumber: Int) throws -> AICRestaurantModel {
+		let nid = try getInt(fromJSON: restaurantJSON, forKey: "nid")
+		let title = try getString(fromJSON: restaurantJSON, forKey: "label", optional: true)
+		let description = try getString(fromJSON: restaurantJSON, forKey: "description", optional: true)
+		let coreLocation = try getCLLocation2d(fromJSON: restaurantJSON, forKey: "location")
+		let location = CoordinateWithFloor(coordinate: coreLocation, floor: floorNumber)
+		let imageUrl: URL? = try getURL(fromJSON: restaurantJSON, forKey: "image_url", optional: true)
+		
+		return AICRestaurantModel(nid: nid,
+								  title: title,
+								  imageUrl: imageUrl,
+								  description: description,
+								  location: location)
 	}
 	
 	// MARK: Exhibition Images

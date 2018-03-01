@@ -204,6 +204,14 @@ class SectionsViewController : UIViewController {
 		sectionTabBarController.selectedIndex = 2
 	}
 	
+	func showDiningOnMap() {
+		if currentViewController != mapVC {
+			setSelectedSection(sectionVC: mapVC)
+		}
+		mapVC.showDining()
+		sectionTabBarController.selectedIndex = 2
+	}
+	
 	func showRestroomsOnMap() {
 		if currentViewController != mapVC {
 			setSelectedSection(sectionVC: mapVC)
@@ -562,7 +570,10 @@ extension SectionsViewController : ExhibitionTableViewControllerDelegate {
 // MARK: Search Map Items Collection Delegate
 extension SectionsViewController : MapItemsCollectionContainerDelegate {
 	func mapItemDiningSelected() {
-		
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		showDiningOnMap()
 	}
 	
 	func mapItemGiftShopSelected() {

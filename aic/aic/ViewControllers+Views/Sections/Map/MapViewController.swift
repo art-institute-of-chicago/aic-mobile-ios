@@ -12,6 +12,7 @@ protocol MapViewControllerDelegate : class {
 	func mapWasPressed()
     func mapDidPressArtworkPlayButton(artwork: AICObjectModel)
     func mapDidSelectTourStop(artwork: AICObjectModel)
+	func mapDidSelectRestaurant(restaurant: AICRestaurantModel)
 }
 
 class MapViewController: UIViewController {
@@ -20,8 +21,9 @@ class MapViewController: UIViewController {
         case allInformation
 		case artwork
 		case exhibition
-		case restrooms
+		case dining
 		case giftshop
+		case restrooms
         case location
         case tour
     }
@@ -210,6 +212,29 @@ class MapViewController: UIViewController {
 		mapView.selectAnnotation(exhibitionAnnotation, animated: true)
 	}
 	
+	func showDining() {
+		mode = .dining
+		
+		updateDiningAnnotations()
+		
+		floorSelectorVC.disableUserHeading()
+		
+		mapView.addAnnotations(mapModel.floors[currentFloor].diningAnnotations)
+		
+		// Zoom in on the first restaurant
+		if AppDataManager.sharedInstance.app.restaurants.count > 0 {
+			let firstRestaurant = AppDataManager.sharedInstance.app.restaurants.first!
+			
+			let startFloor: Int = firstRestaurant.location.floor
+			setCurrentFloor(forFloorNum: startFloor, andResetMap: false)
+			
+			highlightRestaurant(identifier: firstRestaurant.nid, location: firstRestaurant.location)
+		}
+		else {
+			mapView.showAnnotations(mapModel.floors[currentFloor].diningAnnotations, animated: false)
+		}
+	}
+	
 	func showRestrooms() {
 		mode = .restrooms
 		
@@ -345,6 +370,27 @@ class MapViewController: UIViewController {
             }
         }
     }
+	
+	func highlightRestaurant(identifier: Int, location: CoordinateWithFloor) {
+		// Select the annotation
+		for floor in mapModel.floors {
+			for annotation in floor.diningAnnotations {
+				if annotation.nid == identifier {
+					// Turn off user heading since we want to jump to a specific place
+					floorSelectorVC.disableUserHeading()
+					
+					// Go to that floor
+					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
+					
+					// Zoom in on the item
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedIn.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 45.0)
+					
+					// Select the annotation (which eventually updates it's view)
+					mapView.selectAnnotation(annotation, animated: true)
+				}
+			}
+		}
+	}
     
     // MARK: Viewable Area
     // Sets the viewable area of our map and repositions the floor selector
@@ -441,6 +487,11 @@ class MapViewController: UIViewController {
 			
 		case .exhibition:
 			updateExhibitionAnnotationView()
+			updateUserLocationAnnotationView()
+			
+		case .dining:
+			updateDiningAnnotations()
+			updateDiningAnnotationViews()
 			updateUserLocationAnnotationView()
 			
 		case .restrooms:
@@ -571,6 +622,37 @@ class MapViewController: UIViewController {
 		for floor in mapModel.floors {
 			for annotation in floor.objectAnnotations {
 				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
+					if floor.floorNumber == currentFloor {
+						view.alpha = 1.0
+					} else {
+						view.alpha = 0.5
+					}
+				}
+			}
+		}
+	}
+	
+	private func updateDiningAnnotations() {
+		var annotationFilter:[MKAnnotation] = []
+		annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
+		annotationFilter.append(contentsOf: mapModel.diningAnnotations as [MKAnnotation])
+		annotationFilter.append(mapView.userLocation)
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
+		
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		var annotations: [MKAnnotation] = []
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: mapModel.diningAnnotations as [MKAnnotation])
+		annotations.append(mapView.userLocation)
+		
+		mapView.addAnnotations(annotations)
+	}
+	
+	private func updateDiningAnnotationViews() {
+		for floor in mapModel.floors {
+			for annotation in floor.diningAnnotations {
+				if let view = mapView.view(for: annotation) as? MapAmenityAnnotationView {
 					if floor.floorNumber == currentFloor {
 						view.alpha = 1.0
 					} else {
@@ -828,11 +910,33 @@ extension MapViewController : MKMapViewDelegate {
 				}
             }
         }
-        
         else if let view = view as? MapDepartmentAnnotationView {
             mapView.deselectAnnotation(view.annotation, animated: false)
             self.mapView.zoomIn(onCenterCoordinate: view.annotation!.coordinate);
         }
+		else if let view = view as? MapAmenityAnnotationView {
+			// Restaurants
+			let annotation = view.annotation as! MapAmenityAnnotation
+			
+			// Switch to the floor for this restaurant
+			if annotation.type == .Dining {
+				
+				// Switch floors
+				if currentFloor != annotation.floor {
+					setCurrentFloor(forFloorNum: annotation.floor, andResetMap: false)
+				}
+				
+				mapView.setCenter(annotation.coordinate, animated: true)
+				
+				if mode == .dining {
+					if let restaurantId = annotation.nid {
+						if let restaurant = AppDataManager.sharedInstance.getRestaurant(forID: restaurantId) {
+							delegate?.mapDidSelectRestaurant(restaurant: restaurant)
+						}
+					}
+				}
+			}
+		}
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {

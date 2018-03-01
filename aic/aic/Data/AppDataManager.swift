@@ -316,6 +316,10 @@ class AppDataManager {
         return app.tours.filter({ $0.nid == id }).first
     }
 	
+	func getRestaurant(forID id: Int) -> AICRestaurantModel? {
+		return app.restaurants.filter({ $0.nid == id }).first
+	}
+	
 	func getEventsForEarliestDay() -> [AICEventModel] {
 		var dayEvents: [AICEventModel] = []
 		

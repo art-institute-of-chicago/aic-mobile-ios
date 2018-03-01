@@ -28,6 +28,7 @@ class MapNavigationController : SectionNavigationController {
 	let mapVC: MapViewController = MapViewController()
 	var mapContentCardVC: MapContentCardNavigationController? = nil
 	var tourStopPageVC: TourStopPageViewController? = nil
+	var restaurantPageVC: RestaurantPageViewController? = nil
 	
 	private var enableLocationMessageView: MessageViewController? = nil
 	private var leaveTourMessageView: MessageViewController? = nil
@@ -106,6 +107,11 @@ class MapNavigationController : SectionNavigationController {
 		}
 		else if currentMode == .exhibition {
 			showExhibition(exhibition: exhibitionModel!)
+			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
+		}
+		else if currentMode == .dining {
+			showDining()
+			
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 		}
 		else if currentMode == .giftshop {
@@ -373,6 +379,44 @@ class MapNavigationController : SectionNavigationController {
 		}
 	}
 	
+	func showDining() {
+		currentMode = .dining
+		
+		// if we are on the Map tab, open tour immediately
+		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
+		if isMapTabOpen {
+			if sectionNavigationBar.currentState != .hidden {
+				sectionNavigationBar.hide()
+			}
+			
+			// Create Restaurants card
+			if mapContentCardVC != nil {
+				mapContentCardVC!.view.removeFromSuperview()
+			}
+			restaurantPageVC = RestaurantPageViewController(restaurants: AppDataManager.sharedInstance.app.restaurants)
+			mapContentCardVC = MapContentCardNavigationController(contentVC: restaurantPageVC!)
+			mapContentCardVC!.titleLabel.text = "Dining"
+			mapContentCardVC!.cardDelegate = self
+			restaurantPageVC!.restaurantPageDelegate = self
+			
+			// Add card to view
+			mapContentCardVC!.willMove(toParentViewController: self)
+			self.view.addSubview(mapContentCardVC!.view)
+			mapContentCardVC!.didMove(toParentViewController: self)
+			
+			// in case the tour card is open, to tell the map to animate the floor selector
+			self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+			
+			// Set first restaurant
+			restaurantPageVC!.setCurrentPage(pageIndex: 0)
+			
+			// Set map state
+			mapVC.showDining()
+			
+			showMapContentCard()
+		}
+	}
+	
 	func showRestrooms() {
 		currentMode = .restrooms
 		
@@ -508,6 +552,15 @@ extension MapNavigationController : MapViewControllerDelegate {
 			tourStopPageVC!.setCurrentPage(pageIndex: pageIndex)
 		}
 	}
+	
+	func mapDidSelectRestaurant(restaurant: AICRestaurantModel) {
+		for index in 0...AppDataManager.sharedInstance.app.restaurants.count-1 {
+			let restaurantModel = AppDataManager.sharedInstance.app.restaurants[index]
+			if restaurantModel.nid == restaurant.nid {
+				restaurantPageVC?.setCurrentPage(pageIndex: index)
+			}
+		}
+	}
 }
 
 // MARK: CardNavigationControllerDelegate
@@ -551,6 +604,14 @@ extension MapNavigationController : TourStopPageViewControllerDelegate {
 	
 	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel, language: Common.Language) {
 		self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, language: language)
+	}
+}
+
+// MARK: RestaurantPageViewControllerDelegate
+
+extension MapNavigationController : RestaurantPageViewControllerDelegate {
+	func restaurantPageDidChangeTo(restaurant: AICRestaurantModel) {
+		mapVC.highlightRestaurant(identifier: restaurant.nid, location: restaurant.location)
 	}
 }
 

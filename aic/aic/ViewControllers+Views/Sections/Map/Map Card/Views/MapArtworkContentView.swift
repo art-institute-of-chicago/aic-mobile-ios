@@ -81,6 +81,10 @@ class MapArtworkContentView : UIView {
 		locationLabel.text = tour.stops.first!.object.gallery.title //Common.Map.stringForFloorNumber[tour.location.floor]
 	}
 	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
 	private func setup() {
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true
@@ -126,9 +130,5 @@ class MapArtworkContentView : UIView {
 		
 		audioButton.autoPinEdge(.top, to: .top, of: self, withOffset: 56)
 		audioButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: UIScreen.main.bounds.width - audioButton.image(for: .normal)!.size.width - 16)
-	}
-	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
 	}
 }

@@ -10,6 +10,7 @@ struct AICAppDataModel {
     var audioFiles: [AICAudioFileModel] = []
     var tours: [AICTourModel]			= []
 	var map: AICMapModel
+	var restaurants: [AICRestaurantModel] = []
 	
 	var featuredTours: [Int]			= []
 	var featuredExhibitions: [Int]		= []

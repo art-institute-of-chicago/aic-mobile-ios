@@ -21,11 +21,15 @@ enum MapAmenityAnnotationType : String {
 }
 
 class MapAmenityAnnotation: NSObject, MKAnnotation {
+	var nid: Int?
     var coordinate: CLLocationCoordinate2D
+	var floor: Int
     var type: MapAmenityAnnotationType
     
-    init(coordinate: CLLocationCoordinate2D, type:MapAmenityAnnotationType) {
+	init(nid: Int, coordinate: CLLocationCoordinate2D, floor: Int, type: MapAmenityAnnotationType) {
+		self.nid = nid
         self.coordinate = coordinate
+		self.floor = floor
         self.type = type
     }
 }

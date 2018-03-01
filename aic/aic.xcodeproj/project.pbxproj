@@ -159,6 +159,9 @@
 		29D6921A1FE0E92000B61286 /* SeeAllExhibitionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */; };
 		29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29D6921B1FE0E92E00B61286 /* SeeAllExhibitionCell.xib */; };
 		29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */; };
+		29E003EB2048561F00E1D305 /* RestaurantPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003EA2048561F00E1D305 /* RestaurantPageViewController.swift */; };
+		29E003ED204858F900E1D305 /* MapRestaurantContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003EC204858F900E1D305 /* MapRestaurantContentView.swift */; };
+		29E003EF20486F9300E1D305 /* AICRestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */; };
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
@@ -466,6 +469,9 @@
 		29D692191FE0E92000B61286 /* SeeAllExhibitionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllExhibitionCell.swift; sourceTree = "<group>"; };
 		29D6921B1FE0E92E00B61286 /* SeeAllExhibitionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllExhibitionCell.xib; sourceTree = "<group>"; };
 		29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedTextView.swift; sourceTree = "<group>"; };
+		29E003EA2048561F00E1D305 /* RestaurantPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPageViewController.swift; sourceTree = "<group>"; };
+		29E003EC204858F900E1D305 /* MapRestaurantContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestaurantContentView.swift; sourceTree = "<group>"; };
+		29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICRestaurantModel.swift; sourceTree = "<group>"; };
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
@@ -883,6 +889,7 @@
 			isa = PBXGroup;
 			children = (
 				2984611B203A045C001E5378 /* MapArtworkContentView.swift */,
+				29E003EC204858F900E1D305 /* MapRestaurantContentView.swift */,
 				2984611D203A046C001E5378 /* MapTextContentView.swift */,
 			);
 			path = Views;
@@ -892,6 +899,7 @@
 			isa = PBXGroup;
 			children = (
 				2984611A203916D3001E5378 /* Views */,
+				29E003EA2048561F00E1D305 /* RestaurantPageViewController.swift */,
 				29A67F8B20290389003C630A /* TourStopPageViewController.swift */,
 				29A67F892028F7B6003C630A /* MapContentCardNavigationController.swift */,
 			);
@@ -1153,6 +1161,7 @@
 				E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */,
 				E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */,
 				E425B3CD1C97649300A19F6F /* AICObjectModel.swift */,
+				29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */,
 				293127821FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift */,
 				E47A97191CF262760041D0A6 /* AICTooltipModel.swift */,
 				E4D159341CBAE3E900536B4D /* AICTourModel.swift */,
@@ -1802,6 +1811,7 @@
 				E415ABD61C7298420093B719 /* _InfoSectionViewController.swift in Sources */,
 				E411DE7F1CCD37A800E22047 /* AICGalleryModel.swift in Sources */,
 				E42178391CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift in Sources */,
+				29E003EF20486F9300E1D305 /* AICRestaurantModel.swift in Sources */,
 				29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */,
 				294C0B59201A76F700F2ABB1 /* MapFloorSelectorView.swift in Sources */,
 				29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */,
@@ -1916,8 +1926,10 @@
 				E415ABD51C7298420093B719 /* MiniAudioPlayerView.swift in Sources */,
 				2986A58A1FBCBD8B00029E74 /* SectionNavigationController.swift in Sources */,
 				E42677E31CC558060046BB27 /* AICButton.swift in Sources */,
+				29E003ED204858F900E1D305 /* MapRestaurantContentView.swift in Sources */,
 				E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */,
 				29B9B5931FD0A7670095FE52 /* SeeAllTourCell.swift in Sources */,
+				29E003EB2048561F00E1D305 /* RestaurantPageViewController.swift in Sources */,
 				29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */,
 				E47A972F1CF3EE140041D0A6 /* LoadingViewController.swift in Sources */,
 				2968F67920125B5700638153 /* MessageViewController.swift in Sources */,
