@@ -35,6 +35,7 @@ class CardNavigationController : UINavigationController {
     let rootVC: UIViewController = UIViewController()
     
     // Card Pan Gesture Recognizer to show/hide/minimize
+	let tapToCloseGesture: UITapGestureRecognizer = UITapGestureRecognizer()
     let cardPanGesture: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "cardDownArrow"))
@@ -94,7 +95,12 @@ class CardNavigationController : UINavigationController {
         cardPanGesture.addTarget(self, action: #selector(handlePanGesture(recognizer:)))
         cardPanGesture.delegate = self
         self.view.addGestureRecognizer(cardPanGesture)
-    }
+		
+		// Tap to Close Gesture
+		tapToCloseGesture.addTarget(self, action: #selector(handleTapGesture(recognizer:)))
+		downArrowImageView.isUserInteractionEnabled = true
+		downArrowImageView.addGestureRecognizer(tapToCloseGesture)
+	}
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -277,7 +283,13 @@ extension CardNavigationController : UIGestureRecognizerDelegate {
         // Clean up gesture
         recognizer.setTranslation(CGPoint.zero, in: view)
     }
-    
+	
+	@objc internal func handleTapGesture(recognizer: UITapGestureRecognizer) {
+		if currentState == .fullscreen {
+			hide()
+		}
+	}
+	
     internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view is UISlider {
             return false
