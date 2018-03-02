@@ -209,7 +209,7 @@ extension RootViewController : LoadingViewControllerDelegate {
 		}
 		loadingFadeOutAnimationStarted = true
 		
-		UIView.animate(withDuration: 0.5, delay: 0.6, options: .curveLinear, animations: {
+		UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveLinear, animations: {
 			self.loadingVC!.view.alpha = 0.0
 		}, completion: { (completed3) in
 			if completed3 == true {

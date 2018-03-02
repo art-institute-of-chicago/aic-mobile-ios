@@ -417,12 +417,13 @@ struct Common {
         static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
 
         enum ZoomLevelAltitude : Double {
-            case zoomedOut = 1200.0
-            case zoomedIn = 200.0
-            case zoomedDetail = 40.0
-            case zoomedMax = 25.0
+            case zoomLimit = 1000.0
+            case zoomDefault = 300.0
+			case zoomMedium = 260.0
+            case zoomDetail = 40.0
+            case zoomMax = 25.0
 
-            static let allValues = [zoomedOut, zoomedIn, zoomedDetail, zoomedMax]
+            static let allValues = [zoomLimit, zoomDefault, zoomMedium, zoomDetail, zoomMax]
         }
 
         enum AnnotationZPosition: CGFloat {

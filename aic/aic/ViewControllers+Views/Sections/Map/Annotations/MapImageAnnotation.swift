@@ -7,17 +7,15 @@
 import MapKit
 import Kingfisher
 
-class MapImageAnnotation: NSObject, MKAnnotation {
+class MapImageAnnotation: MapAnnotation {
 	var identifier: String
 	
-    var coordinate: CLLocationCoordinate2D
 	var image: UIImage? = nil
     
     init(coordinate: CLLocationCoordinate2D, imageUrl: URL) {
-        self.coordinate = coordinate
 		self.identifier = imageUrl.absoluteString
 		self.image = nil
-		super.init()
+		super.init(coordinate: coordinate)
 		
 		ImageDownloader.default.downloadImage(with: imageUrl, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, error, url, data) in
 			if image != nil {
@@ -27,10 +25,9 @@ class MapImageAnnotation: NSObject, MKAnnotation {
     }
 	
 	init(coordinate: CLLocationCoordinate2D, image: UIImage, identifier: String) {
-		self.coordinate = coordinate
 		self.identifier = identifier
 		self.image = image
-		super.init()
+		super.init(coordinate: coordinate)
 	}
     
 }

@@ -5,7 +5,7 @@
 
 import MapKit
 
-class MapTextAnnotation: NSObject, MKAnnotation {
+class MapTextAnnotation: MapAnnotation {
     enum AnnotationType : String {
         case Landmark = "Landmark"
 		case Garden = "Garden"
@@ -14,8 +14,7 @@ class MapTextAnnotation: NSObject, MKAnnotation {
     }
     
     let type:AnnotationType
-    
-    var coordinate: CLLocationCoordinate2D
+	
     var labelText: String
     
     convenience init(coordinateAsCGPoint:CGPoint, text:String, type:AnnotationType) {
@@ -25,9 +24,9 @@ class MapTextAnnotation: NSObject, MKAnnotation {
     }
     
     init(coordinate: CLLocationCoordinate2D, text:String, type:AnnotationType) {
-        self.coordinate = coordinate
         self.labelText = text
         self.type = type
+		super.init(coordinate: coordinate)
     }
 }
 

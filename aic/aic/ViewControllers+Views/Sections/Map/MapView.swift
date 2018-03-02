@@ -40,8 +40,8 @@ class MapView: MKMapView {
     private (set) var previousAltitude:Double = 0.0
     private (set) var currentAltitude:Double = 0.0
     
-    private (set) var previousZoomLevel:Common.Map.ZoomLevelAltitude = .zoomedOut
-    private (set) var currentZoomLevel:Common.Map.ZoomLevelAltitude = .zoomedOut
+    private (set) var previousZoomLevel:Common.Map.ZoomLevelAltitude = .zoomLimit
+    private (set) var currentZoomLevel:Common.Map.ZoomLevelAltitude = .zoomLimit
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,20 +121,24 @@ class MapView: MKMapView {
 //    }
 
     func zoomIn(onCenterCoordinate centerCoordinate:CLLocationCoordinate2D) {
-        zoomIn(onCenterCoordinate: centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedMax.rawValue, heading: camera.heading)
+        zoomIn(onCenterCoordinate: centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, heading: camera.heading)
     }
     
     func showFullMap(useDefaultHeading: Bool = false, animated: Bool = true) {
         if let overlay = floorplanOverlay {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
-            zoomIn(onCenterCoordinate: overlay.coordinate, altitude: defaultZoom, withAnimation: animated, heading: heading)
+            zoomIn(onCenterCoordinate: overlay.coordinate, altitude: camera.altitude, withAnimation: animated, heading: heading)
+			print("showFullMap")
         }
     }
     
     func keepMapInView() {
         // Check altitude
-        if camera.altitude > Common.Map.ZoomLevelAltitude.zoomedOut.rawValue {
-            showFullMap()
+        if camera.altitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
+			if let overlay = floorplanOverlay {
+				let heading = defaultHeading// camera.heading
+				zoomIn(onCenterCoordinate: overlay.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: heading)
+			}
         } else {
             // Make sure our floorplan is on-screen
             if let floorplanOverlay = floorplanOverlay {
@@ -148,6 +152,21 @@ class MapView: MKMapView {
             }
         }
     }
+	
+	func adjustPicthForZoomLevel() {
+		if self.currentZoomLevel != self.previousZoomLevel && camera.pitch != 60.0 {
+			var pitch: CGFloat = 0.0
+//			var altitude: Double = camera.altitude
+			if self.camera.altitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {
+				pitch = 60.0
+//				if altitude > Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50 &&
+//					altitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {
+//					altitude = altitude - 80.0
+//				}
+			}
+			zoomIn(onCenterCoordinate: camera.centerCoordinate, altitude: camera.altitude, withAnimation: true, heading: camera.heading, pitch: pitch)
+		}
+	}
     
     func zoomIn(onCenterCoordinate centerCoordinate: CLLocationCoordinate2D, altitude: Double, withAnimation animated: Bool = true, heading: Double? = nil, pitch: CGFloat? = nil) {
 		//let newCamera = MKMapCamera(lookingAtCenterCoordinate: centerCoordinate, fromEyeCoordinate: centerCoordinate, eyeAltitude: altitude)
@@ -186,8 +205,8 @@ class MapView: MKMapView {
         
         // Zoom Level
         previousZoomLevel = currentZoomLevel
-        if currentAltitude > Common.Map.ZoomLevelAltitude.zoomedOut.rawValue {
-            currentZoomLevel = .zoomedOut
+        if currentAltitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
+            currentZoomLevel = .zoomLimit
         } else {
             for zoomLevel in Common.Map.ZoomLevelAltitude.allValues {
                 if currentAltitude <= zoomLevel.rawValue {

@@ -9,17 +9,16 @@
 import UIKit
 import MapKit
 
-class MapExhibitionAnnotation : NSObject, MKAnnotation {
-	var coordinate: CLLocationCoordinate2D
+class MapExhibitionAnnotation : MapAnnotation {
 	var floor: Int
 	var clLocation: CLLocation
 	var imageUrl: URL?
 	var exhibitionModel: AICExhibitionModel
 	
 	init(exhibition: AICExhibitionModel) {
-		self.coordinate = exhibition.location!.coordinate
 		self.floor = exhibition.location!.floor
-		self.clLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+		self.clLocation = CLLocation(latitude: exhibition.location!.coordinate.latitude, longitude: exhibition.location!.coordinate.longitude)
 		self.exhibitionModel = exhibition
+		super.init(coordinate: exhibition.location!.coordinate)
 	}
 }

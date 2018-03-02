@@ -30,7 +30,9 @@ extension UIFont {
     
     static let aicDepartmentsFont: UIFont = UIFont(name: "SourceSansPro-Semibold", size: 17.0)!
     
-    static let aicSpacesFont: UIFont = UIFont(name: "SourceSansPro-It", size: 17.0)!
+    static let aicMapSpacesFont: UIFont = UIFont(name: "IdealSans-Medium", size: 15.0)!
+	
+	static let aicMapTextFont: UIFont = UIFont(name: "IdealSans-Medium", size: 13.0)!
     
     static let aicMapSVGTextFont: UIFont = UIFont(name: "SourceSansPro-Regular", size: 9.0)!
     

@@ -162,6 +162,7 @@
 		29E003EB2048561F00E1D305 /* RestaurantPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003EA2048561F00E1D305 /* RestaurantPageViewController.swift */; };
 		29E003ED204858F900E1D305 /* MapRestaurantContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003EC204858F900E1D305 /* MapRestaurantContentView.swift */; };
 		29E003EF20486F9300E1D305 /* AICRestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */; };
+		29E003F1204967A600E1D305 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003F0204967A600E1D305 /* MapAnnotation.swift */; };
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
@@ -472,6 +473,7 @@
 		29E003EA2048561F00E1D305 /* RestaurantPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPageViewController.swift; sourceTree = "<group>"; };
 		29E003EC204858F900E1D305 /* MapRestaurantContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRestaurantContentView.swift; sourceTree = "<group>"; };
 		29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICRestaurantModel.swift; sourceTree = "<group>"; };
+		29E003F0204967A600E1D305 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
@@ -778,6 +780,7 @@
 		294C0B39201A76F700F2ABB1 /* Annotations */ = {
 			isa = PBXGroup;
 			children = (
+				29E003F0204967A600E1D305 /* MapAnnotation.swift */,
 				294C0B3A201A76F700F2ABB1 /* MapAmenityAnnotation.swift */,
 				294C0B3E201A76F700F2ABB1 /* MapDepartmentAnnotation.swift */,
 				2975A054203F61150014017C /* MapExhibitionAnnotation.swift */,
@@ -1855,6 +1858,7 @@
 				2915B0F2202CA08B00DEBB03 /* LanguageSelectorView.swift in Sources */,
 				E47A971A1CF262760041D0A6 /* AICTooltipModel.swift in Sources */,
 				294C0B53201A76F700F2ABB1 /* MapObjectAnnotation.swift in Sources */,
+				29E003F1204967A600E1D305 /* MapAnnotation.swift in Sources */,
 				E42677E51CC5677A0046BB27 /* _InfoSectionInformationView.swift in Sources */,
 				291FB71F1FDA0905007794E0 /* SearchNavigationController.swift in Sources */,
 				29C91B0F1FC4E04E008C3E9E /* HomeMemberPromptView.swift in Sources */,

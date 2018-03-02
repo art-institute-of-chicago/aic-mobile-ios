@@ -6,9 +6,8 @@
 import UIKit
 import MapKit
 
-class MapObjectAnnotation : NSObject, MKAnnotation {
+class MapObjectAnnotation : MapAnnotation {
 	var nid: Int?	// nid from CMS used to match with Tour Stop
-    var coordinate: CLLocationCoordinate2D
 	var floor: Int
     var clLocation: CLLocation
     var title: String?
@@ -18,11 +17,11 @@ class MapObjectAnnotation : NSObject, MKAnnotation {
 	// Objects with audio
     init(object: AICObjectModel) {
 		self.nid = object.nid
-        self.coordinate = object.location.coordinate
 		self.floor = object.location.floor
-        self.clLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        self.clLocation = CLLocation(latitude: object.location.coordinate.latitude, longitude: object.location.coordinate.longitude)
         self.title = object.title
 		self.thumbnailUrl = object.thumbnailUrl
+		super.init(coordinate: object.location.coordinate)
     }
 	
 	// Artworks from search
@@ -30,20 +29,20 @@ class MapObjectAnnotation : NSObject, MKAnnotation {
 		if let object = searchedArtwork.audioObject {
 			self.nid = object.nid
 		}
-		self.coordinate = searchedArtwork.location.coordinate
 		self.floor = searchedArtwork.location.floor
-		self.clLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+		self.clLocation = CLLocation(latitude: searchedArtwork.location.coordinate.latitude, longitude: searchedArtwork.location.coordinate.longitude)
 		self.title = searchedArtwork.title
 		self.thumbnailUrl = searchedArtwork.thumbnailUrl
+		super.init(coordinate: searchedArtwork.location.coordinate)
 	}
 	
 	// Tour Overview Stop
 	init(tour: AICTourModel) {
 		self.nid = tour.nid
-		self.coordinate = tour.location.coordinate
 		self.floor = tour.location.floor
-		self.clLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+		self.clLocation = CLLocation(latitude: tour.location.coordinate.latitude, longitude: tour.location.coordinate.longitude)
 		self.title = tour.title
 		self.thumbnailUrl = tour.imageUrl
+		super.init(coordinate: tour.location.coordinate)
 	}
 }

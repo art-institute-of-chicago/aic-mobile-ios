@@ -97,7 +97,7 @@ class MapViewController: UIViewController {
 		mapView.add(mapModel.backgroundOverlay)
         
         mapView.camera.heading = mapView.defaultHeading
-        mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomedOut.rawValue
+        mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
         mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
         
         // Set Delegates
@@ -154,8 +154,10 @@ class MapViewController: UIViewController {
     func showAllInformation() {
         // Switch modes
         mode = .allInformation
-        
-		mapView.showFullMap(useDefaultHeading: true)
+		
+		if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
+			mapView.showFullMap(useDefaultHeading: true)
+		}
     }
     
     // Show a news item (location) on the map
@@ -362,7 +364,7 @@ class MapViewController: UIViewController {
 					// Zoom in on the item
 //					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
 //					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue)
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
                     
                     // Select the annotation (which eventually updates it's view)
                     mapView.selectAnnotation(annotation, animated: true)
@@ -383,7 +385,7 @@ class MapViewController: UIViewController {
 					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 					
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedIn.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 45.0)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 45.0)
 					
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -521,11 +523,11 @@ class MapViewController: UIViewController {
             }
             
             // If we are going between Detail and Max Zoom, stay the same
-            if (mapView.currentZoomLevel == .zoomedDetail && mapView.previousZoomLevel == .zoomedMax) ||
-                (mapView.currentZoomLevel == .zoomedMax && mapView.previousZoomLevel == .zoomedDetail) {
+            if (mapView.currentZoomLevel == .zoomDetail && mapView.previousZoomLevel == .zoomMax) ||
+                (mapView.currentZoomLevel == .zoomMax && mapView.previousZoomLevel == .zoomDetail) {
                 return
             }
-        }
+		}
         
         if floorSwitch {
             mapView.removeAnnotations(mapView.annotations)
@@ -534,7 +536,7 @@ class MapViewController: UIViewController {
             annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
             annotationFilter.append(contentsOf: mapView.selectedAnnotations)
             annotationFilter.append(mapView.userLocation)
-            
+			
             let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
         
             mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
@@ -545,26 +547,111 @@ class MapViewController: UIViewController {
         
         // Set the annotations for this zoom level
         switch mapView.currentZoomLevel {
-        case .zoomedOut:
+        case .zoomLimit:
             mapView.addAnnotations(mapModel.landmarkAnnotations)
             break
             
-        case .zoomedIn:
+        case .zoomDefault:
             mapView.addAnnotations(mapModel.floors[currentFloor].amenityAnnotations)
             mapView.addAnnotations(mapModel.floors[currentFloor].departmentAnnotations)
             break
+			
+		case .zoomMedium:
+			mapView.addAnnotations(mapModel.floors[currentFloor].amenityAnnotations)
+			mapView.addAnnotations(mapModel.floors[currentFloor].departmentAnnotations)
+			break
             
-        case .zoomedDetail, .zoomedMax:
+        case .zoomDetail, .zoomMax:
             mapView.addAnnotations(mapModel.floors[currentFloor].galleryAnnotations)
             mapView.addAnnotations(mapModel.floors[currentFloor].objectAnnotations)
-            
             break
-        }
+		}
+		
+//		if mapView.currentZoomLevel == .zoomedOut {
+//			// This value to controls the number of off screen annotations are displayed.
+//			// A bigger number means more annotations, less chance of seeing annotation views pop in but decreased performance.
+//			// A smaller number means fewer annotations, more chance of seeing annotation views pop in but better performance.
+//			let marginFactor: Double = 2.0
+//
+//			// Adjust this roughly based on the dimensions of your annotations views.
+//			// Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
+//			// Numbers too small result in overlapping annotations views and too many annotations on screen.
+//			let bucketSize: CGFloat = 120.0
+//
+//			// find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
+//			let adjustedVisibleMapRect = MKMapRectInset(mapView.visibleMapRect, -marginFactor * mapView.visibleMapRect.size.width, -marginFactor * mapView.visibleMapRect.size.height)
+//
+//			// determine how wide each bucket will be, as a MKMapRect square
+//			let leftCoordinate = mapView.convert(CGPoint.zero, toCoordinateFrom: self.view)
+//			let rightCoordinate = mapView.convert(CGPoint(x: bucketSize, y: 0), toCoordinateFrom: self.view)
+//			let gridSize = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x
+//			var gridMapRect = MKMapRectMake(0, 0, gridSize, gridSize)
+//
+//			// condense annotations, with a padding of two squares, around the visibleMapRect
+//			let startX = floor(MKMapRectGetMinX(adjustedVisibleMapRect) / gridSize) * gridSize
+//			let startY = floor(MKMapRectGetMinY(adjustedVisibleMapRect) / gridSize) * gridSize
+//			let endX = floor(MKMapRectGetMaxX(adjustedVisibleMapRect) / gridSize) * gridSize
+//			let endY = floor(MKMapRectGetMaxY(adjustedVisibleMapRect) / gridSize) * gridSize
+//
+//			// for each square in our grid, pick one annotation to show
+//			gridMapRect.origin.y = startY
+//			while MKMapRectGetMinY(gridMapRect) <= endY {
+//				gridMapRect.origin.x = startX
+//
+//				while MKMapRectGetMinX(gridMapRect) <= endX {
+//					let allAnnotationsInBucket = self.mapView.annotations(in: gridMapRect)
+//
+//					if allAnnotationsInBucket.count > 0 {
+//						if let _ = allAnnotationsInBucket as? Set<MapAnnotation> {
+//							let annotationForGrid = self.annotationInGrid(gridMapRect, usingAnnotations: allAnnotationsInBucket as! Set<MapAnnotation>)
+//
+//							for annotation in allAnnotationsInBucket {
+//								if annotation != annotationForGrid as! AnyHashable {
+//									// remove annotations which we've decided to cluster
+//									self.mapView.removeAnnotation(annotation as! MKAnnotation)
+//								}
+//							}
+//
+//							//self.mapView.addAnnotation(annotationForGrid)
+//						}
+//					}
+//					gridMapRect.origin.x += gridSize
+//				}
+//
+//				gridMapRect.origin.y += gridSize
+//			}
+//		}
     }
+	
+//	private func annotationInGrid(_ gridMapRect: MKMapRect, usingAnnotations annotations: Set<MapAnnotation>) -> MKAnnotation {
+//
+//		// first, see if one of the annotations we were already showing is in this mapRect
+//		let visibleAnnotatonsInBucket = self.mapView.annotations(in: gridMapRect)
+//		if let annotationForGridSet = annotations.first(where: { annotation in
+//			visibleAnnotatonsInBucket.contains(annotation)
+//		})  {
+//			return annotationForGridSet
+//		}
+//
+//		// otherwise, sort the annotations based on their distance from the center of the grid square,
+//		// then choose the one closest to the center to show
+//		let centerMapPoint = MKMapPointMake(MKMapRectGetMidX(gridMapRect), MKMapRectGetMidY(gridMapRect))
+//		let sortedAnnotations = annotations.sorted {obj1, obj2 in
+//			let mapPoint1 = MKMapPointForCoordinate(obj1.coordinate)
+//			let mapPoint2 = MKMapPointForCoordinate(obj2.coordinate)
+//
+//			let distance1 = MKMetersBetweenMapPoints(mapPoint1, centerMapPoint)
+//			let distance2 = MKMetersBetweenMapPoints(mapPoint2, centerMapPoint)
+//
+//			return distance1 < distance2
+//		}
+//
+//		return sortedAnnotations[0]
+//	}
 
     // Highlight object annotations that are in a visible range as the user pans around
     private func updateAllInformationAnnotationViews() {
-        if mapView.currentZoomLevel == .zoomedDetail || mapView.currentZoomLevel == .zoomedMax {
+        if mapView.currentZoomLevel == .zoomDetail || mapView.currentZoomLevel == .zoomMax {
             // Update Objects
             //let annotationsInRect = mapView.annotationsInMapRect(mapView.visibleMapRect)
             let centerCoord = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
@@ -941,7 +1028,7 @@ extension MapViewController : MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         if mode == .allInformation && view.isKind(of: MapObjectAnnotationView.self) {
-            if self.mapView.currentZoomLevel != .zoomedMax && self.mapView.currentZoomLevel != .zoomedDetail {
+            if self.mapView.currentZoomLevel != .zoomMax && self.mapView.currentZoomLevel != .zoomDetail {
                 self.mapView.removeAnnotationsWithAnimation(annotations: [view.annotation!])
             }
         }
@@ -955,7 +1042,8 @@ extension MapViewController : MKMapViewDelegate {
         
         // Store the location mode
         if !floorSelectorVC.userHeadingIsEnabled() {
-           self.mapView.keepMapInView()
+			self.mapView.keepMapInView()
+			self.mapView.adjustPicthForZoomLevel()
         }
         
         if isSwitchingModes {
@@ -1048,12 +1136,14 @@ extension MapViewController : UIGestureRecognizerDelegate {
     
     @objc func mapViewWasPinched(_ gesture:UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
+		self.mapView.adjustPicthForZoomLevel()
 		self.delegate?.mapWasPressed()
     }
     
     @objc func mapViewWasPanned(_ gesture:UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
         mapView.keepMapInView()
+		self.mapView.adjustPicthForZoomLevel()
 		self.delegate?.mapWasPressed()
     }
 }

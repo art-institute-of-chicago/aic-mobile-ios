@@ -20,16 +20,15 @@ enum MapAmenityAnnotationType : String {
     case AudioGuide = "Audio Guide"
 }
 
-class MapAmenityAnnotation: NSObject, MKAnnotation {
+class MapAmenityAnnotation: MapAnnotation {
 	var nid: Int?
-    var coordinate: CLLocationCoordinate2D
 	var floor: Int
     var type: MapAmenityAnnotationType
     
 	init(nid: Int, coordinate: CLLocationCoordinate2D, floor: Int, type: MapAmenityAnnotationType) {
 		self.nid = nid
-        self.coordinate = coordinate
 		self.floor = floor
         self.type = type
+		super.init(coordinate: coordinate)
     }
 }

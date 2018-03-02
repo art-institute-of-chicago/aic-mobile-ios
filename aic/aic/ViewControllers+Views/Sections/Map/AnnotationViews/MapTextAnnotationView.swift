@@ -35,16 +35,16 @@ class MapTextAnnotationView: MapAnnotationView {
         
         switch annotation.type {
         case .Space:
-            font = .aicSpacesFont
+            font = .aicMapSpacesFont
             
         case .Landmark:
-            font = .aicSystemTextFont
+            font = .aicMapTextFont
 		
 		case .Garden:
-			font = .aicSystemTextFont
+			font = .aicMapTextFont
 		
         case .Gallery:
-            font = .aicSystemTextFont
+            font = .aicMapTextFont
         }
         
         self.annotation = annotation
@@ -57,7 +57,8 @@ class MapTextAnnotationView: MapAnnotationView {
         let range = NSMakeRange(0, attrString.length)
         attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range: range)
         attrString.addAttribute(NSAttributedStringKey.font, value:font, range: range)
-        
+		
+		label.textColor = .white
         label.attributedText = attrString
         label.numberOfLines = 0
         label.textAlignment = NSTextAlignment.center
@@ -75,21 +76,21 @@ class MapTextAnnotationView: MapAnnotationView {
             return
         }
         
-        if let annotation = self.annotation as? MapTextAnnotation {
-            switch annotation.type {
-            case .Landmark:
-                label.textColor = color.darker()
-				
-			case .Garden:
-				label.textColor = color.darker()
-                
-            case .Space:
-                label.textColor = color.lighter()
-                
-            case .Gallery:
-                label.textColor = color.lighter()
-            }
-        }
+//        if let annotation = self.annotation as? MapTextAnnotation {
+//            switch annotation.type {
+//            case .Landmark:
+//                label.textColor = color.darker()
+//
+//			case .Garden:
+//				label.textColor = color.darker()
+//
+//            case .Space:
+//                label.textColor = color.lighter()
+//
+//            case .Gallery:
+//                label.textColor = color.lighter()
+//            }
+//        }
     }
 }
 
