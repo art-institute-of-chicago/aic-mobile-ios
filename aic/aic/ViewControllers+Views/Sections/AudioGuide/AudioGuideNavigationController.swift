@@ -11,10 +11,10 @@ protocol AudioGuideNavigationControllerDelegate : class {
 }
 
 class AudioGuideNavigationController : SectionNavigationController {
-	let rootViewController: UIViewController = UIViewController()
+	let rootVC: UIViewController = UIViewController()
 	
-    static let buttonSizeRatio:CGFloat = 0.1946 // Ratio of preferred button size to screen width
-    static let colSpacingRatio:CGFloat = 0.048
+    static let buttonSizeRatio: CGFloat = 0.1946 // Ratio of preferred button size to screen width
+    static let colSpacingRatio: CGFloat = 0.048
 	// No top margin on iPhone 5, should define this width somewhere this is gross
 	let numberPadTopMargin = UIScreen.main.bounds.width > 320 ? 30 : 0
 	
@@ -45,6 +45,7 @@ class AudioGuideNavigationController : SectionNavigationController {
 		super.viewDidLoad()
 		
 		self.view.backgroundColor = sectionModel.color
+		self.automaticallyAdjustsScrollViewInsets = false
 		
 		sectionNavigationBar.headerView.backgroundColor = .clear
 		
@@ -52,12 +53,14 @@ class AudioGuideNavigationController : SectionNavigationController {
 		collectionView.delaysContentTouches = false
 		collectionView.register(AudioGuideCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
 		collectionView.dataSource = self
+		collectionView.delegate = self
 		
-		rootViewController.view.backgroundColor = .clear
-		rootViewController.navigationItem.title = sectionModel.title
-		rootViewController.view.addSubview(collectionView)
+		rootVC.automaticallyAdjustsScrollViewInsets = false
+		rootVC.view.backgroundColor = .clear
+		rootVC.navigationItem.title = sectionModel.title
+		rootVC.view.addSubview(collectionView)
 		
-		self.pushViewController(rootViewController, animated: false)
+		self.pushViewController(rootVC, animated: false)
 		
 		createViewConstraints()
 	}
@@ -74,28 +77,33 @@ class AudioGuideNavigationController : SectionNavigationController {
 		let buttonSize = Int(buttonSizeRatio * UIScreen.main.bounds.width)
 		let buttonSpacing = Int(colSpacingRatio * UIScreen.main.bounds.width)
 		let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		layout.sectionInset = UIEdgeInsets.zero
 		layout.itemSize = CGSize(width: buttonSize, height: buttonSize)
-		layout.minimumInteritemSpacing = CGFloat(buttonSpacing);
-		layout.minimumLineSpacing = CGFloat(buttonSpacing);
+		layout.minimumInteritemSpacing = CGFloat(buttonSpacing)
+		layout.minimumLineSpacing = CGFloat(buttonSpacing)
+		layout.headerReferenceSize = CGSize.zero
+		layout.sectionHeadersPinToVisibleBounds = true
+		layout.footerReferenceSize = CGSize.zero
 		
 		let width = CGFloat((buttonSize * numCols) + buttonSpacing * (numCols-1))
 		let height = CGFloat((buttonSize * numRows) + buttonSpacing * (numRows-1))
 		
 		let collectionView = UICollectionView(frame: CGRect(x: 0,y: 0, width: width, height: height), collectionViewLayout: layout)
+		collectionView.contentInset = UIEdgeInsets.zero
+		collectionView.isScrollEnabled = false
 		collectionView.backgroundColor = .clear
 		return collectionView
 	}
 	
 	func createViewConstraints() {
 		collectionView.autoSetDimensions(to: collectionView.frame.size)
-		collectionView.autoAlignAxis(.vertical, toSameAxisOf: rootViewController.view)
-		
+		collectionView.autoAlignAxis(.vertical, toSameAxisOf: rootVC.view)
+
 		var collectionViewTopOffset: CGFloat = -25
 		if UIDevice().type == .iPhoneX {
 			collectionViewTopOffset = 15
 		}
-		collectionView.autoPinEdge(.top, to: .top, of: rootViewController.view, withOffset: Common.Layout.navigationBarHeight + collectionViewTopOffset, relation: .greaterThanOrEqual)
+		collectionView.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: Common.Layout.navigationBarHeight + collectionViewTopOffset, relation: .greaterThanOrEqual)
 	}
     
     func reset() {
@@ -156,8 +164,7 @@ class AudioGuideNavigationController : SectionNavigationController {
 extension AudioGuideNavigationController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AudioGuideCollectionViewCell
-        
-        //TODO: Not sure that NSIndexPath conversion is necessary, may be auto converted with swift 3
+		
 		let titleLabel = buttonValueMap[((indexPath as NSIndexPath).section * AudioGuideNavigationController.numCols) + (indexPath as NSIndexPath).row]
         switch titleLabel! {
         case "<":
@@ -178,15 +185,22 @@ extension AudioGuideNavigationController : UICollectionViewDataSource {
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
 		return AudioGuideNavigationController.numRows * AudioGuideNavigationController.numCols
     }
+}
+
+extension AudioGuideNavigationController : UICollectionViewDelegate {
+	func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlowLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		return CGSize.zero
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+		return CGPoint.zero
+	}
 }
 
 // MARK: Gesture handlers
