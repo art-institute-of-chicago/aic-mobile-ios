@@ -9,7 +9,8 @@ class MapDepartmentAnnotationView: MapAnnotationView {
     class var reuseIdentifier:String {
         return "mapDepartment"
     }
-    
+	
+	let imageSize: CGSize = CGSize(width: 46.0, height: 46.0)
     let insets:UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10)
     let labelMargin: CGFloat = 10
     
@@ -70,13 +71,13 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         // Save Annotation
         self.annotation = annotation
         // Create image
-        let image = UIImageView()
-        image.image = UIImage(named:annotation.imageName)
-        image.sizeToFit()
-        image.isUserInteractionEnabled = true
-        
-        image.frame.origin = CGPoint(x: insets.left, y: insets.top)
-        holderView.addSubview(image)
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: insets.left, y: insets.top), size: imageSize))
+		if let image = annotation.image {
+			imageView.image = image
+		}
+		imageView.contentMode = .scaleToFill
+        imageView.isUserInteractionEnabled = true
+        holderView.addSubview(imageView)
         
         // Create label
         let label = UILabel()
@@ -87,10 +88,10 @@ class MapDepartmentAnnotationView: MapAnnotationView {
 		label.textAlignment = .center
         label.textColor = .white
         label.sizeToFit()
-        label.frame.origin.x = image.frame.maxX + labelMargin
+        label.frame.origin.x = imageView.frame.maxX + labelMargin
         holderView.addSubview(label)
         
-        holderView.frame.size = CGSize(width: label.frame.maxX + insets.right, height: image.frame.maxY + insets.bottom)
+        holderView.frame.size = CGSize(width: label.frame.maxX + insets.right, height: imageView.frame.maxY + insets.bottom)
         holderTailImageView.frame.origin = CGPoint(x: holderView.frame.width/2 - holderTailImageView.frame.width/2, y: holderView.frame.size.height - 10)
         
         label.frame.origin.y = holderView.frame.height/2 - label.frame.height/2

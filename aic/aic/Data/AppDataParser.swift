@@ -84,9 +84,6 @@ class AppDataParser {
 			location = gallery.location
 		}
 		catch{}
-		
-		// optional weburl
-		let webURL = try getURL(fromJSON: exhibitionJSON, forKey: "web_url", optional: true)
         
 		// Get date exibition ends
 		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
@@ -113,7 +110,6 @@ class AppDataParser {
 								  imageUrl: imageURL,
 								  startDate: startDate,
 								  endDate: endDate,
-								  webUrl: webURL,
 								  location: location
         )
     }
@@ -853,8 +849,9 @@ class AppDataParser {
 	private func parse(departmentAnnotationJSON: JSON) throws -> MapDepartmentAnnotation {
 		let coordinate = try getCLLocation2d(fromJSON: departmentAnnotationJSON, forKey: "location")
 		let title = try getString(fromJSON: departmentAnnotationJSON, forKey: "label")
+		let imageUrl = try getURL(fromJSON: departmentAnnotationJSON, forKey: "image_url")!
 		
-		return MapDepartmentAnnotation(coordinate: coordinate, title: title, imageName: "islamic")
+		return MapDepartmentAnnotation(coordinate: coordinate, title: title, imageUrl: imageUrl)
 	}
 	
 	// Text Annotations
