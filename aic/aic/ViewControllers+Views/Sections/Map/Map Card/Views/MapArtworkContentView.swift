@@ -21,7 +21,14 @@ class MapArtworkContentView : UIView {
 		setup()
 		
 		titleLabel.text = artwork.title
-		imageView.kf.setImage(with: artwork.imageUrl)
+		imageView.kf.indicatorType = .activity
+		imageView.kf.setImage(with: artwork.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
+			if image != nil {
+				if let cropRect = artwork.imageCropRect {
+					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+				}
+			}
+		})
 		locationLabel.text = artwork.gallery.title //Common.Map.stringForFloorNumber[artwork.location.floor]
 	}
 	
@@ -31,10 +38,13 @@ class MapArtworkContentView : UIView {
 		
 		if let object = searchedArtwork.audioObject {
 			titleLabel.text = object.title
+			imageView.kf.indicatorType = .activity
 			imageView.kf.setImage(with: object.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
 				if image != nil {
 					if let cropRect = object.imageCropRect {
-						self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+						let imageCropped = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+						
+						self.imageView.image = imageCropped
 					}
 				}
 			})
@@ -59,6 +69,7 @@ class MapArtworkContentView : UIView {
 		audio.language = language
 		
 		titleLabel.text = audio.trackTitle
+		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: tourStop.object.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
 			if image != nil {
 				if let cropRect = tourStop.object.imageCropRect {
@@ -77,6 +88,7 @@ class MapArtworkContentView : UIView {
 		audio.language = language
 		
 		titleLabel.text = audio.trackTitle
+		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: tour.imageUrl)
 		locationLabel.text = tour.stops.first!.object.gallery.title //Common.Map.stringForFloorNumber[tour.location.floor]
 	}
@@ -86,6 +98,7 @@ class MapArtworkContentView : UIView {
 	}
 	
 	private func setup() {
+		imageView.frame.size = CGSize(width: 72, height: 45)
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true
 		imageView.backgroundColor = .aicLightGrayColor
@@ -117,8 +130,7 @@ class MapArtworkContentView : UIView {
 	private func createViewConstraints() {
 		imageView.autoPinEdge(.top, to: .top, of: self, withOffset: 56)
 		imageView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
-		imageView.autoSetDimension(.width, toSize: 72)
-		imageView.autoSetDimension(.height, toSize: 45)
+		imageView.autoSetDimensions(to: imageView.frame.size)
 		
 		titleLabel.autoPinEdge(.top, to: .top, of: imageView)
 		titleLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 16)

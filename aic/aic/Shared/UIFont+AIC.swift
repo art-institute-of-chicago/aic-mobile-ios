@@ -33,6 +33,8 @@ extension UIFont {
     static let aicMapSpacesFont: UIFont = UIFont(name: "IdealSans-Medium", size: 16.0)!
 	
 	static let aicMapTextFont: UIFont = UIFont(name: "IdealSans-Medium", size: 15.0)!
+	
+	static let aicMapObjectTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 15.0)!
     
     static let aicMapSVGTextFont: UIFont = UIFont(name: "SourceSansPro-Regular", size: 9.0)!
     

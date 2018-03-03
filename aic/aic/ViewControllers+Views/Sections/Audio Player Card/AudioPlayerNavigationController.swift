@@ -25,6 +25,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 	
 	var currentArtwork: AICObjectModel? = nil
     var currentAudioFile: AICAudioFileModel? = nil
+	var currentTrackTitle: String = ""
     var currentAudioFileMaxProgress: CGFloat = 0
 	var selectedLanguage: Common.Language? = nil
     
@@ -69,6 +70,15 @@ class AudioPlayerNavigationController : CardNavigationController {
         configureAVAudioSession()
         NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
     }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		// Set as
+		self.becomeFirstResponder()
+		UIApplication.shared.beginReceivingRemoteControlEvents()
+		initializeMPRemote()
+	}
     
     func createViewConstraints() {
         miniAudioPlayerView.autoPinEdge(.top, to: .top, of: rootVC.view)
@@ -128,8 +138,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 			}
         }
 		
-        currentAudioFile = audioFile
-        currentAudioFileMaxProgress = 0
+		self.currentAudioFile = audioFile
+		self.currentTrackTitle = audioFile.trackTitle
+		self.currentAudioFileMaxProgress = 0
 		
 		// even if the player defaults to a language
 		// check to see if the user changed it
@@ -195,7 +206,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 						
 						// Set the MPNowPlaying information
 						let songInfo: [String : AnyObject] = [
-							MPMediaItemPropertyTitle: NSString(string: self.currentAudioFile!.trackTitle),
+							MPMediaItemPropertyTitle: NSString(string: self.currentTrackTitle),
 							MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
 							MPMediaItemPropertyArtwork: artworkMediaItem,
 							MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
@@ -248,8 +259,8 @@ class AudioPlayerNavigationController : CardNavigationController {
     }
     
     private func showAudioControls() {
-        miniAudioPlayerView.showTrackTitle(title: currentAudioFile!.trackTitle)
-        audioInfoVC.audioPlayerView.showTrackTitle(title: currentAudioFile!.trackTitle)
+        miniAudioPlayerView.showTrackTitle(title: self.currentTrackTitle)
+        audioInfoVC.audioPlayerView.showTrackTitle(title: self.currentTrackTitle)
     }
     
     // MARK: Audio Playback

@@ -185,17 +185,26 @@ class MapViewController: UIViewController {
 		
 		// Add location annotation the floor model
 		let floor = mapModel.floors[artwork.location.floor]
-		let artworkAnnotation = MapObjectAnnotation(searchedArtwork: artwork)
+		var artworkAnnotation: MapObjectAnnotation? = nil
+		
+		if let object = artwork.audioObject {
+			for objectAnnotation in floor.objectAnnotations {
+				if objectAnnotation.nid == object.nid {
+					artworkAnnotation = objectAnnotation
+					artworkAnnotation!.tourStopIndex = 0
+				}
+			}
+		}
+		else {
+			artworkAnnotation = MapObjectAnnotation(searchedArtwork: artwork)
+		}
 		
 		setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
 		
-		mapView.addAnnotation(artworkAnnotation)
+		mapView.addAnnotation(artworkAnnotation!)
 		
 		// Zoom in on the item
 		mapView.zoomIn(onCenterCoordinate: artwork.location.coordinate)
-		
-		// Select the annotation (which eventually updates it's view)
-		mapView.selectAnnotation(artworkAnnotation, animated: true)
 	}
 	
 	func showExhibition(exhibition: AICExhibitionModel) {
@@ -701,14 +710,19 @@ class MapViewController: UIViewController {
     }
 	
 	private func updateArtworkAnnotationView() {
-		for floor in mapModel.floors {
-			for annotation in floor.objectAnnotations {
-				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-					if floor.floorNumber == currentFloor {
-						view.isSelected = true
+		for annotation in mapView.annotations {
+			if let objectAnnotation = annotation as? MapObjectAnnotation {
+				if let view = mapView.view(for: objectAnnotation) as? MapObjectAnnotationView {
+					view.mode = .maximized
+					if objectAnnotation.floor == currentFloor {
+						if view.isSelected == false {
+							view.setSelected(true, animated: true)
+						}
 						view.alpha = 1.0
 					} else {
-						view.isSelected = false
+						if view.isSelected == true {
+							view.setSelected(false, animated: true)
+						}
 						view.alpha = 0.5
 					}
 				}
@@ -945,8 +959,7 @@ extension MapViewController : MKMapViewDelegate {
         }
         
         // Object annotations
-        if let objectAnnotation = annotation as? MapObjectAnnotation {
-            //let objectIdentifier = String(objectAnnotation.object.nid)
+		if let objectAnnotation = annotation as? MapObjectAnnotation {
             let objectIdentifier = String(MapObjectAnnotationView.reuseIdentifier)
             
             guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier) as? MapObjectAnnotationView else {

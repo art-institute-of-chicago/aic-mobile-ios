@@ -100,7 +100,7 @@ class SectionsViewController : UIViewController {
 		}
 		
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
     }
 	
 	override func viewWillAppear(_ animated: Bool) {

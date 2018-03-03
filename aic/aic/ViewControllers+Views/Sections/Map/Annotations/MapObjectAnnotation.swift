@@ -30,6 +30,9 @@ class MapObjectAnnotation : MapAnnotation {
 		if let object = searchedArtwork.audioObject {
 			self.nid = object.nid
 		}
+		else {
+			self.nid = searchedArtwork.artworkId
+		}
 		self.floor = searchedArtwork.location.floor
 		self.clLocation = CLLocation(latitude: searchedArtwork.location.coordinate.latitude, longitude: searchedArtwork.location.coordinate.longitude)
 		self.title = searchedArtwork.title
