@@ -47,6 +47,7 @@ class RestaurantPageViewController : UIPageViewController {
 		pageControl.currentPageIndicatorTintColor = .white
 		pageControl.layer.borderColor = UIColor.white.cgColor
 		pageControl.layer.borderWidth = 1
+		pageControl.isUserInteractionEnabled = false // disable tap
 		
 		setCurrentPage(pageIndex: 0)
 	}

@@ -65,6 +65,8 @@ class MapViewController: UIViewController {
     fileprivate (set) var currentFloor: Int = Common.Map.startFloor
 	fileprivate (set) var currentUserFloor: Int? = nil
 	
+	private var highlightedTourStopIdentifier: Int = 0
+	
 	// TODO: move these to SectionsViewController
     var locationDisabledMessage: UIView? = nil
     var locationOffsiteMessage: UIView? = nil
@@ -284,7 +286,9 @@ class MapViewController: UIViewController {
             let floorStops = tourModel.stops.filter({ $0.object.location.floor == floor.floorNumber })
 			
 			if tourModel.location.floor == floor.floorNumber {
-				floor.tourStopAnnotations.append(MapObjectAnnotation(tour: tourModel))
+				let tourOverviewStop = MapObjectAnnotation(tour: tourModel)
+				tourOverviewStop.tourStopIndex = 0
+				floor.tourStopAnnotations.append(tourOverviewStop)
 			}
 			
             // Set their objects as active on the map floor
@@ -355,6 +359,7 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if annotation.nid == identifier {
+					highlightedTourStopIdentifier = identifier
 					// Turn off user heading since we want to jump to a specific place
 					floorSelectorVC.disableUserHeading()
 					
@@ -362,8 +367,6 @@ class MapViewController: UIViewController {
                     setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 					
 					// Zoom in on the item
-//					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate)
-//					mapView.zoomIn(onCenterCoordinate: tourStop.object.location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomedDetail.rawValue)
 					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
                     
                     // Select the annotation (which eventually updates it's view)
@@ -678,13 +681,19 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-                    if floor.floorNumber == currentFloor {
-                        view.mode = .maximized
-                        view.alpha = 1.0
+					
+					view.setTourStopNumber(number: annotation.tourStopIndex)
+					
+					if floor.floorNumber == currentFloor {
+						if annotation.nid == highlightedTourStopIdentifier {
+							view.mode = .tourMaximized
+						}
+						else {
+							view.mode = .tourMinimized
+						}
                     }
                     else {
-                        view.mode = .maximized
-                        view.alpha = 0.5
+                        view.mode = .tourOtherFloor
                     }
                 }
             }
@@ -696,8 +705,10 @@ class MapViewController: UIViewController {
 			for annotation in floor.objectAnnotations {
 				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
 					if floor.floorNumber == currentFloor {
+						view.isSelected = true
 						view.alpha = 1.0
 					} else {
+						view.isSelected = false
 						view.alpha = 0.5
 					}
 				}
@@ -708,7 +719,7 @@ class MapViewController: UIViewController {
 	private func updateExhibitionAnnotationView() {
 		for floor in mapModel.floors {
 			for annotation in floor.objectAnnotations {
-				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
+				if let view = mapView.view(for: annotation) as? MapExhibitionAnnotationView {
 					if floor.floorNumber == currentFloor {
 						view.alpha = 1.0
 					} else {
@@ -1136,14 +1147,12 @@ extension MapViewController : UIGestureRecognizerDelegate {
     
     @objc func mapViewWasPinched(_ gesture:UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
-		self.mapView.adjustPicthForZoomLevel()
 		self.delegate?.mapWasPressed()
     }
     
     @objc func mapViewWasPanned(_ gesture:UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
         mapView.keepMapInView()
-		self.mapView.adjustPicthForZoomLevel()
 		self.delegate?.mapWasPressed()
     }
 }

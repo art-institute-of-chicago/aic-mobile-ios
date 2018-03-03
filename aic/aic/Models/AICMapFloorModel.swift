@@ -76,14 +76,15 @@ class AICMapFloorModel {
     
     func setTourStopAnnotations(forTourStopModels tourStopmodels:[AICTourStopModel]) {
         for stopModel in tourStopmodels {
-            setTourStopAnnotation(forStopModel:stopModel)
+            setTourStopAnnotation(forStopModel: stopModel)
         }
     }
     
     // Make sure we actually have a tour object on this floor
     // then mark it as one we're showing
-    func setTourStopAnnotation(forStopModel stopModel:AICTourStopModel) {
+    func setTourStopAnnotation(forStopModel stopModel: AICTourStopModel) {
         if let annotation = getAnnotationForObject(object: stopModel.object) {
+			annotation.tourStopIndex = stopModel.order + 1 // set index in annotation model to show on annotation view
             tourStopAnnotations.append(annotation)
         }
     }

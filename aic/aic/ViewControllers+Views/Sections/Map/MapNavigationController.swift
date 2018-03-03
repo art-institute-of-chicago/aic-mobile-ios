@@ -246,7 +246,7 @@ class MapNavigationController : SectionNavigationController {
 		currentMode = .allInformation
 		mapVC.showAllInformation()
 		if mapContentCardVC != nil {
-			mapContentCardVC!.view.removeFromSuperview()
+			mapContentCardVC!.hide()
 		}
 		mapContentCardVC = nil
 		tourModel = nil
