@@ -13,7 +13,7 @@ class MapObjectAnnotation : MapAnnotation {
     var title: String?
 	var thumbnailUrl: URL
 	var thumbnailCropRect: CGRect?
-	var tourStopIndex: Int = 0
+	var tourStopOrder: Int = 0
 	
 	// Objects with audio
     init(object: AICObjectModel) {

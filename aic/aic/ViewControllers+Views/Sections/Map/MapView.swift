@@ -128,7 +128,7 @@ class MapView: MKMapView {
         if let overlay = floorplanOverlay {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
             zoomIn(onCenterCoordinate: overlay.coordinate, altitude: camera.altitude, withAnimation: animated, heading: heading)
-			print("showFullMap")
+			
         }
     }
     

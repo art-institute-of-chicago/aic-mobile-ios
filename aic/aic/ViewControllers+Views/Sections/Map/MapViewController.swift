@@ -191,7 +191,7 @@ class MapViewController: UIViewController {
 			for objectAnnotation in floor.objectAnnotations {
 				if objectAnnotation.nid == object.nid {
 					artworkAnnotation = objectAnnotation
-					artworkAnnotation!.tourStopIndex = 0
+					artworkAnnotation!.tourStopOrder = 0
 				}
 			}
 		}
@@ -290,20 +290,31 @@ class MapViewController: UIViewController {
         mode = .tour
         
         // Find the stops for this floor and set them on the model
-        var annotations: [MKAnnotation] = []
+        var annotations: [MapObjectAnnotation] = []
         for floor in mapModel.floors {
             let floorStops = tourModel.stops.filter({ $0.object.location.floor == floor.floorNumber })
 			
 			if tourModel.location.floor == floor.floorNumber {
 				let tourOverviewStop = MapObjectAnnotation(tour: tourModel)
-				tourOverviewStop.tourStopIndex = 0
+				tourOverviewStop.tourStopOrder = 0
 				floor.tourStopAnnotations.append(tourOverviewStop)
 			}
 			
             // Set their objects as active on the map floor
             floor.setTourStopAnnotations(forTourStopModels: floorStops)
-            annotations.append(contentsOf: floor.tourStopAnnotations as [MKAnnotation])
+            annotations.append(contentsOf: floor.tourStopAnnotations)
         }
+		
+		// order annotations and assign tour stop numbers
+		// based on total number of stops, instead of number coming from CMS (some stops might be missing)
+		annotations.sort { (A, B) -> Bool in
+			return A.tourStopOrder < B.tourStopOrder
+		}
+		var number: Int = 0
+		for annotation in annotations {
+			annotation.tourStopOrder = number
+			number += 1
+		}
 
 		let startFloor: Int = tourModel.stops.first!.object.location.floor
         setCurrentFloor(forFloorNum: startFloor, andResetMap: false)
@@ -691,7 +702,7 @@ class MapViewController: UIViewController {
             for annotation in floor.tourStopAnnotations {
                 if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
 					
-					view.setTourStopNumber(number: annotation.tourStopIndex)
+					view.setTourStopNumber(number: annotation.tourStopOrder)
 					
 					if floor.floorNumber == currentFloor {
 						if annotation.nid == highlightedTourStopIdentifier {
