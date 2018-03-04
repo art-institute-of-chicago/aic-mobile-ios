@@ -15,10 +15,13 @@ protocol AudioInfoSectionViewDelegate: class {
 class AudioInfoSectionView : UIView {
 	let topDividerLine: UIView = UIView()
 	let titleLabel: UILabel = UILabel()
+	let tapArea: UIView = UIView()
 	let bodyTextView: LinkedTextView = LinkedTextView()
 	let collapseExpandButton: UIButton = UIButton()
 	
 	weak var delegate: AudioInfoSectionViewDelegate? = nil
+	
+	let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
 	
 	private let collapsedHeight: CGFloat = 64
 	private let collapseAnimationDuration = 0.5
@@ -31,6 +34,8 @@ class AudioInfoSectionView : UIView {
 		self.translatesAutoresizingMaskIntoConstraints = false
 		self.clipsToBounds = true
 		
+		tapArea.backgroundColor = .clear
+		
 		topDividerLine.backgroundColor = .aicDividerLineDarkColor
 		
 		titleLabel.numberOfLines = 1
@@ -42,12 +47,19 @@ class AudioInfoSectionView : UIView {
 		collapseExpandButton.addTarget(self, action: #selector(collapseButtonPressed(button:)), for: .touchUpInside)
 		collapseExpandButton.isEnabled = false
 		collapseExpandButton.isHidden = true
+		collapseExpandButton.isSelected = false
 		
 		bodyTextView.textColor = .white
 		bodyTextView.font = .aicCardDescriptionFont
 		bodyTextView.setDefaultsForAICAttributedTextView()
 		
+		// tap to expand/collapse
+		tapGesture.isEnabled = false
+		tapGesture.addTarget(self, action: #selector(handleTapGesture(recognizer:)))
+		tapArea.addGestureRecognizer(tapGesture)
+		
 		// Add Subviews
+		addSubview(tapArea)
 		addSubview(topDividerLine)
 		addSubview(titleLabel)
 		addSubview(collapseExpandButton)
@@ -74,6 +86,7 @@ class AudioInfoSectionView : UIView {
 	
 	func show(collapseEnabled: Bool) {
 		isHidden = false
+		tapGesture.isEnabled = collapseEnabled
 		collapseExpandButton.isEnabled = collapseEnabled
 		collapseExpandButton.isHidden = !collapseEnabled
 		collapseExpandButton.isSelected = false
@@ -115,6 +128,11 @@ class AudioInfoSectionView : UIView {
 	// MARK: Constraints
 	
 	func createConstraints() {
+		tapArea.autoPinEdge(.top, to: .top, of: self)
+		tapArea.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		tapArea.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
+		tapArea.autoSetDimension(.height, toSize: collapsedHeight)
+		
 		topDividerLine.autoPinEdge(.top, to: .top, of: self)
 		topDividerLine.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		topDividerLine.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
@@ -158,5 +176,9 @@ class AudioInfoSectionView : UIView {
 		}
 		
 		button.isSelected = !button.isSelected
+	}
+	
+	@objc func handleTapGesture(recognizer: UITapGestureRecognizer) {
+		self.collapseButtonPressed(button: collapseExpandButton)
 	}
 }

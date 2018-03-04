@@ -116,7 +116,8 @@ class MapArtworkContentView : UIView {
 		locationLabel.font = .aicMapCardTextFont
 		locationLabel.textColor = .white
 		
-		audioButton.setImage(#imageLiteral(resourceName: "mapTourStopAudioButton"), for: .normal)
+		audioButton.setImage(#imageLiteral(resourceName: "tourStopPlay"), for: .normal)
+		audioButton.setImage(#imageLiteral(resourceName: "tourStopPause"), for: .selected)
 		
 		// Add subviews
 		self.addSubview(imageView)
@@ -140,7 +141,7 @@ class MapArtworkContentView : UIView {
 		locationLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 16)
 		locationLabel.autoPinEdge(.trailing, to: .leading, of: audioButton, withOffset: -16)
 		
-		audioButton.autoPinEdge(.top, to: .top, of: self, withOffset: 56)
+		audioButton.autoAlignAxis(.horizontal, toSameAxisOf: imageView)
 		audioButton.autoPinEdge(.leading, to: .leading, of: self, withOffset: UIScreen.main.bounds.width - audioButton.image(for: .normal)!.size.width - 16)
 	}
 }

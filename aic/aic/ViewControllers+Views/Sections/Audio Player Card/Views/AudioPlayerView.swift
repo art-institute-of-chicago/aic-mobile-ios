@@ -32,9 +32,9 @@ class AudioPlayerView : BaseView {
         timeRemainingLabel.font = .aicAudioPlayerTimeRemainingFont
         timeRemainingLabel.text = " "
 		
-		playPauseButton.setImage(#imageLiteral(resourceName: "audioPlay"), for: .normal)
-		playPauseButton.setImage(#imageLiteral(resourceName: "audioPause"), for: .selected)
-		playPauseButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+		playPauseButton.setImage(#imageLiteral(resourceName: "audioPlayBig"), for: .normal)
+		playPauseButton.setImage(#imageLiteral(resourceName: "audioPauseBig"), for: .selected)
+		playPauseButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         
         // Add Subviews
 		self.addSubview(titleLabel)
@@ -110,6 +110,6 @@ class AudioPlayerView : BaseView {
 		playPauseButton.autoAlignAxis(.horizontal, toSameAxisOf: slider)
 		
 		self.autoSetDimension(.width, toSize: UIScreen.main.bounds.width)
-		self.autoPinEdge(.bottom, to: .bottom, of: slider, withOffset: 8)
+		self.autoPinEdge(.bottom, to: .bottom, of: slider, withOffset: 12)
     }
 }

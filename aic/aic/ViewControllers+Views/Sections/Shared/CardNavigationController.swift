@@ -285,8 +285,16 @@ extension CardNavigationController : UIGestureRecognizerDelegate {
     }
 	
 	@objc internal func handleTapGesture(recognizer: UITapGestureRecognizer) {
-		if currentState == .fullscreen {
-			hide()
+		if currentState == openState {
+			if closedState == .minimized {
+				showMinimized()
+			}
+			else if closedState == .mini_player {
+				showMiniPlayer()
+			}
+			else if closedState == .hidden {
+				hide()
+			}
 		}
 	}
 	

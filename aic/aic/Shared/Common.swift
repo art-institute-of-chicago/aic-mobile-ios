@@ -195,7 +195,7 @@ struct Common {
 			return 49
 		}
 		
-		static var miniAudioPlayerHeight: CGFloat = 40.0
+		static var miniAudioPlayerHeight: CGFloat = 42.0
 
         static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat {
 			return tabBarHeight + miniAudioPlayerHeight

@@ -59,13 +59,13 @@ class MapViewController: UIViewController {
 
     // Floor Selector
     let floorSelectorVC = MapFloorSelectorViewController()
-    let floorSelectorMargin = CGPoint(x: 20, y: 40)
+    let floorSelectorMargin = CGPoint(x: 20, y: 20)
     
     fileprivate (set) var previousFloor: Int = Common.Map.startFloor
     fileprivate (set) var currentFloor: Int = Common.Map.startFloor
 	fileprivate (set) var currentUserFloor: Int? = nil
 	
-	private var highlightedTourStopIdentifier: Int = 0
+	private var highlightedTourStopNid: Int = 0
 	
 	// TODO: move these to SectionsViewController
     var locationDisabledMessage: UIView? = nil
@@ -379,7 +379,7 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if annotation.nid == identifier {
-					highlightedTourStopIdentifier = identifier
+					highlightedTourStopNid = identifier
 					// Turn off user heading since we want to jump to a specific place
 					floorSelectorVC.disableUserHeading()
 					
@@ -434,11 +434,8 @@ class MapViewController: UIViewController {
 		
 		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
 		var floorSelectorY = mapFrame.origin.y + mapFrame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y
-		
-		// Try to bottom align, if that pushes it out of the viewable area, push it down below area
-		if floorSelectorY < 0 {
-			floorSelectorY = mapFrame.origin.y + 5
-		}
+		let maxFloorSelectorY = UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.miniAudioPlayerHeight - floorSelectorVC.view.frame.height - floorSelectorMargin.y
+		floorSelectorY = min(floorSelectorY, maxFloorSelectorY)
 		
 		floorSelectorVC.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
 		
@@ -458,14 +455,30 @@ class MapViewController: UIViewController {
         mapView.floorplanOverlay = mapModel.floors[floorNum].overlay
         
         // Add annotations
-        if mode == .allInformation {
-            updateAllInformationAnnotations(isSwitchingFloors: true)
-        }
-		else if mode == .restrooms {
-			updateRestroomAnnotations()
-		}
-		else if mode == .giftshop {
+		switch mode {
+		case .allInformation:
+			updateAllInformationAnnotations(isSwitchingFloors: true)
+			break
+		case .artwork:
+			updateArtworkAnnotationView()
+			break
+		case .exhibition:
+			updateExhibitionAnnotationView()
+			break
+		case .dining:
+			updateDiningAnnotations()
+			break
+		case .giftshop:
 			updateGiftShopAnnotations()
+			break
+		case .restrooms:
+			updateRestroomAnnotations()
+			break
+		case .location:
+			break
+		case .tour:
+			updateTourAnnotationViews()
+			break
 		}
         
         // Snap back to full view
@@ -704,8 +717,8 @@ class MapViewController: UIViewController {
 					
 					view.setTourStopNumber(number: annotation.tourStopOrder)
 					
-					if floor.floorNumber == currentFloor {
-						if annotation.nid == highlightedTourStopIdentifier {
+					if annotation.floor == currentFloor {
+						if annotation.nid == highlightedTourStopNid {
 							view.mode = .tourMaximized
 						}
 						else {
@@ -742,10 +755,10 @@ class MapViewController: UIViewController {
 	}
 	
 	private func updateExhibitionAnnotationView() {
-		for floor in mapModel.floors {
-			for annotation in floor.objectAnnotations {
+		for annotation in mapView.annotations {
+			if let exhibitionAnnotation = annotation as? MapExhibitionAnnotation {
 				if let view = mapView.view(for: annotation) as? MapExhibitionAnnotationView {
-					if floor.floorNumber == currentFloor {
+					if exhibitionAnnotation.floor == currentFloor {
 						view.alpha = 1.0
 					} else {
 						view.alpha = 0.5

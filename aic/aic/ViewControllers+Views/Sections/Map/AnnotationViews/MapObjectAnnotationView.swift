@@ -166,10 +166,10 @@ class MapObjectAnnotationView: MapAnnotationView {
 	func setTourStopNumber(number: Int) {
 		if number > 0 {
 			self.tourStopNumberLabel.text = String(number)
-			imageDarkOverlay.alpha = 1
+			imageDarkOverlay.isHidden = false
 		}
 		else {
-			imageDarkOverlay.alpha = 0
+			imageDarkOverlay.isHidden = true
 		}
 		
 	}
@@ -221,8 +221,8 @@ class MapObjectAnnotationView: MapAnnotationView {
                 })
                 
                 UIView.animate(withDuration: animationDuration, delay: animationDuration, options: UIViewAnimationOptions(), animations: {
-                    self.titleLabel.alpha = CGFloat(1.0)
-                    self.headphonesIcon.alpha = CGFloat(1.0)
+                    self.titleLabel.alpha = 1.0
+                    self.headphonesIcon.alpha = 1.0
                     }, completion: { _ in }
                 )
                 

@@ -127,7 +127,16 @@ class MapView: MKMapView {
     func showFullMap(useDefaultHeading: Bool = false, animated: Bool = true) {
         if let overlay = floorplanOverlay {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
-            zoomIn(onCenterCoordinate: overlay.coordinate, altitude: camera.altitude, withAnimation: animated, heading: heading)
+			var centerPoint = overlay.coordinate
+			
+			let buildingRect = overlay.boundingMapRect
+			let userMapPoint = MKMapPointForCoordinate(userLocation.coordinate)
+			let distanceFromBuildingCenter = MKMetersBetweenMapPoints(userMapPoint, buildingRect.getCenter())
+			if  distanceFromBuildingCenter < Common.Location.minDistanceFromMuseumForLocation {
+				centerPoint = userLocation.coordinate
+			}
+			
+			zoomIn(onCenterCoordinate: centerPoint, altitude: camera.altitude, withAnimation: animated, heading: heading)
 			
         }
     }

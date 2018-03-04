@@ -33,7 +33,7 @@ class AudioInfoViewController : UIViewController {
 		scrollView.delegate = self
 		scrollView.backgroundColor = .clear
 		scrollView.isScrollEnabled = true
-//		scrollView.showsVerticalScrollIndicator = false
+		scrollView.showsVerticalScrollIndicator = false
 		scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		
 		imageView.backgroundColor = .clear
