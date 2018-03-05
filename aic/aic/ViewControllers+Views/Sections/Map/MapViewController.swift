@@ -11,7 +11,7 @@ import Localize_Swift
 protocol MapViewControllerDelegate : class {
 	func mapWasPressed()
     func mapDidPressArtworkPlayButton(artwork: AICObjectModel)
-    func mapDidSelectTourStop(artwork: AICObjectModel)
+    func mapDidSelectTourStop(stopId: Int)
 	func mapDidSelectRestaurant(restaurant: AICRestaurantModel)
 }
 
@@ -24,7 +24,6 @@ class MapViewController: UIViewController {
 		case dining
 		case giftshop
 		case restrooms
-        case location
         case tour
     }
     
@@ -34,20 +33,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    enum AnnotationLevel {
-        case building
-        case department
-        case object
-    }
-    
     weak var delegate:MapViewControllerDelegate?
-    
-    // Map + Text Colors
-    var color: UIColor = .aicHomeColor {
-        didSet {
-            updateColors()
-        }
-    }
     
     let mapModel = AppDataManager.sharedInstance.app.map
     
@@ -65,8 +51,6 @@ class MapViewController: UIViewController {
     fileprivate (set) var currentFloor: Int = Common.Map.startFloor
 	fileprivate (set) var currentUserFloor: Int? = nil
 	
-	private var highlightedTourStopNid: Int = 0
-	
 	// TODO: move these to SectionsViewController
     var locationDisabledMessage: UIView? = nil
     var locationOffsiteMessage: UIView? = nil
@@ -81,8 +65,8 @@ class MapViewController: UIViewController {
 		self.navigationItem.title = Common.Sections[.map]!.title
 		
         // Update teh annotation views every frame
-        //let displayLink = CADisplayLink(target: self, selector: #selector(MapViewController.setAnnotationViewPropertiesForCurrentMapAltitude))
-        //displayLink.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+//        let displayLink = CADisplayLink(target: self, selector: #selector(setAnnotationViewPropertiesForCurrentMapAltitude))
+//		displayLink.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -126,28 +110,7 @@ class MapViewController: UIViewController {
                                                selector: #selector(MapViewController.updateMapWithTimer),
                                                userInfo: nil,
                                                repeats: true)
-		
-		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
-    }
-	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		
-		updateLanguage()
 	}
-	
-	@objc func updateLanguage() {
-		
-	}
-    
-    // Set the color of the background overlay
-    func updateColors() {
-        // Set the background color
-        if let renderer = mapView.renderer(for: mapViewHideBackgroundOverlay) as? MKPolygonRenderer {
-            renderer.fillColor = self.color
-        }
-    }
     
     // MARK: Mode Functions
     
@@ -160,24 +123,6 @@ class MapViewController: UIViewController {
 		if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
 			mapView.showFullMap(useDefaultHeading: true)
 		}
-    }
-    
-    // Show a news item (location) on the map
-    // Shows only that item and hides all other floor level info
-    func showNews(forNewsItem item:AICExhibitionModel) {
-        mode = .location
-        
-        // Add location annotation the floor model
-        let floor = mapModel.floors[item.location!.floor]
-        let locationAnnotation = MapLocationAnnotation(coordinate: item.location!.coordinate)
-        
-        floor.locationAnnotations = [locationAnnotation]
-        setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
-        
-        mapView.addAnnotation(locationAnnotation)
-        
-        // Zoom in on the item
-        mapView.zoomIn(onCenterCoordinate: item.location!.coordinate);
     }
 	
 	func showArtwork(artwork: AICSearchedArtworkModel) {
@@ -378,8 +323,7 @@ class MapViewController: UIViewController {
         // Select the annotation
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
-                if annotation.nid == identifier {
-					highlightedTourStopNid = identifier
+				if annotation.nid == identifier {
 					// Turn off user heading since we want to jump to a specific place
 					floorSelectorVC.disableUserHeading()
 					
@@ -390,7 +334,7 @@ class MapViewController: UIViewController {
 					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
                     
                     // Select the annotation (which eventually updates it's view)
-                    mapView.selectAnnotation(annotation, animated: true)
+					mapView.selectAnnotation(annotation, animated: true)
                 }
             }
         }
@@ -474,8 +418,6 @@ class MapViewController: UIViewController {
 		case .restrooms:
 			updateRestroomAnnotations()
 			break
-		case .location:
-			break
 		case .tour:
 			updateTourAnnotationViews()
 			break
@@ -543,11 +485,6 @@ class MapViewController: UIViewController {
 			updateGiftShopAnnotationViews()
 			updateUserLocationAnnotationView()
 			break
-			
-        case .location:
-            updateNewsLocationAnnotationViews()
-			updateUserLocationAnnotationView()
-            break
         }
     }
     
@@ -718,7 +655,7 @@ class MapViewController: UIViewController {
 					view.setTourStopNumber(number: annotation.tourStopOrder)
 					
 					if annotation.floor == currentFloor {
-						if annotation.nid == highlightedTourStopNid {
+						if view.isSelected == true {
 							view.mode = .tourMaximized
 						}
 						else {
@@ -914,12 +851,12 @@ extension MapViewController : MKMapViewDelegate {
         // Hide Background Overlay
         if (overlay.isKind(of: HideBackgroundOverlay.self) == true) {
             let renderer = MKPolygonRenderer(overlay: overlay as MKOverlay)
-            
-            renderer.fillColor = self.color
-            
+			
             // No border
             renderer.lineWidth = 0.0
             renderer.strokeColor = UIColor.white.withAlphaComponent(0.0)
+			
+			renderer.fillColor = .aicMapColor
             
             return renderer
         }
@@ -959,7 +896,7 @@ extension MapViewController : MKMapViewDelegate {
         // Amenity annotation
         if let amenityAnnotation = annotation as? MapAmenityAnnotation {
             guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: amenityAnnotation.type.rawValue) as? MapAmenityAnnotationView else {
-                let view = MapAmenityAnnotationView(annotation: amenityAnnotation, reuseIdentifier: amenityAnnotation.type.rawValue, color:self.color)
+                let view = MapAmenityAnnotationView(annotation: amenityAnnotation, reuseIdentifier: amenityAnnotation.type.rawValue)
                 return view
             }
             
@@ -976,8 +913,7 @@ extension MapViewController : MKMapViewDelegate {
             }
             
             // Update the view
-            view.setAnnotation(forMapTextAnnotation: textAnnotation);
-            view.setTextColor(self.color)
+            view.setAnnotation(forMapTextAnnotation: textAnnotation)
             
             return view
         }
@@ -1038,10 +974,8 @@ extension MapViewController : MKMapViewDelegate {
             mapView.setCenter(annotation.coordinate, animated: true)
             
             if mode == .tour {
-				if let objectId = annotation.nid {
-					if let object = AppDataManager.sharedInstance.getObject(forID: objectId) {
-						delegate?.mapDidSelectTourStop(artwork: object)
-					}
+				if let stopId = annotation.nid {
+					delegate?.mapDidSelectTourStop(stopId: stopId)
 				}
             }
         }

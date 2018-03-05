@@ -8,7 +8,7 @@ import MapKit
 
 class MapAmenityAnnotationView: MapAnnotationView {
     
-    init(annotation: MKAnnotation?, reuseIdentifier: String?, color:UIColor) {
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
         layer.zPosition = Common.Map.AnnotationZPosition.amenities.rawValue

@@ -61,14 +61,11 @@ class MapArtworkContentView : UIView {
 		}
 	}
 	
-	init(tourStop: AICTourStopModel, language: Common.Language) {
+	init(tourStop: AICTourStopModel, stopNumber: Int, language: Common.Language) {
 		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
 		setup()
 		
-		var audio = tourStop.audio
-		audio.language = language
-		
-		titleLabel.text = audio.trackTitle
+		titleLabel.text = "\(stopNumber).\t" + tourStop.object.title
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: tourStop.object.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
 			if image != nil {
@@ -77,17 +74,14 @@ class MapArtworkContentView : UIView {
 				}
 			}
 		})
-		locationLabel.text = tourStop.object.gallery.title //Common.Map.stringForFloorNumber[tourStop.object.location.floor]
+		locationLabel.text = "\t" + tourStop.object.gallery.title //Common.Map.stringForFloorNumber[tourStop.object.location.floor]
 	}
 	
 	init(tour: AICTourModel, language: Common.Language) {
 		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
 		setup()
 		
-		var audio = tour.overview.audio
-		audio.language = language
-		
-		titleLabel.text = audio.trackTitle
+		titleLabel.text = tour.title
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: tour.imageUrl)
 		locationLabel.text = tour.stops.first!.object.gallery.title //Common.Map.stringForFloorNumber[tour.location.floor]

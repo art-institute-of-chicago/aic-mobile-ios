@@ -103,7 +103,6 @@ class MapObjectAnnotationView: MapAnnotationView {
 		imageDarkOverlay.layer.masksToBounds = true
 		imageDarkOverlay.frame.origin = CGPoint(x: Common.Map.thumbHolderMargin, y: Common.Map.thumbHolderMargin)
 		imageDarkOverlay.frame.size = CGSize(width: Common.Map.thumbSize, height: Common.Map.thumbSize)
-		imageDarkOverlay.alpha = 0.0
 		
 		tourStopNumberLabel.numberOfLines = 1
 		tourStopNumberLabel.text = ""
@@ -193,7 +192,6 @@ class MapObjectAnnotationView: MapAnnotationView {
             self.isSelected = selected
 			
 			// never expand if in tour mode
-			// selection is only to make annotationview pop in front of view stack
 			if mode == .tourMinimized || mode == .tourMaximized || mode == .tourOtherFloor {
 				return
 			}

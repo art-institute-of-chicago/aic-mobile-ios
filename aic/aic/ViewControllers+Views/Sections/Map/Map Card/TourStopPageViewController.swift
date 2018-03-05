@@ -74,7 +74,7 @@ class TourStopPageViewController : UIPageViewController {
 				if stopIndex < tourModel.stops.count {
 					let stop = tourModel.stops[stopIndex]
 					
-					let artworkContentView = MapArtworkContentView(tourStop: stop, language: tourModel.language)
+					let artworkContentView = MapArtworkContentView(tourStop: stop, stopNumber: currentPage, language: tourModel.language)
 					artworkContentView.audioButton.tag = currentPage
 					artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
 					page.view.addSubview(artworkContentView)

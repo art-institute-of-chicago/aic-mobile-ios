@@ -546,10 +546,15 @@ extension MapNavigationController : MapViewControllerDelegate {
 		}
 	}
 	
-	func mapDidSelectTourStop(artwork: AICObjectModel) {
+	func mapDidSelectTourStop(stopId: Int) {
 		if let tour = tourModel {
-			let pageIndex = tour.getIndex(forStopObject: artwork)! + 1 // add 1 for the overview
-			tourStopPageVC!.setCurrentPage(pageIndex: pageIndex)
+			if tour.nid == stopId {
+				tourStopPageVC!.setCurrentPage(pageIndex: 0)
+			}
+			else if let artwork = AppDataManager.sharedInstance.getObject(forID: stopId) {
+				let pageIndex = tour.getIndex(forStopObject: artwork)! + 1 // add 1 for the overview
+				tourStopPageVC!.setCurrentPage(pageIndex: pageIndex)
+			}
 		}
 	}
 	

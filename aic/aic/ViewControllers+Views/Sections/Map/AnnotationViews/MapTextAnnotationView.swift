@@ -69,28 +69,5 @@ class MapTextAnnotationView: MapAnnotationView {
         label.frame.origin = CGPoint(x: -label.bounds.width/2, y: -label.bounds.height/2)
         //self.frame.size = label.frame.size
     }
-    
-    func setTextColor(_ color:UIColor) {
-        guard let label = self.label else {
-            print("UILabel not created for MapTextAnnotationView. Can not set color.")
-            return
-        }
-        
-//        if let annotation = self.annotation as? MapTextAnnotation {
-//            switch annotation.type {
-//            case .Landmark:
-//                label.textColor = color.darker()
-//
-//			case .Garden:
-//				label.textColor = color.darker()
-//
-//            case .Space:
-//                label.textColor = color.lighter()
-//
-//            case .Gallery:
-//                label.textColor = color.lighter()
-//            }
-//        }
-    }
 }
 
