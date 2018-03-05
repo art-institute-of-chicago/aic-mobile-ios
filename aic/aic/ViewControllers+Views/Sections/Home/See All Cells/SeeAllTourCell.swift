@@ -49,8 +49,8 @@ class SeeAllTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
-			tourTitleLabel.text = self.tourModel!.title.stringByDecodingHTMLEntities
-			shortDescriptionTextView.text = self.tourModel!.shortDescription.stringByDecodingHTMLEntities
+			tourTitleLabel.text = self.tourModel!.title
+			shortDescriptionTextView.text = self.tourModel!.shortDescription
 			stopsNumberLabel.text = "\(tourModel.stops.count) " + "Stops"
 			
 			if (self.tourModel!.durationInMinutes ?? "").isEmpty {

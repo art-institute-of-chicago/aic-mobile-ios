@@ -82,7 +82,7 @@ extension ExhibitionTableViewController {
 extension ExhibitionTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CardTitleView.reuseIdentifier) as! CardTitleView
-		titleView.titleLabel.text = exhibitionModel.title.stringByDecodingHTMLEntities
+		titleView.titleLabel.text = exhibitionModel.title
 		return titleView
 	}
 	

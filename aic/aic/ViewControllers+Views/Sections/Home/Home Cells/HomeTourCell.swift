@@ -48,8 +48,8 @@ class HomeTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
-			tourTitleLabel.text = self.tourModel!.title.stringByDecodingHTMLEntities
-			shortDescriptionTextView.text = self.tourModel!.shortDescription.stringByDecodingHTMLEntities
+			tourTitleLabel.text = self.tourModel!.title
+			shortDescriptionTextView.text = self.tourModel!.shortDescription
 			stopsNumberLabel.text = "\(self.tourModel!.stops.count) " + "Stops"
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true

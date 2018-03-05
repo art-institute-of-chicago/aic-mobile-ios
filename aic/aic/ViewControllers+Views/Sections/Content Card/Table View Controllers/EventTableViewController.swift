@@ -70,7 +70,7 @@ extension EventTableViewController {
 extension EventTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CardTitleView.reuseIdentifier) as! CardTitleView
-		titleView.titleLabel.text = eventModel.title.stringByDecodingHTMLEntities
+		titleView.titleLabel.text = eventModel.title
 		return titleView
 	}
 	

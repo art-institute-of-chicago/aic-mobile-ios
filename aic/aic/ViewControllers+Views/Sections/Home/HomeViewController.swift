@@ -189,7 +189,7 @@ class HomeViewController : SectionViewController {
 		}
 		
 		let homeMemberPromptText: String = generalInfo.translations[language]!.homeMemberPrompt
-		memberPromptView.promptTextView.text = homeMemberPromptText.stringByDecodingHTMLEntities
+		memberPromptView.promptTextView.text = homeMemberPromptText
 		
 		memberPromptView.accessMemberCardButton.setTitle("Member Card Button Title".localized(using: "Home"), for: .normal)
 		

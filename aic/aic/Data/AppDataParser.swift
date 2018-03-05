@@ -105,8 +105,8 @@ class AppDataParser {
 
         // Return news item
 		return AICExhibitionModel(id: id,
-								  title: title,
-								  shortDescription: description,
+								  title: title.stringByDecodingHTMLEntities,
+								  shortDescription: description.stringByDecodingHTMLEntities,
 								  imageUrl: imageURL,
 								  startDate: startDate,
 								  endDate: endDate,
@@ -167,9 +167,9 @@ class AppDataParser {
 		
 		// Return news item
 		return AICEventModel(eventId: eventId,
-							 title: title,
-							 shortDescription: shortDescription,
-							 longDescription: longDescription,
+							 title: title.stringByDecodingHTMLEntities,
+							 shortDescription: shortDescription.stringByDecodingHTMLEntities,
+							 longDescription: longDescription.stringByDecodingHTMLEntities,
 							 imageUrl: imageUrl,
 							 startDate: startDate,
 							 endDate: endDate,
@@ -273,14 +273,14 @@ class AppDataParser {
 		let infoTitle = try getString(fromJSON: generalInfoJSON, forKey: "info_title", optional: optional)
 		let infoSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "info_subtitle", optional: optional)
 		
-		return AICGeneralInfoTranslationModel(museumHours: museumHours,
-								   homeMemberPrompt: homeMemberPrompt,
-								   audioTitle: audioTitle,
-								   audioSubtitle: audioSubtitle,
-								   mapTitle: mapTitle,
-								   mapSubtitle: mapSubtitle,
-								   infoTitle: infoTitle,
-								   infoSubtitle: infoSubtitle
+		return AICGeneralInfoTranslationModel(museumHours: museumHours.stringByDecodingHTMLEntities,
+								   homeMemberPrompt: homeMemberPrompt.stringByDecodingHTMLEntities,
+								   audioTitle: audioTitle.stringByDecodingHTMLEntities,
+								   audioSubtitle: audioSubtitle.stringByDecodingHTMLEntities,
+								   mapTitle: mapTitle.stringByDecodingHTMLEntities,
+								   mapSubtitle: mapSubtitle.stringByDecodingHTMLEntities,
+								   infoTitle: infoTitle.stringByDecodingHTMLEntities,
+								   infoSubtitle: infoSubtitle.stringByDecodingHTMLEntities
 		)
 	}
 	
@@ -374,11 +374,13 @@ class AppDataParser {
         var credits:String? = nil
         do {
             credits = try getString(fromJSON: objectJSON, forKey: "credit_line")
+			credits = credits!.stringByDecodingHTMLEntities
         } catch {}
         
         var imageCopyright:String? = nil
         do {
             imageCopyright = try getString(fromJSON: objectJSON, forKey: "copyright_notice")
+			imageCopyright = imageCopyright!.stringByDecodingHTMLEntities
         } catch {}
         
         // Get images
@@ -429,7 +431,7 @@ class AppDataParser {
                               thumbnailCropRect: thumbnailCropRect,
                               imageUrl: image,
                               imageCropRect: imageCropRect,
-                              title: title,
+                              title: title.stringByDecodingHTMLEntities,
                               audioCommentaries: audioCommentaries,
                               tombstone: tombstone,
                               credits: credits,
@@ -518,9 +520,9 @@ class AppDataParser {
 		let transcript  = try getString(fromJSON: audioFileJSON, forKey: "audio_transcript")
 		let trackTitle = try getString(fromJSON: audioFileJSON, forKey: "track_title", optional: true)
 		
-		return AICAudioFileTranslationModel(trackTitle: trackTitle,
+		return AICAudioFileTranslationModel(trackTitle: trackTitle.stringByDecodingHTMLEntities,
 											url: url,
-											transcript: transcript
+											transcript: transcript.stringByDecodingHTMLEntities
 		)
 	}
 	
@@ -649,16 +651,16 @@ class AppDataParser {
 		let durationInMinutes = try? getString(fromJSON: tourJSON, forKey: "tour_duration")
 		
 		// Create overview
-		let overview = AICTourOverviewModel(title: title,
-											description: longDescription,
+		let overview = AICTourOverviewModel(title: title.stringByDecodingHTMLEntities,
+											description: longDescription.stringByDecodingHTMLEntities,
 											imageUrl: imageUrl,
 											audio: audioFile,
 											credits: "Copyright 2016 Art Institue of Chicago"
 		)
 		
-		return AICTourTranslationModel(title: title,
-									   shortDescription: shortDescription,
-									   longDescription: longDescription,
+		return AICTourTranslationModel(title: title.stringByDecodingHTMLEntities,
+									   shortDescription: shortDescription.stringByDecodingHTMLEntities,
+									   longDescription: longDescription.stringByDecodingHTMLEntities,
 									   durationInMinutes: durationInMinutes,
 									   overview: overview
 		)
@@ -991,7 +993,6 @@ class AppDataParser {
 					}
 					// Otherwise we parse from the data api
 					else if isOnView {
-						let audioObject: AICObjectModel? = nil
 						let title: String = try getString(fromJSON: resultJSON, forKey: "title")
 						let artistDisplay: String = try getString(fromJSON: resultJSON, forKey: "artist_display")
 						
@@ -1031,11 +1032,11 @@ class AppDataParser {
 						}
 						
 						let searchedArtwork = AICSearchedArtworkModel(artworkId: artworkId,
-																	  audioObject: audioObject,
-																	  title: title,
+																	  audioObject: nil,
+																	  title: title.stringByDecodingHTMLEntities,
 																	  thumbnailUrl: thumbnailUrl!,
 																	  imageUrl: imageUrl!,
-																	  artistDisplay: artistDisplay,
+																	  artistDisplay: artistDisplay.stringByDecodingHTMLEntities,
 																	  location: location!,
 																	  gallery: gallery)
 						searchedArtworks.append(searchedArtwork)

@@ -50,7 +50,7 @@ class ExhibitionContentCell : UITableViewCell {
 				exhibitionImageView.kf.setImage(with: imageUrl)
 			}
 			
-			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: exhibitionModel.shortDescription.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
+			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: exhibitionModel.shortDescription, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
 			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
 			

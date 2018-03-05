@@ -46,7 +46,7 @@ class EventContentCell : UITableViewCell {
 			}
 			
 			let descriptionText = eventModel.longDescription.replacingOccurrences(of: "<br />", with: "\n")
-			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: descriptionText.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
+			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: descriptionText, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
 			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)

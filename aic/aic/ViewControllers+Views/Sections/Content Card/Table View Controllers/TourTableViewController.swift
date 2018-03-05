@@ -102,7 +102,7 @@ extension TourTableViewController {
 extension TourTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CardTitleView.reuseIdentifier) as! CardTitleView
-		titleView.titleLabel.text = tourModel.title.stringByDecodingHTMLEntities
+		titleView.titleLabel.text = tourModel.title
 		return titleView
 	}
 	

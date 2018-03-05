@@ -83,7 +83,7 @@ class NewsToursTableViewCell: UITableViewCell {
         headerImageView.isUserInteractionEnabled = true
         
         // Title
-        titleLabel.attributedText = getAttributedStringWithLineHeight(text: model.title.stringByDecodingHTMLEntities, font: .aicTitleFont, lineHeight: titleLineHeight)
+        titleLabel.attributedText = getAttributedStringWithLineHeight(text: model.title, font: .aicTitleFont, lineHeight: titleLineHeight)
         titleLabel.numberOfLines = 0
         titleLabel.textColor = .black
         

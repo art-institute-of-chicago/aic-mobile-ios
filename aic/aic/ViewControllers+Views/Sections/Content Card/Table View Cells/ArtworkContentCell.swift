@@ -57,7 +57,7 @@ class ArtworkContentCell : UITableViewCell {
 //				}
 			}
 			
-			artistDisplayLabel.attributedText = getAttributedStringWithLineHeight(text: artworkModel.artistDisplay.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
+			artistDisplayLabel.attributedText = getAttributedStringWithLineHeight(text: artworkModel.artistDisplay, font: .aicCardDescriptionFont, lineHeight: 22)
 			artistDisplayLabel.textColor = .white
 			
 			descriptionLabel.text = ""

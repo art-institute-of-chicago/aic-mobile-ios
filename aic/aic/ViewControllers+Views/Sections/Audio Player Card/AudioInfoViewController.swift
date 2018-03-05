@@ -142,7 +142,7 @@ class AudioInfoViewController : UIViewController {
 		updateLanguage(language: audio.language)
 		
 		transcriptView.show(collapseEnabled: true)
-		transcriptView.bodyTextView.text = audio.transcript.stringByDecodingHTMLEntities
+		transcriptView.bodyTextView.text = audio.transcript
 		
 		var creditsString = ""
 		if (artwork.credits ?? "").isEmpty == false { creditsString += artwork.credits! }
@@ -153,7 +153,7 @@ class AudioInfoViewController : UIViewController {
 		
 		if creditsString.isEmpty == false {
 			creditsView.show(collapseEnabled: true)
-			creditsView.bodyTextView.text = creditsString.stringByDecodingHTMLEntities
+			creditsView.bodyTextView.text = creditsString
 		}
 		else {
 			creditsView.hide()
@@ -215,7 +215,7 @@ class AudioInfoViewController : UIViewController {
     }
 	
 	private func setDescription(description: String) {
-		descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: description.stringByDecodingHTMLEntities, font: .aicCardDescriptionFont, lineHeight: 22)
+		descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: description, font: .aicCardDescriptionFont, lineHeight: 22)
 	}
 	
 	func reset() {

@@ -39,7 +39,7 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 			
 			// set up UI
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
-			exhibitionTitleLabel.text = exhibitionModel.title.stringByDecodingHTMLEntities
+			exhibitionTitleLabel.text = exhibitionModel.title
 			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
 		}
 	}

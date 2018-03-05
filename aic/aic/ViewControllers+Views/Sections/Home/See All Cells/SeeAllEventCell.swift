@@ -49,8 +49,8 @@ class SeeAllEventCell : UICollectionViewCell {
 					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
 				}
 			}
-			eventTitleLabel.text = eventModel.title.stringByDecodingHTMLEntities
-			shortDescriptionTextView.text = eventModel.shortDescription.stringByDecodingHTMLEntities
+			eventTitleLabel.text = eventModel.title
+			shortDescriptionTextView.text = eventModel.shortDescription
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
 			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
 		}
