@@ -47,7 +47,7 @@ protocol ResultsTableViewControllerDelegate : class {
 ///   - Section 1: Exhibitions
 ///
 class ResultsTableViewController : UITableViewController {
-	var promotedSearchStringItems: [String] = ["Essentials Tour", "Impressionism", "American Gothic"]
+	var promotedSearchStringItems: [String] = []
 	var autocompleteStringItems: [String] = []
 	var artworkItems: [AICSearchedArtworkModel] = []
 	var tourItems: [AICTourModel] = []
@@ -90,7 +90,9 @@ class ResultsTableViewController : UITableViewController {
 		self.tableView.register(UINib(nibName: "NoResultsCell", bundle: Bundle.main), forCellReuseIdentifier: NoResultsCell.reuseIdentifier)
 		self.tableView.register(ResultsSectionTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsSectionTitleView.reuseIdentifier)
 		self.tableView.register(ResultsContentTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsContentTitleView.reuseIdentifier)
-        
+		
+		promotedSearchStringItems = AppDataManager.sharedInstance.app.searchStrings
+		
         self.filter = .empty
 		
 		resetContentLoaded()

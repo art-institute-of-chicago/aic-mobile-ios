@@ -188,11 +188,19 @@ class SectionsViewController : UIViewController {
 //        AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)
     }
 	
-	func showArtworkOnMap(artwork: AICSearchedArtworkModel) {
+	func showArtworkOnMap(artwork: AICObjectModel) {
 		if currentViewController != mapVC {
 			setSelectedSection(sectionVC: mapVC)
 		}
 		mapVC.showArtwork(artwork: artwork)
+		sectionTabBarController.selectedIndex = 2
+	}
+	
+	func showSearchedArtworkOnMap(searchedArtwork: AICSearchedArtworkModel) {
+		if currentViewController != mapVC {
+			setSelectedSection(sectionVC: mapVC)
+		}
+		mapVC.showSearchedArtwork(searchedArtwork: searchedArtwork)
 		sectionTabBarController.selectedIndex = 2
 	}
 	
@@ -556,7 +564,7 @@ extension SectionsViewController : ArtworkTableViewControllerDelegate {
 		if searchVC.currentState == .fullscreen {
 			searchVC.hide()
 		}
-		showArtworkOnMap(artwork: artwork)
+		showSearchedArtworkOnMap(searchedArtwork: artwork)
 	}
 }
 
@@ -590,8 +598,11 @@ extension SectionsViewController : MapItemsCollectionContainerDelegate {
 		showRestroomsOnMap()
 	}
 	
-	func mapItemObjectSelected(object: AICObjectModel) {
-		
+	func mapItemArtworkSelected(artwork: AICObjectModel) {
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		showArtworkOnMap(artwork: artwork)
 	}
 }
 

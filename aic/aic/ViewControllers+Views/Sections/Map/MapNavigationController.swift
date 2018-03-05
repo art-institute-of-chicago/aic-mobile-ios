@@ -22,7 +22,8 @@ class MapNavigationController : SectionNavigationController {
 	// Models for content modes
 	var tourModel: AICTourModel? = nil
 	var tourStopIndex: Int? = nil
-	var artworkModel: AICSearchedArtworkModel? = nil
+	var artworkModel: AICObjectModel? = nil
+	var searchedArtworkModel: AICSearchedArtworkModel? = nil
 	var exhibitionModel: AICExhibitionModel? = nil
 	
 	let mapVC: MapViewController = MapViewController()
@@ -95,34 +96,36 @@ class MapNavigationController : SectionNavigationController {
 	// MARK: Show Content
 	
 	private func showContentIfNeeded() {
-		if currentMode == .tour {
-			showTour(tour: tourModel!, language: tourModel!.language, stopIndex: tourStopIndex)
-			
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
-		}
-		else if currentMode == .artwork {
+		switch currentMode {
+		case .allInformation:
+			break
+		case .artwork:
 			showArtwork(artwork: artworkModel!)
-			
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
-		}
-		else if currentMode == .exhibition {
+		case .searchedArtwork:
+			showSearchedArtwork(searchedArtwork: searchedArtworkModel!)
+			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
+			break
+		case .exhibition:
 			showExhibition(exhibition: exhibitionModel!)
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
-		}
-		else if currentMode == .dining {
+			break
+		case .dining:
 			showDining()
-			
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
-		}
-		else if currentMode == .giftshop {
+			break
+		case .giftshop:
 			showGiftShop()
-			
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
-		}
-		else if currentMode == .restrooms {
+			break
+		case .restrooms:
 			showRestrooms()
-			
 			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
+			break
+		case .tour:
+			showTour(tour: tourModel!, language: tourModel!.language, stopIndex: tourStopIndex)
+			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
+			break
 		}
 	}
 	
@@ -251,7 +254,7 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC = nil
 		tourModel = nil
 		tourStopPageVC = nil
-		artworkModel = nil
+		searchedArtworkModel = nil
 		exhibitionModel = nil
 	}
 	
@@ -306,7 +309,7 @@ class MapNavigationController : SectionNavigationController {
 		}
 	}
 	
-	func showArtwork(artwork: AICSearchedArtworkModel) {
+	func showArtwork(artwork: AICObjectModel) {
 		currentMode = .artwork
 		artworkModel = artwork
 		
@@ -322,7 +325,7 @@ class MapNavigationController : SectionNavigationController {
 				mapContentCardVC!.view.removeFromSuperview()
 			}
 			let artworkVC = UIViewController()
-			let artworkContentView = MapArtworkContentView(searchedArtwork: artwork)
+			let artworkContentView = MapArtworkContentView(artwork: artwork)
 			artworkContentView.audioButton.addTarget(self, action: #selector(mapArtworkAudioButtonPressed(button:)), for: .touchUpInside)
 			artworkVC.view.addSubview(artworkContentView)
 			mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
@@ -339,6 +342,44 @@ class MapNavigationController : SectionNavigationController {
 			
 			// Set map state
 			mapVC.showArtwork(artwork: artwork)
+			
+			showMapContentCard()
+		}
+	}
+	
+	func showSearchedArtwork(searchedArtwork: AICSearchedArtworkModel) {
+		currentMode = .searchedArtwork
+		searchedArtworkModel = searchedArtwork
+		
+		// if we are on the Map tab, open tour immediately
+		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
+		if isMapTabOpen {
+			if sectionNavigationBar.currentState != .hidden {
+				sectionNavigationBar.hide()
+			}
+			
+			// Crate Content Card
+			if mapContentCardVC != nil {
+				mapContentCardVC!.view.removeFromSuperview()
+			}
+			let artworkVC = UIViewController()
+			let artworkContentView = MapArtworkContentView(searchedArtwork: searchedArtwork)
+			artworkContentView.audioButton.addTarget(self, action: #selector(mapArtworkAudioButtonPressed(button:)), for: .touchUpInside)
+			artworkVC.view.addSubview(artworkContentView)
+			mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
+			mapContentCardVC!.titleLabel.text = searchedArtwork.title
+			mapContentCardVC!.cardDelegate = self
+			
+			// Add card to view
+			mapContentCardVC!.willMove(toParentViewController: self)
+			self.view.addSubview(mapContentCardVC!.view)
+			mapContentCardVC!.didMove(toParentViewController: self)
+			
+			// in case the tour card is open, to tell the map to animate the floor selector
+			self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+			
+			// Set map state
+			mapVC.showSearchedArtwork(searchedArtwork: searchedArtwork)
 		
 			showMapContentCard()
 		}
@@ -493,7 +534,7 @@ class MapNavigationController : SectionNavigationController {
 	
 	// MARK: Audio Button
 	@objc private func mapArtworkAudioButtonPressed(button: UIButton) {
-		if let searchedArtwork = artworkModel {
+		if let searchedArtwork = searchedArtworkModel {
 			if let object = searchedArtwork.audioObject {
 				self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: object)
 			}

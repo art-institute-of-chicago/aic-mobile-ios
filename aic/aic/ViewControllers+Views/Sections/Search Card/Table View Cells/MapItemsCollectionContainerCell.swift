@@ -12,7 +12,7 @@ protocol MapItemsCollectionContainerDelegate: class {
 	func mapItemDiningSelected()
 	func mapItemGiftShopSelected()
 	func mapItemRestroomSelected()
-	func mapItemObjectSelected(object: AICObjectModel)
+	func mapItemArtworkSelected(artwork: AICObjectModel)
 }
 
 /// Cell of ResultsTableViewController to show suggested search text
@@ -24,13 +24,20 @@ class MapItemsCollectionContainerCell : UITableViewCell {
 	
 	weak var delegate: MapItemsCollectionContainerDelegate? = nil
 	
-	var objectModels: [AICObjectModel] = [] {
-		didSet {
-			innerCollectionView.reloadData()
-		}
+	static let sectionInset: CGFloat = 24.0
+	
+	static var cellHeight: CGFloat {
+		let sectionsNumber = CGFloat(MapItemsCollectionContainerCell.totalSections)
+		return sectionsNumber * MapItemCell.cellHeight + (sectionsNumber-1) * MapItemsCollectionContainerCell.sectionInset + 15
 	}
 	
-	static let cellHeight: CGFloat = 160.0
+	static var artworkModels: [AICObjectModel] {
+		return AppDataManager.sharedInstance.app.searchArtworks
+	}
+	
+	static var totalSections: Int {
+		return 1 + Int(ceil(Float(MapItemsCollectionContainerCell.artworkModels.count) / 5.0))
+	}
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -69,6 +76,12 @@ extension MapItemsCollectionContainerCell : UICollectionViewDelegate {
 				self.delegate?.mapItemRestroomSelected()
 			}
 		}
+		else {
+			let index = (indexPath.section-1) * 5 + indexPath.row
+			if index < MapItemsCollectionContainerCell.artworkModels.count {
+				self.delegate?.mapItemArtworkSelected(artwork: MapItemsCollectionContainerCell.artworkModels[index])
+			}
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
@@ -77,12 +90,20 @@ extension MapItemsCollectionContainerCell : UICollectionViewDelegate {
 }
 
 extension MapItemsCollectionContainerCell : UICollectionViewDataSource {
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return MapItemsCollectionContainerCell.totalSections
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section == 0 {
 			return 3
 		}
 		else {
-			return 5 //min(objectModels.count, 5)
+			let lastItemIndex = section * 5 - 1
+			if lastItemIndex < MapItemsCollectionContainerCell.artworkModels.count {
+				return 5
+			}
+			return (MapItemsCollectionContainerCell.artworkModels.count % 5)
 		}
 	}
 	
@@ -94,16 +115,11 @@ extension MapItemsCollectionContainerCell : UICollectionViewDataSource {
 			if indexPath.row == 2 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchRestroomIcon")) }
 		}
 		else {
-			if indexPath.row == 0 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork1")) }
-			if indexPath.row == 1 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork2")) }
-			if indexPath.row == 2 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork3")) }
-			if indexPath.row == 3 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork4")) }
-			if indexPath.row == 4 { cell.setItemIcon(image: #imageLiteral(resourceName: "Artwork5")) }
+			let index = (indexPath.section-1) * 5 + indexPath.row
+			if index < MapItemsCollectionContainerCell.artworkModels.count {
+				cell.artworkModel = MapItemsCollectionContainerCell.artworkModels[index]
+			}
 		}
 		return cell
-	}
-	
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 2
 	}
 }

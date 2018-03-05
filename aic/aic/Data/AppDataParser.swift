@@ -192,6 +192,8 @@ class AppDataParser {
 		let featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
 		let exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
 		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
+		let searchStrings = parse(searchStringsJSON: appDataJson["search"]["search_strings"])
+		let searchArtworks = parse(searchArtworks: appDataJson["search"])
 		
 		let appData = AICAppDataModel(generalInfo: generalInfo,
 									  galleries: self.galleries,
@@ -203,7 +205,9 @@ class AppDataParser {
 									  featuredTours: featuredTours,
 									  featuredExhibitions: featuredExhibitions,
 									  exhibitionOptionalImages: exhibitionOptionalImages,
-									  dataSettings: dataSettings
+									  dataSettings: dataSettings,
+									  searchStrings: searchStrings,
+									  searchArtworks: searchArtworks
 		)
 		
 		// TODO: check if you can get rid of all this temp data after initial loading
@@ -526,7 +530,7 @@ class AppDataParser {
 		)
 	}
 	
-	// MARK: Parse tours
+	// MARK: Tours
 	fileprivate func parse(toursJSON:JSON) -> [AICTourModel] {
 		var tours = [AICTourModel]()
         print(toursJSON.arrayValue.count)
@@ -935,6 +939,48 @@ class AppDataParser {
 	
 	// MARK: Search
 	
+	func parse(searchStringsJSON: JSON) -> [String] {
+		var searchStrings = [String]()
+		
+		for (_, stringJSON):(String, JSON) in searchStringsJSON.dictionaryValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let searchString = stringJSON.string
+					searchStrings.append(searchString!)
+				})
+			}
+				
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Search String:\n\(stringJSON)\n")
+				}
+			}
+		}
+		
+		return searchStrings
+	}
+	
+	func parse(searchArtworks inSearchJSON: JSON) -> [AICObjectModel] {
+		var artworks = [AICObjectModel]()
+		
+		do {
+			try handleParseError({ [unowned self] in
+				let artworkIDs  = try self.getIntArray(fromJSON: inSearchJSON, forArrayKey: "search_objects")
+				for artworkID in artworkIDs {
+					let artwork = try self.getObject(forNID: artworkID)
+					artworks.append(artwork)
+				}
+			})
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse AIC Search Artworks\n")
+			}
+		}
+		
+		return artworks
+	}
+	
 	func parse(autocompleteData: Data) -> [String] {
 		var autocompleteStrings = [String]()
 		
@@ -958,7 +1004,6 @@ class AppDataParser {
 				print("Could not parse AIC Search Autocomplete\n")
 			}
 		}
-		
 		return autocompleteStrings
 	}
 	

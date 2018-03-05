@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     enum Mode {
         case allInformation
 		case artwork
+		case searchedArtwork
 		case exhibition
 		case dining
 		case giftshop
@@ -125,14 +126,37 @@ class MapViewController: UIViewController {
 		}
     }
 	
-	func showArtwork(artwork: AICSearchedArtworkModel) {
+	func showArtwork(artwork: AICObjectModel) {
 		mode = .artwork
 		
 		// Add location annotation the floor model
 		let floor = mapModel.floors[artwork.location.floor]
 		var artworkAnnotation: MapObjectAnnotation? = nil
+		for objectAnnotation in floor.objectAnnotations {
+			if objectAnnotation.nid == artwork.nid {
+				artworkAnnotation = objectAnnotation
+				artworkAnnotation!.tourStopOrder = 0
+			}
+		}
 		
-		if let object = artwork.audioObject {
+		if artworkAnnotation != nil {
+			setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
+			
+			mapView.addAnnotation(artworkAnnotation!)
+			
+			// Zoom in on the item
+			mapView.zoomIn(onCenterCoordinate: artwork.location.coordinate)
+		}
+	}
+	
+	func showSearchedArtwork(searchedArtwork: AICSearchedArtworkModel) {
+		mode = .searchedArtwork
+		
+		// Add location annotation the floor model
+		let floor = mapModel.floors[searchedArtwork.location.floor]
+		var artworkAnnotation: MapObjectAnnotation? = nil
+		
+		if let object = searchedArtwork.audioObject {
 			for objectAnnotation in floor.objectAnnotations {
 				if objectAnnotation.nid == object.nid {
 					artworkAnnotation = objectAnnotation
@@ -141,7 +165,7 @@ class MapViewController: UIViewController {
 			}
 		}
 		else {
-			artworkAnnotation = MapObjectAnnotation(searchedArtwork: artwork)
+			artworkAnnotation = MapObjectAnnotation(searchedArtwork: searchedArtwork)
 		}
 		
 		setCurrentFloor(forFloorNum: floor.floorNumber, andResetMap: false)
@@ -149,7 +173,7 @@ class MapViewController: UIViewController {
 		mapView.addAnnotation(artworkAnnotation!)
 		
 		// Zoom in on the item
-		mapView.zoomIn(onCenterCoordinate: artwork.location.coordinate)
+		mapView.zoomIn(onCenterCoordinate: searchedArtwork.location.coordinate)
 	}
 	
 	func showExhibition(exhibition: AICExhibitionModel) {
@@ -403,7 +427,7 @@ class MapViewController: UIViewController {
 		case .allInformation:
 			updateAllInformationAnnotations(isSwitchingFloors: true)
 			break
-		case .artwork:
+		case .artwork, .searchedArtwork:
 			updateArtworkAnnotationView()
 			break
 		case .exhibition:
@@ -459,8 +483,8 @@ class MapViewController: UIViewController {
             updateTourAnnotationViews()
 			updateUserLocationAnnotationView()
             break
-			
-		case .artwork:
+		
+		case .artwork, .searchedArtwork:
 			updateArtworkAnnotationView()
 			updateUserLocationAnnotationView()
 			break
@@ -485,7 +509,7 @@ class MapViewController: UIViewController {
 			updateGiftShopAnnotationViews()
 			updateUserLocationAnnotationView()
 			break
-        }
+		}
     }
     
     internal func updateAllInformationAnnotations(isSwitchingFloors floorSwitch:Bool=false) {

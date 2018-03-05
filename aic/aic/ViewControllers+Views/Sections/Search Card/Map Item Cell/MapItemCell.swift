@@ -16,6 +16,8 @@ class MapItemCell : UICollectionViewCell {
 	
 	@IBOutlet var iconImageView: AICImageView!
 	
+	static let cellHeight: CGFloat = 48.0
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
@@ -33,5 +35,22 @@ class MapItemCell : UICollectionViewCell {
 	
 	func setItemIcon(image: UIImage) {
 		iconImageView.image = image
+	}
+	
+	var artworkModel: AICObjectModel? = nil {
+		didSet {
+			guard let artworkModel = self.artworkModel else {
+				return
+			}
+			
+			iconImageView.kf.indicatorType = .activity
+			iconImageView.kf.setImage(with: artworkModel.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
+				if image != nil {
+					if let cropRect = artworkModel.thumbnailCropRect {
+						self.iconImageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.iconImageView.frame.size, cropRect: cropRect)
+					}
+				}
+			}
+		}
 	}
 }
