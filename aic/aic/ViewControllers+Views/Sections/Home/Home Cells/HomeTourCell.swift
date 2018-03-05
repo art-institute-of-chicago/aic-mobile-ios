@@ -48,7 +48,6 @@ class HomeTourCell : UICollectionViewCell {
 			
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
-//			tourImageView.loadImageAsynchronously(fromUrl: tourModel.imageUrl, withCropRect: nil)
 			tourTitleLabel.text = self.tourModel!.title.stringByDecodingHTMLEntities
 			shortDescriptionTextView.text = self.tourModel!.shortDescription.stringByDecodingHTMLEntities
 			stopsNumberLabel.text = "\(self.tourModel!.stops.count) " + "Stops"

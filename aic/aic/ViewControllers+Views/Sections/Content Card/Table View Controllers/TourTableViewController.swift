@@ -87,10 +87,11 @@ extension TourTableViewController {
 		else {
 			// tour stop cell
 			let object = tourModel.stops[indexPath.row - 2].object
-			let title = "\(indexPath.row - 1). \(object.title)"
+			let title = "\(indexPath.row - 1).\t\(object.title)"
+			let subtitle = "\t\(object.gallery.title)"
 			
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
-			cell.setContent(imageUrl: object.imageUrl, cropRect: object.imageCropRect, title: title, subtitle: object.gallery.title)
+			cell.setContent(imageUrl: object.thumbnailUrl, cropRect: object.imageCropRect, title: title, subtitle: subtitle)
 			cell.dividerLineBottom.isHidden = true
 			return cell
 		}

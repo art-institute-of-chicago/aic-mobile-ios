@@ -408,11 +408,12 @@ class AppDataManager {
 	}
 	
 	func getCroppedImage(image: UIImage, viewSize: CGSize, cropRect: CGRect) -> UIImage {
+		let imageCropRect = CGRect(x: cropRect.origin.x * image.size.width, y: cropRect.origin.y * image.size.height, width: cropRect.size.width * image.size.width, height: cropRect.size.height * image.size.height)
 		let viewAspect = viewSize.width / viewSize.height
-		let cropAspect = cropRect.size.width / cropRect.size.height
+		let cropAspect = imageCropRect.size.width / imageCropRect.size.height
 		
 		if cropAspect > viewAspect {
-			let finalCropRect = CGRect(origin: cropRect.origin, size: CGSize(width: cropRect.width, height: cropRect.width * (viewSize.height / viewSize.width)))
+			let finalCropRect = CGRect(origin: imageCropRect.origin, size: CGSize(width: imageCropRect.width, height: imageCropRect.width * (viewSize.height / viewSize.width)))
 			
 			let imageRect = CGRect(origin: CGPoint.zero, size: image.size)
 			if imageRect.contains(finalCropRect) {

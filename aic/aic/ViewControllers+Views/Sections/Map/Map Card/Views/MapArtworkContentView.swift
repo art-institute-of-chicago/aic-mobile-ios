@@ -22,7 +22,7 @@ class MapArtworkContentView : UIView {
 		
 		titleLabel.text = artwork.title
 		imageView.kf.indicatorType = .activity
-		imageView.kf.setImage(with: artwork.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
+		imageView.kf.setImage(with: artwork.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
 			if image != nil {
 				if let cropRect = artwork.imageCropRect {
 					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
@@ -39,7 +39,7 @@ class MapArtworkContentView : UIView {
 		if let object = searchedArtwork.audioObject {
 			titleLabel.text = object.title
 			imageView.kf.indicatorType = .activity
-			imageView.kf.setImage(with: object.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
+			imageView.kf.setImage(with: object.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
 				if image != nil {
 					if let cropRect = object.imageCropRect {
 						let imageCropped = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
@@ -53,7 +53,7 @@ class MapArtworkContentView : UIView {
 		else {
 			titleLabel.text = searchedArtwork.title
 			imageView.kf.indicatorType = .activity
-			imageView.kf.setImage(with: searchedArtwork.imageUrl)
+			imageView.kf.setImage(with: searchedArtwork.thumbnailUrl)
 			
 			locationLabel.text = searchedArtwork.gallery.title // Common.Map.stringForFloorNumber[searchedArtwork.location.floor]
 			audioButton.isHidden = true
@@ -67,7 +67,7 @@ class MapArtworkContentView : UIView {
 		
 		titleLabel.text = "\(stopNumber).\t" + tourStop.object.title
 		imageView.kf.indicatorType = .activity
-		imageView.kf.setImage(with: tourStop.object.imageUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
+		imageView.kf.setImage(with: tourStop.object.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
 			if image != nil {
 				if let cropRect = tourStop.object.imageCropRect {
 					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)

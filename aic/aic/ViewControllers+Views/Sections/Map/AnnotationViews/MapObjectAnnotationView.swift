@@ -238,9 +238,14 @@ class MapObjectAnnotationView: MapAnnotationView {
     private func loadImage() {
         if !imageLoaded {
             if let annotation = objectAnnotation {
-                //thumbImageView.loadImageAsynchronously(fromUrl: annotation.imageUrl, withCropRect: annotation.object.thumbnailCropRect)
 				imageView.kf.indicatorType = .activity
-				imageView.kf.setImage(with: annotation.thumbnailUrl)
+				imageView.kf.setImage(with: annotation.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, url) in
+					if image != nil {
+						if let cropRect = annotation.thumbnailCropRect {
+							self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+						}
+					}
+				})
 				imageLoaded = true
             }
         }

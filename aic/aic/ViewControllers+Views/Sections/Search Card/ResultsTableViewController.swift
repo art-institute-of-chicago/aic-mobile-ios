@@ -258,7 +258,7 @@ extension ResultsTableViewController {
 					cropRect = object.imageCropRect
 				}
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-				cell.setContent(imageUrl: artwork.imageUrl, cropRect: cropRect, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
+				cell.setContent(imageUrl: artwork.thumbnailUrl, cropRect: cropRect, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 				return cell
 			}
 			else if indexPath.section == 3 {
@@ -301,7 +301,7 @@ extension ResultsTableViewController {
 					cropRect = object.imageCropRect
 				}
 				setupDividerLines(cell, indexPath: indexPath, itemsCount: artworkItems.count)
-				cell.setContent(imageUrl: artwork.imageUrl, cropRect: cropRect, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
+				cell.setContent(imageUrl: artwork.thumbnailUrl, cropRect: cropRect, title: artwork.title, subtitle: artwork.gallery.title, showAudioIcon: artwork.audioObject != nil)
 				return cell
 			}
 		}

@@ -47,7 +47,6 @@ class HomeEventCell : UICollectionViewCell {
 					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
 				}
 			}
-//			eventImageView.loadImageAsynchronously(fromUrl: eventModel.imageUrl, withCropRect: nil)
 			eventTitleLabel.text = eventModel.title.stringByDecodingHTMLEntities
 			shortDescriptionTextView.text = eventModel.shortDescription.stringByDecodingHTMLEntities
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)

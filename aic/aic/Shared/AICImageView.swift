@@ -73,7 +73,8 @@ class AICImageView : UIImageView {
             }else{
                 let uncroppedImage = UIImage(data: NSData(data: response.data!) as Data)
                 if uncroppedImage != nil {
-                    self?.image = UIImage(cgImage: (uncroppedImage!.cgImage!.cropping(to: cropRect!))!)
+					let imageCropRect = CGRect(x: cropRect!.origin.x * uncroppedImage!.size.width, y: cropRect!.origin.y * uncroppedImage!.size.height, width: cropRect!.width * uncroppedImage!.size.width, height: cropRect!.height * uncroppedImage!.size.height)
+                    self?.image = UIImage(cgImage: (uncroppedImage!.cgImage!.cropping(to: imageCropRect))!)
                     //If you'd like to verify the crops set a breakpoint here and
                     //take a look at uncroppedImage vs croppedImage
                     //let croppedImage = self?.image

@@ -1162,20 +1162,20 @@ class AppDataParser {
             throw ParseError.missingKey(key: key)
         }
         
-        guard let x = cropDict["x"]?.intValue else {
+        guard let x = cropDict["x"]?.floatValue else {
             throw ParseError.missingKey(key: "x")
         }
-        guard let y = cropDict["y"]?.intValue else {
+        guard let y = cropDict["y"]?.floatValue else {
             throw ParseError.missingKey(key: "y")
         }
-        guard let width = cropDict["width"]?.intValue else {
+        guard let width = cropDict["width"]?.floatValue else {
             throw ParseError.missingKey(key: "width")
         }
-        guard let height = cropDict["height"]?.intValue else {
+        guard let height = cropDict["height"]?.floatValue else {
             throw ParseError.missingKey(key: "height")
         }
         
-        return CGRect(x: x, y: y, width: width, height: height)
+        return CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
     }
     
     // Try to get a URL from a string
