@@ -166,7 +166,7 @@ class MapView: MKMapView {
 		if self.currentZoomLevel != self.previousZoomLevel && camera.pitch != 60.0 {
 			var pitch: CGFloat = 0.0
 //			var altitude: Double = camera.altitude
-			if self.camera.altitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {
+			if self.camera.altitude <= Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
 				pitch = 60.0
 //				if altitude > Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50 &&
 //					altitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {
@@ -208,7 +208,8 @@ class MapView: MKMapView {
     func calculateCurrentAltitude() {
         // Altitude
         previousAltitude = currentAltitude
-        
+		
+		// TODO: I do not understand this, investigate
         let zoomScale = Double(bounds.size.width) / visibleMapRect.size.width
         currentAltitude = startingHeight * (1 / zoomScale)
         

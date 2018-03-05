@@ -33,7 +33,7 @@ class ToursSectionStopView: BaseView {
         
         thumbnailImageView.delegate = self
         
-        playButton.setImage(#imageLiteral(resourceName: "tourItemPlayButton"), for: UIControlState())
+//        playButton.setImage(#imageLiteral(resourceName: "tourItemPlayButton"), for: UIControlState())
         playButton.isHidden = true
         
         // Add subviews

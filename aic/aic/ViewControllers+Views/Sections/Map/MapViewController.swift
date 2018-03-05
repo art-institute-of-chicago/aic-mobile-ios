@@ -1025,7 +1025,7 @@ extension MapViewController : MKMapViewDelegate {
         // Store the location mode
         if !floorSelectorVC.userHeadingIsEnabled() {
 			self.mapView.keepMapInView()
-			self.mapView.adjustPicthForZoomLevel()
+//			self.mapView.adjustPicthForZoomLevel()
         }
         
         if isSwitchingModes {

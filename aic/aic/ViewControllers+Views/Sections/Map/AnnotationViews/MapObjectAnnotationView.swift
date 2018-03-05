@@ -110,7 +110,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 		tourStopNumberLabel.textAlignment = .center
 		tourStopNumberLabel.textColor = .white
         
-        headphonesIcon.image = #imageLiteral(resourceName: "headphonesSm")
+		headphonesIcon.image = #imageLiteral(resourceName: "audioPlay").colorized(.aicMapColor)
         headphonesIcon.sizeToFit()
         headphonesIcon.frame.origin = CGPoint(x: thumbHolderExpandedWidth - headphonesIcon.frame.width - headphonesMarginRight, y: thumbHolderHeight/2 - headphonesIcon.frame.height/2)
         
@@ -199,7 +199,6 @@ class MapObjectAnnotationView: MapAnnotationView {
             if selected {
                 addSubview(imageHolderTailView)
                 addSubview(imageView)
-				addSubview(imageDarkOverlay)
 				if objectAnnotation?.nid != nil {
 					addSubview(headphonesIcon)
 				}

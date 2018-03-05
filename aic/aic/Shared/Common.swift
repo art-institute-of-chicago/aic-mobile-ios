@@ -423,7 +423,7 @@ struct Common {
             case zoomDetail = 40.0
             case zoomMax = 25.0
 
-            static let allValues = [zoomLimit, zoomDefault, zoomMedium, zoomDetail, zoomMax]
+            static let allValues = [zoomLimit, zoomDefault, zoomDetail, zoomMax]
         }
 
         enum AnnotationZPosition: CGFloat {
