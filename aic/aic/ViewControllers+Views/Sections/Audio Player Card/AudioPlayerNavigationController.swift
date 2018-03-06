@@ -125,7 +125,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 	func playTourOverviewAudio(tour: AICTourModel) {
 		let nextTourStop = tour.stops.first!
 		currentAudioBumper = nextTourStop.audioBumper
-		currentAudioBumper!.language = tour.language
+		if currentAudioBumper != nil {
+			currentAudioBumper!.language = tour.language
+		}
 		currentTourStopAudioFile = tour.overview.audio
 		
 		currentTrackTitle = tour.title
@@ -148,7 +150,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 		if let stopIndex = tour.getIndex(forStopObject: tourStop.object) {
 			if stopIndex + 1 < tour.stops.count {
 				currentAudioBumper = tour.stops[stopIndex + 1].audioBumper
-				currentAudioBumper!.language = tour.language
+				if currentAudioBumper != nil {
+					currentAudioBumper!.language = tour.language
+				}
 			}
 		}
 		currentTourStopAudioFile = tourStop.audio

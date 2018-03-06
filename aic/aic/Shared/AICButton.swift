@@ -19,6 +19,11 @@ class AICButton: UIButton {
 		let highlighted: ColorSet
 	}
 	
+	static let blueMode = ButtonColorMode(
+		normal: ColorSet(borderColor: .aicButtonBlueColor, backgroundColor: .aicButtonBlueColor, textColor: .white),
+		highlighted: ColorSet(borderColor: .aicButtonBlueColor, backgroundColor: .aicButtonBlueDarkColor, textColor: .white)
+	)
+	
 	static let greenBlueMode = ButtonColorMode(
 		normal: ColorSet(borderColor: .aicButtonGreenBlueColor, backgroundColor: .aicButtonGreenBlueColor, textColor: .white),
 		highlighted: ColorSet(borderColor: .aicButtonGreenBlueColor, backgroundColor: .aicButtonGreenBlueDarkColor, textColor: .white)

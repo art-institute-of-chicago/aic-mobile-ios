@@ -166,6 +166,7 @@
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
+		29F12BC2204F4C37009C1A47 /* MapTourStartContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F12BC1204F4C37009C1A47 /* MapTourStartContentView.swift */; };
 		29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */; };
 		29F261FD200FE5C30000BF05 /* ExhibitionContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */; };
 		29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */; };
@@ -477,6 +478,7 @@
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
+		29F12BC1204F4C37009C1A47 /* MapTourStartContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTourStartContentView.swift; sourceTree = "<group>"; };
 		29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionContentCell.xib; sourceTree = "<group>"; };
 		29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionContentCell.swift; sourceTree = "<group>"; };
 		29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkContentCell.swift; sourceTree = "<group>"; };
@@ -894,6 +896,7 @@
 				2984611B203A045C001E5378 /* MapArtworkContentView.swift */,
 				29E003EC204858F900E1D305 /* MapRestaurantContentView.swift */,
 				2984611D203A046C001E5378 /* MapTextContentView.swift */,
+				29F12BC1204F4C37009C1A47 /* MapTourStartContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1952,6 +1955,7 @@
 				2975A057203F61250014017C /* MapExhibitionAnnotationView.swift in Sources */,
 				E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */,
 				29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */,
+				29F12BC2204F4C37009C1A47 /* MapTourStartContentView.swift in Sources */,
 				2994891F1FA3849C00943197 /* AICGeneralInfoModel.swift in Sources */,
 				2984611E203A046C001E5378 /* MapTextContentView.swift in Sources */,
 				294338541FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift in Sources */,

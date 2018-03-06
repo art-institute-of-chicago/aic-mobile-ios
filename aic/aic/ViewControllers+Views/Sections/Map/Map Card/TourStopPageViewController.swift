@@ -63,11 +63,9 @@ class TourStopPageViewController : UIPageViewController {
 			
 			if currentPage == 0 {
 				// Tour Overview
-				let artworkContentView = MapArtworkContentView(tour: tourModel, language: tourModel.language)
+				let artworkContentView = MapTourStartContentView()
 				artworkContentView.audioButton.tag = currentPage
-				artworkContentView.imageButton.tag = currentPage
 				artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
-				artworkContentView.imageButton.addTarget(self, action: #selector(imageButtonPressed(button:)), for: .touchUpInside)
 				page.view.addSubview(artworkContentView)
 			}
 			else {
