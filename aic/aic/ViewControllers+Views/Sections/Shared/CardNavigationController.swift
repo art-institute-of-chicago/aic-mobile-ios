@@ -40,8 +40,7 @@ class CardNavigationController : UINavigationController {
     
     let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "cardDownArrow"))
 	let closeButton: UIButton = UIButton()
-    
-    private (set) var downArrowTopMargin: CGFloat = 11.0
+	
     private (set) var contentTopMargin: CGFloat = 30
     
     private let positionForState: [State : CGFloat] = [
@@ -70,8 +69,9 @@ class CardNavigationController : UINavigationController {
 		self.view.addSubview(closeButton)
         
         // Arrow constraints
-        downArrowImageView.autoSetDimensions(to: downArrowImageView.image!.size)
-        downArrowImageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: downArrowTopMargin)
+		downArrowImageView.contentMode = .center
+		downArrowImageView.autoSetDimensions(to: CGSize(width: 150, height: 32))
+        downArrowImageView.autoPinEdge(.top, to: .top, of: self.view)
         downArrowImageView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 		
 		// Close Button
@@ -98,7 +98,8 @@ class CardNavigationController : UINavigationController {
 		
 		// Tap to Close Gesture
 		tapToCloseGesture.addTarget(self, action: #selector(handleTapGesture(recognizer:)))
-		self.view.addGestureRecognizer(tapToCloseGesture)
+		downArrowImageView.isUserInteractionEnabled = true
+		downArrowImageView.addGestureRecognizer(tapToCloseGesture)
 	}
     
     override func viewDidAppear(_ animated: Bool) {

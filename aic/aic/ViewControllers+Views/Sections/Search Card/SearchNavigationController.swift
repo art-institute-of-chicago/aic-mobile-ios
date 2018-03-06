@@ -168,6 +168,13 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.view.layoutIfNeeded()
 	}
 	
+	override func cardWillHide() {
+		// dismiss the keyboard when the user taps to close the card
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
+	}
+	
 	override func handlePanGesture(recognizer: UIPanGestureRecognizer) {
 		// dismiss the keyboard when the user taps to close the card
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
