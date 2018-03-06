@@ -254,6 +254,7 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC = nil
 		tourModel = nil
 		tourStopPageVC = nil
+		artworkModel = nil
 		searchedArtworkModel = nil
 		exhibitionModel = nil
 	}
@@ -327,6 +328,7 @@ class MapNavigationController : SectionNavigationController {
 			let artworkVC = UIViewController()
 			let artworkContentView = MapArtworkContentView(artwork: artwork)
 			artworkContentView.audioButton.addTarget(self, action: #selector(mapArtworkAudioButtonPressed(button:)), for: .touchUpInside)
+			artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 			artworkVC.view.addSubview(artworkContentView)
 			mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
 			mapContentCardVC!.titleLabel.text = artwork.title
@@ -365,6 +367,7 @@ class MapNavigationController : SectionNavigationController {
 			let artworkVC = UIViewController()
 			let artworkContentView = MapArtworkContentView(searchedArtwork: searchedArtwork)
 			artworkContentView.audioButton.addTarget(self, action: #selector(mapArtworkAudioButtonPressed(button:)), for: .touchUpInside)
+			artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 			artworkVC.view.addSubview(artworkContentView)
 			mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
 			mapContentCardVC!.titleLabel.text = searchedArtwork.title
@@ -538,6 +541,18 @@ class MapNavigationController : SectionNavigationController {
 			if let object = searchedArtwork.audioObject {
 				self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: object)
 			}
+		}
+		else if let artwork = artworkModel {
+			self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork)
+		}
+	}
+	
+	@objc func mapArtworkImageButtonPressed(button: UIButton) {
+		if let searchedArtwork = searchedArtworkModel {
+			mapVC.highlightArtwork(identifier: searchedArtwork.artworkId, location: searchedArtwork.location)
+		}
+		else if let artwork = artworkModel {
+			mapVC.highlightArtwork(identifier: artwork.nid, location: artwork.location)
 		}
 	}
 }

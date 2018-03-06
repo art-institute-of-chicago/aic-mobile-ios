@@ -13,6 +13,7 @@ class MapArtworkContentView : UIView {
 	private let titleLabel: UILabel = UILabel()
 	private let locationLabel: UILabel = UILabel()
 	let audioButton: UIButton = UIButton()
+	let imageButton: UIButton = UIButton()
 	
 	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight)
 	
@@ -113,8 +114,13 @@ class MapArtworkContentView : UIView {
 		audioButton.setImage(#imageLiteral(resourceName: "tourStopPlay"), for: .normal)
 		audioButton.setImage(#imageLiteral(resourceName: "tourStopPause"), for: .selected)
 		
+		imageButton.setTitle("", for: .normal)
+		imageButton.setImage(UIImage(), for: .normal)
+		imageButton.backgroundColor = .clear
+		
 		// Add subviews
 		self.addSubview(imageView)
+		self.addSubview(imageButton)
 		self.addSubview(titleLabel)
 		self.addSubview(locationLabel)
 		self.addSubview(audioButton)
@@ -126,6 +132,11 @@ class MapArtworkContentView : UIView {
 		imageView.autoPinEdge(.top, to: .top, of: self, withOffset: 56)
 		imageView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		imageView.autoSetDimensions(to: imageView.frame.size)
+		
+		imageButton.autoPinEdge(.top, to: .top, of: imageView)
+		imageButton.autoPinEdge(.leading, to: .leading, of: imageView)
+		imageButton.autoPinEdge(.trailing, to: .trailing, of: imageView)
+		imageButton.autoPinEdge(.bottom, to: .bottom, of: imageView)
 		
 		titleLabel.autoPinEdge(.top, to: .top, of: imageView)
 		titleLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 16)

@@ -30,7 +30,7 @@ class MapViewController: UIViewController {
     
     var mode: Mode = .allInformation {
         didSet {
-            updateMapForModeChange(andStorePreviousMode: oldValue)
+            updateMapForModeChange()
         }
     }
     
@@ -101,7 +101,7 @@ class MapViewController: UIViewController {
         mapView.addGestureRecognizer(panGesture)
         
         // Init map
-        updateMapForModeChange(andStorePreviousMode: .allInformation)
+        updateMapForModeChange()
         setCurrentFloor(forFloorNum: Common.Map.startFloor)
         
         
@@ -296,7 +296,7 @@ class MapViewController: UIViewController {
 		highlightTourStop(identifier: tourModel.nid, location: tourModel.location)
     }
     
-    private func updateMapForModeChange(andStorePreviousMode previousMode:Mode) {
+    private func updateMapForModeChange() {
         // Save our state
 		if let selectedAnnotation = mapView.selectedAnnotations.first {
 			mapView.deselectAnnotation(selectedAnnotation, animated: false)
@@ -368,6 +368,27 @@ class MapViewController: UIViewController {
 		for floor in mapModel.floors {
 			for annotation in floor.diningAnnotations {
 				if annotation.nid == identifier {
+					// Turn off user heading since we want to jump to a specific place
+					floorSelectorVC.disableUserHeading()
+					
+					// Go to that floor
+					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
+					
+					// Zoom in on the item
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 45.0)
+					
+					// Select the annotation (which eventually updates it's view)
+					mapView.selectAnnotation(annotation, animated: true)
+				}
+			}
+		}
+	}
+	
+	func highlightArtwork(identifier: Int, location: CoordinateWithFloor) {
+		// Select the annotation
+		for annotation in mapView.annotations {
+			if let artworkAnnotation = annotation as? MapObjectAnnotation {
+				if artworkAnnotation.nid == identifier {
 					// Turn off user heading since we want to jump to a specific place
 					floorSelectorVC.disableUserHeading()
 					
