@@ -240,7 +240,6 @@ class SectionsViewController : UIViewController {
 	
 	private func playArtwork(artwork: AICObjectModel, audio: AICAudioFileModel) {
 		audioPlayerVC.playArtworkAudio(artwork: artwork, audio: audio)
-	
 		showHeadphonesMessage()
     }
     
@@ -249,7 +248,6 @@ class SectionsViewController : UIViewController {
 		audio.language = Common.currentLanguage
 		
 		playArtwork(artwork: artwork, audio: audio)
-		
 		audioPlayerVC.showFullscreen()
         
         // Log analytics
@@ -261,7 +259,6 @@ class SectionsViewController : UIViewController {
 		audio.language = Common.currentLanguage
 		
 		playArtwork(artwork: artwork, audio: audio)
-		
 		audioPlayerVC.showMiniPlayer()
 		
         // Log analytics
@@ -274,7 +271,6 @@ class SectionsViewController : UIViewController {
 		audio.language = Common.currentLanguage
 		
 		playArtwork(artwork: artwork, audio: audio)
-		
 		audioPlayerVC.showMiniPlayer()
 		
 		// Log analytics
@@ -282,12 +278,8 @@ class SectionsViewController : UIViewController {
 //        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
 	}
 	
-	private func playTourStop(tourStop: AICTourStopModel, language: Common.Language) {
-		var audio = tourStop.audio
-		audio.language = language
-		
-		playArtwork(artwork: tourStop.object, audio: audio)
-		
+	private func playTourStop(tourStop: AICTourStopModel, tour: AICTourModel) {
+		audioPlayerVC.playTourStopAudio(tourStop: tourStop, tour: tour)
 		audioPlayerVC.showMiniPlayer()
 		
 		// Log analytics
@@ -295,9 +287,6 @@ class SectionsViewController : UIViewController {
 	}
     
     private func playTourOverview(tour: AICTourModel, language: Common.Language) {
-		var audio = tour.overview.audio
-		audio.language = language
-		
 		audioPlayerVC.playTourOverviewAudio(tour: tour)
 		audioPlayerVC.showMiniPlayer()
 		
@@ -458,8 +447,10 @@ extension SectionsViewController : MapNavigationControllerDelegate {
 		playTourOverview(tour: tour, language: language)
 	}
 	
-	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, language: Common.Language) {
-		playTourStop(tourStop: tourStop, language: language)
+	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, tour: AICTourModel, language: Common.Language) {
+		var tourModel = tour
+		tourModel.language = language
+		playTourStop(tourStop: tourStop, tour: tourModel)
 	}
 }
 

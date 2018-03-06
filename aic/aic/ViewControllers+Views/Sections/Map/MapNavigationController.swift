@@ -13,7 +13,7 @@ import Localize_Swift
 protocol MapNavigationControllerDelegate : class {
 	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel)
 	func mapDidSelectPlayAudioForTour(tour: AICTourModel, language: Common.Language)
-	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, language: Common.Language)
+	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, tour: AICTourModel, language: Common.Language)
 }
 
 class MapNavigationController : SectionNavigationController {
@@ -475,7 +475,7 @@ class MapNavigationController : SectionNavigationController {
 			if mapContentCardVC != nil {
 				mapContentCardVC!.view.removeFromSuperview()
 			}
-			let restroomsContentView = MapTextContentView(text: "Close to exlpore everything.")
+			let restroomsContentView = MapTextContentView(text: "Close to explore everything.")
 			mapContentCardVC = MapContentCardNavigationController(contentView: restroomsContentView)
 			mapContentCardVC!.titleLabel.text = "Restrooms"
 			mapContentCardVC!.cardDelegate = self
@@ -593,7 +593,7 @@ extension MapNavigationController : MapViewControllerDelegate {
 			if let tour = tourModel {
 				if let stopIndex = tour.getIndex(forStopObject: artwork) {
 					let tourStop = tour.stops[stopIndex]
-					self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, language: tour.language)
+					self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, tour: tourModel!, language: tour.language)
 				}
 			}
 		}
@@ -664,7 +664,7 @@ extension MapNavigationController : TourStopPageViewControllerDelegate {
 	}
 	
 	func tourStopPageDidPressPlayAudio(tourStop: AICTourStopModel, language: Common.Language) {
-		self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, language: language)
+		self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, tour: tourModel!, language: language)
 	}
 }
 

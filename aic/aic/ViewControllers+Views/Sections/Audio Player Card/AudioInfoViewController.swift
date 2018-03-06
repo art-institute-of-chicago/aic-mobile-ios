@@ -162,6 +162,15 @@ class AudioInfoViewController : UIViewController {
 		updateLayout()
     }
 	
+	func updateAudioContent(audio: AICAudioFileModel) {
+		updateLanguage(language: audio.language)
+		
+		transcriptView.show(collapseEnabled: true)
+		transcriptView.bodyTextView.text = audio.transcript
+		
+		updateLayout()
+	}
+	
 	func setTourOverviewContent(tourOverview: AICTourOverviewModel) {
 		reset()
 		
@@ -171,21 +180,6 @@ class AudioInfoViewController : UIViewController {
 		
 		updateLayout()
 	}
-    
-    func setTourStopContent(tour: AICTourModel, stopIndex: Int) {
-		reset()
-		
-        tourModel = tour
-		
-		if tourModel!.availableLanguages.contains(Common.currentLanguage) {
-			tourModel!.language = Common.currentLanguage
-		}
-		
-		setImage(imageURL: tour.imageUrl)
-		setDescription(description: tourModel!.longDescription)
-		
-		updateLayout()
-    }
 	
 	// Language
 	private func updateLanguage(language: Common.Language) {

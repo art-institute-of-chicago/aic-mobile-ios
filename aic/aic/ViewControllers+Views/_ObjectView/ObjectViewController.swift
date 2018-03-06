@@ -291,7 +291,7 @@ class ObjectViewController: UIViewController {
         return true
     }
     
-    private func showLoadError(forAudioFile audioFile:AICAudioFileModel, coverImageURL:URL) {
+    private func showLoadError(forAudioFile audioFile:AICAudioFileModel, coverImageURL: URL) {
         // Preset a UIAlertView that allows the user to try to load the file.
         let alertView = UIAlertController(title: loadFailureTitle, message: loadFailureMessage, preferredStyle: .alert)
         alertView.addAction(UIAlertAction(title: self.reloadButtonTitle, style: .default, handler: { (alertAction) -> Void in

@@ -254,12 +254,6 @@ struct Common {
 
 
         // Small
-        static let leaveTour = AICMessageSmallModel(title: "Leave this tour?",
-                                                    message: "If you continue, you will leave this page and end the tour.",
-                                                    actionButtonTitle: "Continue",
-                                                    cancelButtonTitle: "Cancel"
-        )
-
         static let locationDisabled = AICMessageSmallModel(title: "Your phone’s Location Services feature is off.",
                                                            message: "Turn on Location Services to easily navigate the museum and find museum features near you.",
                                                            actionButtonTitle: "Go to Settings",
@@ -433,67 +427,6 @@ struct Common {
             case objectMaximized = 30
             case objectsSelected = 40
         }
-
-        // Departments
-        enum Department: String {
-            case African = "african"
-            case AmericaBefore1900 = "americanbefore1900"
-            case AmericanDecorative = "americandecorative"
-            case AmericanFolk = "americanfolk"
-            case AmericanIndian = "americanindian"
-            case AmericanModern = "americanmodern"
-            case Architecture1 = "architecture0"
-            case Architecture2 = "architecture2"
-            case Armor = "armor"
-            case Chicago = "chicago"
-            case Chinese = "chinese"
-            case Contemporary = "contemporary"
-            case ContempSculpture = "contemporarysculpture"
-            case EuroBefore1900 = "europeanbefore1900"
-            case EuroDecorative = "europeandecorative"
-            case Film = "film"
-            case Greek = "greek"
-            case Impressionism = "impressionism"
-            case Indian = "indian"
-            case Islamic = "islamic"
-            case Modern = "modern"
-            case Paperweights = "paperweights"
-            case Photography0 = "photography0"
-            case Photography1 = "photography1"
-            case Print = "prints"
-            case Textiles = "textiles"
-            case Thorne = "thorne"
-        }
-
-        static let departmentTitles:[Department:String] = [
-            .African : "African Art",
-            .AmericaBefore1900 : "American Art Before 1900",
-            .AmericanDecorative : "American Decorative\nArts 1920-1970",
-            .AmericanFolk : "American Folk Art",
-            .AmericanIndian : "Indian Art of\nthe Americas",
-            .AmericanModern : "Modern American Art",
-            .Architecture1 : "Architecture\nand Design",
-            .Architecture2 : "Architecture\nand Design",
-            .Armor : "Arms and Armor",
-            .Chicago : "Chicago\nArchitecture",
-            .Chinese : "Chinese, Japanese,\nand Korean Art",
-            .Contemporary : "Contemporary Art 1945 - 1960",
-            .ContempSculpture : "Contemporary Sculpture",
-            .EuroBefore1900 : "European Art\nBefore 1900",
-            .EuroDecorative : "European Decorative\nArts",
-            .Film : "Film, Video,\nand New Media",
-            .Greek : "Greek, Roman,\nand Byzantine Art",
-            .Impressionism : "Impressionism",
-            .Indian : "Indian, Southeast Asian,\nand Himalayan Art",
-            .Islamic : "Islamic Art",
-            .Modern : "Modern Art",
-            .Paperweights : "Paperweights",
-            .Photography0 : "Photography",
-            .Photography1 : "Photography",
-            .Print : "Prints and Drawings",
-            .Textiles : "Textiles",
-            .Thorne : "Thorne Miniature Rooms"
-        ]
 
         // Annotation view settings
         static let thumbSize:CGFloat = 54

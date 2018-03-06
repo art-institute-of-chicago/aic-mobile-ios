@@ -16,18 +16,25 @@ class AudioPlayerNavigationController : CardNavigationController {
     var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
     let miniAudioPlayerView: MiniAudioPlayerView = MiniAudioPlayerView()
 	
-	let remoteSkipTime: Int = 10 // Number of seconds to skip forward/back wiht MPRemoteCommandCenter seek
+	let remoteSkipTime: Int = 10 // Number of seconds to skip forward/back with MPRemoteCommandCenter seek
     
     // AVPlayer
     fileprivate let avPlayer = AVPlayer()
     private var audioProgressTimer: Timer?
     private var audioPlayerProgressTimer: Timer? = nil
 	
-	var currentArtwork: AICObjectModel? = nil
-    var currentAudioFile: AICAudioFileModel? = nil
-	var currentTrackTitle: String = ""
-    var currentAudioFileMaxProgress: CGFloat = 0
+	// Audio
+	var currentAudioFile: AICAudioFileModel? = nil
+	var currentAudioFileMaxProgress: CGFloat = 0
 	var selectedLanguage: Common.Language? = nil
+	
+	// Info
+	var currentTourStopAudioFile: AICAudioFileModel? = nil
+	var currentAudioBumper: AICAudioFileModel? = nil
+	var currentTrackTitle: String = ""
+	var currentImageURL: URL? = nil
+	
+	var autoPlay: Bool = false
     
     var isUpdatingObjectViewProgressSlider = false
     
@@ -101,8 +108,13 @@ class AudioPlayerNavigationController : CardNavigationController {
     // MARK: Play Audio
     
 	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel) {
-		currentArtwork = artwork
-		self.currentTrackTitle = artwork.title
+		currentAudioBumper = nil
+		currentTourStopAudioFile = nil
+		
+		currentTrackTitle = artwork.title
+		currentImageURL = artwork.imageUrl
+		
+		self.autoPlay = true
 		
         if load(audioFile: audio, coverImageURL: artwork.imageUrl as URL) {
 			miniAudioPlayerView.reset()
@@ -111,15 +123,53 @@ class AudioPlayerNavigationController : CardNavigationController {
     }
 	
 	func playTourOverviewAudio(tour: AICTourModel) {
+		let nextTourStop = tour.stops.first!
+		currentAudioBumper = nextTourStop.audioBumper
+		currentAudioBumper!.language = tour.language
+		currentTourStopAudioFile = tour.overview.audio
+		
+		currentTrackTitle = tour.title
+		currentImageURL = tour.imageUrl
+		
+		self.autoPlay = true
+		
 		// set correct language on audio
 		var audio = tour.overview.audio
 		audio.language = tour.language
 		
-		self.currentTrackTitle = tour.title
-		
 		if load(audioFile: audio, coverImageURL: tour.imageUrl as URL) {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setTourOverviewContent(tourOverview: tour.overview)
+		}
+	}
+	
+	func playTourStopAudio(tourStop: AICTourStopModel, tour: AICTourModel) {
+		currentAudioBumper = nil
+		if let stopIndex = tour.getIndex(forStopObject: tourStop.object) {
+			if stopIndex + 1 < tour.stops.count {
+				currentAudioBumper = tour.stops[stopIndex + 1].audioBumper
+				currentAudioBumper!.language = tour.language
+			}
+		}
+		currentTourStopAudioFile = tourStop.audio
+		
+		currentTrackTitle = tourStop.object.title
+		currentImageURL = tourStop.object.imageUrl
+		
+		self.autoPlay = true
+		
+		// set correct language on audio
+		var audio = tourStop.audio
+		audio.language = tour.language
+		
+		if load(audioFile: audio, coverImageURL: tourStop.object.imageUrl as URL) {
+			miniAudioPlayerView.reset()
+			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio)
+		}
+	}
+	
+	private func playAudioBumper(audioBumper: AICAudioFileModel) {
+		if load(audioFile: audioBumper, coverImageURL: self.currentImageURL!) {
 		}
 	}
     
@@ -201,28 +251,13 @@ class AudioPlayerNavigationController : CardNavigationController {
 							return
 						}
 						
-						// MPMediaItemPropertyArtwork
-						let artworkMediaItem = MPMediaItemArtwork.init(boundsSize: image!.size, requestHandler: { (size) -> UIImage in
-							return image!
-						})
-						
-						// Set the MPNowPlaying information
-						let songInfo: [String : AnyObject] = [
-							MPMediaItemPropertyTitle: NSString(string: self.currentTrackTitle),
-							MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
-							MPMediaItemPropertyArtwork: artworkMediaItem,
-							MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
-							MPMediaItemPropertyAlbumTrackCount: NSNumber(floatLiteral: 0),
-							MPNowPlayingInfoPropertyPlaybackQueueIndex: NSNumber(floatLiteral: 0),
-							MPNowPlayingInfoPropertyPlaybackQueueCount: NSNumber(floatLiteral: 0),
-							MPNowPlayingInfoPropertyPlaybackRate: NSInteger(1.0) as AnyObject
-						]
-						
-						MPNowPlayingInfoCenter.default().nowPlayingInfo = songInfo
+						self.setMediaInformation(image: image!)
 					})
 					
 					// Auto-play on load
-					self.play()
+					if self.autoPlay == true {
+						self.play()
+					}
 					
 					break
 					
@@ -234,6 +269,27 @@ class AudioPlayerNavigationController : CardNavigationController {
         
         return true
     }
+	
+	private func setMediaInformation(image: UIImage) {
+		// MPMediaItemPropertyArtwork
+		let artworkMediaItem = MPMediaItemArtwork.init(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+			return image
+		})
+		
+		// Set the MPNowPlaying information
+		let songInfo: [String : AnyObject] = [
+			MPMediaItemPropertyTitle: NSString(string: self.currentTrackTitle),
+			MPMediaItemPropertyArtist: NSString(string: "Art Institute of Chicago"),
+			MPMediaItemPropertyArtwork: artworkMediaItem,
+			MPMediaItemPropertyPlaybackDuration: NSNumber(floatLiteral: (CMTimeGetSeconds(self.avPlayer.currentItem!.asset.duration))),
+			MPMediaItemPropertyAlbumTrackCount: NSNumber(floatLiteral: 0),
+			MPNowPlayingInfoPropertyPlaybackQueueIndex: NSNumber(floatLiteral: 0),
+			MPNowPlayingInfoPropertyPlaybackQueueCount: NSNumber(floatLiteral: 0),
+			MPNowPlayingInfoPropertyPlaybackRate: NSInteger(1.0) as AnyObject
+		]
+		
+		MPNowPlayingInfoCenter.default().nowPlayingInfo = songInfo
+	}
     
     private func showLoadError(forAudioFile audioFile: AICAudioFileModel, coverImageURL: URL) {
 		// Preset a UIAlertView that allows the user to try to load the file.
@@ -314,9 +370,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 			
 			if duration < 1 {
 				if let audio = currentAudioFile {
-					if let artwork = currentArtwork {
-						showLoadError(forAudioFile: audio, coverImageURL: artwork.imageUrl)
-					}
+					showLoadError(forAudioFile: audio, coverImageURL: currentImageURL!)
 				}
 				return
 			}
@@ -498,6 +552,30 @@ extension AudioPlayerNavigationController {
     
     @objc internal func audioPlayerDidFinishPlaying(_ notification:Notification) {
         synchronizePlayPauseButtons(isPlaying: false)
+		
+		// check that we are playing tour stop audio, before you play bumper or original track
+		guard let currentAudio = currentAudioFile else {
+			return
+		}
+		guard let currentTourStopAudio = currentTourStopAudioFile else {
+			return
+		}
+		guard let currentBumper = currentAudioBumper else {
+			return
+		}
+		
+		if currentAudio.nid == currentTourStopAudio.nid {
+			// if you just played tour stop audio
+			// play audio bumper if there is one
+			self.autoPlay = true
+			playAudioBumper(audioBumper: currentBumper)
+		}
+		else if currentAudio.nid == currentBumper.nid {
+			self.autoPlay = false
+			if load(audioFile: currentTourStopAudioFile!, coverImageURL: currentImageURL!) {
+				miniAudioPlayerView.reset()
+			}
+		}
     }
     
     // Audio player Slider Events
@@ -506,7 +584,6 @@ extension AudioPlayerNavigationController {
         // Stop the progress from updating, otherwise the two funcs fight
         isUpdatingObjectViewProgressSlider = true
     }
-    
     
     @objc internal func audioPlayerSliderValueChanged(slider: UISlider) {
         if let currentItem = avPlayer.currentItem {
@@ -553,9 +630,9 @@ extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
 	func languageSelectorDidSelect(language: Common.Language) {
 		if let _ = currentAudioFile {
 			selectedLanguage = language // set the language to indicate the language has been selected using the LanguageSelector
-			if load(audioFile: currentAudioFile!, coverImageURL: currentArtwork!.imageUrl as URL) {
+			if load(audioFile: currentAudioFile!, coverImageURL: currentImageURL!) {
 				miniAudioPlayerView.reset()
-				audioInfoVC.setArtworkContent(artwork: currentArtwork!, audio: currentAudioFile!)
+				audioInfoVC.updateAudioContent(audio: currentAudioFile!)
 			}
 			selectedLanguage = nil
 		}

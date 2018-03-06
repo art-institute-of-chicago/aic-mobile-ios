@@ -521,7 +521,7 @@ class AppDataParser {
 	
 	func parseTranslation(audioFileJSON: JSON) throws -> AICAudioFileTranslationModel {
 		let url: URL    = try getURL(fromJSON: audioFileJSON, forKey: "audio_file_url")!
-		let transcript  = try getString(fromJSON: audioFileJSON, forKey: "audio_transcript")
+		let transcript  = try getString(fromJSON: audioFileJSON, forKey: "audio_transcript", optional: true)
 		let trackTitle = try getString(fromJSON: audioFileJSON, forKey: "track_title", optional: true)
 		
 		return AICAudioFileTranslationModel(trackTitle: trackTitle.stringByDecodingHTMLEntities,
