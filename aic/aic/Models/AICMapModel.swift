@@ -9,9 +9,6 @@ import CoreGraphics
 import MapKit
 
 struct AICMapModel {
-	// Background
-	let backgroundOverlay: FloorplanOverlay
-	
     // Global Annotations
     private (set) var imageAnnotations: [MapImageAnnotation] = []
     private (set) var landmarkAnnotations: [MapTextAnnotation] = []

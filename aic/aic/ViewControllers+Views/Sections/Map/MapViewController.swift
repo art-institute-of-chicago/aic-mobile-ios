@@ -81,7 +81,6 @@ class MapViewController: UIViewController {
         
         // Set the overlay for the background
         mapView.add(mapViewHideBackgroundOverlay, level: .aboveRoads)
-		mapView.add(mapModel.backgroundOverlay)
         
         mapView.camera.heading = mapView.defaultHeading
         mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue

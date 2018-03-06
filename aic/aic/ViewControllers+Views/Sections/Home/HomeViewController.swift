@@ -35,7 +35,7 @@ class HomeViewController : SectionViewController {
 	var exhibitionItems: [AICExhibitionModel] = []
 	var eventItems: [AICEventModel] = []
 	
-	static let tourCellSize: CGSize = CGSize(width: 285, height: 300)
+	static let tourCellSize: CGSize = CGSize(width: 285, height: 306)
 	static let eventCellSize: CGSize = CGSize(width: 285, height: 320)
 	static let exhibitionCellSize: CGSize = CGSize(width: 240, height: 380)
 	

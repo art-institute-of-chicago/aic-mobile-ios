@@ -102,6 +102,7 @@ class AudioPlayerNavigationController : CardNavigationController {
     
 	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel) {
 		currentArtwork = artwork
+		self.currentTrackTitle = artwork.title
 		
         if load(audioFile: audio, coverImageURL: artwork.imageUrl as URL) {
 			miniAudioPlayerView.reset()
@@ -113,6 +114,8 @@ class AudioPlayerNavigationController : CardNavigationController {
 		// set correct language on audio
 		var audio = tour.overview.audio
 		audio.language = tour.language
+		
+		self.currentTrackTitle = tour.title
 		
 		if load(audioFile: audio, coverImageURL: tour.imageUrl as URL) {
 			miniAudioPlayerView.reset()
@@ -139,7 +142,6 @@ class AudioPlayerNavigationController : CardNavigationController {
         }
 		
 		self.currentAudioFile = audioFile
-		self.currentTrackTitle = audioFile.trackTitle
 		self.currentAudioFileMaxProgress = 0
 		
 		// even if the player defaults to a language

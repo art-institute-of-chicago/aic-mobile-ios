@@ -673,11 +673,6 @@ class AppDataParser {
 	// MARK: Map
 	
 	func parse(mapFloorsJSON: JSON, mapAnnotationsJSON: JSON) -> AICMapModel {
-		// Background
-		let backgroundPdfUrl = Bundle.main.url(forResource: "map_bg", withExtension: "pdf", subdirectory:Common.Map.mapsDirectory)!
-		
-		let backgroundOverlay = FloorplanOverlay(floorplanUrl: backgroundPdfUrl, withPDFBox: CGPDFBox.trimBox, andAnchors: Common.Map.anchorPair)
-		
 		do {
 			var floorOverlays: [FloorplanOverlay] = []
 			var floorGalleryAnnotations: [Int : [MapTextAnnotation]] = [:]
@@ -809,8 +804,7 @@ class AppDataParser {
 				floors.append(floor)
 			}
 			
-			return AICMapModel(backgroundOverlay: backgroundOverlay,
-							   imageAnnotations: imageAnnotations,
+			return AICMapModel(imageAnnotations: imageAnnotations,
 							   landmarkAnnotations: landmarkAnnotations,
 							   gardenAnnotations: gardenAnnotations,
 							   floors: floors)
@@ -821,8 +815,7 @@ class AppDataParser {
 			}
 		}
 		
-		return AICMapModel(backgroundOverlay: backgroundOverlay,
-						   imageAnnotations: [MapImageAnnotation](),
+		return AICMapModel(imageAnnotations: [MapImageAnnotation](),
 						   landmarkAnnotations: [MapTextAnnotation](),
 						   gardenAnnotations: [MapTextAnnotation](),
 						   floors: [AICMapFloorModel]())

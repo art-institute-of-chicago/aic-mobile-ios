@@ -25,10 +25,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="homeTourCell" id="pTf-aA-L9V" customClass="HomeTourCell" customModule="aic" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="285" height="296"/>
+            <rect key="frame" x="0.0" y="0.0" width="285" height="300"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="285" height="296"/>
+                <rect key="frame" x="0.0" y="0.0" width="285" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d78-wj-ThX" customClass="AICImageView" customModule="aic" customModuleProvider="target">
@@ -98,7 +98,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XEv-K2-evg">
-                        <rect key="frame" x="0.0" y="221" width="275" height="75"/>
+                        <rect key="frame" x="0.0" y="221" width="275" height="79"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="275" id="RxD-6w-XwB"/>
                         </constraints>

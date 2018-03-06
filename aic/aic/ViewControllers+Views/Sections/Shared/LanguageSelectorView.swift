@@ -127,9 +127,9 @@ class LanguageSelectorView : UIView {
 	
 	func open() {
 		currentState = .open
-		languageAButton.isEnabled = true
+		languageAButton.isEnabled = availableLanguages.count > 2
+		languageAButton.isHidden = !languageAButton.isEnabled
 		languageBButton.isEnabled = true
-		languageAButton.isHidden = false
 		languageBButton.isHidden = false
 		languageAButton.alpha = 0
 		languageBButton.alpha = 0
