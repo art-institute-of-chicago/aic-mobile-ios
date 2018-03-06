@@ -98,8 +98,7 @@ class CardNavigationController : UINavigationController {
 		
 		// Tap to Close Gesture
 		tapToCloseGesture.addTarget(self, action: #selector(handleTapGesture(recognizer:)))
-		downArrowImageView.isUserInteractionEnabled = true
-		downArrowImageView.addGestureRecognizer(tapToCloseGesture)
+		self.view.addGestureRecognizer(tapToCloseGesture)
 	}
     
     override func viewDidAppear(_ animated: Bool) {
@@ -285,15 +284,18 @@ extension CardNavigationController : UIGestureRecognizerDelegate {
     }
 	
 	@objc internal func handleTapGesture(recognizer: UITapGestureRecognizer) {
-		if currentState == openState {
-			if closedState == .minimized {
-				showMinimized()
-			}
-			else if closedState == .mini_player {
-				showMiniPlayer()
-			}
-			else if closedState == .hidden {
-				hide()
+		let location = recognizer.location(in: view)
+		if location.y < 40.0 && location.x > 100 && location.x < self.view.frame.width - 100 {
+			if currentState == openState {
+				if closedState == .minimized {
+					showMinimized()
+				}
+				else if closedState == .mini_player {
+					showMiniPlayer()
+				}
+				else if closedState == .hidden {
+					hide()
+				}
 			}
 		}
 	}
