@@ -222,6 +222,7 @@ class AppDataManager {
 				"description",
 				"short_description",
 				"image",
+				"location",
 				"start_at",
 				"end_at",
 				"button_text",

@@ -35,7 +35,8 @@ class MapView: MKMapView {
     // Rotate the map so that the Michigan Ave entrance faces south
     let defaultHeading = 90.0
 	let defaultZoom = 400.0
-    let defaultPitch:CGFloat = 0.0
+    let topDownPitch:CGFloat = 0.0
+	let perspectivePitch:CGFloat = 60.0
     
     private (set) var previousAltitude:Double = 0.0
     private (set) var currentAltitude:Double = 0.0
@@ -127,7 +128,7 @@ class MapView: MKMapView {
     func showFullMap(useDefaultHeading: Bool = false, animated: Bool = true) {
         if let overlay = floorplanOverlay {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
-			var centerPoint = overlay.coordinate
+			var centerPoint = Common.Map.defaultLocation
 			
 			let buildingRect = overlay.boundingMapRect
 			let userMapPoint = MKMapPointForCoordinate(userLocation.coordinate)
@@ -136,46 +137,9 @@ class MapView: MKMapView {
 				centerPoint = userLocation.coordinate
 			}
 			
-			zoomIn(onCenterCoordinate: centerPoint, altitude: camera.altitude, withAnimation: animated, heading: heading)
-			
+			zoomIn(onCenterCoordinate: centerPoint, altitude: defaultZoom, withAnimation: animated, heading: heading)
         }
     }
-    
-    func keepMapInView() {
-        // Check altitude
-        if camera.altitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
-			if let overlay = floorplanOverlay {
-				let heading = defaultHeading// camera.heading
-				zoomIn(onCenterCoordinate: overlay.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: heading)
-			}
-        } else {
-            // Make sure our floorplan is on-screen
-            if let floorplanOverlay = floorplanOverlay {
-                let buildingRect = floorplanOverlay.boundingMapRect
-                let cameraCenter = MKMapPointForCoordinate(camera.centerCoordinate)
-                let distanceFromBuildingCenter = MKMetersBetweenMapPoints(cameraCenter, buildingRect.getCenter())
-                
-                if  distanceFromBuildingCenter > Common.Location.minDistanceFromMuseumForLocation {
-                    zoomIn(onCenterCoordinate: floorplanOverlay.coordinate, altitude: camera.altitude, heading: nil, pitch: camera.pitch)
-                }
-            }
-        }
-    }
-	
-	func adjustPicthForZoomLevel() {
-		if self.currentZoomLevel != self.previousZoomLevel && camera.pitch != 60.0 {
-			var pitch: CGFloat = 0.0
-//			var altitude: Double = camera.altitude
-			if self.camera.altitude <= Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
-				pitch = 60.0
-//				if altitude > Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50 &&
-//					altitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {
-//					altitude = altitude - 80.0
-//				}
-			}
-			zoomIn(onCenterCoordinate: camera.centerCoordinate, altitude: camera.altitude, withAnimation: true, heading: camera.heading, pitch: pitch)
-		}
-	}
     
     func zoomIn(onCenterCoordinate centerCoordinate: CLLocationCoordinate2D, altitude: Double, withAnimation animated: Bool = true, heading: Double? = nil, pitch: CGFloat? = nil) {
 		//let newCamera = MKMapCamera(lookingAtCenterCoordinate: centerCoordinate, fromEyeCoordinate: centerCoordinate, eyeAltitude: altitude)
@@ -190,11 +154,55 @@ class MapView: MKMapView {
         if let _ = pitch {
             newCamera.pitch = pitch!
         } else {
-            newCamera.pitch = defaultPitch
+            newCamera.pitch = topDownPitch
         }
         
         setCamera(newCamera, animated: animated)
     }
+	
+	func keepMapInView() {
+		// Check altitude
+		if currentAltitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
+			showFullMap()
+		} else {
+			// Make sure our floorplan is on-screen
+			if let floorplanOverlay = floorplanOverlay {
+				let buildingRect = floorplanOverlay.boundingMapRect
+				let cameraCenter = MKMapPointForCoordinate(camera.centerCoordinate)
+				let distanceFromBuildingCenter = MKMetersBetweenMapPoints(cameraCenter, buildingRect.getCenter())
+				
+				if  distanceFromBuildingCenter > Common.Location.minDistanceFromMuseumForLocation {
+					zoomIn(onCenterCoordinate: floorplanOverlay.coordinate, altitude: camera.altitude, heading: nil, pitch: camera.pitch)
+				}
+			}
+		}
+	}
+	
+	func adjustPicthForZoomLevel() {
+		if self.currentZoomLevel != self.previousZoomLevel {
+			var pitch: CGFloat = topDownPitch
+			if currentAltitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {
+				pitch = perspectivePitch
+			}
+			
+			if abs(pitch - camera.pitch) > 10 {
+				let angle = camera.heading.degreesToRadians
+				var lookAtCoordinate = CLLocationCoordinate2D()
+				var altitude = currentAltitude
+				if pitch == perspectivePitch {
+					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * 0.0001)
+					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * 0.0001)
+				}
+				else {
+					altitude = currentAltitude + 50
+					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0002)
+					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0002)
+				}
+				let cam = MKMapCamera(lookingAtCenter: lookAtCoordinate, fromDistance: altitude, pitch: pitch, heading: camera.heading)
+				setCamera(cam, animated: true)
+			}
+		}
+	}
     
     // Find the altitude based on our start value and the current map visible to bounds ratio
     func calculateStartingHeight() {
@@ -208,11 +216,12 @@ class MapView: MKMapView {
     func calculateCurrentAltitude() {
         // Altitude
         previousAltitude = currentAltitude
-		
+
 		// TODO: I do not understand this, investigate
-        let zoomScale = Double(bounds.size.width) / visibleMapRect.size.width
-        currentAltitude = startingHeight * (1 / zoomScale)
-        
+//        let zoomScale = Double(bounds.size.width) / visibleMapRect.size.width
+//        currentAltitude = startingHeight * (1 / zoomScale)
+		currentAltitude = camera.altitude
+		
         // Zoom Level
         previousZoomLevel = currentZoomLevel
         if currentAltitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
@@ -225,4 +234,15 @@ class MapView: MKMapView {
             }
         }
     }
+}
+
+
+
+extension BinaryInteger {
+	var degreesToRadians: CGFloat { return CGFloat(Int(self)) * .pi / 180 }
+}
+
+extension FloatingPoint {
+	var degreesToRadians: Self { return self * .pi / 180 }
+	var radiansToDegrees: Self { return self * 180 / .pi }
 }

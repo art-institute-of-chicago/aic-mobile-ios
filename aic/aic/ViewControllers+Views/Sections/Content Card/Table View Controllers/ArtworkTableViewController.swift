@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 protocol ArtworkTableViewControllerDelegate : class {
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel)
@@ -42,6 +43,13 @@ class ArtworkTableViewController : UITableViewController {
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "ArtworkContentCell", bundle: Bundle.main), forCellReuseIdentifier: ArtworkContentCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+	}
+	
+	@objc private func updateLanguage() {
+		self.tableView.reloadData()
 	}
 	
 	// MARK: Button Events

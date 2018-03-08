@@ -99,4 +99,10 @@ class AICButton: UIButton {
 		backgroundColor = buttonColorMode.normal.backgroundColor
 		layer.borderColor = buttonColorMode.normal.borderColor.cgColor
 	}
+	
+	func setIconImage(image: UIImage) {
+		setImage(image, for: .normal)
+		setImage(image, for: .highlighted)
+		imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+	}
 }

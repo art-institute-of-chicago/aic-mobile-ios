@@ -13,8 +13,8 @@ class ExhibitionContentCell : UITableViewCell {
 	static let reuseIdentifier = "exhibitionContentCell"
 	
 	@IBOutlet var exhibitionImageView: AICImageView!
-	@IBOutlet var showOnMapButton: UIButton!
-	@IBOutlet var buyTicketsButton: UIButton!
+	@IBOutlet var showOnMapButton: AICButton!
+	@IBOutlet var buyTicketsButton: AICButton!
 	@IBOutlet var descriptionLabel: UILabel!
 	@IBOutlet var throughDateLabel: UILabel!
 	
@@ -32,6 +32,8 @@ class ExhibitionContentCell : UITableViewCell {
 		
 		exhibitionImageView.contentMode = .scaleAspectFill
 		exhibitionImageView.clipsToBounds = true
+		showOnMapButton.setIconImage(image: #imageLiteral(resourceName: "buttonMapIcon"))
+		buyTicketsButton.setIconImage(image: #imageLiteral(resourceName: "buttonTicketIcon"))
 	}
 	
 	var exhibitionModel: AICExhibitionModel? = nil {

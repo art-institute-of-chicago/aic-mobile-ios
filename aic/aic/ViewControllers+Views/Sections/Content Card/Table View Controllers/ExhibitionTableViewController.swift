@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 protocol ExhibitionTableViewControllerDelegate : class {
 	func exhibitionContentCardDidPressShowOnMap(exhibition: AICExhibitionModel)
@@ -41,6 +42,13 @@ class ExhibitionTableViewController : UITableViewController {
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "ExhibitionContentCell", bundle: Bundle.main), forCellReuseIdentifier: ExhibitionContentCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+	}
+	
+	@objc private func updateLanguage() {
+		self.tableView.reloadData()
 	}
 	
 	// MARK: Button Events
@@ -70,7 +78,9 @@ extension ExhibitionTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ExhibitionContentCell.reuseIdentifier, for: indexPath) as! ExhibitionContentCell
 			cell.exhibitionModel = exhibitionModel
+			cell.buyTicketsButton.setTitle("Buy Tickets".localized(using: "ContentCard"), for: .normal)
 			cell.buyTicketsButton.addTarget(self, action: #selector(exhibitionBuyTicketsButtonPressed(button:)), for: .touchUpInside)
+			cell.showOnMapButton.setTitle("Show On Map".localized(using: "ContentCard"), for: .normal)
 			cell.showOnMapButton.addTarget(self, action: #selector(exhibitionShowOnMapButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}

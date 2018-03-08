@@ -407,15 +407,17 @@ struct Common {
         static let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
 
         static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
-
+		
+		static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623833)
+		
         enum ZoomLevelAltitude : Double {
-            case zoomLimit = 1000.0
-            case zoomDefault = 300.0
-			case zoomMedium = 260.0
-            case zoomDetail = 40.0
+            case zoomLimit = 600.0
+            case zoomDefault = 350.0
+			case zoomMedium = 200.0
+            case zoomDetail = 50.0
             case zoomMax = 25.0
 
-            static let allValues = [zoomLimit, zoomDefault, zoomDetail, zoomMax]
+            static let allValues = [zoomLimit, zoomDefault, zoomMedium, zoomDetail, zoomMax]
         }
 
         enum AnnotationZPosition: CGFloat {

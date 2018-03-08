@@ -13,6 +13,9 @@
         <array key="IdealSans-Medium.otf">
             <string>IdealSans-Medium</string>
         </array>
+        <array key="Linotype - SabonNextLTPro-Italic.otf">
+            <string>SabonNextLTPro-Italic</string>
+        </array>
         <array key="Linotype - SabonNextLTPro-Regular.otf">
             <string>SabonNextLTPro-Regular</string>
         </array>
@@ -66,7 +69,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Through Month day, year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08c-cl-LXS">
                         <rect key="frame" x="16" y="494.5" width="343" height="16.5"/>
-                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="SabonNextLTPro-Italic" family="Sabon Next LT Pro" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                         <size key="shadowOffset" width="0.0" height="0.0"/>
@@ -100,7 +103,7 @@
                 <outlet property="showOnMapButtonHorizontalOffset" destination="Dt4-bW-jQN" id="tF9-bH-Ywo"/>
                 <outlet property="throughDateLabel" destination="08c-cl-LXS" id="LDe-n8-mgS"/>
             </connections>
-            <point key="canvasLocation" x="2.5" y="154.5"/>
+            <point key="canvasLocation" x="2.5" y="154"/>
         </tableViewCell>
     </objects>
 </document>

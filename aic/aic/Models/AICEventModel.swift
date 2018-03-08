@@ -16,6 +16,7 @@ struct AICEventModel {
 	
 	let imageUrl: URL
 	
+	let locationText: String
 	let startDate: Date
 	let endDate: Date
 	

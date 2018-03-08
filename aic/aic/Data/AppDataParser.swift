@@ -146,6 +146,7 @@ class AppDataParser {
 		let imageUrl: URL = try getURL(fromJSON: eventJson, forKey: "image")!
 		let eventUrl = try getURL(fromJSON: eventJson, forKey: "button_url", optional: true)
 		let buttonText = try getString(fromJSON: eventJson, forKey: "button_text", optional: true)
+		let locationText = try getString(fromJSON: eventJson, forKey: "location", optional: true)
 		
 		// Get date exibition ends
 		let startDateString = try getString(fromJSON: eventJson, forKey: "start_at")
@@ -171,6 +172,7 @@ class AppDataParser {
 							 shortDescription: shortDescription.stringByDecodingHTMLEntities,
 							 longDescription: longDescription.stringByDecodingHTMLEntities,
 							 imageUrl: imageUrl,
+							 locationText: locationText,
 							 startDate: startDate,
 							 endDate: endDate,
 							 eventUrl: eventUrl,

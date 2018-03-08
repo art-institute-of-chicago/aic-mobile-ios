@@ -336,7 +336,7 @@ class MapViewController: UIViewController {
         // Show all annotations messes with the pitch + heading,
         // so reset our pitch + heading to preferred defaults
         mapView.camera.heading = mapView.defaultHeading
-        mapView.camera.pitch = mapView.defaultPitch
+        mapView.camera.pitch = mapView.topDownPitch
     }
     
     // Highlights a specific tour object
@@ -375,7 +375,7 @@ class MapViewController: UIViewController {
 					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 					
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 45.0)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
 					
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -396,7 +396,7 @@ class MapViewController: UIViewController {
 					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 					
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 45.0)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
 					
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -491,6 +491,7 @@ class MapViewController: UIViewController {
         }
 
         mapView.calculateCurrentAltitude()
+		mapView.adjustPicthForZoomLevel()
         
         switch mode {
         case .allInformation:
@@ -1069,13 +1070,14 @@ extension MapViewController : MKMapViewDelegate {
         // Store the location mode
         if !floorSelectorVC.userHeadingIsEnabled() {
 			self.mapView.keepMapInView()
-//			self.mapView.adjustPicthForZoomLevel()
         }
         
         if isSwitchingModes {
             isSwitchingModes = false
             updateAnnotations(andForceUpdate: true) // Force annotation update
         }
+		
+		print("CAMERA ALTITUDE: \(self.mapView.camera.altitude) currentAltitude: \(self.mapView.currentAltitude) previousAltitude: \(self.mapView.previousAltitude)")
     }
 	
 	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
@@ -1162,11 +1164,14 @@ extension MapViewController : UIGestureRecognizerDelegate {
     
     @objc func mapViewWasPinched(_ gesture:UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
+		mapView.adjustPicthForZoomLevel()
+		mapView.keepMapInView()
 		self.delegate?.mapWasPressed()
     }
     
     @objc func mapViewWasPanned(_ gesture:UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
+		mapView.adjustPicthForZoomLevel()
         mapView.keepMapInView()
 		self.delegate?.mapWasPressed()
     }

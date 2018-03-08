@@ -30,6 +30,8 @@ class ArtworkContentCell : UITableViewCell {
 		artworkImageView.backgroundColor = .clear
 		artworkImageView.contentMode = .scaleAspectFit
 		artworkImageView.clipsToBounds = true
+		showOnMapButton.setIconImage(image: #imageLiteral(resourceName: "buttonMapIcon"))
+		playAudioButton.setIconImage(image: #imageLiteral(resourceName: "buttonPlayIcon"))
 	}
 	
 	var artworkModel: AICSearchedArtworkModel? = nil {

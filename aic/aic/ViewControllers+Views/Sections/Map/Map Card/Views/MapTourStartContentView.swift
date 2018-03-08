@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class MapTourStartContentView : UIView {
 	let audioButton: AICButton = AICButton(isSmall: true)
@@ -17,11 +18,15 @@ class MapTourStartContentView : UIView {
 		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
 		
 		audioButton.setColorMode(colorMode: AICButton.blueMode)
-		audioButton.setTitle("Play Audio", for: .normal)
+		audioButton.setIconImage(image: #imageLiteral(resourceName: "buttonPlayIcon"))
+		audioButton.setTitle("Play Audio".localized(using: "ContentCard"), for: .normal)
 		
 		self.addSubview(audioButton)
 		
 		createViewConstraints()
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	private func createViewConstraints() {
@@ -31,5 +36,9 @@ class MapTourStartContentView : UIView {
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	@objc private func updateLanguage() {
+		audioButton.setTitle("Play Audio".localized(using: "ContentCard"), for: .normal)
 	}
 }
