@@ -22,6 +22,7 @@ class MapObjectAnnotation : MapAnnotation {
         self.clLocation = CLLocation(latitude: object.location.coordinate.latitude, longitude: object.location.coordinate.longitude)
         self.title = object.title
 		self.thumbnailUrl = object.thumbnailUrl
+		self.thumbnailCropRect = object.thumbnailCropRect
 		super.init(coordinate: object.location.coordinate)
     }
 	
@@ -29,6 +30,7 @@ class MapObjectAnnotation : MapAnnotation {
 	init(searchedArtwork: AICSearchedArtworkModel) {
 		if let object = searchedArtwork.audioObject {
 			self.nid = object.nid
+			self.thumbnailCropRect = object.thumbnailCropRect
 		}
 		else {
 			self.nid = searchedArtwork.artworkId

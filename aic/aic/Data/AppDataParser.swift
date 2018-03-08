@@ -179,7 +179,7 @@ class AppDataParser {
 	}
     
     // MARK: App Data
-    func parse(appData data:Data) -> AICAppDataModel {
+    func parse(appData data: Data) -> AICAppDataModel {
         let appDataJson = JSON(data: data)
 		
 		let generalInfo: AICGeneralInfoModel	= parse(generalInfoJSON: appDataJson["general_info"])

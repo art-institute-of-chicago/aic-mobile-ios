@@ -8,6 +8,7 @@
 
 import UIKit
 import Localize_Swift
+import CoreLocation
 
 class MuseumInfoViewController : UIViewController {
 	let pageView: InfoPageView = InfoPageView()
@@ -31,6 +32,7 @@ class MuseumInfoViewController : UIViewController {
 		
 		self.view.backgroundColor = .white
 		
+		pageView.textView.delegate = self
 		pageView.textView.dataDetectorTypes = [.address, .phoneNumber]
 		
 		self.view.addSubview(pageView)
@@ -76,5 +78,22 @@ class MuseumInfoViewController : UIViewController {
 extension MuseumInfoViewController : UIGestureRecognizerDelegate {
 	@objc private func swipeRight(recognizer: UIGestureRecognizer) {
 		self.navigationController?.popViewController(animated: true)
+	}
+}
+
+extension MuseumInfoViewController : UITextViewDelegate {
+	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+		if URL.absoluteString.range(of: "tel:") != nil {
+			return true
+		}
+		else {
+			openMuseumAddressURL()
+		}
+		return false
+	}
+	
+	private func openMuseumAddressURL() {
+		// TODO: put this URL in Common
+		UIApplication.shared.open(URL(string: "http://maps.apple.com/?q=The%20Art%20Institute%20of%20Chicago")!, options: [:], completionHandler: nil)
 	}
 }

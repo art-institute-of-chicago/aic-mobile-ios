@@ -1002,7 +1002,7 @@
 			children = (
 				29EABE541FE080090049E341 /* Table View Cells */,
 				29824BCC200D86AD003B6DB5 /* Table View Controllers */,
-				2941CE791FE08EF400B7CCEE /* CardTitleView.swift */,
+				29F12BC32050BB01009C1A47 /* Views */,
 				29824BCA200D867C003B6DB5 /* ContentCardNavigationController.swift */,
 			);
 			path = "Content Card";
@@ -1021,6 +1021,14 @@
 				2941CE7D1FE092AC00B7CCEE /* TourContentCell.xib */,
 			);
 			path = "Table View Cells";
+			sourceTree = "<group>";
+		};
+		29F12BC32050BB01009C1A47 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2941CE791FE08EF400B7CCEE /* CardTitleView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		29F3A9341FE5D27C000BCABE /* Views */ = {

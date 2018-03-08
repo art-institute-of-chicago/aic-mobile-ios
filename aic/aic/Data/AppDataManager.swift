@@ -408,21 +408,10 @@ class AppDataManager {
 	}
 	
 	func getCroppedImage(image: UIImage, viewSize: CGSize, cropRect: CGRect) -> UIImage {
-		let imageCropRect = CGRect(x: cropRect.origin.x * image.size.width, y: cropRect.origin.y * image.size.height, width: cropRect.size.width * image.size.width, height: cropRect.size.height * image.size.height)
-		let viewAspect = viewSize.width / viewSize.height
-		let cropAspect = imageCropRect.size.width / imageCropRect.size.height
+		let imageCropRect = CGRect(x: floor(cropRect.origin.x * image.size.width), y: floor(cropRect.origin.y * image.size.height), width: floor(cropRect.size.width * image.size.width), height: floor(cropRect.size.height * image.size.height))
 		
-		if cropAspect > viewAspect {
-			let finalCropRect = CGRect(origin: imageCropRect.origin, size: CGSize(width: imageCropRect.width, height: imageCropRect.width * (viewSize.height / viewSize.width)))
-			
-			let imageRect = CGRect(origin: CGPoint.zero, size: image.size)
-			if imageRect.contains(finalCropRect) {
-				let croppedImage = UIImage(cgImage: (image.cgImage!.cropping(to: finalCropRect))!)
-				return croppedImage
-			}
-		}
-		
-		return image
+		let croppedImage: UIImage = UIImage(cgImage: (image.cgImage!.cropping(to: imageCropRect))!)
+		return croppedImage
 	}
 	
     // Find the tours this object is on, and filter out a tour if sepecified

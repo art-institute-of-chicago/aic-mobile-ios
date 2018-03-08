@@ -101,31 +101,27 @@ class MapNavigationController : SectionNavigationController {
 			break
 		case .artwork:
 			showArtwork(artwork: artworkModel!)
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 		case .searchedArtwork:
 			showSearchedArtwork(searchedArtwork: searchedArtworkModel!)
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 			break
 		case .exhibition:
 			showExhibition(exhibition: exhibitionModel!)
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 			break
 		case .dining:
 			showDining()
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 			break
 		case .giftshop:
 			showGiftShop()
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 			break
 		case .restrooms:
 			showRestrooms()
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 			break
 		case .tour:
 			showTour(tour: tourModel!, language: tourModel!.language, stopIndex: tourStopIndex)
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: mapContentCardVC!.view.frame.origin.y))
 			break
+		}
+		if let contentCard = mapContentCardVC {
+			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: contentCard.view.frame.origin.y))
 		}
 	}
 	

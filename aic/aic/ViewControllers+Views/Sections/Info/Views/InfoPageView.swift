@@ -29,7 +29,6 @@ class InfoPageView : UIView {
 		
 		dividerLine.backgroundColor = .aicDividerLineColor
 		
-		// TODO: change this to use getAttributedStringWithLineHeight
 		textView.setDefaultsForAICAttributedTextView()
 		textView.textColor = .aicDarkGrayColor
 		textView.font = .aicInfoSectionTextFont

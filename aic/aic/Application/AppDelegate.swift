@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		//Check for member and log open
 		let defaults = UserDefaults.standard
+		// TODO: debug to make sure member is false is I'm not a member
 		let storedID = (defaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) as? NSNumber)?.int64Value
 		AICAnalytics.appOpenEvent(isMember: (storedID != nil))
 		

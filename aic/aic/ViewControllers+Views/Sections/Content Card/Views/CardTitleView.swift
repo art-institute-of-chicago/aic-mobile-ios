@@ -23,7 +23,7 @@ class CardTitleView : UITableViewHeaderFooterView {
 		titleLabel.textAlignment = .center
 		titleLabel.font = .aicCardTitleFont
 		titleLabel.numberOfLines = 0
-		titleLabel.lineBreakMode = .byWordWrapping
+		titleLabel.lineBreakMode = .byTruncatingTail
 		
 		self.addSubview(titleLabel)
 	}
