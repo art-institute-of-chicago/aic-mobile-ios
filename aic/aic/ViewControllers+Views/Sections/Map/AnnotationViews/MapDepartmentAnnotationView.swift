@@ -37,14 +37,14 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         self.isEnabled = true
         self.canShowCallout = false
         
-        holderView.backgroundColor = UIColor.aicMapColor.darker()
+        holderView.backgroundColor = UIColor.aicMapLightColor
         holderView.isUserInteractionEnabled = true
         
         let holderTailImage = #imageLiteral(resourceName: "calloutTail").withRenderingMode(.alwaysTemplate)
         
         holderTailImageView.image = holderTailImage
         holderTailImageView.sizeToFit()
-        holderTailImageView.tintColor = UIColor.aicMapColor.darker()
+        holderTailImageView.tintColor = UIColor.aicMapLightColor
         
         addSubview(holderTailImageView)
         addSubview(holderView)

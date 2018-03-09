@@ -178,6 +178,8 @@ class MapView: MKMapView {
 		}
 	}
 	
+	/// Function to keep same altitude when switching the camera pitch from top-down to perspective
+	/// https://stackoverflow.com/questions/6633850/calculate-new-coordinate-x-meters-and-y-degree-away-from-one-coordinate
 	func adjustPicthForZoomLevel() {
 		if self.currentZoomLevel != self.previousZoomLevel {
 			var pitch: CGFloat = topDownPitch
@@ -188,18 +190,28 @@ class MapView: MKMapView {
 			if abs(pitch - camera.pitch) > 10 {
 				let angle = camera.heading.degreesToRadians
 				var lookAtCoordinate = CLLocationCoordinate2D()
-				var distance = currentAltitude
+				var distanceCamera = currentAltitude
 				if pitch == perspectivePitch {
-					distance = currentAltitude
-					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * 0.0001)
-					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * 0.0001)
+//					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * 0.0001)
+//					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * 0.0001)
+//
+//					let clCenter = CLLocation(latitude: centerCoordinate.latitude, longitude: centerCoordinate.longitude)
+//					let clLook = CLLocation(latitude: lookAtCoordinate.latitude, longitude: lookAtCoordinate.longitude)
+//					let distanceMeters = clCenter.distance(from: clLook)
+//					distanceCamera = sqrt(currentAltitude*currentAltitude + distanceMeters*distanceMeters)
+					
+					let distanceMeters = currentAltitude * Double(tan(pitch))
+					distanceCamera = sqrt((currentAltitude * currentAltitude) + (distanceMeters * distanceMeters))
+					let oneMeterRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, 1, 1)
+					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * (oneMeterRegion.span.latitudeDelta * distanceMeters))
+					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * (oneMeterRegion.span.longitudeDelta * distanceMeters))
 				}
 				else {
-					distance = currentAltitude + 50
-					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0003)
-					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0003)
+					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0006)
+					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0006)
+					distanceCamera = currentAltitude
 				}
-				let cam = MKMapCamera(lookingAtCenter: lookAtCoordinate, fromDistance: distance, pitch: pitch, heading: camera.heading)
+				let cam = MKMapCamera(lookingAtCenter: lookAtCoordinate, fromDistance: distanceCamera, pitch: pitch, heading: camera.heading)
 				setCamera(cam, animated: true)
 			}
 		}
@@ -217,10 +229,6 @@ class MapView: MKMapView {
     func calculateCurrentAltitude() {
         // Altitude
         previousAltitude = currentAltitude
-
-		// TODO: I do not understand this, investigate
-//        let zoomScale = Double(bounds.size.width) / visibleMapRect.size.width
-//        currentAltitude = startingHeight * (1 / zoomScale)
 		currentAltitude = camera.altitude
 		
         // Zoom Level
@@ -235,18 +243,8 @@ class MapView: MKMapView {
             }
         }
 		
-//		print("CAMERA ALTITUDE: \(self.mapView.camera.altitude) currentAltitude: \(self.mapView.currentAltitude) previousAltitude: \(self.mapView.previousAltitude)")
+		print("CAMERA ALTITUDE: \(camera.altitude) currentAltitude: \(currentAltitude) previousAltitude: \(previousAltitude)")
 
     }
 }
 
-
-
-extension BinaryInteger {
-	var degreesToRadians: CGFloat { return CGFloat(Int(self)) * .pi / 180 }
-}
-
-extension FloatingPoint {
-	var degreesToRadians: Self { return self * .pi / 180 }
-	var radiansToDegrees: Self { return self * 180 / .pi }
-}

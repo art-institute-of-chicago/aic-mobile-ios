@@ -191,6 +191,10 @@ class MapObjectAnnotationView: MapAnnotationView {
         if self.isSelected != selected {
             self.isSelected = selected
 			
+			if selected == true {
+				self.imageHolderView.backgroundColor = .white
+			}
+			
 			// never expand if in tour mode
 			if mode == .tourMinimized || mode == .tourMaximized || mode == .tourOtherFloor {
 				return
@@ -321,16 +325,19 @@ class MapObjectAnnotationView: MapAnnotationView {
             
             switch self.mode {
             case .minimized:
+				self.imageHolderView.backgroundColor = .aicMapLightColor
                 self.transform = CGAffineTransform(scaleX: self.minimizedScale, y: self.minimizedScale)
                 self.bounds = self.imageHolderView.frame
                 break
                 
             case .maximized:
+				self.imageHolderView.backgroundColor = .white
                 self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.bounds = self.imageHolderView.frame.union(self.imageHolderTailView.frame)
 				break
 				
 			case .tourMinimized, .tourOtherFloor:
+				self.imageHolderView.backgroundColor = .white
 				self.transform = CGAffineTransform(scaleX: self.tourMinimizedScale, y: self.tourMinimizedScale)
 				self.bounds = self.imageHolderView.frame
 				
@@ -338,6 +345,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 				break
 				
 			case .tourMaximized:
+				self.imageHolderView.backgroundColor = .white
 				self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
 				self.bounds = self.imageHolderView.frame
 				
