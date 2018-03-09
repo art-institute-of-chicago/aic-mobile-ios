@@ -1076,8 +1076,6 @@ extension MapViewController : MKMapViewDelegate {
             isSwitchingModes = false
             updateAnnotations(andForceUpdate: true) // Force annotation update
         }
-		
-		print("CAMERA ALTITUDE: \(self.mapView.camera.altitude) currentAltitude: \(self.mapView.currentAltitude) previousAltitude: \(self.mapView.previousAltitude)")
     }
 	
 	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {

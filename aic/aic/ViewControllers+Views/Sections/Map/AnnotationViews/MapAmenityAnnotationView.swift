@@ -25,11 +25,13 @@ class MapAmenityAnnotationView: MapAnnotationView {
 					image = #imageLiteral(resourceName: "Dining")
 					isEnabled = true
 				case .Escalator:
-					image = #imageLiteral(resourceName: "Elevator")
+					image = #imageLiteral(resourceName: "Escalator")
 				case .Elevator:
 					image = #imageLiteral(resourceName: "Elevator")
 				case .WomensRoom:
 					image = #imageLiteral(resourceName: "WomensRoom")
+				case .MembersLounge:
+					image = #imageLiteral(resourceName: "MembersLounge")
 				case .MensRoom:
 					image = #imageLiteral(resourceName: "MensRoom")
 				case .WheelchairRamp:

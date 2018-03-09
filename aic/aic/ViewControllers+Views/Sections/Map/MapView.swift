@@ -234,6 +234,9 @@ class MapView: MKMapView {
                 }
             }
         }
+		
+//		print("CAMERA ALTITUDE: \(self.mapView.camera.altitude) currentAltitude: \(self.mapView.currentAltitude) previousAltitude: \(self.mapView.previousAltitude)")
+
     }
 }
 

@@ -6,18 +6,19 @@
 import MapKit
 
 enum MapAmenityAnnotationType : String {
+	case AudioGuide = "Audio Guide"
     case Checkroom = "Check Room"
     case Dining = "Dining"
     case Escalator = "Escalator"
     case Elevator = "Elevator"
-    case WomensRoom = "Women's Room"
-    case MensRoom   = "Men's Room"
-    case WheelchairRamp = "Wheelchair Ramp"
-    case FamilyRestroom = "Family Restroom"
+	case FamilyRestroom = "Family Restroom"
+	case Giftshop = "Gift Shop"
     case Information = "Information"
+	case MembersLounge = "Members Lounge"
+	case MensRoom   = "Men's Room"
     case Tickets = "Tickets"
-    case Giftshop = "Gift Shop"
-    case AudioGuide = "Audio Guide"
+	case WheelchairRamp = "Wheelchair Ramp"
+	case WomensRoom = "Women's Room"
 }
 
 class MapAmenityAnnotation: MapAnnotation {
