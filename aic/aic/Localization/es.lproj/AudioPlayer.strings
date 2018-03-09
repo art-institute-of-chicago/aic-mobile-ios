@@ -6,16 +6,16 @@
   Copyright © 2018 Art Institute of Chicago. All rights reserved.
 */
 
-"Loading Message" = "Missing Translation (Spanish)";
+"Loading Message" = "Cargando";
 
-"Load Failure Title" = "Missing Translation (Spanish)";
+"Load Failure Title" = "No se pudo cargar este elemento.";
 
-"Load Failure Message" = "Missing Translation (Spanish)";
+"Load Failure Message" = "No pudimos cargar el objeto en este momento. Verifique su conexión e intente nuevamente.";
 
-"Load Failure Reload Button Title" = "Missing Translation (Spanish)";
+"Load Failure Reload Button Title" = "Inténtelo nuevamente";
 
-"Load Failure Cancel Button Title" = "Missing Translation (Spanish)";
+"Load Failure Cancel Button Title" = "Cancelar";
 
 "Transcript" = "Texto";
 
-"Credits" = "Missing Translation (Spanish)";
+"Credits" = "Créditos";

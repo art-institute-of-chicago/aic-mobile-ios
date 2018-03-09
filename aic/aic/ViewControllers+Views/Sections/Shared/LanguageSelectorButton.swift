@@ -19,13 +19,13 @@ class LanguageSelectorButton : UIButton {
 	var language: Common.Language = .english {
 		didSet {
 			if language == .english {
-				setTitle("English", for: .normal)
+				setTitle("English".localized(using: "Global"), for: .normal)
 			}
 			else if language == .spanish {
-				setTitle("Spanish", for: .normal)
+				setTitle("Spanish".localized(using: "Global"), for: .normal)
 			}
 			else if language == .chinese {
-				setTitle("Chinese", for: .normal)
+				setTitle("Chinese".localized(using: "Global"), for: .normal)
 			}
 		}
 	}

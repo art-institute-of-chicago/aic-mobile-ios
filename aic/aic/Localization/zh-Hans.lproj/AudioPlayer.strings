@@ -6,16 +6,16 @@
   Copyright © 2018 Art Institute of Chicago. All rights reserved.
 */
 
-"Loading Message" = "Missing Translation (Chinese)";
+"Loading Message" = "加载中";
 
-"Load Failure Title" = "Missing Translation (Chinese)";
+"Load Failure Title" = "未能加载此项目";
 
-"Load Failure Message" = "Missing Translation (Chinese)";
+"Load Failure Message" = "目前我们无法加载此项。请检查您的连接并再次尝试。";
 
-"Load Failure Reload Button Title" = "Missing Translation (Chinese)";
+"Load Failure Reload Button Title" = "再次尝试";
 
-"Load Failure Cancel Button Title" = "Missing Translation (Chinese)";
+"Load Failure Cancel Button Title" = "取消";
 
 "Transcript" = "脚本";
 
-"Credits" = "Missing Translation (Chinese)";
+"Credits" = "信用";

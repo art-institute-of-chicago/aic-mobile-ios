@@ -506,7 +506,6 @@ struct Common {
 	// MARK: Search
 	struct Search {
 		static let museumWebsiteURL = "http://www.artic.edu"
-		static let visitWebsiteText = "For help, visit the nearest museum representative\nor visit our website."
 		
 		enum Filter {
 			case empty

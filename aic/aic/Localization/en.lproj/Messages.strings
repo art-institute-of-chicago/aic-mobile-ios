@@ -16,9 +16,9 @@
 
 "Message Leaving Tour Text" = "If you continue, you will leave this page and end the tour.";
 
-"Message Leaving Tour Action Button Title" = "Continue";
+"Message Leaving Tour Action Button Title" = "Leave Tour";
 
-"Message Leaving Tour Cancel Button Title" = "Go Back";
+"Message Leaving Tour Cancel Button Title" = "Continue Tour";
 
 "Message Location Title" = "Where Are You?";
 

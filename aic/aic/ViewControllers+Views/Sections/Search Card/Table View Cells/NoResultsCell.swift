@@ -29,11 +29,12 @@ class NoResultsCell : UITableViewCell {
 		
 		self.backgroundColor = .aicDarkGrayColor
 		
+		noResultsLabel.text = "Not Found Text".localized(using: "Search")
 		noResultsLabel.numberOfLines = 0
 		noResultsLabel.lineBreakMode = .byWordWrapping
 		noResultsLabel.textColor = .aicCardDarkTextColor
 		
-		let visitOurWebsiteAttrString = NSMutableAttributedString(string: Common.Search.visitWebsiteText)
+		let visitOurWebsiteAttrString = NSMutableAttributedString(string: "Not Found Website Link Text".localized(using: "Search"))
 		let websiteURL = URL(string: Common.Search.museumWebsiteURL)!
 		visitOurWebsiteAttrString.addAttributes([NSAttributedStringKey.link : websiteURL.absoluteString], range: NSMakeRange(0, visitOurWebsiteAttrString.string.count))
 		

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 /// HomeTourCell
 ///
@@ -50,7 +51,7 @@ class HomeTourCell : UICollectionViewCell {
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			tourTitleLabel.text = self.tourModel!.title
 			shortDescriptionTextView.text = self.tourModel!.shortDescription
-			stopsNumberLabel.text = "\(self.tourModel!.stops.count) " + "Stops"
+			stopsNumberLabel.text = "\(self.tourModel!.stops.count) " + "Stops".localized(using: "Home")
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true
 				durationLabel.isHidden = true

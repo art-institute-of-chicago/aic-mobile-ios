@@ -6,22 +6,22 @@
   Copyright © 2018 Art Institute of Chicago. All rights reserved.
 */
 
-"Member Not Found Alert" = "Missing translation (Spanish)";
+"Member Not Found Alert" = "No se pudo encontrar la información del Miembro";
 
-"Member Not Found Alert Ok Button" = "Missing translation (Spanish)";
+"Member Not Found Alert Ok Button" = "Aceptar";
 
-"Member ID Field Title" = "Missing translation (Spanish)";
+"Member ID Field Title" = "Identificación del Miembro";
 
-"Member ID Field Placeholder" = "Missing translation (Spanish)";
+"Member ID Field Placeholder" = "Ingrese la Identificación del Miembro...";
 
-"Member ZipCode Field Title" = "Missing translation (Spanish)";
+"Member ZipCode Field Title" = "Código postal";
 
-"Member ZipCode Field Placeholder" = "Missing translation (Spanish)";
+"Member ZipCode Field Placeholder" = "Ingrese su código postal...";
 
-"Sign In" = "Missing translation (Spanish)";
+"Sign In" = "Iniciar sesión";
 
-"Change Info" = "Missing translation (Spanish)";
+"Change Info" = "Cambiar información";
 
-"Switch Cardholder" = "Missing translation (Spanish)";
+"Switch Cardholder" = "Cambiar titular de tarjeta";
 
-"Expires" = "Missing translation (Spanish)";
+"Expires" = "Vence";

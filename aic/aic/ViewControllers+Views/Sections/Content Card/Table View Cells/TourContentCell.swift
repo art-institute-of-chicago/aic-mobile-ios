@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+import Localize_Swift
 
 class TourContentCell : UITableViewCell {
 	static let reuseIdentifier = "tourContentCell"
@@ -48,7 +48,7 @@ class TourContentCell : UITableViewCell {
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
-			stopsNumberLabel.text = "\(tourModel.stops.count) " + "Stops"
+			stopsNumberLabel.text = "\(tourModel.stops.count) " + "Stops".localized(using: "Home")
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true
 				durationLabel.isHidden = true
