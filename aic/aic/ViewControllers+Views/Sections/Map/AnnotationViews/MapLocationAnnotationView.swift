@@ -24,8 +24,8 @@ class MapLocationAnnotationView : MapAnnotationView {
         layer.zPosition = Common.Map.AnnotationZPosition.objectsSelected.rawValue
         layer.drawsAsynchronously = true
         isEnabled = false
-        
-        pinImageView.image = #imageLiteral(resourceName: "mapPin")
+		
+//        pinImageView.image = #imageLiteral(resourceName: "mapPin")
         pinImageView.sizeToFit()
         
         // Offset to bottom

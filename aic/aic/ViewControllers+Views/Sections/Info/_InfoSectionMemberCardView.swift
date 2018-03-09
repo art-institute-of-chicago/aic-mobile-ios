@@ -76,8 +76,6 @@ class InfoSectionMemberCardView: BaseView {
         
         contentView.backgroundColor = .darkGray
         
-        backgroundImageViewBack.image = Common.Info.memberCardImages[currentBackgroundImageIndex]
-        
         titleLabel.text = Common.Info.memberCardTitle
         titleLabel.font = .aicHeaderSmallFont
         titleLabel.textColor = .white
@@ -276,25 +274,5 @@ class InfoSectionMemberCardView: BaseView {
         // Move back image to front
         backgroundImageViewFront.image = backgroundImageViewBack.image
         backgroundImageViewFront.alpha = 1.0
-        
-        // Increment Current background image
-        currentBackgroundImageIndex = currentBackgroundImageIndex + 1
-        if currentBackgroundImageIndex >= Common.Info.memberCardImagesTotal {
-            currentBackgroundImageIndex = 0
-        }
-        
-        // Set the back image
-        backgroundImageViewBack.image = Common.Info.memberCardImages[currentBackgroundImageIndex]
-        
-        // Animate
-        UIView.animate(withDuration: Common.Info.backgroundAnimationTime, delay: 0, options: UIViewAnimationOptions(), animations: {
-            self.backgroundImageViewFront.alpha = 0.0
-            }, completion:  { (value:Bool) in
-                if self.window != nil {
-                    self.animateBackground()
-                }
-            }
-        )
-        
-    }
+	}
 }

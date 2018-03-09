@@ -408,10 +408,10 @@ struct Common {
 
         static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
 		
-		static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623833)
+		static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
 		
         enum ZoomLevelAltitude : Double {
-            case zoomLimit = 600.0
+            case zoomLimit = 1000.0
             case zoomDefault = 350.0
 			case zoomMedium = 200.0
             case zoomDetail = 50.0
@@ -501,23 +501,6 @@ struct Common {
 			let hoursMinutesString = dateFormatter.string(from: date)
 			return hoursMinutesString
 		}
-		
-        // Background images
-        static let backgroundAnimationTime = 3.0
-        static let memberCardImagesTotal = 3
-        static let memberCardImagePrefix = "memberCard"
-
-        static var memberCardImages:[UIImage] = {
-            var images:[UIImage] = []
-
-            for index in 1...memberCardImagesTotal {
-                let imageName = "\(memberCardImagePrefix)\(index)"
-                images.append(UIImage(named:imageName)!)
-            }
-
-            return images
-        }()
-
     }
 	
 	// MARK: Search

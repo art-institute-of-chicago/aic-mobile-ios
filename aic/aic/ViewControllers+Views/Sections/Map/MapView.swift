@@ -188,17 +188,18 @@ class MapView: MKMapView {
 			if abs(pitch - camera.pitch) > 10 {
 				let angle = camera.heading.degreesToRadians
 				var lookAtCoordinate = CLLocationCoordinate2D()
-				var altitude = currentAltitude
+				var distance = currentAltitude
 				if pitch == perspectivePitch {
+					distance = currentAltitude
 					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * 0.0001)
 					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * 0.0001)
 				}
 				else {
-					altitude = currentAltitude + 50
-					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0002)
-					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0002)
+					distance = currentAltitude + 50
+					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0003)
+					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0003)
 				}
-				let cam = MKMapCamera(lookingAtCenter: lookAtCoordinate, fromDistance: altitude, pitch: pitch, heading: camera.heading)
+				let cam = MKMapCamera(lookingAtCenter: lookAtCoordinate, fromDistance: distance, pitch: pitch, heading: camera.heading)
 				setCamera(cam, animated: true)
 			}
 		}
