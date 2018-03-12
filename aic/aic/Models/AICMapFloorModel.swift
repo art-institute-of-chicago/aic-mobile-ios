@@ -15,7 +15,6 @@ class AICMapFloorModel {
             annotations += departmentAnnotations as [MKAnnotation]
             annotations += spaceAnnotations as [MKAnnotation]
             annotations += objectAnnotations as [MKAnnotation]
-            annotations += locationAnnotations as [MKAnnotation]
             
             return annotations
         }
@@ -37,7 +36,6 @@ class AICMapFloorModel {
     let objectAnnotations: [MapObjectAnnotation] // All objects taht exist on this floor
     
     var tourStopAnnotations: [MapObjectAnnotation] = []
-    var locationAnnotations: [MapLocationAnnotation] = []
 	
 	private (set) var restroomAnnotations: [MapAmenityAnnotation] = []
 	private (set) var giftShopAnnotations: [MapAmenityAnnotation] = []
@@ -91,7 +89,6 @@ class AICMapFloorModel {
     
     func clearActiveAnnotations() {
         tourStopAnnotations = []
-        locationAnnotations = []
     }
     
     private func getAnnotationForObject(object:AICObjectModel) -> MapObjectAnnotation? {

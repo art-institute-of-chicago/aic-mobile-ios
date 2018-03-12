@@ -259,12 +259,14 @@ class MapViewController: UIViewController {
         
         // Find the stops for this floor and set them on the model
         var annotations: [MapObjectAnnotation] = []
-        for floor in mapModel.floors {
+		// add overview
+		let tourOverviewStop = MapObjectAnnotation(tour: tourModel)
+		tourOverviewStop.tourStopOrder = 0
+		// add objects to each floor
+		for floor in mapModel.floors {
             let floorStops = tourModel.stops.filter({ $0.object.location.floor == floor.floorNumber })
 			
 			if tourModel.location.floor == floor.floorNumber {
-				let tourOverviewStop = MapObjectAnnotation(tour: tourModel)
-				tourOverviewStop.tourStopOrder = 0
 				floor.tourStopAnnotations.append(tourOverviewStop)
 			}
 			
@@ -283,13 +285,8 @@ class MapViewController: UIViewController {
 			annotation.tourStopOrder = number
 			number += 1
 		}
-
-		let startFloor: Int = tourModel.stops.first!.object.location.floor
-        setCurrentFloor(forFloorNum: startFloor, andResetMap: false)
-
-//        mapView.showAnnotations(annotations, animated: false)
-//
-//        showTourOverview()
+		
+        setCurrentFloor(forFloorNum: tourModel.location.floor, andResetMap: false)
 		
 		mapView.addAnnotations(annotations)
 		
@@ -297,10 +294,8 @@ class MapViewController: UIViewController {
     }
     
     private func updateMapForModeChange() {
-        // Save our state
-		if let selectedAnnotation = mapView.selectedAnnotations.first {
-			mapView.deselectAnnotation(selectedAnnotation, animated: false)
-		}
+        // Deselect all annotations
+		deselectAllAnnotations()
         
         // Clear the active annotations from the previous mode
         clearActiveAnnotations()
@@ -357,7 +352,7 @@ class MapViewController: UIViewController {
 					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
                     
                     // Select the annotation (which eventually updates it's view)
-					mapView.selectAnnotation(annotation, animated: true)
+					mapView.selectAnnotation(annotation, animated: false)
                 }
             }
         }
@@ -448,10 +443,8 @@ class MapViewController: UIViewController {
 			updateAllInformationAnnotations(isSwitchingFloors: true)
 			break
 		case .artwork, .searchedArtwork:
-			updateArtworkAnnotationView()
 			break
 		case .exhibition:
-			updateExhibitionAnnotationView()
 			break
 		case .dining:
 			updateDiningAnnotations()
@@ -463,7 +456,6 @@ class MapViewController: UIViewController {
 			updateRestroomAnnotations()
 			break
 		case .tour:
-			updateTourAnnotationViews()
 			break
 		}
         
@@ -473,10 +465,7 @@ class MapViewController: UIViewController {
             mapView.showFullMap()
         }
     }
-    
-    
-    
-    
+	
     // MARK: Annotations
     // Clears out all of the locations + tour objects
     // currently set for floors
@@ -677,15 +666,14 @@ class MapViewController: UIViewController {
             for annotation in mapModel.floors[currentFloor].objectAnnotations {
 //                if let annotation = annotation as? MKAnnotation {
                     if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-						let distance = centerCoord.distance(from: annotation.clLocation)
-                        if distance < 10 {
-                            if view.isSelected == false {
-                                view.mode = .maximized
-                            }
-                                
-                        } else {
-                            view.mode = .minimized
-                        }
+							let distance = centerCoord.distance(from: annotation.clLocation)
+							if distance < 10 {
+								if view.isSelected == false {
+									view.mode = .imageInfo
+								}
+							} else {
+								view.mode = .dot
+							}
                     }
 //                }
             }
@@ -696,20 +684,14 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-					
+					view.mode = .imageTour
 					view.setTourStopNumber(number: annotation.tourStopOrder)
-					
-					if annotation.floor == currentFloor {
-						if view.isSelected == true {
-							view.mode = .tourMaximized
-						}
-						else {
-							view.mode = .tourMinimized
-						}
-                    }
-                    else {
-                        view.mode = .tourOtherFloor
-                    }
+//					if annotation.floor == currentFloor {
+//						view.alpha = 1.0
+//                    }
+//                    else {
+//                        view.alpha = 0.5
+//                    }
                 }
             }
         }
@@ -719,7 +701,7 @@ class MapViewController: UIViewController {
 		for annotation in mapView.annotations {
 			if let objectAnnotation = annotation as? MapObjectAnnotation {
 				if let view = mapView.view(for: objectAnnotation) as? MapObjectAnnotationView {
-					view.mode = .maximized
+					view.mode = .image
 					if objectAnnotation.floor == currentFloor {
 						if view.isSelected == false {
 							view.setSelected(true, animated: true)
@@ -846,20 +828,6 @@ class MapViewController: UIViewController {
 			}
 		}
 	}
-
-    private func updateNewsLocationAnnotationViews() {
-        for floor in mapModel.floors {
-            for annotation in floor.locationAnnotations {
-                if let view = mapView.view(for: annotation) as? MapLocationAnnotationView {
-                    if floor.floorNumber == currentFloor {
-                        view.alpha = 1.0
-                    } else {
-                        view.alpha = 0.5
-                    }
-                }
-            }
-        }
-    }
 	
 	private func updateUserLocationAnnotationView() {
 		if let locationView = mapView.view(for: mapView.userLocation) {
@@ -973,7 +941,7 @@ extension MapViewController : MKMapViewDelegate {
                 return view
             }
 
-            view.setAnnotation(forObjectAnnotation: objectAnnotation);
+            view.setAnnotation(forObjectAnnotation: objectAnnotation)
             return view
         }
 		

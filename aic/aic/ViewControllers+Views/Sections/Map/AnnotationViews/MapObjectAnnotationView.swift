@@ -13,20 +13,18 @@ protocol MapObjectAnnotationViewDelegate : class {
 }
 
 class MapObjectAnnotationView: MapAnnotationView {
-    
     class var reuseIdentifier: String {
         return "mapObject"
     }
     
     enum Mode {
-        case minimized
-        case maximized
-		case tourMinimized
-		case tourMaximized
-		case tourOtherFloor
+        case dot
+		case image
+		case imageTour
+		case imageInfo
     }
     
-    var mode:Mode = .minimized {
+    var mode: Mode = .dot {
         didSet {
             if oldValue != mode {
                 setContentForCurrentMode(withAnimation: true)
@@ -34,34 +32,31 @@ class MapObjectAnnotationView: MapAnnotationView {
         }
     }
     
-    weak var delegate:MapObjectAnnotationViewDelegate?
+    weak var delegate: MapObjectAnnotationViewDelegate?
     
-    private var objectAnnotation:MapObjectAnnotation? = nil
+    private var objectAnnotation: MapObjectAnnotation? = nil
     
     private let animationDuration = 0.25
-    private let minimizedScale:CGFloat = 0.15
-	private let tourMinimizedScale: CGFloat = 0.75
+    private let dotScale: CGFloat = 0.15
+	private let minimizedScale: CGFloat = 0.75
     
-    private let titleLabelWidth:CGFloat = 150
-    private let titleLabelHeight:CGFloat = 45
-    private let titleLabelMarginLeft:CGFloat = 10
+    private let titleLabelWidth: CGFloat = 150
+    private let titleLabelHeight: CGFloat = 45
+    private let titleLabelMarginLeft: CGFloat = 10
     
-    private let thumbHolderShrunkWidth:CGFloat = Common.Map.thumbSize + Common.Map.thumbHolderMargin * 2
-    private let thumbHolderExpandedWidth:CGFloat = 260
-    private let thumbHolderHeight:CGFloat = Common.Map.thumbSize + Common.Map.thumbHolderMargin * 2
+    private let thumbHolderShrunkWidth: CGFloat = Common.Map.thumbSize + Common.Map.thumbHolderMargin * 2
+    private let thumbHolderExpandedWidth: CGFloat = 260
+    private let thumbHolderHeight: CGFloat = Common.Map.thumbSize + Common.Map.thumbHolderMargin * 2
     
-    private let headphonesMarginRight:CGFloat = 15
-    
-    private var imageLoaded = false
+    private let headphonesMarginRight: CGFloat = 15
     
     // Sub Views
     private let imageView = AICImageView()
-    private let imageHolderView = UIView() // Circle frame with tail
-    private let imageHolderTailView = UIImageView()
+    private let backgroundView = UIView() // Circle frame with tail
+    private let tailView = UIImageView()
 	private let imageDarkOverlay = UIView()
 	private let tourStopNumberLabel = UILabel()
-    
-    private let headphonesIcon = UIImageView()
+    private let playIcon = UIImageView()
     
     private let titleLabel = UILabel()
     
@@ -84,12 +79,12 @@ class MapObjectAnnotationView: MapAnnotationView {
         self.layer.drawsAsynchronously = true
         //self.layer.shouldRasterize = true
         
-        imageHolderView.frame = CGRect(x: 0, y: 0, width: thumbHolderShrunkWidth, height: thumbHolderHeight)
-        imageHolderView.layer.cornerRadius = thumbHolderShrunkWidth/2
-        imageHolderView.backgroundColor = .white
+        backgroundView.frame = CGRect(x: 0, y: 0, width: thumbHolderShrunkWidth, height: thumbHolderHeight)
+        backgroundView.layer.cornerRadius = thumbHolderShrunkWidth/2
+        backgroundView.backgroundColor = .white
         
-        imageHolderTailView.image = #imageLiteral(resourceName: "calloutTail")
-        imageHolderTailView.sizeToFit()
+        tailView.image = #imageLiteral(resourceName: "calloutTail")
+        tailView.sizeToFit()
         
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = Common.Map.thumbSize/2
@@ -97,6 +92,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         imageView.frame.origin = CGPoint(x: Common.Map.thumbHolderMargin, y: Common.Map.thumbHolderMargin)
         imageView.frame.size = CGSize(width: Common.Map.thumbSize, height: Common.Map.thumbSize)
         imageView.isUserInteractionEnabled = true
+		imageView.image = nil
 		
 		imageDarkOverlay.backgroundColor = UIColor(white: 0.2, alpha: 0.4)
 		imageDarkOverlay.layer.cornerRadius = Common.Map.thumbSize/2
@@ -110,9 +106,9 @@ class MapObjectAnnotationView: MapAnnotationView {
 		tourStopNumberLabel.textAlignment = .center
 		tourStopNumberLabel.textColor = .white
         
-		headphonesIcon.image = #imageLiteral(resourceName: "audioPlay").colorized(.aicMapColor)
-        headphonesIcon.sizeToFit()
-        headphonesIcon.frame.origin = CGPoint(x: thumbHolderExpandedWidth - headphonesIcon.frame.width - headphonesMarginRight, y: thumbHolderHeight/2 - headphonesIcon.frame.height/2)
+		playIcon.image = #imageLiteral(resourceName: "audioPlay").colorized(.aicMapColor)
+        playIcon.sizeToFit()
+        playIcon.frame.origin = CGPoint(x: thumbHolderExpandedWidth - playIcon.frame.width - headphonesMarginRight, y: thumbHolderHeight/2 - playIcon.frame.height/2)
         
         titleLabel.font = .aicMapObjectTextFont
         titleLabel.textColor = .aicMapColor
@@ -120,10 +116,6 @@ class MapObjectAnnotationView: MapAnnotationView {
         titleLabel.frame = CGRect(x: imageView.frame.width + Common.Map.thumbHolderMargin + titleLabelMarginLeft, y: thumbHolderHeight/2, width: titleLabelWidth, height: titleLabelHeight)
         
         // Add Subviews
-        addSubview(imageHolderTailView)
-        addSubview(imageHolderView)
-        addSubview(imageView)
-		addSubview(imageDarkOverlay)
 		imageDarkOverlay.addSubview(tourStopNumberLabel)
 		
 		// Constraint number position to center of image
@@ -132,7 +124,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 		
         // Add Gestures
         let playTapGesture = UITapGestureRecognizer(target: self, action: #selector(MapObjectAnnotationView.playButtonWasTapped(_:)))
-        imageHolderView.isUserInteractionEnabled = true
+        backgroundView.isUserInteractionEnabled = true
         addGestureRecognizer(playTapGesture)
         
         setAnnotation(forObjectAnnotation: annotation as! MapObjectAnnotation)
@@ -142,10 +134,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         super.prepareForReuse()
 		
 //        mode = .minimized
-//        isSelected = false
-
-        imageView.image = nil
-        imageLoaded = false
+        isSelected = false
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -174,63 +163,109 @@ class MapObjectAnnotationView: MapAnnotationView {
 	}
     
     private func shrinkThumbHolder() {
-        imageHolderView.frame.size.width = thumbHolderShrunkWidth
+        backgroundView.frame.size.width = thumbHolderShrunkWidth
         positionThumbHolderTail(forThumbholderWidth: thumbHolderShrunkWidth)
     }
     
     private func expandThumbholder() {
-        imageHolderView.frame.size.width = thumbHolderExpandedWidth
+        backgroundView.frame.size.width = thumbHolderExpandedWidth
         positionThumbHolderTail(forThumbholderWidth: thumbHolderExpandedWidth)
     }
     
     private func positionThumbHolderTail(forThumbholderWidth thumbHolderWidth:CGFloat) {
-        imageHolderTailView.frame.origin = CGPoint(x: thumbHolderWidth/2 - imageHolderTailView.frame.width/2, y: imageHolderView.frame.height - imageHolderTailView.frame.height/2)
+        tailView.frame.origin = CGPoint(x: thumbHolderWidth/2 - tailView.frame.width/2, y: backgroundView.frame.height - tailView.frame.height/2)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         if self.isSelected != selected {
             self.isSelected = selected
 			
-			if selected == true {
-				self.imageHolderView.backgroundColor = .white
-			}
-			
-			// never expand if in tour mode
-			if mode == .tourMinimized || mode == .tourMaximized || mode == .tourOtherFloor {
-				return
-			}
-			
-            if selected {
-                addSubview(imageHolderTailView)
-                addSubview(imageView)
-				if objectAnnotation?.nid != nil {
-					addSubview(headphonesIcon)
-				}
-                addSubview(titleLabel)
-                
-                headphonesIcon.alpha = 0.0
-                titleLabel.alpha = 0.0
-                
-                loadImage()
-                
-                UIView.animate(withDuration: animationDuration, animations: {
-                    self.expandThumbholder()
+			switch self.mode {
+			case .dot:
+				if self.isSelected == true {
+					addSubview(tailView)
+					addSubview(imageView)
+					addSubview(titleLabel)
+					addSubview(playIcon)
 					
-                    self.transform = CGAffineTransform(scaleX: 1, y: 1);
-                    self.bounds = self.imageHolderView.frame.union(self.imageHolderTailView.frame)
-                    self.updateCenterOffsetForTransformedSize()
-                })
-                
-                UIView.animate(withDuration: animationDuration, delay: animationDuration, options: UIViewAnimationOptions(), animations: {
-                    self.titleLabel.alpha = 1.0
-                    self.headphonesIcon.alpha = 1.0
-                    }, completion: { _ in }
-                )
-                
-                layer.zPosition = Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.floor)
-            } else {
-                setContentForCurrentMode(withAnimation: true)
-            }
+					loadImage()
+					playIcon.alpha = 0.0
+					titleLabel.alpha = 0.0
+
+					layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
+
+					UIView.animate(withDuration: animationDuration, animations: {
+						self.expandThumbholder()
+
+						self.backgroundView.backgroundColor = .white
+						self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+						self.bounds = self.backgroundView.frame.union(self.tailView.frame)
+
+						self.updateCenterOffsetForTransformedSize()
+
+						self.setNeedsLayout()
+						self.layoutIfNeeded()
+					}, completion: { (completed) in
+						if completed {
+							UIView.animate(withDuration: self.animationDuration, animations: {
+								self.titleLabel.alpha = 1.0
+								self.playIcon.alpha = 1.0
+							})
+						}
+					})
+				}
+				else {
+					setContentForCurrentMode(withAnimation: true)
+				}
+				break
+				
+			case .imageInfo:
+				if self.isSelected == true {
+					backgroundView.backgroundColor = .white
+					
+					addSubview(titleLabel)
+					addSubview(playIcon)
+					
+					playIcon.alpha = 0.0
+					titleLabel.alpha = 0.0
+					
+					UIView.animate(withDuration: animationDuration, animations: {
+						self.expandThumbholder()
+						
+						self.transform = CGAffineTransform(scaleX: 1, y: 1);
+						self.bounds = self.backgroundView.frame.union(self.tailView.frame)
+						self.updateCenterOffsetForTransformedSize()
+					}, completion: { (completed) in
+						if completed {
+							UIView.animate(withDuration: self.animationDuration, animations: {
+								self.titleLabel.alpha = 1.0
+								self.playIcon.alpha = 1.0
+							})
+						}
+					})
+					
+					layer.zPosition = Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.floor)
+				}
+				else {
+					setContentForCurrentMode(withAnimation: true)
+				}
+				break
+				
+			case .image, .imageTour:
+				if self.isSelected == true {
+					UIView.animate(withDuration: animationDuration, animations: {
+						self.backgroundView.backgroundColor = .white
+						self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+						self.bounds = self.backgroundView.frame
+						
+						self.tourStopNumberLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+					})
+				}
+				else {
+					setContentForCurrentMode(withAnimation: true)
+				}
+				break
+			}
         }
     }
     
@@ -240,137 +275,105 @@ class MapObjectAnnotationView: MapAnnotationView {
     }
     
     private func loadImage() {
-        if !imageLoaded {
-            if let annotation = objectAnnotation {
+		if let annotation = objectAnnotation {
+			if let image = ImageCache.default.retrieveImageInMemoryCache(forKey: annotation.thumbnailUrl.absoluteString) {
+				self.imageView.image = image
+			}
+			else {
 				imageView.kf.indicatorType = .activity
 				imageView.kf.setImage(with: annotation.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, url) in
 					if image != nil {
 						if let cropRect = annotation.thumbnailCropRect {
-							self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+							let croppedImage = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+							self.imageView.image = croppedImage
+							ImageCache.default.store(croppedImage, forKey: annotation.thumbnailUrl.absoluteString)
+						}
+						else {
+							ImageCache.default.store(image!, forKey: annotation.thumbnailUrl.absoluteString)
 						}
 					}
 				})
-				imageLoaded = true
-            }
-        }
+			}
+		}
     }
     
     internal func setContentForCurrentMode(withAnimation animated:Bool) {
-        // Add/Remove views
-        titleLabel.removeFromSuperview()
-        headphonesIcon.removeFromSuperview()
+		// Add/Remove views
+		for view in subviews {
+			view.removeFromSuperview()
+		}
+		addSubview(backgroundView)
 		
-		switch mode {
-		case .minimized:
-			imageView.cancelLoading()
+		if mode == .image || mode == .imageTour || mode == .imageInfo {
+			addSubview(tailView)
+			addSubview(imageView)
+		}
+		
+		if mode == .imageTour {
+			addSubview(imageDarkOverlay)
+		}
+		
+		// Image
+		if mode == .dot {
 			imageView.image = nil
-			imageLoaded = false
-			
-			self.alpha = 1.0
-			
-			imageHolderTailView.removeFromSuperview()
-			imageView.removeFromSuperview()
-			imageDarkOverlay.removeFromSuperview()
-			
+		}
+		else {
+			loadImage()
+		}
+		
+		// Z position
+		switch mode {
+		case .dot:
 			layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 			
-		case .maximized:
-			loadImage()
-			
-			self.alpha = 1.0
-			
-			imageDarkOverlay.removeFromSuperview()
-			addSubview(imageHolderTailView)
-			addSubview(imageView)
-			
-			layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
-			break
-			
-		case .tourMinimized, .tourOtherFloor:
-			loadImage()
-			
-			self.alpha = mode == .tourMinimized ? 1.0 : 0.5
-			
-			if mode == . tourMinimized {
-				addSubview(imageHolderTailView)
-			}
-			else {
-				imageHolderTailView.removeFromSuperview()
-			}
-			addSubview(imageView)
-			addSubview(imageDarkOverlay)
-			
-			layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
-			break
-			
-		case .tourMaximized:
-			loadImage()
-			
-			self.alpha = 1.0
-			
-			addSubview(imageHolderTailView)
-			addSubview(imageView)
-			addSubview(imageDarkOverlay)
-			
+		case .image, .imageInfo, .imageTour:
 			layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 		}
-        
-
-        // Change frames with animation
+		
+        // Animation
         let duration = animated ? animationDuration : 0
         UIView.animate(withDuration: duration, animations: {
             self.shrinkThumbHolder()
             
             switch self.mode {
-            case .minimized:
-				self.imageHolderView.backgroundColor = .aicMapLightColor
-                self.transform = CGAffineTransform(scaleX: self.minimizedScale, y: self.minimizedScale)
-                self.bounds = self.imageHolderView.frame
+            case .dot:
+				self.backgroundView.backgroundColor = .aicMapLightColor
+                self.transform = CGAffineTransform(scaleX: self.dotScale, y: self.dotScale)
+                self.bounds = self.backgroundView.frame
                 break
-                
-            case .maximized:
-				self.imageHolderView.backgroundColor = .white
-                self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                self.bounds = self.imageHolderView.frame.union(self.imageHolderTailView.frame)
-				break
 				
-			case .tourMinimized, .tourOtherFloor:
-				self.imageHolderView.backgroundColor = .white
-				self.transform = CGAffineTransform(scaleX: self.tourMinimizedScale, y: self.tourMinimizedScale)
-				self.bounds = self.imageHolderView.frame
-				
-				self.tourStopNumberLabel.transform = CGAffineTransform(scaleX: 1.0 / self.tourMinimizedScale, y: 1.0 / self.tourMinimizedScale)
-				break
-				
-			case .tourMaximized:
-				self.imageHolderView.backgroundColor = .white
+			case .imageInfo:
+				self.backgroundView.backgroundColor = .white
 				self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-				self.bounds = self.imageHolderView.frame
+				self.bounds = self.backgroundView.frame
+				break
+                
+			case .image, .imageTour:
+				self.backgroundView.backgroundColor = .white
+				self.transform = CGAffineTransform(scaleX: self.minimizedScale, y: self.minimizedScale)
+				self.bounds = self.backgroundView.frame
 				
-				self.tourStopNumberLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+				self.tourStopNumberLabel.transform = CGAffineTransform(scaleX: 1.0 / self.minimizedScale, y: 1.0 / self.minimizedScale)
 				break
 			}
-            
+			
             self.updateCenterOffsetForTransformedSize()
 			
 			self.setNeedsLayout()
 			self.layoutIfNeeded()
-        }) 
-    }
+        })
+	}
 }
 
 // MARK: Gesture Recognizers
 extension MapObjectAnnotationView {
     @objc internal func playButtonWasTapped(_ gesture:UIGestureRecognizer) {
-		// if in tour mode, do now tap to play audio
-		if mode == .tourMaximized || mode == .tourMinimized || mode == .tourOtherFloor {
-			return
+		if mode == .imageInfo {
+			if isSelected {
+				delegate?.mapObjectAnnotationViewPlayPressed(self)
+			}
 		}
-		
-        if isSelected {
-            delegate?.mapObjectAnnotationViewPlayPressed(self)
-        }
     }
 }

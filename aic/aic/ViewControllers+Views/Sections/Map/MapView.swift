@@ -4,7 +4,7 @@
  and implements a function to get the zoom level
  
  Map Altitude continuous value code reinterpreted from:
- http://yuluer.com/page/bjfhcdhh-how-to-show-map-scale-during-zoom-of-mkmapview-like-apples-maps-app.shtml
+https://stackoverflow.com/questions/19572377/how-to-show-map-scale-during-zoom-of-mkmapview-like-apples-maps-app?rq=1
 */
 
 import MapKit
@@ -179,6 +179,7 @@ class MapView: MKMapView {
 	}
 	
 	/// Function to keep same altitude when switching the camera pitch from top-down to perspective
+	/// Based on:
 	/// https://stackoverflow.com/questions/6633850/calculate-new-coordinate-x-meters-and-y-degree-away-from-one-coordinate
 	func adjustPicthForZoomLevel() {
 		if self.currentZoomLevel != self.previousZoomLevel {
@@ -243,8 +244,7 @@ class MapView: MKMapView {
             }
         }
 		
-		print("CAMERA ALTITUDE: \(camera.altitude) currentAltitude: \(currentAltitude) previousAltitude: \(previousAltitude)")
-
+//		print("CAMERA ALTITUDE: \(camera.altitude) currentAltitude: \(currentAltitude) previousAltitude: \(previousAltitude)")
     }
 }
 
