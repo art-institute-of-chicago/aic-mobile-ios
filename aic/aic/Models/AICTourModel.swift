@@ -14,6 +14,8 @@ struct AICTourModel {
 	var longDescription: String { return self.translations[self.language]!.longDescription }
 	var durationInMinutes: String? { return self.translations[self.language]!.durationInMinutes }
 	var overview: AICTourOverviewModel { return self.translations[self.language]!.overview }
+	
+	let isFeatured: Bool
     
     let additionalInformation: String? = nil
     let imageUrl: URL

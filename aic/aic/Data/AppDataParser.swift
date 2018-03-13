@@ -6,7 +6,7 @@
 import SwiftyJSON
 import CoreLocation
 import Kingfisher
-
+import MapKit
 
 class AppDataParser {
     enum ParseError: Error {
@@ -34,165 +34,26 @@ class AppDataParser {
 	private var audioFiles = [AICAudioFileModel]()
 	private var objects = [AICObjectModel]()
 	private var restaurants = [AICRestaurantModel]()
+	private var featuredTours = [Int]()
+	private var featuredExhibitions: [Int] = []
+	private var exhibitionOptionalImages: [Int : URL] = [:]
 	
 	private var mapFloors: [FloorplanOverlay] = []
     
-    // MARK: Exhibitions
-    func parse(exhibitionsData data: Data) -> [AICExhibitionModel] {
-		var exhibitionItems: [AICExhibitionModel] = []
-		
-		let json = JSON(data: data)
-		let dataJSON: JSON = json["data"]
-		for exhibitionJSON: JSON in dataJSON.arrayValue {
-			do {
-				try handleParseError({ [unowned self] in
-					let exhibitionItem = try self.parse(exhibitionJSON: exhibitionJSON)
-					exhibitionItems.append(exhibitionItem)
-				})
-			}
-			catch {
-				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Exhibition:\n\(exhibitionJSON)\n")
-				}
-			}
-		}
-		
-		// Order by recently opened
-//		newsItems = newsItems.sorted(by: { $0.startDate.compare($1.startDate) == .orderedAscending })
-		
-		return exhibitionItems
-    }
-    
-    private func parse(exhibitionJSON: JSON) throws -> AICExhibitionModel {
-		let id = try getInt(fromJSON: exhibitionJSON, forKey: "id")
-        let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
-		
-		// optional description
-		let description: String = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
-		
-		// optional image
-		var imageURL: URL? = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_mobile_url", optional: true)
-		if imageURL == nil {
-			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_desktop_url", optional: true)
-		}
-		
-		// optional location
-        var location: CoordinateWithFloor? = nil
-		do {
-			let galleryId = try getInt(fromJSON: exhibitionJSON, forKey: "gallery_id")
-			let gallery = try getGallery(forGalleryId: galleryId)
-			location = gallery.location
-		}
-		catch{}
-        
-		// Get date exibition ends
-		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
-		let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_end_at")
-		
-		let dateFormatter = DateFormatter()
-		dateFormatter.locale = Locale(identifier: "en_US")
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-		
-		// TODO: fix the timezone
-		
-		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
-			throw ParseError.newsBadDateString(dateString: startDateString)
-		}
-		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
-			throw ParseError.newsBadDateString(dateString: endDateString)
-		}
-
-        // Return news item
-		return AICExhibitionModel(id: id,
-								  title: title.stringByDecodingHTMLEntities,
-								  shortDescription: description.stringByDecodingHTMLEntities,
-								  imageUrl: imageURL,
-								  startDate: startDate,
-								  endDate: endDate,
-								  location: location
-        )
-    }
-	
-	// MARK: Events
-	
-	func parse(eventsData data: Data) -> [AICEventModel] {
-		var eventItems:[AICEventModel] = []
-		
-		let json = JSON(data: data)
-		let dataJson: JSON = json["data"]
-		for eventJson: JSON in dataJson.arrayValue {
-			do {
-				try handleParseError({ [unowned self] in
-					let eventItem = try self.parse(eventJson: eventJson)
-					eventItems.append(eventItem)
-				})
-			}
-			catch {
-				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Event:\n\(json)\n")
-				}
-			}
-		}
-		
-		return eventItems
-	}
-	
-	func parse(eventJson: JSON) throws -> AICEventModel {
-		let eventId = try getInt(fromJSON: eventJson, forKey: "id")
-		let title = try getString(fromJSON: eventJson, forKey: "title")
-		let longDescription = try getString(fromJSON: eventJson, forKey: "description")
-		let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description")
-		let imageUrl: URL = try getURL(fromJSON: eventJson, forKey: "image")!
-		let eventUrl = try getURL(fromJSON: eventJson, forKey: "button_url", optional: true)
-		let buttonText = try getString(fromJSON: eventJson, forKey: "button_text", optional: true)
-		let locationText = try getString(fromJSON: eventJson, forKey: "location", optional: true)
-		
-		// Get date exibition ends
-		let startDateString = try getString(fromJSON: eventJson, forKey: "start_at")
-		let endDateString = try getString(fromJSON: eventJson, forKey: "end_at")
-		
-		let dateFormatter = DateFormatter()
-		dateFormatter.locale = Locale(identifier: "en_US")
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-		
-		// TODO: fix the timezone
-		
-		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
-			throw ParseError.newsBadDateString(dateString: startDateString)
-		}
-		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
-			throw ParseError.newsBadDateString(dateString: endDateString)
-		}
-		
-		// Return news item
-		return AICEventModel(eventId: eventId,
-							 title: title.stringByDecodingHTMLEntities,
-							 shortDescription: shortDescription.stringByDecodingHTMLEntities,
-							 longDescription: longDescription.stringByDecodingHTMLEntities,
-							 imageUrl: imageUrl,
-							 locationText: locationText,
-							 startDate: startDate,
-							 endDate: endDate,
-							 eventUrl: eventUrl,
-							 buttonText: buttonText
-		)
-	}
-    
     // MARK: App Data
+	
     func parse(appData data: Data) -> AICAppDataModel {
         let appDataJson = JSON(data: data)
 		
+		self.featuredTours = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
+		self.featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
 		let generalInfo: AICGeneralInfoModel	= parse(generalInfoJSON: appDataJson["general_info"])
 		self.galleries	= parse(galleriesJSON: appDataJson["galleries"])
 		self.audioFiles = parse(audioFilesJSON: appDataJson["audio_files"])
         self.objects 	= parse(objectsJSON: appDataJson["objects"])
+		self.exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
 		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
 		let map: AICMapModel = parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
-		let featuredTours = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
-		let featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
-		let exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
 		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
 		let searchStrings = parse(searchStringsJSON: appDataJson["search"]["search_strings"])
 		let searchArtworks = parse(searchArtworks: appDataJson["search"])
@@ -204,19 +65,17 @@ class AppDataParser {
 									  tours: tours,
 									  map: map,
 									  restaurants: self.restaurants,
-									  featuredTours: featuredTours,
-									  featuredExhibitions: featuredExhibitions,
-									  exhibitionOptionalImages: exhibitionOptionalImages,
 									  dataSettings: dataSettings,
 									  searchStrings: searchStrings,
 									  searchArtworks: searchArtworks
 		)
 		
-		// TODO: check if you can get rid of all this temp data after initial loading
-//		self.galleries.removeAll()
-//		self.audioFiles.removeAll()
-//		self.objects.removeAll()
-//		self.restaurants.removeAll()
+		// clean up data used for parsing only
+		self.galleries.removeAll()
+		self.audioFiles.removeAll()
+		self.objects.removeAll()
+		self.restaurants.removeAll()
+		self.featuredTours.removeAll()
 		
 		return appData
     }
@@ -559,6 +418,15 @@ class AppDataParser {
         
         let audioFileID         = try getInt(fromJSON: tourJSON, forKey: "tour_audio")
         let audioFile           = try getAudioFile(forNID:audioFileID)
+		
+		// isFeatured
+		var isFeatured: Bool = false
+		for tourId in self.featuredTours {
+			if tourId == nid {
+				isFeatured = true
+				break
+			}
+		}
         
         // Create Stops
         var stops:[AICTourStopModel] = []
@@ -638,7 +506,8 @@ class AppDataParser {
 			}
 		}
         
-        return AICTourModel(nid:nid,
+		return AICTourModel(nid:nid,
+							isFeatured: isFeatured,
 							imageUrl: imageUrl,
 							location: coordinate,
                             stops: stops,
@@ -678,7 +547,18 @@ class AppDataParser {
 		do {
 			var floorOverlays: [FloorplanOverlay] = []
 			var floorGalleryAnnotations: [Int : [MapTextAnnotation]] = [:]
-			var floorObjectAnnotations: [Int : [MapObjectAnnotation]] = [:]
+			var floorObjectAnnotations: [Int : [MapObjectAnnotation]] = [
+				0 : [MapObjectAnnotation](),
+				1 : [MapObjectAnnotation](),
+				2 : [MapObjectAnnotation](),
+				3 : [MapObjectAnnotation]()
+			]
+			var floorFarObjectAnnotations: [Int : [MapObjectAnnotation]] = [
+				0 : [MapObjectAnnotation](),
+				1 : [MapObjectAnnotation](),
+				2 : [MapObjectAnnotation](),
+				3 : [MapObjectAnnotation]()
+			]
 			
 			// Floors
 			for floorNumber in 0..<Common.Map.totalFloors {
@@ -787,6 +667,39 @@ class AppDataParser {
 				}
 			}
 			
+			// Add object visible from far to each floor
+			let topLeftPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 801, y: 801))
+			let bottomRightPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 1599, y: 1599))
+			let rows: Int = 3
+			let cols: Int = 3
+			let rowSize: Double = abs((bottomRightPoint.y - topLeftPoint.y) / Double(rows))
+			let colSize: Double = abs((bottomRightPoint.x - topLeftPoint.x) / Double(cols))
+			var gridMapRect = MKMapRectMake(topLeftPoint.x, topLeftPoint.y, colSize, rowSize)
+			let startX = min(topLeftPoint.x, bottomRightPoint.x)
+			let startY = min(topLeftPoint.y, bottomRightPoint.y)
+			let endX = max(topLeftPoint.x, bottomRightPoint.x)
+			let endY = max(topLeftPoint.y, bottomRightPoint.y)
+			for floorNumber in 0..<Common.Map.totalFloors {
+				// for each square in our grid, pick one annotation to show
+				gridMapRect.origin.y = startY
+				while MKMapRectGetMinY(gridMapRect) <= endY {
+					gridMapRect.origin.x = startX
+					
+					while MKMapRectGetMinX(gridMapRect) <= endX {
+						for objectAnnotation in floorObjectAnnotations[floorNumber]! {
+							let mapPoint = MKMapPointForCoordinate(objectAnnotation.clLocation.coordinate)
+							if MKMapRectContainsPoint(gridMapRect, mapPoint) {
+								floorFarObjectAnnotations[floorNumber]!.append(objectAnnotation)
+								break
+							}
+						}
+						gridMapRect.origin.x += colSize
+					}
+			
+					gridMapRect.origin.y += rowSize
+				}
+			}
+			
 			// Lions
 			let lion1 = MapImageAnnotation(coordinate: CLLocationCoordinate2DMake(41.879678006591391, -87.624091248446064), image: #imageLiteral(resourceName: "Lion1"), identifier: "Lion1")
 			let lion2 = MapImageAnnotation(coordinate: CLLocationCoordinate2DMake(41.879491568164525, -87.624089977901931), image: #imageLiteral(resourceName: "Lion2"), identifier: "Lion2")
@@ -798,6 +711,7 @@ class AppDataParser {
 				let floor = AICMapFloorModel(floorNumber: floorNumber,
 											 overlay: floorOverlays[floorNumber],
 											 objects: floorObjectAnnotations[floorNumber]!,
+											 farObjects: floorFarObjectAnnotations[floorNumber]!,
 											 amenities: floorAmenityAnnotations[floorNumber]!,
 											 departments: floorDepartmentAnnotations[floorNumber]!,
 											 galleries: floorGalleryAnnotations[floorNumber]!,
@@ -930,6 +844,164 @@ class AppDataParser {
 			}
 		}
 		return dataSettings
+	}
+	
+	// MARK: Exhibitions
+	
+	func parse(exhibitionsData data: Data) -> [AICExhibitionModel] {
+		var exhibitionItems: [AICExhibitionModel] = []
+		
+		let json = JSON(data: data)
+		let dataJSON: JSON = json["data"]
+		for exhibitionJSON: JSON in dataJSON.arrayValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let exhibitionItem = try self.parse(exhibitionJSON: exhibitionJSON)
+					exhibitionItems.append(exhibitionItem)
+				})
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Exhibition:\n\(exhibitionJSON)\n")
+				}
+			}
+		}
+		
+		// Order by recently opened
+		exhibitionItems = exhibitionItems.sorted(by: { $0.startDate.compare($1.startDate) == .orderedAscending })
+		
+		self.featuredExhibitions.removeAll()
+		self.exhibitionOptionalImages.removeAll()
+		
+		return exhibitionItems
+	}
+	
+	private func parse(exhibitionJSON: JSON) throws -> AICExhibitionModel {
+		let id = try getInt(fromJSON: exhibitionJSON, forKey: "id")
+		let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
+		
+		// featured
+		var isFeatured: Bool = false
+		for exhibitionId in self.featuredExhibitions {
+			if exhibitionId == id {
+				isFeatured = true
+				break
+			}
+		}
+		
+		// optional description
+		let description: String = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
+		
+		// Image
+		var imageURL: URL? = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_mobile_url", optional: true)
+		if imageURL == nil {
+			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_desktop_url", optional: true)
+		}
+		
+		// Override with exhibitions optional images from CMS, if available
+		if let url = self.exhibitionOptionalImages[id] {
+			imageURL = url
+		}
+		
+		// optional location
+		var location: CoordinateWithFloor? = nil
+		do {
+			let galleryId = try getInt(fromJSON: exhibitionJSON, forKey: "gallery_id")
+			let gallery = try getGallery(forGalleryId: galleryId)
+			location = gallery.location
+		}
+		catch{}
+		
+		// Get date exibition ends
+		let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
+		let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_end_at")
+		
+		let dateFormatter = DateFormatter()
+		dateFormatter.locale = Locale(identifier: "en_US")
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+		
+		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
+			throw ParseError.newsBadDateString(dateString: startDateString)
+		}
+		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
+			throw ParseError.newsBadDateString(dateString: endDateString)
+		}
+		
+		// Return news item
+		return AICExhibitionModel(id: id,
+								  isFeatured: isFeatured,
+								  title: title.stringByDecodingHTMLEntities,
+								  shortDescription: description.stringByDecodingHTMLEntities,
+								  imageUrl: imageURL,
+								  startDate: startDate,
+								  endDate: endDate,
+								  location: location
+		)
+	}
+	
+	// MARK: Events
+	
+	func parse(eventsData data: Data) -> [AICEventModel] {
+		var eventItems:[AICEventModel] = []
+		
+		let json = JSON(data: data)
+		let dataJson: JSON = json["data"]
+		for eventJson: JSON in dataJson.arrayValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let eventItem = try self.parse(eventJson: eventJson)
+					eventItems.append(eventItem)
+				})
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Event:\n\(json)\n")
+				}
+			}
+		}
+		
+		return eventItems
+	}
+	
+	func parse(eventJson: JSON) throws -> AICEventModel {
+		let eventId = try getInt(fromJSON: eventJson, forKey: "id")
+		let title = try getString(fromJSON: eventJson, forKey: "title")
+		let longDescription = try getString(fromJSON: eventJson, forKey: "description")
+		let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description")
+		let imageUrl: URL = try getURL(fromJSON: eventJson, forKey: "image")!
+		let eventUrl = try getURL(fromJSON: eventJson, forKey: "button_url", optional: true)
+		let buttonText = try getString(fromJSON: eventJson, forKey: "button_text", optional: true)
+		let locationText = try getString(fromJSON: eventJson, forKey: "location", optional: true)
+		
+		// Get date exibition ends
+		let startDateString = try getString(fromJSON: eventJson, forKey: "start_at")
+		let endDateString = try getString(fromJSON: eventJson, forKey: "end_at")
+		
+		let dateFormatter = DateFormatter()
+		dateFormatter.locale = Locale(identifier: "en_US")
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+		
+		guard let startDate: Date = dateFormatter.date(from: startDateString) else {
+			throw ParseError.newsBadDateString(dateString: startDateString)
+		}
+		guard let endDate: Date = dateFormatter.date(from: endDateString) else {
+			throw ParseError.newsBadDateString(dateString: endDateString)
+		}
+		
+		// Return news item
+		return AICEventModel(eventId: eventId,
+							 title: title.stringByDecodingHTMLEntities,
+							 shortDescription: shortDescription.stringByDecodingHTMLEntities,
+							 longDescription: longDescription.stringByDecodingHTMLEntities,
+							 imageUrl: imageUrl,
+							 locationText: locationText,
+							 startDate: startDate,
+							 endDate: endDate,
+							 eventUrl: eventUrl,
+							 buttonText: buttonText
+		)
 	}
 	
 	// MARK: Search

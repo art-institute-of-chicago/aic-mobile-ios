@@ -197,16 +197,10 @@ class AppDataManager {
 				case .success(let value):
 					self.exhibitions = self.dataParser.parse(exhibitionsData: value)
 					
-					// Assign to exhibitions optional images from CMS, if available
-					for index in 0...self.exhibitions.count-1 {
-						if let imageUrl = self.app.exhibitionOptionalImages[self.exhibitions[index].id] {
-							self.exhibitions[index].imageUrl = imageUrl
-						}
-					}
-					
 				case .failure(let error):
 					print(error)
 				}
+				
 				self.updateDownloadProgress()
 				self.downloadEvents()
 		}

@@ -34,8 +34,9 @@ class AICMapFloorModel {
     let galleryAnnotations: [MapTextAnnotation]
     
     let objectAnnotations: [MapObjectAnnotation] // All objects taht exist on this floor
-    
-    var tourStopAnnotations: [MapObjectAnnotation] = []
+	let farObjectAnnotations: [MapObjectAnnotation]
+	
+	var tourStopAnnotations: [MapObjectAnnotation] = []
 	
 	private (set) var restroomAnnotations: [MapAmenityAnnotation] = []
 	private (set) var giftShopAnnotations: [MapAmenityAnnotation] = []
@@ -46,6 +47,7 @@ class AICMapFloorModel {
     init(floorNumber: Int,
          overlay: FloorplanOverlay,
          objects: [MapObjectAnnotation],
+		 farObjects: [MapObjectAnnotation],
          amenities: [MapAmenityAnnotation],
          departments: [MapDepartmentAnnotation],
          galleries: [MapTextAnnotation],
@@ -55,6 +57,7 @@ class AICMapFloorModel {
         self.overlay = overlay
         self.amenityAnnotations = amenities
         self.objectAnnotations = objects
+		self.farObjectAnnotations = farObjects
         self.departmentAnnotations = departments
         self.galleryAnnotations = galleries
         self.spaceAnnotations = spaces

@@ -17,13 +17,13 @@ class MapTextAnnotation: MapAnnotation {
 	
     var labelText: String
     
-    convenience init(coordinateAsCGPoint:CGPoint, text:String, type:AnnotationType) {
+    convenience init(coordinateAsCGPoint: CGPoint, text: String, type: AnnotationType) {
         let mkCoord = MKCoordinateForMapPoint(Common.Map.coordinateConverter.MKMapPointFromPDFPoint(coordinateAsCGPoint))
         
         self.init(coordinate: mkCoord, text: text, type:type)
     }
     
-    init(coordinate: CLLocationCoordinate2D, text:String, type:AnnotationType) {
+    init(coordinate: CLLocationCoordinate2D, text: String, type: AnnotationType) {
         self.labelText = text
         self.type = type
 		super.init(coordinate: coordinate)

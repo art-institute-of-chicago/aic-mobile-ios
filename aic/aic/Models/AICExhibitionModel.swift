@@ -7,6 +7,9 @@ import CoreLocation
 
 struct AICExhibitionModel {
 	let id: Int
+	
+	let isFeatured: Bool
+	
     let title: String
     let shortDescription: String
     var imageUrl: URL?
@@ -14,5 +17,5 @@ struct AICExhibitionModel {
 	let startDate: Date
 	let endDate: Date
     
-	let location: CoordinateWithFloor? // TODO: temporarily making this optional
+	let location: CoordinateWithFloor? // TODO: making this optional, it's not always available in the data
 }
