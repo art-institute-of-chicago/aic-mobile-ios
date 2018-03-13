@@ -35,8 +35,8 @@ class MapView: MKMapView {
     // Rotate the map so that the Michigan Ave entrance faces south
     let defaultHeading = 90.0
 	let defaultZoom = 400.0
-    let topDownPitch:CGFloat = 0.0
-	let perspectivePitch:CGFloat = 60.0
+    let topDownPitch: CGFloat = 0.0
+	let perspectivePitch: CGFloat = 60.0
     
     private (set) var previousAltitude:Double = 0.0
     private (set) var currentAltitude:Double = 0.0
@@ -125,7 +125,7 @@ class MapView: MKMapView {
         zoomIn(onCenterCoordinate: centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, heading: camera.heading)
     }
     
-    func showFullMap(useDefaultHeading: Bool = false, animated: Bool = true) {
+	func showFullMap(useDefaultHeading: Bool = false, altitude: Double = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue) {
         if let overlay = floorplanOverlay {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
 			var centerPoint = Common.Map.defaultLocation
@@ -137,7 +137,7 @@ class MapView: MKMapView {
 				centerPoint = userLocation.coordinate
 			}
 			
-			zoomIn(onCenterCoordinate: centerPoint, altitude: defaultZoom, withAnimation: animated, heading: heading)
+			zoomIn(onCenterCoordinate: centerPoint, altitude: altitude, withAnimation: true, heading: heading)
         }
     }
     
@@ -163,7 +163,7 @@ class MapView: MKMapView {
 	func keepMapInView() {
 		// Check altitude
 		if currentAltitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
-			showFullMap()
+			showFullMap(useDefaultHeading: false, altitude: Common.Map.ZoomLevelAltitude.zoomLimit.rawValue)
 		} else {
 			// Make sure our floorplan is on-screen
 			if let floorplanOverlay = floorplanOverlay {
@@ -193,14 +193,6 @@ class MapView: MKMapView {
 				var lookAtCoordinate = CLLocationCoordinate2D()
 				var distanceCamera = currentAltitude
 				if pitch == perspectivePitch {
-//					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * 0.0001)
-//					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * 0.0001)
-//
-//					let clCenter = CLLocation(latitude: centerCoordinate.latitude, longitude: centerCoordinate.longitude)
-//					let clLook = CLLocation(latitude: lookAtCoordinate.latitude, longitude: lookAtCoordinate.longitude)
-//					let distanceMeters = clCenter.distance(from: clLook)
-//					distanceCamera = sqrt(currentAltitude*currentAltitude + distanceMeters*distanceMeters)
-					
 					let distanceMeters = currentAltitude * Double(tan(pitch))
 					distanceCamera = sqrt((currentAltitude * currentAltitude) + (distanceMeters * distanceMeters))
 					let oneMeterRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, 1, 1)
@@ -208,8 +200,8 @@ class MapView: MKMapView {
 					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * (oneMeterRegion.span.longitudeDelta * distanceMeters))
 				}
 				else {
-					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0006)
-					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0006)
+					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0003)
+					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0003)
 					distanceCamera = currentAltitude
 				}
 				let cam = MKMapCamera(lookingAtCenter: lookAtCoordinate, fromDistance: distanceCamera, pitch: pitch, heading: camera.heading)

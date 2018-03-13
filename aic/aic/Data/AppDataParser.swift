@@ -37,6 +37,7 @@ class AppDataParser {
 	private var featuredTours = [Int]()
 	private var featuredExhibitions: [Int] = []
 	private var exhibitionOptionalImages: [Int : URL] = [:]
+	private var searchArtworks = [AICObjectModel]()
 	
 	private var mapFloors: [FloorplanOverlay] = []
     
@@ -55,7 +56,7 @@ class AppDataParser {
 		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
 		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
 		let searchStrings = parse(searchStringsJSON: appDataJson["search"]["search_strings"])
-		let searchArtworks = parse(searchArtworks: appDataJson["search"])
+		self.searchArtworks = parse(searchArtworks: appDataJson["search"])
 		let map: AICMapModel = parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
 		
 		let appData = AICAppDataModel(generalInfo: generalInfo,
@@ -67,7 +68,7 @@ class AppDataParser {
 									  restaurants: self.restaurants,
 									  dataSettings: dataSettings,
 									  searchStrings: searchStrings,
-									  searchArtworks: searchArtworks
+									  searchArtworks: self.searchArtworks
 		)
 		
 		// clean up data used for parsing only
@@ -76,6 +77,7 @@ class AppDataParser {
 		self.objects.removeAll()
 		self.restaurants.removeAll()
 		self.featuredTours.removeAll()
+		self.searchArtworks.removeAll()
 		
 		return appData
     }
@@ -676,6 +678,19 @@ class AppDataParser {
 			let rowSize: Double = 800.0 / Double(rows)
 			let colSize: Double = 800.0 / Double(cols)
 			for floorNumber in 0..<Common.Map.totalFloors {
+				// first add all artworks from the search
+				for artwork in self.searchArtworks {
+					if artwork.location.floor == floorNumber {
+						if let objectAnnotation = floorObjectAnnotations[floorNumber]!.filter({ $0.nid == artwork.nid }).first as MapObjectAnnotation? {
+							floorFarObjectAnnotations[floorNumber]!.append(objectAnnotation)
+						}
+					}
+				}
+				
+				if floorFarObjectAnnotations[floorNumber]!.count > 10 {
+					break
+				}
+				
 				// for each square in our grid, pick one annotation to show
 				y = 800.0
 				while y < 1600 {

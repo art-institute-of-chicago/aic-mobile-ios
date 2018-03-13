@@ -18,19 +18,25 @@ class MapObjectAnnotationView: MapAnnotationView {
     }
     
     enum Mode {
-        case dot
-		case image
-		case imageTour
-		case imageInfo
+        case dot			// dot + info
+		case image			// small image + big image
+		case smallImageInfo	// small image + info
+		case imageInfo		// image + info
     }
-    
-    var mode: Mode = .dot {
-        didSet {
-            if oldValue != mode {
-                setContentForCurrentMode(withAnimation: true)
-            }
-        }
-    }
+	
+	func setMode(mode: Mode, inTour: Bool = false) {
+		let updateMode = self.mode != mode || self.isInTour != inTour
+		
+		self.mode = mode
+		self.isInTour = inTour
+		
+		if updateMode {
+			setContentForCurrentMode(withAnimation: true)
+		}
+	}
+	
+    private var mode: Mode = .dot
+	private var isInTour: Bool = false
     
     weak var delegate: MapObjectAnnotationViewDelegate?
     
@@ -219,7 +225,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 				}
 				break
 				
-			case .imageInfo:
+			case .imageInfo, .smallImageInfo:
 				if self.isSelected == true {
 					backgroundView.backgroundColor = .white
 					
@@ -251,7 +257,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 				}
 				break
 				
-			case .image, .imageTour:
+			case .image:
 				if self.isSelected == true {
 					UIView.animate(withDuration: animationDuration, animations: {
 						self.backgroundView.backgroundColor = .white
@@ -310,12 +316,12 @@ class MapObjectAnnotationView: MapAnnotationView {
 		}
 		addSubview(backgroundView)
 		
-		if mode == .image || mode == .imageTour || mode == .imageInfo {
+		if mode == .image || mode == .smallImageInfo || mode == .imageInfo {
 			addSubview(tailView)
 			addSubview(imageView)
 		}
 		
-		if mode == .imageTour {
+		if isInTour {
 			addSubview(imageDarkOverlay)
 		}
 		
@@ -333,7 +339,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 			layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 			
-		case .image, .imageInfo, .imageTour:
+		case .image, .smallImageInfo, .imageInfo:
 			layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 		}
@@ -356,7 +362,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 				self.bounds = self.backgroundView.frame
 				break
                 
-			case .image, .imageTour:
+			case .image, .smallImageInfo:
 				self.backgroundView.backgroundColor = .white
 				self.transform = CGAffineTransform(scaleX: self.minimizedScale, y: self.minimizedScale)
 				self.bounds = self.backgroundView.frame
@@ -376,7 +382,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 // MARK: Gesture Recognizers
 extension MapObjectAnnotationView {
     @objc internal func playButtonWasTapped(_ gesture:UIGestureRecognizer) {
-		if mode == .imageInfo {
+		if mode == .imageInfo || mode == .smallImageInfo {
 			if isSelected {
 				delegate?.mapObjectAnnotationViewPlayPressed(self)
 			}

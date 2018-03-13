@@ -120,6 +120,7 @@ class MapViewController: UIViewController {
         // Switch modes
         mode = .allInformation
 		
+		// TODO: INITIAL ANIMATION
 		if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
 			mapView.showFullMap(useDefaultHeading: true)
 		}
@@ -313,27 +314,6 @@ class MapViewController: UIViewController {
         }
     }
     
-    // MARK: Tour Mode functions
-    // Functions for manipulating the map while in .Tour mode
-    // Show all annotations for the tour in view
-	func showTourOverview() {
-        // Deselect all annotations
-        for annotation in mapView.selectedAnnotations {
-            mapView.deselectAnnotation(annotation, animated: true)
-        }
-        
-        // Turn off user heading since we want to jump to a specific place
-        floorSelectorVC.disableUserHeading()
-        
-        // Zoom in on the tour's stops
-        mapView.showAnnotations(mapModel.floors[currentFloor].tourStopAnnotations, animated: false)
-        
-        // Show all annotations messes with the pitch + heading,
-        // so reset our pitch + heading to preferred defaults
-        mapView.camera.heading = mapView.defaultHeading
-        mapView.camera.pitch = mapView.topDownPitch
-    }
-    
     // Highlights a specific tour object
     // Highlights item, switches to it's floor
     // and centers the map around it
@@ -370,7 +350,7 @@ class MapViewController: UIViewController {
 					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 					
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
 					
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -428,7 +408,7 @@ class MapViewController: UIViewController {
     // MARK: Change floor
     
     // Show the current floor's overlay, and change the views
-    fileprivate func setCurrentFloor(forFloorNum floorNum:Int, andResetMap:Bool = false) {
+    fileprivate func setCurrentFloor(forFloorNum floorNum: Int, andResetMap: Bool = false) {
         previousFloor = currentFloor
         currentFloor = floorNum
         
@@ -474,13 +454,12 @@ class MapViewController: UIViewController {
         updateAnnotations()
     }
     
-    internal func updateAnnotations(andForceUpdate forceUpdate:Bool = false) {
+    internal func updateAnnotations(andForceUpdate forceUpdate: Bool = false) {
         if isSwitchingModes {
             return
         }
-
+		
         mapView.calculateCurrentAltitude()
-		mapView.adjustPicthForZoomLevel()
         
         switch mode {
         case .allInformation:
@@ -522,83 +501,66 @@ class MapViewController: UIViewController {
 		}
     }
     
-    internal func updateAllInformationAnnotations(isSwitchingFloors floorSwitch:Bool=false) {
-        if floorSwitch == false {
-            // If we haven't changed zoom levels nothing to do
-            if mapView.currentZoomLevel == mapView.previousZoomLevel {
-                return
-            }
-            
-            // If we are going between Detail and Max Zoom, stay the same
-            if (mapView.currentZoomLevel == .zoomDetail && mapView.previousZoomLevel == .zoomMax) ||
-                (mapView.currentZoomLevel == .zoomMax && mapView.previousZoomLevel == .zoomDetail) {
-                return
-            }
-		}
-        
-        if floorSwitch {
-            mapView.removeAnnotations(mapView.annotations)
-        } else {
-            var annotationFilter:[MKAnnotation] = []
-            annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-            annotationFilter.append(contentsOf: mapView.selectedAnnotations)
-            annotationFilter.append(mapView.userLocation)
-			
-            let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
-        
-            mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
-        }
-        
-        // Lions always present
-        mapView.addAnnotations(mapModel.imageAnnotations)
+    internal func updateAllInformationAnnotations(isSwitchingFloors floorSwitch: Bool=false) {
+		var annotations: [MKAnnotation] = []
         
         // Set the annotations for this zoom level
         switch mapView.currentZoomLevel {
         case .zoomLimit:
-            mapView.addAnnotations(mapModel.landmarkAnnotations)
-			mapView.addAnnotations(mapModel.floors[currentFloor].farObjectAnnotations)
+			annotations.append(contentsOf: mapModel.landmarkAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
             break
             
         case .zoomDefault:
-            mapView.addAnnotations(mapModel.floors[currentFloor].amenityAnnotations)
-            mapView.addAnnotations(mapModel.floors[currentFloor].departmentAnnotations)
+			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
             break
 			
 		case .zoomMedium:
-			mapView.addAnnotations(mapModel.floors[currentFloor].amenityAnnotations)
-			mapView.addAnnotations(mapModel.floors[currentFloor].departmentAnnotations)
+			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
 			break
             
         case .zoomDetail, .zoomMax:
-            mapView.addAnnotations(mapModel.floors[currentFloor].galleryAnnotations)
-            mapView.addAnnotations(mapModel.floors[currentFloor].objectAnnotations)
+			annotations.append(contentsOf: mapModel.floors[currentFloor].galleryAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].objectAnnotations as [MKAnnotation])
             break
 		}
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
+		annotations.append(mapView.userLocation)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		mapView.addAnnotations(annotations)
     }
 	
     // Highlight object annotations that are in a visible range as the user pans around
     private func updateAllInformationAnnotationViews() {
-        if mapView.currentZoomLevel == .zoomDetail || mapView.currentZoomLevel == .zoomMax {
+        if mapView.currentZoomLevel == .zoomMax || mapView.currentZoomLevel == .zoomDetail {
             // Update Objects
             let centerCoord = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
             
             for annotation in mapModel.floors[currentFloor].objectAnnotations {
 				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
 					let distance = centerCoord.distance(from: annotation.clLocation)
-					if distance < 10 {
+					if distance < 15 {
 						if view.isSelected == false {
-							view.mode = .imageInfo
+							view.setMode(mode: .imageInfo)
 						}
 					} else {
-						view.mode = .dot
+						view.setMode(mode: .dot)
 					}
 				}
             }
         }
-		else if mapView.currentZoomLevel == .zoomDefault || mapView.currentZoomLevel == .zoomLimit {
+		else if mapView.currentZoomLevel == .zoomMedium || mapView.currentZoomLevel == .zoomDefault || mapView.currentZoomLevel == .zoomLimit {
 			for annotation in mapModel.floors[currentFloor].farObjectAnnotations {
 				if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-					view.mode = .image
+					view.setMode(mode: .smallImageInfo)
 				}
 			}
 		}
@@ -608,7 +570,7 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-					view.mode = .imageTour
+					view.setMode(mode: .image, inTour: true)
 					view.setTourStopNumber(number: annotation.tourStopOrder)
 					if annotation.floor == currentFloor {
 						view.alpha = 1.0
@@ -625,7 +587,7 @@ class MapViewController: UIViewController {
 		for annotation in mapView.annotations {
 			if let objectAnnotation = annotation as? MapObjectAnnotation {
 				if let view = mapView.view(for: objectAnnotation) as? MapObjectAnnotationView {
-					view.mode = .image
+					view.setMode(mode: .image)
 					view.setSelected(true, animated: true)
 					if objectAnnotation.floor == currentFloor {
 						view.alpha = 1.0
@@ -809,7 +771,7 @@ extension MapViewController : MKMapViewDelegate {
                 return view
             }
             
-            view.setAnnotation(forDepartmentAnnotation: departmentAnnotation);
+            view.setAnnotation(forDepartmentAnnotation: departmentAnnotation)
             return view
         }
         
@@ -859,7 +821,8 @@ extension MapViewController : MKMapViewDelegate {
                 view.delegate = self
                 return view
             }
-
+			
+			view.delegate = self
             view.setAnnotation(forObjectAnnotation: objectAnnotation)
             return view
         }
@@ -942,9 +905,9 @@ extension MapViewController : MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         if mode == .allInformation && view.isKind(of: MapObjectAnnotationView.self) {
-            if self.mapView.currentZoomLevel != .zoomMax && self.mapView.currentZoomLevel != .zoomDetail {
-                self.mapView.removeAnnotationsWithAnimation(annotations: [view.annotation!])
-            }
+//            if self.mapView.currentZoomLevel != .zoomMax && self.mapView.currentZoomLevel != .zoomDetail {
+//                self.mapView.removeAnnotationsWithAnimation(annotations: [view.annotation!])
+//            }
         }
     }
     
@@ -952,7 +915,8 @@ extension MapViewController : MKMapViewDelegate {
      When the map region changes update view properties
      */
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        self.mapView.calculateStartingHeight()
+        self.mapView.calculateCurrentAltitude()
+		self.mapView.adjustPicthForZoomLevel()
         
         // Store the location mode
         if !floorSelectorVC.userHeadingIsEnabled() {
@@ -966,7 +930,17 @@ extension MapViewController : MKMapViewDelegate {
     }
 	
 	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-		
+//		mapView.camera.heading = 0
+//		mapView.camera.altitude = 900
+//		mapView.camera.pitch = self.mapView.perspectivePitch
+//		mapView.camera.centerCoordinate = mapModel.floors[currentFloor].overlay.coordinate
+//
+//		let newCamera = mapView.camera
+//		newCamera.heading = self.mapView.defaultHeading
+//		newCamera.altitude = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue
+//		newCamera.pitch = self.mapView.topDownPitch
+//		newCamera.centerCoordinate = mapModel.floors[currentFloor].overlay.coordinate
+//		mapView.setCamera(newCamera, animated: true)
 	}
 }
 

@@ -412,7 +412,7 @@ struct Common {
 		
         enum ZoomLevelAltitude : Double {
             case zoomLimit = 1000.0
-            case zoomDefault = 350.0
+            case zoomDefault = 400.0
 			case zoomMedium = 200.0
             case zoomDetail = 50.0
             case zoomMax = 25.0
