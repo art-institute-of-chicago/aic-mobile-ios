@@ -96,7 +96,6 @@ class HomeViewController : SectionViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		// TODO: set max number of items (6) in Common / Settings
 		tourItems = AppDataManager.sharedInstance.getToursForHome()
 		exhibitionItems = AppDataManager.sharedInstance.getExhibitionsForHome()
 		eventItems = AppDataManager.sharedInstance.getEventsForHome()

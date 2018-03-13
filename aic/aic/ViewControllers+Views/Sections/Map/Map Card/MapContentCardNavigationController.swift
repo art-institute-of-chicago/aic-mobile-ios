@@ -11,7 +11,7 @@ import UIKit
 class MapContentCardNavigationController: CardNavigationController {
 	private var tourModel: AICTourModel? = nil
 	
-	let titleLabel: UILabel = UILabel()
+	private let titleLabel: UILabel = UILabel()
 	private let dividerLine: UIView = UIView()
 	private let contentVC: UIViewController
 	
@@ -58,11 +58,21 @@ class MapContentCardNavigationController: CardNavigationController {
 		createViewConstraints()
 	}
 	
+	func setTitleText(text: String) {
+		if text.isEmpty {
+			titleLabel.isHidden = true
+			dividerLine.isHidden = true
+		}
+		else {
+			titleLabel.text = text
+		}
+	}
+	
 	private func createViewConstraints() {
-		contentVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: contentTopMargin)
+		contentVC.view.autoPinEdge(.top, to: .top, of: rootVC.view)
 		contentVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
 		contentVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-		contentVC.view.autoSetDimension(.height, toSize: Common.Layout.cardMinimizedContentHeight - contentTopMargin - Common.Layout.miniAudioPlayerHeight)
+		contentVC.view.autoSetDimension(.height, toSize: Common.Layout.cardMinimizedContentHeight - Common.Layout.miniAudioPlayerHeight)
 		
 		titleLabel.autoPinEdge(.top, to: .top, of: self.view, withOffset: 27)
 		titleLabel.autoPinEdge(.leading, to: .leading, of: self.view,  withOffset: 16)

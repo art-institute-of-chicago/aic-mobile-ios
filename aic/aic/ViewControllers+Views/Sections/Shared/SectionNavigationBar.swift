@@ -122,6 +122,7 @@ class SectionNavigationBar : UIView {
 	
 	func collapse() {
 		currentState = .collapsed
+		self.layer.removeAllAnimations()
 		UIView.animate(withDuration: 0.5) {
 			self.headerView.frame.size.height = Common.Layout.navigationBarMinimizedHeight
 			self.backdropImageView.alpha = 0.0
@@ -135,6 +136,7 @@ class SectionNavigationBar : UIView {
 	
 	func hide() {
 		currentState = .hidden
+		self.layer.removeAllAnimations()
 		UIView.animate(withDuration: 0.5) {
 			self.headerView.frame.size.height = 0
 			self.backdropImageView.alpha = 0.0
@@ -172,6 +174,7 @@ class SectionNavigationBar : UIView {
 		else if frameHeight > Common.Layout.navigationBarMinimizedHeight {
 			currentState = .open
 		}
+		self.layoutIfNeeded()
 	}
 	
 	func createConstraints() {
@@ -219,7 +222,6 @@ extension SectionNavigationBar : SectionViewControllerScrollDelegate {
 	func sectionViewControllerWillAppearWithScrollView(scrollView: UIScrollView) {
 		UIView.animate(withDuration: 0.5) {
 			self.updateHeight(contentOffset: scrollView.contentOffset)
-			self.layoutIfNeeded()
 		}
 	}
 }

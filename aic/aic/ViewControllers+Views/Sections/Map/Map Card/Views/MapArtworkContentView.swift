@@ -15,7 +15,7 @@ class MapArtworkContentView : UIView {
 	let audioButton: UIButton = UIButton()
 	let imageButton: UIButton = UIButton()
 	
-	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight)
+	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight - Common.Layout.miniAudioPlayerHeight)
 	
 	init(artwork: AICObjectModel) {
 		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
@@ -88,6 +88,18 @@ class MapArtworkContentView : UIView {
 		locationLabel.text = tour.stops.first!.object.gallery.title //Common.Map.stringForFloorNumber[tour.location.floor]
 	}
 	
+	init(exhibition: AICExhibitionModel) {
+		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
+		setup()
+		
+		titleLabel.text = exhibition.title
+		imageView.kf.indicatorType = .activity
+		imageView.kf.setImage(with: exhibition.imageUrl)
+		locationLabel.text = Common.Map.stringForFloorNumber[exhibition.location!.floor]
+		audioButton.isHidden = true
+		audioButton.isEnabled = false
+	}
+	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -129,7 +141,7 @@ class MapArtworkContentView : UIView {
 	}
 	
 	private func createViewConstraints() {
-		imageView.autoPinEdge(.top, to: .top, of: self, withOffset: 56)
+		imageView.autoPinEdge(.top, to: .top, of: self, withOffset: 86)
 		imageView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		imageView.autoSetDimensions(to: imageView.frame.size)
 		

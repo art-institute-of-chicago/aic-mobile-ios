@@ -82,8 +82,7 @@ class MapViewController: UIViewController {
         // Set the overlay for the background
         mapView.add(mapViewHideBackgroundOverlay, level: .aboveRoads)
 		
-		mapView.camera.pitch = mapView.perspectivePitch
-        mapView.camera.heading = 0
+        mapView.camera.heading = mapView.defaultHeading
         mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
         mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
         
@@ -245,7 +244,7 @@ class MapViewController: UIViewController {
 		let currentPitch = mapView.camera.pitch
 		
 		// Zoom in on the gift shop annotations
-		mapView.showAnnotations(mapModel.floors[currentFloor].giftShopAnnotations, animated: false)
+		mapView.showAnnotations(mapModel.floors[currentFloor].giftShopAnnotations, animated: true)
 		
 		// Show all annotations messes with the pitch + heading,
 		// so reset our pitch + heading to preferred defaults
@@ -371,7 +370,7 @@ class MapViewController: UIViewController {
 					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 					
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
 					
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)

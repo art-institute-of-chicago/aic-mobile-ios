@@ -66,13 +66,21 @@ class SectionNavigationController : UINavigationController {
 		updateLanguage()
 	}
 	
+	override func popToRootViewController(animated: Bool) -> [UIViewController]? {
+		let vcs = super.popToRootViewController(animated: animated)
+		
+		sectionNavigationBar.setBackButtonHidden(true)
+		updateLanguage()
+		
+		return vcs
+	}
+	
 	override func popViewController(animated: Bool) -> UIViewController? {
 		let vc: UIViewController? = super.popViewController(animated: animated)
 		
 		let isRootVC: Bool = self.viewControllers.count <= 1
 		let backButtonHidden = isRootVC
 		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
-		
 		updateLanguage()
 		
 		return vc
@@ -125,7 +133,7 @@ class SectionNavigationController : UINavigationController {
 	}
 	
 	@objc private func backButtonPressed(button: UIButton) {
-		self.popViewController(animated: true)
+		self.popToRootViewController(animated: true)
 	}
 }
 

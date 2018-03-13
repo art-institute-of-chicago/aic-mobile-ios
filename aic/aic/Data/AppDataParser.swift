@@ -669,24 +669,22 @@ class AppDataParser {
 				3 : [MapObjectAnnotation]()
 			]
 			// Add object visible from far to each floor
-			let topLeftPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 801, y: 801))
-			let bottomRightPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 1599, y: 1599))
 			let rows: Int = 3
 			let cols: Int = 2
-			let rowSize: Double = abs((bottomRightPoint.y - topLeftPoint.y) / Double(rows))
-			let colSize: Double = abs((bottomRightPoint.x - topLeftPoint.x) / Double(cols))
-			var gridMapRect = MKMapRectMake(topLeftPoint.x, topLeftPoint.y, colSize, rowSize)
-			let startX = min(topLeftPoint.x, bottomRightPoint.x)
-			let startY = min(topLeftPoint.y, bottomRightPoint.y)
-			let endX = max(topLeftPoint.x, bottomRightPoint.x)
-			let endY = max(topLeftPoint.y, bottomRightPoint.y)
+			var x = 800.0
+			var y = 800.0
+			let rowSize: Double = 800.0 / Double(rows)
+			let colSize: Double = 800.0 / Double(cols)
 			for floorNumber in 0..<Common.Map.totalFloors {
 				// for each square in our grid, pick one annotation to show
-				gridMapRect.origin.y = startY
-				while MKMapRectGetMinY(gridMapRect) <= endY {
-					gridMapRect.origin.x = startX
-					
-					while MKMapRectGetMinX(gridMapRect) <= endX {
+				y = 800.0
+				while y < 1600 {
+					x = 800.0
+					while x < 1600 {
+						let p1 = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: x, y: y))
+						let p2 = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: x+colSize, y: y+rowSize))
+						let gridMapRect = MKMapRectMake(fmin(p1.x,p2.x), fmin(p1.y,p2.y), fabs(p1.x-p2.x), fabs(p1.y-p2.y))
+						
 						for objectAnnotation in floorObjectAnnotations[floorNumber]! {
 							let mapPoint = MKMapPointForCoordinate(objectAnnotation.clLocation.coordinate)
 							if MKMapRectContainsPoint(gridMapRect, mapPoint) {
@@ -694,10 +692,9 @@ class AppDataParser {
 								break
 							}
 						}
-						gridMapRect.origin.x += colSize
+						x += colSize
 					}
-					
-					gridMapRect.origin.y += rowSize
+					y += rowSize
 				}
 			}
 			

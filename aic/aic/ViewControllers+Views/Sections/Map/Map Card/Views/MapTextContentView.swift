@@ -11,7 +11,7 @@ import UIKit
 class MapTextContentView : UIView {
 	private let textLabel: UILabel = UILabel()
 	
-	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight - 30 - Common.Layout.miniAudioPlayerHeight)
+	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight - Common.Layout.miniAudioPlayerHeight)
 	
 	init(text: String) {
 		super.init(frame: CGRect(origin: CGPoint.zero, size: frameSize))
@@ -28,7 +28,7 @@ class MapTextContentView : UIView {
 	}
 	
 	private func createViewConstraints() {
-		textLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 65)
+		textLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 95)
 		textLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		textLabel.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
 	}

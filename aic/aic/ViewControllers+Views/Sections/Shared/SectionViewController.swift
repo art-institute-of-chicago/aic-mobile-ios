@@ -20,20 +20,8 @@ class SectionViewController : UIViewController {
         self.color = section.color
         super.init(nibName: nil, bundle: nil)
 		
-		// Set the tab bar item content // TODO: No need to set tabBarItem since SectionVC is never the tabBar viewcontroller
-        self.tabBarItem = UITabBarItem(title: section.tabBarTitle, image: section.tabBarIcon, tag: section.nid)
-		
 		// Set the navigation item content
 		self.navigationItem.title = sectionModel.title
-        
-        // Hide title and inset (center) images if not showing titles
-        if Common.Layout.showTabBarTitles == false {
-            self.tabBarItem.title = ""
-            self.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
-        }
-        
-        // Subscribe to tab bar height changes
-        NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,15 +37,5 @@ class SectionViewController : UIViewController {
 	
     internal func reset() {
         // Override this to reset view when going back
-    }
-}
-
-extension SectionViewController {
-    // When the tab bar height changes, change the size of our view so anything bottom aligned
-    // does not get hidden by the mini player
-    @objc func tabBarHeightDidChange() {
-        self.view.frame.size.height = UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight
-//        viewableMapArea = CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeightWithMiniAudioPlayerHeight)
-//        recalculateViewableMapArea()
     }
 }

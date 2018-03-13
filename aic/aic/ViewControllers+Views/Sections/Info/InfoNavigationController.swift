@@ -41,7 +41,13 @@ class InfoNavigationController : SectionNavigationController {
 		if shouldShowMemberCard {
 			shouldShowMemberCard = false
 			
-			self.popToRootViewController(animated: false)
+			if self.viewControllers.count > 1 {
+				if self.viewControllers.last!.isKind(of: MemberCardViewController.self) == true {
+					self.sectionNavigationBar.setBackButtonHidden(false)
+					return
+				}
+			}
+			
 			showMemberCard()
 		}
 	}
@@ -62,7 +68,7 @@ extension InfoNavigationController : UINavigationControllerDelegate {
 	}
 	
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-		// set SectionNavigationBar as scrollDelegateon homeVC only after it appears for the first time
+		// set SectionNavigationBar as scrollDelegate on infoVC only after it appears for the first time
 		if viewController == infoVC && infoVC.scrollDelegate == nil {
 			infoVC.scrollDelegate = sectionNavigationBar
 		}

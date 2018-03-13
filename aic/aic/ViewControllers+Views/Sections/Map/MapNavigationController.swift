@@ -278,7 +278,7 @@ class MapNavigationController : SectionNavigationController {
 				mapContentCardVC!.view.removeFromSuperview()
 			}
 			mapContentCardVC = MapContentCardNavigationController(contentVC: tourStopPageVC!)
-			mapContentCardVC!.titleLabel.text = tourModel!.title
+			mapContentCardVC!.setTitleText(text: tourModel!.title)
 			mapContentCardVC!.cardDelegate = self
 			tourStopPageVC!.tourStopPageDelegate = self
 			
@@ -327,7 +327,7 @@ class MapNavigationController : SectionNavigationController {
 			artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 			artworkVC.view.addSubview(artworkContentView)
 			mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
-			mapContentCardVC!.titleLabel.text = artwork.title
+			mapContentCardVC!.setTitleText(text: artwork.title)
 			mapContentCardVC!.cardDelegate = self
 			
 			// Add card to view
@@ -366,7 +366,7 @@ class MapNavigationController : SectionNavigationController {
 			artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 			artworkVC.view.addSubview(artworkContentView)
 			mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
-			mapContentCardVC!.titleLabel.text = searchedArtwork.title
+			mapContentCardVC!.setTitleText(text: searchedArtwork.title)
 			mapContentCardVC!.cardDelegate = self
 			
 			// Add card to view
@@ -399,9 +399,9 @@ class MapNavigationController : SectionNavigationController {
 			if mapContentCardVC != nil {
 				mapContentCardVC!.view.removeFromSuperview()
 			}
-			let exhibitionVC = UIViewController()
-			mapContentCardVC = MapContentCardNavigationController(contentVC: exhibitionVC)
-			mapContentCardVC!.titleLabel.text = exhibitionModel!.title
+			let exhibitionView = MapArtworkContentView(exhibition: exhibitionModel!)
+			mapContentCardVC = MapContentCardNavigationController(contentView: exhibitionView)
+			mapContentCardVC!.setTitleText(text: "Exhibition".localized(using: "Map"))
 			mapContentCardVC!.cardDelegate = self
 			
 			// Add card to view
@@ -435,7 +435,7 @@ class MapNavigationController : SectionNavigationController {
 			}
 			restaurantPageVC = RestaurantPageViewController(restaurants: AppDataManager.sharedInstance.app.restaurants)
 			mapContentCardVC = MapContentCardNavigationController(contentVC: restaurantPageVC!)
-			mapContentCardVC!.titleLabel.text = "Dining"
+			mapContentCardVC!.setTitleText(text: "")
 			mapContentCardVC!.cardDelegate = self
 			restaurantPageVC!.restaurantPageDelegate = self
 			
@@ -473,7 +473,7 @@ class MapNavigationController : SectionNavigationController {
 			}
 			let restroomsContentView = MapTextContentView(text: "Close to explore everything.")
 			mapContentCardVC = MapContentCardNavigationController(contentView: restroomsContentView)
-			mapContentCardVC!.titleLabel.text = "Restrooms"
+			mapContentCardVC!.setTitleText(text: "Restrooms")
 			mapContentCardVC!.cardDelegate = self
 			
 			// Add card to view
@@ -507,7 +507,7 @@ class MapNavigationController : SectionNavigationController {
 			}
 			let giftshopContentView = MapTextContentView(text: "Close to exlpore everything.")
 			mapContentCardVC = MapContentCardNavigationController(contentView: giftshopContentView)
-			mapContentCardVC!.titleLabel.text = "Gift Shops"
+			mapContentCardVC!.setTitleText(text: "Gift Shops")
 			mapContentCardVC!.cardDelegate = self
 			
 			// Add card to view
