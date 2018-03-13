@@ -276,26 +276,32 @@ class MapObjectAnnotationView: MapAnnotationView {
     
     private func loadImage() {
 		if let annotation = objectAnnotation {
+			// Try to load image from cache
 			if let image = ImageCache.default.retrieveImageInMemoryCache(forKey: annotation.thumbnailUrl.absoluteString) {
 				self.imageView.image = image
+				self.cropImage()
 			}
 			else {
 				imageView.kf.indicatorType = .activity
 				imageView.kf.setImage(with: annotation.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, url) in
 					if image != nil {
-						if let cropRect = annotation.thumbnailCropRect {
-							let croppedImage = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
-							self.imageView.image = croppedImage
-							ImageCache.default.store(croppedImage, forKey: annotation.thumbnailUrl.absoluteString)
-						}
-						else {
-							ImageCache.default.store(image!, forKey: annotation.thumbnailUrl.absoluteString)
-						}
+						self.imageView.image = image
+						self.cropImage()
 					}
 				})
 			}
 		}
     }
+	
+	private func cropImage() {
+		if let image = self.imageView.image {
+			if let annotation = objectAnnotation {
+				if let cropRect = annotation.thumbnailCropRect {
+					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image, viewSize: self.imageView.frame.size, cropRect: cropRect)
+				}
+			}
+		}
+	}
     
     internal func setContentForCurrentMode(withAnimation animated:Bool) {
 		// Add/Remove views

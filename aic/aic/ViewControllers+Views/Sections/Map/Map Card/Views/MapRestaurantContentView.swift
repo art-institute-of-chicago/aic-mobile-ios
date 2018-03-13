@@ -29,7 +29,7 @@ class MapRestaurantContentView : UIView {
 		titleLabel.numberOfLines = 1
 		titleLabel.lineBreakMode = .byWordWrapping
 		titleLabel.textAlignment = .left
-		titleLabel.font = .aicMapCardBoldTextFont
+		titleLabel.font = .aicContentTitleFont
 		titleLabel.textColor = .white
 		
 		descriptionLabel.text = restaurant.description

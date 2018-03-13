@@ -53,10 +53,10 @@ class AppDataParser {
         self.objects 	= parse(objectsJSON: appDataJson["objects"])
 		self.exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
 		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
-		let map: AICMapModel = parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
 		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
 		let searchStrings = parse(searchStringsJSON: appDataJson["search"]["search_strings"])
 		let searchArtworks = parse(searchArtworks: appDataJson["search"])
+		let map: AICMapModel = parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
 		
 		let appData = AICAppDataModel(generalInfo: generalInfo,
 									  galleries: self.galleries,
@@ -553,12 +553,6 @@ class AppDataParser {
 				2 : [MapObjectAnnotation](),
 				3 : [MapObjectAnnotation]()
 			]
-			var floorFarObjectAnnotations: [Int : [MapObjectAnnotation]] = [
-				0 : [MapObjectAnnotation](),
-				1 : [MapObjectAnnotation](),
-				2 : [MapObjectAnnotation](),
-				3 : [MapObjectAnnotation]()
-			]
 			
 			// Floors
 			for floorNumber in 0..<Common.Map.totalFloors {
@@ -667,11 +661,18 @@ class AppDataParser {
 				}
 			}
 			
+			// Far Objects
+			var floorFarObjectAnnotations: [Int : [MapObjectAnnotation]] = [
+				0 : [MapObjectAnnotation](),
+				1 : [MapObjectAnnotation](),
+				2 : [MapObjectAnnotation](),
+				3 : [MapObjectAnnotation]()
+			]
 			// Add object visible from far to each floor
 			let topLeftPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 801, y: 801))
 			let bottomRightPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 1599, y: 1599))
 			let rows: Int = 3
-			let cols: Int = 3
+			let cols: Int = 2
 			let rowSize: Double = abs((bottomRightPoint.y - topLeftPoint.y) / Double(rows))
 			let colSize: Double = abs((bottomRightPoint.x - topLeftPoint.x) / Double(cols))
 			var gridMapRect = MKMapRectMake(topLeftPoint.x, topLeftPoint.y, colSize, rowSize)
@@ -695,7 +696,7 @@ class AppDataParser {
 						}
 						gridMapRect.origin.x += colSize
 					}
-			
+					
 					gridMapRect.origin.y += rowSize
 				}
 			}

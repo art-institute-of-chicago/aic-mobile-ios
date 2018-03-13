@@ -102,7 +102,7 @@ class MapArtworkContentView : UIView {
 		titleLabel.numberOfLines = 1
 		titleLabel.lineBreakMode = .byTruncatingTail
 		titleLabel.textAlignment = .left
-		titleLabel.font = .aicMapCardBoldTextFont
+		titleLabel.font = .aicContentTitleFont
 		titleLabel.textColor = .white
 		
 		locationLabel.numberOfLines = 1

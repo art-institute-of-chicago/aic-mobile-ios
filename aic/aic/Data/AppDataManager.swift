@@ -403,10 +403,27 @@ class AppDataManager {
 	}
 	
 	func getCroppedImage(image: UIImage, viewSize: CGSize, cropRect: CGRect) -> UIImage {
-		let imageCropRect = CGRect(x: floor(cropRect.origin.x * image.size.width), y: floor(cropRect.origin.y * image.size.height), width: floor(cropRect.size.width * image.size.width), height: floor(cropRect.size.height * image.size.height))
+		// create image crop from cropRect which is in percentages based on the original image size
+		var imageCropRect = CGRect(x: floor(cropRect.origin.x * image.size.width), y: floor(cropRect.origin.y * image.size.height), width: floor(cropRect.size.width * image.size.width), height: floor(cropRect.size.height * image.size.height))
+		let imageCropAspect = imageCropRect.width / imageCropRect.height
+		let viewAspect = viewSize.width / viewSize.height
+		let imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
 		
-		if let cgImage = image.cgImage!.cropping(to: imageCropRect) {
-			return UIImage(cgImage: cgImage)
+		// if image is more landscape than the view frame, compensate for the height
+		if imageCropAspect > viewAspect {
+			let finalHeight = imageCropRect.width * (1.0 / viewAspect)
+			var finalOriginY = imageCropRect.origin.y
+			if imageCropRect.origin.y + finalHeight > image.size.height {
+				finalOriginY = image.size.height - finalHeight
+			}
+			imageCropRect.origin = CGPoint(x: imageCropRect.origin.x, y: finalOriginY)
+			imageCropRect.size = CGSize(width: imageCropRect.width, height: finalHeight)
+		}
+		
+		if imageRect.contains(imageCropRect) {
+			if let cgImage = image.cgImage!.cropping(to: imageCropRect) {
+				return UIImage(cgImage: cgImage)
+			}
 		}
 		return image
 	}
