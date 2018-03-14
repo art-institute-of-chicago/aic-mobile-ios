@@ -6,7 +6,7 @@
 import UIKit
 
 extension UIFont {
-	static let aicSectionBigTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 40.0)!
+	static let aicSectionBigTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 40.0)!.upperCaseNumbers()
 	
 	static let aicSectionTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 30.0)!.upperCaseNumbers()
 	
@@ -30,11 +30,11 @@ extension UIFont {
     
     static let aicDepartmentsFont: UIFont = UIFont(name: "SourceSansPro-Semibold", size: 17.0)!
     
-    static let aicMapSpacesFont: UIFont = UIFont(name: "IdealSans-Medium", size: 16.0)!
+    static let aicMapSpacesFont: UIFont = UIFont(name: "IdealSans-Medium", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicMapTextFont: UIFont = UIFont(name: "IdealSans-Medium", size: 15.0)!
+	static let aicMapTextFont: UIFont = UIFont(name: "IdealSans-Medium", size: 15.0)!.upperCaseNumbers()
 	
-	static let aicMapObjectTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 15.0)!
+	static let aicMapObjectTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 15.0)!.upperCaseNumbers()
     
     static let aicMapSVGTextFont: UIFont = UIFont(name: "SourceSansPro-Regular", size: 9.0)!
     
@@ -44,75 +44,75 @@ extension UIFont {
     
     static let aicMapSVGTextFontFont: UIFont = UIFont(name: "SourceSansPro-Regular", size: 9.0)!
 	
-	static let aicTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	static let aicTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	static let aicTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicButtonFont: UIFont = UIFont(name: "IdealSans-Medium", size: 13.0)!
+	static let aicButtonFont: UIFont = UIFont(name: "IdealSans-Medium", size: 13.0)!.upperCaseNumbers()
 	
-	static let aicPotionCreditsFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
+	static let aicPotionCreditsFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!.upperCaseNumbers()
 	
-	static let aicHomeCollectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!
+	static let aicHomeCollectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicHomeSeeAllFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
+	static let aicHomeSeeAllFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!.upperCaseNumbers()
 	
-	static let aicHomeTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!
+	static let aicHomeTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicHomeSmallTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!
+	static let aicHomeSmallTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!.upperCaseNumbers()
 	
 	static let aicHomeShortTextFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 14)!
 	
-	static let aicSearchBarFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!
+	static let aicSearchBarFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!.upperCaseNumbers()
 	
-	static let aicSearchResultsFilterFont: UIFont = UIFont(name: "IdealSans-Book", size: 18.0)!
+	static let aicSearchResultsFilterFont: UIFont = UIFont(name: "IdealSans-Book", size: 18.0)!.upperCaseNumbers()
 	
-	static let aicSearchResultsSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
+	static let aicSearchResultsSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!.upperCaseNumbers()
 	
-	static let aicInfoSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 28.0)!
+	static let aicInfoSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 28.0)!.upperCaseNumbers()
 	
-	static let aicInfoSectionTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	static let aicInfoSectionTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	static let aicCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
 	static let aicCardDescriptionFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 16.0)!
 	
 	static let aicCardDateLocationFont: UIFont = UIFont(name: "SabonNextLTPro-Italic", size: 16.0)!
 	
-	static let aicSeeAllHeaderFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	static let aicSeeAllHeaderFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicLanguageSelectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 28.0)!
+	static let aicLanguageSelectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 28.0)!.upperCaseNumbers()
 	
-	static let aicLanguageSelectionTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	static let aicLanguageSelectionTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicLoadingWelcomeFont: UIFont = UIFont(name: "IdealSans-Book", size: 45.0)!
+	static let aicLoadingWelcomeFont: UIFont = UIFont(name: "IdealSans-Book", size: 45.0)!.upperCaseNumbers()
     
-    static let aicMiniPlayerTrackTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+    static let aicMiniPlayerTrackTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicAudioPlayerTrackTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	static let aicAudioPlayerTrackTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicAudioPlayerTimeRemainingFont: UIFont = UIFont(name: "IdealSans-Book", size: 14.0)!
+	static let aicAudioPlayerTimeRemainingFont: UIFont = UIFont(name: "IdealSans-Book", size: 14.0)!.upperCaseNumbers()
 	
-	static let aicAudioInfoSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!
+	static let aicAudioInfoSectionTitleFont: UIFont = UIFont(name: "IdealSans-Book", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicMapCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	static let aicMapCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
 	static let aicContentTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicMapCardTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	static let aicMapCardTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicMapFloorMenuFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	static let aicMapFloorMenuFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
-	static let aicMemberCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	static let aicMemberCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
 	static let aicMemberCardLoginFieldFont: UIFont = UIFont(name: "IdealSans-Book", size: 17.0)!.upperCaseNumbers()
 	
-	static let aicMapDepartmentLabelFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!
+	static let aicMapDepartmentLabelFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!.upperCaseNumbers()
 	
-	static let aicSearchNoResultsWebsiteFont: UIFont = UIFont(name: "IdealSans-BookItalic", size: 13.0)!
+	static let aicSearchNoResultsWebsiteFont: UIFont = UIFont(name: "IdealSans-BookItalic", size: 13.0)!.upperCaseNumbers()
 	
-	static let aicTooltipTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!
+	static let aicTooltipTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicTooltipTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!
+	static let aicTooltipTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
 	/// Font modified to use uppercase numbers
 	///
