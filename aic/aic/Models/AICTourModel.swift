@@ -16,6 +16,7 @@ struct AICTourModel {
 	var overview: AICTourOverviewModel { return self.translations[self.language]!.overview }
 	
 	let isFeatured: Bool
+	let category: AICTourCategoryModel?
     
     let additionalInformation: String? = nil
     let imageUrl: URL

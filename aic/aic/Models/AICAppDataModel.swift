@@ -9,6 +9,7 @@ struct AICAppDataModel {
     var objects: [AICObjectModel]		= []
     var audioFiles: [AICAudioFileModel] = []
     var tours: [AICTourModel]			= []
+	var tourCategories: [AICTourCategoryModel]	= []
 	var map: AICMapModel
 	var restaurants: [AICRestaurantModel] = []
 	var dataSettings: [Common.DataSetting : String]	= [:]

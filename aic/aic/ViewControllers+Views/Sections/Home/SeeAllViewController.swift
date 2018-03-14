@@ -21,6 +21,7 @@ class SeeAllViewController : UIViewController {
 	
 	enum ContentType {
 		case tours
+		case toursByCategory
 		case exhibitions
 		case events
 	}
@@ -28,16 +29,33 @@ class SeeAllViewController : UIViewController {
 	
 	let titles = [ContentType.tours : "Tours", ContentType.exhibitions : "On View", ContentType.events : "Events"]
 	
-	var tourItems: [AICTourModel] = []
-	var exhibitionItems: [AICExhibitionModel] = []
-	var eventDates: [Date] = []
-	var eventItems: [[AICEventModel]] = []
+	private var tourItems: [AICTourModel] = []
+	private var tourCategories: [AICTourCategoryModel] = []
+	private var tourItemsByCategory: [[AICTourModel]] = []
+	private var exhibitionItems: [AICExhibitionModel] = []
+	private var eventDates: [Date] = []
+	private var eventItems: [[AICEventModel]] = []
 	
 	weak var delegate: SeeAllViewControllerDelegate? = nil
 	
 	init(contentType: ContentType) {
 		self.content = contentType
 		collectionView = SeeAllViewController.createCollectionView(for: content)
+		
+		if content == .tours {
+			tourItems = AppDataManager.sharedInstance.getToursForSeeAll()
+		}
+		else if content == .toursByCategory {
+			let categoryTours = AppDataManager.sharedInstance.getToursByCategoryForSeeAll()
+			for item in categoryTours {
+				tourCategories.append(item.key)
+				tourItemsByCategory.append(item.value)
+			}
+		}
+		else if content == .exhibitions {
+			exhibitionItems = AppDataManager.sharedInstance.getExhibitionsForSeeAll()
+		}
+		
 		super.init(nibName: nil, bundle: nil)
 		
 		// Set the navigation item content
@@ -65,6 +83,7 @@ class SeeAllViewController : UIViewController {
 		collectionView.register(UINib(nibName: "SeeAllTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllTourCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllEventCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier)
+		collectionView.register(SeeAllHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier)
 		collectionView.delegate = self
 		collectionView.dataSource = self
 		
@@ -77,19 +96,21 @@ class SeeAllViewController : UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		eventDates.removeAll()
-		eventItems.removeAll()
-		for event in AppDataManager.sharedInstance.events {
-			var foundDate: Bool = false
-			for index in 0..<eventDates.count {
-				if Calendar.current.compare(eventDates[index], to: event.startDate, toGranularity: .day) == .orderedSame {
-					foundDate = true
-					eventItems[index].append(event)
+		if self.content == .events {
+			eventDates.removeAll()
+			eventItems.removeAll()
+			for event in AppDataManager.sharedInstance.events {
+				var foundDate: Bool = false
+				for index in 0..<eventDates.count {
+					if Calendar.current.compare(eventDates[index], to: event.startDate, toGranularity: .day) == .orderedSame {
+						foundDate = true
+						eventItems[index].append(event)
+					}
 				}
-			}
-			if foundDate == false {
-				eventDates.append(event.startDate)
-				eventItems.append([event])
+				if foundDate == false {
+					eventDates.append(event.startDate)
+					eventItems.append([event])
+				}
 			}
 		}
 	}
@@ -121,9 +142,6 @@ class SeeAllViewController : UIViewController {
 		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Common.Layout.miniAudioPlayerHeight, right: 0)
 		collectionView.showsVerticalScrollIndicator = false
 		collectionView.backgroundColor = .white
-		if content == .events || content == .tours {
-			collectionView.register(SeeAllHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier)
-		}
 		return collectionView
 	}
 	
@@ -144,11 +162,14 @@ class SeeAllViewController : UIViewController {
 // Layout
 extension SeeAllViewController : UICollectionViewDataSource {
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		if content == .events {
-			return eventItems.count
+		if content == .tours {
+			return 1
 		}
-		else if content == .tours {
-			return 1 // TODO: replace with tour categories
+		else if content == .toursByCategory {
+			return tourCategories.count
+		}
+		else if content == .events {
+			return eventItems.count
 		}
 		return 1
 	}
@@ -156,6 +177,9 @@ extension SeeAllViewController : UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if content == .tours {
 			return tourItems.count
+		}
+		else if content == .toursByCategory {
+			return tourItemsByCategory[section].count
 		}
 		else if content == .exhibitions {
 			return exhibitionItems.count
@@ -169,7 +193,12 @@ extension SeeAllViewController : UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if content == .tours {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllTourCell.reuseIdentifier, for: indexPath) as! SeeAllTourCell
-			cell.tourModel = AppDataManager.sharedInstance.app.tours[indexPath.row]
+			cell.tourModel = tourItems[indexPath.row]
+			return cell
+		}
+		else if content == .toursByCategory {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllTourCell.reuseIdentifier, for: indexPath) as! SeeAllTourCell
+			cell.tourModel = tourItemsByCategory[indexPath.section][indexPath.row]
 			return cell
 		}
 		else if content == .exhibitions {
@@ -195,7 +224,12 @@ extension SeeAllViewController : UICollectionViewDataSource {
 			}
 			else if content == .tours {
 				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
-				sectionHeader.titleLabel.text = "" // TODO: replace with tour categories
+				sectionHeader.titleLabel.text = ""
+				return sectionHeader
+			}
+			else if content == .toursByCategory {
+				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
+				sectionHeader.titleLabel.text = tourCategories[indexPath.section].title[Common.currentLanguage]
 				return sectionHeader
 			}
 		}
@@ -207,7 +241,7 @@ extension SeeAllViewController : UICollectionViewDataSource {
 // Interaction
 extension SeeAllViewController : UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if content == .tours {
+		if content == .tours || content == .toursByCategory {
 			self.delegate?.seeAllDidSelectTour(tour: tourItems[indexPath.row])
 		}
 		else if content == .exhibitions {
@@ -221,7 +255,7 @@ extension SeeAllViewController : UICollectionViewDelegate {
 
 extension SeeAllViewController : UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		if content == .events || content == .tours {
+		if content == .events || content == .tours || content == .toursByCategory {
 			return CGSize(width: UIScreen.main.bounds.width, height: SeeAllHeaderView.headerHeight)
 		}
 		return CGSize.zero

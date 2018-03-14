@@ -64,9 +64,13 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
-		let seeAllVC = SeeAllViewController(contentType: .tours)
+		var content: SeeAllViewController.ContentType = .tours
+		if AppDataManager.sharedInstance.shouldUseCategoriesForTours() {
+			content = .toursByCategory
+		}
+		
+		let seeAllVC = SeeAllViewController(contentType: content)
 		seeAllVC.delegate = self
-		seeAllVC.tourItems = AppDataManager.sharedInstance.app.tours
 		self.pushViewController(seeAllVC, animated: true)
 	}
 	
@@ -76,7 +80,6 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 		
 		let seeAllVC = SeeAllViewController(contentType: .exhibitions)
 		seeAllVC.delegate = self
-		seeAllVC.exhibitionItems = AppDataManager.sharedInstance.exhibitions
 		self.pushViewController(seeAllVC, animated: true)
 	}
 	

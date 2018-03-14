@@ -141,6 +141,7 @@
 		29A7BCFD1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29A7BCEF1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf */; };
 		29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */; };
 		29A7BD011FBF87D900FD8639 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7BD001FBF87D900FD8639 /* InfoViewController.swift */; };
+		29AC501A2059C4210085EE5B /* AICTourCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC50192059C4210085EE5B /* AICTourCategoryModel.swift */; };
 		29B9B58B1FCFC5660095FE52 /* HomeContentTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B58A1FCFC5660095FE52 /* HomeContentTitleView.swift */; };
 		29B9B58F1FD0A3FF0095FE52 /* SeeAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */; };
 		29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */; };
@@ -449,6 +450,7 @@
 		29A7BCEF1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Linotype - SabonNextLTPro-Regular.otf"; sourceTree = "<group>"; };
 		29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNavigationController.swift; sourceTree = "<group>"; };
 		29A7BD001FBF87D900FD8639 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		29AC50192059C4210085EE5B /* AICTourCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICTourCategoryModel.swift; sourceTree = "<group>"; };
 		29B9B58A1FCFC5660095FE52 /* HomeContentTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentTitleView.swift; sourceTree = "<group>"; };
 		29B9B58E1FD0A3FF0095FE52 /* SeeAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewController.swift; sourceTree = "<group>"; };
 		29B9B5901FD0A7590095FE52 /* SeeAllTourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllTourCell.xib; sourceTree = "<group>"; };
@@ -1178,6 +1180,7 @@
 				29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */,
 				293127821FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift */,
 				E47A97191CF262760041D0A6 /* AICTooltipModel.swift */,
+				29AC50192059C4210085EE5B /* AICTourCategoryModel.swift */,
 				E4D159341CBAE3E900536B4D /* AICTourModel.swift */,
 				E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */,
 				E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */,
@@ -1819,6 +1822,7 @@
 				E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */,
 				E4F82F6D1CA45F3400E4224B /* _SectionView.swift in Sources */,
 				294C0B57201A76F700F2ABB1 /* MapImageAnnotation.swift in Sources */,
+				29AC501A2059C4210085EE5B /* AICTourCategoryModel.swift in Sources */,
 				29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */,
 				E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */,
 				295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */,

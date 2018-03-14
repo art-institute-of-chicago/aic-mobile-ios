@@ -352,26 +352,54 @@ class AppDataManager {
 		return dayEvents
 	}
 	
+	private func sortToursByFeatured(tours: [AICTourModel]) -> [AICTourModel] {
+		let result = tours.sorted(by: { (A, B) -> Bool in
+			if A.isFeatured && !B.isFeatured {
+				return true
+			}
+			else if B.isFeatured && !A.isFeatured {
+				return false
+			}
+			return A.nid > B.nid
+		})
+		return result
+	}
+	
+	private func sortExhibitionsByFeatured(exhibitions: [AICExhibitionModel]) -> [AICExhibitionModel] {
+		let result = exhibitions.sorted(by: { (A, B) -> Bool in
+			if A.isFeatured && !B.isFeatured {
+				return true
+			}
+			else if B.isFeatured && !A.isFeatured {
+				return false
+			}
+			return A.startDate < B.startDate
+		})
+		return result
+	}
+	
 	func getToursForHome() -> [AICTourModel] {
-		var tourItems: [AICTourModel] = []
-		for tour in self.app.tours {
-			tourItems.append(tour)
-			if tourItems.count == Common.Home.maxNumberOfTours {
+		var result: [AICTourModel] = []
+		let toursByFeatured: [AICTourModel] = sortToursByFeatured(tours: self.app.tours)
+		for tour in toursByFeatured {
+			result.append(tour)
+			if result.count == Common.Home.maxNumberOfTours {
 				break
 			}
 		}
-		return tourItems
+		return result
 	}
 	
 	func getExhibitionsForHome() -> [AICExhibitionModel] {
-		var exhibitionItems: [AICExhibitionModel] = []
-		for exhibition in self.exhibitions {
-			exhibitionItems.append(exhibition)
-			if exhibitionItems.count == Common.Home.maxNumberOfExhibitions {
+		var result: [AICExhibitionModel] = []
+		let exhibitionsByFeatured: [AICExhibitionModel] = sortExhibitionsByFeatured(exhibitions: self.exhibitions)
+		for exhibition in exhibitionsByFeatured {
+			result.append(exhibition)
+			if result.count == Common.Home.maxNumberOfExhibitions {
 				break
 			}
 		}
-		return exhibitionItems
+		return result
 	}
 	
 	func getEventsForHome() -> [AICEventModel] {
@@ -386,6 +414,42 @@ class AppDataManager {
 			}
 		}
 		return eventItems
+	}
+	
+	func shouldUseCategoriesForTours() -> Bool {
+		var result: Bool = true
+		for tour in self.app.tours {
+			if tour.category == nil {
+				result = false
+			}
+		}
+		return result
+	}
+	
+	func getToursForSeeAll() -> [AICTourModel] {
+		return sortToursByFeatured(tours: self.app.tours)
+	}
+	
+	func getToursByCategoryForSeeAll() -> [AICTourCategoryModel : [AICTourModel]] {
+		var result = [AICTourCategoryModel : [AICTourModel]]()
+		for category in self.app.tourCategories {
+			var tours: [AICTourModel] = []
+			for tour in self.app.tours {
+				if let tourCategory = tour.category {
+					if category.id == tourCategory.id {
+						tours.append(tour)
+					}
+				}
+			}
+			if tours.count > 0 {
+				result[category] = tours
+			}
+		}
+		return result
+	}
+	
+	func getExhibitionsForSeeAll() -> [AICExhibitionModel] {
+		return sortExhibitionsByFeatured(exhibitions: self.exhibitions)
 	}
 	
 	func getCroppedImageForEvent(image: UIImage, viewSize: CGSize) -> UIImage {

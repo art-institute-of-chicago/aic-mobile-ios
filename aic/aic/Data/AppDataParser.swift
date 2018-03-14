@@ -36,6 +36,7 @@ class AppDataParser {
 	private var restaurants = [AICRestaurantModel]()
 	private var featuredTours = [Int]()
 	private var featuredExhibitions: [Int] = []
+	private var tourCategories = [AICTourCategoryModel]()
 	private var exhibitionOptionalImages: [Int : URL] = [:]
 	private var searchArtworks = [AICObjectModel]()
 	
@@ -53,6 +54,7 @@ class AppDataParser {
 		self.audioFiles = parse(audioFilesJSON: appDataJson["audio_files"])
         self.objects 	= parse(objectsJSON: appDataJson["objects"])
 		self.exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
+		self.tourCategories = parse(tourCategoriesJSON: appDataJson["tour_categories"])
 		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
 		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
 		let searchStrings = parse(searchStringsJSON: appDataJson["search"]["search_strings"])
@@ -64,6 +66,7 @@ class AppDataParser {
 									  objects: self.objects,
 									  audioFiles: self.audioFiles,
 									  tours: tours,
+									  tourCategories: self.tourCategories,
 									  map: map,
 									  restaurants: self.restaurants,
 									  dataSettings: dataSettings,
@@ -78,6 +81,7 @@ class AppDataParser {
 		self.restaurants.removeAll()
 		self.featuredTours.removeAll()
 		self.searchArtworks.removeAll()
+		self.tourCategories.removeAll()
 		
 		return appData
     }
@@ -394,6 +398,37 @@ class AppDataParser {
 	}
 	
 	// MARK: Tours
+	fileprivate func parse(tourCategoriesJSON: JSON) -> [AICTourCategoryModel] {
+		var categories: [AICTourCategoryModel] = []
+		
+		for (_, categoryJSON):(String, JSON) in tourCategoriesJSON.dictionaryValue {
+			do {
+				let categoryID = try getString(fromJSON: categoryJSON, forKey: "category")
+				var titles: [Common.Language : String] = [.english : categoryID]
+				
+				let translationsJSON = categoryJSON["translations"]
+				for translationJSON in translationsJSON.arrayValue {
+					let language = try getLanguageFor(translationJSON: translationJSON)
+					let title = try getString(fromJSON: translationJSON, forKey: "category")
+					titles[language] = title
+				}
+				
+				let category = AICTourCategoryModel(
+					id: categoryID,
+					title: titles
+				)
+				categories.append(category)
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Tour Category:\n\(categoryJSON)\n")
+				}
+			}
+		}
+		
+		return categories
+	}
+	
 	fileprivate func parse(toursJSON:JSON) -> [AICTourModel] {
 		var tours = [AICTourModel]()
         print(toursJSON.arrayValue.count)
@@ -429,7 +464,18 @@ class AppDataParser {
 				break
 			}
 		}
-        
+		
+		// Category
+		var category: AICTourCategoryModel? = nil
+		let categoryID = try getString(fromJSON: tourJSON, forKey: "category", optional: true)
+		if categoryID.isEmpty == false {
+			for tourCategory in self.tourCategories {
+				if tourCategory.id == categoryID {
+					category = tourCategory
+				}
+			}
+		}
+		
         // Create Stops
         var stops:[AICTourStopModel] = []
         guard let stopsData = tourJSON["tour_stops"].array else {
@@ -510,6 +556,7 @@ class AppDataParser {
         
 		return AICTourModel(nid:nid,
 							isFeatured: isFeatured,
+							category: category,
 							imageUrl: imageUrl,
 							location: coordinate,
                             allStops: stops,
