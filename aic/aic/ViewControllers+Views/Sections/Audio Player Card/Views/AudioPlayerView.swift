@@ -13,7 +13,6 @@ class AudioPlayerView : BaseView {
 	let playPauseButton: UIButton = UIButton()
     let slider: AudioPlayerSlider = AudioPlayerSlider()
 	let audioPlayerMinHeight: CGFloat = 120
-	let sliderHeight: CGFloat = 45.0
 	
     init() {
         super.init(frame:CGRect.zero)

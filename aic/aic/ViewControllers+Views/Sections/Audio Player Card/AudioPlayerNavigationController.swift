@@ -317,12 +317,12 @@ class AudioPlayerNavigationController : CardNavigationController {
     private func showLoadingMessage() {
         let localizedLoadingMessage = "Loading Message".localized(using: "AudioPlayer")
         miniAudioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
-        audioInfoVC.audioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
+        audioInfoVC.showLoadingMessage(message: localizedLoadingMessage)
     }
     
     private func showAudioControls() {
         miniAudioPlayerView.showTrackTitle(title: self.currentTrackTitle)
-        audioInfoVC.audioPlayerView.showTrackTitle(title: self.currentTrackTitle)
+        audioInfoVC.showTrackTitle(title: self.currentTrackTitle)
     }
     
     // MARK: Audio Playback

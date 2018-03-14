@@ -411,7 +411,7 @@ struct Common {
 		static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
 		
         enum ZoomLevelAltitude : Double {
-            case zoomLimit = 1000.0
+            case zoomLimit = 1200.0
             case zoomDefault = 400.0
 			case zoomMedium = 200.0
             case zoomDetail = 50.0

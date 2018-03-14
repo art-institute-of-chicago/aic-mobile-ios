@@ -18,7 +18,7 @@ class MapItemCell : UICollectionViewCell {
 	
 	static let cellHeight: CGFloat = 48.0
 	
-	private var normalImage: UIImage = UIImage()
+	private var defaultImage: UIImage = UIImage()
 	private var highlightImage: UIImage? = nil
 	
 	override func awakeFromNib() {
@@ -38,7 +38,7 @@ class MapItemCell : UICollectionViewCell {
 	
 	func setItemIcon(image: UIImage, highlightImage: UIImage? = nil) {
 		iconImageView.image = image
-		self.normalImage = image
+		self.defaultImage = image
 		self.highlightImage = highlightImage
 	}
 	
@@ -52,8 +52,13 @@ class MapItemCell : UICollectionViewCell {
 			iconImageView.kf.setImage(with: artworkModel.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
 				if image != nil {
 					if let cropRect = artworkModel.thumbnailCropRect {
-						self.iconImageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.iconImageView.frame.size, cropRect: cropRect)
+						self.defaultImage = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.iconImageView.frame.size, cropRect: cropRect)
+						self.iconImageView.image = self.defaultImage
 					}
+					else {
+						self.defaultImage = image!
+					}
+					self.highlightImage = self.defaultImage.colorized(UIColor(white: 0.75, alpha: 1))
 				}
 			}
 		}
@@ -66,7 +71,7 @@ class MapItemCell : UICollectionViewCell {
 					iconImageView.image = highlightImage
 				}
 				else {
-					iconImageView.image = normalImage
+					iconImageView.image = defaultImage
 				}
 			}
 		}

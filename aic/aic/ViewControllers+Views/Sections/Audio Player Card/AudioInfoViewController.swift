@@ -105,11 +105,12 @@ class AudioInfoViewController : UIViewController {
 		creditsView.autoPinEdge(.trailing, to: .trailing, of: self.view)
     }
 	
-	func updateLayout() {
+	private func updateLayout() {
+		self.view.layoutSubviews()
 		self.view.setNeedsLayout()
 		self.view.layoutIfNeeded()
 		
-		scrollView.contentSize.height = creditsView.frame.origin.y + creditsView.frame.height
+		self.scrollView.contentSize.height = creditsView.frame.origin.y + creditsView.frame.height
 	}
     
 	// MARK: Set Content
@@ -181,6 +182,16 @@ class AudioInfoViewController : UIViewController {
 		updateLayout()
 	}
 	
+	func showLoadingMessage(message: String) {
+		audioPlayerView.showLoadingMessage(message: message)
+		updateLayout()
+	}
+	
+	func showTrackTitle(title: String) {
+		audioPlayerView.showTrackTitle(title: title)
+		updateLayout()
+	}
+	
 	// Language
 	private func updateLanguage(language: Common.Language) {
 		creditsView.titleLabel.text = "Credits".localized(using: "AudioPlayer")
@@ -189,8 +200,9 @@ class AudioInfoViewController : UIViewController {
     
     private func setImage(imageURL: URL) {
 		imageView.kf.indicatorType = .activity
-		imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
-            // calculate image dimension to adjust height of imageview
+		imageView.kf.setImage(with: imageURL)
+//		imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
+//            // calculate image dimension to adjust height of imageview
 //            if let _ = image {
 //                let imageAspectRatio = image!.size.width / image!.size.height
 //                let viewAspectRatio = self.imageView.frame.width / self.imageViewHeight!.constant
@@ -204,7 +216,7 @@ class AudioInfoViewController : UIViewController {
 //
 //				self.updateLayout()
 //            }
-        }
+//        }
 		updateLayout()
     }
 	

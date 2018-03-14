@@ -212,9 +212,6 @@ class MapViewController: UIViewController {
 			
 			highlightRestaurant(identifier: firstRestaurant.nid, location: firstRestaurant.location)
 		}
-		else {
-			mapView.showAnnotations(mapModel.floors[currentFloor].diningAnnotations, animated: false)
-		}
 	}
 	
 	func showRestrooms() {
@@ -222,35 +219,43 @@ class MapViewController: UIViewController {
 		
 		updateRestroomAnnotations()
 		
-		floorSelectorVC.disableUserHeading()
-		
-		let currentPitch = mapView.camera.pitch
-		
-		// Zoom in on the gift shop annotations
-		mapView.showAnnotations(mapModel.floors[currentFloor].restroomAnnotations, animated: false)
-		
-		// Show all annotations messes with the pitch + heading,
-		// so reset our pitch + heading to preferred defaults
-		mapView.camera.heading = mapView.defaultHeading
-		mapView.camera.pitch = currentPitch
+		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
 	}
 	
 	func showGiftShop() {
 		mode = .giftshop
 		
+		// if no giftshops are on the current floor, find a floor with giftshops
+		if mapModel.floors[currentFloor].giftShopAnnotations.count == 0 {
+			for index in 0...mapModel.floors.count-1 {
+				// start from floor 1
+				let floorNumber = (index + 1) < mapModel.floors.count ? (index + 1) : 0
+				if mapModel.floors[floorNumber].giftShopAnnotations.count > 0 {
+					setCurrentFloor(forFloorNum: floorNumber)
+					break
+				}
+			}
+		}
+		
 		updateGiftShopAnnotations()
 		
+		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].giftShopAnnotations as [MKAnnotation])
+	}
+	
+	func showAnnotationsTopDown(annotations: [MKAnnotation]) {
 		floorSelectorVC.disableUserHeading()
 		
-		let currentPitch = mapView.camera.pitch
-		
 		// Zoom in on the gift shop annotations
-		mapView.showAnnotations(mapModel.floors[currentFloor].giftShopAnnotations, animated: true)
+		setViewableArea(frame: CGRect(origin: CGPoint(x: 20, y: 0), size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+		mapView.showAnnotations(annotations, animated: false)
 		
 		// Show all annotations messes with the pitch + heading,
 		// so reset our pitch + heading to preferred defaults
+		mapView.camera.pitch = mapView.topDownPitch
+		if mapView.camera.altitude < Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
+			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue
+		}
 		mapView.camera.heading = mapView.defaultHeading
-		mapView.camera.pitch = currentPitch
 	}
 	
     // Shows all the objects on a tour, with active/inactive
@@ -427,10 +432,8 @@ class MapViewController: UIViewController {
 		case .exhibition:
 			break
 		case .dining:
-			updateDiningAnnotations()
 			break
 		case .giftshop:
-			updateGiftShopAnnotations()
 			break
 		case .restrooms:
 			updateRestroomAnnotations()
@@ -483,18 +486,15 @@ class MapViewController: UIViewController {
 			updateUserLocationAnnotationView()
 			
 		case .dining:
-			updateDiningAnnotations()
 			updateDiningAnnotationViews()
 			updateUserLocationAnnotationView()
 			
 		case .restrooms:
-			updateRestroomAnnotations()
 			updateRestroomAnnotationViews()
 			updateUserLocationAnnotationView()
 			break
 			
 		case .giftshop:
-			updateGiftShopAnnotations()
 			updateGiftShopAnnotationViews()
 			updateUserLocationAnnotationView()
 			break
@@ -645,20 +645,13 @@ class MapViewController: UIViewController {
 	}
 	
 	private func updateRestroomAnnotations() {
-		let floor = mapModel.floors[currentFloor]
-		
-		var annotationFilter:[MKAnnotation] = []
-		annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		annotationFilter.append(contentsOf: floor.restroomAnnotations as [MKAnnotation])
-		annotationFilter.append(mapView.userLocation)
-		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
-		
-		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
-		
 		var annotations: [MKAnnotation] = []
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		annotations.append(contentsOf: floor.restroomAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		mapView.addAnnotations(annotations)
 	}
@@ -678,20 +671,15 @@ class MapViewController: UIViewController {
 	}
 	
 	private func updateGiftShopAnnotations() {
-		let floor = mapModel.floors[currentFloor]
-		
-		var annotationFilter:[MKAnnotation] = []
-		annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		annotationFilter.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
-		annotationFilter.append(mapView.userLocation)
-		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
-		
-		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
-		
 		var annotations: [MKAnnotation] = []
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		annotations.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
+		for floor in mapModel.floors {
+			annotations.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
+		}
 		annotations.append(mapView.userLocation)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		mapView.addAnnotations(annotations)
 	}
@@ -948,6 +936,10 @@ extension MapViewController : MKMapViewDelegate {
 extension MapViewController : MapFloorSelectorViewControllerDelegate {
     func floorSelectorDidSelectFloor(_ floor: Int) {
         setCurrentFloor(forFloorNum: floor)
+		
+		if mode == .restrooms {
+			showRestrooms()
+		}
     }
     
     func floorSelectorLocationButtonTapped() {
