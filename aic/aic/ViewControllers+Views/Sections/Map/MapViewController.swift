@@ -309,7 +309,7 @@ class MapViewController: UIViewController {
         // Set the new state
         mapView.removeAnnotations(mapView.annotations)
         
-        isSwitchingModes = true
+        updateAnnotations()
     }
     
     // Go through each floor and clear out it's location + tour objects
@@ -425,7 +425,7 @@ class MapViewController: UIViewController {
         // Add annotations
 		switch mode {
 		case .allInformation:
-			updateAllInformationAnnotations(isSwitchingFloors: true)
+			updateAllInformationAnnotations()
 			break
 		case .artwork, .searchedArtwork:
 			break
@@ -457,7 +457,7 @@ class MapViewController: UIViewController {
         updateAnnotations()
     }
     
-    internal func updateAnnotations(andForceUpdate forceUpdate: Bool = false) {
+    internal func updateAnnotations() {
         if isSwitchingModes {
             return
         }
@@ -466,7 +466,7 @@ class MapViewController: UIViewController {
         
         switch mode {
         case .allInformation:
-            updateAllInformationAnnotations(isSwitchingFloors: forceUpdate)
+            updateAllInformationAnnotations()
             updateAllInformationAnnotationViews()
 			updateUserLocationAnnotationView()
             break
@@ -501,7 +501,7 @@ class MapViewController: UIViewController {
 		}
     }
     
-    internal func updateAllInformationAnnotations(isSwitchingFloors floorSwitch: Bool=false) {
+    internal func updateAllInformationAnnotations() {
 		var annotations: [MKAnnotation] = []
         
         // Set the annotations for this zoom level
@@ -913,22 +913,11 @@ extension MapViewController : MKMapViewDelegate {
         
         if isSwitchingModes {
             isSwitchingModes = false
-            updateAnnotations(andForceUpdate: true) // Force annotation update
+            updateAnnotations()
         }
     }
 	
 	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-//		mapView.camera.heading = 0
-//		mapView.camera.altitude = 900
-//		mapView.camera.pitch = self.mapView.perspectivePitch
-//		mapView.camera.centerCoordinate = mapModel.floors[currentFloor].overlay.coordinate
-//
-//		let newCamera = mapView.camera
-//		newCamera.heading = self.mapView.defaultHeading
-//		newCamera.altitude = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue
-//		newCamera.pitch = self.mapView.topDownPitch
-//		newCamera.centerCoordinate = mapModel.floors[currentFloor].overlay.coordinate
-//		mapView.setCamera(newCamera, animated: true)
 	}
 }
 

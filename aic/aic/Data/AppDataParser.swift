@@ -512,7 +512,7 @@ class AppDataParser {
 							isFeatured: isFeatured,
 							imageUrl: imageUrl,
 							location: coordinate,
-                            stops: stops,
+                            allStops: stops,
 							translations: translations,
 							language: .english
         )

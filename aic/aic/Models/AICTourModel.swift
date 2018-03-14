@@ -22,7 +22,17 @@ struct AICTourModel {
 	
 	let location: CoordinateWithFloor
 	
-    let stops: [AICTourStopModel]
+	var stops: [AICTourStopModel] {
+		var result = [AICTourStopModel]()
+		for stop in allStops {
+			if stop.audio.availableLanguages.contains(self.language) {
+				result.append(stop)
+			}
+		}
+		return result
+	}
+	
+	let allStops: [AICTourStopModel]
 	
 	var translations: [Common.Language : AICTourTranslationModel]
 	

@@ -29,6 +29,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 	var selectedLanguage: Common.Language? = nil
 	
 	// Info
+	var currentTourLanguage: Common.Language = .english
 	var currentTourStopAudioFile: AICAudioFileModel? = nil
 	var currentAudioBumper: AICAudioFileModel? = nil
 	var currentTrackTitle: String = ""
@@ -123,11 +124,11 @@ class AudioPlayerNavigationController : CardNavigationController {
     }
 	
 	func playTourOverviewAudio(tour: AICTourModel) {
+		currentTourLanguage = tour.language
+		
 		let nextTourStop = tour.stops.first!
-		currentAudioBumper = nextTourStop.audioBumper
-		if currentAudioBumper != nil {
-			currentAudioBumper!.language = tour.language
-		}
+		setAudioBumperFor(nextTourStop: nextTourStop)
+		
 		currentTourStopAudioFile = tour.overview.audio
 		
 		currentTrackTitle = tour.title
@@ -146,15 +147,14 @@ class AudioPlayerNavigationController : CardNavigationController {
 	}
 	
 	func playTourStopAudio(tourStop: AICTourStopModel, tour: AICTourModel) {
-		currentAudioBumper = nil
+		currentTourLanguage = tour.language
+		
 		if let stopIndex = tour.getIndex(forStopObject: tourStop.object) {
 			if stopIndex + 1 < tour.stops.count {
-				currentAudioBumper = tour.stops[stopIndex + 1].audioBumper
-				if currentAudioBumper != nil {
-					currentAudioBumper!.language = tour.language
-				}
+				setAudioBumperFor(nextTourStop: tour.stops[stopIndex + 1])
 			}
 		}
+		
 		currentTourStopAudioFile = tourStop.audio
 		
 		currentTrackTitle = tourStop.object.title
@@ -168,7 +168,17 @@ class AudioPlayerNavigationController : CardNavigationController {
 		
 		if load(audioFile: audio, coverImageURL: tourStop.object.imageUrl as URL) {
 			miniAudioPlayerView.reset()
-			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio)
+			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio, isTour: true)
+		}
+	}
+	
+	private func setAudioBumperFor(nextTourStop: AICTourStopModel) {
+		currentAudioBumper = nil
+		if let audioBumper = nextTourStop.audioBumper {
+			if audioBumper.availableLanguages.contains(self.currentTourLanguage) {
+				currentAudioBumper = nextTourStop.audioBumper
+				currentAudioBumper!.language = self.currentTourLanguage
+			}
 		}
 	}
 	

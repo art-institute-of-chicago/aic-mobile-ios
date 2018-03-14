@@ -115,7 +115,7 @@ class AudioInfoViewController : UIViewController {
     
 	// MARK: Set Content
     
-	func setArtworkContent(artwork: AICObjectModel, audio: AICAudioFileModel) {
+	func setArtworkContent(artwork: AICObjectModel, audio: AICAudioFileModel, isTour: Bool = false) {
 		reset()
 		
         artworkModel = artwork
@@ -134,11 +134,12 @@ class AudioInfoViewController : UIViewController {
 //		}
 		
 		// Language
-		languageSelector.isHidden = true
-		if audio.availableLanguages.count > 1 {
-			languageSelector.isHidden = false
-			languageSelector.close()
-			languageSelector.setLanguages(languages: audio.availableLanguages, defaultLanguage: audio.language)
+		if isTour == false {
+			if audio.availableLanguages.count > 1 {
+				languageSelector.isHidden = false
+				languageSelector.close()
+				languageSelector.setLanguages(languages: audio.availableLanguages, defaultLanguage: audio.language)
+			}
 		}
 		updateLanguage(language: audio.language)
 		
@@ -230,6 +231,8 @@ class AudioInfoViewController : UIViewController {
 		descriptionLabel.text = ""
 		languageSelector.close()
 		languageSelector.isHidden = true
+		creditsView.hide()
+		transcriptView.hide()
 	}
 }
 
