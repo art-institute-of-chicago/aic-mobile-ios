@@ -282,6 +282,9 @@ class MapObjectAnnotationView: MapAnnotationView {
     
     private func loadImage() {
 		if let annotation = objectAnnotation {
+			if annotation.nid == 1938 {
+				print("rainy day")
+			}
 			// Try to load image from cache
 			if let image = ImageCache.default.retrieveImageInMemoryCache(forKey: annotation.thumbnailUrl.absoluteString) {
 				self.imageView.image = image
@@ -310,6 +313,8 @@ class MapObjectAnnotationView: MapAnnotationView {
 	}
     
     internal func setContentForCurrentMode(withAnimation animated:Bool) {
+		self.isSelected = false
+		
 		// Add/Remove views
 		for view in subviews {
 			view.removeFromSuperview()
@@ -383,7 +388,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 extension MapObjectAnnotationView {
     @objc internal func playButtonWasTapped(_ gesture:UIGestureRecognizer) {
 		if mode == .imageInfo || mode == .smallImageInfo {
-			if isSelected {
+			if self.isSelected {
 				delegate?.mapObjectAnnotationViewPlayPressed(self)
 			}
 		}

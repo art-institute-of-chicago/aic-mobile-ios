@@ -378,6 +378,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
 		let exhibitionVC = ExhibitionTableViewController(exhibition: exhibition)
+		exhibitionVC.exhibitionTableDelegate = self.sectionsVC // set tourTableDelegate to the parent SectionsViewController
 		showSearchContentViewController(tableVC: exhibitionVC)
 	}
 	
