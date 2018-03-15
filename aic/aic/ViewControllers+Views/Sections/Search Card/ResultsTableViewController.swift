@@ -170,7 +170,7 @@ extension ResultsTableViewController {
 				return min(autocompleteStringItems.count, 3)
 			}
 			else if section == 1 {
-				if isAllContentLoadedWithNoResults() {
+				if isAllContentLoadedWithNoResults() && autocompleteStringItems.isEmpty {
 					return 1
 				}
 				return 0
