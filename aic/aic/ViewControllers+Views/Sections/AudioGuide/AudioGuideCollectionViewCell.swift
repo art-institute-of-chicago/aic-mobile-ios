@@ -11,11 +11,11 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
     override init(frame:CGRect) {
         super.init(frame:frame)
         
-        button.layer.borderColor = UIColor.white.cgColor
+		button.layer.borderColor = UIColor(white: 1, alpha: 0.5).cgColor
         button.layer.borderWidth = 2
         button.layer.cornerRadius = frame.width/2.0
         
-        button.alpha = 0.5
+        button.alpha = 1.0
         
         button.frame.size = frame.size
         button.setTitleColor(.white, for: UIControlState())
@@ -43,18 +43,14 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
     }
     
     private func setButtonNormalState() {
-        if let _ = button.currentImage {
-            button.alpha = 0.5
-        } else {
+        if button.currentImage == nil {
             button.backgroundColor = .clear
         }
     }
     
     private func setButtonPressedState() {
-        if let _ = button.currentImage {
-            button.alpha = 1.0
-        } else {
-            button.backgroundColor = .white
+        if button.currentImage == nil {
+            button.backgroundColor = UIColor(white: 1, alpha: 0.36)
         }
     }
     
