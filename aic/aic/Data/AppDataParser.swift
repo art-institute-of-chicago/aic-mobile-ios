@@ -734,9 +734,11 @@ class AppDataParser {
 					}
 				}
 				
-				if floorFarObjectAnnotations[floorNumber]!.count > 10 {
-					break
-				}
+				continue
+				
+//				if floorFarObjectAnnotations[floorNumber]!.count > 10 {
+//
+//				}
 				
 				// for each square in our grid, pick one annotation to show
 				y = 800.0

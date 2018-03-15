@@ -120,6 +120,7 @@ public extension UIDevice {
 			"iPhone10,3" : .iPhoneX,
 			"iPhone10,4" : .iPhone8,
 			"iPhone10,5" : .iPhone8plus,
+			"iPhone10,6" : .iPhoneX,
 		]
 		
 		if let model = modelMap[String(validatingUTF8: modelCode)!] {

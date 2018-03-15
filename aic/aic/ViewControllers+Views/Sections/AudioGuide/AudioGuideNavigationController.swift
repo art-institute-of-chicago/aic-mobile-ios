@@ -168,13 +168,13 @@ extension AudioGuideNavigationController : UICollectionViewDataSource {
 		let titleLabel = buttonValueMap[((indexPath as NSIndexPath).section * AudioGuideNavigationController.numCols) + (indexPath as NSIndexPath).row]
         switch titleLabel! {
         case "<":
-            cell.button.setImage(#imageLiteral(resourceName: "deleteButton").colorized(.white), for: .normal)
-			cell.button.setImage(#imageLiteral(resourceName: "deleteButton"), for: .highlighted)
+			cell.button.setImage(#imageLiteral(resourceName: "deleteButton"), for: .normal)
+            cell.button.setImage(#imageLiteral(resourceName: "deleteButton").colorized(.white), for: .highlighted)
         default:
             cell.button.setTitle(titleLabel, for: .normal)
         }
         
-        if (indexPath as NSIndexPath).row == 9 {
+        if indexPath.row == 9 {
             cell.hideBorder()
         }
         

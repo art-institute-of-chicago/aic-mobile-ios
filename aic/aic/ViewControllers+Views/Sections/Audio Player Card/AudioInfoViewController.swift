@@ -53,7 +53,7 @@ class AudioInfoViewController : UIViewController {
 		scrollView.addSubview(languageSelector)
 		scrollView.addSubview(audioPlayerView)
 		scrollView.addSubview(descriptionLabel)
-//		scrollView.addSubview(relatedToursView)
+		scrollView.addSubview(relatedToursView)
 		scrollView.addSubview(transcriptView)
 		scrollView.addSubview(creditsView)
 		self.view.addSubview(scrollView)
@@ -125,12 +125,12 @@ class AudioInfoViewController : UIViewController {
 		}
 		
 		// Add related tours subview if there are any relate tours
-//		let excludedTour = Common.Testing.filterOutRelatedTours ? onTour : nil
-//		let relatedTours = AppDataManager.sharedInstance.getRelatedTours(forObject: object, excludingTour: excludedTour)
+//		let excludedTour = Common.Testing.filterOutRelatedTours ? isTour : nil
+//		let relatedTours = AppDataManager.sharedInstance.getRelatedTours(forObject: artwork, excludingTour: excludedTour)
 //
 //		if !relatedTours.isEmpty {
-//			relatedToursContentView.set(relatedTours: relatedTours)
-//			contentViewSubviews.append(relatedToursContentView)
+//			relatedToursView.set(relatedTours: relatedTours)
+//			scrollView.addSubview(relatedToursView)
 //		}
 		
 		// Language
