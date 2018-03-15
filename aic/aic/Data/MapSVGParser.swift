@@ -18,8 +18,8 @@ struct SVGImage : SVGAnnotationProtocol {
     var imageName: String
 }
 struct SVGAmenity : SVGAnnotationProtocol {
-    var positionInSVG:CGPoint
-    var type:MapAmenityAnnotationType
+    var positionInSVG: CGPoint
+    var type: MapAmenityAnnotationType
 }
 
 struct SVGDepartment : SVGAnnotationProtocol {
@@ -50,7 +50,7 @@ class MapSVGParser {
     private let departmentsID = "Departments"
     private let spacesID = "Spaces"
     
-    private let textFont = UIFont.aicSystemTextFont()
+	private let textFont: UIFont = .aicSystemTextFont
     
     var svgDimensions:CGRect? = nil
     
@@ -194,7 +194,7 @@ class MapSVGParser {
         })
         
         for department in departmentRects {
-            guard let id = department.element!.allAttributes["id"] else {
+            guard let id = department.element?.allAttributes["id"] else {
                 print("Could not get ID for SVG Department")
                 continue
             }
@@ -223,7 +223,7 @@ class MapSVGParser {
         
         for child in filteredLabels {
             let text = getText(forSVGTextIndexer: child)
-            let position = getCenteredPosition(forSVGTextIndexer: child, text: text, fontSize: UIFont.aicMapSVGTextFont()!.pointSize)
+            let position = getCenteredPosition(forSVGTextIndexer: child, text: text, fontSize: UIFont.aicMapSVGTextFont.pointSize)
             
             labels.append(SVGTextLabel(positionInSVG: position, text: text))
         }
@@ -356,10 +356,10 @@ class MapSVGParser {
         // First flip coords into top-left space
         y = svgDimensions!.origin.y + svgDimensions!.height - y
         // Then offset by 1 line height since SVG TextBoxes measure from first baseline
-        y += getOffsetRect(forText: "T", forFont: UIFont.aicMapSVGTextFont()!).height
+        y += getOffsetRect(forText: "T", forFont: .aicMapSVGTextFont).height
         
         // Find the center point of the text box
-        let offsetRect = getOffsetRect(forText: text, forFont: UIFont.aicMapSVGTextFont()!)
+        let offsetRect = getOffsetRect(forText: text, forFont: .aicMapSVGTextFont)
         let centerX = x + offsetRect.width/2.0
         let centerY = y - offsetRect.height/2.0
         
@@ -379,8 +379,8 @@ class MapSVGParser {
         var text = ""
         
         for (index, child) in textIndexer.children.enumerated() {
-            guard let span = child.element , child.element!.name == "tspan" else {
-                print(child.element!.name)
+            guard let span = child.element , child.element?.name == "tspan" else {
+                print(child.element?.name ?? "")
                 continue
             }
             

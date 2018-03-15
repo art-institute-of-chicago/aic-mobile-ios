@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="IdealSans-Book.otf">
+            <string>IdealSans-Book</string>
+        </array>
+        <array key="IdealSans-Medium.otf">
+            <string>IdealSans-Medium</string>
+        </array>
+        <array key="Linotype - SabonNextLTPro-Regular.otf">
+            <string>SabonNextLTPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="seeAllTourCell" id="k19-pn-F8w" customClass="SeeAllTourCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="168" height="285"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="168" height="285"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MR4-Rr-yxf" customClass="AICImageView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="168" height="105"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="MR4-Rr-yxf" secondAttribute="height" multiplier="8:5" id="Vix-tz-N0M"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHR-m7-DDq">
+                        <rect key="frame" x="0.0" y="111" width="168" height="21"/>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="17"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCZ-Xa-DWm">
+                        <rect key="frame" x="0.0" y="180" width="168" height="1"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="HQn-T8-Cjs"/>
+                        </constraints>
+                    </view>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt." translatesAutoresizingMaskIntoConstraints="NO" id="5sJ-ss-p3W">
+                        <rect key="frame" x="0.0" y="182" width="168" height="98"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="160" id="rsO-q5-t2H"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n Stops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drA-BM-hOJ">
+                        <rect key="frame" x="0.0" y="152" width="38" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="MhZ-a1-bvd"/>
+                            <constraint firstAttribute="height" constant="21" id="eCc-9W-ZrA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WK2-kg-LLr">
+                        <rect key="frame" x="50" y="152" width="50.5" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="TmS-Zy-dm3"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="wah-cM-A2B"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="WK2-kg-LLr" firstAttribute="centerY" secondItem="drA-BM-hOJ" secondAttribute="centerY" id="9ew-YI-Bam"/>
+                <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="EHR-m7-DDq" secondAttribute="trailing" id="Ftx-1M-WK6"/>
+                <constraint firstItem="gCZ-Xa-DWm" firstAttribute="top" secondItem="MR4-Rr-yxf" secondAttribute="bottom" constant="75" id="GIU-8y-qSq"/>
+                <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="5sJ-ss-p3W" secondAttribute="trailing" id="KxE-It-hcT"/>
+                <constraint firstItem="5sJ-ss-p3W" firstAttribute="top" secondItem="gCZ-Xa-DWm" secondAttribute="bottom" constant="1" id="L48-pu-eUU"/>
+                <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="MR4-Rr-yxf" secondAttribute="trailing" id="T0x-4l-b02"/>
+                <constraint firstItem="gCZ-Xa-DWm" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="XPe-f2-tOg"/>
+                <constraint firstItem="gCZ-Xa-DWm" firstAttribute="top" secondItem="drA-BM-hOJ" secondAttribute="bottom" constant="7" id="Xcj-re-rRR"/>
+                <constraint firstItem="EHR-m7-DDq" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="bAi-zx-TrD"/>
+                <constraint firstItem="MR4-Rr-yxf" firstAttribute="top" secondItem="ayj-Yn-QHM" secondAttribute="top" id="eCW-FV-ZLJ"/>
+                <constraint firstItem="5sJ-ss-p3W" firstAttribute="bottom" secondItem="ayj-Yn-QHM" secondAttribute="bottom" constant="-5" id="kyo-HJ-PO3"/>
+                <constraint firstItem="MR4-Rr-yxf" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="qj7-XO-Hw2"/>
+                <constraint firstItem="EHR-m7-DDq" firstAttribute="top" secondItem="MR4-Rr-yxf" secondAttribute="bottom" constant="6" id="tvZ-U9-qHR"/>
+                <constraint firstItem="ayj-Yn-QHM" firstAttribute="trailing" secondItem="gCZ-Xa-DWm" secondAttribute="trailing" id="uAz-Yh-VNS"/>
+                <constraint firstItem="5sJ-ss-p3W" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="xgA-iV-TLu"/>
+                <constraint firstItem="WK2-kg-LLr" firstAttribute="leading" secondItem="drA-BM-hOJ" secondAttribute="trailing" constant="12" id="y5c-Ri-Q9y"/>
+                <constraint firstItem="drA-BM-hOJ" firstAttribute="leading" secondItem="ayj-Yn-QHM" secondAttribute="leading" id="yk7-we-l2U"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ayj-Yn-QHM"/>
+            <size key="customSize" width="168" height="285"/>
+            <connections>
+                <outlet property="dividerLine" destination="gCZ-Xa-DWm" id="kMG-Xe-JHA"/>
+                <outlet property="durationLabel" destination="WK2-kg-LLr" id="Ig4-f3-Zc1"/>
+                <outlet property="shortDescriptionTextView" destination="5sJ-ss-p3W" id="xlf-sa-iBB"/>
+                <outlet property="stopsNumberLabel" destination="drA-BM-hOJ" id="joJ-Ng-mfU"/>
+                <outlet property="tourImageView" destination="MR4-Rr-yxf" id="StP-Kr-oDq"/>
+                <outlet property="tourTitleLabel" destination="EHR-m7-DDq" id="7oZ-bV-Kl0"/>
+            </connections>
+            <point key="canvasLocation" x="-15" y="87.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

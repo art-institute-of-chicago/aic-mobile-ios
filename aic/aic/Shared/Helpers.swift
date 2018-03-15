@@ -6,9 +6,8 @@
 import Foundation
 import UIKit
 
-/**
- Math
-*/
+// MARK: Math
+
 func clamp(val: Double, minVal: Double, maxVal: Double) -> Double {
     return max(min(maxVal, val), minVal)
 }
@@ -32,6 +31,17 @@ func convertToHoursMinutesSeconds(seconds : Int) -> (Int, Int, Int) {
     return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
 }
 
+
+extension BinaryInteger {
+	var degreesToRadians: CGFloat { return CGFloat(Int(self)) * .pi / 180 }
+}
+
+extension FloatingPoint {
+	var degreesToRadians: Self { return self * .pi / 180 }
+	var radiansToDegrees: Self { return self * 180 / .pi }
+}
+
+// MARK: Data Structs
 /**
  Wrapper template for passing structs as NSObjects so they can work with dictionaries
  */
@@ -42,12 +52,14 @@ class Wrapper<T> {
     }
 }
 
+// MARK: Text
+
 /**
  Convenience method to measure text without having to create a UILabel
 */
 func getOffsetRect(forText text:String, forFont font:UIFont) -> CGRect {
     let textString = text as NSString
-    let textAttributes = [NSFontAttributeName: font]
+    let textAttributes = [NSAttributedStringKey.font: font]
     
     return textString.boundingRect(with: CGSize(width: 2000, height: 2000), options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil)
 }
@@ -70,7 +82,7 @@ func getAttributedString(forHTMLText text:String, font:UIFont) -> NSAttributedSt
     
     let attrStr = try! NSAttributedString(
         data: data,
-        options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue],
+        options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html, NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue],
         documentAttributes: nil)
     
     return attrStr
@@ -79,7 +91,7 @@ func getAttributedString(forHTMLText text:String, font:UIFont) -> NSAttributedSt
 
 // Create an attributed string with line-height set
 func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFloat) -> NSAttributedString {
-    let baselineOffset = lineHeight - UIFont.aicTitleFont()!.pointSize
+    let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = 0.0
     paragraphStyle.minimumLineHeight = lineHeight
@@ -87,17 +99,18 @@ func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFl
     
     let attrString = NSMutableAttributedString(string: text)
     let range = NSMakeRange(0, attrString.length)
-    attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range: range)
-    attrString.addAttribute(NSBaselineOffsetAttributeName, value:baselineOffset, range: range)
-    attrString.addAttribute(NSFontAttributeName, value:font, range: range)
+    attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range: range)
+    attrString.addAttribute(NSAttributedStringKey.baselineOffset, value:baselineOffset, range: range)
+    attrString.addAttribute(NSAttributedStringKey.font, value:font, range: range)
     
     return attrString
 }
 
-/**
- View with a blur effect, should be uniform in app
-*/
-func getBlurEffectView(frame:CGRect) -> UIVisualEffectView {
+// MARK: Visual Effects
+
+
+/// View with a blur effect, should be uniform in app
+func getBlurEffectView(frame: CGRect) -> UIVisualEffectView {
     let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
     let blurEffectView = UIVisualEffectView(effect: blurEffect)
     blurEffectView.frame = frame
@@ -106,7 +119,7 @@ func getBlurEffectView(frame:CGRect) -> UIVisualEffectView {
     return blurEffectView
 }
 
-// Great function to get the splash screen dynamically based on device size
+/// Great function to get the splash screen dynamically based on device size
 // from http://stackoverflow.com/a/29792747
 func splashImage(forOrientation orientation: UIInterfaceOrientation, screenSize: CGSize) -> String? {
     var viewSize        = screenSize
@@ -134,3 +147,19 @@ func splashImage(forOrientation orientation: UIInterfaceOrientation, screenSize:
     
     return nil
 }
+
+/// Add Parallex effect to UIView
+func addParallexEffect(toView view: UIView, left: CGFloat, right: CGFloat, top: CGFloat, bottom: CGFloat) {
+    let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+    horizontal.minimumRelativeValue = left
+    horizontal.maximumRelativeValue = right
+    
+    let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+    vertical.minimumRelativeValue = top
+    vertical.maximumRelativeValue = bottom
+    
+    let group = UIMotionEffectGroup()
+    group.motionEffects = [horizontal, vertical]
+    view.addMotionEffect(group)
+}
+

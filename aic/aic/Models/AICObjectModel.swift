@@ -9,20 +9,24 @@ import Foundation
 struct AICObjectModel {
     // MARK: Properties
     let nid: Int
-    
-    let thumbnailUrl:URL
+	
+	// id from museum collection
+	let objectId: Int
+	
+    let thumbnailUrl: URL
     let thumbnailCropRect: CGRect?
-    let imageUrl:URL
+    let imageUrl: URL
     let imageCropRect: CGRect?
     let title: String
     
-    let audioFiles:[AICAudioFileModel]?
-    let audioGuideIDs:[Int]?
+    let audioCommentaries: [AICAudioCommentaryModel]
     
-    let tombstone:String?
-    let credits:String?
+    let tombstone: String?
+    let credits: String?
     
-    let imageCopyright:String?
+    let imageCopyright: String?
         
-    let location:CoordinateWithFloor
+    let location: CoordinateWithFloor
+	
+	let gallery: AICGalleryModel
 }

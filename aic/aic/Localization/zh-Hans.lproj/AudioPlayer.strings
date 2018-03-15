@@ -1,0 +1,21 @@
+/* 
+  AudioPlayer.strings
+  aic
+
+  Created by Filippo Vanucci on 2/2/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Loading Message" = "加载中";
+
+"Load Failure Title" = "未能加载此项目";
+
+"Load Failure Message" = "目前我们无法加载此项。请检查您的连接并再次尝试。";
+
+"Load Failure Reload Button Title" = "再次尝试";
+
+"Load Failure Cancel Button Title" = "取消";
+
+"Transcript" = "脚本";
+
+"Credits" = "信用";

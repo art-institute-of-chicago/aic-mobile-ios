@@ -1,0 +1,19 @@
+/* 
+  Map.strings
+  aic
+
+  Created by Filippo Vanucci on 2/8/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Lower Level" = "地下层";
+
+"First Level" = "一层";
+
+"Second Level" = "二层";
+
+"Third Level" = "三层";
+
+"Close to Explore Text" = "靠近去探索一切。";
+
+"Exhibition" = "展览";

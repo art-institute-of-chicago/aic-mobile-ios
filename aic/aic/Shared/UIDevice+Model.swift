@@ -117,7 +117,10 @@ public extension UIDevice {
 			"iPhone9,4"  : .iPhone7plus,
 			"iPhone10,1" : .iPhone8,
 			"iPhone10,2" : .iPhone8plus,
-			"iPhone10,3" : .iPhoneX
+			"iPhone10,3" : .iPhoneX,
+			"iPhone10,4" : .iPhone8,
+			"iPhone10,5" : .iPhone8plus,
+			"iPhone10,6" : .iPhoneX,
 		]
 		
 		if let model = modelMap[String(validatingUTF8: modelCode)!] {

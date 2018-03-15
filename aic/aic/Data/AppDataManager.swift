@@ -17,9 +17,10 @@ class AppDataManager {
     
     weak var delegate:AppDataManagerDelegate?
     
-    private (set) var app:AICAppDataModel! = nil
-    private (set) var news:AICNewsModel = AICNewsModel()
-    
+    private (set) var app: AICAppDataModel! = nil
+	private (set) var exhibitions: [AICExhibitionModel] = []
+	private (set) var events: [AICEventModel] = []
+	
     private let dataParser = AppDataParser()
     
     private var dataFilesRetrieved = 0
@@ -31,11 +32,13 @@ class AppDataManager {
     func load() {
         
         // TODO: Refactor this
-        // Replace Common.swift values w/ values from Config.plist
+		// A lot of urls and strings not needed in v2.0
         if let url = Bundle.main.url(forResource:"Config", withExtension: "plist") {
             do {
                 let data = try Data(contentsOf:url)
-                let config = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! [String:Any]
+                guard let config = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String:Any] else {
+                    return
+                }
                 
                 if let Testing = config["Testing"] as! [String : Any]? {
                     
@@ -62,9 +65,13 @@ class AppDataManager {
                     if let appDataInternalPrefix = DataConstants["appDataInternalPrefix"] {
                         Common.DataConstants.appDataInternalPrefix = appDataInternalPrefix as! String
                     }
+					
+					if let appDataLocalPrefix = DataConstants["appDataLocalPrefix"] {
+						Common.DataConstants.appDataLocalPrefix = appDataLocalPrefix as! String
+					}
                     
-                    if let memberCardSOAPRequestURL = DataConstants["memberCardSOAPRequestURL"] {
-                        Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL as! String
+                    if let memberCardSOAPRequestURL = DataConstants["memberCardSOAPRequestURL"] as? String {
+                        Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
                     }
                     
                     if let ignoreOverrideImageCrop = DataConstants["ignoreOverrideImageCrop"] {
@@ -100,7 +107,7 @@ class AppDataManager {
                 //We have good cached app data, continue on
                 self.app = self.dataParser.parse(appData: cachedAppData)
                 self.updateDownloadProgress()
-                self.downloadNewsFeeds()
+                self.downloadExhibitions()
             }
             
         }
@@ -116,9 +123,7 @@ class AppDataManager {
                     switch response.result {
                     case .success(let value):
                         self.app = self.dataParser.parse(appData: value)
-                        self.updateDownloadProgress()
-                        
-                        
+						
                         //Save the data to disk incase the server is down at some point in the future [JB]
                         let headersDictionary = response.response?.allHeaderFields
                         if let lastModifiedString = headersDictionary?["Last-Modified"] as? String {
@@ -127,10 +132,6 @@ class AppDataManager {
                                                  lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedString,
                                                  fileName: Common.DataConstants.localAppDataFilename)
                         }
-                        
-                        
-                        // Get the news feeds
-                        self.downloadNewsFeeds()
                     case .failure(let error):
                         //Attempt to fall back to cached data
                         guard let cachedAppData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename) else {
@@ -141,68 +142,117 @@ class AppDataManager {
                         }
                         //We have good cached app data, continue on
                         self.app = self.dataParser.parse(appData: cachedAppData)
-                        self.updateDownloadProgress()
-                        self.downloadNewsFeeds()
                     }
+					self.updateDownloadProgress()
+					self.downloadExhibitions()
                 }
         }
     }
-    
-    private func downloadNewsFeeds() {
-        let newsFeedString = Common.DataConstants.NewsFeed.Featured
-        lastModifiedStringsMatch(atURL: newsFeedString as URLConvertible, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskNewsFeedLastModifiedString) { (stringsMatch) in
-            if !stringsMatch {
-                self.parseNews(fromFeed: Common.DataConstants.NewsFeed.Featured)
-            }else{
-                guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
-                    self.notifyLoadFailure(withMessage: "Failed to load news data.")
-                    return
-                }
-                let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
-                self.news.featured = newsItems
-                self.updateDownloadProgress()
-            }
-        }
-    }
-    
-    private func parseNews(fromFeed feed:String) {
-        
-        let request = URLRequest(url: URL(string: feed)!)
-        
-        Alamofire.request(request as URLRequestConvertible)
-            .validate()
-            .responseData { response in
-                if self.loadFailure == false {
-                    switch response.result {
-                    case .success(let value):
-                        let newsItems = self.dataParser.parse(newsItemsData: value)
-                        self.writeDataToDisk(data: value,
-                                             fileName: Common.DataConstants.localNewsFeedFilename)
-                        
-                        if feed == Common.DataConstants.NewsFeed.Featured {
-                            self.news.featured = newsItems
-                        }
-                        
-                    case .failure(let error):
-                        guard let cachedNewsFeed = self.loadFromDisk(fileName: Common.DataConstants.localNewsFeedFilename) else {
-                            // If there was an issue loading the news feed let the user know
-                            self.notifyLoadFailure(withMessage: "Failed to load news data.")
-                            print(error)
-                            return
-                        }
-                        //We have a good cache of the news feed, continue on
-                        let newsItems = self.dataParser.parse(newsItemsData: cachedNewsFeed)
-                    
-                        if feed == Common.DataConstants.NewsFeed.Featured {
-                            self.news.featured = newsItems
-                        }
-                    
-                    }
-                    
-                    self.updateDownloadProgress()
-                }
-        }
-    }
+	
+	private func downloadExhibitions() {
+		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]! + "/search?limit=99")!)
+		let urlString = urlRequest.url?.absoluteString
+		let parameters: [String: Any] = [
+			"fields": [
+				"id",
+				"title",
+				"short_description",
+				"legacy_image_mobile_url",
+				"legacy_image_desktop_url",
+				"gallery_id",
+				"web_url",
+				"aic_start_at",
+				"aic_end_at"
+			],
+			"sort": ["aic_start_at", "aic_end_at"],
+			"query": [
+				"bool": [
+					"must": [
+						[
+							"range": [
+								"aic_start_at": ["lte": "now"]
+							]
+						],
+						[
+							"range": [
+								"aic_end_at": ["gte": "now"]
+							]
+						]
+					],
+					"must_not": [
+						[
+							"term": [
+								"status": "Closed"
+							]
+						]
+					]
+				]
+			]
+		]
+		
+		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+			.validate()
+			.responseData { response in
+				switch response.result {
+				case .success(let value):
+					self.exhibitions = self.dataParser.parse(exhibitionsData: value)
+					
+				case .failure(let error):
+					print(error)
+				}
+				
+				self.updateDownloadProgress()
+				self.downloadEvents()
+		}
+	}
+	
+	func downloadEvents() {
+		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]! + "/search?limit=500")!)
+		let urlString = urlRequest.url?.absoluteString
+		let parameters: [String: Any] = [
+			"fields": [
+				"id",
+				"title",
+				"description",
+				"short_description",
+				"image",
+				"location",
+				"start_at",
+				"end_at",
+				"button_text",
+				"button_url"
+			],
+			"sort": ["start_at", "end_at"],
+			"query": [
+				"bool": [
+					"must": [
+						[
+							"range": [
+								"start_at": ["lte": "now+2w"]
+							]
+						],
+						[
+							"range": [
+								"end_at": ["gte": "now"]
+							]
+						]
+					]
+				]
+			]
+		]
+		
+		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+			.validate()
+			.responseData { response in
+				switch response.result {
+				case .success(let value):
+					self.events = self.dataParser.parse(eventsData: value)
+				case .failure(let error):
+					print(error)
+				}
+				self.updateDownloadProgress()
+		}
+	}
     
     private func updateDownloadProgress() {
         DispatchQueue.main.async {
@@ -210,7 +260,7 @@ class AppDataManager {
             self.pctComplete = Float(self.dataFilesRetrieved) / Float(Common.DataConstants.totalDataFeeds)
             self.delegate?.downloadProgress(withPctCompleted: self.pctComplete)
             
-            if self.pctComplete == 1 {
+            if self.dataFilesRetrieved == Common.DataConstants.totalDataFeeds {
                 // We're finished
                 self.delegate?.didFinishLoadingData?()
             }
@@ -224,38 +274,224 @@ class AppDataManager {
         }
     }
     
-    func getAllNewsItems() -> [AICNewsItemModel] {
-        var newsItems:[AICNewsItemModel] = []
-        
-        newsItems.append(contentsOf: news.upcoming)
-        newsItems.append(contentsOf: news.current)
-        newsItems.append(contentsOf: news.featured)
-        
-        return newsItems
-    }
-    
-    
     func getObjects(forFloor floor:Int) -> [AICObjectModel] {
         return app.objects.filter( { $0.location.floor == floor })
     }
     
-    func getObject(forAudioGuideID id:Int) -> AICObjectModel? {
-        let objectsWithAudioIDs = app.objects.filter({ $0.audioGuideIDs != nil })
-        if objectsWithAudioIDs.count == 0 {
-            return nil
-        }else{
-            return objectsWithAudioIDs.filter({ $0.audioGuideIDs!.contains(id) }).first
-        }
+    func getObject(forSelectorNumber number: Int) -> AICObjectModel? {
+        return app.objects.filter({ $0.audioCommentaries.contains(where: { (audioCommentary) -> Bool in
+			if let selectorNumber = audioCommentary.selectorNumber  {
+				return selectorNumber == number
+			}
+			return false
+		}) }).first
     }
+	
+	func getAudioFile(forObject object: AICObjectModel, selectorNumber: Int?) -> AICAudioFileModel {
+		// If a selectorNumber is specified, check that the object has it in its list
+		if let number = selectorNumber {
+			let audioCommentariesWithNumber = object.audioCommentaries.filter({ $0.selectorNumber == number  })
+			if audioCommentariesWithNumber.count > 0 {
+				return audioCommentariesWithNumber.first!.audioFile
+			}
+		}
+		// Otherwise return first audio file
+		return object.audioCommentaries.first!.audioFile
+	}
     
     func getObject(forID id:Int) -> AICObjectModel? {
         return app.objects.filter({ $0.nid == id }).first
     }
+	
+	func getObject(forObjectID id:Int) -> AICObjectModel? {
+		return app.objects.filter({ $0.objectId == id }).first
+	}
     
     func getTour(forID id:Int) -> AICTourModel? {
         return app.tours.filter({ $0.nid == id }).first
     }
-    
+	
+	func getRestaurant(forID id: Int) -> AICRestaurantModel? {
+		return app.restaurants.filter({ $0.nid == id }).first
+	}
+	
+	func getEventsForEarliestDay() -> [AICEventModel] {
+		var dayEvents: [AICEventModel] = []
+		
+		// set earliest day to 1 year in the future
+		var components = DateComponents()
+		components.setValue(1, for: .year)
+		let now: Date = Date()
+		var earliestDate = Calendar.current.date(byAdding: components, to: now)!
+		
+		// find earliest day
+		for event in self.events {
+			if event.startDate < earliestDate && event.startDate > now {
+				earliestDate = event.startDate
+			}
+		}
+		
+		let eventsForEarliestDate = events.filter({ Calendar.current.compare($0.startDate, to: earliestDate, toGranularity: .day) == .orderedSame })
+		
+		for event in eventsForEarliestDate {
+			let now = Date()
+			if event.startDate > now {
+				dayEvents.append(event)
+			}
+			if dayEvents.count == 6 {
+				break
+			}
+		}
+		
+		if dayEvents.isEmpty {
+			if let lastEventOfEarliestDay = eventsForEarliestDate.last {
+				dayEvents.append(lastEventOfEarliestDay)
+			}
+		}
+		
+		return dayEvents
+	}
+	
+	private func sortToursByFeatured(tours: [AICTourModel]) -> [AICTourModel] {
+		let result = tours.sorted(by: { (A, B) -> Bool in
+			if A.isFeatured && !B.isFeatured {
+				return true
+			}
+			else if B.isFeatured && !A.isFeatured {
+				return false
+			}
+			return A.nid > B.nid
+		})
+		return result
+	}
+	
+	private func sortExhibitionsByFeatured(exhibitions: [AICExhibitionModel]) -> [AICExhibitionModel] {
+		let result = exhibitions.sorted(by: { (A, B) -> Bool in
+			if A.isFeatured && !B.isFeatured {
+				return true
+			}
+			else if B.isFeatured && !A.isFeatured {
+				return false
+			}
+			return A.startDate < B.startDate
+		})
+		return result
+	}
+	
+	func getToursForHome() -> [AICTourModel] {
+		var result: [AICTourModel] = []
+		let toursByFeatured: [AICTourModel] = sortToursByFeatured(tours: self.app.tours)
+		for tour in toursByFeatured {
+			result.append(tour)
+			if result.count == Common.Home.maxNumberOfTours {
+				break
+			}
+		}
+		return result
+	}
+	
+	func getExhibitionsForHome() -> [AICExhibitionModel] {
+		var result: [AICExhibitionModel] = []
+		let exhibitionsByFeatured: [AICExhibitionModel] = sortExhibitionsByFeatured(exhibitions: self.exhibitions)
+		for exhibition in exhibitionsByFeatured {
+			result.append(exhibition)
+			if result.count == Common.Home.maxNumberOfExhibitions {
+				break
+			}
+		}
+		return result
+	}
+	
+	func getEventsForHome() -> [AICEventModel] {
+		var eventItems: [AICEventModel] = []
+		let now: Date = Date()
+		for event in self.events {
+			if event.startDate > now {
+				eventItems.append(event)
+			}
+			if eventItems.count == Common.Home.maxNumberOfEvents {
+				break
+			}
+		}
+		return eventItems
+	}
+	
+	func shouldUseCategoriesForTours() -> Bool {
+		var result: Bool = true
+		for tour in self.app.tours {
+			if tour.category == nil {
+				result = false
+			}
+		}
+		return result
+	}
+	
+	func getToursForSeeAll() -> [AICTourModel] {
+		return sortToursByFeatured(tours: self.app.tours)
+	}
+	
+	func getToursByCategoryForSeeAll() -> [AICTourCategoryModel : [AICTourModel]] {
+		var result = [AICTourCategoryModel : [AICTourModel]]()
+		for category in self.app.tourCategories {
+			var tours: [AICTourModel] = []
+			for tour in self.app.tours {
+				if let tourCategory = tour.category {
+					if category.id == tourCategory.id {
+						tours.append(tour)
+					}
+				}
+			}
+			if tours.count > 0 {
+				result[category] = tours
+			}
+		}
+		return result
+	}
+	
+	func getExhibitionsForSeeAll() -> [AICExhibitionModel] {
+		return sortExhibitionsByFeatured(exhibitions: self.exhibitions)
+	}
+	
+	func getCroppedImageForEvent(image: UIImage, viewSize: CGSize) -> UIImage {
+		let imageSize = image.size
+		let imageAspect = imageSize.width / imageSize.height
+		let viewAspect = viewSize.width / viewSize.height
+		
+		if imageAspect < viewAspect {
+			let cropRect = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.width * (viewSize.height / viewSize.width))
+			let croppedImage = UIImage(cgImage: (image.cgImage!.cropping(to: cropRect))!)
+			
+			return croppedImage
+		}
+		return image
+	}
+	
+	func getCroppedImage(image: UIImage, viewSize: CGSize, cropRect: CGRect) -> UIImage {
+		// create image crop from cropRect which is in percentages based on the original image size
+		var imageCropRect = CGRect(x: floor(cropRect.origin.x * image.size.width), y: floor(cropRect.origin.y * image.size.height), width: floor(cropRect.size.width * image.size.width), height: floor(cropRect.size.height * image.size.height))
+		let imageCropAspect = imageCropRect.width / imageCropRect.height
+		let viewAspect = viewSize.width / viewSize.height
+		let imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+		
+		// if image is more landscape than the view frame, compensate for the height
+		if imageCropAspect > viewAspect {
+			let finalHeight = imageCropRect.width * (1.0 / viewAspect)
+			var finalOriginY = imageCropRect.origin.y
+			if imageCropRect.origin.y + finalHeight > image.size.height {
+				finalOriginY = image.size.height - finalHeight
+			}
+			imageCropRect.origin = CGPoint(x: imageCropRect.origin.x, y: finalOriginY)
+			imageCropRect.size = CGSize(width: imageCropRect.width, height: finalHeight)
+		}
+		
+		if imageRect.contains(imageCropRect) {
+			if let cgImage = image.cgImage!.cropping(to: imageCropRect) {
+				return UIImage(cgImage: cgImage)
+			}
+		}
+		return image
+	}
+	
     // Find the tours this object is on, and filter out a tour if sepecified
     func getRelatedTours(forObject object:AICObjectModel, excludingTour:AICTourModel? = nil) -> [AICTourModel] {
         var relatedTours:[AICTourModel] = []
@@ -336,8 +572,4 @@ class AppDataManager {
         guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         return directory.appendingPathComponent(fileName)
     }
-    
-    
-    
-    
 }

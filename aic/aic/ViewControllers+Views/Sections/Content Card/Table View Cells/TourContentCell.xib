@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="IdealSans-Book.otf">
+            <string>IdealSans-Book</string>
+        </array>
+        <array key="IdealSans-Medium.otf">
+            <string>IdealSans-Medium</string>
+        </array>
+        <array key="Linotype - SabonNextLTPro-Regular.otf">
+            <string>SabonNextLTPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tourContentCell" rowHeight="380" id="zKN-be-rHb" customClass="TourContentCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="380"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zKN-be-rHb" id="ZAJ-5a-7Ql">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="379.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M4X-H7-qci" customClass="AICImageView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="220.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="M4X-H7-qci" secondAttribute="height" multiplier="75:44" id="FyR-2N-BN6"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-6p-yGa">
+                        <rect key="frame" x="16" y="313" width="343" height="17"/>
+                        <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                    <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oia-Gy-VmZ" customClass="AICButton" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="117" y="236" width="140" height="50"/>
+                        <color key="backgroundColor" red="0.21568627450980393" green="0.63529411764705879" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Ifd-E8-Hpc"/>
+                            <constraint firstAttribute="width" constant="140" id="boE-4d-fRL"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="13"/>
+                        <state key="normal" title="Start Tour">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qi-hz-FxZ">
+                        <rect key="frame" x="0.0" y="182" width="375" height="38"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTourStopIcon" translatesAutoresizingMaskIntoConstraints="NO" id="uCG-iP-kK1">
+                                <rect key="frame" x="8" y="7" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="DD1-ZS-GdD"/>
+                                    <constraint firstAttribute="width" constant="24" id="sdm-Ct-pQk"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="homeTourClockIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Xei-xd-rsI">
+                                <rect key="frame" x="85" y="7" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="dKf-Gb-q1b"/>
+                                    <constraint firstAttribute="height" constant="24" id="l9b-iH-iHG"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n Stops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ha-59-RMm">
+                                <rect key="frame" x="32" y="11.5" width="41" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="Sda-XU-nQq"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="rq2-PG-xai"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09Y-aL-N1G">
+                                <rect key="frame" x="109" y="9" width="36" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="DjF-uB-YXt"/>
+                                    <constraint firstAttribute="height" constant="21" id="FDJ-QW-5Oh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IdealSans-Book" family="Ideal Sans" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="09Y-aL-N1G" firstAttribute="leading" secondItem="Xei-xd-rsI" secondAttribute="trailing" id="KMw-7N-Igt"/>
+                            <constraint firstItem="4Ha-59-RMm" firstAttribute="leading" secondItem="uCG-iP-kK1" secondAttribute="trailing" id="KyQ-8w-UCz"/>
+                            <constraint firstAttribute="height" constant="38" id="ZiY-rF-MRa"/>
+                            <constraint firstItem="uCG-iP-kK1" firstAttribute="leading" secondItem="3Qi-hz-FxZ" secondAttribute="leading" constant="8" id="eZ7-7R-pmZ"/>
+                            <constraint firstItem="Xei-xd-rsI" firstAttribute="centerY" secondItem="3Qi-hz-FxZ" secondAttribute="centerY" id="fFr-bx-FQA"/>
+                            <constraint firstItem="4Ha-59-RMm" firstAttribute="centerY" secondItem="3Qi-hz-FxZ" secondAttribute="centerY" id="mSX-zc-gxK"/>
+                            <constraint firstItem="uCG-iP-kK1" firstAttribute="centerY" secondItem="3Qi-hz-FxZ" secondAttribute="centerY" id="n7p-XD-NMJ"/>
+                            <constraint firstItem="09Y-aL-N1G" firstAttribute="centerY" secondItem="3Qi-hz-FxZ" secondAttribute="centerY" id="py5-LO-wpf"/>
+                            <constraint firstItem="Xei-xd-rsI" firstAttribute="leading" secondItem="4Ha-59-RMm" secondAttribute="trailing" constant="12" id="sLj-j6-bSz"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TeH-Be-21x" customClass="LanguageSelectorView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="261" y="115.5" width="94" height="98"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="98" id="LbE-IF-Ffn"/>
+                            <constraint firstAttribute="width" constant="94" id="TNg-xM-TUR"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Oia-Gy-VmZ" firstAttribute="top" secondItem="M4X-H7-qci" secondAttribute="bottom" constant="16" id="2nj-cZ-KGL"/>
+                    <constraint firstItem="M4X-H7-qci" firstAttribute="top" secondItem="ZAJ-5a-7Ql" secondAttribute="top" id="GRo-WR-ikf"/>
+                    <constraint firstAttribute="bottom" secondItem="7zJ-6p-yGa" secondAttribute="bottom" constant="49" id="Im1-VT-3aj"/>
+                    <constraint firstAttribute="trailing" secondItem="3Qi-hz-FxZ" secondAttribute="trailing" id="MS2-tK-pVk"/>
+                    <constraint firstAttribute="trailing" secondItem="M4X-H7-qci" secondAttribute="trailing" id="Q9H-Fk-D5R"/>
+                    <constraint firstItem="3Qi-hz-FxZ" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leading" id="Toa-XW-5fx"/>
+                    <constraint firstItem="7zJ-6p-yGa" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leadingMargin" id="aUm-gW-fyd"/>
+                    <constraint firstItem="M4X-H7-qci" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leading" id="dpD-9t-v2H"/>
+                    <constraint firstItem="7zJ-6p-yGa" firstAttribute="top" secondItem="ZAJ-5a-7Ql" secondAttribute="top" constant="313" id="iwA-65-2za"/>
+                    <constraint firstItem="3Qi-hz-FxZ" firstAttribute="bottom" secondItem="M4X-H7-qci" secondAttribute="bottom" id="lTu-hl-PAM"/>
+                    <constraint firstItem="TeH-Be-21x" firstAttribute="trailing" secondItem="M4X-H7-qci" secondAttribute="trailing" constant="-20" id="uaj-dc-FIS"/>
+                    <constraint firstItem="TeH-Be-21x" firstAttribute="bottom" secondItem="M4X-H7-qci" secondAttribute="bottom" constant="-7" id="vwH-yQ-TWQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="7zJ-6p-yGa" secondAttribute="trailing" id="wWi-ij-Ppx"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Oia-Gy-VmZ" firstAttribute="centerX" secondItem="zKN-be-rHb" secondAttribute="centerX" id="Ewh-3f-zic"/>
+            </constraints>
+            <connections>
+                <outlet property="clockImageView" destination="Xei-xd-rsI" id="pIX-MV-Z8G"/>
+                <outlet property="descriptionLabel" destination="7zJ-6p-yGa" id="waH-aH-FnD"/>
+                <outlet property="durationLabel" destination="09Y-aL-N1G" id="bfg-9W-jPP"/>
+                <outlet property="languageSelectorView" destination="TeH-Be-21x" id="qEj-5w-OxH"/>
+                <outlet property="startTourButton" destination="Oia-Gy-VmZ" id="rM1-mS-1QX"/>
+                <outlet property="stopsNumberLabel" destination="4Ha-59-RMm" id="s1Q-q3-v90"/>
+                <outlet property="tourImageView" destination="M4X-H7-qci" id="Rh1-Qx-d6o"/>
+                <outlet property="transparentOverlayView" destination="3Qi-hz-FxZ" id="aLO-pd-jZB"/>
+            </connections>
+            <point key="canvasLocation" x="9.5" y="31"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="homeTourClockIcon" width="24" height="24"/>
+        <image name="homeTourStopIcon" width="24" height="24"/>
+    </resources>
+</document>

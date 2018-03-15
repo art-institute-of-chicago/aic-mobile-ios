@@ -5,25 +5,54 @@
 
 import Foundation
 
-struct AICTourModel : AICNewsTourItemProtocol {
-    let type:NewsTourItemType = .tour
-    
-    let nid:Int
-    
-    let title:String
-    let shortDescription:String
-    let longDescription:String
+struct AICTourModel {
+    let nid: Int
+	
+	// Translated content
+	var title: String { return self.translations[self.language]!.title }
+	var shortDescription: String { return self.translations[self.language]!.shortDescription }
+	var longDescription: String { return self.translations[self.language]!.longDescription }
+	var durationInMinutes: String? { return self.translations[self.language]!.durationInMinutes }
+	var overview: AICTourOverviewModel { return self.translations[self.language]!.overview }
+	
+	let isFeatured: Bool
+	let category: AICTourCategoryModel?
     
     let additionalInformation: String? = nil
-    let imageUrl:URL
-    
-    let revealTitle: String = "Start Tour"
-    
-    let overview:AICTourOverviewModel
-    let stops:[AICTourStopModel]
-    
-    let bannerString: String?
-    
+    let imageUrl: URL
+	
+	let location: CoordinateWithFloor
+	
+	var stops: [AICTourStopModel] {
+		var result = [AICTourStopModel]()
+		for stop in allStops {
+			if stop.audio.availableLanguages.contains(self.language) {
+				result.append(stop)
+			}
+		}
+		return result
+	}
+	
+	let allStops: [AICTourStopModel]
+	
+	var translations: [Common.Language : AICTourTranslationModel]
+	
+	var language: Common.Language = .english {
+		didSet {
+			if availableLanguages.contains(language) == false {
+				self.language = oldValue
+			}
+		}
+	}
+	
+	var availableLanguages: [Common.Language] {
+		var languages: [Common.Language] = []
+		for (key, _) in translations {
+			languages.append(key)
+		}
+		return languages
+	}
+	
     func getObjectsForStops() -> [AICObjectModel] {
         var objects:[AICObjectModel] = []
         for stop in stops {
@@ -42,4 +71,12 @@ struct AICTourModel : AICNewsTourItemProtocol {
         
         return nil
     }
+}
+
+struct AICTourTranslationModel {
+	let title: String
+	let shortDescription: String
+	let longDescription: String
+	let durationInMinutes: String?
+	let overview: AICTourOverviewModel
 }

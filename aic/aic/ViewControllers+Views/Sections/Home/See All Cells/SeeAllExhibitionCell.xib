@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="IdealSans-Medium.otf">
+            <string>IdealSans-Medium</string>
+        </array>
+        <array key="Linotype - SabonNextLTPro-Italic.otf">
+            <string>SabonNextLTPro-Italic</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="seeAllExhibitionCell" id="iQA-Ok-eoj" customClass="SeeAllExhibitionCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="343" height="371"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="343" height="371"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HBm-68-tgR" customClass="AICImageView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="240"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="HBm-68-tgR" secondAttribute="height" multiplier="343:240" id="oIF-EX-ZoA"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exhibition Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IV8-FP-nHm">
+                        <rect key="frame" x="0.0" y="254" width="327" height="22"/>
+                        <fontDescription key="fontDescription" name="IdealSans-Medium" family="Ideal Sans" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Through Month Day, Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvh-W1-y8T">
+                        <rect key="frame" x="0.0" y="288" width="343" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="vHX-0H-J1H"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SabonNextLTPro-Italic" family="Sabon Next LT Pro" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="IV8-FP-nHm" firstAttribute="top" secondItem="HBm-68-tgR" secondAttribute="bottom" constant="14" id="0mg-zP-UX5"/>
+                <constraint firstItem="fhx-mH-hvg" firstAttribute="trailing" secondItem="HBm-68-tgR" secondAttribute="trailing" id="24l-yo-hc8"/>
+                <constraint firstItem="HBm-68-tgR" firstAttribute="top" secondItem="fhx-mH-hvg" secondAttribute="top" id="Jhf-UX-peZ"/>
+                <constraint firstItem="fhx-mH-hvg" firstAttribute="trailing" secondItem="Gvh-W1-y8T" secondAttribute="trailing" id="Rpr-u7-Hgz"/>
+                <constraint firstItem="HBm-68-tgR" firstAttribute="leading" secondItem="fhx-mH-hvg" secondAttribute="leading" id="a5i-CL-2qB"/>
+                <constraint firstItem="fhx-mH-hvg" firstAttribute="trailing" secondItem="IV8-FP-nHm" secondAttribute="trailing" constant="16" id="bYW-uJ-DCq"/>
+                <constraint firstItem="IV8-FP-nHm" firstAttribute="leading" secondItem="fhx-mH-hvg" secondAttribute="leading" id="ctd-n0-11m"/>
+                <constraint firstItem="Gvh-W1-y8T" firstAttribute="leading" secondItem="fhx-mH-hvg" secondAttribute="leading" id="iv3-Mh-fHD"/>
+                <constraint firstItem="Gvh-W1-y8T" firstAttribute="top" secondItem="IV8-FP-nHm" secondAttribute="bottom" constant="12" id="tt6-oq-FoL"/>
+                <constraint firstItem="fhx-mH-hvg" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Gvh-W1-y8T" secondAttribute="bottom" constant="30" id="zD2-fL-Pvw"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fhx-mH-hvg"/>
+            <size key="customSize" width="343" height="412"/>
+            <connections>
+                <outlet property="exhibitionImageView" destination="HBm-68-tgR" id="uRm-uc-y1G"/>
+                <outlet property="exhibitionTitleLabel" destination="IV8-FP-nHm" id="pTp-GC-Bwc"/>
+                <outlet property="throughDateLabel" destination="Gvh-W1-y8T" id="nEP-jO-4wn"/>
+            </connections>
+            <point key="canvasLocation" x="-39.5" y="-19.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

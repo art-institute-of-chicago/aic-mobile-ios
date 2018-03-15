@@ -6,9 +6,8 @@
 import UIKit
 
 enum Section : Int {
-    case audioGuide
-    case whatsOn
-    case tours
+	case home
+	case audioGuide
     case map
     case info
 }
@@ -17,14 +16,14 @@ struct AICSectionModel {
     let nid:Int
     
     // Background color for this section
-    let color:UIColor
+    let color: UIColor
     
     // Section top title + Info
-    let icon:UIImage
-    let title:String
-    let description:String
+	let background: UIImage?
+	let icon: UIImage
+    let title: String
     
     // Tab Bar item info
-    let tabBarTitle:String
-    let tabBarIcon:UIImage
+    let tabBarTitle: String
+    let tabBarIcon: UIImage
 }

@@ -1,4 +1,0 @@
-github "drmohundro/SWXMLHash" ~> 4.2.1
-github "SnapKit/SnapKit" ~> 3.2.0
-github "Alamofire/Alamofire" ~> 4.5.1
-github "SwiftyJSON/SwiftyJSON" >= 3.1.4
