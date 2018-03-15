@@ -27,7 +27,7 @@ class SeeAllViewController : UIViewController {
 	}
 	let content: ContentType
 	
-	let titles = [ContentType.tours : "Tours", ContentType.exhibitions : "On View", ContentType.events : "Events"]
+	let titles = [ContentType.tours : "Tours", ContentType.toursByCategory : "Tours", ContentType.exhibitions : "On View", ContentType.events : "Events"]
 	
 	private var tourItems: [AICTourModel] = []
 	private var tourCategories: [AICTourCategoryModel] = []
