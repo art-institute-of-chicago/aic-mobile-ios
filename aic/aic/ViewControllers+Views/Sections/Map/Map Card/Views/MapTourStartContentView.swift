@@ -30,7 +30,7 @@ class MapTourStartContentView : UIView {
 	}
 	
 	private func createViewConstraints() {
-		audioButton.autoPinEdge(.top, to: .top, of: self, withOffset: 86)
+		audioButton.autoPinEdge(.top, to: .top, of: self, withOffset: 85)
 		audioButton.autoAlignAxis(.vertical, toSameAxisOf: self)
 	}
 	

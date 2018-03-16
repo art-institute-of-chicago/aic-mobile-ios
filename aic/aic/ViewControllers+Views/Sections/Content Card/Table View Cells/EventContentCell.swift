@@ -64,6 +64,31 @@ class EventContentCell : UITableViewCell {
 			descriptionTextView.textColor = .white
 			locationAndDateLabel.attributedText = getAttributedStringWithLineHeight(text: locationAndDateString, font: .aicCardDateLocationFont, lineHeight: 22)
 			
+			
+			// TODO: remove this code for testing bullet points
+//			do {
+//				let data = Data(eventModel.longDescription.utf8)
+//				let attributedString = try NSMutableAttributedString(data: data,
+//															 options: [.documentType: NSAttributedString.DocumentType.html],
+//															 documentAttributes: nil
+//				)
+//				let baselineOffset = 22 - UIFont.aicCardDescriptionFont.pointSize
+//				let paragraphStyle = NSMutableParagraphStyle()
+//				paragraphStyle.lineSpacing = 0.0
+//				paragraphStyle.minimumLineHeight = 22
+//				paragraphStyle.maximumLineHeight = 22
+//
+//				let range = NSMakeRange(0, attributedString.length)
+//				attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
+//				attributedString.addAttribute(NSAttributedStringKey.baselineOffset, value: baselineOffset, range: range)
+//				attributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.aicCardDescriptionFont, range: range)
+//				descriptionTextView.attributedText = attributedString
+//				descriptionTextView.textColor = .white
+//			}
+//			catch {
+//
+//			}
+			
 			if eventModel.eventUrl == nil {
 				buyTicketsButton.isEnabled = false
 				buyTicketsButton.isHidden = true

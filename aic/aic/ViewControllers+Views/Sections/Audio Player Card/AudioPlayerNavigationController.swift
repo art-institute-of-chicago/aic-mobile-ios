@@ -12,6 +12,10 @@ import MediaPlayer
 import Alamofire
 import Kingfisher
 
+protocol AudioPlayerNavigationControllerDelegate : class {
+	func audioPlayerSelectedRelatedTour(tour: AICTourModel)
+}
+
 class AudioPlayerNavigationController : CardNavigationController {
     var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
     let miniAudioPlayerView: MiniAudioPlayerView = MiniAudioPlayerView()
@@ -54,6 +58,9 @@ class AudioPlayerNavigationController : CardNavigationController {
         rootVC.view.addSubview(miniAudioPlayerView)
         
         createViewConstraints()
+		
+		// Related Tours Link
+		audioInfoVC.relatedToursView.bodyTextView.delegate = self
 		
 		// Language Selector Delegate
 		audioInfoVC.languageSelector.delegate = self
@@ -168,7 +175,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 		
 		if load(audioFile: audio, coverImageURL: tourStop.object.imageUrl as URL) {
 			miniAudioPlayerView.reset()
-			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio, isTour: true)
+			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio, tour: tour)
 		}
 	}
 	
@@ -650,5 +657,18 @@ extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
 			}
 			selectedLanguage = nil
 		}
+	}
+}
+
+// MARK: Related Tours Link
+
+extension AudioPlayerNavigationController : UITextViewDelegate {
+	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+		if URL.absoluteString.range(of: "artic") != nil {
+			pause()
+			showMiniPlayer()
+			return true
+		}
+		return false
 	}
 }

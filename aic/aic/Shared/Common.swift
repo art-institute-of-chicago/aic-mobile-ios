@@ -135,7 +135,7 @@ struct Common {
         static let domain = "artic"
         static let tourCategory = "tour"
 
-        static func getURL(forTour tour:AICTourModel) -> String?{
+        static func getURL(forTour tour:AICTourModel) -> String? {
             if (loadedEnoughToLink){
                 return String("\(domain)://\(tourCategory)/\(tour.nid)")
             } else {

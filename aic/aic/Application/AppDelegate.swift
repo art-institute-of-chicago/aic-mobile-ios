@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var deepLinkString: String? = nil
-
+	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		
 		// DEBUG find coordinates for pdf overlay anchor points
@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		//Check for member and log open
 		let defaults = UserDefaults.standard
-		// TODO: debug to make sure member is false is I'm not a member
+		// TODO: debug to make sure member is false if I'm not a member
 		let storedID = (defaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) as? NSNumber)?.int64Value
 		AICAnalytics.appOpenEvent(isMember: (storedID != nil))
 		
@@ -112,11 +112,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func applicationWillResignActive(_ application: UIApplication) {}
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        AICAnalytics.appBackgroundEvent()
-    }
+	func applicationWillResignActive(_ application: UIApplication) {
+	}
+	
+	func applicationDidEnterBackground(_ application: UIApplication) {
+		AICAnalytics.appBackgroundEvent()
+	}
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Resume data loading if necessary
@@ -130,65 +131,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AICAnalytics.appForegroundEvent()
         setStatusBar()
     }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {}
-    
-    // URL Deep Linking
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        if url.host == nil {
-            return true;
-        }
-        
-        let urlString = url.absoluteString
-        let queryArray = urlString.components(separatedBy: "/")
-        let query = queryArray[2]
-        
-        if Common.DeepLinks.loadedEnoughToLink {
-            
-        // Check if it is a tour
-        
-        if query.range(of: "tour") != nil
-        {
-            let data = urlString.components(separatedBy: "/")
-            if (data.count) >= 3
-            {
-                guard let tourNID = Int(data[3]) else {
-                    return true
-                }
-                
-                guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else {
-                    return true
-                }
-                
-                    let rootVC = window?.rootViewController as! RootViewController
-                    rootVC.startTour(tour: tour)
-                }
-            }
-        } else {
-            
-            let data = urlString.components(separatedBy: "/")
-            deepLinkString = data[3]
-        }
-        
-        return true
-    }
-    
-    
+	
+	func applicationDidBecomeActive(_ application: UIApplication) {
+	}
+	
+	func applicationWillTerminate(_ application: UIApplication) {
+	}
+	
+	// URL Deep Linking
+	func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+		if url.host == nil {
+			return true
+		}
+		
+		let urlString = url.absoluteString
+		let queryArray = urlString.components(separatedBy: "/")
+		let query = queryArray[2]
+		
+		if Common.DeepLinks.loadedEnoughToLink {
+			
+			// Check if it is a tour
+			
+			if query.range(of: "tour") != nil
+			{
+				let data = urlString.components(separatedBy: "/")
+				if (data.count) >= 3
+				{
+					guard let tourNID = Int(data[3]) else {
+						return true
+					}
+					
+					guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else {
+						return true
+					}
+					
+					let rootVC = window?.rootViewController as! RootViewController
+					rootVC.startTour(tour: tour)
+				}
+			}
+		} else {
+			
+			let data = urlString.components(separatedBy: "/")
+			deepLinkString = data[2]
+		}
+		
+		return true
+	}
+	
     func triggerDeepLinkIfPresent()
     {
         if deepLinkString != nil {
-          
+
             guard let tourNID = Int(deepLinkString!) else {
                 return
             }
-            
+
             guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else {
                 return
             }
-            
+
             let rootVC = window?.rootViewController as! RootViewController
             rootVC.startTour(tour: tour)
         }

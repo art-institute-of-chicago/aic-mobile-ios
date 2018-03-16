@@ -142,7 +142,7 @@ class RootViewController: UIViewController {
         view.insertSubview(sectionsVC!.view, belowSubview: loadingVC!.view)
 		
 //        sectionsVC!.setSelectedSection(sectionVC: sectionsVC!.toursVC)
-        //sectionsVC!.animateInInitialView()
+        sectionsVC!.animateInInitialView()
     }
     
     fileprivate func cleanUpViews() {

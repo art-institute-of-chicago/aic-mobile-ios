@@ -104,11 +104,8 @@ class AudioInfoSectionView : UIView {
 	}
 	
 	func set(relatedTours tours:[AICTourModel]) {
-		self.titleLabel.text = "Related tours" // TODO: Translate this
-		self.bodyTextView.dataDetectorTypes = UIDataDetectorTypes.link
-		self.bodyTextView.setDefaultsForAICAttributedTextView()
-		
-		let links:NSMutableAttributedString = NSMutableAttributedString()
+		let links: NSMutableAttributedString = NSMutableAttributedString()
+		var linksCount: Int = 0
 		
 		for tour in tours {
 			var linkText = tour.title
@@ -116,17 +113,33 @@ class AudioInfoSectionView : UIView {
 				linkText += "\n"
 			}
 			
-			let url = Common.DeepLinks.getURL(forTour: tour)
-			let linkAttrString = NSMutableAttributedString(string: linkText)
-			
-			let range = NSMakeRange(0, linkAttrString.string.count)
-			linkAttrString.addAttributes([NSAttributedStringKey.link : url], range: range)
-			
-			links.append(linkAttrString)
+			if let urlString = Common.DeepLinks.getURL(forTour: tour) {
+				if let url = URL(string: urlString) {
+					let linkAttrString = NSMutableAttributedString(string: linkText)
+					
+					let range = NSMakeRange(0, linkAttrString.string.count)
+					linkAttrString.addAttributes([NSAttributedStringKey.link : url], range: range)
+					
+					links.append(linkAttrString)
+					linksCount += 1
+				}
+			}
 		}
 		
-		bodyTextView.attributedText = links
-		bodyTextView.font = .aicCardDescriptionFont
+		if linksCount > 0 {
+			titleLabel.text = "Related Tours".localized(using: "AudioPlayer")
+			
+			bodyTextView.attributedText = links
+			bodyTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeLightColor]
+			bodyTextView.font = .aicCardTitleFont
+			
+			infoSectionHeight?.constant = bodyTextView.frame.origin.y + bodyTextView.frame.height + 40
+			self.setNeedsLayout()
+			self.layoutIfNeeded()
+		}
+		else {
+			hide()
+		}
 	}
 	
 	// MARK: Constraints

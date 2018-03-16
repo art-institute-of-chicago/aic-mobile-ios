@@ -493,7 +493,7 @@ class AppDataManager {
 	}
 	
     // Find the tours this object is on, and filter out a tour if sepecified
-    func getRelatedTours(forObject object:AICObjectModel, excludingTour:AICTourModel? = nil) -> [AICTourModel] {
+    func getRelatedTours(forObject object: AICObjectModel, excludingTour: AICTourModel? = nil) -> [AICTourModel] {
         var relatedTours:[AICTourModel] = []
         for tour in app.tours {
             // Skip excluding tour

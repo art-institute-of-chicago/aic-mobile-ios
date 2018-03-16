@@ -20,7 +20,7 @@ class ObjectRelatedToursView: ObjectContentSectionView {
     
     func set(relatedTours tours:[AICTourModel]) {
         let links:NSMutableAttributedString = NSMutableAttributedString()
-        
+
         for tour in tours {
 			var tourModel = tour
 			if let _ = tour.translations[Common.currentLanguage] {
@@ -31,16 +31,16 @@ class ObjectRelatedToursView: ObjectContentSectionView {
             if tour.nid != tours.last?.nid {
                 linkText += "\n"
             }
-            
+
             let url = Common.DeepLinks.getURL(forTour: tour)
             let linkAttrString = NSMutableAttributedString(string: linkText)
-            
+
             let range = NSMakeRange(0, linkAttrString.string.count)
             linkAttrString.addAttributes([NSAttributedStringKey.link : url], range: range)
-            
+
             links.append(linkAttrString)
         }
-        
+
         bodyTextView.attributedText = links
         bodyTextView.font = .aicTitleFont
     }

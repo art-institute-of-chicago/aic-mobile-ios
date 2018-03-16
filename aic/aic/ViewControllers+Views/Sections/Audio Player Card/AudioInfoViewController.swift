@@ -96,7 +96,11 @@ class AudioInfoViewController : UIViewController {
 		descriptionLabel.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
 		descriptionLabel.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 		
-		transcriptView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 32)
+		relatedToursView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 32)
+		relatedToursView.autoPinEdge(.leading, to: .leading, of: self.view)
+		relatedToursView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		
+		transcriptView.autoPinEdge(.top, to: .bottom, of: relatedToursView)
 		transcriptView.autoPinEdge(.leading, to: .leading, of: self.view)
 		transcriptView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		
@@ -115,7 +119,7 @@ class AudioInfoViewController : UIViewController {
     
 	// MARK: Set Content
     
-	func setArtworkContent(artwork: AICObjectModel, audio: AICAudioFileModel, isTour: Bool = false) {
+	func setArtworkContent(artwork: AICObjectModel, audio: AICAudioFileModel, tour: AICTourModel? = nil) {
 		reset()
 		
         artworkModel = artwork
@@ -125,16 +129,24 @@ class AudioInfoViewController : UIViewController {
 		}
 		
 		// Add related tours subview if there are any relate tours
-//		let excludedTour = Common.Testing.filterOutRelatedTours ? isTour : nil
-//		let relatedTours = AppDataManager.sharedInstance.getRelatedTours(forObject: artwork, excludingTour: excludedTour)
-//
-//		if !relatedTours.isEmpty {
-//			relatedToursView.set(relatedTours: relatedTours)
-//			scrollView.addSubview(relatedToursView)
-//		}
+		if let _ = tour {
+			let excludedTour = Common.Testing.filterOutRelatedTours ? tour : nil
+			let relatedTours = AppDataManager.sharedInstance.getRelatedTours(forObject: artwork, excludingTour: excludedTour)
+
+			if !relatedTours.isEmpty {
+				relatedToursView.set(relatedTours: relatedTours)
+				relatedToursView.show(collapseEnabled: false)
+			}
+			else {
+				relatedToursView.hide()
+			}
+		}
+		else {
+			relatedToursView.hide()
+		}
 		
 		// Language
-		if isTour == false {
+		if let _ = tour {
 			if audio.availableLanguages.count > 1 {
 				languageSelector.isHidden = false
 				languageSelector.close()
@@ -231,6 +243,7 @@ class AudioInfoViewController : UIViewController {
 		descriptionLabel.text = ""
 		languageSelector.close()
 		languageSelector.isHidden = true
+		relatedToursView.hide()
 		creditsView.hide()
 		transcriptView.hide()
 	}

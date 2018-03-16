@@ -241,8 +241,11 @@ extension SeeAllViewController : UICollectionViewDataSource {
 // Interaction
 extension SeeAllViewController : UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if content == .tours || content == .toursByCategory {
+		if content == .tours {
 			self.delegate?.seeAllDidSelectTour(tour: tourItems[indexPath.row])
+		}
+		else if content == .toursByCategory {
+			self.delegate?.seeAllDidSelectTour(tour: tourItemsByCategory[indexPath.section][indexPath.row])
 		}
 		else if content == .exhibitions {
 			self.delegate?.seeAllDidSelectExhibition(exhibition: exhibitionItems[indexPath.row])
