@@ -17,11 +17,21 @@ protocol MapNavigationControllerDelegate : class {
 }
 
 class MapNavigationController : SectionNavigationController {
-	var currentMode: MapViewController.Mode = .allInformation
+	var currentMode: MapViewController.Mode = .allInformation {
+		didSet {
+			if oldValue == .tour && currentMode != .tour && self.currentMode != .allInformation {
+				showLeaveTourMessage()
+			}
+		}
+	}
 	
 	// Models for content modes
 	var tourModel: AICTourModel? = nil
 	var tourStopIndex: Int? = nil
+	var relatedTourModel: AICTourModel? = nil
+	var relatedTourStopIndex: Int? = nil
+	var nextTourModel: AICTourModel? = nil
+	var nextTourStopIndex: Int? = nil
 	var artworkModel: AICObjectModel? = nil
 	var searchedArtworkModel: AICSearchedArtworkModel? = nil
 	var exhibitionModel: AICExhibitionModel? = nil
@@ -39,6 +49,7 @@ class MapNavigationController : SectionNavigationController {
 	weak var sectionDelegate: MapNavigationControllerDelegate? = nil
 	
 	var isMapTabOpen: Bool = false
+	var shouldShowLeaveTourMessage: Bool = false
 	
 	override init(section: AICSectionModel) {
 		super.init(section: section)
@@ -82,6 +93,7 @@ class MapNavigationController : SectionNavigationController {
 			showMapTooltips()
 		}
 		
+		// Show content for current mode
 		if mapTooltipVC == nil {
 			showContentIfNeeded()
 		}
@@ -117,11 +129,11 @@ class MapNavigationController : SectionNavigationController {
 			showRestrooms()
 			break
 		case .tour:
-			showTour(tour: tourModel!, language: tourModel!.language, stopIndex: tourStopIndex)
+			showTourContent()
 			break
 		}
 		if let contentCard = mapContentCardVC {
-			mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: contentCard.view.frame.origin.y))
+			mapVC.setViewableArea(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: contentCard.view.frame.origin.y))
 		}
 	}
 	
@@ -256,54 +268,69 @@ class MapNavigationController : SectionNavigationController {
 	}
 	
 	func showTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
-		currentMode = .tour
-		tourModel = tour
-		if tourModel!.availableLanguages.contains(language) {
-			tourModel!.language = language
+		if currentMode == .tour {
+			relatedTourModel = tour
+			if relatedTourModel!.availableLanguages.contains(language) {
+				relatedTourModel!.language = language
+			}
+			showLeaveTourMessage()
 		}
-		tourStopIndex = stopIndex
+		else {
+			currentMode = .tour
+			tourModel = tour
+			if tourModel!.availableLanguages.contains(language) {
+				tourModel!.language = language
+			}
+			tourStopIndex = stopIndex
+		}
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
 		if isMapTabOpen {
-			if sectionNavigationBar.currentState != .hidden {
-				sectionNavigationBar.hide()
+			if relatedTourModel == nil {
+				showTourContent()
 			}
-			
-			// Creeate Tour Stops card
-			tourStopPageVC = TourStopPageViewController(tour: tourModel!)
-			
-			// Crate Content Card
-			if mapContentCardVC != nil {
-				mapContentCardVC!.view.removeFromSuperview()
-			}
-			mapContentCardVC = MapContentCardNavigationController(contentVC: tourStopPageVC!)
-			mapContentCardVC!.setTitleText(text: tourModel!.title)
-			mapContentCardVC!.cardDelegate = self
-			tourStopPageVC!.tourStopPageDelegate = self
-			
-			// Add card to view
-			mapContentCardVC!.willMove(toParentViewController: self)
-			self.view.addSubview(mapContentCardVC!.view)
-			mapContentCardVC!.didMove(toParentViewController: self)
-			
-			// in case the tour card is open, to tell the map to animate the floor selector
-			self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
-			
-			// Set map state
-			mapVC.showTour(forTour: tour)
-			
-			// Set TourStopPageVC to the right stop
-			if let index = tourStopIndex {
-				mapVC.highlightTourStop(identifier: tourModel!.stops[index].object.nid, location: tourModel!.stops[index].object.location)
-				tourStopPageVC!.setCurrentPage(pageIndex: index + 1) // add +1 for tour overview
-			}
-			else {
-				tourStopPageVC!.setCurrentPage(pageIndex: 0)
-			}
-		
-			showMapContentCard()
 		}
+	}
+	
+	private func showTourContent() {
+		if sectionNavigationBar.currentState != .hidden {
+			sectionNavigationBar.hide()
+		}
+		
+		// Creeate Tour Stops card
+		tourStopPageVC = TourStopPageViewController(tour: tourModel!)
+		
+		// Crate Content Card
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
+		}
+		mapContentCardVC = MapContentCardNavigationController(contentVC: tourStopPageVC!)
+		mapContentCardVC!.setTitleText(text: tourModel!.title)
+		mapContentCardVC!.cardDelegate = self
+		tourStopPageVC!.tourStopPageDelegate = self
+		
+		// Add card to view
+		mapContentCardVC!.willMove(toParentViewController: self)
+		self.view.addSubview(mapContentCardVC!.view)
+		mapContentCardVC!.didMove(toParentViewController: self)
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+		
+		// Set map state
+		mapVC.showTour(forTour: tourModel!)
+		
+		// Set TourStopPageVC to the right stop
+		if let index = tourStopIndex {
+			mapVC.highlightTourStop(identifier: tourModel!.stops[index].object.nid, location: tourModel!.stops[index].object.location)
+			tourStopPageVC!.setCurrentPage(pageIndex: index + 1) // add +1 for tour overview
+		}
+		else {
+			tourStopPageVC!.setCurrentPage(pageIndex: 0)
+		}
+		
+		showMapContentCard()
 	}
 	
 	func showArtwork(artwork: AICObjectModel) {
@@ -312,7 +339,7 @@ class MapNavigationController : SectionNavigationController {
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
-		if isMapTabOpen {
+		if isMapTabOpen && leaveTourMessageView == nil {
 			if sectionNavigationBar.currentState != .hidden {
 				sectionNavigationBar.hide()
 			}
@@ -351,7 +378,7 @@ class MapNavigationController : SectionNavigationController {
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
-		if isMapTabOpen {
+		if isMapTabOpen && leaveTourMessageView == nil {
 			if sectionNavigationBar.currentState != .hidden {
 				sectionNavigationBar.hide()
 			}
@@ -390,7 +417,7 @@ class MapNavigationController : SectionNavigationController {
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
-		if isMapTabOpen {
+		if isMapTabOpen && leaveTourMessageView == nil {
 			if sectionNavigationBar.currentState != .hidden {
 				sectionNavigationBar.hide()
 			}
@@ -424,7 +451,7 @@ class MapNavigationController : SectionNavigationController {
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
-		if isMapTabOpen {
+		if isMapTabOpen && leaveTourMessageView == nil {
 			if sectionNavigationBar.currentState != .hidden {
 				sectionNavigationBar.hide()
 			}
@@ -462,7 +489,7 @@ class MapNavigationController : SectionNavigationController {
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
-		if isMapTabOpen {
+		if isMapTabOpen && leaveTourMessageView == nil {
 			if sectionNavigationBar.currentState != .hidden {
 				sectionNavigationBar.hide()
 			}
@@ -496,7 +523,7 @@ class MapNavigationController : SectionNavigationController {
 		
 		// if we are on the Map tab, open tour immediately
 		// otherwise open it at viewWillAppear, so the card opens after the view layout is completed
-		if isMapTabOpen {
+		if isMapTabOpen && leaveTourMessageView == nil {
 			if sectionNavigationBar.currentState != .hidden {
 				sectionNavigationBar.hide()
 			}
@@ -562,8 +589,19 @@ extension MapNavigationController : MessageViewControllerDelegate {
 			startLocationManager()
 		}
 		else if messageVC == leaveTourMessageView {
-			showAllInformation()
 			hideLeaveTourMessage()
+			if currentMode == .tour && relatedTourModel != nil {
+				if let tour = tourModel {
+					relatedTourModel!.language = tour.language
+				}
+				tourModel = relatedTourModel
+				tourStopIndex = nil
+				showTourContent()
+				relatedTourModel = nil
+			}
+			else {
+				showContentIfNeeded()
+			}
 		}
 	}
 	
@@ -573,6 +611,8 @@ extension MapNavigationController : MessageViewControllerDelegate {
 		}
 		else if messageVC == leaveTourMessageView {
 			hideLeaveTourMessage()
+			currentMode = .tour
+			relatedTourModel = nil
 		}
 	}
 }

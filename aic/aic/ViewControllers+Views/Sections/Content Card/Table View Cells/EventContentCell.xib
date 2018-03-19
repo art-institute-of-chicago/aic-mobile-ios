@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14105" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,6 +111,7 @@ Location</string>
                     <constraint firstAttribute="bottom" secondItem="7vP-ys-6Vo" secondAttribute="bottom" constant="100" id="QVK-RZ-jfm"/>
                     <constraint firstItem="7vP-ys-6Vo" firstAttribute="top" secondItem="3K1-W8-qEM" secondAttribute="bottom" constant="86" id="TpN-i7-x9p"/>
                     <constraint firstAttribute="trailing" secondItem="7vP-ys-6Vo" secondAttribute="trailing" constant="16" id="YQe-nt-AqH"/>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="centerX" secondItem="aia-Sy-xUb" secondAttribute="centerX" id="Zs4-Jd-eSJ"/>
                     <constraint firstItem="i29-cB-gnI" firstAttribute="centerX" secondItem="aia-Sy-xUb" secondAttribute="centerX" id="aGu-ze-kt2"/>
                     <constraint firstItem="eT9-Qh-kAN" firstAttribute="leading" secondItem="aia-Sy-xUb" secondAttribute="leading" constant="16" id="bjs-aj-WG8"/>
                     <constraint firstAttribute="trailing" secondItem="3K1-W8-qEM" secondAttribute="trailing" id="e6f-V1-I9H"/>

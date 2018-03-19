@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14105" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,7 +38,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zJ-6p-yGa">
-                        <rect key="frame" x="16" y="313" width="343" height="17"/>
+                        <rect key="frame" x="16" y="313.5" width="343" height="16.5"/>
                         <fontDescription key="fontDescription" name="SabonNextLTPro-Regular" family="Sabon Next LT Pro" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -121,11 +121,12 @@
                     <constraint firstItem="M4X-H7-qci" firstAttribute="top" secondItem="ZAJ-5a-7Ql" secondAttribute="top" id="GRo-WR-ikf"/>
                     <constraint firstAttribute="bottom" secondItem="7zJ-6p-yGa" secondAttribute="bottom" constant="49" id="Im1-VT-3aj"/>
                     <constraint firstAttribute="trailing" secondItem="3Qi-hz-FxZ" secondAttribute="trailing" id="MS2-tK-pVk"/>
+                    <constraint firstItem="M4X-H7-qci" firstAttribute="centerX" secondItem="ZAJ-5a-7Ql" secondAttribute="centerX" id="PkF-Mi-jLv"/>
                     <constraint firstAttribute="trailing" secondItem="M4X-H7-qci" secondAttribute="trailing" id="Q9H-Fk-D5R"/>
                     <constraint firstItem="3Qi-hz-FxZ" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leading" id="Toa-XW-5fx"/>
                     <constraint firstItem="7zJ-6p-yGa" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leadingMargin" id="aUm-gW-fyd"/>
                     <constraint firstItem="M4X-H7-qci" firstAttribute="leading" secondItem="ZAJ-5a-7Ql" secondAttribute="leading" id="dpD-9t-v2H"/>
-                    <constraint firstItem="7zJ-6p-yGa" firstAttribute="top" secondItem="ZAJ-5a-7Ql" secondAttribute="top" constant="313" id="iwA-65-2za"/>
+                    <constraint firstItem="7zJ-6p-yGa" firstAttribute="top" secondItem="M4X-H7-qci" secondAttribute="bottom" constant="93" id="i6C-9Y-0eo"/>
                     <constraint firstItem="3Qi-hz-FxZ" firstAttribute="bottom" secondItem="M4X-H7-qci" secondAttribute="bottom" id="lTu-hl-PAM"/>
                     <constraint firstItem="TeH-Be-21x" firstAttribute="trailing" secondItem="M4X-H7-qci" secondAttribute="trailing" constant="-20" id="uaj-dc-FIS"/>
                     <constraint firstItem="TeH-Be-21x" firstAttribute="bottom" secondItem="M4X-H7-qci" secondAttribute="bottom" constant="-7" id="vwH-yQ-TWQ"/>

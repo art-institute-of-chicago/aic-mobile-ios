@@ -12,10 +12,6 @@ import MediaPlayer
 import Alamofire
 import Kingfisher
 
-protocol AudioPlayerNavigationControllerDelegate : class {
-	func audioPlayerSelectedRelatedTour(tour: AICTourModel)
-}
-
 class AudioPlayerNavigationController : CardNavigationController {
     var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
     let miniAudioPlayerView: MiniAudioPlayerView = MiniAudioPlayerView()
