@@ -106,8 +106,6 @@ extension ArtworkTableViewController {
 extension ArtworkTableViewController {
     /// Avoid bouncing at the top of the TableView
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y <= 0) {
-            scrollView.contentOffset = CGPoint.zero
-        }
+		scrollView.bounces = (scrollView.contentOffset.y > 20)
     }
 }

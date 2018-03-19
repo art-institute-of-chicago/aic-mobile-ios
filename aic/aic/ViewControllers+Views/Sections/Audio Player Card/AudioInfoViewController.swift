@@ -253,9 +253,7 @@ class AudioInfoViewController : UIViewController {
 extension AudioInfoViewController : UIScrollViewDelegate {
     /// Avoid bouncing at the top of the TableView
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y <= 0) {
-            scrollView.contentOffset = CGPoint.zero
-        }
+		scrollView.bounces = (scrollView.contentOffset.y > 20)
     }
 }
 

@@ -38,9 +38,15 @@ class SectionsViewController : UIViewController {
     var previousViewController: SectionNavigationController? = nil
     
     // Messages
-	fileprivate var headphonesMessageView: MessageViewController? = nil
+	private var headphonesMessageVC: MessageViewController? = nil
+	private var leaveTourMessageVC: MessageViewController? = nil
 	
-    fileprivate var requestedTour: AICTourModel? = nil
+	// Content on Map
+    private var requestedTour: AICTourModel? = nil
+	private var requestedArtwork: AICObjectModel? = nil
+	private var requestedSearchedArtwork: AICSearchedArtworkModel? = nil
+	private var requestedExhibition: AICExhibitionModel? = nil
+	private var requestedMapMode: MapViewController.Mode? = nil
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		currentViewController = homeVC
@@ -112,20 +118,12 @@ class SectionsViewController : UIViewController {
 	// MARK: Section Navigation
 	
     private func setSelectedSection(sectionVC: SectionNavigationController) {
-        // If tours tab was pressed when on a tour
-        /*if sectionVC == currentViewController && sectionVC == toursVC {
-            if toursVC.currentTour != nil {
-                showLeaveTourMessage()
-                return
-            }
-        }*/
-        
+		if sectionVC == currentViewController {
+			return
+		}
+		
         previousViewController = currentViewController
         currentViewController = sectionVC
-        
-        // Update colors for this VC
-		sectionTabBarController.tabBar.tintColor = sectionVC.color
-		audioPlayerVC.setProgressBarColor(color: sectionVC.color)
 		
 		// Card operations
 		if currentViewController != previousViewController {
@@ -134,6 +132,23 @@ class SectionsViewController : UIViewController {
 			}
 			if let contentCardVC = self.contentCardVC {
 				contentCardVC.hide()
+			}
+			
+			// Update colors for this VC
+			sectionTabBarController.tabBar.tintColor = sectionVC.color
+			audioPlayerVC.setProgressBarColor(color: sectionVC.color)
+			
+			if currentViewController == homeVC && sectionTabBarController.selectedIndex != 0 {
+				sectionTabBarController.selectedIndex = 0
+			}
+			else if currentViewController == audioGuideVC && sectionTabBarController.selectedIndex != 1 {
+				sectionTabBarController.selectedIndex = 1
+			}
+			else if currentViewController == mapVC && sectionTabBarController.selectedIndex != 2 {
+				sectionTabBarController.selectedIndex = 2
+			}
+			else if currentViewController == infoVC && sectionTabBarController.selectedIndex != 3 {
+				sectionTabBarController.selectedIndex = 3
 			}
 		}
 		
@@ -164,76 +179,102 @@ class SectionsViewController : UIViewController {
     }
 	
 	// MARK: Show On Map
-    
+	
 	func showTourOnMap(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
-        /*if toursVC.currentTour != nil {
-            self.requestedTour = tour
-            showLeaveTourMessage()
-            return
-        }*/
+		setSelectedSection(sectionVC: mapVC)
 		
-		if currentViewController != mapVC {
-			setSelectedSection(sectionVC: mapVC)
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			if let currentTour = mapVC.tourModel {
+				if currentTour.nid == tour.nid && currentTour.language == tour.language {
+					return
+				}
+			}
+			
+			self.requestedMapMode = .tour
+			self.requestedTour = tour
+			showLeaveTourMessage()
+			return
 		}
-		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
-		sectionTabBarController.selectedIndex = 2
 		
-        // If this is coming from an object view,
-        //show the mini player to reveal tour below
-//        if objectVC.mode != .hidden {
-//            objectVC.showMiniPlayer()
-//        }
+		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
 		
         // Log Analytics
 //        AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)
     }
 	
 	func showArtworkOnMap(artwork: AICObjectModel) {
-		if currentViewController != mapVC {
-			setSelectedSection(sectionVC: mapVC)
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .artwork
+			self.requestedArtwork = artwork
+			showLeaveTourMessage()
+			return
 		}
+		
 		mapVC.showArtwork(artwork: artwork)
-		sectionTabBarController.selectedIndex = 2
 	}
 	
 	func showSearchedArtworkOnMap(searchedArtwork: AICSearchedArtworkModel) {
-		if currentViewController != mapVC {
-			setSelectedSection(sectionVC: mapVC)
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .searchedArtwork
+			self.requestedSearchedArtwork = searchedArtwork
+			showLeaveTourMessage()
+			return
 		}
+		
 		mapVC.showSearchedArtwork(searchedArtwork: searchedArtwork)
-		sectionTabBarController.selectedIndex = 2
 	}
 	
 	func showExhibitionOnMap(exhibition: AICExhibitionModel) {
-		if currentViewController != mapVC {
-			setSelectedSection(sectionVC: mapVC)
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .exhibition
+			self.requestedExhibition = exhibition
+			showLeaveTourMessage()
+			return
 		}
+		
 		mapVC.showExhibition(exhibition: exhibition)
-		sectionTabBarController.selectedIndex = 2
 	}
 	
 	func showDiningOnMap() {
-		if currentViewController != mapVC {
-			setSelectedSection(sectionVC: mapVC)
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .dining
+			showLeaveTourMessage()
+			return
 		}
+		
 		mapVC.showDining()
-		sectionTabBarController.selectedIndex = 2
 	}
 	
 	func showRestroomsOnMap() {
-		if currentViewController != mapVC {
-			setSelectedSection(sectionVC: mapVC)
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .restrooms
+			showLeaveTourMessage()
+			return
 		}
+		
 		mapVC.showRestrooms()
-		sectionTabBarController.selectedIndex = 2
 	}
 	
 	func showGiftShopOnMap() {
-		if currentViewController != mapVC {
-			setSelectedSection(sectionVC: mapVC)
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .giftshop
+			showLeaveTourMessage()
+			return
 		}
+		
 		mapVC.showGiftShop()
-		sectionTabBarController.selectedIndex = 2
 	}
     
     // MARK: Play Audio
@@ -303,43 +344,68 @@ class SectionsViewController : UIViewController {
 		}
 	}
 	
-    // MARK: Messages
+    // MARK: Headphones Messages
     
     fileprivate func showHeadphonesMessage() {
         let defaults = UserDefaults.standard
         let showHeadphonesMessage = defaults.bool(forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
         
         if showHeadphonesMessage {
-            headphonesMessageView = MessageViewController(message: Common.Messages.useHeadphones)
-            headphonesMessageView!.delegate = self
+            headphonesMessageVC = MessageViewController(message: Common.Messages.useHeadphones)
+            headphonesMessageVC!.delegate = self
 			
             // Modal presentation style
-            headphonesMessageView!.definesPresentationContext = true
-            headphonesMessageView!.providesPresentationContextTransitionStyle = true
-            headphonesMessageView!.modalPresentationStyle = .overFullScreen
-            headphonesMessageView!.modalTransitionStyle = .crossDissolve
+            headphonesMessageVC!.definesPresentationContext = true
+            headphonesMessageVC!.providesPresentationContextTransitionStyle = true
+            headphonesMessageVC!.modalPresentationStyle = .overFullScreen
+            headphonesMessageVC!.modalTransitionStyle = .crossDissolve
             
-            self.present(headphonesMessageView!, animated: true, completion: nil)
+            self.present(headphonesMessageVC!, animated: true, completion: nil)
         }
     }
     
     fileprivate func hideHeadphonesMessage() {
-        if let messageView = headphonesMessageView {
+        if let messageView = headphonesMessageVC {
             // Update user defaults
             let defaults = UserDefaults.standard
             defaults.set(false, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
             defaults.synchronize()
             
             messageView.dismiss(animated: true, completion: nil)
-            headphonesMessageView = nil
+            headphonesMessageVC = nil
         }
     }
+	
+	// MARK: Leave Tour Message
+	
+	private func showLeaveTourMessage() {
+		leaveTourMessageVC = MessageViewController(message: Common.Messages.leavingTour)
+		leaveTourMessageVC!.delegate = self
+		
+		// Modal presentation style
+		leaveTourMessageVC!.definesPresentationContext = true
+		leaveTourMessageVC!.providesPresentationContextTransitionStyle = true
+		leaveTourMessageVC!.modalPresentationStyle = .overFullScreen
+		leaveTourMessageVC!.modalTransitionStyle = .crossDissolve
+		
+		self.present(leaveTourMessageVC!, animated: true, completion: nil)
+	}
+	
+	private func hideLeaveTourMessage() {
+		if let messageView = leaveTourMessageVC {
+			messageView.dismiss(animated: true, completion: nil)
+			leaveTourMessageVC = nil
+		}
+	}
+	
+	// MARK: Search Button Pressed
 	
 	@objc func searchButtonPressed(button: UIButton) {
 		searchVC.showFullscreen()
 	}
 	
 	// MARK: Language
+	
 	@objc func updateLanguage() {
 		sectionTabBarController.tabBar.items![0].title = "Home".localized(using: "TabMenu")
 		sectionTabBarController.tabBar.items![1].title = "Audio".localized(using: "TabMenu")
@@ -348,7 +414,8 @@ class SectionsViewController : UIViewController {
 	}
 }
 
-// MARK: SectionTabBarController Delegate Methods
+// MARK: SectionTabBarController Delegate
+
 extension SectionsViewController : UITabBarControllerDelegate {
 	func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
 		if let sectionVC = viewController as? SectionNavigationController {
@@ -399,6 +466,7 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 }
 
 // MARK: AudioGuide Delegate
+
 extension SectionsViewController : AudioGuideNavigationControllerDelegate {
     func audioGuideDidSelectObject(object: AICObjectModel, audioGuideID: Int) {
         playAudioGuideArtwork(artwork: object, audioGuideID: audioGuideID)
@@ -438,6 +506,7 @@ extension SectionsViewController : AudioGuideNavigationControllerDelegate {
 //}
 
 // MARK: Map Delegate
+
 extension SectionsViewController : MapNavigationControllerDelegate {
 	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel) {
 		playMapArtwork(artwork: artwork)
@@ -452,36 +521,79 @@ extension SectionsViewController : MapNavigationControllerDelegate {
 		tourModel.language = language
 		playTourStop(tourStop: tourStop, tour: tourModel)
 	}
+	
+	func mapDidPresseCloseTourButton() {
+		showLeaveTourMessage()
+	}
 }
 
 // MARK: Message Delegate
+
 extension SectionsViewController : MessageViewControllerDelegate {
     func messageViewActionSelected(messageVC: MessageViewController) {
-		if messageVC == headphonesMessageView {
+		if messageVC == headphonesMessageVC {
 			hideHeadphonesMessage()
 		}
-//        if messageVC.view == leaveCurrentTourMessageView {
-//            hideLeaveTourMessage()
-//
-//            if let requestedTour = self.requestedTour {
-//                self.requestedTour = nil
-////                toursVC.removeCurrentTour()
-//                //startTour(tour: requestedTour)
-//            } else {
-////                removeCurrentTour()
-//            }
-//        }
+		else if messageVC == leaveTourMessageVC {
+			hideLeaveTourMessage()
+			
+			if let _ = self.requestedMapMode {
+				if self.requestedMapMode == .tour && self.requestedTour != nil {
+					if let previousTour = mapVC.tourModel {
+						self.requestedTour!.language = previousTour.language
+					}
+					
+					audioPlayerVC.pause()
+					audioPlayerVC.hide()
+					
+					showTourOnMap(tour: self.requestedTour!, language: self.requestedTour!.language, stopIndex: nil)
+				}
+				else if self.requestedMapMode == .artwork && self.requestedArtwork != nil {
+					showArtworkOnMap(artwork: self.requestedArtwork!)
+				}
+				else if self.requestedMapMode == .searchedArtwork && self.requestedSearchedArtwork != nil {
+					showSearchedArtworkOnMap(searchedArtwork: self.requestedSearchedArtwork!)
+				}
+				else if self.requestedMapMode == .exhibition && self.requestedExhibition != nil {
+					showExhibitionOnMap(exhibition: self.requestedExhibition!)
+				}
+				else if self.requestedMapMode == .dining {
+					showDiningOnMap()
+				}
+				else if self.requestedMapMode == .giftshop {
+					showGiftShopOnMap()
+				}
+				else if self.requestedMapMode == .restrooms {
+					showRestroomsOnMap()
+				}
+			}
+			else {
+				mapVC.showAllInformation()
+			}
+			
+			self.requestedMapMode = nil
+			self.requestedTour = nil
+			self.requestedArtwork = nil
+			self.requestedSearchedArtwork = nil
+			self.requestedExhibition = nil
+		}
     }
     
     func messageViewCancelSelected(messageVC: MessageViewController) {
-//        if messageVC.view == leaveCurrentTourMessageView {
-//            hideLeaveTourMessage()
-//            requestedTour = nil
-//        }
+        if messageVC == leaveTourMessageVC {
+            hideLeaveTourMessage()
+			
+			self.requestedMapMode = nil
+			self.requestedTour = nil
+			self.requestedArtwork = nil
+			self.requestedSearchedArtwork = nil
+			self.requestedExhibition = nil
+        }
     }
 }
 
 // MARK: Card Delegate
+
 extension SectionsViewController : CardNavigationControllerDelegate {
     // When the Audio Player goes fullscreen hide the TabBar
     func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint) {
@@ -534,6 +646,7 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 }
 
 // MARK: Tour Content Card Delegate
+
 extension SectionsViewController : TourTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
 	func tourContentCardDidPressStartTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
@@ -545,6 +658,7 @@ extension SectionsViewController : TourTableViewControllerDelegate {
 }
 
 // MARK: Artwork Content Card Delegate
+
 extension SectionsViewController : ArtworkTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel) {
@@ -559,7 +673,8 @@ extension SectionsViewController : ArtworkTableViewControllerDelegate {
 	}
 }
 
-//MARK: Exhibition Content Card Delegate
+// MARK: Exhibition Content Card Delegate
+
 extension SectionsViewController : ExhibitionTableViewControllerDelegate {
 	func exhibitionContentCardDidPressShowOnMap(exhibition: AICExhibitionModel) {
 		showExhibitionOnMap(exhibition: exhibition)
@@ -567,6 +682,7 @@ extension SectionsViewController : ExhibitionTableViewControllerDelegate {
 }
 
 // MARK: Search Map Items Collection Delegate
+
 extension SectionsViewController : MapItemsCollectionContainerDelegate {
 	func mapItemDiningSelected() {
 		if searchVC.currentState == .fullscreen {

@@ -135,6 +135,16 @@ class SearchNavigationController : CardNavigationController {
 		filterMenuView.autoPinEdge(.bottom, to: .top, of: rootVC.view, withOffset: resultsTopMargin + ResultsFilterMenuView.menuHeight)
 	}
 	
+	override func setCardPosition(_ positionY: CGFloat) {
+		super.setCardPosition(positionY)
+		if positionY > Common.Layout.cardFullscreenPositionY + 50 {
+			currentTableView.panGestureRecognizer.isEnabled = false
+		}
+		else {
+			currentTableView.panGestureRecognizer.isEnabled = true
+		}
+	}
+	
 	// MARK: Language
 	
 	@objc func updateLanguage() {
@@ -421,7 +431,7 @@ extension SearchNavigationController : UINavigationControllerDelegate {
 extension SearchNavigationController {
 	override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		if gestureRecognizer == cardPanGesture {
-			if currentTableView.contentOffset.y <= 0 {
+			if currentTableView != resultsVC.tableView && currentTableView.contentOffset.y <= 0 {
 				return true
 			}
 		}

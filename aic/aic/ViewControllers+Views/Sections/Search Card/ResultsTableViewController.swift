@@ -79,10 +79,8 @@ class ResultsTableViewController : UITableViewController {
 		self.view.backgroundColor = .aicDarkGrayColor
 		
 		self.tableView.separatorStyle = .none
-//		self.tableView.rowHeight = UITableViewAutomaticDimension // Necessary for AutoLayout of cells
-//		self.tableView.estimatedRowHeight = 30
-		self.tableView.alwaysBounceVertical = false
-		//self.tableView.bounces = false
+		self.tableView.rowHeight = UITableViewAutomaticDimension // Necessary for AutoLayout of cells
+		self.tableView.bounces = true
 		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 120, right: 0)
 		self.tableView.register(UINib(nibName: "SuggestedSearchCell", bundle: Bundle.main), forCellReuseIdentifier: SuggestedSearchCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
@@ -541,11 +539,9 @@ extension ResultsTableViewController {
 // MARK: Scroll Delegate
 extension ResultsTableViewController {
 	/// Avoid bouncing at the top of the TableView
-	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if (scrollView.contentOffset.y <= 0) {
-			scrollView.contentOffset = CGPoint.zero
-		}
-	}
+//	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//		scrollView.bounces = (scrollView.contentOffset.y > 20)
+//	}
 }
 
 // MARK: See All Buttons Events

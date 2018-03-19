@@ -24,6 +24,8 @@ class ContentButtonCell : UITableViewCell {
 	
 	static let cellHeight: CGFloat = 72.0
 	
+	var imageUrl: URL? = nil
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
@@ -42,7 +44,12 @@ class ContentButtonCell : UITableViewCell {
 	}
 	
 	func setContent(imageUrl: URL?, cropRect: CGRect?, title: String, subtitle: String, showAudioIcon: Bool = false) {
+		if title == itemTitleLabel.text && subtitle == itemSubtitleLabel.text && self.imageUrl == imageUrl {
+			return
+		}
+		
 		// Load image only if URL is not nil
+		self.imageUrl = imageUrl
 		if let url = imageUrl {
 			itemImageView.kf.indicatorType = .activity
 			itemImageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cache, imageUrl) in
