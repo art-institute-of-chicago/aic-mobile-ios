@@ -34,7 +34,7 @@ class LocationSettingsViewController : UIViewController {
 		self.view.backgroundColor = .white
 		
 		locationButton.setColorMode(colorMode: AICButton.orangeMode)
-		locationButton.setTitle("Location Enabled", for: .normal)
+		locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
 		locationButton.addTarget(self, action: #selector(locationButtonPressed(button:)), for: .touchUpInside)
 		
 		self.view.addSubview(pageView)
@@ -80,7 +80,8 @@ class LocationSettingsViewController : UIViewController {
 			case .authorizedAlways, .authorizedWhenInUse:
 				locationButton.setTitle("Location Enabled".localized(using: "LocationSettings"), for: .normal)
 			case .notDetermined:
-				Common.Map.locationManager.requestAlwaysAuthorization()
+				Common.Map.locationManager.delegate = self
+				locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
 			}
 		}
 		else {
@@ -89,7 +90,20 @@ class LocationSettingsViewController : UIViewController {
 	}
 	
 	@objc func locationButtonPressed(button: UIButton) {
-		UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+		if CLLocationManager.authorizationStatus() == .notDetermined {
+			Common.Map.locationManager.requestWhenInUseAuthorization()
+			Common.Map.locationManager.startUpdatingLocation()
+			Common.Map.locationManager.startUpdatingHeading()
+		}
+		else {
+			UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+		}
+	}
+}
+
+extension LocationSettingsViewController : CLLocationManagerDelegate {
+	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+		updateLanguage()
 	}
 }
 

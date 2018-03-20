@@ -55,7 +55,6 @@ class MapNavigationController : SectionNavigationController {
 		
 		// Setup delegates
 		mapVC.delegate = self
-		Common.Map.locationManager.delegate = self.mapVC
 		
 		// Add root viewcontroller
 		self.pushViewController(mapVC, animated: false)
@@ -75,6 +74,7 @@ class MapNavigationController : SectionNavigationController {
 		mapVC.setViewableArea(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - Common.Layout.tabBarHeight))
 		
 		// Location
+		Common.Map.locationManager.delegate = self.mapVC
 		startLocationManager()
 		
 		// Tooltips
