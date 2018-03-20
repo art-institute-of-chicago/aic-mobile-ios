@@ -7,6 +7,7 @@ import SwiftyJSON
 import CoreLocation
 import Kingfisher
 import MapKit
+import Alamofire
 
 class AppDataParser {
     enum ParseError: Error {
@@ -39,8 +40,7 @@ class AppDataParser {
 	private var tourCategories = [AICTourCategoryModel]()
 	private var exhibitionOptionalImages: [Int : URL] = [:]
 	private var searchArtworks = [AICObjectModel]()
-	
-	private var mapFloors: [FloorplanOverlay] = []
+	private var mapFloorsURLs: [URL] = []
     
     // MARK: App Data
 	
@@ -59,7 +59,7 @@ class AppDataParser {
 		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
 		let searchStrings = parse(searchStringsJSON: appDataJson["search"]["search_strings"])
 		self.searchArtworks = parse(searchArtworks: appDataJson["search"])
-		let map: AICMapModel = parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
+		let map = self.parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
 		
 		let appData = AICAppDataModel(generalInfo: generalInfo,
 									  galleries: self.galleries,
@@ -86,7 +86,8 @@ class AppDataParser {
 		return appData
     }
 	
-	// MARK: Featured Tours and Exhibitis
+	// MARK: Featured Tours and Exhibitions
+	
 	func parseFeaturedItems(dashboardJSON: JSON, arrayKey: String) -> [Int] {
 		var featuredItems: [Int] = []
 		do {
@@ -101,6 +102,7 @@ class AppDataParser {
 	}
 	
 	// MARK: General Info
+	
 	func parse(generalInfoJSON: JSON) -> AICGeneralInfoModel {
 		do {
 			let nid         = try getInt(fromJSON: generalInfoJSON, forKey: "nid")
@@ -156,6 +158,7 @@ class AppDataParser {
 	}
 	
 	// MARK: Galleries
+	
     private func parse(galleriesJSON: JSON) -> [AICGalleryModel] {
         print(galleriesJSON.dictionaryValue.count)
 		var galleries = [AICGalleryModel]()
@@ -206,6 +209,7 @@ class AppDataParser {
     }
     
 	// MARK: Objects
+	
     fileprivate func parse(objectsJSON: JSON) -> [AICObjectModel] {
 		var objects = [AICObjectModel]()
         for (_,objectData):(String, JSON) in objectsJSON.dictionaryValue {
@@ -313,6 +317,7 @@ class AppDataParser {
     }
 	
 	// MARK: Audio Commentary
+	
 	func parse(audioCommentaryJSON: JSON) throws -> AICAudioCommentaryModel {
 		// Selector number is optional
 		var selectorNumber: Int?  = nil
@@ -329,6 +334,7 @@ class AppDataParser {
 	}
     
 	// MARK: Audio Files
+	
 	fileprivate func parse(audioFilesJSON: JSON) -> [AICAudioFileModel] {
 		var audioFiles = [AICAudioFileModel]()
 		for (_,audioFileData):(String, JSON) in audioFilesJSON.dictionaryValue {
@@ -398,6 +404,7 @@ class AppDataParser {
 	}
 	
 	// MARK: Tours
+	
 	fileprivate func parse(tourCategoriesJSON: JSON) -> [AICTourCategoryModel] {
 		var categories: [AICTourCategoryModel] = []
 		
@@ -592,6 +599,25 @@ class AppDataParser {
 	
 	// MARK: Map
 	
+	func parseMapFloorsURLs(fromAppData: Data) -> [URL] {
+		var result: [URL] = []
+		
+		do {
+			let appDataJSON = JSON(data: fromAppData)
+			let mapFloorsJSON = appDataJSON["map_floors"]
+			
+			for floorNumber in 0..<Common.Map.totalFloors {
+				let mapFloorJSON = mapFloorsJSON["map_floor\(floorNumber)"]
+				let floorPdfURL: URL = try getURL(fromJSON: mapFloorJSON, forKey: "floor_plan")!
+				result.append(floorPdfURL)
+			}
+		}
+		catch {
+		}
+		
+		return result
+	}
+	
 	func parse(mapFloorsJSON: JSON, mapAnnotationsJSON: JSON) -> AICMapModel {
 		do {
 			var floorOverlays: [FloorplanOverlay] = []
@@ -607,7 +633,7 @@ class AppDataParser {
 			for floorNumber in 0..<Common.Map.totalFloors {
 				let mapFloorJSON = mapFloorsJSON["map_floor\(floorNumber)"]
 				
-				let floorPdfURL: URL = try getURL(fromJSON: mapFloorJSON, forKey: "floor_plan")!
+				let floorPdfURL: URL = AppDataManager.sharedInstance.mapFloorURLs[floorNumber]
 				let anchorPixel1 = try getPoint(fromJSON: mapFloorJSON, forKey: "anchor_pixel_1")
 				let anchorPixel2 = try getPoint(fromJSON: mapFloorJSON, forKey: "anchor_pixel_2")
 				let anchorLocation1 = try getCLLocation2d(fromJSON: mapFloorJSON, forKey: "anchor_location_1")

@@ -25,6 +25,10 @@ class AppDataManager {
     
     private var dataFilesRetrieved = 0
     var pctComplete:Float = 0.0
+	
+	private var appData: Data? = nil
+	private var numberMapFloorsLoaded: Int = 0
+	var mapFloorURLs: [URL] = [] // local path to map floor pdf files
     
     private (set) var isLoaded = false
     private var loadFailure = false
@@ -49,10 +53,6 @@ class AppDataManager {
                 }
                 
                 if let DataConstants = config["DataConstants"] as! [String : Any]? {
-                    
-                    if let feedFeaturedExhibitions = DataConstants["feedFeaturedExhibitions"] {
-                        Common.DataConstants.NewsFeed.Featured = feedFeaturedExhibitions as! String
-                    }
                     
                     if let appDataJSON = DataConstants["appDataJSON"] {
                         Common.DataConstants.appDataJSON = appDataJSON as! String
@@ -85,36 +85,34 @@ class AppDataManager {
                 print(error)
             }
         }
-                
+		
         loadFailure = false
         dataFilesRetrieved = 0
-        pctComplete = 0.0
-        lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedString) { (stringsMatch) in
+		pctComplete = 0.0
+		appData = nil
+		mapFloorURLs = []
+		numberMapFloorsLoaded = 0
+		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedString) { (stringsMatch) in
             if !stringsMatch {
                 //Try tp download new app data
                 //If there is an issue with the server or reachability
                 //then fall back to the older local data, unless no local data
                 //exists, then fail.
                 self.downloadAppData()
-            }else{
+            }
+			else {
                 //If the appData json that is on disk is the same as
                 //the server provided json then just use our local data
-                guard let cachedAppData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename) else {
-                    //If we couldn't load any app data from disk let the user know
-                    self.notifyLoadFailure(withMessage: "Failed to load application data.")
-                    return
-                }
-                //We have good cached app data, continue on
-                self.app = self.dataParser.parse(appData: cachedAppData)
-                self.updateDownloadProgress()
-                self.downloadExhibitions()
+               self.appData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename)
+				
+				//We have good cached app data, continue on
+				self.loadAppData()
             }
             
         }
     }
     
     private func downloadAppData() {
-        
         // App Data
         Alamofire.request(Common.DataConstants.appDataJSON)
             .validate()
@@ -122,9 +120,10 @@ class AppDataManager {
                 if self.loadFailure == false {
                     switch response.result {
                     case .success(let value):
-                        self.app = self.dataParser.parse(appData: value)
 						
-                        //Save the data to disk incase the server is down at some point in the future [JB]
+						self.appData = value
+						
+						//Save the data to disk in case the server is down at some point in the future [JB]
                         let headersDictionary = response.response?.allHeaderFields
                         if let lastModifiedString = headersDictionary?["Last-Modified"] as? String {
                             self.writeDataToDisk(data: value,
@@ -133,21 +132,100 @@ class AppDataManager {
                                                  fileName: Common.DataConstants.localAppDataFilename)
                         }
                     case .failure(let error):
-                        //Attempt to fall back to cached data
-                        guard let cachedAppData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename) else {
-                            //If we couldn't load any app data from disk let the user know
-                            self.notifyLoadFailure(withMessage: "Failed to load application data.")
-                            print(error)
-                            return
-                        }
-                        //We have good cached app data, continue on
-                        self.app = self.dataParser.parse(appData: cachedAppData)
-                    }
-					self.updateDownloadProgress()
-					self.downloadExhibitions()
+						// Load cached app data from disk
+						self.appData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename)
+					}
+					
+					self.loadAppData()
                 }
         }
     }
+	
+	private func loadAppData() {
+		if let appData = self.appData {
+			// We have good app data, continue on
+			self.updateDownloadProgress()
+			self.downloadMapFloorsPdfs(appData: appData)
+		}
+		else {
+			// If we couldn't load any app data from url or disk let the user know
+			self.notifyLoadFailure(withMessage: "Failed to load application data.")
+		}
+	}
+	
+	private func downloadMapFloorsPdfs(appData: Data) {
+		// URLs to download Floor Pdfs
+		let floorsURLs = dataParser.parseMapFloorsURLs(fromAppData: appData)
+		
+		guard floorsURLs.count == Common.Map.totalFloors else {
+			// If we couldn't parse all floor pdfs urls let the user know
+			self.notifyLoadFailure(withMessage: "Failed to load application data.")
+			return
+		}
+		
+		for floorNumber in 0..<Common.Map.totalFloors {
+			let floorSourceURL = floorsURLs[floorNumber]
+			
+			// Create destination URL for this floor
+			let cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .allDomainsMask).first!
+			let floorFolderURL = cachesFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
+			let floorDestinationURL = floorFolderURL.appendingPathComponent(floorSourceURL.lastPathComponent)
+			
+			// If a pdf file already exists with the same name, load from caches folder
+			if FileManager.default.fileExists(atPath: floorDestinationURL.path) {
+				self.numberMapFloorsLoaded += 1
+				self.addMapFloorURL(floorDestinationURL)
+			}
+			// If the file is new, download pdf from CMS
+			else {
+				// Clean up floder of previous pdf files for this floor
+				var isDirectory : ObjCBool = true
+				if FileManager.default.fileExists(atPath: floorFolderURL.path, isDirectory: &isDirectory) {
+					do {
+						try FileManager.default.removeItem(atPath: floorFolderURL.path)
+					}
+					catch {
+					}
+				}
+				
+				// Download new pdf file
+				let destination: DownloadRequest.DownloadFileDestination = { _, _ in (floorDestinationURL, [.removePreviousFile, .createIntermediateDirectories]) }
+				
+				Alamofire.download(floorSourceURL, to: destination).response { response in
+					self.numberMapFloorsLoaded += 1
+					
+					if response.destinationURL != nil {
+						self.addMapFloorURL(response.destinationURL!)
+					}
+					else {
+						// If we coulfn't load this floor pdf let the user know
+						self.notifyLoadFailure(withMessage: "Failed to load application data.")
+						return
+					}
+				}
+			}
+		}
+	}
+	
+	private func addMapFloorURL(_ url: URL) {
+		self.mapFloorURLs.append(url)
+		
+		// If we loaded all floors and we succesfully downloaded all of them
+		if self.numberMapFloorsLoaded == Common.Map.totalFloors {
+			if self.mapFloorURLs.count == Common.Map.totalFloors, let appData = self.appData {
+				
+				self.app = self.dataParser.parse(appData: appData)
+				self.updateDownloadProgress()
+				self.downloadExhibitions()
+			}
+			else {
+				// If we couldn't load some floor pdfs let the user know
+				self.notifyLoadFailure(withMessage: "Failed to load application data.")
+				return
+			}
+		}
+	}
+	
 	
 	private func downloadExhibitions() {
 		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]! + "/search?limit=99")!)

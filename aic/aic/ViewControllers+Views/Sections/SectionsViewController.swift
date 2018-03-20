@@ -571,11 +571,7 @@ extension SectionsViewController : MessageViewControllerDelegate {
 				mapVC.showAllInformation()
 			}
 			
-			self.requestedMapMode = nil
-			self.requestedTour = nil
-			self.requestedArtwork = nil
-			self.requestedSearchedArtwork = nil
-			self.requestedExhibition = nil
+			resetRequestedContent()
 		}
     }
     
@@ -583,13 +579,17 @@ extension SectionsViewController : MessageViewControllerDelegate {
         if messageVC == leaveTourMessageVC {
             hideLeaveTourMessage()
 			
-			self.requestedMapMode = nil
-			self.requestedTour = nil
-			self.requestedArtwork = nil
-			self.requestedSearchedArtwork = nil
-			self.requestedExhibition = nil
+			resetRequestedContent()
         }
     }
+	
+	func resetRequestedContent() {
+		self.requestedMapMode = nil
+		self.requestedTour = nil
+		self.requestedArtwork = nil
+		self.requestedSearchedArtwork = nil
+		self.requestedExhibition = nil
+	}
 }
 
 // MARK: Card Delegate

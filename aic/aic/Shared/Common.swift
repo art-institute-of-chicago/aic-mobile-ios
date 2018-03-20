@@ -33,11 +33,7 @@ struct Common {
 
     // MARK: Data
     struct DataConstants {
-        static let totalDataFeeds = 3
-
-        struct NewsFeed {
-            static var Featured = "http://www.artic.edu/exhibitions-json/featured-exhibitions"
-        }
+        static let totalDataFeeds = 4
         
         static var appDataJSON = "http://localhost:8888/appData.json"
 
@@ -49,12 +45,6 @@ struct Common {
         // in the open source version of this application
         static var memberCardSOAPRequestURL = "http://link-to-member-card-validation.domain"
 
-        static let testMemberID:UInt64 = 0000000000000
-        static let testMemberZip:Int = 00000
-
-        static let testMultipleMemberID:UInt64 = 000000
-        static let testMultipleMemberZip:Int = 00000
-
         static let dataLoadFailureTitle = "Load Failure"
         static let dataLoadFailureMessage = "Please check your internet connection and try again."
         static let dataLoadFailureButtonTitle = "Retry"
@@ -64,7 +54,6 @@ struct Common {
 
         // Used to cache JSON data locally until remote file changes
         static let localAppDataFilename = "app.data"
-        static let localNewsFeedFilename = "news.data"
     }
 
     // MARK: Sections
@@ -124,7 +113,6 @@ struct Common {
         static let memberInfoSelectedMemberDefaultsKey = "AICMemberInfoSelectedMember"
 
         static let onDiskAppDataLastModifiedString = "AICAppDataLastModified"
-        static let onDiskNewsFeedLastModifiedString = "AICNewsFeedLastModified"
     }
 
     // MARK: URL Scheme/Deep Links
