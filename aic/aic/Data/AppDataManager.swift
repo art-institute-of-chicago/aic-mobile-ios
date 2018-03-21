@@ -111,7 +111,9 @@ class AppDataManager {
             
         }
     }
-    
+	
+	// MARK: Download App Data
+	
     private func downloadAppData() {
         // App Data
         Alamofire.request(Common.DataConstants.appDataJSON)
@@ -152,6 +154,8 @@ class AppDataManager {
 			self.notifyLoadFailure(withMessage: "Failed to load application data.")
 		}
 	}
+	
+	// MARK: Download Map Floors Pdfs
 	
 	private func downloadMapFloorsPdfs(appData: Data) {
 		// URLs to download Floor Pdfs
@@ -226,6 +230,7 @@ class AppDataManager {
 		}
 	}
 	
+	// MARK: Download Exhibitions
 	
 	private func downloadExhibitions() {
 		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]! + "/search?limit=99")!)
@@ -284,6 +289,8 @@ class AppDataManager {
 		}
 	}
 	
+	// MARK: Download Events
+	
 	func downloadEvents() {
 		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]! + "/search?limit=500")!)
 		let urlString = urlRequest.url?.absoluteString
@@ -331,7 +338,9 @@ class AppDataManager {
 				self.updateDownloadProgress()
 		}
 	}
-    
+	
+	// MARK: Update Download State
+	
     private func updateDownloadProgress() {
         DispatchQueue.main.async {
             self.dataFilesRetrieved = self.dataFilesRetrieved + 1
@@ -351,7 +360,9 @@ class AppDataManager {
             self.loadFailure = true
         }
     }
-    
+	
+	// MARK: Data Getters
+	
     func getObjects(forFloor floor:Int) -> [AICObjectModel] {
         return app.objects.filter( { $0.location.floor == floor })
     }

@@ -241,19 +241,13 @@ class SearchNavigationController : CardNavigationController {
 		
 		if showAutocomplete == true {
 			// Autocomplete request sent immediately
-			SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadAutocompleteStrings(searchText:)), with: searchText, afterDelay: 0.4)
+			SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadAutocompleteStrings(searchText:)), with: searchText, afterDelay: 0.3)
 			//SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
 		}
 		
 		// Artworks/Tours/Exhibitions requests sent with delay
 		// to avoid making too many requests to the api while typing
-		SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadArtworks(searchText:)), with: searchText, afterDelay: 1.0)
-		SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadTours(searchText:)), with: searchText, afterDelay: 1.0)
-		SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadExhibitions(searchText:)), with: searchText, afterDelay: 1.0)
-		
-//		SearchDataManager.sharedInstance.loadArtworks(searchText: searchText)
-//		SearchDataManager.sharedInstance.loadTours(searchText: searchText)
-//		SearchDataManager.sharedInstance.loadExhibitions(searchText: searchText)
+		SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadAllContent(searchText:)), with: searchText, afterDelay: 0.5)
 		
 		if resultsVC.filter == .empty {
 			resultsTopMarginConstraint?.constant = resultsWithFilterMenuTopMargin
@@ -334,22 +328,12 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 		self.view.layoutIfNeeded()
 	}
 	
-	func searchDataDidFinishLoading(searchedArtworks: [AICSearchedArtworkModel]) {
+	func searchDataDidFinishLoading(artworks: [AICSearchedArtworkModel], tours: [AICTourModel], exhibitions: [AICExhibitionModel]) {
 		resultsVC.setContentLoadedForFilter(filter: .artworks, loaded: true)
-		resultsVC.artworkItems = searchedArtworks
-		resultsVC.tableView.reloadData()
-		self.view.layoutIfNeeded()
-	}
-	
-	func searchDataDidFinishLoading(tours: [AICTourModel]) {
 		resultsVC.setContentLoadedForFilter(filter: .tours, loaded: true)
-		resultsVC.tourItems = tours
-		resultsVC.tableView.reloadData()
-		self.view.layoutIfNeeded()
-	}
-	
-	func searchDataDidFinishLoading(exhibitions: [AICExhibitionModel]) {
 		resultsVC.setContentLoadedForFilter(filter: .exhibitions, loaded: true)
+		resultsVC.artworkItems = artworks
+		resultsVC.tourItems = tours
 		resultsVC.exhibitionItems = exhibitions
 		resultsVC.tableView.reloadData()
 		self.view.layoutIfNeeded()

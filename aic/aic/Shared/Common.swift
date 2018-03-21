@@ -515,6 +515,7 @@ struct Common {
 		case eventsEndpoint = "events_endpoint"
 		case autocompleteEndpoint = "autocomplete_endpoint"
 		case toursEndpoint = "tours_endpoint"
+		case multiSearchEndpoint = "multisearch_endpoint"
 		case ticketsUrl = "tickets_endpoint"
 	}
 }

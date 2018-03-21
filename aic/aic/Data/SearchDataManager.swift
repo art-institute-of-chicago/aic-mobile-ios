@@ -11,9 +11,7 @@ import Alamofire
 
 protocol SearchDataManagerDelegate : class {
 	func searchDataDidFinishLoading(autocompleteStrings: [String])
-	func searchDataDidFinishLoading(searchedArtworks: [AICSearchedArtworkModel])
-	func searchDataDidFinishLoading(tours: [AICTourModel])
-	func searchDataDidFinishLoading(exhibitions: [AICExhibitionModel])
+	func searchDataDidFinishLoading(artworks: [AICSearchedArtworkModel], tours: [AICTourModel], exhibitions: [AICExhibitionModel])
 	func searchDataFailure(filter: Common.Search.Filter)
 }
 
@@ -55,14 +53,16 @@ class SearchDataManager : NSObject {
 		}
 	}
 	
-	@objc func loadArtworks(searchText: String) {
+	@objc func loadAllContent(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
-		url += AppDataManager.sharedInstance.app.dataSettings[.artworksEndpoint]!
-		url += "/search?limit=99"
+		url += AppDataManager.sharedInstance.app.dataSettings[.multiSearchEndpoint]!
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-		let urlRequest = URLRequest(url:  URL(string: url)!)
-		let urlString = urlRequest.url?.absoluteString
-		let parameters: [String: Any] = [
+		var urlRequest = URLRequest(url:  URL(string: url)!)
+		
+		let artworksQuery: [String: Any] = [
+			"resources": "artworks",
+			"from": 0,
+			"size": 99,
 			"fields": [
 				"id",
 				"is_on_view",
@@ -80,63 +80,20 @@ class SearchDataManager : NSObject {
 			]
 		]
 		
-		if let previousRequest = artworksRequest {
-			previousRequest.cancel()
-		}
+		let toursQuery: [String: Any] = [
+			"resources": "tours",
+			"from": 0,
+			"size": 99,
+			"fields": [
+				"id"
+			],
+			"q": searchText
+		]
 		
-		artworksRequest = Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-			.validate()
-			.responseData { response in
-				switch response.result {
-				case .success(let value):
-					let searchedArtworks = self.dataParser.parse(searchedArtworksData: value)
-					self.delegate?.searchDataDidFinishLoading(searchedArtworks: searchedArtworks)
-				case .failure(let error):
-					self.delegate?.searchDataFailure(filter: .artworks)
-					print(error)
-				}
-		}
-	}
-	
-	@objc func loadTours(searchText: String) {
-		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
-		url += AppDataManager.sharedInstance.app.dataSettings[.toursEndpoint]!
-		url += "/search?q=" + searchText + "&limit=99&fields=id"
-		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-		let request = URLRequest(url: URL(string: url)!)
-		
-		if let previousRequest = toursRequest {
-			previousRequest.cancel()
-		}
-		
-		toursRequest = Alamofire.request(request as URLRequestConvertible)
-			.validate()
-			.responseData { response in
-				switch response.result {
-				case .success(let value):
-					var tours = [AICTourModel]()
-					let searchedTours = self.dataParser.parse(searchedToursData: value)
-					for tourId in searchedTours {
-						if let tour = AppDataManager.sharedInstance.getTour(forID: tourId) {
-							tours.append(tour)
-						}
-					}
-					self.delegate?.searchDataDidFinishLoading(tours: tours)
-				case .failure(let error):
-					self.delegate?.searchDataFailure(filter: .tours)
-					print(error)
-				}
-		}
-	}
-	
-	@objc func loadExhibitions(searchText: String) {
-		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
-		url += AppDataManager.sharedInstance.app.dataSettings[.exhibitionsEndpoint]!
-		url += "/search?limit=99"
-		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-		let urlRequest = URLRequest(url:  URL(string: url)!)
-		let urlString = urlRequest.url?.absoluteString
-		let parameters: [String: Any] = [
+		let exhibitionsQuery: [String: Any] = [
+			"resources": "exhibitions",
+			"from": 0,
+			"size": 99,
 			"fields": [
 				"id",
 				"title",
@@ -171,29 +128,59 @@ class SearchDataManager : NSObject {
 			]
 		]
 		
-		if let previousRequest = exhibitionsRequest {
+		let parameters: [[String : Any]] = [
+			artworksQuery,
+			toursQuery,
+			exhibitionsQuery
+		]
+		
+		if let previousRequest = artworksRequest {
 			previousRequest.cancel()
 		}
 		
-		exhibitionsRequest = Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+		urlRequest.httpMethod = "POST"
+		urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters, options: [])
+		
+		artworksRequest = Alamofire.request(urlRequest)
 			.validate()
 			.responseData { response in
 				switch response.result {
 				case .success(let value):
-					var exhibitions = [AICExhibitionModel]()
-					let searchedExhibitions = self.dataParser.parse(exhibitionsData: value)
-					// Assign imageUrl to search exhibition, if it already exists in the current exhibitions
-					for searchedExhibition in searchedExhibitions {
-						if let currentExhibition = AppDataManager.sharedInstance.exhibitions.filter({ $0.id == searchedExhibition.id }).first {
-							exhibitions.append(currentExhibition)
-						}
-						else {
-							exhibitions.append(searchedExhibition)
+					
+					// get results as dictionary of [contentType : Any]
+					let results = self.dataParser.parse(searchContent: value)
+					
+					// type cast results into the correspondent AIC data model
+					var artworks: [AICSearchedArtworkModel] = []
+					if let items = results[.artworks] {
+						for item in items {
+							if let artwork = item as? AICSearchedArtworkModel {
+								artworks.append(artwork)
+							}
 						}
 					}
-					self.delegate?.searchDataDidFinishLoading(exhibitions: exhibitions)
+					var tours: [AICTourModel] = []
+					if let items = results[.tours] {
+						for item in items {
+							if let tour = item as? AICTourModel {
+								tours.append(tour)
+							}
+						}
+					}
+					var exhibitions: [AICExhibitionModel] = []
+					if let items = results[.exhibitions] {
+						for item in items {
+							if let exhibition = item as? AICExhibitionModel {
+								exhibitions.append(exhibition)
+							}
+						}
+					}
+					
+					self.delegate?.searchDataDidFinishLoading(artworks: artworks, tours: tours, exhibitions: exhibitions)
+					
 				case .failure(let error):
-					self.delegate?.searchDataFailure(filter: .exhibitions)
+					self.delegate?.searchDataFailure(filter: .artworks)
 					print(error)
 				}
 		}

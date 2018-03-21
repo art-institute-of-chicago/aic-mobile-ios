@@ -924,6 +924,7 @@ class AppDataParser {
 			dataSettings[.eventsEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.eventsEndpoint.rawValue)
 			dataSettings[.autocompleteEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.autocompleteEndpoint.rawValue)
 			dataSettings[.toursEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.toursEndpoint.rawValue)
+			dataSettings[.multiSearchEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.multiSearchEndpoint.rawValue)
 			dataSettings[.ticketsUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.ticketsUrl.rawValue)
 		}
 		catch {
@@ -1141,7 +1142,6 @@ class AppDataParser {
 		
 		do {
 			try handleParseError({ [unowned self] in
-				
 				let json = JSON(data: autocompleteData)
 				if let jsonArray: [JSON] = json.array {
 					if jsonArray.count == 0 {
@@ -1162,12 +1162,51 @@ class AppDataParser {
 		return autocompleteStrings
 	}
 	
-	func parse(searchedArtworksData: Data) -> [AICSearchedArtworkModel] {
+	func parse(searchContent data: Data) -> [Common.Search.Filter : [Any]] {
+		var results: [Common.Search.Filter : [Any]] = [:]
+		
+		do {
+			try handleParseError({ [unowned self] in
+				let json = JSON(data: data)
+				if let jsonArray: [JSON] = json.array {
+					for index in 0...jsonArray.count-1 {
+						if index == 0 {
+							results[.artworks] = parse(searchedArtworksJSON: jsonArray[index])
+						}
+						else if index == 1 {
+							results[.tours] = parse(searchedToursJSON: jsonArray[index])
+						}
+						else if index == 2 {
+							results[.exhibitions] = parse(searchedExhibitionsJSON: jsonArray[index])
+						}
+					}
+				}
+			})
+		}
+		catch {
+			if Common.Testing.printDataErrors {
+				print("Could not parse AIC Search Autocomplete\n")
+			}
+		}
+		
+//		do {
+//			let json = JSON(data: data)
+//			for index in 0..<json.arrayValue.count {
+//				if index == 0 {
+//
+//				}
+//			}
+//		}
+//		catch {
+//		}
+		
+		return results
+	}
+	
+	func parse(searchedArtworksJSON: JSON) -> [AICSearchedArtworkModel] {
 		var searchedArtworks = [AICSearchedArtworkModel]()
 		
-		let json = JSON(data: searchedArtworksData)
-		
-		let dataJSON: JSON = json["data"]
+		let dataJSON: JSON = searchedArtworksJSON["data"]
 		for resultJSON: JSON in dataJSON.arrayValue {
 			do {
 				try handleParseError({ [unowned self] in
@@ -1245,7 +1284,7 @@ class AppDataParser {
 			}
 			catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Search Autocomplete:\n\(json)\n")
+					print("Could not parse AIC Searched Artworks:\n\(searchedArtworksJSON)\n")
 				}
 			}
 		}
@@ -1253,27 +1292,47 @@ class AppDataParser {
 		return searchedArtworks
 	}
 	
-	/// Parse Searched Tours
-	///
-	/// Returns an array of tourIds to match with the tours in the appData.json
-	func parse(searchedToursData: Data) -> [Int] {
-		var searchedTours = [Int]()
-		let json = JSON(data: searchedToursData)
+	func parse(searchedToursJSON: JSON) -> [AICTourModel] {
+		var searchedTours = [AICTourModel]()
 		do {
 			try handleParseError({ [unowned self] in
-				let dataJson: JSON = json["data"]
+				let dataJson: JSON = searchedToursJSON["data"]
 				for resultson: JSON in dataJson.arrayValue {
+					// Since Tours are stored in the CMS, we just need to match ids with the tour models we already parsed on app launch
 					let tourId = try self.getInt(fromJSON: resultson, forKey: "id")
-					searchedTours.append(tourId)
+					if let tour = AppDataManager.sharedInstance.getTour(forID: tourId) {
+						searchedTours.append(tour)
+					}
 				}
 			})
 		}
 		catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Search Autocomplete:\n\(json)\n")
+				print("Could not parse AIC Searched Tours:\n\(searchedToursJSON)\n")
 			}
 		}
 		return searchedTours
+	}
+	
+	func parse(searchedExhibitionsJSON: JSON) -> [AICExhibitionModel] {
+		var searchedExhibitions: [AICExhibitionModel] = []
+		
+		let dataJSON: JSON = searchedExhibitionsJSON["data"]
+		for exhibitionJSON: JSON in dataJSON.arrayValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let exhibition = try self.parse(exhibitionJSON: exhibitionJSON)
+					searchedExhibitions.append(exhibition)
+				})
+			}
+			catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse Searched Exhibition:\n\(exhibitionJSON)\n")
+				}
+			}
+		}
+		
+		return searchedExhibitions
 	}
     
     // MARK: Error-Throwing data parsing functions
