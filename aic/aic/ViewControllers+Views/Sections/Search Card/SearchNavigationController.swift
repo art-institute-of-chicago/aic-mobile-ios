@@ -240,9 +240,8 @@ class SearchNavigationController : CardNavigationController {
 		NSObject.cancelPreviousPerformRequests(withTarget: SearchDataManager.sharedInstance)
 		
 		if showAutocomplete == true {
-			// Autocomplete request sent immediately
+			// Autocomplete request sent almost immediately
 			SearchDataManager.sharedInstance.perform(#selector(SearchDataManager.loadAutocompleteStrings(searchText:)), with: searchText, afterDelay: 0.3)
-			//SearchDataManager.sharedInstance.loadAutocompleteStrings(searchText: searchText)
 		}
 		
 		// Artworks/Tours/Exhibitions requests sent with delay

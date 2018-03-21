@@ -8,8 +8,7 @@ import AVFoundation
 
 protocol LoadingViewControllerDelegate: class {
     func loadingDidFinishPlayingIntroVideoA()
-	func loadingDidFinishPlayingIntroVideoB()
-	func loadingDidFinishBuildingAnimation()
+	func loadingDidFinish()
 }
 
 class LoadingViewController: UIViewController {
@@ -20,11 +19,11 @@ class LoadingViewController: UIViewController {
 	let progressHighlightView = UIView()
 	let progressView = UIView()
 	let welcomeLabel = UILabel()
-	let buildingImageView = UIImageView(image: Common.Sections[.home]!.background)
 	
 	let videoView: UIView = UIView()
 	var avPlayer : AVQueuePlayer!
 	
+	let playerItemFull: AVPlayerItem
 	let playerItemA: AVPlayerItem
 	let playerItemB: AVPlayerItem
 	
@@ -35,18 +34,58 @@ class LoadingViewController: UIViewController {
 	let buildingToVideoTopMargin: CGFloat = 368.0
 	
 	var progressHighlightWidth: NSLayoutConstraint? = nil
-	var buildingImageTopMargin: NSLayoutConstraint? = nil
     
     var pctComplete:Float = 0.0
 	
-	init() {
+	let showFullVideo: Bool
+	
+	init(showFullVideo: Bool) {
+		self.showFullVideo = showFullVideo
+		
 		// Load Video URL
-		let loadingVideoURL_A = Bundle.main.url(forResource: "RegularSplash_AIC_1", withExtension: "mp4", subdirectory:"/video")
-		let loadingVideoURL_B = Bundle.main.url(forResource: "RegularSplash_AIC_2", withExtension: "mp4", subdirectory:"/video")
+		var resolutionString = ""
+		if UIDevice().userInterfaceIdiom == .phone {
+			let height: Int = Int(UIScreen.main.nativeBounds.height)
+			switch height {
+			case 1136:
+				resolutionString = String(height)
+			case 1334:
+				resolutionString = String(height)
+			case 2208:
+				resolutionString = String(height)
+			case 2436:
+				resolutionString = String(height)
+			default:
+				resolutionString = "1334"
+			}
+		}
+		
+		let videoFilename = "RegularSplash_AIC_" + resolutionString
+		
+		let loadingVideoURL_Full = Bundle.main.url(forResource: videoFilename, withExtension: "mp4", subdirectory:"/video")
+		let loadingVideoURL_A = Bundle.main.url(forResource: videoFilename + "_1", withExtension: "mp4", subdirectory:"/video")
+		let loadingVideoURL_B = Bundle.main.url(forResource: videoFilename + "_2", withExtension: "mp4", subdirectory:"/video")
 		
 		// Create player item with the video, add callback for finished
+		playerItemFull = AVPlayerItem(url: loadingVideoURL_Full!)
 		playerItemA = AVPlayerItem(url: loadingVideoURL_A!)
 		playerItemB = AVPlayerItem(url: loadingVideoURL_B!)
+		
+		// Remove video files that we don't need for this device resolution
+		let videoFolder = Bundle.main.bundleURL.appendingPathComponent("video")
+		var isDirectory : ObjCBool = true
+		if FileManager.default.fileExists(atPath: videoFolder.path, isDirectory: &isDirectory) {
+			do {
+				let items = try FileManager.default.contentsOfDirectory(atPath: videoFolder.path)
+				for item in items {
+					if item.range(of: videoFilename) == nil {
+						try FileManager.default.removeItem(atPath: videoFolder.appendingPathComponent(item).path)
+					}
+				}
+			}
+			catch {
+			}
+		}
 		
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -74,7 +113,12 @@ class LoadingViewController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(videoFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer)
 		
         // Create the player
-        avPlayer = AVQueuePlayer(items: [playerItemA, playerItemB])
+		if showFullVideo {
+			avPlayer = AVQueuePlayer(items: [playerItemFull])
+		}
+		else {
+			avPlayer = AVQueuePlayer(items: [playerItemA, playerItemB])
+		}
 		
         // No Looping
         avPlayer.actionAtItemEnd = AVPlayerActionAtItemEnd.none
@@ -93,32 +137,19 @@ class LoadingViewController: UIViewController {
 		welcomeLabel.textAlignment = .center
 		welcomeLabel.isHidden = true
 		
-		// Building Image
-		buildingImageView.isHidden = true
-		
 		// Setup Video Layer
 		// Cover up the splash image
 		let layer = AVPlayerLayer(player: avPlayer)
-		// Fit video layer in screen frame
-		let videoSize: CGSize = CGSize(width: 375.0, height: 812.0)
-		let videoAspectRatio: CGFloat = videoSize.width / videoSize.height
-		let screenAspectRatio: CGFloat = self.view.frame.width / self.view.frame.height
-		if screenAspectRatio > videoAspectRatio {
-			layerFrame.size.width = self.view.frame.width
-			layerFrame.size.height = ceil(self.view.frame.width * (videoSize.height / videoSize.width))
-			layerFrame.origin = CGPoint(x: 0, y: (self.view.frame.height - layerFrame.size.height) * 0.5)
-		}
 		layer.frame = layerFrame
 		videoView.layer.addSublayer(layer)
 		
 		// Add Subviews
 		progressView.addSubview(progressBackgroundView)
 		progressView.addSubview(progressHighlightView)
-		self.view.addSubview(loadingImage)
+		loadingImage.addSubview(progressView)
+		loadingImage.addSubview(welcomeLabel)
 		self.view.addSubview(videoView)
-		self.view.addSubview(progressView)
-		self.view.addSubview(welcomeLabel)
-		self.view.addSubview(buildingImageView)
+		self.view.addSubview(loadingImage)
 		
 		createViewConstraints()
     }
@@ -126,8 +157,8 @@ class LoadingViewController: UIViewController {
 	func createViewConstraints() {
 		loadingImage.autoPinEdgesToSuperviewEdges()
 		
-		progressView.autoPinEdge(.top, to: .top, of: self.view, withOffset: self.view.bounds.height * 0.5 + 35)
-		progressView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		progressView.autoPinEdge(.top, to: .top, of: loadingImage, withOffset: self.view.bounds.height * 0.5 - 60)
+		progressView.autoAlignAxis(.vertical, toSameAxisOf: loadingImage)
 		progressView.autoSetDimensions(to: progressSize)
 		
 		progressBackgroundView.autoPinEdge(.top, to: .top, of: progressView)
@@ -140,20 +171,9 @@ class LoadingViewController: UIViewController {
 		progressHighlightView.autoSetDimension(.height, toSize: progressSize.height)
 		
 		welcomeLabel.autoPinEdge(.bottom, to: .top, of: progressView, withOffset: -5)
-		welcomeLabel.autoPinEdge(.leading, to: .leading, of: self.view)
-		welcomeLabel.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		
-		let buildingTopMarginInitialValue: CGFloat = 368.0 * (layerFrame.height / 812.0) + layerFrame.origin.y
-		
-		buildingImageTopMargin = buildingImageView.autoPinEdge(.top, to: .top, of: self.view, withOffset: buildingTopMarginInitialValue)
-		buildingImageView.autoPinEdge(.leading, to: .leading, of: self.view)
-		buildingImageView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		buildingImageView.autoMatch(.height, to: .width, of: buildingImageView, withMultiplier: buildingImageView.image!.size.height / buildingImageView.image!.size.width)
+		welcomeLabel.autoPinEdge(.leading, to: .leading, of: loadingImage)
+		welcomeLabel.autoPinEdge(.trailing, to: .trailing, of: loadingImage)
 	}
-    
-    func playIntroVideoA() {
-		avPlayer.play()
-    }
 	
 	func showProgressBar() {
 		progressView.isHidden = false
@@ -164,28 +184,32 @@ class LoadingViewController: UIViewController {
 		})
 	}
 	
-	func hideProgressBar() {
-		progressView.isHidden = true
-		welcomeLabel.isHidden = true
-	}
-	
-	func loadIntroVideoB() {
-		//avPlayer.pause()
-		avPlayer.advanceToNextItem()
-		avPlayer.pause()
-	}
-	
-	func playIntroVideoB() {
-		avPlayer.play()
-	}
-    
-    func updateProgress(forPercentComplete pct:Float) {
+	func updateProgress(forPercentComplete pct:Float) {
 		pctComplete = pct
 		
 		progressHighlightWidth?.constant = (progressSize.width * CGFloat(pct))
 		
 		self.view.layoutIfNeeded()
+	}
+    
+    func playIntroVideo() {
+		if loadingImage.superview != nil {
+			UIView.animate(withDuration: 0.3, animations: {
+				self.loadingImage.alpha = 0.0
+			}) { (completed) in
+				if completed == true {
+					self.loadingImage.removeFromSuperview()
+				}
+			}
+		}
+		
+		avPlayer.play()
     }
+	
+	@objc func loadIntroVideoB() {
+		avPlayer.advanceToNextItem()
+		avPlayer.pause()
+	}
     
     @objc func videoFinishedPlaying() {
 		if avPlayer.currentItem == playerItemA {
@@ -193,25 +217,7 @@ class LoadingViewController: UIViewController {
 			delegate?.loadingDidFinishPlayingIntroVideoA()
 		}
 		else {
-			delegate?.loadingDidFinishPlayingIntroVideoB()
-			self.perform(#selector(animateOut))
+			self.delegate?.loadingDidFinish()
 		}
     }
-	
-	@objc func animateOut() {
-		buildingImageView.isHidden = false
-		buildingImageView.alpha = 0.0
-		
-		UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
-			self.videoView.alpha = 0.0
-			self.buildingImageView.alpha = 1.0
-		}, completion: { (completed1) in
-			UIView.animate(withDuration: 0.8, delay: 0.2, options: .curveEaseInOut, animations: {
-				self.buildingImageTopMargin!.constant = 0.0
-				self.view.layoutIfNeeded()
-			}, completion: { (completed2) in
-				self.delegate?.loadingDidFinishBuildingAnimation()
-			})
-		})
-	}
 }

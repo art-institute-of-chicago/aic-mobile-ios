@@ -164,13 +164,11 @@ class SectionsViewController : UIViewController {
 	// MARK: Intro animation (deprecated)
 	// TODO: remove function but keep deep link to related tour
     func animateInInitialView() {
-		sectionTabBarController.view.alpha = 0.0
-        homeVC.view.alpha = 0.0
+		self.view.alpha = 0.0
         
-        UIView.animate(withDuration: 0.5, delay: 1.0, options: UIViewAnimationOptions.curveEaseOut,
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
-									self.sectionTabBarController.view.alpha = 1.0
-                                    self.homeVC.view.alpha = 1.0
+									self.view.alpha = 1.0
             }, completion: { (value:Bool) in
                 self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
         })

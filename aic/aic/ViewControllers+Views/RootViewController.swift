@@ -12,19 +12,24 @@ class RootViewController: UIViewController {
         case mainApp
     }
     
-    var mode:Mode = .loading {
+    var mode: Mode = .loading {
         didSet {
-            modeDidChange()
+			switch self.mode {
+			case .loading:
+				showLoadingVC()
+			case .language:
+				showLanguageVC()
+			case .mainApp:
+				showMainApp()
+			}
         }
     }
     
     var loadingVC: LoadingViewController? = nil
-//    var instructionsVC:InstructionsPageViewController? = nil
 	var languageVC: LanguageSelectionViewController? = nil
 	var sectionsVC: SectionsViewController? = nil
     
     var shouldShowLanguageSelection: Bool = false
-	var loadingFadeOutAnimationStarted: Bool = false
     
     override var prefersStatusBarHidden: Bool {
         return !Common.Layout.showStatusBar
@@ -46,7 +51,7 @@ class RootViewController: UIViewController {
         
         // Set delegates
         AppDataManager.sharedInstance.delegate = self
-        
+		
         startLoading()
     }
     
@@ -85,8 +90,7 @@ class RootViewController: UIViewController {
         cleanUpViews()
         showLoadingVC()
     }
-    
-    
+	
     // If loading got stopped (backgrounding the app?)
     // finish it up
     func resumeLoadingIfNotComplete() {
@@ -101,28 +105,17 @@ class RootViewController: UIViewController {
 		sectionsVC?.showTourOnMap(tour: tour, language: tour.language, stopIndex: nil)
     }
     
-    private func modeDidChange() {
-        switch mode {
-        case .loading:
-            showLoadingVC()
-        case .language:
-            showLanguageVC()
-        case .mainApp:
-            showMainApp()
-        }
-    }
-    
     private func showLoadingVC() {
-        loadingVC = LoadingViewController()
+        loadingVC = LoadingViewController(showFullVideo: !shouldShowLanguageSelection)
         loadingVC?.delegate = self
         view.addSubview(loadingVC!.view)
 		
-		loadingVC?.playIntroVideoA()
+		AppDataManager.sharedInstance.load()
+		loadingVC?.showProgressBar()
     }
     
     private func showLanguageVC() {
         languageVC = LanguageSelectionViewController()
-//        languageVC?.instructionsDelegate = self
 		languageVC?.delegate = self
         self.view.addSubview(languageVC!.view)
 		
@@ -139,18 +132,19 @@ class RootViewController: UIViewController {
 			sectionsVC = SectionsViewController()
 			sectionsVC?.delegate = self
 		}
-        view.insertSubview(sectionsVC!.view, belowSubview: loadingVC!.view)
+        view.insertSubview(sectionsVC!.view, aboveSubview: loadingVC!.view)
 		
-//        sectionsVC!.setSelectedSection(sectionVC: sectionsVC!.toursVC)
         sectionsVC!.animateInInitialView()
     }
     
     fileprivate func cleanUpViews() {
         // Remove and clean up language + loading
         languageVC?.view.removeFromSuperview()
+		languageVC?.delegate = nil
         languageVC = nil
         
         loadingVC?.view.removeFromSuperview()
+		loadingVC?.delegate = nil
         loadingVC = nil
     }
 }
@@ -163,14 +157,7 @@ extension RootViewController : AppDataManagerDelegate{
             self.loadingVC?.updateProgress(forPercentComplete: pct)
             }, completion:  { (value:Bool) in
                 if pct == 1.0 {
-                    self.loadingVC?.hideProgressBar()
-                    
-                    if self.shouldShowLanguageSelection {
-                        self.mode = .language
-                    } else {
-                        self.loadingVC?.loadIntroVideoB()
-                        self.loadingVC?.playIntroVideoB()
-                    }
+                    self.loadingVC?.playIntroVideo()
                 }
             }
         )
@@ -187,7 +174,7 @@ extension RootViewController : AppDataManagerDelegate{
         
         alert.addAction(action)
         
-        present(alert, animated:true)
+        present(alert, animated: true)
     }
 }
 
@@ -195,27 +182,11 @@ extension RootViewController : AppDataManagerDelegate{
 // Loading VC delegate
 extension RootViewController : LoadingViewControllerDelegate {
     func loadingDidFinishPlayingIntroVideoA() {
-		AppDataManager.sharedInstance.load()
-		loadingVC?.showProgressBar()
+		self.mode = .language
     }
 	
-	func loadingDidFinishPlayingIntroVideoB() {
+	func loadingDidFinish() {
 		self.mode = .mainApp
-	}
-	
-	func loadingDidFinishBuildingAnimation() {
-		if loadingFadeOutAnimationStarted == true {
-			return
-		}
-		loadingFadeOutAnimationStarted = true
-		
-		UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveLinear, animations: {
-			self.loadingVC!.view.alpha = 0.0
-		}, completion: { (completed3) in
-			if completed3 == true {
-				self.cleanUpViews()
-			}
-		})
 	}
 }
 
@@ -232,14 +203,14 @@ extension RootViewController : LanguageSelectionViewControllerDelegate {
 		languageVC?.view.removeFromSuperview()
 		languageVC = nil
 		
-		loadingVC?.playIntroVideoB()
+		loadingVC?.playIntroVideo()
 	}
 }
 
 // Sections view controller Delegate
 extension RootViewController : SectionsViewControllerDelegate {
     func sectionsViewControllerDidFinishAnimatingIn() {
-		
+		self.cleanUpViews()
     }
 }
 

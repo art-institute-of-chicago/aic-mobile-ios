@@ -126,6 +126,23 @@ public extension UIDevice {
 		if let model = modelMap[String(validatingUTF8: modelCode)!] {
 			return model
 		}
+		
+		// If we can't recognize the model, let's check the resolution
+		if UIDevice().userInterfaceIdiom == .phone {
+			switch UIScreen.main.nativeBounds.height {
+			case 1136:
+				return .iPhone5
+			case 1334:
+				return .iPhone8
+			case 2208:
+				return .iPhone8plus
+			case 2436:
+				return .iPhoneX
+			default:
+				return Model.unrecognized
+			}
+		}
+		
 		return Model.unrecognized
 	}
 }

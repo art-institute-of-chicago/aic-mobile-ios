@@ -47,8 +47,6 @@ class LanguageSelectionViewController : UIViewController {
 		
 		contentView.backgroundColor = .clear
 		
-//		titleLabel.attributedText = getAttributedStringWithLineHeight(text: "Please Choose Your Preferred Language", font: .aicLanguageSelectionTitleFont, lineHeight: 32)
-		titleLabel.text = "Language Settings Title"
 		titleLabel.font = .aicLanguageSelectionTitleFont
 		titleLabel.numberOfLines = 0
 		titleLabel.textColor = .white
