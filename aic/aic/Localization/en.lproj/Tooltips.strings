@@ -12,6 +12,8 @@
 
 "Map Tooltip Floor" = "You are on the ";
 
+"Map Tooltip Floor Second Line" = "Tap to change floors.";
+
 "Map Tooltip Orientation" = "Tap to Orient Map";
 
 "Map Tooltip Artwork Title" = "Tap Audio Pins to Listen";

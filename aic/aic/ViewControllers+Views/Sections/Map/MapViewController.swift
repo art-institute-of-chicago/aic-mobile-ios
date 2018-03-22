@@ -49,9 +49,9 @@ class MapViewController: UIViewController {
     let floorSelectorVC = MapFloorSelectorViewController()
     let floorSelectorMargin = CGPoint(x: 20, y: 20)
     
-    fileprivate (set) var previousFloor: Int = Common.Map.startFloor
-    fileprivate (set) var currentFloor: Int = Common.Map.startFloor
-	fileprivate (set) var currentUserFloor: Int? = nil
+    private (set) var previousFloor: Int = Common.Map.startFloor
+    private (set) var currentFloor: Int = Common.Map.startFloor
+	private (set) var currentUserFloor: Int? = nil
 	
 	// TODO: move these to SectionsViewController
     var locationDisabledMessage: UIView? = nil
@@ -434,7 +434,7 @@ class MapViewController: UIViewController {
     // MARK: Change floor
     
     // Show the current floor's overlay, and change the views
-    fileprivate func setCurrentFloor(forFloorNum floorNum: Int, andResetMap: Bool = false) {
+    func setCurrentFloor(forFloorNum floorNum: Int, andResetMap: Bool = false) {
         previousFloor = currentFloor
         currentFloor = floorNum
         

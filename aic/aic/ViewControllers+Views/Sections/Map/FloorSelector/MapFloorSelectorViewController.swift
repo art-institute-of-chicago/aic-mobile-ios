@@ -78,10 +78,11 @@ class MapFloorSelectorViewController: UIViewController {
 		return 1
 	}
 	
-	func getCurrentFloorPosition() -> CGPoint {
+	// get position of 
+	func getFloorButtonPosition(floorNumber: Int) -> CGPoint {
 		let pointX = self.view.frame.origin.x
 		
-		let floorButton = floorSelectorView.floorButtons[getCurrentFloorNumber()]
+		let floorButton = floorSelectorView.floorButtons[floorNumber]
 		let pointY: CGFloat = self.view.frame.origin.y + floorButton.frame.origin.y + CGFloat(MapFloorSelectorView.buttonSize * 0.5)
 		
 		return CGPoint(x: pointX, y: pointY)

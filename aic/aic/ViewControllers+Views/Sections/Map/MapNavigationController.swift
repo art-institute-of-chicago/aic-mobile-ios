@@ -173,27 +173,8 @@ class MapNavigationController : SectionNavigationController {
 		let showMapTooltipsMessageValue = defaults.bool(forKey: Common.UserDefaults.showMapTooltipsDefaultsKey)
 		
 		if showMapTooltipsMessageValue {
-			var tooltips = [AICTooltipModel]()
-			
 			// Pinch Tooltip
-			tooltips.append(Common.Tooltips.mapPinchTooltip)
-			
-			// Orientation Tooltip
-			Common.Tooltips.mapOrienationTooltip.arrowPosition = mapVC.floorSelectorVC.getOrientationButtonPosition()
-			Common.Tooltips.mapOrienationTooltip.text = "Map Tooltip Orientation".localized(using: "Tooltips")
-			tooltips.append(Common.Tooltips.mapOrienationTooltip)
-			
-			// Floor Tooltip
-			Common.Tooltips.mapFloorTooltip.arrowPosition = mapVC.floorSelectorVC.getCurrentFloorPosition()
-			var floorText = "Map Tooltip Floor".localized(using: "Tooltips")
-			floorText += Common.Map.stringForFloorNumber[mapVC.floorSelectorVC.getCurrentFloorNumber()]!
-			Common.Tooltips.mapFloorTooltip.text = floorText
-			tooltips.append(Common.Tooltips.mapFloorTooltip)
-			
-			// Artwork Tooltip
-			tooltips.append(Common.Tooltips.mapArtworkTooltip)
-			
-			mapTooltipVC = TooltipViewController(tooltips: tooltips)
+			mapTooltipVC = TooltipViewController(firstTooltip: Common.Tooltips.mapPinchTooltip)
 			mapTooltipVC!.delegate = self
 			
 			mapTooltipVC!.definesPresentationContext = true
@@ -650,6 +631,39 @@ extension MapNavigationController : RestaurantPageViewControllerDelegate {
 // MARK: TourStopPageViewControllerDelegate
 
 extension MapNavigationController : TooltipViewControllerDelegate {
+	func tooltipsMoveToNextTooltip(index: Int) -> AICTooltipModel? {
+		if index == 1 {
+			// Orientation Tooltip
+			Common.Tooltips.mapOrienationTooltip.arrowPosition = mapVC.floorSelectorVC.getOrientationButtonPosition()
+			Common.Tooltips.mapOrienationTooltip.text = "Map Tooltip Orientation".localized(using: "Tooltips")
+			
+			return Common.Tooltips.mapOrienationTooltip
+		}
+		else if index == 2 {
+			// Floor Tooltip
+			var floorNumber = mapVC.currentFloor
+			if let userFloor = mapVC.currentUserFloor {
+				floorNumber = userFloor
+			}
+			Common.Tooltips.mapFloorTooltip.arrowPosition = mapVC.floorSelectorVC.getFloorButtonPosition(floorNumber: floorNumber)
+			var floorText = "Map Tooltip Floor".localized(using: "Tooltips")
+			floorText += Common.Map.stringForFloorNumber[floorNumber]!
+			floorText += ".\n"
+			floorText += "Map Tooltip Floor Second Line".localized(using: "Tooltips")
+			Common.Tooltips.mapFloorTooltip.text = floorText
+			
+			mapVC.setCurrentFloor(forFloorNum: floorNumber)
+			
+			return Common.Tooltips.mapFloorTooltip
+		}
+		else if index == 3 {
+			// Artwork Tooltip
+			return Common.Tooltips.mapArtworkTooltip
+		}
+		
+		return nil
+	}
+	
 	func tooltipsCompleted(tooltipVC: TooltipViewController) {
 		hideMapTooltips()
 	}

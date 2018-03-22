@@ -14,6 +14,9 @@ class TooltipArrowView : UIView {
 	let arrowView: UIView = UIView()
 	var arrowPosition: CGPoint
 	
+	let arrowSize = CGSize(width: 7.0, height: 10.0)
+	let arrowRightMargin: CGFloat = 5.0
+	
 	init(tooltip: AICTooltipModel) {
 		arrowPosition = tooltip.arrowPosition
 		super.init(frame: UIScreen.main.bounds)
@@ -29,10 +32,14 @@ class TooltipArrowView : UIView {
 		textLabel.textAlignment = .right
 		textLabel.numberOfLines = 1
 		
+		if tooltip.text.range(of: "\n") != nil {
+			textLabel.numberOfLines = 2
+		}
+		
 		let arrowPath = UIBezierPath()
 		arrowPath.move(to: CGPoint(x: 0, y: 0))
-		arrowPath.addLine(to: CGPoint(x: 6.0, y: 5.0))
-		arrowPath.addLine(to: CGPoint(x: 0, y: 10.0))
+		arrowPath.addLine(to: CGPoint(x: arrowSize.width, y: arrowSize.height * 0.5))
+		arrowPath.addLine(to: CGPoint(x: 0, y: arrowSize.height))
 		arrowPath.close()
 		
 		let arrowLayer = CAShapeLayer()
@@ -42,9 +49,9 @@ class TooltipArrowView : UIView {
 		arrowView.layer.addSublayer(arrowLayer)
 		
 		// Add Subviews
-		self.addSubview(backgroundView)
 		backgroundView.addSubview(arrowView)
 		backgroundView.addSubview(textLabel)
+		self.addSubview(backgroundView)
 		
 		createConstraints()
 	}
@@ -54,16 +61,16 @@ class TooltipArrowView : UIView {
 	}
 	
 	private func createConstraints() {
-		textLabel.autoPinEdge(.top, to: .top, of: self, withOffset: arrowPosition.y - 7.0)
-		textLabel.autoPinEdge(.trailing, to: .leading, of: self, withOffset: arrowPosition.x - 24.0)
+		arrowView.autoSetDimensions(to: CGSize(width: arrowSize.width, height: arrowSize.height))
+		arrowView.autoPinEdge(.top, to: .top, of: self, withOffset: arrowPosition.y - 5.0)
+		arrowView.autoPinEdge(.leading, to: .leading, of: self, withOffset: arrowPosition.x - arrowSize.width - arrowRightMargin)
+		
+		textLabel.autoAlignAxis(.horizontal, toSameAxisOf: arrowView)
+		textLabel.autoPinEdge(.trailing, to: .leading, of: arrowView, withOffset: -10.0)
 		
 		backgroundView.autoPinEdge(.top, to: .top, of: textLabel, withOffset: -5)
 		backgroundView.autoPinEdge(.leading, to: .leading, of: textLabel, withOffset: -10)
 		backgroundView.autoPinEdge(.trailing, to: .trailing, of: textLabel, withOffset: 10)
 		backgroundView.autoPinEdge(.bottom, to: .bottom, of: textLabel, withOffset: 5)
-		
-		arrowView.autoSetDimensions(to: CGSize(width: 6.0, height: 10.0))
-		arrowView.autoPinEdge(.leading, to: .trailing, of: backgroundView)
-		arrowView.autoPinEdge(.top, to: .top, of: backgroundView, withOffset: 10.0)
 	}
 }

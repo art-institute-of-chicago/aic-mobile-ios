@@ -39,6 +39,6 @@ class MapTourStartContentView : UIView {
 	}
 	
 	@objc private func updateLanguage() {
-		audioButton.setTitle("Play Audio".localized(using: "ContentCard"), for: .normal)
+		audioButton.setTitle("Play Tour Intro".localized(using: "ContentCard"), for: .normal)
 	}
 }

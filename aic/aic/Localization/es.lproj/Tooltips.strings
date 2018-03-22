@@ -12,10 +12,12 @@
 
 "Map Tooltip Floor" = "Usted está en ";
 
+"Map Tooltip Floor Second Line" = "Tocar para cambiar las pistas.";
+
 "Map Tooltip Orientation" = "Presione para orientar el mapa";
 
-"Map Tooltip Artwork Title" = "Missing Translation (Spanish)";
+"Map Tooltip Artwork Title" = "Tocar los Pines de Audio para Escuchar";
 
-"Map Tooltip Artwork Text" = "Missing Translation (Spanish)";
+"Map Tooltip Artwork Text" = "Los pines transparentes indican audio en una pista diferente.";
 
 "Dismiss" = "Anular";

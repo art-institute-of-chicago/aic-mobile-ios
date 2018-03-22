@@ -9,20 +9,20 @@
 import UIKit
 
 protocol TooltipViewControllerDelegate: class {
+	func tooltipsMoveToNextTooltip(index: Int) -> AICTooltipModel?
 	func tooltipsCompleted(tooltipVC: TooltipViewController)
 }
 
 class TooltipViewController : UIViewController {
 	private let backgroundOverlayView: UIView = UIView()
-	private let tooltips: [AICTooltipModel]
-	private var tooltipViews: [UIView] = []
-	private var currentIndex: Int = -1
+	private var currentTooltipView: UIView = UIView()
+	private var currentIndex: Int = 0
 	
 	weak var delegate: TooltipViewControllerDelegate? = nil
 	
-	init(tooltips: [AICTooltipModel]) {
-		self.tooltips = tooltips
+	init(firstTooltip: AICTooltipModel) {
 		super.init(nibName: nil, bundle: nil)
+		self.currentTooltipView = createTooltipView(tooltip: firstTooltip)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -32,39 +32,35 @@ class TooltipViewController : UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		for tooltip in tooltips {
-			if tooltip.type == .popup {
-				let tooltipView = TooltipPopupView(tooltip: tooltip)
-				tooltipViews.append(tooltipView)
-			}
-			else if tooltip.type == .arrow {
-				let tooltipView = TooltipArrowView(tooltip: tooltip)
-				tooltipViews.append(tooltipView)
-			}
-		}
-		
 		let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleGesture(gesture:)))
 		self.view.addGestureRecognizer(tapGesture)
 		
-		showTooltip(index: 0)
+		showTooltip()
 	}
 	
-	private func showTooltip(index: Int) {
-		if index < tooltipViews.count {
-			for view in self.view.subviews {
-				view.removeFromSuperview()
-			}
-			
-			currentIndex = index
-			self.view.addSubview(tooltipViews[index])
+	private func createTooltipView(tooltip: AICTooltipModel) -> UIView {
+		if tooltip.type == .popup {
+			return TooltipPopupView(tooltip: tooltip)
+		}
+		return TooltipArrowView(tooltip: tooltip)
+	}
+	
+	private func showTooltip() {
+		for view in self.view.subviews {
+			view.removeFromSuperview()
+		}
+		self.view.addSubview(self.currentTooltipView)
+	}
+	
+	@objc private func handleGesture(gesture: UIGestureRecognizer) {
+		currentIndex += 1
+		if let nextTooltip = self.delegate?.tooltipsMoveToNextTooltip(index: currentIndex) {
+			currentTooltipView = createTooltipView(tooltip: nextTooltip)
+			showTooltip()
 		}
 		else {
 			self.delegate?.tooltipsCompleted(tooltipVC: self)
 		}
-	}
-	
-	@objc private func handleGesture(gesture: UIGestureRecognizer) {
-		showTooltip(index: currentIndex+1)
 	}
 }
 
