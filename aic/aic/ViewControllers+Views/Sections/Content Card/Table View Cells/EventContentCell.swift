@@ -60,7 +60,7 @@ class EventContentCell : UITableViewCell {
 			
 			monthDayLabel.text = monthDayString
 			hoursMinutesLabel.text = hoursMinutesString
-			descriptionTextView.attributedText = getAttributedStringWithLineHeight(text: eventModel.longDescription, font: .aicCardDescriptionFont, lineHeight: 22)
+			descriptionTextView.attributedText = getAttributedStringWithHTMLEnabled(text: eventModel.longDescription, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionTextView.textColor = .white
 			locationAndDateLabel.attributedText = getAttributedStringWithLineHeight(text: locationAndDateString, font: .aicCardDateLocationFont, lineHeight: 22)
 			

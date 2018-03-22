@@ -22,9 +22,9 @@ func map(val: Double, oldRange1: Double, oldRange2: Double, newRange1:Double, ne
 }
 
 func CGPointDistance(p1:CGPoint, p2:CGPoint) -> CGFloat {
-    let xDist = (p2.x - p1.x);
-    let yDist = (p2.y - p1.y);
-    return sqrt((xDist * xDist) + (yDist * yDist));
+    let xDist = (p2.x - p1.x)
+    let yDist = (p2.y - p1.y)
+    return sqrt((xDist * xDist) + (yDist * yDist))
 }
 
 func convertToHoursMinutesSeconds(seconds : Int) -> (Int, Int, Int) {
@@ -67,7 +67,7 @@ func getOffsetRect(forText text:String, forFont font:UIFont) -> CGRect {
 /**
  Render HTML text, very slow :/
 */
-func getAttributedString(forHTMLText text:String, font:UIFont) -> NSAttributedString {
+func getAttributedString(forHTMLText text: String, font: UIFont) -> NSAttributedString {
     // Convert line breaks to HTML breaks
     var textWithHTMLReturns = text.replacingOccurrences(of: "\r\n", with: "<br />")
     textWithHTMLReturns = textWithHTMLReturns.replacingOccurrences(of: "\r", with: "<br />")
@@ -88,22 +88,51 @@ func getAttributedString(forHTMLText text:String, font:UIFont) -> NSAttributedSt
     return attrStr
 }
 
-
 // Create an attributed string with line-height set
 func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFloat) -> NSAttributedString {
-    let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
+	let attrString = NSMutableAttributedString(string: text)
+	
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.lineSpacing = 0.0
     paragraphStyle.minimumLineHeight = lineHeight
     paragraphStyle.maximumLineHeight = lineHeight
-    
-    let attrString = NSMutableAttributedString(string: text)
+	
+	let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
+	
     let range = NSMakeRange(0, attrString.length)
-    attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range: range)
-    attrString.addAttribute(NSAttributedStringKey.baselineOffset, value:baselineOffset, range: range)
-    attrString.addAttribute(NSAttributedStringKey.font, value:font, range: range)
+    attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
+    attrString.addAttribute(NSAttributedStringKey.baselineOffset, value: baselineOffset, range: range)
+    attrString.addAttribute(NSAttributedStringKey.font, value: font, range: range)
     
     return attrString
+}
+
+func getAttributedStringWithHTMLEnabled(text: String, font: UIFont, lineHeight: CGFloat) -> NSAttributedString {
+	do {
+		let data = text.data(using: .utf8, allowLossyConversion: true)!
+		let attributedString = try NSMutableAttributedString(data: data,
+															 options: [.documentType : NSAttributedString.DocumentType.html,
+																	   .characterEncoding : String.Encoding.utf8.rawValue],
+															 documentAttributes: nil
+		)
+		
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineSpacing = 0.0
+		paragraphStyle.minimumLineHeight = lineHeight
+		paragraphStyle.maximumLineHeight = lineHeight
+		
+		let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
+		
+		let range = NSMakeRange(0, attributedString.length)
+		attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
+		attributedString.addAttribute(NSAttributedStringKey.baselineOffset, value: baselineOffset, range: range)
+		attributedString.addAttribute(NSAttributedStringKey.font, value: font, range: range)
+		
+		return attributedString
+	}
+	catch {
+		return getAttributedStringWithLineHeight(text: text, font: font, lineHeight: lineHeight)
+	}
 }
 
 // MARK: Visual Effects
