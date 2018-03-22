@@ -104,9 +104,9 @@ class AudioInfoSectionView : UIView {
 	}
 	
 	func set(relatedTours tours:[AICTourModel]) {
-		let links: NSMutableAttributedString = NSMutableAttributedString()
-		var linksCount: Int = 0
+		let toursAttributedString: NSMutableAttributedString = NSMutableAttributedString()
 		
+		var linksCount: Int = 0
 		for tour in tours {
 			var linkText = tour.title
 			if tour.nid != tours.last?.nid {
@@ -120,16 +120,22 @@ class AudioInfoSectionView : UIView {
 					let range = NSMakeRange(0, linkAttrString.string.count)
 					linkAttrString.addAttributes([NSAttributedStringKey.link : url], range: range)
 					
-					links.append(linkAttrString)
+					toursAttributedString.append(linkAttrString)
 					linksCount += 1
 				}
 			}
 		}
 		
+		// Add spacing between tours
+		let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.paragraphSpacing = 14.0
+		let range = NSMakeRange(0, toursAttributedString.length)
+		toursAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
+		
 		if linksCount > 0 {
 			titleLabel.text = "Related Tours".localized(using: "AudioPlayer")
 			
-			bodyTextView.attributedText = links
+			bodyTextView.attributedText = toursAttributedString
 			bodyTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeLightColor]
 			bodyTextView.font = .aicCardTitleFont
 			
