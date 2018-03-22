@@ -22,11 +22,16 @@ struct AICGeneralInfoModel {
 struct AICGeneralInfoTranslationModel {
 	let museumHours: String
 	let homeMemberPrompt: String
+	let seeAllToursIntro: String
 	let audioTitle: String
 	let audioSubtitle: String
 	let mapTitle: String
 	let mapSubtitle: String
 	let infoTitle: String
 	let infoSubtitle: String
+	let diningTitle: String
+	let giftShopsTitle: String
+	let membersLoungeTitle: String
+	let restroomsTitle: String
 }
 

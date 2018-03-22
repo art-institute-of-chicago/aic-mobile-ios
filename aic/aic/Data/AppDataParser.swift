@@ -47,19 +47,20 @@ class AppDataParser {
     func parse(appData data: Data) -> AICAppDataModel {
         let appDataJson = JSON(data: data)
 		
-		self.featuredTours = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
+		self.featuredTours		= parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
 		self.featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
-		let generalInfo: AICGeneralInfoModel	= parse(generalInfoJSON: appDataJson["general_info"])
-		self.galleries	= parse(galleriesJSON: appDataJson["galleries"])
-		self.audioFiles = parse(audioFilesJSON: appDataJson["audio_files"])
-        self.objects 	= parse(objectsJSON: appDataJson["objects"])
+		let generalInfo 		= parse(generalInfoJSON: appDataJson["general_info"])
+		self.galleries			= parse(galleriesJSON: appDataJson["galleries"])
+		self.audioFiles 		= parse(audioFilesJSON: appDataJson["audio_files"])
+        self.objects 			= parse(objectsJSON: appDataJson["objects"])
 		self.exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
-		self.tourCategories = parse(tourCategoriesJSON: appDataJson["tour_categories"])
-		let tours: [AICTourModel]	 = parse(toursJSON: appDataJson["tours"])
-		let dataSettings = parse(dataSettingsJSON: appDataJson["data"])
-		let searchStrings = parse(searchStringsJSON: appDataJson["search"]["search_strings"])
-		self.searchArtworks = parse(searchArtworks: appDataJson["search"])
-		let map = self.parse(mapFloorsJSON: appDataJson["map_floors"], mapAnnotationsJSON: appDataJson["annontations"])
+		self.tourCategories 	= parse(tourCategoriesJSON: appDataJson["tour_categories"])
+		let tours 				= parse(toursJSON: appDataJson["tours"])
+		let dataSettings 		= parse(dataSettingsJSON: appDataJson["data"])
+		let searchStrings 		= parse(searchStringsJSON: appDataJson["search"]["search_strings"])
+		self.searchArtworks 	= parse(searchArtworks: appDataJson["search"])
+		let map 				= parse(mapFloorsJSON: appDataJson["map_floors"],
+										mapAnnotationsJSON: appDataJson["annontations"])
 		
 		let appData = AICAppDataModel(generalInfo: generalInfo,
 									  galleries: self.galleries,
@@ -110,7 +111,7 @@ class AppDataParser {
 			var translations: [Common.Language : AICGeneralInfoTranslationModel] = [:]
 			let translationsJSON = generalInfoJSON["translations"].array
 			
-			let translationEng = try parseTranslation(generalInfoJSON: generalInfoJSON, optional: true)
+			let translationEng = try parseTranslation(generalInfoJSON: generalInfoJSON)
 			translations[.english] = translationEng
 			
 			for translationJSON in translationsJSON! {
@@ -136,24 +137,34 @@ class AppDataParser {
 		return AICGeneralInfoModel(nid: 0, translations: [Common.Language : AICGeneralInfoTranslationModel]())
 	}
 	
-	func parseTranslation(generalInfoJSON: JSON, optional: Bool = false) throws -> AICGeneralInfoTranslationModel {
-		let museumHours	= try getString(fromJSON: generalInfoJSON, forKey: "museum_hours", optional: optional)
-		let homeMemberPrompt = try getString(fromJSON: generalInfoJSON, forKey: "home_member_prompt_text", optional: optional)
-		let audioTitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_title", optional: optional)
-		let audioSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_subtitle", optional: optional)
-		let mapTitle = try getString(fromJSON: generalInfoJSON, forKey: "map_title", optional: optional)
-		let mapSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "map_subtitle", optional: optional)
-		let infoTitle = try getString(fromJSON: generalInfoJSON, forKey: "info_title", optional: optional)
-		let infoSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "info_subtitle", optional: optional)
+	func parseTranslation(generalInfoJSON: JSON) throws -> AICGeneralInfoTranslationModel {
+		let museumHours	= try getString(fromJSON: generalInfoJSON, forKey: "museum_hours", optional: true)
+		let homeMemberPrompt = try getString(fromJSON: generalInfoJSON, forKey: "home_member_prompt_text", optional: true)
+		let seeAllToursIntro = try getString(fromJSON: generalInfoJSON, forKey: "see_all_tours_intro", optional: true)
+		let audioTitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_title", optional: true)
+		let audioSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "audio_subtitle", optional: true)
+		let mapTitle = try getString(fromJSON: generalInfoJSON, forKey: "map_title", optional: true)
+		let mapSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "map_subtitle", optional: true)
+		let infoTitle = try getString(fromJSON: generalInfoJSON, forKey: "info_title", optional: true)
+		let infoSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "info_subtitle", optional: true)
+		let diningTitle = try getString(fromJSON: generalInfoJSON, forKey: "dining_title", optional: true)
+		let giftShopsTitle = try getString(fromJSON: generalInfoJSON, forKey: "gift_shops_title", optional: true)
+		let membersLoungeTitle = try getString(fromJSON: generalInfoJSON, forKey: "members_lounge_title", optional: true)
+		let restroomsTitle = try getString(fromJSON: generalInfoJSON, forKey: "restrooms_title", optional: true)
 		
 		return AICGeneralInfoTranslationModel(museumHours: museumHours.stringByDecodingHTMLEntities,
-								   homeMemberPrompt: homeMemberPrompt.stringByDecodingHTMLEntities,
-								   audioTitle: audioTitle.stringByDecodingHTMLEntities,
-								   audioSubtitle: audioSubtitle.stringByDecodingHTMLEntities,
-								   mapTitle: mapTitle.stringByDecodingHTMLEntities,
-								   mapSubtitle: mapSubtitle.stringByDecodingHTMLEntities,
-								   infoTitle: infoTitle.stringByDecodingHTMLEntities,
-								   infoSubtitle: infoSubtitle.stringByDecodingHTMLEntities
+											  homeMemberPrompt: homeMemberPrompt.stringByDecodingHTMLEntities,
+											  seeAllToursIntro: seeAllToursIntro.stringByDecodingHTMLEntities,
+											  audioTitle: audioTitle.stringByDecodingHTMLEntities,
+											  audioSubtitle: audioSubtitle.stringByDecodingHTMLEntities,
+											  mapTitle: mapTitle.stringByDecodingHTMLEntities,
+											  mapSubtitle: mapSubtitle.stringByDecodingHTMLEntities,
+											  infoTitle: infoTitle.stringByDecodingHTMLEntities,
+											  infoSubtitle: infoSubtitle.stringByDecodingHTMLEntities,
+											  diningTitle: diningTitle.stringByDecodingHTMLEntities,
+											  giftShopsTitle: giftShopsTitle.stringByDecodingHTMLEntities,
+											  membersLoungeTitle: membersLoungeTitle.stringByDecodingHTMLEntities,
+											  restroomsTitle: restroomsTitle.stringByDecodingHTMLEntities
 		)
 	}
 	
