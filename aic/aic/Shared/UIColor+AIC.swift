@@ -78,7 +78,7 @@ extension UIColor {
 	
 	static let aicDividerLineTransparentColor: UIColor = UIColor(white: 1.0, alpha: 0.5)
 	
-	static let aicHomeMemberPromptBackgroundColor: UIColor = UIColor(red: 199.0 / 255.0, green: 226.0 / 255.0, blue: 227.0 / 255.0, alpha: 1.0)
+	static let aicIntroTextBackgroundColor: UIColor = UIColor(red: 199.0 / 255.0, green: 226.0 / 255.0, blue: 227.0 / 255.0, alpha: 1.0)
 	
 	static let aicHomeMemberPromptLinkColor: UIColor = UIColor(red: 48.0 / 255.0, green: 113.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)
 	

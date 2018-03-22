@@ -58,8 +58,8 @@ class SectionNavigationBar : UIView {
 		setBackButtonHidden(true)
 		
 		iconImageView.image = section.icon
-        
-        addParallexEffect(toView: backdropImageView, left: 0, right: 0, top: -30, bottom: 30)
+		
+		enableParallaxEffect()
 		
 		titleLabel.numberOfLines = 1
 		if section.nid == Section.home.rawValue {
@@ -211,6 +211,14 @@ class SectionNavigationBar : UIView {
 		searchButton.autoSetDimensions(to: CGSize(width: 36, height: 36))
 		searchButton.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -11)
 		searchButton.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -5)
+	}
+	
+	func disableParallaxEffect() {
+		backdropImageView.motionEffects.removeAll()
+	}
+	
+	func enableParallaxEffect() {
+		addParallexEffect(toView: backdropImageView, left: 0, right: 0, top: -30, bottom: 30)
 	}
 }
 

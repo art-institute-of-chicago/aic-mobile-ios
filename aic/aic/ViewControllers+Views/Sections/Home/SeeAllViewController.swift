@@ -38,10 +38,13 @@ class SeeAllViewController : UIViewController {
 	
 	weak var delegate: SeeAllViewControllerDelegate? = nil
 	
+	let seeAllToursIntroText: String
+	
 	init(contentType: ContentType) {
-		self.content = contentType
+		content = contentType
 		collectionView = SeeAllViewController.createCollectionView(for: content)
 		
+		// Data
 		if content == .tours {
 			tourItems = AppDataManager.sharedInstance.getToursForSeeAll()
 		}
@@ -55,6 +58,8 @@ class SeeAllViewController : UIViewController {
 		else if content == .exhibitions {
 			exhibitionItems = AppDataManager.sharedInstance.getExhibitionsForSeeAll()
 		}
+		
+		seeAllToursIntroText = AppDataManager.sharedInstance.app.generalInfo.translations[Common.currentLanguage]!.seeAllToursIntro
 		
 		super.init(nibName: nil, bundle: nil)
 		
@@ -84,6 +89,7 @@ class SeeAllViewController : UIViewController {
 		collectionView.register(UINib(nibName: "SeeAllEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllEventCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier)
 		collectionView.register(SeeAllHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier)
+		collectionView.register(SeeAllIntroView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier)
 		collectionView.delegate = self
 		collectionView.dataSource = self
 		
@@ -163,10 +169,10 @@ class SeeAllViewController : UIViewController {
 extension SeeAllViewController : UICollectionViewDataSource {
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		if content == .tours {
-			return 1
+			return 2
 		}
 		else if content == .toursByCategory {
-			return tourCategories.count
+			return tourCategories.count + 1
 		}
 		else if content == .events {
 			return eventItems.count
@@ -176,10 +182,17 @@ extension SeeAllViewController : UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if content == .tours {
+			if section == 0 {
+				return 0
+			}
 			return tourItems.count
 		}
 		else if content == .toursByCategory {
-			return tourItemsByCategory[section].count
+			if section == 0 {
+				return 0
+			}
+			let toursSectionIndex = section-1 // first section is the intro text
+			return tourItemsByCategory[toursSectionIndex].count
 		}
 		else if content == .exhibitions {
 			return exhibitionItems.count
@@ -197,8 +210,9 @@ extension SeeAllViewController : UICollectionViewDataSource {
 			return cell
 		}
 		else if content == .toursByCategory {
+			let toursSectionIndex = indexPath.section-1 // first section is the intro text
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeeAllTourCell.reuseIdentifier, for: indexPath) as! SeeAllTourCell
-			cell.tourModel = tourItemsByCategory[indexPath.section][indexPath.row]
+			cell.tourModel = tourItemsByCategory[toursSectionIndex][indexPath.row]
 			return cell
 		}
 		else if content == .exhibitions {
@@ -223,18 +237,49 @@ extension SeeAllViewController : UICollectionViewDataSource {
 				return sectionHeader
 			}
 			else if content == .tours {
+				if indexPath.section == 0 {
+					let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier, for: indexPath) as! SeeAllIntroView
+					sectionHeader.setText(text: seeAllToursIntroText)
+					return sectionHeader
+				}
+				
 				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
 				sectionHeader.titleLabel.text = ""
 				return sectionHeader
 			}
 			else if content == .toursByCategory {
+				if indexPath.section == 0 {
+					let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier, for: indexPath) as! SeeAllIntroView
+					sectionHeader.setText(text: seeAllToursIntroText)
+					return sectionHeader
+				}
+				
+				let toursSectionIndex = indexPath.section-1 // first section is the intro text
 				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
-				sectionHeader.titleLabel.text = tourCategories[indexPath.section].title[Common.currentLanguage]
+				sectionHeader.titleLabel.text = tourCategories[toursSectionIndex].title[Common.currentLanguage]
 				return sectionHeader
 			}
 		}
 		
 		return UICollectionReusableView()
+	}
+}
+
+extension SeeAllViewController : UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+		if content == .events {
+			return CGSize(width: UIScreen.main.bounds.width, height: SeeAllHeaderView.headerHeight)
+		}
+		else if content == .tours || content == .toursByCategory {
+			if section == 0 {
+				return SeeAllIntroView.sizeForText(text: seeAllToursIntroText)
+			}
+			else if content == .tours {
+				return CGSize(width: UIScreen.main.bounds.width, height: 16.0)
+			}
+			return CGSize(width: UIScreen.main.bounds.width, height: SeeAllHeaderView.headerHeight)
+		}
+		return CGSize.zero
 	}
 }
 
@@ -245,7 +290,8 @@ extension SeeAllViewController : UICollectionViewDelegate {
 			self.delegate?.seeAllDidSelectTour(tour: tourItems[indexPath.row])
 		}
 		else if content == .toursByCategory {
-			self.delegate?.seeAllDidSelectTour(tour: tourItemsByCategory[indexPath.section][indexPath.row])
+			let toursSectionIndex = indexPath.section-1 // first section is the intro text
+			self.delegate?.seeAllDidSelectTour(tour: tourItemsByCategory[toursSectionIndex][indexPath.row])
 		}
 		else if content == .exhibitions {
 			self.delegate?.seeAllDidSelectExhibition(exhibition: exhibitionItems[indexPath.row])
@@ -253,15 +299,6 @@ extension SeeAllViewController : UICollectionViewDelegate {
 		else if content == .events {
 			self.delegate?.seeAllDidSelectEvent(event: eventItems[indexPath.section][indexPath.row])
 		}
-	}
-}
-
-extension SeeAllViewController : UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		if content == .events || content == .tours || content == .toursByCategory {
-			return CGSize(width: UIScreen.main.bounds.width, height: SeeAllHeaderView.headerHeight)
-		}
-		return CGSize.zero
 	}
 }
 

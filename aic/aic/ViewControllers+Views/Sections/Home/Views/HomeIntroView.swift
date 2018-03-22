@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import PureLayout
 
-class HomeMemberPromptView: BaseView {
+class HomeIntroView: UIView {
 	let promptTextView: UITextView = UITextView()
 	let accessMemberCardButton: UIButton = UIButton()
 	
@@ -20,7 +19,7 @@ class HomeMemberPromptView: BaseView {
 	init() {
 		super.init(frame:CGRect.zero)
 		
-		backgroundColor = .aicHomeMemberPromptBackgroundColor
+		backgroundColor = .aicIntroTextBackgroundColor
 		
 		promptTextView.setDefaultsForAICAttributedTextView()
 		promptTextView.font = .aicTextFont
@@ -43,19 +42,13 @@ class HomeMemberPromptView: BaseView {
 	}
 	
 	private func createConstraints() {
-		if didSetupConstraints == false {
-			promptTextView.autoPinEdge(.top, to: .top, of: self, withOffset: topMargin)
-			promptTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16.0)
-			promptTextView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16.0)
-			
-			accessMemberCardButton.autoPinEdge(.top, to: .bottom, of: promptTextView, withOffset: accessMemberCardTopMargin)
-			accessMemberCardButton.autoAlignAxis(.vertical, toSameAxisOf: self)
-			
-			self.autoPinEdge(.bottom, to: .bottom, of: accessMemberCardButton, withOffset: bottomMargin)
-			
-			didSetupConstraints = true
-		}
+		promptTextView.autoPinEdge(.top, to: .top, of: self, withOffset: topMargin)
+		promptTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16.0)
+		promptTextView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16.0)
 		
-		super.updateConstraints()
+		accessMemberCardButton.autoPinEdge(.top, to: .bottom, of: promptTextView, withOffset: accessMemberCardTopMargin)
+		accessMemberCardButton.autoAlignAxis(.vertical, toSameAxisOf: self)
+		
+		self.autoPinEdge(.bottom, to: .bottom, of: accessMemberCardButton, withOffset: bottomMargin)
 	}
 }

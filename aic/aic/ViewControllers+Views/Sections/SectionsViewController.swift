@@ -165,12 +165,20 @@ class SectionsViewController : UIViewController {
 	// TODO: remove function but keep deep link to related tour
     func animateInInitialView() {
 		self.view.alpha = 0.0
-        
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut,
+		
+		// disable parallax effect
+		self.homeVC.sectionNavigationBar.disableParallaxEffect()
+		
+		UIView.animate(withDuration: 0.5, delay: 0.3, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
 									self.view.alpha = 1.0
-            }, completion: { (value:Bool) in
-                self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
+            }, completion: { (completed) in
+				if completed {
+					// re-enable parallax effect
+					self.homeVC.sectionNavigationBar.enableParallaxEffect()
+					
+					self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
+				}
         })
         Common.DeepLinks.loadedEnoughToLink = true
         (UIApplication.shared.delegate as? AppDelegate)?.triggerDeepLinkIfPresent()

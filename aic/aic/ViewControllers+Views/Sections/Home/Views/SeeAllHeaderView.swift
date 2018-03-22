@@ -35,5 +35,7 @@ class SeeAllHeaderView : UICollectionReusableView {
 		titleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		titleLabel.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
 		titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: self)
+		
+		self.autoSetDimensions(to: CGSize(width: UIScreen.main.bounds.width, height: SeeAllHeaderView.headerHeight))
 	}
 }

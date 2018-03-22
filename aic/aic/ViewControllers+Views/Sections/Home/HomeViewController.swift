@@ -21,7 +21,7 @@ protocol HomeViewControllerDelegate : class {
 
 class HomeViewController : SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
-	let memberPromptView: HomeMemberPromptView = HomeMemberPromptView()
+	let homeIntroView: HomeIntroView = HomeIntroView()
 	let toursTitleView: HomeContentTitleView = HomeContentTitleView(title: "Tours")
 	let toursCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.tourCellSize)
 	let exhibitionsDividerLine: UIView = createDividerLine()
@@ -59,7 +59,7 @@ class HomeViewController : SectionViewController {
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
 		
-		memberPromptView.accessMemberCardButton.addTarget(self, action: #selector(accessMemberCardButtonPressed(button:)), for: .touchUpInside)
+		homeIntroView.accessMemberCardButton.addTarget(self, action: #selector(accessMemberCardButtonPressed(button:)), for: .touchUpInside)
 		
 		toursCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
 		toursCollectionView.delegate = self
@@ -77,7 +77,7 @@ class HomeViewController : SectionViewController {
 		eventsTitleView.seeAllButton.addTarget(self, action: #selector(seeAllEventsButtonPressed(button:)), for: .touchUpInside)
 		
 		self.view.addSubview(scrollView)
-		scrollView.addSubview(memberPromptView)
+		scrollView.addSubview(homeIntroView)
 		scrollView.addSubview(toursTitleView)
 		scrollView.addSubview(toursCollectionView)
 		scrollView.addSubview(exhibitionsDividerLine)
@@ -133,11 +133,11 @@ class HomeViewController : SectionViewController {
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
 		
-		memberPromptView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
-		memberPromptView.autoPinEdge(.leading, to: .leading, of: self.view)
-		memberPromptView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		homeIntroView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
+		homeIntroView.autoPinEdge(.leading, to: .leading, of: self.view)
+		homeIntroView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		
-		toursTitleView.autoPinEdge(.top, to: .bottom, of: memberPromptView)
+		toursTitleView.autoPinEdge(.top, to: .bottom, of: homeIntroView)
 		toursTitleView.autoPinEdge(.leading, to: .leading, of: self.view)
 		toursTitleView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		toursTitleView.autoSetDimension(.height, toSize: 65)
@@ -188,9 +188,9 @@ class HomeViewController : SectionViewController {
 		}
 		
 		let homeMemberPromptText: String = generalInfo.translations[language]!.homeMemberPrompt
-		memberPromptView.promptTextView.text = homeMemberPromptText
+		homeIntroView.promptTextView.text = homeMemberPromptText
 		
-		memberPromptView.accessMemberCardButton.setTitle("Member Card Button Title".localized(using: "Home"), for: .normal)
+		homeIntroView.accessMemberCardButton.setTitle("Member Card Button Title".localized(using: "Home"), for: .normal)
 		
 		toursTitleView.contentTitleLabel.text = "Tours".localized(using: "Sections")
 		toursTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
