@@ -23,6 +23,7 @@ class MapViewController: UIViewController {
 		case searchedArtwork
 		case exhibition
 		case dining
+		case memberLounge
 		case giftshop
 		case restrooms
         case tour
@@ -214,12 +215,24 @@ class MapViewController: UIViewController {
 		}
 	}
 	
-	func showRestrooms() {
-		mode = .restrooms
+	func showMemberLounge() {
+		mode = .memberLounge
 		
-		updateRestroomAnnotations()
+		// if no member lounges are on the current floor, find a floor with member lounge
+		if mapModel.floors[currentFloor].memberLoungeAnnotations.count == 0 {
+			for index in 0...mapModel.floors.count-1 {
+				// start from floor 1
+				let floorNumber = (index + 1) < mapModel.floors.count ? (index + 1) : 0
+				if mapModel.floors[floorNumber].memberLoungeAnnotations.count > 0 {
+					setCurrentFloor(forFloorNum: floorNumber)
+					break
+				}
+			}
+		}
 		
-		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
+		updateMemberLoungeAnnotations()
+		
+		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].memberLoungeAnnotations as [MKAnnotation])
 	}
 	
 	func showGiftShop() {
@@ -240,6 +253,14 @@ class MapViewController: UIViewController {
 		updateGiftShopAnnotations()
 		
 		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].giftShopAnnotations as [MKAnnotation])
+	}
+	
+	func showRestrooms() {
+		mode = .restrooms
+		
+		updateRestroomAnnotations()
+		
+		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
 	}
 	
 	func showAnnotationsTopDown(annotations: [MKAnnotation]) {
@@ -433,6 +454,8 @@ class MapViewController: UIViewController {
 			break
 		case .dining:
 			break
+		case .memberLounge:
+			break
 		case .giftshop:
 			break
 		case .restrooms:
@@ -489,13 +512,14 @@ class MapViewController: UIViewController {
 			updateDiningAnnotationViews()
 			updateUserLocationAnnotationView()
 			
-		case .restrooms:
-			updateRestroomAnnotationViews()
+		case .memberLounge:
+			updateUserLocationAnnotationView()
+			
+		case .giftshop:
 			updateUserLocationAnnotationView()
 			break
 			
-		case .giftshop:
-			updateGiftShopAnnotationViews()
+		case .restrooms:
 			updateUserLocationAnnotationView()
 			break
 		}
@@ -649,6 +673,18 @@ class MapViewController: UIViewController {
 		}
 	}
 	
+	private func updateMemberLoungeAnnotations() {
+		var annotations: [MKAnnotation] = []
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: mapModel.floors[currentFloor].memberLoungeAnnotations as [MKAnnotation])
+		annotations.append(mapView.userLocation)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		mapView.addAnnotations(annotations)
+	}
+	
 	private func updateRestroomAnnotations() {
 		var annotations: [MKAnnotation] = []
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
@@ -659,20 +695,6 @@ class MapViewController: UIViewController {
 		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		mapView.addAnnotations(annotations)
-	}
-	
-	private func updateRestroomAnnotationViews() {
-		for floor in mapModel.floors {
-			for annotation in floor.restroomAnnotations {
-				if let view = mapView.view(for: annotation) as? MapAmenityAnnotationView {
-					if floor.floorNumber == currentFloor {
-						view.alpha = 1.0
-					} else {
-						view.alpha = 0.5
-					}
-				}
-			}
-		}
 	}
 	
 	private func updateGiftShopAnnotations() {
@@ -687,20 +709,6 @@ class MapViewController: UIViewController {
 		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		mapView.addAnnotations(annotations)
-	}
-	
-	private func updateGiftShopAnnotationViews() {
-		for floor in mapModel.floors {
-			for annotation in floor.giftShopAnnotations {
-				if let view = mapView.view(for: annotation) as? MapAmenityAnnotationView {
-					if floor.floorNumber == currentFloor {
-						view.alpha = 1.0
-					} else {
-						view.alpha = 0.5
-					}
-				}
-			}
-		}
 	}
 	
 	private func updateUserLocationAnnotationView() {
@@ -930,10 +938,6 @@ extension MapViewController : MKMapViewDelegate {
 extension MapViewController : MapFloorSelectorViewControllerDelegate {
     func floorSelectorDidSelectFloor(_ floor: Int) {
         setCurrentFloor(forFloorNum: floor)
-		
-		if mode == .restrooms {
-			showRestrooms()
-		}
     }
     
     func floorSelectorLocationButtonTapped() {

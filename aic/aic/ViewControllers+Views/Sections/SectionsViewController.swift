@@ -251,6 +251,18 @@ class SectionsViewController : UIViewController {
 		mapVC.showDining()
 	}
 	
+	func showMemberLoungeOnMap() {
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .memberLounge
+			showLeaveTourMessage()
+			return
+		}
+		
+		mapVC.showMemberLounge()
+	}
+	
 	func showRestroomsOnMap() {
 		setSelectedSection(sectionVC: mapVC)
 		
@@ -535,34 +547,49 @@ extension SectionsViewController : MessageViewControllerDelegate {
 		else if messageVC == leaveTourMessageVC {
 			hideLeaveTourMessage()
 			
-			if let _ = self.requestedMapMode {
-				if self.requestedMapMode == .tour && self.requestedTour != nil {
-					if let previousTour = mapVC.tourModel {
-						self.requestedTour!.language = previousTour.language
+			if let mapMode = self.requestedMapMode {
+				switch mapMode {
+				case .tour:
+					if let tour = self.requestedTour {
+						if let previousTour = mapVC.tourModel {
+							self.requestedTour!.language = previousTour.language
+						}
+						
+						audioPlayerVC.pause()
+						audioPlayerVC.hide()
+						
+						showTourOnMap(tour: tour, language: tour.language, stopIndex: nil)
 					}
-					
-					audioPlayerVC.pause()
-					audioPlayerVC.hide()
-					
-					showTourOnMap(tour: self.requestedTour!, language: self.requestedTour!.language, stopIndex: nil)
-				}
-				else if self.requestedMapMode == .artwork && self.requestedArtwork != nil {
-					showArtworkOnMap(artwork: self.requestedArtwork!)
-				}
-				else if self.requestedMapMode == .searchedArtwork && self.requestedSearchedArtwork != nil {
-					showSearchedArtworkOnMap(searchedArtwork: self.requestedSearchedArtwork!)
-				}
-				else if self.requestedMapMode == .exhibition && self.requestedExhibition != nil {
-					showExhibitionOnMap(exhibition: self.requestedExhibition!)
-				}
-				else if self.requestedMapMode == .dining {
+					break
+				case .artwork:
+					if let artwork = self.requestedArtwork {
+						showArtworkOnMap(artwork: artwork)
+					}
+					break
+				case .allInformation:
+					break
+				case .searchedArtwork:
+					if let searchedArtwork = self.requestedSearchedArtwork {
+						showSearchedArtworkOnMap(searchedArtwork: searchedArtwork)
+					}
+					break
+				case .exhibition:
+					if let exhibition = self.requestedExhibition {
+						showExhibitionOnMap(exhibition: exhibition)
+					}
+					break
+				case .dining:
 					showDiningOnMap()
-				}
-				else if self.requestedMapMode == .giftshop {
+					break
+				case .memberLounge:
+					showMemberLoungeOnMap()
+					break
+				case .giftshop:
 					showGiftShopOnMap()
-				}
-				else if self.requestedMapMode == .restrooms {
+					break
+				case .restrooms:
 					showRestroomsOnMap()
+					break
 				}
 			}
 			else {
@@ -687,6 +714,13 @@ extension SectionsViewController : MapItemsCollectionContainerDelegate {
 			searchVC.hide()
 		}
 		showDiningOnMap()
+	}
+	
+	func mapItemMemberLoungeSelected() {
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		showMemberLoungeOnMap()
 	}
 	
 	func mapItemGiftShopSelected() {

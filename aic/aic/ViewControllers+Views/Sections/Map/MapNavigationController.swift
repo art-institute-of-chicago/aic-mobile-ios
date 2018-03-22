@@ -105,6 +105,9 @@ class MapNavigationController : SectionNavigationController {
 		case .dining:
 			showDining()
 			break
+		case .memberLounge:
+			showMemberLounge()
+			break
 		case .giftshop:
 			showGiftShop()
 			break
@@ -407,6 +410,36 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 	}
 	
+	func showMemberLounge() {
+		currentMode = .memberLounge
+		
+		if sectionNavigationBar.currentState != .hidden {
+			sectionNavigationBar.hide()
+		}
+		
+		// Crate Content Card
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
+		}
+		let memberLoungeContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
+		mapContentCardVC = MapContentCardNavigationController(contentView: memberLoungeContentView)
+		mapContentCardVC!.setTitleText(text: "Member Lounge")
+		mapContentCardVC!.cardDelegate = self
+		
+		// Add card to view
+		mapContentCardVC!.willMove(toParentViewController: self)
+		self.view.addSubview(mapContentCardVC!.view)
+		mapContentCardVC!.didMove(toParentViewController: self)
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
+		
+		// Set map state
+		mapVC.showMemberLounge()
+		
+		showMapContentCard()
+	}
+	
 	func showRestrooms() {
 		currentMode = .restrooms
 		
@@ -418,7 +451,7 @@ class MapNavigationController : SectionNavigationController {
 		if mapContentCardVC != nil {
 			mapContentCardVC!.view.removeFromSuperview()
 		}
-		let restroomsContentView = MapTextContentView(text: "Close to explore everything.")
+		let restroomsContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
 		mapContentCardVC = MapContentCardNavigationController(contentView: restroomsContentView)
 		mapContentCardVC!.setTitleText(text: "Restrooms")
 		mapContentCardVC!.cardDelegate = self
@@ -448,7 +481,7 @@ class MapNavigationController : SectionNavigationController {
 		if mapContentCardVC != nil {
 			mapContentCardVC!.view.removeFromSuperview()
 		}
-		let giftshopContentView = MapTextContentView(text: "Close to exlpore everything.")
+		let giftshopContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
 		mapContentCardVC = MapContentCardNavigationController(contentView: giftshopContentView)
 		mapContentCardVC!.setTitleText(text: "Gift Shops")
 		mapContentCardVC!.cardDelegate = self

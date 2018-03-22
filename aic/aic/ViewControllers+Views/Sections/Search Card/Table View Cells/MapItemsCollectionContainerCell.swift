@@ -10,6 +10,7 @@ import UIKit
 
 protocol MapItemsCollectionContainerDelegate: class {
 	func mapItemDiningSelected()
+	func mapItemMemberLoungeSelected()
 	func mapItemGiftShopSelected()
 	func mapItemRestroomSelected()
 	func mapItemArtworkSelected(artwork: AICObjectModel)
@@ -70,9 +71,12 @@ extension MapItemsCollectionContainerCell : UICollectionViewDelegate {
 				self.delegate?.mapItemDiningSelected()
 			}
 			else if indexPath.row == 1 {
-				self.delegate?.mapItemGiftShopSelected()
+				self.delegate?.mapItemMemberLoungeSelected()
 			}
 			else if indexPath.row == 2 {
+				self.delegate?.mapItemGiftShopSelected()
+			}
+			else if indexPath.row == 3 {
 				self.delegate?.mapItemRestroomSelected()
 			}
 		}
@@ -96,7 +100,7 @@ extension MapItemsCollectionContainerCell : UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section == 0 {
-			return 3
+			return 4
 		}
 		else {
 			let lastItemIndex = section * 5 - 1
@@ -111,8 +115,9 @@ extension MapItemsCollectionContainerCell : UICollectionViewDataSource {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapItemCell.reuseIdentifier, for: indexPath) as! MapItemCell
 		if indexPath.section == 0 {
 			if indexPath.row == 0 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchRestaurantButton"), highlightImage: #imageLiteral(resourceName: "searchRestaurantButtonDown")) }
-			if indexPath.row == 1 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchGiftshopButton"), highlightImage: #imageLiteral(resourceName: "searchGiftshopButtonDown")) }
-			if indexPath.row == 2 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchRestroomButton"), highlightImage: #imageLiteral(resourceName: "searchRestroomButtonDown")) }
+			if indexPath.row == 1 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchMembersButton"), highlightImage: #imageLiteral(resourceName: "searchMembersButtonDown")) }
+			if indexPath.row == 2 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchGiftshopButton"), highlightImage: #imageLiteral(resourceName: "searchGiftshopButtonDown")) }
+			if indexPath.row == 3 { cell.setItemIcon(image: #imageLiteral(resourceName: "searchRestroomButton"), highlightImage: #imageLiteral(resourceName: "searchRestroomButtonDown")) }
 		}
 		else {
 			let index = (indexPath.section-1) * 5 + indexPath.row

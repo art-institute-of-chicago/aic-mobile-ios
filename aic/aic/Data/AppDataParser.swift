@@ -843,9 +843,11 @@ class AppDataParser {
 		let coordinate = try getCLLocation2d(fromJSON: amenityAnnotationJSON, forKey: "location")
 		
 		let typeString = try getString(fromJSON: amenityAnnotationJSON, forKey: "amenity_type")
-		let type: MapAmenityAnnotationType = MapAmenityAnnotationType(rawValue: typeString)!
+		if let type: MapAmenityAnnotationType = MapAmenityAnnotationType(rawValue: typeString) {
+			return MapAmenityAnnotation(nid: nid, coordinate: coordinate, floor: floorNumber, type: type)
+		}
 		
-		return MapAmenityAnnotation(nid: nid, coordinate: coordinate, floor: floorNumber, type: type)
+		throw ParseError.badBoolString(string: typeString)
 	}
 	
 	// Department Annotations
