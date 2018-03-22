@@ -6,12 +6,16 @@
   Copyright © 2018 Art Institute of Chicago. All rights reserved.
 */
 
-"Map Tooltip Overview Title" = "Explora el mapa";
+"Map Tooltip Pinch Title" = "Explora el mapa";
 
-"Map Tooltip Overview Text" = "Presione para orientar el mapa.";
+"Map Tooltip Pinch Text" = "Presione para orientar el mapa.";
 
 "Map Tooltip Floor" = "Usted está en ";
 
 "Map Tooltip Orientation" = "Presione para orientar el mapa";
+
+"Map Tooltip Artwork Title" = "Missing Translation (Spanish)";
+
+"Map Tooltip Artwork Text" = "Missing Translation (Spanish)";
 
 "Dismiss" = "Anular";

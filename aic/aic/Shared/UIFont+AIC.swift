@@ -114,6 +114,8 @@ extension UIFont {
 	
 	static let aicTooltipTextFont: UIFont = UIFont(name: "IdealSans-Book", size: 16.0)!.upperCaseNumbers()
 	
+	static let aicTooltipDismissFont: UIFont = UIFont(name: "IdealSans-Light", size: 13.0)!.upperCaseNumbers()
+	
 	/// Font modified to use uppercase numbers
 	///
 	/// Every Font feature has a specific identifier (ex: "Number Case" is 21).

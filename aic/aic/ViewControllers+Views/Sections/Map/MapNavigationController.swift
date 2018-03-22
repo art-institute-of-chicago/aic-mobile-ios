@@ -174,17 +174,24 @@ class MapNavigationController : SectionNavigationController {
 		
 		if showMapTooltipsMessageValue {
 			var tooltips = [AICTooltipModel]()
-			tooltips.append(Common.Tooltips.mapPopupTooltip)
 			
+			// Pinch Tooltip
+			tooltips.append(Common.Tooltips.mapPinchTooltip)
+			
+			// Orientation Tooltip
+			Common.Tooltips.mapOrienationTooltip.arrowPosition = mapVC.floorSelectorVC.getOrientationButtonPosition()
+			Common.Tooltips.mapOrienationTooltip.text = "Map Tooltip Orientation".localized(using: "Tooltips")
+			tooltips.append(Common.Tooltips.mapOrienationTooltip)
+			
+			// Floor Tooltip
 			Common.Tooltips.mapFloorTooltip.arrowPosition = mapVC.floorSelectorVC.getCurrentFloorPosition()
 			var floorText = "Map Tooltip Floor".localized(using: "Tooltips")
 			floorText += Common.Map.stringForFloorNumber[mapVC.floorSelectorVC.getCurrentFloorNumber()]!
 			Common.Tooltips.mapFloorTooltip.text = floorText
 			tooltips.append(Common.Tooltips.mapFloorTooltip)
 			
-			Common.Tooltips.mapOrienationTooltip.arrowPosition = mapVC.floorSelectorVC.getOrientationButtonPosition()
-			Common.Tooltips.mapOrienationTooltip.text = "Map Tooltip Orientation".localized(using: "Tooltips")
-			tooltips.append(Common.Tooltips.mapOrienationTooltip)
+			// Artwork Tooltip
+			tooltips.append(Common.Tooltips.mapArtworkTooltip)
 			
 			mapTooltipVC = TooltipViewController(tooltips: tooltips)
 			mapTooltipVC!.delegate = self

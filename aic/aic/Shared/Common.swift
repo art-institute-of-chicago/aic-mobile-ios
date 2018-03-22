@@ -338,23 +338,30 @@ struct Common {
 	}
 
     // MARK: Tooltips
-	// TODO: REMOVE instructions
-    // Content for each screen
     struct Tooltips {
-		static var mapPopupTooltip = AICTooltipModel(type: .popup,
-													 title: "Map Tooltip Overview Title",
-													 text: "Map Tooltip Overview Text",
-													 arrowPosition: CGPoint.zero
+		static var mapPinchTooltip = AICTooltipModel(type: .popup,
+													 title: "Map Tooltip Pinch Title",
+													 text: "Map Tooltip Pinch Text",
+													 arrowPosition: CGPoint.zero,
+													 image: #imageLiteral(resourceName: "tooltipPinch")
 		)
 		static var mapFloorTooltip = AICTooltipModel(type: .arrow,
 													 title: "",
 													 text: "Map Tooltip Floor",
-													 arrowPosition: CGPoint.zero
+													 arrowPosition: CGPoint.zero,
+													 image: nil
 		)
 		static var mapOrienationTooltip = AICTooltipModel(type: .arrow,
 														  title: "",
 														  text: "Map Tooltip Orientation",
-														  arrowPosition: CGPoint.zero
+														  arrowPosition: CGPoint.zero,
+														  image: nil
+		)
+		static var mapArtworkTooltip = AICTooltipModel(type: .popup,
+													   title: "Map Tooltip Artwork Title",
+													   text: "Map Tooltip Artwork Text",
+													   arrowPosition: CGPoint.zero,
+													   image: #imageLiteral(resourceName: "tooltipArtwork")
 		)
     }
 	

@@ -44,9 +44,7 @@ class TooltipViewController : UIViewController {
 		}
 		
 		let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleGesture(gesture:)))
-		let pinchGesture: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handleGesture(gesture:)))
 		self.view.addGestureRecognizer(tapGesture)
-		self.view.addGestureRecognizer(pinchGesture)
 		
 		showTooltip(index: 0)
 	}

@@ -15,4 +15,5 @@ struct AICTooltipModel {
     let title: String
     var text: String
 	var arrowPosition: CGPoint
+	var image: UIImage?
 }

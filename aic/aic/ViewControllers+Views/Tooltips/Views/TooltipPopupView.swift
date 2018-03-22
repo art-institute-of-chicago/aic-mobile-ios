@@ -13,7 +13,9 @@ class TooltipPopupView : UIView {
 	private let backgroundView: UIView = UIView()
 	private let titleLabel: UILabel = UILabel()
 	private let dividerLine: UIView = UIView()
+	private let imageView: UIImageView = UIImageView()
 	private let textLabel: UILabel = UILabel()
+	private let dismissLabel: UILabel = UILabel()
 	
 	init(tooltip: AICTooltipModel) {
 		super.init(frame: UIScreen.main.bounds)
@@ -30,17 +32,31 @@ class TooltipPopupView : UIView {
 		
 		dividerLine.backgroundColor = .white
 		
+		imageView.backgroundColor = .clear
+		imageView.contentMode = .scaleAspectFit
+		if let image = tooltip.image {
+			imageView.image = image
+		}
+		
 		textLabel.text = tooltip.text.localized(using: "Tooltips")
 		textLabel.font = .aicTooltipTextFont
 		textLabel.textColor = .white
 		textLabel.textAlignment = .center
 		textLabel.numberOfLines = 0
 		
+		dismissLabel.text = "Dismiss".localized(using: "Tooltips").uppercased()
+		dismissLabel.font = .aicTooltipDismissFont
+		dismissLabel.textColor = .white
+		dismissLabel.textAlignment = .right
+		dismissLabel.numberOfLines = 1
+		
 		// Add Subviews
 		self.addSubview(backgroundView)
 		backgroundView.addSubview(titleLabel)
 		backgroundView.addSubview(dividerLine)
+		backgroundView.addSubview(imageView)
 		backgroundView.addSubview(textLabel)
+		backgroundView.addSubview(dismissLabel)
 		
 		createConstraints()
 	}
@@ -63,9 +79,17 @@ class TooltipPopupView : UIView {
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: backgroundView, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
 		
-		textLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 24)
+		imageView.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 8)
+		imageView.autoAlignAxis(.vertical, toSameAxisOf: backgroundView)
+		imageView.autoSetDimensions(to: CGSize(width: 48, height: 48))
+		
+		textLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 24)
 		textLabel.autoPinEdge(.leading, to: .leading, of: backgroundView, withOffset: 16)
 		textLabel.autoPinEdge(.trailing, to: .trailing, of: backgroundView, withOffset: -16)
-		textLabel.autoPinEdge(.bottom, to: .bottom, of: backgroundView, withOffset: -40)
+		
+		dismissLabel.autoPinEdge(.top, to: .bottom, of: textLabel, withOffset: 20)
+		dismissLabel.autoPinEdge(.leading, to: .leading, of: backgroundView, withOffset: 16)
+		dismissLabel.autoPinEdge(.trailing, to: .trailing, of: backgroundView, withOffset: -16)
+		dismissLabel.autoPinEdge(.bottom, to: .bottom, of: backgroundView, withOffset: -16)
 	}
 }
