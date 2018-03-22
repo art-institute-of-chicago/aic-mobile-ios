@@ -28,7 +28,7 @@ class AppDataManager {
 	
 	private var appData: Data? = nil
 	private var numberMapFloorsLoaded: Int = 0
-	var mapFloorURLs: [URL] = [] // local path to map floor pdf files
+	var mapFloorURLs: [Int : URL] = [:] // local path to map floor pdf files
     
     private (set) var isLoaded = false
     private var loadFailure = false
@@ -90,7 +90,7 @@ class AppDataManager {
         dataFilesRetrieved = 0
 		pctComplete = 0.0
 		appData = nil
-		mapFloorURLs = []
+		mapFloorURLs = [:]
 		numberMapFloorsLoaded = 0
 		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedString) { (stringsMatch) in
             if !stringsMatch {
@@ -178,7 +178,7 @@ class AppDataManager {
 			// If a pdf file already exists with the same name, load from caches folder
 			if FileManager.default.fileExists(atPath: floorDestinationURL.path) {
 				self.numberMapFloorsLoaded += 1
-				self.addMapFloorURL(floorDestinationURL)
+				self.addMapFloorURL(floorDestinationURL, floorNumber: floorNumber)
 			}
 			// If the file is new, download pdf from CMS
 			else {
@@ -199,7 +199,7 @@ class AppDataManager {
 					self.numberMapFloorsLoaded += 1
 					
 					if response.destinationURL != nil {
-						self.addMapFloorURL(response.destinationURL!)
+						self.addMapFloorURL(response.destinationURL!, floorNumber: floorNumber)
 					}
 					else {
 						// If we coulfn't load this floor pdf let the user know
@@ -211,8 +211,8 @@ class AppDataManager {
 		}
 	}
 	
-	private func addMapFloorURL(_ url: URL) {
-		self.mapFloorURLs.append(url)
+	private func addMapFloorURL(_ url: URL, floorNumber: Int) {
+		self.mapFloorURLs[floorNumber] = url
 		
 		// If we loaded all floors and we succesfully downloaded all of them
 		if self.numberMapFloorsLoaded == Common.Map.totalFloors {

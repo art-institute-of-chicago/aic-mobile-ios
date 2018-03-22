@@ -508,17 +508,22 @@ class MapViewController: UIViewController {
         switch mapView.currentZoomLevel {
         case .zoomLimit:
 			annotations.append(contentsOf: mapModel.landmarkAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.gardenAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
             break
             
         case .zoomDefault:
+			annotations.append(contentsOf: mapModel.gardenAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].spaceAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
             break
 			
 		case .zoomMedium:
+			annotations.append(contentsOf: mapModel.gardenAnnotations as [MKAnnotation])
+			annotations.append(contentsOf: mapModel.floors[currentFloor].spaceAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])

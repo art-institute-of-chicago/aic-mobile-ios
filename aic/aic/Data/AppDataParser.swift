@@ -633,7 +633,7 @@ class AppDataParser {
 			for floorNumber in 0..<Common.Map.totalFloors {
 				let mapFloorJSON = mapFloorsJSON["map_floor\(floorNumber)"]
 				
-				let floorPdfURL: URL = AppDataManager.sharedInstance.mapFloorURLs[floorNumber]
+				let floorPdfURL: URL = AppDataManager.sharedInstance.mapFloorURLs[floorNumber]!
 				let anchorPixel1 = try getPoint(fromJSON: mapFloorJSON, forKey: "anchor_pixel_1")
 				let anchorPixel2 = try getPoint(fromJSON: mapFloorJSON, forKey: "anchor_pixel_2")
 				let anchorLocation1 = try getCLLocation2d(fromJSON: mapFloorJSON, forKey: "anchor_location_1")
