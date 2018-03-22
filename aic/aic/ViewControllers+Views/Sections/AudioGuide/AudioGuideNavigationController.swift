@@ -13,7 +13,7 @@ protocol AudioGuideNavigationControllerDelegate : class {
 class AudioGuideNavigationController : SectionNavigationController {
 	let rootVC: UIViewController = UIViewController()
 	
-    static let buttonSizeRatio: CGFloat = 0.1946 // Ratio of preferred button size to screen width
+    static var buttonSizeRatio: CGFloat = 0.1946 // Ratio of preferred button size to screen width
     static let colSpacingRatio: CGFloat = 0.048
 	// No top margin on iPhone 5, should define this width somewhere this is gross
 	let numberPadTopMargin = UIScreen.main.bounds.width > 320 ? 30 : 0
@@ -74,6 +74,11 @@ class AudioGuideNavigationController : SectionNavigationController {
 	}
 	
 	static func createCollectionView() -> UICollectionView {
+		// Adjust size for iPhone 5 screen size
+		if UIScreen.main.bounds.height < 600 {
+			buttonSizeRatio = buttonSizeRatio * 0.9
+		}
+		
 		let buttonSize = Int(buttonSizeRatio * UIScreen.main.bounds.width)
 		let buttonSpacing = Int(colSpacingRatio * UIScreen.main.bounds.width)
 		let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -103,6 +108,11 @@ class AudioGuideNavigationController : SectionNavigationController {
 		if UIDevice().type == .iPhoneX {
 			collectionViewTopOffset = 15
 		}
+		else if UIScreen.main.bounds.height < 600 {
+			// Adjust size for iPhone 5 screen size
+			collectionViewTopOffset = -40
+		}
+		
 		collectionView.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: Common.Layout.navigationBarHeight + collectionViewTopOffset, relation: .greaterThanOrEqual)
 	}
     
