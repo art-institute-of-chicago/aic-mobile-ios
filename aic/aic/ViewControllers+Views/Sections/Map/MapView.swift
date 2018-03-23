@@ -41,8 +41,8 @@ class MapView: MKMapView {
     private (set) var previousAltitude:Double = 0.0
     private (set) var currentAltitude:Double = 0.0
     
-    private (set) var previousZoomLevel:Common.Map.ZoomLevelAltitude = .zoomLimit
-    private (set) var currentZoomLevel:Common.Map.ZoomLevelAltitude = .zoomLimit
+    private (set) var previousZoomLevel: Common.Map.ZoomLevelAltitude = .zoomLimit
+    private (set) var currentZoomLevel: Common.Map.ZoomLevelAltitude = .zoomLimit
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,9 +75,6 @@ class MapView: MKMapView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func didMoveToSuperview() {
     }
     
     override func layoutSubviews() {
@@ -128,10 +125,11 @@ class MapView: MKMapView {
 	func showFullMap(useDefaultHeading: Bool = false, altitude: Double = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue) {
         if let overlay = floorplanOverlay {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
-			var centerPoint = Common.Map.defaultLocation
 			
 			let buildingRect = overlay.boundingMapRect
 			let userMapPoint = MKMapPointForCoordinate(userLocation.coordinate)
+			var centerPoint = MKCoordinateForMapPoint(buildingRect.getCenter()) // Common.Map.defaultLocation
+			
 			let distanceFromBuildingCenter = MKMetersBetweenMapPoints(userMapPoint, buildingRect.getCenter())
 			if  distanceFromBuildingCenter < Common.Location.minDistanceFromMuseumForLocation {
 				centerPoint = userLocation.coordinate
@@ -154,7 +152,7 @@ class MapView: MKMapView {
         if let _ = pitch {
             newCamera.pitch = pitch!
         } else {
-            newCamera.pitch = topDownPitch
+            newCamera.pitch = perspectivePitch // topDownPitch
         }
         
         setCamera(newCamera, animated: animated)
@@ -182,6 +180,7 @@ class MapView: MKMapView {
 	/// Based on:
 	/// https://stackoverflow.com/questions/6633850/calculate-new-coordinate-x-meters-and-y-degree-away-from-one-coordinate
 	func adjustPicthForZoomLevel() {
+		return
 		if self.currentZoomLevel != self.previousZoomLevel {
 			var pitch: CGFloat = topDownPitch
 			if currentAltitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {

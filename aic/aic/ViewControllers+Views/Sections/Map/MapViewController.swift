@@ -42,7 +42,7 @@ class MapViewController: UIViewController {
     // Layout
 
     // Map View
-    let mapView:MapView
+    let mapView: MapView = MapView(frame: UIScreen.main.bounds)
     let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
 
     // Floor Selector
@@ -60,15 +60,10 @@ class MapViewController: UIViewController {
     var isSwitchingModes = false
     
     init() {
-        self.mapView = MapView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
 		
 		// Navigation Item
 		self.navigationItem.title = Common.Sections[.map]!.title
-		
-        // Update teh annotation views every frame
-//        let displayLink = CADisplayLink(target: self, selector: #selector(setAnnotationViewPropertiesForCurrentMapAltitude))
-//		displayLink.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -79,13 +74,11 @@ class MapViewController: UIViewController {
 		// Add Subviews
         view.addSubview(mapView)
         view.addSubview(floorSelectorVC.view)
-        
-        // Set the overlay for the background
-        mapView.add(mapViewHideBackgroundOverlay, level: .aboveRoads)
 		
-        mapView.camera.heading = mapView.defaultHeading
-        mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
-        mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
+		// Set the overlay for the background
+		mapView.add(mapViewHideBackgroundOverlay, level: .aboveRoads)
+		
+		setMapCameraInitialState()
         
         // Set Delegates
         mapView.delegate = self
@@ -111,6 +104,16 @@ class MapViewController: UIViewController {
                                                selector: #selector(MapViewController.updateMapWithTimer),
                                                userInfo: nil,
                                                repeats: true)
+	}
+	
+	// MARK: Map Initial State
+	
+	/// Set Camera initial state for first animation when you open the map
+	func setMapCameraInitialState() {
+		mapView.camera.heading = 0 //mapView.defaultHeading
+		mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+		mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
+		mapView.camera.pitch = mapView.perspectivePitch
 	}
     
     // MARK: Mode Functions
@@ -272,7 +275,7 @@ class MapViewController: UIViewController {
 		
 		// Show all annotations messes with the pitch + heading,
 		// so reset our pitch + heading to preferred defaults
-		mapView.camera.pitch = mapView.topDownPitch
+		mapView.camera.pitch = mapView.perspectivePitch  //mapView.topDownPitch
 		if mapView.camera.altitude < Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
 			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue
 		}
@@ -534,15 +537,15 @@ class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.landmarkAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.gardenAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
-			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
+//			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
             break
             
         case .zoomDefault:
 			annotations.append(contentsOf: mapModel.gardenAnnotations as [MKAnnotation])
-			annotations.append(contentsOf: mapModel.floors[currentFloor].spaceAnnotations as [MKAnnotation])
+//			annotations.append(contentsOf: mapModel.floors[currentFloor].spaceAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
-			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
+//			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
             break
 			
 		case .zoomMedium:
@@ -550,7 +553,7 @@ class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].spaceAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
-			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
+//			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
 			break
             
         case .zoomDetail, .zoomMax:
@@ -930,7 +933,12 @@ extension MapViewController : MKMapViewDelegate {
         }
     }
 	
+	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
+		print("MAP STARTS LOADING!")
+	}
+	
 	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+		print("MAP FINISHED LOADING!")
 	}
 }
 
@@ -1011,14 +1019,14 @@ extension MapViewController : UIGestureRecognizerDelegate {
         return true
     }
     
-    @objc func mapViewWasPinched(_ gesture:UIPinchGestureRecognizer) {
+    @objc func mapViewWasPinched(_ gesture: UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
 		mapView.keepMapInView()
 		self.delegate?.mapWasPressed()
     }
     
-    @objc func mapViewWasPanned(_ gesture:UIPanGestureRecognizer) {
+    @objc func mapViewWasPanned(_ gesture: UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
         mapView.keepMapInView()
