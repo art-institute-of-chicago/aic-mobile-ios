@@ -93,6 +93,10 @@
 		<string>IdealSans-MediumItalic.otf</string>
 		<string>IdealSans-SemiBold.otf</string>
 		<string>IdealSans-SemiBoldItalic.otf</string>
+		<string>Linotype - SabonNextLTPro-Bold.otf</string>
+		<string>Linotype - SabonNextLTPro-BoldItalic.otf</string>
+		<string>Linotype - SabonNextLTPro-Italic.otf</string>
+		<string>Linotype - SabonNextLTPro-Regular.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

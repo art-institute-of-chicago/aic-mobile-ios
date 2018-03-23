@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Atributika
 
 class EventContentCell : UITableViewCell {
 	static let reuseIdentifier = "eventContentCell"
@@ -60,34 +61,27 @@ class EventContentCell : UITableViewCell {
 			
 			monthDayLabel.text = monthDayString
 			hoursMinutesLabel.text = hoursMinutesString
-			descriptionTextView.attributedText = getAttributedStringWithHTMLEnabled(text: eventModel.longDescription, font: .aicCardDescriptionFont, lineHeight: 22)
 			descriptionTextView.textColor = .white
 			locationAndDateLabel.attributedText = getAttributedStringWithLineHeight(text: locationAndDateString, font: .aicCardDateLocationFont, lineHeight: 22)
 			
+			let emStyle = Style("em").font(.aicCardTextItalicFont)
+			let iStyle = Style("i").font(.aicCardTextItalicFont)
+			let strongStyle = Style("strong").font(.aicCardTextBoldFont)
+			let bStyle = Style("b").font(.aicCardTextBoldFont)
+			let allStyle = Style.font(.aicCardTextFont).baselineOffset(22.0 - Float(UIFont.aicTitleFont.pointSize))
 			
-			// TODO: remove this code for testing bullet points
-//			do {
-//				let data = Data(eventModel.longDescription.utf8)
-//				let attributedString = try NSMutableAttributedString(data: data,
-//															 options: [.documentType: NSAttributedString.DocumentType.html],
-//															 documentAttributes: nil
-//				)
-//				let baselineOffset = 22 - UIFont.aicCardDescriptionFont.pointSize
-//				let paragraphStyle = NSMutableParagraphStyle()
-//				paragraphStyle.lineSpacing = 0.0
-//				paragraphStyle.minimumLineHeight = 22
-//				paragraphStyle.maximumLineHeight = 22
-//
-//				let range = NSMakeRange(0, attributedString.length)
-//				attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
-//				attributedString.addAttribute(NSAttributedStringKey.baselineOffset, value: baselineOffset, range: range)
-//				attributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.aicCardDescriptionFont, range: range)
-//				descriptionTextView.attributedText = attributedString
-//				descriptionTextView.textColor = .white
-//			}
-//			catch {
-//
-//			}
+			let eventDescription = eventModel.longDescription
+				.replacingOccurrences(of: "</p>", with: "</p>\n")
+				.replacingOccurrences(of: "<li>", with: "<li>\t•\t")
+			
+			let descriptionAttributedString = eventDescription
+				.style(tags: emStyle, iStyle, strongStyle, bStyle)
+				.styleAll(allStyle)
+				.attributedString
+			
+			descriptionTextView.attributedText = descriptionAttributedString
+			descriptionTextView.textColor = .white
+			
 			
 			if eventModel.eventUrl == nil {
 				buyTicketsButton.isEnabled = false

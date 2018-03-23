@@ -74,7 +74,11 @@ extension UIFont {
 	
 	static let aicCardTitleFont: UIFont = UIFont(name: "IdealSans-Medium", size: 21.0)!.upperCaseNumbers()
 	
-	static let aicCardDescriptionFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 16.0)!
+	static let aicCardTextFont: UIFont = UIFont(name: "SabonNextLTPro-Regular", size: 16.0)!
+	
+	static let aicCardTextBoldFont: UIFont = UIFont(name: "SabonNextLTPro-Bold", size: 16.0)!
+	
+	static let aicCardTextItalicFont: UIFont = UIFont(name: "SabonNextLTPro-Italic", size: 16.0)!
 	
 	static let aicCardDateLocationFont: UIFont = UIFont(name: "SabonNextLTPro-Italic", size: 16.0)!
 	

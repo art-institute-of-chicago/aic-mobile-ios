@@ -50,7 +50,7 @@ class AudioInfoSectionView : UIView {
 		collapseExpandButton.isSelected = false
 		
 		bodyTextView.textColor = .white
-		bodyTextView.font = .aicCardDescriptionFont
+		bodyTextView.font = .aicCardTextFont
 		bodyTextView.setDefaultsForAICAttributedTextView()
 		
 		// tap to expand/collapse
