@@ -153,6 +153,36 @@ class MapNavigationController : SectionNavigationController {
 		}
 	}
 	
+	// MARK: Advance to next Tour Stop after Audio playback
+	
+	func advanceToNextTourStopAfterAudioPlayback(audio: AICAudioFileModel) {
+		if let tour = self.tourModel {
+			if let tourStopsVC = self.tourStopPageVC {
+				// page for audio track
+				var previousStopPage = -1
+				var nextTourStopIndex = -1
+				if audio.nid == tour.overview.audio.nid {
+					nextTourStopIndex = 0
+					previousStopPage = 0
+				}
+				else if let audioIndex = tour.getIndex(forStopAudio: audio) {
+					nextTourStopIndex = audioIndex + 1
+					previousStopPage = audioIndex + 1 // pages include overview
+				}
+				
+				// if the tour card is still on the stop of the audio that just played
+				// move to the next stop
+				if tourStopsVC.getCurrentPage() == previousStopPage {
+					tourStopsVC.setCurrentPage(pageIndex: previousStopPage + 1)
+					
+					if nextTourStopIndex < tour.stops.count {
+						mapVC.highlightTourStop(identifier: tour.stops[nextTourStopIndex].object.nid, location: tour.stops[nextTourStopIndex].object.location)
+					}
+				}
+			}
+		}
+	}
+	
 	// MARK: Location Manager
 	
 	fileprivate func startLocationManager() {

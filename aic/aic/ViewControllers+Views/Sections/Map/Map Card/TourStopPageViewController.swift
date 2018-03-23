@@ -57,26 +57,25 @@ class TourStopPageViewController : UIPageViewController {
 	
 	func tourStopController(_ pageIndex: Int) -> UIViewController? {
 		if pageIndex < totalPages {
-			currentPage = pageIndex
 			let page = UIViewController()
-			page.view.tag = currentPage
+			page.view.tag = pageIndex
 			
-			if currentPage == 0 {
+			if pageIndex == 0 {
 				// Tour Overview
 				let artworkContentView = MapTourStartContentView()
-				artworkContentView.audioButton.tag = currentPage
+				artworkContentView.audioButton.tag = pageIndex
 				artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
 				page.view.addSubview(artworkContentView)
 			}
 			else {
 				// Stop
-				let stopIndex = currentPage-1
+				let stopIndex = pageIndex-1
 				if stopIndex < tourModel.stops.count {
 					let stop = tourModel.stops[stopIndex]
 					
-					let artworkContentView = MapArtworkContentView(tourStop: stop, stopNumber: currentPage, language: tourModel.language)
-					artworkContentView.audioButton.tag = currentPage
-					artworkContentView.imageButton.tag = currentPage
+					let artworkContentView = MapArtworkContentView(tourStop: stop, stopNumber: pageIndex, language: tourModel.language)
+					artworkContentView.audioButton.tag = pageIndex
+					artworkContentView.imageButton.tag = pageIndex
 					artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
 					artworkContentView.imageButton.addTarget(self, action: #selector(imageButtonPressed(button:)), for: .touchUpInside)
 					page.view.addSubview(artworkContentView)
@@ -88,10 +87,15 @@ class TourStopPageViewController : UIPageViewController {
 		return nil
 	}
 	
+	func getCurrentPage() -> Int {
+		return currentPage
+	}
+	
 	func setCurrentPage(pageIndex: Int) {
-		if currentPage == pageIndex {
+		if currentPage == pageIndex || pageIndex >= totalPages {
 			return
 		}
+		currentPage = pageIndex
 		
 		// Set Tour Stop Page
 		if let viewController = tourStopController(pageIndex) {

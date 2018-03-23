@@ -58,19 +58,26 @@ struct AICTourModel {
         for stop in stops {
             objects.append(stop.object)
         }
-        
         return objects
     }
     
-    func getIndex(forStopObject stopObject:AICObjectModel) -> Int? {
+    func getIndex(forStopObject stopObject: AICObjectModel) -> Int? {
         for (index, stop) in stops.enumerated() {
             if stop.object.nid == stopObject.nid {
                 return index
             }
         }
-        
         return nil
     }
+	
+	func getIndex(forStopAudio audio: AICAudioFileModel) -> Int? {
+		for (index, stop) in stops.enumerated() {
+			if stop.audio.nid == audio.nid {
+				return index
+			}
+		}
+		return nil
+	}
 }
 
 struct AICTourTranslationModel {

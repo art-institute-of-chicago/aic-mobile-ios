@@ -99,6 +99,7 @@ class SectionsViewController : UIViewController {
 		searchVC.sectionsVC = self
 		searchVC.resultsVC.sectionsVC = self
         audioPlayerVC.cardDelegate = self
+		audioPlayerVC.sectionDelegate = self
 		
 		// Search Buttons
 		for sectionVC in sectionViewControllers {
@@ -707,6 +708,16 @@ extension SectionsViewController : MapItemsCollectionContainerDelegate {
 	
 	func mapItemArtworkSelected(artwork: AICObjectModel) {
 		showArtworkOnMap(artwork: artwork)
+	}
+}
+
+// MARK: Audio Player Delegate
+
+extension SectionsViewController : AudioPlayerNavigationControllerDelegate {
+	func audioPlayerDidFinishPlaying(audio: AICAudioFileModel) {
+		if mapVC.currentMode == .tour {
+			mapVC.advanceToNextTourStopAfterAudioPlayback(audio: audio)
+		}
 	}
 }
 

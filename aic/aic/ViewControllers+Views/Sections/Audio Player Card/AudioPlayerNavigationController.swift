@@ -12,9 +12,15 @@ import MediaPlayer
 import Alamofire
 import Kingfisher
 
+protocol AudioPlayerNavigationControllerDelegate : class {
+	func audioPlayerDidFinishPlaying(audio: AICAudioFileModel)
+}
+
 class AudioPlayerNavigationController : CardNavigationController {
     var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
     let miniAudioPlayerView: MiniAudioPlayerView = MiniAudioPlayerView()
+	
+	weak var sectionDelegate: AudioPlayerNavigationControllerDelegate? = nil
 	
 	let remoteSkipTime: Int = 10 // Number of seconds to skip forward/back with MPRemoteCommandCenter seek
     
@@ -410,11 +416,11 @@ class AudioPlayerNavigationController : CardNavigationController {
             avPlayer.pause()
             synchronizePlayPauseButtons(isPlaying: false)
             
-            var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
-            info![MPNowPlayingInfoPropertyPlaybackRate] = NSInteger(0.0)
-            
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = info
-            
+			if var info = MPNowPlayingInfoCenter.default().nowPlayingInfo {
+				info[MPNowPlayingInfoPropertyPlaybackRate] = NSInteger(0.0)
+            	MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+			}
+			
             // Enable proximity sensing, needed when user is holding phone to their ear to listen to audio
             UIDevice.current.isProximityMonitoringEnabled = false
         }
@@ -458,7 +464,7 @@ class AudioPlayerNavigationController : CardNavigationController {
         audioInfoVC.audioPlayerView.playPauseButton.isSelected = isPlaying
     }
     
-    // Show/Hide
+	// MARK: Show/Hide Card
     
     override func showFullscreen() {
         super.showFullscreen()
@@ -571,29 +577,41 @@ extension AudioPlayerNavigationController {
         synchronizePlayPauseButtons(isPlaying: false)
 		
 		// check that we are playing tour stop audio, before you play bumper or original track
-		guard let currentAudio = currentAudioFile else {
-			return
-		}
-		guard let currentTourStopAudio = currentTourStopAudioFile else {
-			return
-		}
-		guard let currentBumper = currentAudioBumper else {
-			return
-		}
-		
-		if currentAudio.nid == currentTourStopAudio.nid {
-			// if you just played tour stop audio
-			// play audio bumper if there is one
-			self.autoPlay = true
-			playAudioBumper(audioBumper: currentBumper)
-		}
-		else if currentAudio.nid == currentBumper.nid {
-			self.autoPlay = false
-			if load(audioFile: currentTourStopAudioFile!, coverImageURL: currentImageURL!) {
-				miniAudioPlayerView.reset()
+		if let currentAudio = currentAudioFile,
+			let currentTourStopAudio = currentTourStopAudioFile,
+			let currentBumper = currentAudioBumper {
+			
+			if currentAudio.nid == currentTourStopAudio.nid {
+				// if you just played tour stop audio
+				// play audio bumper if there is one
+				self.autoPlay = true
+				playAudioBumper(audioBumper: currentBumper)
+			}
+			else if currentAudio.nid == currentBumper.nid {
+				self.autoPlay = false
+				if load(audioFile: currentTourStopAudioFile!, coverImageURL: currentImageURL!) {
+					miniAudioPlayerView.reset()
+				}
+				
+				// notify end of audio playback
+				self.sectionDelegate?.audioPlayerDidFinishPlaying(audio: currentTourStopAudio)
+				// and hide
+				if self.currentState != .fullscreen {
+					hide()
+				}
 			}
 		}
-    }
+		else if let currentAudio = currentAudioFile {
+			// notify end of audio playback
+			self.sectionDelegate?.audioPlayerDidFinishPlaying(audio: currentAudio)
+			// rewind to 0
+			seekToTime(0.0)
+			// and hide
+			if self.currentState != .fullscreen {
+				hide()
+			}
+		}
+	}
     
     // Audio player Slider Events
     
