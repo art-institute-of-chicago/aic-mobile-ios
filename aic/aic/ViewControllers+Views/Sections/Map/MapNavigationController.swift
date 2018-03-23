@@ -88,6 +88,39 @@ class MapNavigationController : SectionNavigationController {
 		}
 	}
 	
+	// MARK: Language
+	
+	@objc override func updateLanguage() {
+		super.updateLanguage()
+		
+		if let contentCard = mapContentCardVC {
+			switch currentMode {
+			case .allInformation:
+				break
+			case .artwork, .searchedArtwork:
+				contentCard.setTitleText(text: "Artwork".localized(using: "Map"))
+				break
+			case .exhibition:
+				contentCard.setTitleText(text: "Exhibition".localized(using: "Map"))
+				break
+			case .dining:
+				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.diningTitle)
+				break
+			case .memberLounge:
+				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.membersLoungeTitle)
+				break
+			case .giftshop:
+				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.giftShopsTitle)
+				break
+			case .restrooms:
+				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.restroomsTitle)
+				break
+			case .tour:
+				break
+			}
+		}
+	}
+	
 	// MARK: Show Content
 	
 	private func showContentIfNeeded() {
@@ -281,7 +314,7 @@ class MapNavigationController : SectionNavigationController {
 		artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 		artworkVC.view.addSubview(artworkContentView)
 		mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
-		mapContentCardVC!.setTitleText(text: artwork.title)
+		mapContentCardVC!.setTitleText(text: "Artwork".localized(using: "Map"))
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
@@ -316,7 +349,7 @@ class MapNavigationController : SectionNavigationController {
 		artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 		artworkVC.view.addSubview(artworkContentView)
 		mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
-		mapContentCardVC!.setTitleText(text: searchedArtwork.title)
+		mapContentCardVC!.setTitleText(text: "Artwork".localized(using: "Map"))
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
@@ -377,7 +410,7 @@ class MapNavigationController : SectionNavigationController {
 		}
 		restaurantPageVC = RestaurantPageViewController(restaurants: AppDataManager.sharedInstance.app.restaurants)
 		mapContentCardVC = MapContentCardNavigationController(contentVC: restaurantPageVC!)
-		mapContentCardVC!.setTitleText(text: "")
+		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.diningTitle)
 		mapContentCardVC!.cardDelegate = self
 		restaurantPageVC!.restaurantPageDelegate = self
 		
@@ -411,7 +444,7 @@ class MapNavigationController : SectionNavigationController {
 		}
 		let memberLoungeContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
 		mapContentCardVC = MapContentCardNavigationController(contentView: memberLoungeContentView)
-		mapContentCardVC!.setTitleText(text: "Member Lounge")
+		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.membersLoungeTitle)
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
@@ -441,7 +474,7 @@ class MapNavigationController : SectionNavigationController {
 		}
 		let restroomsContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
 		mapContentCardVC = MapContentCardNavigationController(contentView: restroomsContentView)
-		mapContentCardVC!.setTitleText(text: "Restrooms")
+		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.restroomsTitle)
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
@@ -471,7 +504,7 @@ class MapNavigationController : SectionNavigationController {
 		}
 		let giftshopContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
 		mapContentCardVC = MapContentCardNavigationController(contentView: giftshopContentView)
-		mapContentCardVC!.setTitleText(text: "Gift Shops")
+		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.giftShopsTitle)
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view

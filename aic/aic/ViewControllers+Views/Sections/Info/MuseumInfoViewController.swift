@@ -62,13 +62,7 @@ class MuseumInfoViewController : UIViewController {
 	@objc func updateLanguage() {
 		pageView.titleLabel.text = "Museum Information".localized(using: "Sections")
 		
-		let generalInfo = AppDataManager.sharedInstance.app.generalInfo
-		var language: Common.Language = .english
-		if generalInfo.availableLanguages.contains(Common.currentLanguage) {
-			language = Common.currentLanguage
-		}
-		
-		var text: String = generalInfo.translations[language]!.museumHours
+		var text: String = AppDataManager.sharedInstance.app.generalInfo.museumHours
 		text += "\n\n" + Common.Info.museumInformationAddress
 		text += "\n\n" + Common.Info.museumInformationPhoneNumber
 		pageView.textView.text = text

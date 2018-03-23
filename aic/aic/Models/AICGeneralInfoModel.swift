@@ -8,15 +8,24 @@ import Foundation
 
 struct AICGeneralInfoModel {
 	let nid: Int
-	var translations: [Common.Language : AICGeneralInfoTranslationModel]
 	
-	var availableLanguages: [Common.Language] {
-		var languages: [Common.Language] = []
-		for (key, translation) in translations {
-			languages.append(key)
-		}
-		return languages
-	}
+	var museumHours: String { return translations[Common.currentLanguage]!.museumHours }
+	var homeMemberPrompt: String { return translations[Common.currentLanguage]!.homeMemberPrompt }
+	var seeAllToursIntro: String { return translations[Common.currentLanguage]!.seeAllToursIntro }
+	
+	var audioTitle: String { return translations[Common.currentLanguage]!.audioTitle }
+	var audioSubtitle: String { return translations[Common.currentLanguage]!.audioSubtitle }
+	var mapTitle: String { return translations[Common.currentLanguage]!.mapTitle }
+	var mapSubtitle: String { return translations[Common.currentLanguage]!.mapSubtitle }
+	var infoTitle: String { return translations[Common.currentLanguage]!.infoTitle }
+	var infoSubtitle: String { return translations[Common.currentLanguage]!.infoSubtitle }
+	
+	var diningTitle: String { return translations[Common.currentLanguage]!.diningTitle }
+	var giftShopsTitle: String { return translations[Common.currentLanguage]!.giftShopsTitle }
+	var membersLoungeTitle: String { return translations[Common.currentLanguage]!.membersLoungeTitle }
+	var restroomsTitle: String { return translations[Common.currentLanguage]!.restroomsTitle }
+	
+	var translations: [Common.Language : AICGeneralInfoTranslationModel]
 }
 
 struct AICGeneralInfoTranslationModel {

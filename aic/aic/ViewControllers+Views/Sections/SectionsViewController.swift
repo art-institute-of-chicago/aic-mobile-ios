@@ -118,6 +118,10 @@ class SectionsViewController : UIViewController {
 	// MARK: Section Navigation
 	
     private func setSelectedSection(sectionVC: SectionNavigationController) {
+		if searchVC.currentState == .fullscreen {
+			searchVC.hide()
+		}
+		
 		if sectionVC == currentViewController {
 			return
 		}
@@ -416,6 +420,68 @@ class SectionsViewController : UIViewController {
 		}
 	}
 	
+	// MARK: Requested Content
+	// Functions used when user wants to open content on the Map and a Tour is open
+	
+	func showRequestedMapContentIfNeeded() {
+		if let mapMode = self.requestedMapMode {
+			switch mapMode {
+			case .tour:
+				if let tour = self.requestedTour {
+					if let previousTour = mapVC.tourModel {
+						self.requestedTour!.language = previousTour.language
+					}
+					
+					audioPlayerVC.pause()
+					audioPlayerVC.hide()
+					
+					showTourOnMap(tour: tour, language: tour.language, stopIndex: nil)
+				}
+				break
+			case .artwork:
+				if let artwork = self.requestedArtwork {
+					showArtworkOnMap(artwork: artwork)
+				}
+				break
+			case .allInformation:
+				break
+			case .searchedArtwork:
+				if let searchedArtwork = self.requestedSearchedArtwork {
+					showSearchedArtworkOnMap(searchedArtwork: searchedArtwork)
+				}
+				break
+			case .exhibition:
+				if let exhibition = self.requestedExhibition {
+					showExhibitionOnMap(exhibition: exhibition)
+				}
+				break
+			case .dining:
+				showDiningOnMap()
+				break
+			case .memberLounge:
+				showMemberLoungeOnMap()
+				break
+			case .giftshop:
+				showGiftShopOnMap()
+				break
+			case .restrooms:
+				showRestroomsOnMap()
+				break
+			}
+		}
+		else {
+			mapVC.showAllInformation()
+		}
+	}
+	
+	func resetRequestedMapContent() {
+		self.requestedMapMode = nil
+		self.requestedTour = nil
+		self.requestedArtwork = nil
+		self.requestedSearchedArtwork = nil
+		self.requestedExhibition = nil
+	}
+	
 	// MARK: Search Button Pressed
 	
 	@objc func searchButtonPressed(button: UIButton) {
@@ -491,38 +557,6 @@ extension SectionsViewController : AudioGuideNavigationControllerDelegate {
     }
 }
 
-// Tours Delegate Methods
-//extension SectionsViewController : ToursSectionViewControllerDelegate {
-//    func toursSectionDidShowTour(tour: AICTourModel) {
-//        //locationManager.delegate = mapVC
-//        //mapVC.showTour(forTour: tour)
-//
-//        // Log Analytics
-//        AICAnalytics.sendTourDidStartEvent(forTour: tour)
-//    }
-//
-//    func toursSectionDidFocusOnTourOverview(tour: AICTourModel) {
-//        //mapVC.showTourOverview(forTourModel: tour)
-//    }
-//
-//    func toursSectionDidFocusOnTourStop(tour: AICTourModel, stopIndex: Int) {
-//        //mapVC.highlightTourStop(forTour: tour, atStopIndex: stopIndex)
-//    }
-//
-//    func toursSectionDidSelectTourOverview(tour:AICTourModel) {
-//        playTourOverview(forTourModel: tour)
-//    }
-//
-//    func toursSectionDidSelectTourStop(tour: AICTourModel, stopIndex:Int) {
-//        playTourStop(forTourModel: tour, atStopIndex:stopIndex)
-//    }
-//
-//    func toursSectionDidLeaveTour(tour: AICTourModel) {
-//        // Log analytics
-//        AICAnalytics.sendTourDidLeaveEvent(forTour: tour)
-//    }
-//}
-
 // MARK: Map Delegate
 
 extension SectionsViewController : MapNavigationControllerDelegate {
@@ -555,56 +589,8 @@ extension SectionsViewController : MessageViewControllerDelegate {
 		else if messageVC == leaveTourMessageVC {
 			hideLeaveTourMessage()
 			
-			if let mapMode = self.requestedMapMode {
-				switch mapMode {
-				case .tour:
-					if let tour = self.requestedTour {
-						if let previousTour = mapVC.tourModel {
-							self.requestedTour!.language = previousTour.language
-						}
-						
-						audioPlayerVC.pause()
-						audioPlayerVC.hide()
-						
-						showTourOnMap(tour: tour, language: tour.language, stopIndex: nil)
-					}
-					break
-				case .artwork:
-					if let artwork = self.requestedArtwork {
-						showArtworkOnMap(artwork: artwork)
-					}
-					break
-				case .allInformation:
-					break
-				case .searchedArtwork:
-					if let searchedArtwork = self.requestedSearchedArtwork {
-						showSearchedArtworkOnMap(searchedArtwork: searchedArtwork)
-					}
-					break
-				case .exhibition:
-					if let exhibition = self.requestedExhibition {
-						showExhibitionOnMap(exhibition: exhibition)
-					}
-					break
-				case .dining:
-					showDiningOnMap()
-					break
-				case .memberLounge:
-					showMemberLoungeOnMap()
-					break
-				case .giftshop:
-					showGiftShopOnMap()
-					break
-				case .restrooms:
-					showRestroomsOnMap()
-					break
-				}
-			}
-			else {
-				mapVC.showAllInformation()
-			}
-			
-			resetRequestedContent()
+			showRequestedMapContentIfNeeded()
+			resetRequestedMapContent()
 		}
     }
     
@@ -612,17 +598,9 @@ extension SectionsViewController : MessageViewControllerDelegate {
         if messageVC == leaveTourMessageVC {
             hideLeaveTourMessage()
 			
-			resetRequestedContent()
+			resetRequestedMapContent()
         }
     }
-	
-	func resetRequestedContent() {
-		self.requestedMapMode = nil
-		self.requestedTour = nil
-		self.requestedArtwork = nil
-		self.requestedSearchedArtwork = nil
-		self.requestedExhibition = nil
-	}
 }
 
 // MARK: Card Delegate
@@ -683,9 +661,6 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 extension SectionsViewController : TourTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
 	func tourContentCardDidPressStartTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
 		showTourOnMap(tour: tour, language: language, stopIndex: stopIndex)
 	}
 }
@@ -699,9 +674,6 @@ extension SectionsViewController : ArtworkTableViewControllerDelegate {
 	}
 	
 	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel) {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
 		showSearchedArtworkOnMap(searchedArtwork: artwork)
 	}
 }
@@ -718,37 +690,22 @@ extension SectionsViewController : ExhibitionTableViewControllerDelegate {
 
 extension SectionsViewController : MapItemsCollectionContainerDelegate {
 	func mapItemDiningSelected() {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
 		showDiningOnMap()
 	}
 	
 	func mapItemMemberLoungeSelected() {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
 		showMemberLoungeOnMap()
 	}
 	
 	func mapItemGiftShopSelected() {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
 		showGiftShopOnMap()
 	}
 	
 	func mapItemRestroomSelected() {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
 		showRestroomsOnMap()
 	}
 	
 	func mapItemArtworkSelected(artwork: AICObjectModel) {
-		if searchVC.currentState == .fullscreen {
-			searchVC.hide()
-		}
 		showArtworkOnMap(artwork: artwork)
 	}
 }

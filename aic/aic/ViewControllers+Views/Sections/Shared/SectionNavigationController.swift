@@ -111,19 +111,17 @@ class SectionNavigationController : UINavigationController {
 			}
 			else {
 				let generalInfo = AppDataManager.sharedInstance.app.generalInfo
-				if generalInfo.availableLanguages.contains(Common.currentLanguage) {
-					if sectionModel.nid == Section.audioGuide.rawValue {
-						titleText = generalInfo.translations[Common.currentLanguage]!.audioTitle
-						subtitleText = generalInfo.translations[Common.currentLanguage]!.audioSubtitle
-					}
-					else if sectionModel.nid == Section.map.rawValue {
-						titleText = generalInfo.translations[Common.currentLanguage]!.mapTitle
-						subtitleText = generalInfo.translations[Common.currentLanguage]!.mapSubtitle
-					}
-					else if sectionModel.nid == Section.info.rawValue {
-						titleText = generalInfo.translations[Common.currentLanguage]!.infoTitle
-						subtitleText = generalInfo.translations[Common.currentLanguage]!.infoSubtitle
-					}
+				if sectionModel.nid == Section.audioGuide.rawValue {
+					titleText = generalInfo.audioTitle
+					subtitleText = generalInfo.audioSubtitle
+				}
+				else if sectionModel.nid == Section.map.rawValue {
+					titleText = generalInfo.mapTitle
+					subtitleText = generalInfo.mapSubtitle
+				}
+				else if sectionModel.nid == Section.info.rawValue {
+					titleText = generalInfo.infoTitle
+					subtitleText = generalInfo.infoSubtitle
 				}
 			}
 		}

@@ -59,7 +59,7 @@ class SeeAllViewController : UIViewController {
 			exhibitionItems = AppDataManager.sharedInstance.getExhibitionsForSeeAll()
 		}
 		
-		seeAllToursIntroText = AppDataManager.sharedInstance.app.generalInfo.translations[Common.currentLanguage]!.seeAllToursIntro
+		seeAllToursIntroText = AppDataManager.sharedInstance.app.generalInfo.seeAllToursIntro
 		
 		super.init(nibName: nil, bundle: nil)
 		
