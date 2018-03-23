@@ -35,7 +35,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    weak var delegate:MapViewControllerDelegate?
+    weak var delegate: MapViewControllerDelegate?
     
     let mapModel = AppDataManager.sharedInstance.app.map
     
@@ -52,6 +52,7 @@ class MapViewController: UIViewController {
     private (set) var previousFloor: Int = Common.Map.startFloor
     private (set) var currentFloor: Int = Common.Map.startFloor
 	private (set) var currentUserFloor: Int? = nil
+	private (set) var previousUserFloor: Int? = nil
 	
 	// TODO: move these to SectionsViewController
     var locationDisabledMessage: UIView? = nil
@@ -1056,6 +1057,10 @@ extension MapViewController : CLLocationManagerDelegate {
                 currentUserFloor = Common.Testing.testFloorNumber
             } else {
                 if let floor = location.floor {
+					if floor.level != previousUserFloor && mode == .tour {
+						setCurrentFloor(forFloorNum: floor.level)
+					}
+					previousUserFloor = currentUserFloor
                     currentUserFloor = floor.level
                 }
             }
