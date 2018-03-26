@@ -241,9 +241,8 @@ class AppDataParser {
     }
     
     fileprivate func parse(objectJSON: JSON) throws -> AICObjectModel {
-        let nid             = try getInt(fromJSON:objectJSON, forKey: "nid")
-		let objectId        = try getInt(fromJSON:objectJSON, forKey: "id")
-        let location        = try getCLLocation2d(fromJSON: objectJSON, forKey:"location")
+        let nid             = try getInt(fromJSON: objectJSON, forKey: "nid")
+		let location        = try getCLLocation2d(fromJSON: objectJSON, forKey:"location")
         
         let galleryName     = try getString(fromJSON: objectJSON, forKey: "gallery_location")
         let gallery     	= try getGallery(forGalleryName: galleryName)
@@ -252,7 +251,12 @@ class AppDataParser {
         let title           = try getString(fromJSON: objectJSON, forKey: "title")
         
         // Optional Fields
-        var tombstone:String?  = nil
+		var objectId: Int? = nil
+		do {
+			objectId = try getInt(fromJSON: objectJSON, forKey: "id")
+		} catch {}
+		
+		var tombstone:String?  = nil
         do {
             tombstone = try getString(fromJSON: objectJSON, forKey: "artist_culture_place_delim").replacingOccurrences(of: "|", with: "\r")
         } catch {}
@@ -1397,7 +1401,7 @@ class AppDataParser {
 	}
     
     // Try to parse an int from a JSON string
-    private func getInt(fromJSON json:JSON, forKey key:String) throws -> Int {
+    private func getInt(fromJSON json: JSON, forKey key: String) throws -> Int {
         guard let int = json[key].int else {
             
             let str = try getString(fromJSON: json, forKey: key)

@@ -12,7 +12,7 @@ struct AICObjectModel {
     let nid: Int
 	
 	// id from museum collection
-	let objectId: Int
+	let objectId: Int?
 	
     let thumbnailUrl: URL
     let thumbnailCropRect: CGRect?
