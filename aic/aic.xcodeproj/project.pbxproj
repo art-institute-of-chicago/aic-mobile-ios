@@ -168,6 +168,7 @@
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
+		29EC03BC20691A8200EF2ADB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29EC03BB20691A8200EF2ADB /* GoogleService-Info.plist */; };
 		29F12BC2204F4C37009C1A47 /* MapTourStartContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F12BC1204F4C37009C1A47 /* MapTourStartContentView.swift */; };
 		29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */; };
 		29F261FD200FE5C30000BF05 /* ExhibitionContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */; };
@@ -256,7 +257,6 @@
 		E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */; };
 		E4E861021CDBE46B006D07FD /* _NewsToursRevealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */; };
 		E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F518FA1D2586B0004BFB44 /* AICImageView.swift */; };
-		E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */; };
 		E4F519C71C87B2F200226188 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F519C61C87B2F200226188 /* Helpers.swift */; };
 		E4F7AF951CFB64DE00524F87 /* AICMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */; };
 		E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */; };
@@ -482,6 +482,7 @@
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
+		29EC03BB20691A8200EF2ADB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29F12BC1204F4C37009C1A47 /* MapTourStartContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTourStartContentView.swift; sourceTree = "<group>"; };
 		29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionContentCell.xib; sourceTree = "<group>"; };
 		29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionContentCell.swift; sourceTree = "<group>"; };
@@ -588,7 +589,6 @@
 		E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAudioFileModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursRevealView.swift; sourceTree = "<group>"; };
 		E4F518FA1D2586B0004BFB44 /* AICImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICImageView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E4F519C61C87B2F200226188 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapFloorModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1117,7 +1117,7 @@
 				293D00731FA7C7EF00BF2C26 /* Assets */,
 				2984611F203C6D5C001E5378 /* Assets.xcassets */,
 				E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */,
-				E4F518FD1D25BC13004BFB44 /* GoogleService-Info.plist */,
+				29EC03BB20691A8200EF2ADB /* GoogleService-Info.plist */,
 				32A2A70F1E8079610025186F /* Config.plist */,
 				E415AB8F1C7297E60093B719 /* Info.plist */,
 			);
@@ -1569,6 +1569,7 @@
 				29CDAF96202225D500D1A30D /* Messages.strings in Resources */,
 				29F8997F202A3CA90081BA22 /* IdealSans-Light.otf in Resources */,
 				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
+				29EC03BC20691A8200EF2ADB /* GoogleService-Info.plist in Resources */,
 				2968F6932012B33000638153 /* TabMenu.strings in Resources */,
 				291AF3332033B2BE001099C7 /* MemberCard.strings in Resources */,
 				29A7BCFC1FBF85DB00FD8639 /* Linotype - SabonNextLTPro-Italic.otf in Resources */,
@@ -1585,7 +1586,6 @@
 				294826D92040B926009D1122 /* Global.strings in Resources */,
 				29412AEC1FCE1F44005A7172 /* HomeExhibitionCell.xib in Resources */,
 				29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */,
-				E4F518FE1D25BC13004BFB44 /* GoogleService-Info.plist in Resources */,
 				29C7D0CC202541E00015984B /* AudioPlayer.strings in Resources */,
 				298729F320155E2C00BB3B6A /* Sections.strings in Resources */,
 				293D00A01FA7C80D00BF2C26 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
@@ -1717,6 +1717,7 @@
 				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1729,6 +1730,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

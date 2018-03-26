@@ -6,7 +6,7 @@
 //  Copyright © 2017 Art Institute of Chicago. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol FilterMenuDelegate: class {
 	func filterMenuSelected(filter: Common.Search.Filter)

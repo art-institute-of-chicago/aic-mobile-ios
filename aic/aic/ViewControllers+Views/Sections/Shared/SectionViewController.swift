@@ -32,7 +32,7 @@ class SectionViewController : UIViewController {
         super.viewWillAppear(animated)
         
         // Track this screen
-        AICAnalytics.trackScreen(named: sectionModel.title)
+        AICAnalytics.trackScreen(named: sectionModel.title.localized(using: "Sections"))
     }
 	
     internal func reset() {

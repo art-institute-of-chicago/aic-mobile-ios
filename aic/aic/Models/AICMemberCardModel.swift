@@ -3,6 +3,8 @@
  Data model for info received from member card API
 */
 
+import Foundation
+
 struct AICMemberCardModel {
 	let cardId: String
 	let memberNames: [String]

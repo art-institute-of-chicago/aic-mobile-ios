@@ -5,6 +5,7 @@
 */
 
 import Foundation
+import CoreGraphics
 
 struct AICObjectModel {
     // MARK: Properties

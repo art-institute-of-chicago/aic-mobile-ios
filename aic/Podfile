@@ -6,7 +6,7 @@ target 'aic' do
   use_frameworks!
 
   # Pods for aic
-  pod 'Google/Analytics'
+  pod 'Firebase/Core'
   pod 'PureLayout'
   pod 'SWXMLHash', '~> 4.2.1'
   pod 'Alamofire', '~> 4.5.1'

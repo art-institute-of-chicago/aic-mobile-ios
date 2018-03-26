@@ -4,9 +4,11 @@
  currently using Google Analytics
 */
 
+import Firebase
+
 class AICAnalytics {
     // Analytics tracker
-    static fileprivate let tracker = GAI.sharedInstance().defaultTracker
+    //static fileprivate let tracker = GAI.sharedInstance().defaultTracker
 	
 	fileprivate enum Category : String {
 		case app 			= "app"
@@ -57,50 +59,57 @@ class AICAnalytics {
     
     static func configure() {
         // Configure tracker from GoogleService-Info.plist.
-        var configureError:NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
-        if let error = configureError {
-            assert(configureError == nil, "Error configuring Google services: \(error)")
-        }
-        
+		
+		FirebaseApp.configure()
+		
+//        GGLContext.sharedInstance().configureWithError(&configureError)
+//        if let error = configureError {
+//            assert(configureError == nil, "Error configuring Google services: \(error)")
+//        }
+		
         // Optional: configure GAI options.
-        let gai = GAI.sharedInstance()
-        gai?.dispatchInterval = 30
-        gai?.trackUncaughtExceptions = false  // report uncaught exceptions
-        
-        #if APP_STORE
-            gai.logger.logLevel = GAILogLevel.Error
-        #else
-            gai?.logger.logLevel = GAILogLevel.warning
-        #endif
+//        let gai = GAI.sharedInstance()
+//        gai?.dispatchInterval = 30
+//        gai?.trackUncaughtExceptions = false  // report uncaught exceptions
+		
+//        #if APP_STORE
+//            gai.logger.logLevel = GAILogLevel.Error
+//        #else
+//            gai?.logger.logLevel = GAILogLevel.warning
+//        #endif
     }
     
     // App
     
     static func appOpenEvent(isMember:Bool) {
-        AICAnalytics.sendAnalyticEvent(category:Category.app, action:Action.appOpen, label:Label.appIsMember.rawValue, value:isMember as NSNumber)
+		Analytics.setUserProperty(Common.currentLanguage.rawValue, forName: "Language")
+        AICAnalytics.sendAnalyticEvent(category: Category.app, action: Action.appOpen, label: Label.appIsMember.rawValue, value:isMember as NSNumber)
+		
+		Analytics.logEvent(Action.appOpen.rawValue, parameters: ["Category" : Category.app.rawValue, "Action" : Action.appOpen.rawValue, "Label" : Label.appIsMember.rawValue, "Value" : isMember as NSNumber])
     }
     
     static func appForegroundEvent() {
-        AICAnalytics.sendAnalyticEvent(category:Category.app, action:Action.appForeground)
+        AICAnalytics.sendAnalyticEvent(category: Category.app, action: Action.appForeground)
     }
     
     static func appBackgroundEvent() {
-        AICAnalytics.sendAnalyticEvent(category:Category.app, action:Action.appBackground)
+        AICAnalytics.sendAnalyticEvent(category: Category.app, action: Action.appBackground)
     }
     
     // Screens
-    static func trackScreen(named screenName:String) {
-        if screenName != currentScreen {
-            AICAnalytics.tracker?.set(kGAIScreenName, value: screenName)
-            
-            let builder = GAIDictionaryBuilder.createScreenView()
-            let dictionary = builder?.build() as NSDictionary?
-            
-            AICAnalytics.tracker?.send(dictionary as? [AnyHashable : Any])
-            previousScreen = currentScreen
-            currentScreen = screenName
-        }
+    static func trackScreen(named screenName: String) {
+//        if screenName != currentScreen {
+////            AICAnalytics.tracker?.set(kGAIScreenName, value: screenName)
+//			Analytics.setScreenName(screenName, screenClass: nil)
+//
+////            let builder = GAIDictionaryBuilder.createScreenView()
+////            let dictionary = builder?.build() as NSDictionary?
+//
+////            AICAnalytics.tracker?.send(dictionary as? [AnyHashable : Any])
+//
+//            previousScreen = currentScreen
+//            currentScreen = screenName
+//        }
     }
     
     static func restorePreviousScreen() {
@@ -110,7 +119,7 @@ class AICAnalytics {
     }
     
     // Map
-    static func sendMapDidShowObjectEvent(forObject object:AICObjectModel) {
+    static func sendMapDidShowObjectEvent(forObject object: AICObjectModel) {
         AICAnalytics.objectShown(object: object, action: Action.objectShownMap)
     }
     
@@ -123,41 +132,41 @@ class AICAnalytics {
     }
     
     // Tours
-    static func sendTourDidShowOverviewEvent(forTour tour:AICTourModel) {
+    static func sendTourDidShowOverviewEvent(forTour tour: AICTourModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourOverviewShown, label: tour.translations[.english]!.title)
     }
     
-	static func sendTourExpandedEvent(forTour tour:AICTourModel) {
+	static func sendTourExpandedEvent(forTour tour: AICTourModel) {
 		AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.expanded, label: tour.translations[.english]!.title)
 	}
     
-    static func sendTourStartedFromLinkEvent(forTour tour:AICTourModel) {
+    static func sendTourStartedFromLinkEvent(forTour tour: AICTourModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourStartedFromLink, label: tour.translations[.english]!.title)
     }
     
-    static func sendTourDidStartEvent(forTour tour:AICTourModel) {
+    static func sendTourDidStartEvent(forTour tour: AICTourModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourStarted, label: tour.translations[.english]!.title)
     }
     
-    static func sendTourDidLeaveEvent(forTour tour:AICTourModel) {
+    static func sendTourDidLeaveEvent(forTour tour: AICTourModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.tour, action: Action.tourLeft, label: tour.translations[.english]!.title)
     }
     
-    static func sendTourDidShowObjectEvent(forObject object:AICObjectModel) {
+    static func sendTourDidShowObjectEvent(forObject object: AICObjectModel) {
         AICAnalytics.objectShown(object: object, action: Action.objectShownTour)
     }
     
     // News
-    static func sendNewsItemDidShowOnMapEvent(forNewsItem newsItem:AICExhibitionModel) {
+    static func sendNewsItemDidShowOnMapEvent(forNewsItem newsItem: AICExhibitionModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.news, action: Action.newsItemShownOnMap, label: newsItem.title)
     }
     
-    static func sendNewsItemExpandedEvent(forNewsItem newsItem:AICExhibitionModel) {
+    static func sendNewsItemExpandedEvent(forNewsItem newsItem: AICExhibitionModel) {
         AICAnalytics.sendAnalyticEvent(category: Category.news, action: Action.expanded, label: newsItem.title)
     }
     
     // Audio Guide
-    static func sendAudioGuideDidShowObjectEvent(forObject object:AICObjectModel) {
+    static func sendAudioGuideDidShowObjectEvent(forObject object: AICObjectModel) {
         AICAnalytics.objectShown(object: object, action: Action.objectShownAudioGuide)
     }
     
@@ -167,7 +176,7 @@ class AICAnalytics {
     }
     
     // Members
-    static func memberDidShowMemberCard(memberID:String) {
+    static func memberDidShowMemberCard(memberID: String) {
         // Disabled logging memberID for now, to re-enable:
         // value: String(memberID)
         AICAnalytics.sendAnalyticEvent(category: Category.member, action: Action.memberShowCard)
@@ -176,25 +185,26 @@ class AICAnalytics {
     
     // Info
     static func infoJoinPressedEvent() {
-        AICAnalytics.sendAnalyticEvent(category: Category.info, action:Action.infoJoinPressed)
+        AICAnalytics.sendAnalyticEvent(category: Category.info, action: Action.infoJoinPressed)
     }
     
     static func infoGetTicketsPressedEvent() {
-        AICAnalytics.sendAnalyticEvent(category: Category.info, action:Action.infoGetTicketsPressed)
+        AICAnalytics.sendAnalyticEvent(category: Category.info, action: Action.infoGetTicketsPressed)
     }
     
     // MARK: Private Functions
     
     // Log an object selected
-    private static func objectShown(object:AICObjectModel, action:Action) {
+    private static func objectShown(object: AICObjectModel, action: Action) {
         AICAnalytics.sendAnalyticEvent(category: Category.objectShown, action: action, label: object.title)
     }
     
-    private static func sendAnalyticEvent(category:Category, action:Action, label:String="", value:NSNumber = 0) {
-        let event = GAIDictionaryBuilder.createEvent(withCategory: category.rawValue, action: action.rawValue, label: label, value: value).build() as NSDictionary?
-        if event != nil {
-			// TODO: remember to enable analytics when we go live
-            //AICAnalytics.tracker?.send(event as? [AnyHashable: Any])
-        }
+    private static func sendAnalyticEvent(category: Category, action: Action, label: String = "", value: NSNumber = 0) {
+//        let event = GAIDictionaryBuilder.createEvent(withCategory: category.rawValue, action: action.rawValue, label: label, value: value).build() as NSDictionary?
+//        if event != nil {
+//            AICAnalytics.tracker?.send(event as? [AnyHashable: Any])
+//        }
+		
+//		Analytics.logEvent(action.rawValue, parameters: ["Category" : category.rawValue, "Action" : action.rawValue, "Label" : label, "Value" : value])
     }
 }

@@ -9,6 +9,7 @@ import CoreData
 import MediaPlayer
 import CoreLocation
 import MapKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,14 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var deepLinkString: String? = nil
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		
-		// DEBUG find coordinates for pdf overlay anchor points
-//		let mapPoint = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: 801, y: 801)) // 1061.635
-//		let coordinate = MKCoordinateForMapPoint(mapPoint)
-//		print("-------------")
-//		print(mapPoint)
-//		print(coordinate)
-//		print("-------------")
 		
 		AICAnalytics.configure()
 		

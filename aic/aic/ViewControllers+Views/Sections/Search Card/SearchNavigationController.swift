@@ -8,6 +8,7 @@
 
 import UIKit
 import Localize_Swift
+import Firebase
 
 class SearchNavigationController : CardNavigationController {
 	let backButton: UIButton = UIButton()
@@ -104,7 +105,7 @@ class SearchNavigationController : CardNavigationController {
         self.delegate = self
 		
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name( LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	func createViewConstraints() {
@@ -176,6 +177,8 @@ class SearchNavigationController : CardNavigationController {
 	override func cardDidShowFullscreen() {
 		resultsVC.view.setNeedsLayout()
 		resultsVC.view.layoutIfNeeded()
+		
+		Analytics.setScreenName("Search", screenClass: "SearchNavigationController")
 	}
 	
 	override func cardWillHide() {
