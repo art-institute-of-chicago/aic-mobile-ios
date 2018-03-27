@@ -107,6 +107,13 @@ class MapViewController: UIViewController {
                                                repeats: true)
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Map", screenClass: "MapViewController")
+	}
+	
 	// MARK: Map Initial State
 	
 	/// Set Camera initial state for first animation when you open the map
@@ -935,11 +942,9 @@ extension MapViewController : MKMapViewDelegate {
     }
 	
 	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
-		print("MAP STARTS LOADING!")
 	}
 	
 	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-		print("MAP FINISHED LOADING!")
 	}
 }
 
@@ -972,7 +977,7 @@ extension MapViewController : MapFloorSelectorViewControllerDelegate {
                 floorSelectorVC.enableUserHeading()
                 
                 // Log Analytics
-//                AICAnalytics.sendMapDidEnableHeadingEvent()
+                AICAnalytics.sendLocationEnableHeadingEvent()
             }
         }
     }
@@ -1079,7 +1084,7 @@ extension MapViewController : CLLocationManagerDelegate {
                 floorSelectorVC.locationMode = .Enabled
                 
                 // Log analytics
-                AICAnalytics.sendMapUserOnSiteEvent()
+                AICAnalytics.sendLocationOnSiteEvent()
             }
         } else {
             floorSelectorVC.locationMode = .Offsite

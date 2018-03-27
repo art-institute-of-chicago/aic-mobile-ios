@@ -359,6 +359,9 @@ class MapNavigationController : SectionNavigationController {
 		mapVC.showArtwork(artwork: artwork)
 		
 		showMapContentCard()
+		
+		// Log analytics
+		AICAnalytics.sendMapShowArtworkEvent(artwork: artwork)
 	}
 	
 	func showSearchedArtwork(searchedArtwork: AICSearchedArtworkModel) {
@@ -394,6 +397,9 @@ class MapNavigationController : SectionNavigationController {
 		mapVC.showSearchedArtwork(searchedArtwork: searchedArtwork)
 	
 		showMapContentCard()
+		
+		// Log analytics
+		AICAnalytics.sendMapShowSearchedArtworkEvent(searchedArtwork: searchedArtwork)
 	}
 	
 	func showExhibition(exhibition: AICExhibitionModel) {
@@ -425,6 +431,9 @@ class MapNavigationController : SectionNavigationController {
 		mapVC.showExhibition(exhibition: exhibition)
 		
 		showMapContentCard()
+		
+		// Log analytics
+		AICAnalytics.sendMapShowExhibitionEvent(exhibition: exhibition)
 	}
 	
 	func showDining() {
@@ -459,6 +468,9 @@ class MapNavigationController : SectionNavigationController {
 		mapVC.showDining()
 		
 		showMapContentCard()
+		
+		// Log analytics
+		AICAnalytics.sendMapShowDiningEvent()
 	}
 	
 	func showMemberLounge() {
@@ -489,36 +501,9 @@ class MapNavigationController : SectionNavigationController {
 		mapVC.showMemberLounge()
 		
 		showMapContentCard()
-	}
-	
-	func showRestrooms() {
-		currentMode = .restrooms
 		
-		if sectionNavigationBar.currentState != .hidden {
-			sectionNavigationBar.hide()
-		}
-		
-		// Crate Content Card
-		if mapContentCardVC != nil {
-			mapContentCardVC!.view.removeFromSuperview()
-		}
-		let restroomsContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
-		mapContentCardVC = MapContentCardNavigationController(contentView: restroomsContentView)
-		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.restroomsTitle)
-		mapContentCardVC!.cardDelegate = self
-		
-		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
-		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
-		
-		// in case the tour card is open, to tell the map to animate the floor selector
-		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
-		
-		// Set map state
-		mapVC.showRestrooms()
-		
-		showMapContentCard()
+		// Log analytics
+		AICAnalytics.sendMapShowMemberLoungeEvent()
 	}
 	
 	func showGiftShop() {
@@ -549,6 +534,42 @@ class MapNavigationController : SectionNavigationController {
 		mapVC.showGiftShop()
 		
 		showMapContentCard()
+		
+		// Log analytics
+		AICAnalytics.sendMapShowGiftShopsEvent()
+	}
+	
+	func showRestrooms() {
+		currentMode = .restrooms
+		
+		if sectionNavigationBar.currentState != .hidden {
+			sectionNavigationBar.hide()
+		}
+		
+		// Crate Content Card
+		if mapContentCardVC != nil {
+			mapContentCardVC!.view.removeFromSuperview()
+		}
+		let restroomsContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
+		mapContentCardVC = MapContentCardNavigationController(contentView: restroomsContentView)
+		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.restroomsTitle)
+		mapContentCardVC!.cardDelegate = self
+		
+		// Add card to view
+		mapContentCardVC!.willMove(toParentViewController: self)
+		self.view.addSubview(mapContentCardVC!.view)
+		mapContentCardVC!.didMove(toParentViewController: self)
+		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+		
+		// Set map state
+		mapVC.showRestrooms()
+		
+		showMapContentCard()
+		
+		// Log analytics
+		AICAnalytics.sendMapShowRestroomsEvent()
 	}
 	
 	private func showMapContentCard() {

@@ -63,6 +63,9 @@ class MemberCardViewController : UIViewController {
 		updateLanguage()
 		
 		loadMemberFromUserDefaults()
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Member Card", screenClass: "MemberCardViewController")
 	}
 	
 	private func createViewConstraints() {
@@ -113,6 +116,9 @@ class MemberCardViewController : UIViewController {
 		loadingIndicatorView.isHidden = true
 		loadingIndicatorView.stopAnimating()
 		cardView.isHidden = false
+		
+		// Log analytics
+		AICAnalytics.sendMemberShowCardEvent()
 	}
 	
 	// MARK: Load Member

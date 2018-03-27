@@ -85,6 +85,9 @@ class InfoViewController : SectionViewController {
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: self.scrollView)
 		
 		updateLanguage()
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Information", screenClass: "InfoViewController")
 	}
 	
 	func createViewConstraints() {

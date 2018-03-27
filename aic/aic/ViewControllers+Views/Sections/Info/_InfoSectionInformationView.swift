@@ -175,8 +175,8 @@ class InfoSectionInformationView: BaseView {
 extension InfoSectionInformationView  : UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         // Log Analytics
-        AICAnalytics.infoGetTicketsPressedEvent()
-        
+//        AICAnalytics.infoGetTicketsPressedEvent()
+		
         return true
     }
 }

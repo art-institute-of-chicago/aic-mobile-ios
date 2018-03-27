@@ -107,6 +107,9 @@ class HomeViewController : SectionViewController {
 		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: scrollView)
 		
 		updateLanguage()
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Home", screenClass: "HomeViewController")
 	}
 	
 	private static func createCollectionView(cellSize: CGSize) -> UICollectionView {

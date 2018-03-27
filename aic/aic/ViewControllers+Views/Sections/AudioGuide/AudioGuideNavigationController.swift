@@ -11,7 +11,7 @@ protocol AudioGuideNavigationControllerDelegate : class {
 }
 
 class AudioGuideNavigationController : SectionNavigationController {
-	let rootVC: UIViewController = UIViewController()
+	let rootVC: AudioGuideViewController = AudioGuideViewController()
 	
     static var buttonSizeRatio: CGFloat = 0.1946 // Ratio of preferred button size to screen width
     static let colSpacingRatio: CGFloat = 0.048

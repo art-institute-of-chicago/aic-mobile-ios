@@ -178,7 +178,8 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.view.setNeedsLayout()
 		resultsVC.view.layoutIfNeeded()
 		
-		Analytics.setScreenName("Search", screenClass: "SearchNavigationController")
+		// Log analytics
+		AICAnalytics.trackScreenView("Search", screenClass: "SearchNavigationController")
 	}
 	
 	override func cardWillHide() {

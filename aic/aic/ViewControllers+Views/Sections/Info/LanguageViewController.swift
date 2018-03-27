@@ -66,6 +66,9 @@ class LanguageViewController : UIViewController {
 		super.viewWillAppear(animated)
 		
 		updateLanguage()
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Language Settings", screenClass: "LanguageViewController")
 	}
 	
 	func createViewConstraints() {

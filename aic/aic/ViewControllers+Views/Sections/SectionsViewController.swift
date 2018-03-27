@@ -160,14 +160,6 @@ class SectionsViewController : UIViewController {
         sectionVC.view.setNeedsUpdateConstraints()
     }
     
-    /*fileprivate func removeCurrentTour() {
-        disableMap(locationManagerDelegate: toursVC)
-        toursVC.removeCurrentTour()
-        toursVC.reset()
-    }*/
-    
-	// MARK: Intro animation (deprecated)
-	// TODO: remove function but keep deep link to related tour
     func animateInInitialView() {
 		self.view.alpha = 0.0
 		
@@ -276,18 +268,6 @@ class SectionsViewController : UIViewController {
 		mapVC.showMemberLounge()
 	}
 	
-	func showRestroomsOnMap() {
-		setSelectedSection(sectionVC: mapVC)
-		
-		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
-			self.requestedMapMode = .restrooms
-			showLeaveTourMessage()
-			return
-		}
-		
-		mapVC.showRestrooms()
-	}
-	
 	func showGiftShopOnMap() {
 		setSelectedSection(sectionVC: mapVC)
 		
@@ -298,6 +278,18 @@ class SectionsViewController : UIViewController {
 		}
 		
 		mapVC.showGiftShop()
+	}
+	
+	func showRestroomsOnMap() {
+		setSelectedSection(sectionVC: mapVC)
+		
+		if mapVC.currentMode == .tour && self.requestedMapMode == nil {
+			self.requestedMapMode = .restrooms
+			showLeaveTourMessage()
+			return
+		}
+		
+		mapVC.showRestrooms()
 	}
     
     // MARK: Play Audio
@@ -347,7 +339,7 @@ class SectionsViewController : UIViewController {
 		audioPlayerVC.showMiniPlayer()
 		
 		// Log analytics
-		//        AICAnalytics.sendTourDidShowObjectEvent(forObject: tour.stops[stopIndex].object)
+//        AICAnalytics.sendTourDidShowObjectEvent(forObject: tour.stops[stopIndex].object)
 	}
     
     private func playTourOverview(tour: AICTourModel, language: Common.Language) {
@@ -428,9 +420,9 @@ class SectionsViewController : UIViewController {
 		if let mapMode = self.requestedMapMode {
 			switch mapMode {
 			case .tour:
-				if let tour = self.requestedTour {
+				if var tour = self.requestedTour {
 					if let previousTour = mapVC.tourModel {
-						self.requestedTour!.language = previousTour.language
+						tour.language = previousTour.language
 					}
 					
 					audioPlayerVC.pause()

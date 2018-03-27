@@ -206,7 +206,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 				// Log analytics
 				// GA only accepts int values, so send an int from 1-10
 				let progressValue: Int = Int(currentAudioFileMaxProgress * 100)
-				AICAnalytics.objectViewAudioItemPlayedEvent(audioItem: currentAudioFile, pctComplete: progressValue)
+				AICAnalytics.sendPlaybackInterruptedEvent(audio: currentAudioFile, pctComplete: progressValue)
             }
 			// If it's same nid and language, don't load audio
 			else if selectedLanguage == nil {
@@ -479,6 +479,12 @@ class AudioPlayerNavigationController : CardNavigationController {
             self.downArrowImageView.alpha = 0.0
         }
     }
+	
+	override func cardDidShowFullscreen() {
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Audio Player", screenClass: "AudioPlayerNavigationController")
+	}
 	
 	override func cardWillShowMiniPlayer() {
 		audioInfoVC.languageSelector.close()

@@ -118,7 +118,7 @@ extension ToursSectionViewController {
     override func newsToursTableViewCellWasTapped(_ cell: NewsToursTableViewCell) {
         super.newsToursTableViewCellWasTapped(cell)
         if cell.mode == .open {
-            AICAnalytics.sendTourExpandedEvent(forTour: cell.model as! AICTourModel)
+//            AICAnalytics .sendTourExpandedEvent(forTour: cell.model as! AICTourModel)
         }
     }
     

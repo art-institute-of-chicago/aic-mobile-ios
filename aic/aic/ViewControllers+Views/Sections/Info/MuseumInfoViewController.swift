@@ -51,6 +51,9 @@ class MuseumInfoViewController : UIViewController {
 		super.viewWillAppear(animated)
 		
 		updateLanguage()
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Museum Information", screenClass: "MuseumInfoViewController")
 	}
 	
 	func createViewConstraints() {

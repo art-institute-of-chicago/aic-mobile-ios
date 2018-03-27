@@ -27,7 +27,10 @@ class SeeAllViewController : UIViewController {
 	}
 	let content: ContentType
 	
-	let titles = [ContentType.tours : "Tours", ContentType.toursByCategory : "Tours", ContentType.exhibitions : "On View", ContentType.events : "Events"]
+	let titles = [ContentType.tours : "Tours",
+				  ContentType.toursByCategory : "Tours",
+				  ContentType.exhibitions : "On View",
+				  ContentType.events : "Events"]
 	
 	private var tourItems: [AICTourModel] = []
 	private var tourCategories: [AICTourCategoryModel] = []
@@ -119,6 +122,9 @@ class SeeAllViewController : UIViewController {
 				}
 			}
 		}
+		
+		// Log analytics
+		AICAnalytics.trackScreenView(titles[self.content]!, screenClass: "SeeAllViewController")
 	}
 	
 	private static func createCollectionView(for content: ContentType) -> UICollectionView {

@@ -35,8 +35,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
-	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -128,5 +126,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
+	<false/>
 </dict>
 </plist>

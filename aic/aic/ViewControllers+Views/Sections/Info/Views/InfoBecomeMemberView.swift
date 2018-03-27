@@ -155,7 +155,7 @@ class InfoBecomeMemberView: BaseView {
 extension InfoBecomeMemberView  : UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
 		// Log Analytics
-		AICAnalytics.infoJoinPressedEvent()
+		AICAnalytics.sendMemberJoinPressedEvent()
 		
 		return true
 	}

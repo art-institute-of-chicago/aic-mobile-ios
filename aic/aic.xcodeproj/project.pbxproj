@@ -169,6 +169,7 @@
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
 		29EC03BC20691A8200EF2ADB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29EC03BB20691A8200EF2ADB /* GoogleService-Info.plist */; };
+		29EC03BE206AF5AF00EF2ADB /* AudioGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC03BD206AF5AF00EF2ADB /* AudioGuideViewController.swift */; };
 		29F12BC2204F4C37009C1A47 /* MapTourStartContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F12BC1204F4C37009C1A47 /* MapTourStartContentView.swift */; };
 		29F261FB200FE5AF0000BF05 /* ExhibitionContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */; };
 		29F261FD200FE5C30000BF05 /* ExhibitionContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */; };
@@ -483,6 +484,7 @@
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
 		29EC03BB20691A8200EF2ADB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		29EC03BD206AF5AF00EF2ADB /* AudioGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioGuideViewController.swift; sourceTree = "<group>"; };
 		29F12BC1204F4C37009C1A47 /* MapTourStartContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTourStartContentView.swift; sourceTree = "<group>"; };
 		29F261FA200FE5AF0000BF05 /* ExhibitionContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExhibitionContentCell.xib; sourceTree = "<group>"; };
 		29F261FC200FE5C30000BF05 /* ExhibitionContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitionContentCell.swift; sourceTree = "<group>"; };
@@ -1264,6 +1266,7 @@
 			isa = PBXGroup;
 			children = (
 				E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */,
+				29EC03BD206AF5AF00EF2ADB /* AudioGuideViewController.swift */,
 				E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */,
 			);
 			path = AudioGuide;
@@ -1866,6 +1869,7 @@
 				E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */,
 				29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */,
 				2986A5881FBCBD5B00029E74 /* HomeViewController.swift in Sources */,
+				29EC03BE206AF5AF00EF2ADB /* AudioGuideViewController.swift in Sources */,
 				E415ABD91C7298420093B719 /* SectionsViewController.swift in Sources */,
 				E447397D1CAE01AC0011F059 /* _NewsToursSectionViewController.swift in Sources */,
 				E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */,

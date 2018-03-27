@@ -20,12 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		
 		AICAnalytics.configure()
-		
-		//Check for member and log open
-		let defaults = UserDefaults.standard
-		// TODO: debug to make sure member is false if I'm not a member
-		let storedID = (defaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) as? NSNumber)?.int64Value
-		AICAnalytics.appOpenEvent(isMember: (storedID != nil))
+		AICAnalytics.appOpenEvent()
 		
 		// Turn off caching
 		let sharedCache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)

@@ -58,6 +58,9 @@ class LocationSettingsViewController : UIViewController {
 		super.viewWillAppear(animated)
 		
 		updateLanguage()
+		
+		// Log analytics
+		AICAnalytics.trackScreenView("Location Settings", screenClass: "LocationSettingsViewController")
 	}
 	
 	func createViewConstraints() {

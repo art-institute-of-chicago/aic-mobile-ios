@@ -72,7 +72,7 @@ class EventContentCell : UITableViewCell {
 			
 			let eventDescription = eventModel.longDescription
 				.replacingOccurrences(of: "</p>", with: "</p>\n")
-				.replacingOccurrences(of: "<li>", with: "<li>\t•\t")
+				.replacingOccurrences(of: "<li>", with: "<li>•\t")
 			
 			let descriptionAttributedString = eventDescription
 				.style(tags: emStyle, iStyle, strongStyle, bStyle)

@@ -149,6 +149,13 @@ struct Common {
 		}
 		return .english
 	}
+	
+	static var stringForLanguage: [Language : String] {
+		return [
+			Language.english : "English",
+			Language.spanish : "Spanish",
+			Language.chinese : "Chinese"]
+	}
 
     // MARK: Layout
 	struct Layout {

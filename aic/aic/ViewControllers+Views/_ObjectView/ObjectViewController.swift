@@ -177,7 +177,7 @@ class ObjectViewController: UIViewController {
             // Log analytics
             // GA only accepts int values, so send an int from 1-10
             let progressValue:Int = Int(currentAudioFileMaxProgress * 100)
-            AICAnalytics.objectViewAudioItemPlayedEvent(audioItem: currentAudioFile, pctComplete: progressValue)
+//            AICAnalytics.objectViewAudioItemPlayedEvent(audioItem: currentAudioFile, pctComplete: progressValue)
         }
         
         currentAudioFile = audioFile
@@ -453,9 +453,6 @@ class ObjectViewController: UIViewController {
         mode = .mini
         
         delegate?.objectViewControllerDidShowMiniPlayer(controller: self)
-        
-        // Log analytics
-        AICAnalytics.restorePreviousScreen()
     }
     
     func showFullscreen(withAnimation:Bool = true) {
@@ -475,7 +472,7 @@ class ObjectViewController: UIViewController {
         mode = .fullScreen
         
         // Log analytics
-        AICAnalytics.trackScreen(named: "Object View")
+//        AICAnalytics.trackScreenView("Object View")
     }
     
     func hide() {

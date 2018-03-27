@@ -177,7 +177,7 @@ class InfoSectionMemberCardViewController: UIViewController {
         isShowingBarcode = true
         
         // Log analytics
-        AICAnalytics.memberDidShowMemberCard(memberID: apiData.cardId)
+//        AICAnalytics.memberDidShowMemberCard(memberID: apiData.cardId)
     }
     
     fileprivate func saveCurrentMember() {
