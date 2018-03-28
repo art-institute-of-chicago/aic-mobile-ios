@@ -38,11 +38,17 @@ class AICAnalytics {
 		
 		case memberShowCard			= "member_show_card"
 		case memberJoinPressed		= "member_join_pressed"
+		
+		case searchLoaded			= "search_loaded"
+		case searchSelectedArtwork	= "search_selected_artwork"
+		case searchSelectedTour		= "search_selected_tour"
+		case searchSelectedExhibition = "search_selected_exhibition"
 	}
 	
     static fileprivate var previousScreen: String? = nil
 	static fileprivate var previousScreenClass: String? = nil
     static fileprivate var currentScreen: String? = nil
+	static fileprivate var lastSearchText: String = ""
     
     static func configure() {
         FirebaseApp.configure()
@@ -50,7 +56,7 @@ class AICAnalytics {
 		// User Properties
 		
 		var membership = "None"
-		if let _ = UserDefaults.standard.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) as? NSNumber {
+		if UserDefaults.standard.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) != nil {
 			membership = "Member"
 		}
 		Analytics.setUserProperty(membership, forName: "Membership")
@@ -229,7 +235,7 @@ class AICAnalytics {
 			AnalyticsParameterItemID: searchedArtwork.artworkId as NSObject,
 			AnalyticsParameterItemName: searchedArtwork.title as NSObject,
 			AnalyticsParameterContentType: "artwork" as NSObject
-			])
+		])
 	}
 	
 	static func sendMapShowExhibitionEvent(exhibition: AICExhibitionModel) {
@@ -259,6 +265,7 @@ class AICAnalytics {
     // MARK: Members
 	
 	static func sendMemberShowCardEvent() {
+		Analytics.setUserProperty("Member", forName: "Membership")
 		Analytics.logEvent(Event.memberShowCard.rawValue, parameters: nil)
     }
 	
@@ -269,18 +276,41 @@ class AICAnalytics {
 	// MARK: Search
 	
 	static func sendSearchLoadedEvent(searchText: String, isAutocompleteString: Bool, isPromotedString: Bool) {
-		
+		if searchText != lastSearchText {
+			lastSearchText = searchText
+			
+			Analytics.logEvent(Event.searchLoaded.rawValue, parameters: [
+				"searchText": searchText as NSObject,
+				"is_autocomplete": (isAutocompleteString ? "true" : "false") as NSObject,
+				"is_promoted": (isPromotedString ? "true" : "false") as NSObject
+			])
+		}
 	}
 	
 	static func sendSearchSelectedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchText: String) {
-		
+		Analytics.logEvent(Event.searchSelectedArtwork.rawValue, parameters: [
+			AnalyticsParameterItemID: searchedArtwork.artworkId as NSObject,
+			AnalyticsParameterItemName: searchedArtwork.title as NSObject,
+			AnalyticsParameterContentType: "artwork" as NSObject,
+			"searchText": searchText as NSObject
+		])
 	}
 	
 	static func sendSearchSelectedTourEvent(tour: AICTourModel, searchText: String) {
-		
+		Analytics.logEvent(Event.searchSelectedTour.rawValue, parameters: [
+			AnalyticsParameterItemID: tour.nid as NSObject,
+			AnalyticsParameterItemName: tour.translations[.english]!.title as NSObject,
+			AnalyticsParameterContentType: "tour" as NSObject,
+			"searchText": searchText as NSObject
+		])
 	}
 	
 	static func sendSearchSelectedExhibitionEvent(exhibition: AICExhibitionModel, searchText: String) {
-		
+		Analytics.logEvent(Event.searchSelectedExhibition.rawValue, parameters: [
+			AnalyticsParameterItemID: exhibition.id as NSObject,
+			AnalyticsParameterItemName: exhibition.title as NSObject,
+			AnalyticsParameterContentType: "exhibition" as NSObject,
+			"searchText": searchText as NSObject
+		])
 	}
 }

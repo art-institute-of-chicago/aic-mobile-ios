@@ -9,7 +9,8 @@
 import UIKit
 
 protocol ResultsTableViewControllerDelegate : class {
-	func resultsTableDidSelect(searchText: String)
+	func resultsTableDidSelect(promotedText: String)
+	func resultsTableDidSelect(autocompleteText: String)
 	func resultsTableDidSelect(artwork: AICSearchedArtworkModel)
 	func resultsTableDidSelect(tour: AICTourModel)
 	func resultsTableDidSelect(exhibition: AICExhibitionModel)
@@ -494,13 +495,13 @@ extension ResultsTableViewController {
 		if filter == .empty {
 			if indexPath.section == 0 {
 				let searchText = promotedSearchStringItems[indexPath.row]
-				self.searchDelegate?.resultsTableDidSelect(searchText: searchText)
+				self.searchDelegate?.resultsTableDidSelect(promotedText: searchText)
 			}
 		}
 		else if filter == .suggested {
 			if indexPath.section == 0 {
 				let searchText = autocompleteStringItems[indexPath.row]
-				self.searchDelegate?.resultsTableDidSelect(searchText: searchText)
+				self.searchDelegate?.resultsTableDidSelect(autocompleteText: searchText)
 			}
 			else if indexPath.section == 2 {
 				let artwork = artworkItems[indexPath.row]

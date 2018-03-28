@@ -31,6 +31,15 @@ class SearchNavigationController : CardNavigationController {
 	
 	weak var sectionsVC: SectionsViewController? = nil
 	
+	// Analytics
+	enum TrackSearchLoadType {
+		case none
+		case typedString
+		case promotedString
+		case autocompleteString
+	}
+	var trackLoadingType: TrackSearchLoadType = .none
+	
 	init() {
 		currentTableView = resultsVC.tableView
         super.init(nibName: nil, bundle: nil)
@@ -277,6 +286,7 @@ class SearchNavigationController : CardNavigationController {
 				searchTextField?.resignFirstResponder()
 				searchTextField?.layoutIfNeeded()
 				
+				trackLoadingType = .typedString
 				loadSearch(searchText: searchText, showAutocomplete: false)
 			}
 		}
@@ -295,6 +305,7 @@ class SearchNavigationController : CardNavigationController {
 extension SearchNavigationController : UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count > 0 {
+			trackLoadingType = searchText.count > 4 ? .typedString : .none
 			loadSearch(searchText: searchText, showAutocomplete: true)
 		}
 		else {
@@ -316,7 +327,11 @@ extension SearchNavigationController : UISearchBarDelegate {
 				searchTextField?.resignFirstResponder()
 				searchTextField?.layoutIfNeeded()
 				
+				trackLoadingType = .typedString
 				loadSearch(searchText: searchText, showAutocomplete: false)
+				
+				// Log analytics
+				AICAnalytics.sendSearchLoadedEvent(searchText: searchText, isAutocompleteString: false, isPromotedString: false)
 			}
 		}
 	}
@@ -340,6 +355,14 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 		resultsVC.exhibitionItems = exhibitions
 		resultsVC.tableView.reloadData()
 		self.view.layoutIfNeeded()
+		
+		// Log analytics
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		if let searchText = searchTextField?.text {
+			if trackLoadingType != .none {
+				AICAnalytics.sendSearchLoadedEvent(searchText: searchText, isAutocompleteString: trackLoadingType == .autocompleteString, isPromotedString: trackLoadingType == .promotedString)
+			}
+		}
 	}
 	
 	func searchDataFailure(filter: Common.Search.Filter) {
@@ -352,31 +375,57 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 // MARK: ResultsTableViewControllerDelegate
 
 extension SearchNavigationController : ResultsTableViewControllerDelegate {
-	func resultsTableDidSelect(searchText: String) {
+	func resultsTableDidSelect(promotedText: String) {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		searchTextField?.text = searchText
+		searchTextField?.text = promotedText
 		searchTextField?.resignFirstResponder()
 		searchTextField?.layoutIfNeeded()
 		
-		loadSearch(searchText: searchText, showAutocomplete: false)
+		trackLoadingType = .promotedString
+		loadSearch(searchText: promotedText, showAutocomplete: false)
+	}
+	
+	func resultsTableDidSelect(autocompleteText: String) {
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		searchTextField?.text = autocompleteText
+		searchTextField?.resignFirstResponder()
+		searchTextField?.layoutIfNeeded()
+		
+		trackLoadingType = .autocompleteString
+		loadSearch(searchText: autocompleteText, showAutocomplete: false)
 	}
 	
 	func resultsTableDidSelect(artwork: AICSearchedArtworkModel) {
 		let artworkVC = ArtworkTableViewController(artwork: artwork)
 		artworkVC.artworkTableDelegate = self.sectionsVC // set tourTableDelegate to the parent SectionsViewController
 		showSearchContentViewController(tableVC: artworkVC)
+		
+		// Log analytics
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		let searchText = (searchTextField!.text ?? "")
+		AICAnalytics.sendSearchSelectedArtworkEvent(searchedArtwork: artwork, searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
 		let tourVC = TourTableViewController(tour: tour)
 		tourVC.tourTableDelegate = self.sectionsVC // set tourTableDelegate to the parent SectionsViewController
 		showSearchContentViewController(tableVC: tourVC)
+		
+		// Log analytics
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		let searchText = (searchTextField!.text ?? "")
+		AICAnalytics.sendSearchSelectedTourEvent(tour: tour, searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
 		let exhibitionVC = ExhibitionTableViewController(exhibition: exhibition)
 		exhibitionVC.exhibitionTableDelegate = self.sectionsVC // set tourTableDelegate to the parent SectionsViewController
 		showSearchContentViewController(tableVC: exhibitionVC)
+		
+		// Log analytics
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		let searchText = (searchTextField!.text ?? "")
+		AICAnalytics.sendSearchSelectedExhibitionEvent(exhibition: exhibition, searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {

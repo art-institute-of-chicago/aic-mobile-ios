@@ -194,27 +194,16 @@
 		E40D41EF1C6CEBB700A57AF4 /* aicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D41EE1C6CEBB700A57AF4 /* aicUITests.swift */; };
 		E411DE7F1CCD37A800E22047 /* AICGalleryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E411DE7E1CCD37A800E22047 /* AICGalleryModel.swift */; };
 		E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */; };
-		E415ABD41C7298420093B719 /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC31C7298420093B719 /* ObjectViewController.swift */; };
 		E415ABD51C7298420093B719 /* MiniAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */; };
-		E415ABD61C7298420093B719 /* _InfoSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABC81C7298420093B719 /* _InfoSectionViewController.swift */; };
 		E415ABD71C7298420093B719 /* AudioGuideNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */; };
-		E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCC1C7298420093B719 /* NearbySectionViewController.swift */; };
 		E415ABD91C7298420093B719 /* SectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCD1C7298420093B719 /* SectionsViewController.swift */; };
-		E415ABDA1C7298420093B719 /* ToursSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E415ABCF1C7298420093B719 /* ToursSectionViewController.swift */; };
-		E417B52B1CA322C200C362A1 /* ToursSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52A1CA322C200C362A1 /* ToursSectionView.swift */; };
-		E417B52D1CA3236600C362A1 /* NearbySectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52C1CA3236600C362A1 /* NearbySectionView.swift */; };
-		E417B52F1CA324E000C362A1 /* _InfoSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417B52E1CA324E000C362A1 /* _InfoSectionView.swift */; };
 		E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E421782F1CC57BE200815B41 /* UITextView+AIC.swift */; };
 		E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */; };
-		E42178341CC6A2CA00815B41 /* _InfoSectionMemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178331CC6A2CA00815B41 /* _InfoSectionMemberCardView.swift */; };
-		E42178361CC6B80200815B41 /* _InfoSectionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178351CC6B80200815B41 /* _InfoSectionTextField.swift */; };
-		E42178391CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178381CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift */; };
 		E421783C1CC6E1F300815B41 /* String+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E421783B1CC6E1F300815B41 /* String+AIC.swift */; };
 		E4223CE51CC7FE6600503D43 /* MemberDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */; };
 		E4223CE81CC8013300503D43 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4223CE71CC8013300503D43 /* Alamofire.framework */; };
 		E425B3CE1C97649300A19F6F /* AICObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E425B3CD1C97649300A19F6F /* AICObjectModel.swift */; };
 		E42677E31CC558060046BB27 /* AICButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42677E21CC558060046BB27 /* AICButton.swift */; };
-		E42677E51CC5677A0046BB27 /* _InfoSectionInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42677E41CC5677A0046BB27 /* _InfoSectionInformationView.swift */; };
 		E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E433BACD1CFDD64A0086F2ED /* AppDelegate.swift */; };
 		E433BAD01CFDD64A0086F2ED /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E433BACE1CFDD64A0086F2ED /* RootViewController.swift */; };
 		E439FD011CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */; };
@@ -222,8 +211,6 @@
 		E43F368B1D2B2F9900DA4DA6 /* AICAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F368A1D2B2F9900DA4DA6 /* AICAnalytics.swift */; };
 		E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */; };
 		E44084A71CC96C8E00AABC92 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */; };
-		E447397D1CAE01AC0011F059 /* _NewsToursSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E447397C1CAE01AC0011F059 /* _NewsToursSectionViewController.swift */; };
-		E447397F1CAE02870011F059 /* _NewsToursSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E447397E1CAE02870011F059 /* _NewsToursSectionView.swift */; };
 		E456CF761CE426DF00D25E5B /* AICTourOverviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */; };
 		E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */; };
 		E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */; };
@@ -240,15 +227,9 @@
 		E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */; };
 		E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */; };
 		E4923FC11C9E00B500AB255C /* UIView+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4923FC01C9E00B500AB255C /* UIView+AIC.swift */; };
-		E4923FE31C9F36C800AB255C /* ObjectContentSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4923FE21C9F36C700AB255C /* ObjectContentSectionView.swift */; };
-		E4923FE71C9F53BE00AB255C /* ObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4923FE61C9F53BE00AB255C /* ObjectView.swift */; };
 		E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */; };
 		E497FA621D00ABAD007FA272 /* AICMessageSmallModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */; };
-		E49BAB881CAEF13E00AE0678 /* ToursSectionStopsScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49BAB871CAEF13E00AE0678 /* ToursSectionStopsScrollerView.swift */; };
-		E49BAB8A1CB1968900AE0678 /* ToursSectionStopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49BAB891CB1968900AE0678 /* ToursSectionStopView.swift */; };
 		E4BBB6771CA1A1FB00B8A37C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */; };
-		E4CD3FD31CA9CDB200013E75 /* _NewsToursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CD3FD21CA9CDB200013E75 /* _NewsToursTableViewCell.swift */; };
-		E4D1592D1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D1592C1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift */; };
 		E4D159311CB9A61F00536B4D /* UIFont+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */; };
 		E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D159341CBAE3E900536B4D /* AICTourModel.swift */; };
 		E4D159391CBAE8C100536B4D /* AICCoordinateWithFloor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D159381CBAE8C100536B4D /* AICCoordinateWithFloor.swift */; };
@@ -256,19 +237,12 @@
 		E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */; };
 		E4DF50B01CEB8AFB0071345E /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DF50AF1CEB8AFB0071345E /* UIImageColors.swift */; };
 		E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */; };
-		E4E861021CDBE46B006D07FD /* _NewsToursRevealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */; };
 		E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F518FA1D2586B0004BFB44 /* AICImageView.swift */; };
 		E4F519C71C87B2F200226188 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F519C61C87B2F200226188 /* Helpers.swift */; };
 		E4F7AF951CFB64DE00524F87 /* AICMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */; };
 		E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */; };
 		E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF9B1CFBA11200524F87 /* MapSVGParser.swift */; };
-		E4F7C1471CA1F46B005976D1 /* ObjectInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7C1461CA1F46B005976D1 /* ObjectInfoView.swift */; };
-		E4F7C1491CA1FE3E005976D1 /* ObjectRelatedToursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7C1481CA1FE3E005976D1 /* ObjectRelatedToursView.swift */; };
-		E4F7C14B1CA200EF005976D1 /* ObjectCreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7C14A1CA200EF005976D1 /* ObjectCreditsView.swift */; };
-		E4F7C14D1CA201B6005976D1 /* ObjectTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7C14C1CA201B6005976D1 /* ObjectTranscriptView.swift */; };
-		E4F82F6D1CA45F3400E4224B /* _SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F6A1CA45F3400E4224B /* _SectionView.swift */; };
 		E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */; };
-		E4F82F721CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F711CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift */; };
 		E4FFC6EC1D00B7FD0082818D /* AICMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */; };
 		F23801B72DA3B2C5C5B13960 /* Pods_aicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A42DED784747728FEECA5D /* Pods_aicTests.framework */; };
 /* End PBXBuildFile section */
@@ -526,27 +500,16 @@
 		E411DE7E1CCD37A800E22047 /* AICGalleryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICGalleryModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTourStopModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E415AB8F1C7297E60093B719 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E415ABC31C7298420093B719 /* ObjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
 		E415ABC51C7298420093B719 /* MiniAudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniAudioPlayerView.swift; sourceTree = "<group>"; };
-		E415ABC81C7298420093B719 /* _InfoSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionViewController.swift; sourceTree = "<group>"; };
 		E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AudioGuideNavigationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E415ABCC1C7298420093B719 /* NearbySectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySectionViewController.swift; sourceTree = "<group>"; };
 		E415ABCD1C7298420093B719 /* SectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsViewController.swift; sourceTree = "<group>"; };
-		E415ABCF1C7298420093B719 /* ToursSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToursSectionViewController.swift; sourceTree = "<group>"; };
-		E417B52A1CA322C200C362A1 /* ToursSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToursSectionView.swift; sourceTree = "<group>"; };
-		E417B52C1CA3236600C362A1 /* NearbySectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbySectionView.swift; sourceTree = "<group>"; };
-		E417B52E1CA324E000C362A1 /* _InfoSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionView.swift; sourceTree = "<group>"; };
 		E421782F1CC57BE200815B41 /* UITextView+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+AIC.swift"; sourceTree = "<group>"; };
 		E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBecomeMemberView.swift; sourceTree = "<group>"; };
-		E42178331CC6A2CA00815B41 /* _InfoSectionMemberCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionMemberCardView.swift; sourceTree = "<group>"; };
-		E42178351CC6B80200815B41 /* _InfoSectionTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionTextField.swift; sourceTree = "<group>"; };
-		E42178381CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionMemberCardViewController.swift; sourceTree = "<group>"; };
 		E421783B1CC6E1F300815B41 /* String+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AIC.swift"; sourceTree = "<group>"; };
 		E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberDataManager.swift; sourceTree = "<group>"; };
 		E4223CE71CC8013300503D43 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		E425B3CD1C97649300A19F6F /* AICObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICObjectModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E42677E21CC558060046BB27 /* AICButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICButton.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E42677E41CC5677A0046BB27 /* _InfoSectionInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _InfoSectionInformationView.swift; sourceTree = "<group>"; };
 		E433BACD1CFDD64A0086F2ED /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E433BACE1CFDD64A0086F2ED /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootViewController.swift; path = "../ViewControllers+Views/RootViewController.swift"; sourceTree = "<group>"; };
 		E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AudioGuideCollectionViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -554,8 +517,6 @@
 		E43F368A1D2B2F9900DA4DA6 /* AICAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AICAnalytics.swift; path = Analytics/AICAnalytics.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICSectionModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		E447397C1CAE01AC0011F059 /* _NewsToursSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursSectionViewController.swift; sourceTree = "<group>"; };
-		E447397E1CAE02870011F059 /* _NewsToursSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursSectionView.swift; sourceTree = "<group>"; };
 		E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTourOverviewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -573,15 +534,9 @@
 		E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+AIC.swift"; sourceTree = "<group>"; };
 		E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		E4923FC01C9E00B500AB255C /* UIView+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AIC.swift"; sourceTree = "<group>"; };
-		E4923FE21C9F36C700AB255C /* ObjectContentSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectContentSectionView.swift; sourceTree = "<group>"; };
-		E4923FE61C9F53BE00AB255C /* ObjectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectView.swift; sourceTree = "<group>"; };
 		E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAppDataModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageSmallModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E49BAB871CAEF13E00AE0678 /* ToursSectionStopsScrollerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToursSectionStopsScrollerView.swift; sourceTree = "<group>"; };
-		E49BAB891CB1968900AE0678 /* ToursSectionStopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToursSectionStopView.swift; sourceTree = "<group>"; };
 		E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		E4CD3FD21CA9CDB200013E75 /* _NewsToursTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _NewsToursTableViewCell.swift; path = "aic/ViewControllers+Views/Sections/Shared/_NewsToursTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
-		E4D1592C1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursStopsDistanceItemView.swift; sourceTree = "<group>"; };
 		E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+AIC.swift"; sourceTree = "<group>"; };
 		E4D159341CBAE3E900536B4D /* AICTourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTourModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4D159381CBAE8C100536B4D /* AICCoordinateWithFloor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICCoordinateWithFloor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -589,19 +544,12 @@
 		E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AIC.swift"; sourceTree = "<group>"; };
 		E4DF50AF1CEB8AFB0071345E /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageColors.swift; path = ThirdParty/UIImageColors/UIImageColors.swift; sourceTree = "<group>"; };
 		E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAudioFileModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursRevealView.swift; sourceTree = "<group>"; };
 		E4F518FA1D2586B0004BFB44 /* AICImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICImageView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F519C61C87B2F200226188 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapFloorModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F7AF9B1CFBA11200524F87 /* MapSVGParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSVGParser.swift; sourceTree = "<group>"; };
-		E4F7C1461CA1F46B005976D1 /* ObjectInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectInfoView.swift; sourceTree = "<group>"; };
-		E4F7C1481CA1FE3E005976D1 /* ObjectRelatedToursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectRelatedToursView.swift; sourceTree = "<group>"; };
-		E4F7C14A1CA200EF005976D1 /* ObjectCreditsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectCreditsView.swift; sourceTree = "<group>"; };
-		E4F7C14C1CA201B6005976D1 /* ObjectTranscriptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectTranscriptView.swift; sourceTree = "<group>"; };
-		E4F82F6A1CA45F3400E4224B /* _SectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _SectionView.swift; sourceTree = "<group>"; };
 		E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
-		E4F82F711CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _NewsToursStopsDistanceView.swift; sourceTree = "<group>"; };
 		E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EA1BA6C00D1BB7B67F144190 /* Pods-aic.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aic.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aic/Pods-aic.appstore.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1202,24 +1150,9 @@
 				E433BAD11CFDD65B0086F2ED /* Messages */,
 				E415ABC61C7298420093B719 /* Sections */,
 				2975A051203F2DE90014017C /* Tooltips */,
-				E415ABC21C7298420093B719 /* _ObjectView */,
 				E433BACE1CFDD64A0086F2ED /* RootViewController.swift */,
 			);
 			path = "ViewControllers+Views";
-			sourceTree = "<group>";
-		};
-		E415ABC21C7298420093B719 /* _ObjectView */ = {
-			isa = PBXGroup;
-			children = (
-				E415ABC31C7298420093B719 /* ObjectViewController.swift */,
-				E4923FE61C9F53BE00AB255C /* ObjectView.swift */,
-				E4923FE21C9F36C700AB255C /* ObjectContentSectionView.swift */,
-				E4F7C1461CA1F46B005976D1 /* ObjectInfoView.swift */,
-				E4F7C1481CA1FE3E005976D1 /* ObjectRelatedToursView.swift */,
-				E4F7C14C1CA201B6005976D1 /* ObjectTranscriptView.swift */,
-				E4F7C14A1CA200EF005976D1 /* ObjectCreditsView.swift */,
-			);
-			path = _ObjectView;
 			sourceTree = "<group>";
 		};
 		E415ABC61C7298420093B719 /* Sections */ = {
@@ -1233,8 +1166,6 @@
 				29C7D0C72025324F0015984B /* Audio Player Card */,
 				29EABE511FE07CDA0049E341 /* Content Card */,
 				291FB71D1FDA08DD007794E0 /* Search Card */,
-				E415ABCB1C7298420093B719 /* _Nearby */,
-				E415ABCE1C7298420093B719 /* _Tours */,
 				E415ABCD1C7298420093B719 /* SectionsViewController.swift */,
 			);
 			name = Sections;
@@ -1251,12 +1182,6 @@
 				295AC0941FDF8FCD009A0FAF /* LocationSettingsViewController.swift */,
 				29A7BD001FBF87D900FD8639 /* InfoViewController.swift */,
 				29A7BCFE1FBF87C100FD8639 /* InfoNavigationController.swift */,
-				E415ABC81C7298420093B719 /* _InfoSectionViewController.swift */,
-				E42178381CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift */,
-				E417B52E1CA324E000C362A1 /* _InfoSectionView.swift */,
-				E42677E41CC5677A0046BB27 /* _InfoSectionInformationView.swift */,
-				E42178331CC6A2CA00815B41 /* _InfoSectionMemberCardView.swift */,
-				E42178351CC6B80200815B41 /* _InfoSectionTextField.swift */,
 			);
 			name = Info;
 			path = "../../ViewControllers+Views/Sections/Info";
@@ -1270,26 +1195,6 @@
 				E415ABCA1C7298420093B719 /* AudioGuideNavigationController.swift */,
 			);
 			path = AudioGuide;
-			sourceTree = "<group>";
-		};
-		E415ABCB1C7298420093B719 /* _Nearby */ = {
-			isa = PBXGroup;
-			children = (
-				E415ABCC1C7298420093B719 /* NearbySectionViewController.swift */,
-				E417B52C1CA3236600C362A1 /* NearbySectionView.swift */,
-			);
-			path = _Nearby;
-			sourceTree = "<group>";
-		};
-		E415ABCE1C7298420093B719 /* _Tours */ = {
-			isa = PBXGroup;
-			children = (
-				E415ABCF1C7298420093B719 /* ToursSectionViewController.swift */,
-				E417B52A1CA322C200C362A1 /* ToursSectionView.swift */,
-				E49BAB871CAEF13E00AE0678 /* ToursSectionStopsScrollerView.swift */,
-				E49BAB891CB1968900AE0678 /* ToursSectionStopView.swift */,
-			);
-			path = _Tours;
 			sourceTree = "<group>";
 		};
 		E4223CE61CC7FE6D00503D43 /* Data */ = {
@@ -1385,13 +1290,6 @@
 				295A86831FBDF1D600F0B807 /* SectionNavigationBar.swift */,
 				2986A5891FBCBD8B00029E74 /* SectionNavigationController.swift */,
 				E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */,
-				E4F82F6A1CA45F3400E4224B /* _SectionView.swift */,
-				E447397C1CAE01AC0011F059 /* _NewsToursSectionViewController.swift */,
-				E447397E1CAE02870011F059 /* _NewsToursSectionView.swift */,
-				E4CD3FD21CA9CDB200013E75 /* _NewsToursTableViewCell.swift */,
-				E4F82F711CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift */,
-				E4D1592C1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift */,
-				E4E861011CDBE46B006D07FD /* _NewsToursRevealView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1810,9 +1708,7 @@
 			files = (
 				294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */,
 				E456CF761CE426DF00D25E5B /* AICTourOverviewModel.swift in Sources */,
-				E4F82F721CA46F5F00E4224B /* _NewsToursStopsDistanceView.swift in Sources */,
 				2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */,
-				E417B52D1CA3236600C362A1 /* NearbySectionView.swift in Sources */,
 				294C0B50201A76F700F2ABB1 /* MapDepartmentAnnotationView.swift in Sources */,
 				295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */,
 				294C0B4C201A76F700F2ABB1 /* MapAmenityAnnotationView.swift in Sources */,
@@ -1826,20 +1722,16 @@
 				E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */,
 				290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */,
 				29E0D4A3206361B500DEEC24 /* SeeAllIntroView.swift in Sources */,
-				E42178341CC6A2CA00815B41 /* _InfoSectionMemberCardView.swift in Sources */,
 				E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */,
 				294C0B4F201A76F700F2ABB1 /* MapObjectAnnotationView.swift in Sources */,
 				E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */,
 				E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */,
-				E4F82F6D1CA45F3400E4224B /* _SectionView.swift in Sources */,
 				294C0B57201A76F700F2ABB1 /* MapImageAnnotation.swift in Sources */,
 				29AC501A2059C4210085EE5B /* AICTourCategoryModel.swift in Sources */,
 				29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */,
 				E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */,
 				295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */,
-				E415ABD61C7298420093B719 /* _InfoSectionViewController.swift in Sources */,
 				E411DE7F1CCD37A800E22047 /* AICGalleryModel.swift in Sources */,
-				E42178391CC6BB6300815B41 /* _InfoSectionMemberCardViewController.swift in Sources */,
 				29E003EF20486F9300E1D305 /* AICRestaurantModel.swift in Sources */,
 				29824BCE200D86F6003B6DB5 /* ExhibitionTableViewController.swift in Sources */,
 				294C0B59201A76F700F2ABB1 /* MapFloorSelectorView.swift in Sources */,
@@ -1849,11 +1741,8 @@
 				E421783C1CC6E1F300815B41 /* String+AIC.swift in Sources */,
 				E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */,
 				E4F519C71C87B2F200226188 /* Helpers.swift in Sources */,
-				E49BAB8A1CB1968900AE0678 /* ToursSectionStopView.swift in Sources */,
 				E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */,
 				29846122203E3B0E001E5378 /* NoResultsCell.swift in Sources */,
-				E49BAB881CAEF13E00AE0678 /* ToursSectionStopsScrollerView.swift in Sources */,
-				E4F7C1491CA1FE3E005976D1 /* ObjectRelatedToursView.swift in Sources */,
 				29B9B58B1FCFC5660095FE52 /* HomeContentTitleView.swift in Sources */,
 				2984611C203A045C001E5378 /* MapArtworkContentView.swift in Sources */,
 				29BF45DA20333F8900919FE8 /* MemberCardView.swift in Sources */,
@@ -1862,21 +1751,16 @@
 				294C0B51201A76F700F2ABB1 /* MapAnnotationView.swift in Sources */,
 				29A67F8A2028F7B6003C630A /* MapContentCardNavigationController.swift in Sources */,
 				294C0B54201A76F700F2ABB1 /* MapLocationAnnotation.swift in Sources */,
-				E4923FE31C9F36C800AB255C /* ObjectContentSectionView.swift in Sources */,
 				2981454520322BA10055F016 /* MemberCardViewController.swift in Sources */,
 				295AC0951FDF8FCD009A0FAF /* LocationSettingsViewController.swift in Sources */,
-				E4F7C14B1CA200EF005976D1 /* ObjectCreditsView.swift in Sources */,
 				E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */,
 				29DAF05F1FB39750002ED862 /* LinkedTextView.swift in Sources */,
 				2986A5881FBCBD5B00029E74 /* HomeViewController.swift in Sources */,
 				29EC03BE206AF5AF00EF2ADB /* AudioGuideViewController.swift in Sources */,
 				E415ABD91C7298420093B719 /* SectionsViewController.swift in Sources */,
-				E447397D1CAE01AC0011F059 /* _NewsToursSectionViewController.swift in Sources */,
 				E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */,
 				E415ABD71C7298420093B719 /* AudioGuideNavigationController.swift in Sources */,
-				E447397F1CAE02870011F059 /* _NewsToursSectionView.swift in Sources */,
 				29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */,
-				E415ABD81C7298420093B719 /* NearbySectionViewController.swift in Sources */,
 				294C0B5D201A76F700F2ABB1 /* HideBackgroundOverlay.swift in Sources */,
 				29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */,
 				E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */,
@@ -1886,7 +1770,6 @@
 				E47A971A1CF262760041D0A6 /* AICTooltipModel.swift in Sources */,
 				294C0B53201A76F700F2ABB1 /* MapObjectAnnotation.swift in Sources */,
 				29E003F1204967A600E1D305 /* MapAnnotation.swift in Sources */,
-				E42677E51CC5677A0046BB27 /* _InfoSectionInformationView.swift in Sources */,
 				291FB71F1FDA0905007794E0 /* SearchNavigationController.swift in Sources */,
 				29C91B0F1FC4E04E008C3E9E /* HomeIntroView.swift in Sources */,
 				294C0B5A201A76F700F2ABB1 /* MapFloorSelectorViewController.swift in Sources */,
@@ -1897,13 +1780,10 @@
 				293127831FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift in Sources */,
 				29C7D0C9202532930015984B /* AudioPlayerNavigationController.swift in Sources */,
 				294C0B5F201A76F700F2ABB1 /* VisibleMapRegionDelegate.swift in Sources */,
-				E42178361CC6B80200815B41 /* _InfoSectionTextField.swift in Sources */,
 				294C0B4D201A76F700F2ABB1 /* MapTextAnnotationView.swift in Sources */,
 				294C0B25201A756900F2ABB1 /* MapNavigationController.swift in Sources */,
 				29A67F852027752E003C630A /* AudioPlayerSlider.swift in Sources */,
 				2986A58C1FBCD38C00029E74 /* HomeNavigationController.swift in Sources */,
-				E417B52F1CA324E000C362A1 /* _InfoSectionView.swift in Sources */,
-				E4E861021CDBE46B006D07FD /* _NewsToursRevealView.swift in Sources */,
 				E4DF50B01CEB8AFB0071345E /* UIImageColors.swift in Sources */,
 				E439FD011CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift in Sources */,
 				291221991FDB359D0096BB75 /* ResultsSectionTitleView.swift in Sources */,
@@ -1911,9 +1791,7 @@
 				29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */,
 				29BF45D820333F7D00919FE8 /* MemberLoginView.swift in Sources */,
 				2975A055203F61150014017C /* MapExhibitionAnnotation.swift in Sources */,
-				E4D1592D1CB6A10500536B4D /* _NewsToursStopsDistanceItemView.swift in Sources */,
 				29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */,
-				E4CD3FD31CA9CDB200013E75 /* _NewsToursTableViewCell.swift in Sources */,
 				291221941FDB2BAD0096BB75 /* ResultsTableViewController.swift in Sources */,
 				294C0B58201A76F700F2ABB1 /* MapFloorSelectorButton.swift in Sources */,
 				E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */,
@@ -1923,26 +1801,20 @@
 				E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */,
 				E4F7AF951CFB64DE00524F87 /* AICMapModel.swift in Sources */,
 				E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */,
-				E417B52B1CA322C200C362A1 /* ToursSectionView.swift in Sources */,
 				E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */,
 				294C0B4E201A76F700F2ABB1 /* MapLocationAnnotationView.swift in Sources */,
 				295AC0931FDF8FBA009A0FAF /* MuseumInfoViewController.swift in Sources */,
-				E415ABD41C7298420093B719 /* ObjectViewController.swift in Sources */,
 				29824BD2200D8779003B6DB5 /* ArtworkTableViewController.swift in Sources */,
 				294C0B56201A76F700F2ABB1 /* MapDepartmentAnnotation.swift in Sources */,
 				295A86841FBDF1D600F0B807 /* SectionNavigationBar.swift in Sources */,
-				E4923FE71C9F53BE00AB255C /* ObjectView.swift in Sources */,
 				29C7D0C5202456100015984B /* SearchSlideAnimator.swift in Sources */,
 				E47A97161CEFBC150041D0A6 /* AppDataParser.swift in Sources */,
 				296D559520239F3E00442A60 /* CardNavigationController.swift in Sources */,
 				294C0B61201A76F700F2ABB1 /* MKMapRectRotated.swift in Sources */,
 				2915B0F4202CA0BE00DEBB03 /* LanguageSelectorButton.swift in Sources */,
 				2941CE801FE09F6000B7CCEE /* SearchContentViewController.swift in Sources */,
-				E4F7C14D1CA201B6005976D1 /* ObjectTranscriptView.swift in Sources */,
 				294338521FDC849E00ECF321 /* SearchDataManager.swift in Sources */,
-				E415ABDA1C7298420093B719 /* ToursSectionViewController.swift in Sources */,
 				E4BBB6771CA1A1FB00B8A37C /* BaseView.swift in Sources */,
-				E4F7C1471CA1F46B005976D1 /* ObjectInfoView.swift in Sources */,
 				29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */,
 				290A0FB62044D60F000CDA8F /* TooltipArrowView.swift in Sources */,
 				293127811FDF0EC5008BFAB1 /* ContentButtonCell.swift in Sources */,

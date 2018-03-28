@@ -11,6 +11,7 @@ import UIKit
 @objc protocol CardNavigationControllerDelegate : class {
     @objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)
 	@objc optional func cardWillShowFullscreen(cardVC: CardNavigationController)
+	@objc optional func cardWillShowMiniplayer(cardVC: CardNavigationController)
 	@objc optional func cardDidShowMiniplayer(cardVC: CardNavigationController)
 	@objc optional func cardWillHide(cardVC: CardNavigationController)
 	@objc optional func cardShouldHide(cardVC: CardNavigationController) -> Bool
@@ -127,6 +128,7 @@ class CardNavigationController : UINavigationController {
     
     func showFullscreen() {
         cardWillShowFullscreen()
+		self.cardDelegate?.cardWillShowFullscreen?(cardVC: self)
 		setCloseButtonEnabled(enabled: false)
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.fullscreen]!)
@@ -135,7 +137,6 @@ class CardNavigationController : UINavigationController {
             self.currentState = .fullscreen
             self.cardDidShowFullscreen()
         })
-		self.cardDelegate?.cardWillShowFullscreen?(cardVC: self)
     }
     
     func showMinimized() {
@@ -152,6 +153,7 @@ class CardNavigationController : UINavigationController {
     
     func showMiniPlayer() {
         cardWillShowMiniPlayer()
+		self.cardDelegate?.cardWillShowMiniplayer?(cardVC: self)
 		setCloseButtonEnabled(enabled: false)
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.mini_player]!)
@@ -165,6 +167,7 @@ class CardNavigationController : UINavigationController {
     
     func hide() {
         cardWillHide()
+		self.cardDelegate?.cardWillHide?(cardVC: self)
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
             self.setCardPosition(self.positionForState[.hidden]!)
             self.view.layer.cornerRadius = 0
@@ -175,7 +178,6 @@ class CardNavigationController : UINavigationController {
 				self.cardDelegate?.cardDidHide?(cardVC: self)
 			}
         })
-		self.cardDelegate?.cardWillHide?(cardVC: self)
     }
     
     // MARK: Show/Hide Animation Callbacks

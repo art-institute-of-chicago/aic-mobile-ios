@@ -628,6 +628,13 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 		}
 	}
 	
+	func cardWillShowMiniplayer(cardVC: CardNavigationController) {
+		if cardVC.currentState == .fullscreen {
+			// Log analytics
+			self.currentViewController.topViewController?.viewWillAppear(false)
+		}
+	}
+	
 	func cardDidShowMiniplayer(cardVC: CardNavigationController) {
 		if cardVC == audioPlayerVC {
 			// when you play artwork for an artwork you found on the search
@@ -635,6 +642,13 @@ extension SectionsViewController : CardNavigationControllerDelegate {
 			if searchVC.currentState != .fullscreen {
 				setSearchButtonEnabled(true)
 			}
+		}
+	}
+	
+	func cardWillHide(cardVC: CardNavigationController) {
+		if cardVC.currentState == .fullscreen {
+			// Log analytics
+			self.currentViewController.topViewController?.viewWillAppear(false)
 		}
 	}
     
