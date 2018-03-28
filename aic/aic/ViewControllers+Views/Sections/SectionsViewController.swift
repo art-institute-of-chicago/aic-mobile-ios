@@ -183,6 +183,13 @@ class SectionsViewController : UIViewController {
 	
 	// MARK: Show On Map
 	
+	func showTourOnMapFromLink(tour: AICTourModel, language: Common.Language) {
+		showTourOnMap(tour: tour, language: language, stopIndex: nil)
+		
+		// Log Analytics
+		AICAnalytics.sendTourStartedEvent(tour: tour, source: "related_tours", tourStopIndex: nil)
+	}
+	
 	func showTourOnMap(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
 		setSelectedSection(sectionVC: mapVC)
 		
@@ -202,7 +209,7 @@ class SectionsViewController : UIViewController {
 		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
 		
         // Log Analytics
-//        AICAnalytics.sendTourStartedFromLinkEvent(forTour: tour)
+		AICAnalytics.sendTourStartedEvent(tour: tour, source: "", tourStopIndex: stopIndex)
     }
 	
 	func showArtworkOnMap(artwork: AICObjectModel) {
@@ -307,7 +314,7 @@ class SectionsViewController : UIViewController {
 		audioPlayerVC.showFullscreen()
         
         // Log analytics
-//        AICAnalytics.sendAudioGuideDidShowObjectEvent(forObject: object)
+		AICAnalytics.sendPlayAudioFromAudioGuideEvent(artwork: artwork, selectorNumber: audioGuideID, language: audio.language)
     }
     
     private func playMapArtwork(artwork: AICObjectModel) {
@@ -318,8 +325,7 @@ class SectionsViewController : UIViewController {
 		audioPlayerVC.showMiniPlayer()
 		
         // Log analytics
-		// TODO: Log as played map object
-//        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
+		AICAnalytics.sendPlayAudioFromMapEvent(artwork: artwork)
     }
 	
 	private func playSearchedArtwork(artwork: AICObjectModel) {
@@ -330,8 +336,7 @@ class SectionsViewController : UIViewController {
 		audioPlayerVC.showMiniPlayer()
 		
 		// Log analytics
-		// TODO: Log as played search object
-//        AICAnalytics.sendMapDidShowObjectEvent(forObject: object)
+		AICAnalytics.sendPlayAudioFromSearchedArtworkEvent(artwork: artwork)
 	}
 	
 	private func playTourStop(tourStop: AICTourStopModel, tour: AICTourModel) {
@@ -339,15 +344,15 @@ class SectionsViewController : UIViewController {
 		audioPlayerVC.showMiniPlayer()
 		
 		// Log analytics
-//        AICAnalytics.sendTourDidShowObjectEvent(forObject: tour.stops[stopIndex].object)
+		AICAnalytics.sendPlayAudioFromTourEvent(artwork: tourStop.object, tour: tour)
 	}
     
     private func playTourOverview(tour: AICTourModel, language: Common.Language) {
 		audioPlayerVC.playTourOverviewAudio(tour: tour)
 		audioPlayerVC.showMiniPlayer()
 		
-        // Log analytics
-//        AICAnalytics.sendTourDidShowOverviewEvent(forTour: tour)
+		// Log analytics
+		AICAnalytics.sendPlayAudioFromTourOverviewEvent(tour: tour)
     }
 	
 	// MARK: Show/Hide Search Button
@@ -514,17 +519,26 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 		let tourTableVC = TourTableViewController(tour: tour)
 		tourTableVC.tourTableDelegate = self
 		showContentCard(ContentCardNavigationController(tableVC: tourTableVC))
+		
+		// Log analytics
+		AICAnalytics.sendTourOpenedEvent(tour: tour)
 	}
 	
 	func showExhibitionCard(exhibition: AICExhibitionModel) {
 		let exhibitionTableVC = ExhibitionTableViewController(exhibition: exhibition)
 		exhibitionTableVC.exhibitionTableDelegate = self
 		showContentCard(ContentCardNavigationController(tableVC: exhibitionTableVC))
+		
+		// Log analytics
+		AICAnalytics.sendExhibitionOpenedEvent(exhibition: exhibition)
 	}
 	
 	func showEventCard(event: AICEventModel) {
 		let eventTableVC = EventTableViewController(event: event)
 		showContentCard(ContentCardNavigationController(tableVC: eventTableVC))
+		
+		// Log analytics
+		AICAnalytics.sendEventOpenedEvent(event: event)
 	}
 	
 	func showContentCard(_ contentCardVC: ContentCardNavigationController) {
@@ -581,6 +595,11 @@ extension SectionsViewController : MessageViewControllerDelegate {
 		}
 		else if messageVC == leaveTourMessageVC {
 			hideLeaveTourMessage()
+			
+			// Log analytics
+			if let tour = mapVC.tourModel {
+				AICAnalytics.sendTourLeftEvent(tour: tour)
+			}
 			
 			showRequestedMapContentIfNeeded()
 			resetRequestedMapContent()

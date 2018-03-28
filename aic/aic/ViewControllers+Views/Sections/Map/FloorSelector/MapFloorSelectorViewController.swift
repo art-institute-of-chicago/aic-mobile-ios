@@ -57,9 +57,8 @@ class MapFloorSelectorViewController: UIViewController {
     }
     
     // MARK: Floor selector buttons
-    /**
-     Set the selected floor and notify delegate
-     */
+	
+    /// Set the selected floor and notify delegate
     func setSelectedFloor(forFloorNum floorNum: Int) {
         for floorButton in floorSelectorView.floorButtons {
             floorButton.isSelectedFloor = false
@@ -78,7 +77,7 @@ class MapFloorSelectorViewController: UIViewController {
 		return 1
 	}
 	
-	// get position of 
+	/// get position of current floor for tooltips
 	func getFloorButtonPosition(floorNumber: Int) -> CGPoint {
 		let pointX = self.view.frame.origin.x
 		
@@ -88,6 +87,7 @@ class MapFloorSelectorViewController: UIViewController {
 		return CGPoint(x: pointX, y: pointY)
 	}
 	
+	/// get position of orientation button for tooltips
 	func getOrientationButtonPosition() -> CGPoint {
 		let pointX = self.view.frame.origin.x
 		let pointY: CGFloat = self.view.frame.origin.y + floorSelectorView.locationButton.frame.origin.y + CGFloat(floorSelectorView.locationButton.frame.height * 0.5)

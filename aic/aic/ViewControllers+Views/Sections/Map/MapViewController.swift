@@ -53,10 +53,6 @@ class MapViewController: UIViewController {
     private (set) var currentFloor: Int = Common.Map.startFloor
 	private (set) var currentUserFloor: Int? = nil
 	private (set) var previousUserFloor: Int? = nil
-	
-	// TODO: move these to SectionsViewController
-    var locationDisabledMessage: UIView? = nil
-    var locationOffsiteMessage: UIView? = nil
     
     var isSwitchingModes = false
     
@@ -779,64 +775,64 @@ extension MapViewController : MKMapViewDelegate {
         // Department Annotations
         if let departmentAnnotation = annotation as? MapDepartmentAnnotation {
             guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapDepartmentAnnotationView.reuseIdentifier) as? MapDepartmentAnnotationView else {
-                let view = MapDepartmentAnnotationView(annotation:departmentAnnotation, reuseIdentifier: MapDepartmentAnnotationView.reuseIdentifier)
-                return view
-            }
-            
-            view.setAnnotation(forDepartmentAnnotation: departmentAnnotation)
-            return view
-        }
-        
-        // Image Annotations
-        if let imageAnnotation = annotation as? MapImageAnnotation {
-            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.identifier) else {
-                let view = MKAnnotationView(annotation: imageAnnotation, reuseIdentifier: imageAnnotation.identifier)
-                view.image = imageAnnotation.image
-                return view
-            }
-            
-            return view
-            
-        }
-        
-        // Amenity annotation
-        if let amenityAnnotation = annotation as? MapAmenityAnnotation {
-            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: amenityAnnotation.type.rawValue) as? MapAmenityAnnotationView else {
-                let view = MapAmenityAnnotationView(annotation: amenityAnnotation, reuseIdentifier: amenityAnnotation.type.rawValue)
-                return view
-            }
-            
-            view.annotation = amenityAnnotation
-            return view
-        }
-        
-        // Text annotations
-        if let textAnnotation = annotation as? MapTextAnnotation {
-            
-            var view:MapTextAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: textAnnotation.type.rawValue) as? MapTextAnnotationView
-            if view == nil {
-                view = MapTextAnnotationView(annotation: textAnnotation, reuseIdentifier: textAnnotation.type.rawValue)
-            }
-            
-            // Update the view
-            view.setAnnotation(forMapTextAnnotation: textAnnotation)
-            
-            return view
-        }
-        
-        // Object annotations
+				let view = MapDepartmentAnnotationView(annotation:departmentAnnotation, reuseIdentifier: MapDepartmentAnnotationView.reuseIdentifier)
+				return view
+			}
+			
+			view.setAnnotation(forDepartmentAnnotation: departmentAnnotation)
+			return view
+		}
+		
+		// Image Annotations
+		if let imageAnnotation = annotation as? MapImageAnnotation {
+			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.identifier) else {
+				let view = MKAnnotationView(annotation: imageAnnotation, reuseIdentifier: imageAnnotation.identifier)
+				view.image = imageAnnotation.image
+				return view
+			}
+			
+			return view
+		
+		}
+		
+		// Amenity annotation
+		if let amenityAnnotation = annotation as? MapAmenityAnnotation {
+			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: amenityAnnotation.type.rawValue) as? MapAmenityAnnotationView else {
+				let view = MapAmenityAnnotationView(annotation: amenityAnnotation, reuseIdentifier: amenityAnnotation.type.rawValue)
+				return view
+			}
+			
+			view.annotation = amenityAnnotation
+			return view
+		}
+		
+		// Text annotations
+		if let textAnnotation = annotation as? MapTextAnnotation {
+			
+			var view:MapTextAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: textAnnotation.type.rawValue) as? MapTextAnnotationView
+			if view == nil {
+				view = MapTextAnnotationView(annotation: textAnnotation, reuseIdentifier: textAnnotation.type.rawValue)
+			}
+			
+			// Update the view
+			view.setAnnotation(forMapTextAnnotation: textAnnotation)
+			
+			return view
+		}
+
+		// Object annotations
 		if let objectAnnotation = annotation as? MapObjectAnnotation {
-            let objectIdentifier = String(MapObjectAnnotationView.reuseIdentifier)
-            
-            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier) as? MapObjectAnnotationView else {
-                let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: objectIdentifier)
-                view.delegate = self
-                return view
-            }
+			let objectIdentifier = String(MapObjectAnnotationView.reuseIdentifier)
+			
+			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier) as? MapObjectAnnotationView else {
+				let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: objectIdentifier)
+				view.delegate = self
+				return view
+			}
 			
 			view.delegate = self
-            view.setAnnotation(forObjectAnnotation: objectAnnotation)
-            return view
+			view.setAnnotation(forObjectAnnotation: objectAnnotation)
+			return view
         }
 		
 		// Object annotations
@@ -959,7 +955,6 @@ extension MapViewController : MapFloorSelectorViewControllerDelegate {
             // Show message to enable location
 //            locationDisabledMessage = MessageSmallView(model: Common.Messages.locationDisabled)
 //            locationDisabledMessage!.delegate = self
-//
 //            self.view.window?.addSubview(locationDisabledMessage!)
         }
         else if floorSelectorVC.locationMode == .Offsite {
@@ -980,28 +975,6 @@ extension MapViewController : MapFloorSelectorViewControllerDelegate {
                 AICAnalytics.sendLocationEnableHeadingEvent()
             }
         }
-    }
-}
-
-// MARK: Enable location services message delegate
-extension MapViewController : MessageViewControllerDelegate {
-    func messageViewActionSelected(messageVC: MessageViewController) {
-        // Remove the message
-        messageVC.dismiss(animated: true, completion: nil)
-        
-        if messageVC.view == locationDisabledMessage {
-            // Go to settings
-            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-				UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-            }
-        }
-        
-        locationDisabledMessage = nil
-        locationOffsiteMessage = nil
-    }
-    
-    func messageViewCancelSelected(messageVC: MessageViewController) {
-        messageVC.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -1047,6 +1020,9 @@ extension MapViewController : CLLocationManagerDelegate {
             print("No useable location found")
             return
         }
+		
+		// previous user location
+		let previousLocationMode = floorSelectorVC.locationMode
         
         // Determine if user is near the museum
         let museumCenterCoordinate = CLLocation(latitude: mapView.floorplanOverlay!.coordinate.latitude, longitude: mapView.floorplanOverlay!.coordinate.longitude)
@@ -1086,8 +1062,15 @@ extension MapViewController : CLLocationManagerDelegate {
                 // Log analytics
                 AICAnalytics.sendLocationOnSiteEvent()
             }
+			
+			// Update analytics User Properties
+			AICAnalytics.updateUserLocationProperty(isOnSite: true)
+			
         } else {
             floorSelectorVC.locationMode = .Offsite
+			
+			// Update analytics User Properties
+			AICAnalytics.updateUserLocationProperty(isOnSite: false)
         }
     }
     

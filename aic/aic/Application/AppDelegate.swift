@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		
 		AICAnalytics.configure()
-		AICAnalytics.appOpenEvent()
+		AICAnalytics.sendAppOpenEvent()
 		
 		// Turn off caching
 		let sharedCache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
@@ -104,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func applicationDidEnterBackground(_ application: UIApplication) {
-		AICAnalytics.appBackgroundEvent()
+		AICAnalytics.sendAppBackgroundEvent()
 	}
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -116,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootVC.resumeLoadingIfNotComplete()
         
         // Log analytics
-        AICAnalytics.appForegroundEvent()
+        AICAnalytics.sendAppForegroundEvent()
         setStatusBar()
     }
 	

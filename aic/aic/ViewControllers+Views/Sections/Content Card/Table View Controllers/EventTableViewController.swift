@@ -48,6 +48,9 @@ class EventTableViewController : UITableViewController {
 	// MARK: Button Events
 	
 	@objc func buyTicketsButtonPressed(button: UIButton) {
+		// Log analytics
+		AICAnalytics.sendEventLinkPressedEvent(event: eventModel)
+		
 		UIApplication.shared.open(eventModel.eventUrl!, options: [:], completionHandler: nil)
 	}
 }

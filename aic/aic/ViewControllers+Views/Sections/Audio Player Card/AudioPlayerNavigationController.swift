@@ -617,6 +617,11 @@ extension AudioPlayerNavigationController {
 				hide()
 			}
 		}
+		
+		// Log analytics
+		if let currentAudio = currentAudioFile {
+			AICAnalytics.sendPlaybackCompletedEvent(audio: currentAudio)
+		}
 	}
     
     // Audio player Slider Events

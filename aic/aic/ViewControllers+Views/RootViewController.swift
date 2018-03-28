@@ -102,7 +102,7 @@ class RootViewController: UIViewController {
     // Show a tour, called from deep link handling in app delegate
     func startTour(tour: AICTourModel) {
         // If we haven't loaded yet we should save the tour here
-		sectionsVC?.showTourOnMap(tour: tour, language: tour.language, stopIndex: nil)
+		sectionsVC?.showTourOnMapFromLink(tour: tour, language: Common.currentLanguage)
     }
     
     private func showLoadingVC() {

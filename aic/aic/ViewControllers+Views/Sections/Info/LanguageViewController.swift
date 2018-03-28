@@ -114,6 +114,9 @@ class LanguageViewController : UIViewController {
 		else if button == chineseButton {
 			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
 		}
+		
+		// Log analytics
+		AICAnalytics.sendLanguageChangedEvent(language: Common.currentLanguage)
 	}
 }
 

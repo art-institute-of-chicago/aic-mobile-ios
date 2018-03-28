@@ -16,18 +16,23 @@ class AICAnalytics {
 		case locationOnSite			= "location_on_site"
 		case locationDidEnableHeading = "location_heading_enabled"
 		
+		case languageSelected		= "language_selected"
+		case languageChanged		= "language_changed"
+		
 		case playAudio		 		= "play_audio"
 		case playInterrupted		= "playback_interrupted"
 		case playCompleted			= "playback_completed"
 		
 //		case artworkOpened			= "artwork_opened"
 		case tourOpened				= "tour_opened" // tour_title: ...
-		case tourStarted			= "tour_started" // source: {link, search, card} // language: ... // start: {overview, artworkTitle}
+		case tourStarted			= "tour_started" // source: {related_tours, } // language: ... // start: {overview, artworkTitle}
 		case tourLeft				= "tour_left"
 		
 		case exhibitionOpened		= "exhibition_opened" // exhibition_title: ...
+		case exhibitionLinkPressed	= "exhibition_link_pressed"
 		
 		case eventOpened			= "event_opened" // event_title: ...
+		case eventLinkPressed		= "event_link_pressed"
 		
 		case mapShowExhibition		= "map_show_exhibition" // exhibition_title: ...
 		case mapShowArtwork			= "map_show_artwork" // artwork_title: ...
@@ -83,17 +88,33 @@ class AICAnalytics {
 	
     // MARK: App
     
-	static func appOpenEvent() {
+	static func sendAppOpenEvent() {
 		Analytics.logEvent(Event.appOpen.rawValue, parameters: nil)
     }
     
-    static func appForegroundEvent() {
+    static func sendAppForegroundEvent() {
 		Analytics.logEvent(Event.appForeground.rawValue, parameters: nil)
     }
     
-    static func appBackgroundEvent() {
+    static func sendAppBackgroundEvent() {
 		Analytics.logEvent(Event.appBackground.rawValue, parameters: nil)
     }
+	
+	// MARK: Language
+	
+	static func sendLanguageSelectedEvent(language: Common.Language) {
+		Analytics.setUserProperty(Common.stringForLanguage[language], forName: "AppLanguage")
+		Analytics.logEvent(Event.languageSelected.rawValue, parameters: [
+			"language": Common.stringForLanguage[language]! as NSObject
+		])
+	}
+	
+	static func sendLanguageChangedEvent(language: Common.Language) {
+		Analytics.setUserProperty(Common.stringForLanguage[language], forName: "AppLanguage")
+		Analytics.logEvent(Event.languageChanged.rawValue, parameters: [
+			"language": Common.stringForLanguage[language]! as NSObject
+		])
+	}
     
     // MARK: Location
     static func sendLocationEnableHeadingEvent() {
@@ -103,6 +124,10 @@ class AICAnalytics {
     static func sendLocationOnSiteEvent() {
 		Analytics.logEvent(Event.locationOnSite.rawValue, parameters: nil)
     }
+	
+	static func updateUserLocationProperty(isOnSite: Bool) {
+		Analytics.setUserProperty(isOnSite ? "Yes" : "No", forName: "OnSite")
+	}
 	
 	// MARK: Audio Player
 	static func sendPlayAudioFromMapEvent(artwork: AICObjectModel) {
@@ -136,7 +161,18 @@ class AICAnalytics {
 		])
 	}
 	
-	static func sendPlayAudioFromSearchedArtworkEvent(artwork: AICObjectModel, language: Common.Language) {
+	static func sendPlayAudioFromTourOverviewEvent(tour: AICTourModel) {
+		Analytics.logEvent(Event.playAudio.rawValue, parameters: [
+			AnalyticsParameterItemID: tour.nid as NSObject,
+			AnalyticsParameterItemName: tour.translations[.english]!.title as NSObject,
+			AnalyticsParameterContentType: "tour" as NSObject,
+			AnalyticsParameterSource: "tour" as NSObject,
+			"tour_name": tour.translations[.english]!.title as NSObject,
+			"language": Common.stringForLanguage[tour.language]! as NSObject
+		])
+	}
+	
+	static func sendPlayAudioFromSearchedArtworkEvent(artwork: AICObjectModel) {
 		Analytics.logEvent(Event.playAudio.rawValue, parameters: [
 			AnalyticsParameterItemID: artwork.nid as NSObject,
 			AnalyticsParameterItemName: artwork.title as NSObject,
@@ -210,10 +246,26 @@ class AICAnalytics {
 		])
 	}
 	
+	static func sendExhibitionLinkPressedEvent(exhibition: AICExhibitionModel) {
+		Analytics.logEvent(Event.exhibitionLinkPressed.rawValue, parameters: [
+			AnalyticsParameterItemID: exhibition.id as NSObject,
+			AnalyticsParameterItemName: exhibition.title as NSObject,
+			AnalyticsParameterContentType: "exhibition" as NSObject
+		])
+	}
+	
 	// MARK: Events
 	
 	static func sendEventOpenedEvent(event: AICEventModel) {
 		Analytics.logEvent(Event.eventOpened.rawValue, parameters: [
+			AnalyticsParameterItemID: event.eventId as NSObject,
+			AnalyticsParameterItemName: event.title as NSObject,
+			AnalyticsParameterContentType: "event" as NSObject
+		])
+	}
+	
+	static func sendEventLinkPressedEvent(event: AICEventModel) {
+		Analytics.logEvent(Event.eventLinkPressed.rawValue, parameters: [
 			AnalyticsParameterItemID: event.eventId as NSObject,
 			AnalyticsParameterItemName: event.title as NSObject,
 			AnalyticsParameterContentType: "event" as NSObject
