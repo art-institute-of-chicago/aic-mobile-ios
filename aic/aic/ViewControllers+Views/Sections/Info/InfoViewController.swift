@@ -44,6 +44,12 @@ class InfoViewController : SectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		automaticallyAdjustsScrollViewInsets = false
+		
+		if #available(iOS 11.0, *) {
+			scrollView.contentInsetAdjustmentBehavior = .never
+		}
+		
 		scrollView.backgroundColor = .aicInfoColor
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
@@ -82,8 +88,6 @@ class InfoViewController : SectionViewController {
 		self.scrollView.contentSize.width = self.view.frame.width
 		self.scrollView.contentSize.height = footerView.frame.origin.y + footerView.frame.height
 		
-		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: self.scrollView)
-		
 		updateLanguage()
 		
 		// Log analytics
@@ -96,7 +100,7 @@ class InfoViewController : SectionViewController {
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
 		
-		becomeMemberView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
+		becomeMemberView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarHeight)
 		becomeMemberView.autoPinEdge(.leading, to: .leading, of: self.view)
 		becomeMemberView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		

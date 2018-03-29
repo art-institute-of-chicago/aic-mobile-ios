@@ -199,7 +199,6 @@ extension RootViewController : LanguageSelectionViewControllerDelegate {
 		defaults.synchronize()
 		
 		// Start the app
-		//self.mode = .mainApp
 		languageVC?.view.removeFromSuperview()
 		languageVC = nil
 		

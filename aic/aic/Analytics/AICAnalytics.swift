@@ -5,6 +5,7 @@
 */
 
 import Firebase
+import Answers
 
 class AICAnalytics {
 	

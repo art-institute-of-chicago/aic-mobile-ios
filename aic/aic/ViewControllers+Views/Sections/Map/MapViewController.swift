@@ -1017,12 +1017,9 @@ extension MapViewController : UIGestureRecognizerDelegate {
 extension MapViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else {
-            print("No useable location found")
+            print("No usable location found")
             return
         }
-		
-		// previous user location
-		let previousLocationMode = floorSelectorVC.locationMode
         
         // Determine if user is near the museum
         let museumCenterCoordinate = CLLocation(latitude: mapView.floorplanOverlay!.coordinate.latitude, longitude: mapView.floorplanOverlay!.coordinate.longitude)

@@ -213,7 +213,6 @@ class LoadingViewController: UIViewController {
     
     @objc func videoFinishedPlaying() {
 		if avPlayer.currentItem == playerItemA {
-			loadingImage.removeFromSuperview()
 			delegate?.loadingDidFinishPlayingIntroVideoA()
 		}
 		else {

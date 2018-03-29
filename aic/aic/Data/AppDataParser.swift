@@ -154,7 +154,7 @@ class AppDataParser {
 		
 		return AICGeneralInfoTranslationModel(museumHours: museumHours.stringByDecodingHTMLEntities,
 											  homeMemberPrompt: homeMemberPrompt.stringByDecodingHTMLEntities,
-											  seeAllToursIntro: seeAllToursIntro.stringByDecodingHTMLEntities,
+											  seeAllToursIntro: seeAllToursIntro,
 											  audioTitle: audioTitle.stringByDecodingHTMLEntities,
 											  audioSubtitle: audioSubtitle.stringByDecodingHTMLEntities,
 											  mapTitle: mapTitle.stringByDecodingHTMLEntities,

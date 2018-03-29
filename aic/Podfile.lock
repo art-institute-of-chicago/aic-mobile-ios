@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (4.5.1)
+  - Answers (1.3.6):
+    - Fabric (~> 1.6.3)
   - Atributika (4.3.2)
+  - Fabric (1.6.13)
   - Firebase/Core (4.11.0):
     - FirebaseAnalytics (= 4.1.0)
     - FirebaseCore (= 4.0.18)
@@ -30,7 +33,9 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.5.1)
+  - Answers
   - Atributika
+  - Fabric
   - Firebase/Core
   - Kingfisher (~> 4.0)
   - Localize-Swift (~> 2.0)
@@ -41,7 +46,9 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  Answers: ef6af16bc75366334db6323a87f37ea54e2dab71
   Atributika: 7d59bf4c4aba05805c90436679bb98dff9a72a57
+  Fabric: 2fb5676bc811af011a04513451f463dac6803206
   Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
   FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
   FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
@@ -55,6 +62,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: eb16013c6f654853980822e0a778c9d66e017dde
 
-PODFILE CHECKSUM: 6de7654cfc230d669730cd2109c09dadc877712e
+PODFILE CHECKSUM: 79f4de3f1f6443af5af038b7584fa08d0fae9592
 
 COCOAPODS: 1.4.0

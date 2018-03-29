@@ -69,7 +69,7 @@ class MemberCardViewController : UIViewController {
 	}
 	
 	private func createViewConstraints() {
-		loginView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
+		loginView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight)
 		loginView.autoPinEdge(.leading, to: .leading, of: self.view)
 		loginView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		loginView.autoPinEdge(.bottom, to: .bottom, of: self.view)
@@ -77,7 +77,7 @@ class MemberCardViewController : UIViewController {
 		loadingIndicatorView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
 		loadingIndicatorView.autoAlignAxis(.horizontal, toSameAxisOf: self.view)
 		
-		cardView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
+		cardView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight)
 		cardView.autoPinEdge(.leading, to: .leading, of: self.view)
 		cardView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		cardView.autoPinEdge(.bottom, to: .bottom, of: self.view)

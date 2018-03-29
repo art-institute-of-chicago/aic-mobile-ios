@@ -81,6 +81,7 @@ class SeeAllViewController : UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		self.automaticallyAdjustsScrollViewInsets = false
 		self.view.backgroundColor = .white
 		
 		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
@@ -158,7 +159,7 @@ class SeeAllViewController : UIViewController {
 	}
 	
 	override func updateViewConstraints() {
-		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedVerticalOffset)
+		collectionView.autoPinEdge(.top, to: .top, of: self.view, withOffset: Common.Layout.navigationBarMinimizedHeight)
 		collectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		collectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		collectionView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)

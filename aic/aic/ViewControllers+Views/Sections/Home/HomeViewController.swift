@@ -19,8 +19,20 @@ protocol HomeViewControllerDelegate : class {
 	func homeDidSelectEvent(event: AICEventModel)
 }
 
+class ClickThroughView : UIView {
+//	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+//		for view in subviews {
+//			if view.point(inside: point, with: event) {
+//				return view
+//			}
+//		}
+//		return nil
+//	}
+}
+
 class HomeViewController : SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
+	let contentView: ClickThroughView = ClickThroughView()
 	let homeIntroView: HomeIntroView = HomeIntroView()
 	let toursTitleView: HomeContentTitleView = HomeContentTitleView(title: "Tours")
 	let toursCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.tourCellSize)
@@ -59,6 +71,8 @@ class HomeViewController : SectionViewController {
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
 		
+		contentView.backgroundColor = .white
+		
 		homeIntroView.accessMemberCardButton.addTarget(self, action: #selector(accessMemberCardButtonPressed(button:)), for: .touchUpInside)
 		
 		toursCollectionView.register(UINib(nibName: "HomeTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: HomeTourCell.reuseIdentifier)
@@ -76,16 +90,24 @@ class HomeViewController : SectionViewController {
 		eventsCollectionView.dataSource = self
 		eventsTitleView.seeAllButton.addTarget(self, action: #selector(seeAllEventsButtonPressed(button:)), for: .touchUpInside)
 		
+		if #available(iOS 11.0, *) {
+			scrollView.contentInsetAdjustmentBehavior = .never
+		}
+		else {
+			automaticallyAdjustsScrollViewInsets = false
+		}
+		
+		contentView.addSubview(homeIntroView)
+		contentView.addSubview(toursTitleView)
+		contentView.addSubview(toursCollectionView)
+		contentView.addSubview(exhibitionsDividerLine)
+		contentView.addSubview(exhibitionsTitleView)
+		contentView.addSubview(exhibitionsCollectionView)
+		contentView.addSubview(eventsDividerLine)
+		contentView.addSubview(eventsTitleView)
+		contentView.addSubview(eventsCollectionView)
+		scrollView.addSubview(contentView)
 		self.view.addSubview(scrollView)
-		scrollView.addSubview(homeIntroView)
-		scrollView.addSubview(toursTitleView)
-		scrollView.addSubview(toursCollectionView)
-		scrollView.addSubview(exhibitionsDividerLine)
-		scrollView.addSubview(exhibitionsTitleView)
-		scrollView.addSubview(exhibitionsCollectionView)
-		scrollView.addSubview(eventsDividerLine)
-		scrollView.addSubview(eventsTitleView)
-		scrollView.addSubview(eventsCollectionView)
 		
 		createViewConstraints()
 		
@@ -103,8 +125,6 @@ class HomeViewController : SectionViewController {
 		self.view.layoutIfNeeded()
 		self.scrollView.contentSize.width = self.view.frame.width
 		self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height + Common.Layout.miniAudioPlayerHeight
-		
-		self.scrollDelegate?.sectionViewControllerWillAppearWithScrollView(scrollView: scrollView)
 		
 		updateLanguage()
 		
@@ -134,30 +154,34 @@ class HomeViewController : SectionViewController {
 		scrollView.autoPinEdge(.top, to: .top, of: self.view)
 		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
+		scrollView.autoSetDimension(.height, toSize: UIScreen.main.bounds.height - Common.Layout.tabBarHeight)
 		
-		homeIntroView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarVerticalOffset)
-		homeIntroView.autoPinEdge(.leading, to: .leading, of: self.view)
-		homeIntroView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		contentView.autoPinEdge(.top, to: .top, of: scrollView)
+		contentView.autoPinEdge(.leading, to: .leading, of: self.view)
+		contentView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		
+		homeIntroView.autoPinEdge(.top, to: .top, of: contentView, withOffset: Common.Layout.navigationBarHeight)
+		homeIntroView.autoPinEdge(.leading, to: .leading, of: contentView)
+		homeIntroView.autoPinEdge(.trailing, to: .trailing, of: contentView)
 		
 		toursTitleView.autoPinEdge(.top, to: .bottom, of: homeIntroView)
-		toursTitleView.autoPinEdge(.leading, to: .leading, of: self.view)
-		toursTitleView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		toursTitleView.autoPinEdge(.leading, to: .leading, of: contentView)
+		toursTitleView.autoPinEdge(.trailing, to: .trailing, of: contentView)
 		toursTitleView.autoSetDimension(.height, toSize: 65)
 		
 		toursCollectionView.autoPinEdge(.top, to: .bottom, of: toursTitleView)
-		toursCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
-		toursCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		toursCollectionView.autoPinEdge(.leading, to: .leading, of: contentView)
+		toursCollectionView.autoPinEdge(.trailing, to: .trailing, of: contentView)
 		toursCollectionView.autoSetDimension(.height, toSize: HomeViewController.tourCellSize.height)
 		
 		exhibitionsDividerLine.autoPinEdge(.top, to: .bottom, of: toursCollectionView, withOffset: 20)
-		exhibitionsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
-		exhibitionsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
+		exhibitionsDividerLine.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
+		exhibitionsDividerLine.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
 		exhibitionsDividerLine.autoSetDimension(.height, toSize: 1)
 		
 		exhibitionsTitleView.autoPinEdge(.top, to: .bottom, of: exhibitionsDividerLine)
-		exhibitionsTitleView.autoPinEdge(.leading, to: .leading, of: self.view)
-		exhibitionsTitleView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		exhibitionsTitleView.autoPinEdge(.leading, to: .leading, of: contentView)
+		exhibitionsTitleView.autoPinEdge(.trailing, to: .trailing, of: contentView)
 		exhibitionsTitleView.autoSetDimension(.height, toSize: 65)
 		
 		exhibitionsCollectionView.autoPinEdge(.top, to: .bottom, of: exhibitionsTitleView)
@@ -166,19 +190,21 @@ class HomeViewController : SectionViewController {
 		exhibitionsCollectionView.autoSetDimension(.height, toSize: HomeViewController.exhibitionCellSize.height)
 		
 		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView, withOffset: 30)
-		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
-		eventsDividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
+		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
+		eventsDividerLine.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
 		eventsDividerLine.autoSetDimension(.height, toSize: 1)
 		
 		eventsTitleView.autoPinEdge(.top, to: .bottom, of: eventsDividerLine)
-		eventsTitleView.autoPinEdge(.leading, to: .leading, of: self.view)
-		eventsTitleView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		eventsTitleView.autoPinEdge(.leading, to: .leading, of: contentView)
+		eventsTitleView.autoPinEdge(.trailing, to: .trailing, of: contentView)
 		eventsTitleView.autoSetDimension(.height, toSize: 65)
 		
 		eventsCollectionView.autoPinEdge(.top, to: .bottom, of: eventsTitleView)
-		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
-		eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: contentView)
+		eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: contentView)
 		eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.eventCellSize.height)
+		
+		contentView.autoPinEdge(.bottom, to: .bottom, of: eventsCollectionView, withOffset: Common.Layout.miniAudioPlayerHeight)
 	}
 	
 	// MARK: Language

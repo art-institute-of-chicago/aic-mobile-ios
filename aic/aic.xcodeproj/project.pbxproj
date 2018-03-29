@@ -217,7 +217,6 @@
 		E458502F1CAC8C1A00131A66 /* AICExhibitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */; };
 		E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */; };
 		E47A970F1CEFBB1F0041D0A6 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47A970D1CEFBB1E0041D0A6 /* Fabric.framework */; };
-		E47A97101CEFBB1F0041D0A6 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47A970E1CEFBB1F0041D0A6 /* Crashlytics.framework */; };
 		E47A97151CEFBC150041D0A6 /* AppDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97131CEFBC150041D0A6 /* AppDataManager.swift */; };
 		E47A97161CEFBC150041D0A6 /* AppDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97141CEFBC150041D0A6 /* AppDataParser.swift */; };
 		E47A971A1CF262760041D0A6 /* AICTooltipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97191CF262760041D0A6 /* AICTooltipModel.swift */; };
@@ -524,7 +523,6 @@
 		E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICExhibitionModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberInfoModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A970D1CEFBB1E0041D0A6 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		E47A970E1CEFBB1F0041D0A6 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		E47A97131CEFBC150041D0A6 /* AppDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDataManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A97141CEFBC150041D0A6 /* AppDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDataParser.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A97191CF262760041D0A6 /* AICTooltipModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTooltipModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -568,7 +566,6 @@
 				E4223CE81CC8013300503D43 /* Alamofire.framework in Frameworks */,
 				E44084A71CC96C8E00AABC92 /* SwiftyJSON.framework in Frameworks */,
 				E47A970F1CEFBB1F0041D0A6 /* Fabric.framework in Frameworks */,
-				E47A97101CEFBB1F0041D0A6 /* Crashlytics.framework in Frameworks */,
 				E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1266,7 +1263,6 @@
 				E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */,
 				E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */,
 				E47A970D1CEFBB1E0041D0A6 /* Fabric.framework */,
-				E47A970E1CEFBB1F0041D0A6 /* Crashlytics.framework */,
 				E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */,
 				E4223CE71CC8013300503D43 /* Alamofire.framework */,
 				E407F9E51C9B225B00E285B4 /* SnapKit.framework */,
@@ -1372,7 +1368,7 @@
 				TargetAttributes = {
 					E40D41C81C6CEBB700A57AF4 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 6CA8WK4597;
+						DevelopmentTeam = VY3V6Q3AXG;
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1697,7 +1693,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run cda599ad3fe0acb29dba8c1b2f283766627425bf a7e4f98760a4ace8dba5c9818a7e89c6884d602120e4ba94a32699e76794a9d1";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 67a1305d6fc347d5727badeea6d892906ad17353 69b4378f7553983464999ff86025e5d7e636148522484e8e1aff360eab04958b";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2141,7 +2137,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 6CA8WK4597;
+				DEVELOPMENT_TEAM = VY3V6Q3AXG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2156,7 +2152,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.AICContours;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
@@ -2177,7 +2173,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.5;
-				DEVELOPMENT_TEAM = 6CA8WK4597;
+				DEVELOPMENT_TEAM = VY3V6Q3AXG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2193,7 +2189,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.AICContours;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
@@ -2326,7 +2322,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.5;
-				DEVELOPMENT_TEAM = 6CA8WK4597;
+				DEVELOPMENT_TEAM = VY3V6Q3AXG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2341,7 +2337,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DAPP_STORE";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.AICContours;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";

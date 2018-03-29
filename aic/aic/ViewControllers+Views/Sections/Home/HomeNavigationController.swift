@@ -43,7 +43,11 @@ class HomeNavigationController : SectionNavigationController {
 extension HomeNavigationController : UINavigationControllerDelegate {
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
 		if viewController == homeVC {
+			self.sectionNavigationBar.sectionViewControllerWillAppearWithScrollView(scrollView: homeVC.scrollView)
 			self.sectionNavigationBar.setBackButtonHidden(true)
+		}
+		else {
+			homeVC.scrollDelegate = nil
 		}
 	}
 	

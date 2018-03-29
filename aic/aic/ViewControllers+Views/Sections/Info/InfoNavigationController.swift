@@ -63,7 +63,11 @@ class InfoNavigationController : SectionNavigationController {
 extension InfoNavigationController : UINavigationControllerDelegate {
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
 		if viewController == infoVC {
+			self.sectionNavigationBar.sectionViewControllerWillAppearWithScrollView(scrollView: infoVC.scrollView)
 			self.sectionNavigationBar.setBackButtonHidden(true)
+		}
+		else {
+			infoVC.scrollDelegate = nil
 		}
 	}
 	

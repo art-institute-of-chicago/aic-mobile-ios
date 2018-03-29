@@ -17,8 +17,8 @@ class SeeAllIntroView : UICollectionReusableView {
 	static let bottomMargin: CGFloat = 32.0
 	
 	static func sizeForText(text: String) -> CGSize {
-		let textSize: CGSize = (text as NSString).boundingRect(with: CGSize(width: UIScreen.main.bounds.width, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : UIFont.aicTextFont], context: nil).size
-		return CGSize(width: UIScreen.main.bounds.width, height: textSize.height + SeeAllIntroView.topMargin + SeeAllIntroView.bottomMargin)
+		let textSize: CGSize = (text as NSString).boundingRect(with: CGSize(width: UIScreen.main.bounds.width - 32, height: 0), options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : UIFont.aicTextFont], context: nil).size
+		return CGSize(width: UIScreen.main.bounds.width - 32, height: textSize.height + SeeAllIntroView.topMargin + SeeAllIntroView.bottomMargin)
 	}
 	
 	override init(frame: CGRect) {

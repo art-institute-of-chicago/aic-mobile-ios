@@ -175,14 +175,6 @@ struct Common {
 			return 64
 		}
 		
-		static var navigationBarVerticalOffset: CGFloat {
-			return navigationBarHeight - safeAreaTopMargin
-		}
-		
-		static var navigationBarMinimizedVerticalOffset: CGFloat {
-			return navigationBarMinimizedHeight
-		}
-		
 		static var tabBarHeight: CGFloat {
 			if UIDevice().type == .iPhoneX {
 				return 83
