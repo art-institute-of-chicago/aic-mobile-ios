@@ -81,22 +81,6 @@
 	<string>See where you are on the map and find museum features near you.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Lora-Bold.ttf</string>
-		<string>Lora-BoldItalic.ttf</string>
-		<string>Lora-Italic.ttf</string>
-		<string>Lora-Regular.ttf</string>
-		<string>SourceSansPro-Black.ttf</string>
-		<string>SourceSansPro-BlackItalic.ttf</string>
-		<string>SourceSansPro-Bold.ttf</string>
-		<string>SourceSansPro-BoldItalic.ttf</string>
-		<string>SourceSansPro-ExtraLight.ttf</string>
-		<string>SourceSansPro-ExtraLightItalic.ttf</string>
-		<string>SourceSansPro-Italic.ttf</string>
-		<string>SourceSansPro-Light.ttf</string>
-		<string>SourceSansPro-LightItalic.ttf</string>
-		<string>SourceSansPro-Regular.ttf</string>
-		<string>SourceSansPro-Semibold.ttf</string>
-		<string>SourceSansPro-SemiboldItalic.ttf</string>
 		<string>IdealSans-Bold.otf</string>
 		<string>IdealSans-BoldItalic.otf</string>
 		<string>IdealSans-Book.otf</string>

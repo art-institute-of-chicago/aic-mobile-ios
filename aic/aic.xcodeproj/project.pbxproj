@@ -241,7 +241,6 @@
 		E4F519C71C87B2F200226188 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F519C61C87B2F200226188 /* Helpers.swift */; };
 		E4F7AF951CFB64DE00524F87 /* AICMapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */; };
 		E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */; };
-		E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF9B1CFBA11200524F87 /* MapSVGParser.swift */; };
 		E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */; };
 		E4FFC6EC1D00B7FD0082818D /* AICMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */; };
 		F23801B72DA3B2C5C5B13960 /* Pods_aicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A42DED784747728FEECA5D /* Pods_aicTests.framework */; };
@@ -548,7 +547,6 @@
 		E4F519C61C87B2F200226188 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		E4F7AF941CFB64DE00524F87 /* AICMapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapFloorModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E4F7AF9B1CFBA11200524F87 /* MapSVGParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSVGParser.swift; sourceTree = "<group>"; };
 		E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
 		E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		EA1BA6C00D1BB7B67F144190 /* Pods-aic.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aic.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aic/Pods-aic.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -1203,7 +1201,6 @@
 				E47A97131CEFBC150041D0A6 /* AppDataManager.swift */,
 				E47A97141CEFBC150041D0A6 /* AppDataParser.swift */,
 				E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */,
-				E4F7AF9B1CFBA11200524F87 /* MapSVGParser.swift */,
 				294338511FDC849E00ECF321 /* SearchDataManager.swift */,
 			);
 			path = Data;
@@ -1763,7 +1760,6 @@
 				29A7BCFF1FBF87C100FD8639 /* InfoNavigationController.swift in Sources */,
 				294C0B5D201A76F700F2ABB1 /* HideBackgroundOverlay.swift in Sources */,
 				29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */,
-				E4F7AF9C1CFBA11200524F87 /* MapSVGParser.swift in Sources */,
 				29B9B58F1FD0A3FF0095FE52 /* SeeAllViewController.swift in Sources */,
 				2941CE7A1FE08EF400B7CCEE /* CardTitleView.swift in Sources */,
 				2915B0F2202CA08B00DEBB03 /* LanguageSelectorView.swift in Sources */,
