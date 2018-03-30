@@ -17,6 +17,7 @@ target 'aic' do
   pod "Atributika"
   pod 'Fabric'
   pod 'Answers'
+  pod 'GoogleAnalytics', '~> 3.17'
 
   target 'aicTests' do
     inherit! :search_paths

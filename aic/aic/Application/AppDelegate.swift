@@ -24,8 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		AICAnalytics.configure()
 		AICAnalytics.sendAppOpenEvent()
 		
-		Fabric.with([Answers.self])
-		
 		// Turn off caching
 		let sharedCache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
 		URLCache.shared = sharedCache

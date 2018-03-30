@@ -154,8 +154,6 @@ class SectionNavigationBar : UIView {
 	}
 	
 	func updateHeight(contentOffset: CGPoint) {
-		print("contentOffset: \(contentOffset)")
-		
 		var frameHeight = Common.Layout.navigationBarHeight + (contentOffset.y * -1.0)
 		frameHeight = clamp(val: frameHeight, minVal: Common.Layout.navigationBarMinimizedHeight, maxVal: 99999.0)
 		var alphaVal = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight + 50), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: 0.0, newRange2: 1.0))
