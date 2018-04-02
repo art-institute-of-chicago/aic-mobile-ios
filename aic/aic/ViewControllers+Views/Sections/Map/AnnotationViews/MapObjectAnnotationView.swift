@@ -76,7 +76,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 		
         // Configure
         backgroundColor = .clear
-        layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
+        layer.zPosition = 0// Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
         
 //        self.layer.masksToBounds = false
 //        self.layer.shadowOffset = CGSizeMake(0, 0)
@@ -198,7 +198,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 					playIcon.alpha = 0.0
 					titleLabel.alpha = 0.0
 
-					layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
+					layer.zPosition = 0// Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
 
 					UIView.animate(withDuration: animationDuration, animations: {
 						self.expandThumbholder()
@@ -250,7 +250,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 						}
 					})
 					
-					layer.zPosition = Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.floor)
+					layer.zPosition = 0// Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.floor)
 				}
 				else {
 					setContentForCurrentMode(withAnimation: true)
@@ -341,11 +341,11 @@ class MapObjectAnnotationView: MapAnnotationView {
 		// Z position
 		switch mode {
 		case .dot:
-			layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
+			layer.zPosition = 0// Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 			
 		case .image, .smallImageInfo, .imageInfo:
-			layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
+			layer.zPosition = 0// Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 		}
 		

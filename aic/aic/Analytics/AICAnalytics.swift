@@ -52,6 +52,13 @@ class AICAnalytics {
 		case searchSelectedExhibition = "search_selected_exhibition"
 	}
 	
+	fileprivate enum UserProperty : UInt {
+		case membership				= 1
+		case appLanguage			= 2
+		case deviceLanguage			= 3
+		case onSite					= 4
+	}
+	
     static fileprivate var previousScreen: String? = nil
 	static fileprivate var previousScreenClass: String? = nil
     static fileprivate var currentScreen: String? = nil
@@ -95,9 +102,9 @@ class AICAnalytics {
 		}
 		
 		// Google Analytics User Properties
-		AICAnalytics.tracker?.set("Membership", value: membership)
-		AICAnalytics.tracker?.set("AppLanguage", value: Common.stringForLanguage[Common.currentLanguage])
-		AICAnalytics.tracker?.set("DeviceLanguage", value: deviceLanguage)
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.membership.rawValue), value: membership)
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.appLanguage.rawValue), value: Common.stringForLanguage[Common.currentLanguage]!)
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.deviceLanguage.rawValue), value: deviceLanguage)
     }
 	
 	// MARK: Track Screens
@@ -164,7 +171,7 @@ class AICAnalytics {
 			"language" : Common.stringForLanguage[language]!
 		])
 		
-		AICAnalytics.tracker?.set("AppLanguage", value: Common.stringForLanguage[language]!)
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.appLanguage.rawValue), value: Common.stringForLanguage[language]!)
 		let event = GAIDictionaryBuilder.createEvent(withCategory: "language", action: "selected", label: Common.stringForLanguage[language]!, value: 0).build() as NSDictionary?
 		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
 	}
@@ -179,7 +186,7 @@ class AICAnalytics {
 			"language" : Common.stringForLanguage[language]!
 		])
 		
-		AICAnalytics.tracker?.set("AppLanguage", value: Common.stringForLanguage[language]!)
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.appLanguage.rawValue), value: Common.stringForLanguage[language]!)
 		let event = GAIDictionaryBuilder.createEvent(withCategory: "language", action: "changed", label: Common.stringForLanguage[language]!, value: 0).build() as NSDictionary?
 		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
 	}
@@ -207,7 +214,7 @@ class AICAnalytics {
 		Analytics.setUserProperty(isOnSite ? "Yes" : "No", forName: "OnSite")
 		
 		// GA
-		AICAnalytics.tracker?.set("OnSite", value: isOnSite ? "Yes" : "No")
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.onSite.rawValue), value: isOnSite ? "Yes" : "No")
 	}
 	
 	// MARK: Audio Player
@@ -575,7 +582,7 @@ class AICAnalytics {
 		
 		Answers.logCustomEvent(withName: Event.memberShowCard.rawValue, customAttributes: nil)
 		
-		AICAnalytics.tracker?.set("Membership", value: "Member")
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.membership.rawValue), value: "Member")
 		let event = GAIDictionaryBuilder.createEvent(withCategory: "member", action: "show_card", label: "", value: 0).build() as NSDictionary?
 		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
     }

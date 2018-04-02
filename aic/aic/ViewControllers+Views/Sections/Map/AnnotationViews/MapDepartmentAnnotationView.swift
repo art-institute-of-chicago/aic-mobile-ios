@@ -34,7 +34,7 @@ class MapDepartmentAnnotationView: MapAnnotationView {
         
         self.layer.zPosition = Common.Map.AnnotationZPosition.department.rawValue
         
-        self.isEnabled = true
+        self.isEnabled = false
         self.canShowCallout = false
         
         holderView.backgroundColor = UIColor.aicMapLightColor
