@@ -29,21 +29,29 @@ class NoResultsCell : UITableViewCell {
 		
 		self.backgroundColor = .aicDarkGrayColor
 		
-		noResultsLabel.text = "Not Found Text".localized(using: "Search")
 		noResultsLabel.numberOfLines = 0
 		noResultsLabel.lineBreakMode = .byWordWrapping
 		noResultsLabel.textColor = .aicCardDarkTextColor
 		
-		let visitOurWebsiteAttrString = NSMutableAttributedString(string: "Not Found Website Link Text".localized(using: "Search"))
+		visitWebsiteTextView.setDefaultsForAICAttributedTextView()
+		visitWebsiteTextView.delegate = self
+	}
+	
+	func updateLanguage() {
+		noResultsLabel.text = "Not Found Text".localized(using: "Search")
+		
+		let visitWebsiteLink = "Not Found Website Link".localized(using: "Search")
+		let visitWebsiteText = "Not Found Website Text".localized(using: "Search") + " " + visitWebsiteLink
+		let linkRange: NSRange = (visitWebsiteText as NSString).range(of: visitWebsiteLink)
+		let visitOurWebsiteAttrString = NSMutableAttributedString(string: visitWebsiteText)
 		let websiteURL = URL(string: Common.Search.museumWebsiteURL)!
 		visitOurWebsiteAttrString.addAttributes([NSAttributedStringKey.link : websiteURL.absoluteString], range: NSMakeRange(0, visitOurWebsiteAttrString.string.count))
+		visitOurWebsiteAttrString.addAttributes([NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue], range: linkRange)
 		
-		visitWebsiteTextView.setDefaultsForAICAttributedTextView()
 		visitWebsiteTextView.attributedText = visitOurWebsiteAttrString
 		visitWebsiteTextView.textColor = .aicCardDarkLinkColor
 		visitWebsiteTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicCardDarkLinkColor]
 		visitWebsiteTextView.font = .aicSearchNoResultsWebsiteFont
-		visitWebsiteTextView.delegate = self
 	}
 }
 

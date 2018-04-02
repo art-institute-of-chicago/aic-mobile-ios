@@ -22,4 +22,6 @@
 
 "Not Found Text" = "Lo sentimos, no pudimos encontrarlo.";
 
-"Not Found Website Link Text" = "Para obtener ayuda, visite al representante del museo más cercano\no visite nuestro sitio web.";
+"Not Found Website Text" = "Para obtener ayuda, visite al representante del museo más cercano o";
+
+"Not Found Website Link" = "visite nuestro sitio web.";

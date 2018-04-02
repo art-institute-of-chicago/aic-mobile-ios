@@ -21,8 +21,7 @@ class TooltipArrowView : UIView {
 		arrowPosition = tooltip.arrowPosition
 		super.init(frame: UIScreen.main.bounds)
 		
-//		self.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
-		self.backgroundColor = UIColor(white: 51.0 / 255.0, alpha: 0.25)
+		self.backgroundColor = .clear
 		
 		backgroundView.backgroundColor = .aicTooltipBackgroundColor
 		

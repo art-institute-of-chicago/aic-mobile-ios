@@ -14,7 +14,7 @@
 		290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */; };
 		2902E0B01FC47FF60070C78C /* InfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902E0AF1FC47FF60070C78C /* InfoButton.swift */; };
 		290A0FAE2044CF15000CDA8F /* Tooltips.strings in Resources */ = {isa = PBXBuildFile; fileRef = 290A0FB02044CF15000CDA8F /* Tooltips.strings */; };
-		290A0FB42044D105000CDA8F /* TooltipPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290A0FB32044D105000CDA8F /* TooltipPopupView.swift */; };
+		290A0FB42044D105000CDA8F /* TooltipPopupPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290A0FB32044D105000CDA8F /* TooltipPopupPageView.swift */; };
 		290A0FB62044D60F000CDA8F /* TooltipArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290A0FB52044D60F000CDA8F /* TooltipArrowView.swift */; };
 		291221941FDB2BAD0096BB75 /* ResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291221931FDB2BAC0096BB75 /* ResultsTableViewController.swift */; };
 		291221971FDB35650096BB75 /* SuggestedSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291221961FDB35650096BB75 /* SuggestedSearchCell.swift */; };
@@ -276,7 +276,7 @@
 		290A0FAF2044CF15000CDA8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Tooltips.strings; sourceTree = "<group>"; };
 		290A0FB12044CF18000CDA8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Tooltips.strings; sourceTree = "<group>"; };
 		290A0FB22044CF19000CDA8F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Tooltips.strings"; sourceTree = "<group>"; };
-		290A0FB32044D105000CDA8F /* TooltipPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipPopupView.swift; sourceTree = "<group>"; };
+		290A0FB32044D105000CDA8F /* TooltipPopupPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipPopupPageView.swift; sourceTree = "<group>"; };
 		290A0FB52044D60F000CDA8F /* TooltipArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipArrowView.swift; sourceTree = "<group>"; };
 		291221931FDB2BAC0096BB75 /* ResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableViewController.swift; sourceTree = "<group>"; };
 		291221961FDB35650096BB75 /* SuggestedSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedSearchCell.swift; sourceTree = "<group>"; };
@@ -593,7 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				290A0FB52044D60F000CDA8F /* TooltipArrowView.swift */,
-				290A0FB32044D105000CDA8F /* TooltipPopupView.swift */,
+				290A0FB32044D105000CDA8F /* TooltipPopupPageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1843,7 +1843,7 @@
 				0E2D15591DA8134200D06A4A /* AICMemberCardModel.swift in Sources */,
 				2902E0B01FC47FF60070C78C /* InfoButton.swift in Sources */,
 				29BB93131FAA6A400034AEB4 /* UIDevice+Model.swift in Sources */,
-				290A0FB42044D105000CDA8F /* TooltipPopupView.swift in Sources */,
+				290A0FB42044D105000CDA8F /* TooltipPopupPageView.swift in Sources */,
 				2975A057203F61250014017C /* MapExhibitionAnnotationView.swift in Sources */,
 				E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */,
 				29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */,

@@ -26,7 +26,7 @@ class TourStopPageViewController : UIPageViewController {
 	init(tour: AICTourModel) {
 		tourModel = tour
 		totalPages = tourModel.stops.count + 1 // add overview
-		super.init(transitionStyle: UIPageViewControllerTransitionStyle.scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal, options: nil)
+		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 	}
 	
 	required init?(coder: NSCoder) {

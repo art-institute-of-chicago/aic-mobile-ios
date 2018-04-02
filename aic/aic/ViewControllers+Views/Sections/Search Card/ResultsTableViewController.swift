@@ -248,6 +248,7 @@ extension ResultsTableViewController {
 			}
 			else if indexPath.section == 1 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				cell.updateLanguage()
 				return cell
 			}
 			else if indexPath.section == 2 {
@@ -292,6 +293,7 @@ extension ResultsTableViewController {
 		else if filter == .artworks {
 			if indexPath.section == 0 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				cell.updateLanguage()
 				return cell
 			}
 			else if indexPath.section == 1 {
@@ -309,6 +311,7 @@ extension ResultsTableViewController {
 		else if filter == .tours {
 			if indexPath.section == 0 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				cell.updateLanguage()
 				return cell
 			}
 			else if indexPath.section == 1 {
@@ -325,6 +328,7 @@ extension ResultsTableViewController {
 		else if filter == .exhibitions {
 			if indexPath.section == 0 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier, for: indexPath) as! NoResultsCell
+				cell.updateLanguage()
 				return cell
 			}
 			else if indexPath.section == 1 {
