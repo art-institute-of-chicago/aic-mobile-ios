@@ -1035,8 +1035,11 @@ extension MapViewController : CLLocationManagerDelegate {
                 currentUserFloor = Common.Testing.testFloorNumber
             } else {
                 if let floor = location.floor {
-					if floor.level != previousUserFloor && mode == .tour {
-						setCurrentFloor(forFloorNum: floor.level)
+					// Automatically show the floor the user walks into, if in tour mode or exploring all information
+					if floor.level != previousUserFloor {
+						if mode == .tour || mode == .allInformation {
+							setCurrentFloor(forFloorNum: floor.level)
+						}
 					}
 					previousUserFloor = currentUserFloor
                     currentUserFloor = floor.level
