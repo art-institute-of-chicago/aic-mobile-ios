@@ -37,10 +37,6 @@ struct Common {
         
         static var appDataJSON = "http://localhost:8888/appData.json"
 
-        static var appDataExternalPrefix = "http://localhost:8888/"
-        static var appDataInternalPrefix = "http://localhost:8888/"
-		static var appDataLocalPrefix = "http://localhost:9000/"
-
         // This URL is the link for requests to validate member card data. The member card feature is disabled by default
         // in the open source version of this application
         static var memberCardSOAPRequestURL = "http://link-to-member-card-validation.domain"

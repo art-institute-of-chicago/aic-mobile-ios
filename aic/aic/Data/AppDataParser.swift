@@ -1457,7 +1457,7 @@ class AppDataParser {
     
     // Try to get a URL from a string
 	private func getURL(fromJSON json:JSON, forKey key:String, optional: Bool = false) throws -> URL? {
-		var stringVal = json[key].string
+		let stringVal = json[key].string
 		if stringVal == nil {
 			if optional == false {
 				throw ParseError.badURLString(string: "null")
@@ -1466,10 +1466,6 @@ class AppDataParser {
 				return nil
 			}
 		}
-		
-		// Get string val and replace URL with public URL (needs to be fixed in data)
-        stringVal = stringVal!.replacingOccurrences(of: Common.DataConstants.appDataInternalPrefix, with: Common.DataConstants.appDataExternalPrefix)
-		stringVal = stringVal!.replacingOccurrences(of: Common.DataConstants.appDataLocalPrefix, with: Common.DataConstants.appDataExternalPrefix)
         
 		guard let url: URL = URL(string: stringVal!) else {
 			if optional == false {

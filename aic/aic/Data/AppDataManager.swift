@@ -35,8 +35,6 @@ class AppDataManager {
     
     func load() {
         
-        // TODO: Refactor this
-		// A lot of urls and strings not needed in v2.0
         if let url = Bundle.main.url(forResource:"Config", withExtension: "plist") {
             do {
                 let data = try Data(contentsOf:url)
@@ -57,18 +55,6 @@ class AppDataManager {
                     if let appDataJSON = DataConstants["appDataJSON"] {
                         Common.DataConstants.appDataJSON = appDataJSON as! String
                     }
-                    
-                    if let appDataExternalPrefix = DataConstants["appDataExternalPrefix"] {
-                        Common.DataConstants.appDataExternalPrefix = appDataExternalPrefix as! String
-                    }
-                    
-                    if let appDataInternalPrefix = DataConstants["appDataInternalPrefix"] {
-                        Common.DataConstants.appDataInternalPrefix = appDataInternalPrefix as! String
-                    }
-					
-					if let appDataLocalPrefix = DataConstants["appDataLocalPrefix"] {
-						Common.DataConstants.appDataLocalPrefix = appDataLocalPrefix as! String
-					}
                     
                     if let memberCardSOAPRequestURL = DataConstants["memberCardSOAPRequestURL"] as? String {
                         Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
