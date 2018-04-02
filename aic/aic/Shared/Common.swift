@@ -108,7 +108,9 @@ struct Common {
 		static let memberFirstNameUserDefaultsKey = "AICMemberFirstName"
         static let memberInfoSelectedMemberDefaultsKey = "AICMemberInfoSelectedMember"
 
-        static let onDiskAppDataLastModifiedString = "AICAppDataLastModified"
+        static let onDiskAppDataLastModifiedStringKey = "AICAppDataLastModified"
+		
+		static let lastVersionNumberKey = "AICLastVersionNumber"
     }
 
     // MARK: URL Scheme/Deep Links

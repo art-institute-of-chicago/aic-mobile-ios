@@ -32,8 +32,22 @@ class AppDataManager {
     
     private (set) var isLoaded = false
     private var loadFailure = false
+	
+	private var forceAppDataDownload = false
     
     func load() {
+		
+		// Check software version number
+		forceAppDataDownload = false
+		if let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String {
+			if let lastVersion = UserDefaults.standard.object(forKey: Common.UserDefaults.lastVersionNumberKey) as? String {
+				if version.compare(lastVersion, options: .numeric) == .orderedDescending {
+					forceAppDataDownload = true
+				}
+			}
+			
+			UserDefaults.standard.set(version, forKey: Common.UserDefaults.lastVersionNumberKey)
+		}
         
         if let url = Bundle.main.url(forResource:"Config", withExtension: "plist") {
             do {
@@ -78,9 +92,9 @@ class AppDataManager {
 		appData = nil
 		mapFloorURLs = [:]
 		numberMapFloorsLoaded = 0
-		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedString) { (stringsMatch) in
-            if !stringsMatch {
-                //Try tp download new app data
+		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey) { (stringsMatch) in
+            if !stringsMatch || self.forceAppDataDownload {
+                //Try to download new app data
                 //If there is an issue with the server or reachability
                 //then fall back to the older local data, unless no local data
                 //exists, then fail.
@@ -116,7 +130,7 @@ class AppDataManager {
                         if let lastModifiedString = headersDictionary?["Last-Modified"] as? String {
                             self.writeDataToDisk(data: value,
                                                  lastModifiedString: lastModifiedString,
-                                                 lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedString,
+                                                 lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey,
                                                  fileName: Common.DataConstants.localAppDataFilename)
                         }
                     case .failure(let error):
