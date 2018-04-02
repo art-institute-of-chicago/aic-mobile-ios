@@ -128,30 +128,23 @@ class AudioInfoViewController : UIViewController {
 			setDescription(description: description)
 		}
 		
-		// Add related tours subview if there are any relate tours
-		if let _ = tour {
-			let excludedTour = Common.Testing.filterOutRelatedTours ? tour : nil
-			let relatedTours = AppDataManager.sharedInstance.getRelatedTours(forObject: artwork, excludingTour: excludedTour)
+		// Related Tours subview if there are any related tours
+		let excludedTour = Common.Testing.filterOutRelatedTours ? tour : nil
+		let relatedTours = AppDataManager.sharedInstance.getRelatedTours(forObject: artwork, excludingTour: excludedTour)
 
-			if !relatedTours.isEmpty {
-				relatedToursView.set(relatedTours: relatedTours)
-				relatedToursView.show(collapseEnabled: false)
-			}
-			else {
-				relatedToursView.hide()
-			}
+		if !relatedTours.isEmpty {
+			relatedToursView.set(relatedTours: relatedTours)
+			relatedToursView.show(collapseEnabled: false)
 		}
 		else {
 			relatedToursView.hide()
 		}
 		
 		// Language
-		if let _ = tour {
-			if audio.availableLanguages.count > 1 {
-				languageSelector.isHidden = false
-				languageSelector.close()
-				languageSelector.setLanguages(languages: audio.availableLanguages, defaultLanguage: audio.language)
-			}
+		if audio.availableLanguages.count > 1 {
+			languageSelector.isHidden = false
+			languageSelector.close()
+			languageSelector.setLanguages(languages: audio.availableLanguages, defaultLanguage: audio.language)
 		}
 		updateLanguage(language: audio.language)
 		
