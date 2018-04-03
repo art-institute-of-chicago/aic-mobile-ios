@@ -69,10 +69,10 @@ class AICAnalytics {
 	}
 	
 	fileprivate enum UserProperty : UInt {
-		case membership				= 1
-		case appLanguage			= 2
-		case deviceLanguage			= 3
-		case onSite					= 4
+		case membership				= 2
+		case appLanguage			= 3
+		case deviceLanguage			= 4
+		case onSite					= 5
 	}
 	
     static fileprivate var previousScreen: String? = nil

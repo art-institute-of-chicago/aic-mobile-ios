@@ -645,6 +645,14 @@ extension AudioPlayerNavigationController {
     }
     
     @objc internal func miniAudioPlayerCloseButtonPressed(button: UIButton) {
+		
+		// Log Analytics
+		if let audio = currentAudioFile {
+			if currentAudioFileMaxProgress < 1.0 {
+				AICAnalytics.sendPlaybackInterruptedEvent(audio: audio, pctComplete: Int(currentAudioFileMaxProgress * 100))
+			}
+		}
+		
 		pause()
 		hide()
 		currentAudioFile = nil
