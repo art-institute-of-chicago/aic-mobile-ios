@@ -101,7 +101,7 @@ struct Common {
         static let showLanguageSelectionUserDefaultsKey = "AICShowLanguageSelection"
         static let showHeadphonesUserDefaultsKey = "AICShowHeadphones"
         static let showEnableLocationUserDefaultsKey = "AICShowEnableLocation"
-		static let showMapTooltipsDefaultsKey = "AICShowMapTooltips"
+		static let showTooltipsDefaultsKey = "AICShowTooltips"
 
         static let memberInfoIDUserDefaultsKey = "AICMemberInfoName"
         static let memberInfoZipUserDefaultsKey = "AICMemberInfoZip"
@@ -403,7 +403,7 @@ struct Common {
 		static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
 		
         enum ZoomLevelAltitude : Double {
-            case zoomLimit = 500.0
+            case zoomLimit = 400.0
             case zoomDefault = 300.0
 			case zoomMedium = 150.0
             case zoomDetail = 50.0

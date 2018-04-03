@@ -279,9 +279,13 @@ class MapViewController: UIViewController {
 		
 		// Show all annotations messes with the pitch + heading,
 		// so reset our pitch + heading to preferred defaults
-		mapView.camera.pitch = mapView.perspectivePitch  //mapView.topDownPitch
-		if mapView.camera.altitude < Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
-			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue
+		mapView.camera.heading = mapView.defaultHeading
+		mapView.camera.pitch = mapView.perspectivePitch
+		if mapView.camera.altitude <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue {
+			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomMedium.rawValue
+		}
+		else if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
+			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
 		}
 		mapView.camera.heading = mapView.defaultHeading
 	}
@@ -462,11 +466,13 @@ class MapViewController: UIViewController {
 		case .dining:
 			break
 		case .memberLounge:
+			updateMemberLoungeAnnotations()
 			break
 		case .giftshop:
+			updateGiftShopAnnotations()
 			break
 		case .restrooms:
-			updateRestroomAnnotations()
+			showRestrooms()
 			break
 		case .tour:
 			break
@@ -520,13 +526,16 @@ class MapViewController: UIViewController {
 			updateUserLocationAnnotationView()
 			
 		case .memberLounge:
+			updateMemberLoungeAnnotations()
 			updateUserLocationAnnotationView()
 			
 		case .giftshop:
+			updateGiftShopAnnotations()
 			updateUserLocationAnnotationView()
 			break
 			
 		case .restrooms:
+			updateRestroomAnnotations()
 			updateUserLocationAnnotationView()
 			break
 		}
@@ -692,24 +701,10 @@ class MapViewController: UIViewController {
 		mapView.addAnnotations(annotations)
 	}
 	
-	private func updateRestroomAnnotations() {
-		var annotations: [MKAnnotation] = []
-		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		annotations.append(contentsOf: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
-		annotations.append(mapView.userLocation)
-		
-		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
-		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
-		
-		mapView.addAnnotations(annotations)
-	}
-	
 	private func updateGiftShopAnnotations() {
 		var annotations: [MKAnnotation] = []
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		for floor in mapModel.floors {
-			annotations.append(contentsOf: floor.giftShopAnnotations as [MKAnnotation])
-		}
+		annotations.append(contentsOf: mapModel.floors[currentFloor].giftShopAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
 		
 		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
@@ -727,6 +722,18 @@ class MapViewController: UIViewController {
 				locationView.alpha = 0.5
 			}
 		}
+	}
+	
+	private func updateRestroomAnnotations() {
+		var annotations: [MKAnnotation] = []
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
+		annotations.append(mapView.userLocation)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		mapView.addAnnotations(annotations)
 	}
     
     // Deselect any open annotations
@@ -927,7 +934,7 @@ extension MapViewController : MKMapViewDelegate {
 		self.mapView.adjustPicthForZoomLevel()
         
         // Store the location mode
-        if !floorSelectorVC.userHeadingIsEnabled() {
+        if !floorSelectorVC.userHeadingIsEnabled() && mode != .giftshop && mode != .memberLounge && mode != .restrooms {
 			self.mapView.keepMapInView()
         }
         
@@ -1001,14 +1008,18 @@ extension MapViewController : UIGestureRecognizerDelegate {
     @objc func mapViewWasPinched(_ gesture: UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
-		mapView.keepMapInView()
+		if !floorSelectorVC.userHeadingIsEnabled() && mode != .giftshop && mode != .memberLounge && mode != .restrooms {
+			mapView.keepMapInView()
+		}
 		self.delegate?.mapWasPressed()
     }
     
     @objc func mapViewWasPanned(_ gesture: UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
-        mapView.keepMapInView()
+		if !floorSelectorVC.userHeadingIsEnabled() && mode != .giftshop && mode != .memberLounge && mode != .restrooms {
+        	mapView.keepMapInView()
+		}
 		self.delegate?.mapWasPressed()
     }
 }

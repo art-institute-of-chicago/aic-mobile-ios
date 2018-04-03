@@ -18,10 +18,10 @@ class MapObjectAnnotationView: MapAnnotationView {
     }
     
     enum Mode {
-        case dot			// dot + info
-		case image			// small image + big image
-		case smallImageInfo	// small image + info
-		case imageInfo		// image + info
+		case dot			// unselected: dot,			selected: expanded info
+		case image			// unselected: small image,	selected: big image
+		case smallImageInfo	// unselected: small image, selected: expanded info
+		case imageInfo		// unselected: big image, 	selected: expanded info
     }
 	
 	func setMode(mode: Mode, inTour: Bool = false) {
@@ -76,7 +76,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 		
         // Configure
         backgroundColor = .clear
-        layer.zPosition = 0// Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
+        //layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
         
 //        self.layer.masksToBounds = false
 //        self.layer.shadowOffset = CGSizeMake(0, 0)
@@ -198,7 +198,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 					playIcon.alpha = 0.0
 					titleLabel.alpha = 0.0
 
-					layer.zPosition = 0// Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
+					layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
 
 					UIView.animate(withDuration: animationDuration, animations: {
 						self.expandThumbholder()
@@ -250,7 +250,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 						}
 					})
 					
-					layer.zPosition = 0// Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.floor)
+					layer.zPosition = Common.Map.AnnotationZPosition.objectsSelected.rawValue + CGFloat(objectAnnotation!.floor)
 				}
 				else {
 					setContentForCurrentMode(withAnimation: true)
@@ -341,11 +341,11 @@ class MapObjectAnnotationView: MapAnnotationView {
 		// Z position
 		switch mode {
 		case .dot:
-			layer.zPosition = 0// Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
+			layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 			
 		case .image, .smallImageInfo, .imageInfo:
-			layer.zPosition = 0// Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
+			layer.zPosition = Common.Map.AnnotationZPosition.objectMaximized.rawValue + CGFloat(objectAnnotation!.floor)
 			break
 		}
 		

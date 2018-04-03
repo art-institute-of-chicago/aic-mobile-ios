@@ -4,52 +4,68 @@
  currently using Google Analytics
 */
 
-import Firebase
-import Answers
-
 class AICAnalytics {
 	// Analytics tracker
 	static fileprivate var tracker: GAITracker? = nil
 	
-	fileprivate enum Event : String {
-		case appOpen				= "app_open"
-		case appBackground			= "app_background"
-		case appForeground			= "app_foreground"
+	fileprivate enum Category : String {
+		case app					= "app"
+		case language				= "language"
+		case languageTour			= "language_tour"
+		case languageAudio			= "language_audio"
+		case location				= "location"
+		case playAudio				= "play_audio"
+		case playback				= "playback"
+		case tour					= "tour"
+		case exhibition				= "exhibition"
+		case event					= "event"
+		case map					= "map"
+		case member					= "member"
+		case search					= "search"
+		case searchArtwork			= "search_artwork"
+		case searchTour				= "search_tour"
+		case searchExhibition 		= "search_exhibition"
+	}
+	
+	fileprivate enum Action : String {
+		case appOpen				= "open"
+		case appBackground			= "background"
+		case appForeground			= "foreground"
 		
-		case languageSelected		= "language_selected"
-		case languageChanged		= "language_changed"
+		case languageSelected		= "selected"
+		case languageChanged		= "changed"
 		
-		case locationOnSite			= "location_on_site"
-		case locationDidEnableHeading = "location_heading_enabled"
+		case locationOnSite			= "on_site"
+		case locationHeadingEnabled = "heading_enabled"
 		
-		case playAudio		 		= "play_audio"
-		case playInterrupted		= "playback_interrupted"
-		case playCompleted			= "playback_completed"
+		case playAudioTour			= "tour"
+		case playAudioTourStop		= "tour_stop"
+		case playAudioAudioGuide	= "audio_guide"
+		case playAudioMap			= "map"
+		case playAudioSearch		= "search"
 		
-		case tourOpened				= "tour_opened" // tour_title: ...
-		case tourStarted			= "tour_started" // source: {related_tours, } // language: ... // start: {overview, artworkTitle}
-		case tourLeft				= "tour_left"
+		case playbackInterrupted	= "interrupted"
+		case playbackCompleted		= "completed"
 		
-		case exhibitionOpened		= "exhibition_opened" // exhibition_title: ...
-		case exhibitionLinkPressed	= "exhibition_link_pressed"
+		case tourStarted			= "started"
+		case tourLeft				= "left"
 		
-		case eventOpened			= "event_opened" // event_title: ...
-		case eventLinkPressed		= "event_link_pressed"
+		case opened					= "opened" 			// tour, exhibition and event Categories
+		case linkPressed			= "link_pressed"	// exhibition and event Categories
 		
-		case mapShowExhibition		= "map_show_exhibition" // exhibition_title: ...
-		case mapShowArtwork			= "map_show_artwork" // artwork_title: ...
-		case mapShowDining			= "map_show_dining"
-		case mapShowMemberLounge	= "map_show_member_lounge"
-		case mapShowGiftShops		= "map_show_gift_shops"
-		case mapShowRestrooms		= "map_show_restrooms"
+		case mapShowExhibition		= "show_exhibition"
+		case mapShowArtwork			= "show_artwork"
+		case mapShowDining			= "show_dining"
+		case mapShowMemberLounge	= "show_member_lounge"
+		case mapShowGiftShops		= "show_gift_shops"
+		case mapShowRestrooms		= "show_restrooms"
 		
-		case memberShowCard			= "member_show_card"
-		case memberJoinPressed		= "member_join_pressed"
+		case memberShowCard			= "show_card"
+		case memberJoinPressed		= "join_pressed"
 		
-		case searchLoaded			= "search_loaded"
-		case searchSelectedArtwork	= "search_selected_artwork"
-		case searchSelectedTour		= "search_selected_tour"
-		case searchSelectedExhibition = "search_selected_exhibition"
+		case searchLoaded			= "loaded"
+		case searchAutocomplete		= "autocomplete"
+		case searchPromoted			= "promoted"
 	}
 	
 	fileprivate enum UserProperty : UInt {
@@ -60,30 +76,10 @@ class AICAnalytics {
 	}
 	
     static fileprivate var previousScreen: String? = nil
-	static fileprivate var previousScreenClass: String? = nil
     static fileprivate var currentScreen: String? = nil
 	static fileprivate var lastSearchText: String = ""
     
     static func configure() {
-		var membership = "None"
-		if UserDefaults.standard.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) != nil {
-			membership = "Member"
-		}
-		let deviceLanguage = NSLocale.preferredLanguages.first!
-		
-		// Firebase
-		let firebaseOptions = FirebaseOptions(contentsOfFile: Bundle.main.path(forResource: "GoogleService-Info-Firebase", ofType: ".plist")!)
-		FirebaseApp.configure(options: firebaseOptions!)
-		
-		// Firebase User Properties
-		Analytics.setUserProperty(membership, forName: "Membership")
-		Analytics.setUserProperty(Common.stringForLanguage[Common.currentLanguage], forName: "AppLanguage")
-		Analytics.setUserProperty(deviceLanguage, forName: "DeviceLanguage")
-		
-		// Fabric
-		Fabric.with([Answers.self])
-		
-		// Google Analytics
 		if let gai = GAI.sharedInstance(),
 			let googleAnalyticsPlist = Bundle.main.path(forResource: "GoogleService-Info", ofType: ".plist"),
 			let googleDict = NSDictionary(contentsOfFile: googleAnalyticsPlist),
@@ -101,23 +97,19 @@ class AICAnalytics {
 			assertionFailure("Google Analytics not configured correctly")
 		}
 		
-		// Google Analytics User Properties
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.membership.rawValue), value: membership)
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.appLanguage.rawValue), value: Common.stringForLanguage[Common.currentLanguage]!)
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.deviceLanguage.rawValue), value: deviceLanguage)
+		// Google Analytics Custom Dimensions
+		let userDefaults = UserDefaults.standard
+		let membership = userDefaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) != nil ? "Member" : "None"
+		let deviceLanguage = NSLocale.preferredLanguages.first!
+		setUserProperty(property: .membership, value: membership)
+		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[Common.currentLanguage]!)
+		setUserProperty(property: .deviceLanguage, value: deviceLanguage)
     }
 	
 	// MARK: Track Screens
 	
 	static func trackScreenView(_ screenName: String, screenClass: String) {
 		if screenName != currentScreen {
-			Analytics.setScreenName(screenName, screenClass: screenClass)
-			
-			Answers.logContentView(withName: screenName,
-								   contentType: "Screen View",
-								   contentId: "",
-								   customAttributes: nil)
-			
 			AICAnalytics.tracker?.set(kGAIScreenName, value: screenName)
 			let builder = GAIDictionaryBuilder.createScreenView()
 			let dictionary = builder?.build() as NSDictionary?
@@ -130,470 +122,167 @@ class AICAnalytics {
 	
 	// MARK: Track Events
 	
+	private static func trackEvent(category: Category, action: Action, label: String = "", value: Int = 0) {
+		trackEvent(category: category.rawValue, action: action.rawValue, label: label, value: value)
+	}
+	
+	private static func trackEvent(category: Category, action: String, label: String = "", value: Int = 0) {
+		trackEvent(category: category.rawValue, action: action, label: label, value: value)
+	}
+	
+	private static func trackEvent(category: String, action: String, label: String = "", value: Int = 0) {
+		let event = GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: NSNumber(value: value as Int)).build() as NSDictionary?
+		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+	}
+	
+	// MARK: Set User Property
+	private static func setUserProperty(property: UserProperty, value: String) {
+		AICAnalytics.tracker?.set(GAIFields.customDimension(for: property.rawValue), value: value)
+	}
+	
     // MARK: App
     
 	static func sendAppOpenEvent() {
-		Analytics.logEvent(Event.appOpen.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.appOpen.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "app", action: "open", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .app, action: .appOpen)
     }
     
     static func sendAppForegroundEvent() {
-		Analytics.logEvent(Event.appForeground.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.appForeground.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "app", action: "foreground", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .app, action: .appForeground)
     }
     
     static func sendAppBackgroundEvent() {
-		Analytics.logEvent(Event.appBackground.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.appBackground.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "app", action: "background", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .app, action: .appBackground)
     }
 	
 	// MARK: Language
 	
 	static func sendLanguageSelectedEvent(language: Common.Language) {
-		Analytics.setUserProperty(Common.stringForLanguage[language], forName: "AppLanguage")
-		Analytics.logEvent(Event.languageSelected.rawValue, parameters: [
-			"language" : Common.stringForLanguage[language]! as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.languageSelected.rawValue, customAttributes: [
-			"language" : Common.stringForLanguage[language]!
-		])
-		
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.appLanguage.rawValue), value: Common.stringForLanguage[language]!)
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "language", action: "selected", label: Common.stringForLanguage[language]!, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
+		trackEvent(category: .language, action: .languageSelected, label: Common.stringForLanguage[language]!)
 	}
 	
 	static func sendLanguageChangedEvent(language: Common.Language) {
-		Analytics.setUserProperty(Common.stringForLanguage[language], forName: "AppLanguage")
-		Analytics.logEvent(Event.languageChanged.rawValue, parameters: [
-			"language": Common.stringForLanguage[language]! as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.languageChanged.rawValue, customAttributes: [
-			"language" : Common.stringForLanguage[language]!
-		])
-		
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.appLanguage.rawValue), value: Common.stringForLanguage[language]!)
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "language", action: "changed", label: Common.stringForLanguage[language]!, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
+		trackEvent(category: .language, action: .languageChanged, label: Common.stringForLanguage[language]!)
 	}
     
     // MARK: Location
     static func sendLocationEnableHeadingEvent() {
-		Analytics.logEvent(Event.locationDidEnableHeading.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.locationDidEnableHeading.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "location", action: "heading_enabled", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .location, action: .locationHeadingEnabled)
     }
     
     static func sendLocationOnSiteEvent() {
-		Analytics.logEvent(Event.locationOnSite.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.locationOnSite.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "location", action: "on_site", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .location, action: .locationOnSite)
     }
 	
 	static func updateUserLocationProperty(isOnSite: Bool) {
-		Analytics.setUserProperty(isOnSite ? "Yes" : "No", forName: "OnSite")
-		
-		// GA
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.onSite.rawValue), value: isOnSite ? "Yes" : "No")
+		setUserProperty(property: .onSite, value: isOnSite ? "Yes" : "No")
 	}
 	
 	// MARK: Audio Player
 	static func sendPlayAudioFromMapEvent(artwork: AICObjectModel) {
-		Analytics.logEvent(Event.playAudio.rawValue, parameters: [
-			AnalyticsParameterItemID: artwork.nid as NSObject,
-			AnalyticsParameterItemName: artwork.title as NSObject,
-			AnalyticsParameterContentType: "artwork" as NSObject,
-			AnalyticsParameterSource: "Map" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.playAudio.rawValue, customAttributes: [
-			"artwork_id" : artwork.nid,
-			"artwork_title" : artwork.title,
-			"source" : "map"
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "play_audio", action: "map", label: artwork.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .playAudio, action: .playAudioMap, label: artwork.title)
 	}
 	
 	static func sendPlayAudioFromAudioGuideEvent(artwork: AICObjectModel, selectorNumber: Int, language: Common.Language) {
-		Analytics.logEvent(Event.playAudio.rawValue, parameters: [
-			AnalyticsParameterItemID: artwork.nid as NSObject,
-			AnalyticsParameterItemName: artwork.title as NSObject,
-			AnalyticsParameterContentType: "artwork" as NSObject,
-			AnalyticsParameterSource: "audio_guide" as NSObject,
-			"selector_number": selectorNumber as NSObject,
-			"language": Common.stringForLanguage[language]! as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.playAudio.rawValue, customAttributes: [
-			"artwork_id" : artwork.nid,
-			"artwork_title" : artwork.title,
-			"source" : "AudioGuide",
-			"selector_number" : selectorNumber,
-			"language" : Common.stringForLanguage[language]!
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "play_audio", action: "audio_guide", label: artwork.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .playAudio, action: .playAudioAudioGuide, label: artwork.title)
 	}
 	
-	static func sendPlayAudioFromTourEvent(artwork: AICObjectModel, tour: AICTourModel) {
-		Analytics.logEvent(Event.playAudio.rawValue, parameters: [
-			AnalyticsParameterItemID: artwork.nid as NSObject,
-			AnalyticsParameterItemName: artwork.title as NSObject,
-			AnalyticsParameterContentType: "artwork" as NSObject,
-			AnalyticsParameterSource: "tour" as NSObject,
-			"tour_name": tour.translations[.english]!.title as NSObject,
-			"language": Common.stringForLanguage[tour.language]! as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.playAudio.rawValue, customAttributes: [
-			"artwork_id" : artwork.nid,
-			"artwork_title" : artwork.title,
-			"source" : "Tour",
-			"tour_name" : tour.translations[.english]!.title,
-			"language" : Common.stringForLanguage[tour.language]!
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "play_audio", action: "tour", label: artwork.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+	static func sendPlayAudioFromTourEvent(tour: AICTourModel) {
+		trackEvent(category: .playAudio, action: .playAudioTour, label: tour.translations[.english]!.title)
 	}
 	
-	static func sendPlayAudioFromTourOverviewEvent(tour: AICTourModel) {
-		Analytics.logEvent(Event.playAudio.rawValue, parameters: [
-			AnalyticsParameterItemID: tour.nid as NSObject,
-			AnalyticsParameterItemName: tour.translations[.english]!.title as NSObject,
-			AnalyticsParameterContentType: "tour" as NSObject,
-			AnalyticsParameterSource: "tour" as NSObject,
-			"tour_name": tour.translations[.english]!.title as NSObject,
-			"language": Common.stringForLanguage[tour.language]! as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.playAudio.rawValue, customAttributes: [
-			"tour_id" : tour.nid,
-			"tour_title" : tour.translations[.english]!.title,
-			"source" : "Tour",
-			"language" : Common.stringForLanguage[tour.language]!
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "play_audio", action: "tour", label: tour.translations[.english]!.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+	static func sendPlayAudioFromTourStopEvent(artwork: AICObjectModel, tour: AICTourModel) {
+		trackEvent(category: .playAudio, action: .playAudioTourStop, label: artwork.title)
 	}
 	
 	static func sendPlayAudioFromSearchedArtworkEvent(artwork: AICObjectModel) {
-		Analytics.logEvent(Event.playAudio.rawValue, parameters: [
-			AnalyticsParameterItemID: artwork.nid as NSObject,
-			AnalyticsParameterItemName: artwork.title as NSObject,
-			AnalyticsParameterContentType: "artwork" as NSObject,
-			AnalyticsParameterSource: "search" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.playAudio.rawValue, customAttributes: [
-			"artwork_id" : artwork.nid,
-			"artwork_title" : artwork.title,
-			"source" : "Search"
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "play_audio", action: "search", label: artwork.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .playAudio, action: .playAudioSearch, label: artwork.title)
 	}
 	
+	// MARK: Playback
+	
 	static func sendPlaybackInterruptedEvent(audio: AICAudioFileModel, pctComplete: Int) {
-		Analytics.logEvent(Event.playInterrupted.rawValue, parameters: [
-			AnalyticsParameterItemID: audio.nid as NSObject,
-			AnalyticsParameterItemName: audio.translations[.english]!.trackTitle as NSObject,
-			AnalyticsParameterContentType: "audio" as NSObject,
-			"percent_completed": pctComplete as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.playInterrupted.rawValue, customAttributes: [
-			"audio_id" : audio.nid,
-			"audio_title" : audio.translations[.english]!.trackTitle,
-			"percent_completed" : pctComplete
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "playback", action: "interrupted", label: audio.translations[.english]!.trackTitle, value: NSNumber(value: pctComplete as Int)).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .playback, action: .playbackInterrupted, label: audio.translations[.english]!.trackTitle)
 	}
 	
 	static func sendPlaybackCompletedEvent(audio: AICAudioFileModel) {
-		Analytics.logEvent(Event.playCompleted.rawValue, parameters: [
-			AnalyticsParameterItemID: audio.nid as NSObject,
-			AnalyticsParameterItemName: audio.translations[.english]!.trackTitle as NSObject,
-			AnalyticsParameterContentType: "audio" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.playCompleted.rawValue, customAttributes: [
-			"audio_id" : audio.nid,
-			"audio_title" : audio.translations[.english]!.trackTitle
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "playback", action: "completed", label: audio.translations[.english]!.trackTitle, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .playback, action: .playbackCompleted, label: audio.translations[.english]!.trackTitle)
 	}
     
     // MARK: Tours
     
 	static func sendTourOpenedEvent(tour: AICTourModel) {
-		Analytics.logEvent(Event.tourOpened.rawValue, parameters: [
-			AnalyticsParameterItemID: tour.nid as NSObject,
-			AnalyticsParameterItemName: tour.translations[.english]!.title as NSObject,
-			AnalyticsParameterContentType: "tour" as NSObject,
-			"language": Common.stringForLanguage[tour.language]! as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.tourOpened.rawValue, customAttributes: [
-			"tour_id" : tour.nid,
-			"tour_title" : tour.translations[.english]!.title,
-			"language" : Common.stringForLanguage[tour.language]!
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "tour", action: "opened", label: tour.translations[.english]!.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .tour, action: .opened, label: tour.translations[.english]!.title)
 	}
 	
-	static func sendTourStartedEvent(tour: AICTourModel, source: String, tourStopIndex: Int?) {
-		var start = "overview"
-		if let stopIndex = tourStopIndex {
-			if stopIndex < tour.stops.count {
-				start = tour.stops[stopIndex].object.title
-			}
-		}
-		
-		Analytics.logEvent(Event.tourStarted.rawValue, parameters: [
-			AnalyticsParameterItemID: tour.nid as NSObject,
-			AnalyticsParameterItemName: tour.translations[.english]!.title as NSObject,
-			AnalyticsParameterContentType: "tour" as NSObject,
-			AnalyticsParameterSource: source as NSObject,
-			"language": Common.stringForLanguage[tour.language]! as NSObject,
-			"start": start as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.tourStarted.rawValue, customAttributes: [
-			"tour_id" : tour.nid,
-			"tour_title" : tour.translations[.english]!.title,
-			"language" : Common.stringForLanguage[tour.language]!,
-			"source" : source,
-			"start_from" : start
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "tour", action: "started", label: tour.translations[.english]!.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+	static func sendTourStartedEvent(tour: AICTourModel) {
+		trackEvent(category: .tour, action: .tourStarted, label: tour.translations[.english]!.title)
 	}
 	
 	static func sendTourLeftEvent(tour: AICTourModel) {
-		Analytics.logEvent(Event.tourLeft.rawValue, parameters: [
-			AnalyticsParameterItemID: tour.nid as NSObject,
-			AnalyticsParameterItemName: tour.translations[.english]!.title as NSObject,
-			AnalyticsParameterContentType: "tour" as NSObject,
-			"language": Common.stringForLanguage[tour.language]! as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.tourStarted.rawValue, customAttributes: [
-			"tour_id" : tour.nid,
-			"tour_title" : tour.translations[.english]!.title,
-			"language" : Common.stringForLanguage[tour.language]!
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "tour", action: "left", label: tour.translations[.english]!.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .tour, action: .tourLeft, label: tour.translations[.english]!.title)
 	}
 	
 	// MARK: Exhibitions
 	
 	static func sendExhibitionOpenedEvent(exhibition: AICExhibitionModel) {
-		Analytics.logEvent(Event.exhibitionOpened.rawValue, parameters: [
-			AnalyticsParameterItemID: exhibition.id as NSObject,
-			AnalyticsParameterItemName: exhibition.title as NSObject,
-			AnalyticsParameterContentType: "exhibition" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.exhibitionOpened.rawValue, customAttributes: [
-			"exhibition_id" : exhibition.id,
-			"exhibition_title" : exhibition.title
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "exhibition", action: "opened", label: exhibition.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .exhibition, action: .opened, label: exhibition.title)
 	}
 	
 	static func sendExhibitionLinkPressedEvent(exhibition: AICExhibitionModel) {
-		Analytics.logEvent(Event.exhibitionLinkPressed.rawValue, parameters: [
-			AnalyticsParameterItemID: exhibition.id as NSObject,
-			AnalyticsParameterItemName: exhibition.title as NSObject,
-			AnalyticsParameterContentType: "exhibition" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.exhibitionLinkPressed.rawValue, customAttributes: [
-			"exhibition_id" : exhibition.id,
-			"exhibition_title" : exhibition.title
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "exhibition", action: "link_pressed", label: exhibition.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .exhibition, action: .linkPressed, label: exhibition.title)
 	}
 	
 	// MARK: Events
 	
 	static func sendEventOpenedEvent(event: AICEventModel) {
-		Analytics.logEvent(Event.eventOpened.rawValue, parameters: [
-			AnalyticsParameterItemID: event.eventId as NSObject,
-			AnalyticsParameterItemName: event.title as NSObject,
-			AnalyticsParameterContentType: "event" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.eventOpened.rawValue, customAttributes: [
-			"event_id" : event.eventId,
-			"event_title" : event.title
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "event", action: "opened", label: event.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .event, action: .opened, label: event.title)
 	}
 	
 	static func sendEventLinkPressedEvent(event: AICEventModel) {
-		Analytics.logEvent(Event.eventLinkPressed.rawValue, parameters: [
-			AnalyticsParameterItemID: event.eventId as NSObject,
-			AnalyticsParameterItemName: event.title as NSObject,
-			AnalyticsParameterContentType: "event" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.eventLinkPressed.rawValue, customAttributes: [
-			"event_id" : event.eventId,
-			"event_title" : event.title
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "event", action: "link_pressed", label: event.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .event, action: .linkPressed, label: event.title)
 	}
 	
 	// MARK: Map
 	
 	static func sendMapShowArtworkEvent(artwork: AICObjectModel) {
-		Analytics.logEvent(Event.mapShowArtwork.rawValue, parameters: [
-			AnalyticsParameterItemID: artwork.nid as NSObject,
-			AnalyticsParameterItemName: artwork.title as NSObject,
-			AnalyticsParameterContentType: "artwork" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.mapShowArtwork.rawValue, customAttributes: [
-			"artwork_id" : artwork.nid,
-			"artwork_title" : artwork.title
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "map", action: "show_artwork", label: artwork.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .map, action: .mapShowArtwork, label: artwork.title)
 	}
 	
 	static func sendMapShowSearchedArtworkEvent(searchedArtwork: AICSearchedArtworkModel) {
-		Analytics.logEvent(Event.mapShowArtwork.rawValue, parameters: [
-			AnalyticsParameterItemID: searchedArtwork.artworkId as NSObject,
-			AnalyticsParameterItemName: searchedArtwork.title as NSObject,
-			AnalyticsParameterContentType: "artwork" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.mapShowArtwork.rawValue, customAttributes: [
-			"artwork_id" : searchedArtwork.artworkId,
-			"artwork_title" : searchedArtwork.title
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "map", action: "show_artwork", label: searchedArtwork.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .map, action: .mapShowArtwork, label: searchedArtwork.title)
 	}
 	
 	static func sendMapShowExhibitionEvent(exhibition: AICExhibitionModel) {
-		Analytics.logEvent(Event.mapShowExhibition.rawValue, parameters: [
-			AnalyticsParameterItemID: exhibition.id as NSObject,
-			AnalyticsParameterItemName: exhibition.title as NSObject,
-			AnalyticsParameterContentType: "exhibition" as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.mapShowExhibition.rawValue, customAttributes: [
-			"exhibition_id" : exhibition.id,
-			"exhibition_title" : exhibition.title
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "map", action: "show_exhibition", label: exhibition.title, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .map, action: .mapShowExhibition, label: exhibition.title)
 	}
 	
 	static func sendMapShowDiningEvent() {
-		Analytics.logEvent(Event.mapShowDining.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.mapShowDining.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "map", action: "show_dining", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .map, action: .mapShowDining)
 	}
 	
 	static func sendMapShowMemberLoungeEvent() {
-		Analytics.logEvent(Event.mapShowMemberLounge.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.mapShowMemberLounge.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "map", action: "show_member_lounge", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .map, action: .mapShowMemberLounge)
 	}
 	
 	static func sendMapShowGiftShopsEvent() {
-		Analytics.logEvent(Event.mapShowGiftShops.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.mapShowGiftShops.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "map", action: "show_gift_shops", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .map, action: .mapShowGiftShops)
 	}
 	
 	static func sendMapShowRestroomsEvent() {
-		Analytics.logEvent(Event.mapShowRestrooms.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.mapShowRestrooms.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "map", action: "show_restrooms", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .map, action: .mapShowRestrooms)
 	}
 	
     // MARK: Members
 	
 	static func sendMemberShowCardEvent() {
-		Analytics.setUserProperty("Member", forName: "Membership")
-		Analytics.logEvent(Event.memberShowCard.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.memberShowCard.rawValue, customAttributes: nil)
-		
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: UserProperty.membership.rawValue), value: "Member")
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "member", action: "show_card", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		setUserProperty(property: .membership, value: "Member")
+		trackEvent(category: .member, action: .memberShowCard)
     }
 	
     static func sendMemberJoinPressedEvent() {
-		Analytics.logEvent(Event.memberJoinPressed.rawValue, parameters: nil)
-		
-		Answers.logCustomEvent(withName: Event.memberJoinPressed.rawValue, customAttributes: nil)
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "member", action: "join_pressed", label: "", value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .member, action: .memberJoinPressed)
     }
 	
 	// MARK: Search
@@ -601,75 +290,19 @@ class AICAnalytics {
 	static func sendSearchLoadedEvent(searchText: String, isAutocompleteString: Bool, isPromotedString: Bool) {
 		if searchText != lastSearchText {
 			lastSearchText = searchText
-			
-			Analytics.logEvent(Event.searchLoaded.rawValue, parameters: [
-				"searchText": searchText as NSObject,
-				"is_autocomplete": (isAutocompleteString ? "true" : "false") as NSObject,
-				"is_promoted": (isPromotedString ? "true" : "false") as NSObject
-			])
-			
-			Answers.logCustomEvent(withName: Event.searchLoaded.rawValue, customAttributes: [
-				"searchText": searchText,
-				"is_autocomplete": (isAutocompleteString ? "true" : "false"),
-				"is_promoted": (isPromotedString ? "true" : "false")
-			])
-			
-			let event = GAIDictionaryBuilder.createEvent(withCategory: "search", action: "loaded", label: searchText, value: 0).build() as NSDictionary?
-			if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+			trackEvent(category: .search, action: .searchLoaded, label: searchText)
 		}
 	}
 	
 	static func sendSearchSelectedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchText: String) {
-		Analytics.logEvent(Event.searchSelectedArtwork.rawValue, parameters: [
-			AnalyticsParameterItemID: searchedArtwork.artworkId as NSObject,
-			AnalyticsParameterItemName: searchedArtwork.title as NSObject,
-			AnalyticsParameterContentType: "artwork" as NSObject,
-			"searchText": searchText as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.searchSelectedArtwork.rawValue, customAttributes: [
-			"artwork_id" : searchedArtwork.artworkId,
-			"artwork_title" : searchedArtwork.title,
-			"searchText": searchText
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "search_artwork", action: searchedArtwork.title, label: searchText, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .searchArtwork, action: searchedArtwork.title, label: searchText)
 	}
 	
 	static func sendSearchSelectedTourEvent(tour: AICTourModel, searchText: String) {
-		Analytics.logEvent(Event.searchSelectedTour.rawValue, parameters: [
-			AnalyticsParameterItemID: tour.nid as NSObject,
-			AnalyticsParameterItemName: tour.translations[.english]!.title as NSObject,
-			AnalyticsParameterContentType: "tour" as NSObject,
-			"searchText": searchText as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.searchSelectedTour.rawValue, customAttributes: [
-			"tour_id" : tour.nid,
-			"tour_title" : tour.translations[.english]!.title,
-			"searchText": searchText
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "search_tour", action: tour.translations[.english]!.title, label: searchText, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .searchTour, action: tour.translations[.english]!.title, label: searchText)
 	}
 	
 	static func sendSearchSelectedExhibitionEvent(exhibition: AICExhibitionModel, searchText: String) {
-		Analytics.logEvent(Event.searchSelectedExhibition.rawValue, parameters: [
-			AnalyticsParameterItemID: exhibition.id as NSObject,
-			AnalyticsParameterItemName: exhibition.title as NSObject,
-			AnalyticsParameterContentType: "exhibition" as NSObject,
-			"searchText": searchText as NSObject
-		])
-		
-		Answers.logCustomEvent(withName: Event.searchSelectedExhibition.rawValue, customAttributes: [
-			"exhibition_id" : exhibition.id,
-			"exhibition_title" : exhibition.title,
-			"searchText": searchText
-		])
-		
-		let event = GAIDictionaryBuilder.createEvent(withCategory: "search_exhibition", action: exhibition.title, label: searchText, value: 0).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
+		trackEvent(category: .searchExhibition, action: exhibition.title, label: searchText)
 	}
 }

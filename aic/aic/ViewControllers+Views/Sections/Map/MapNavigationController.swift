@@ -233,7 +233,7 @@ class MapNavigationController : SectionNavigationController {
 	private func showMapTooltips() {
 		//See if we need to prompt first
 		let defaults = UserDefaults.standard
-		let showMapTooltipsMessageValue = defaults.bool(forKey: Common.UserDefaults.showMapTooltipsDefaultsKey)
+		let showMapTooltipsMessageValue = defaults.bool(forKey: Common.UserDefaults.showTooltipsDefaultsKey)
 		
 		if showMapTooltipsMessageValue {
 			// Page Tooltips
@@ -254,7 +254,7 @@ class MapNavigationController : SectionNavigationController {
 		if let tooltipVC = mapTooltipVC {
 			// Update user defaults
 			let defaults = UserDefaults.standard
-			defaults.set(false, forKey: Common.UserDefaults.showMapTooltipsDefaultsKey)
+			defaults.set(false, forKey: Common.UserDefaults.showTooltipsDefaultsKey)
 			defaults.synchronize()
 			
 			tooltipVC.dismiss(animated: true, completion: nil)

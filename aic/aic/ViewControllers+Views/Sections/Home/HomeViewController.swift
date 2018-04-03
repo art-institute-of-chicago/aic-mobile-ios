@@ -207,6 +207,20 @@ class HomeViewController : SectionViewController {
 		contentView.autoPinEdge(.bottom, to: .bottom, of: eventsCollectionView, withOffset: Common.Layout.miniAudioPlayerHeight)
 	}
 	
+	// MARK: Animation
+	
+	func animateToursScrolling() {
+		UIView.animate(withDuration: 0.8, delay: 0.5, options: .curveEaseInOut, animations: {
+			self.toursCollectionView.contentOffset = CGPoint(x: UIScreen.main.bounds.width/2.0, y: 0)
+		}) { (completed) in
+			if completed {
+				UIView.animate(withDuration: 0.4, animations: {
+					self.toursCollectionView.contentOffset = CGPoint(x: 0, y: 0)
+				})
+			}
+		}
+	}
+	
 	// MARK: Language
 	
 	@objc private func updateLanguage() {

@@ -38,6 +38,16 @@ class HomeNavigationController : SectionNavigationController {
 		
 		self.pushViewController(homeVC, animated: false)
 	}
+	
+	func showHomeTooltip() {
+		//See if we need to prompt first
+		let defaults = UserDefaults.standard
+		let showMapTooltipsMessageValue = defaults.bool(forKey: Common.UserDefaults.showTooltipsDefaultsKey)
+		
+		if showMapTooltipsMessageValue {
+			homeVC.animateToursScrolling()
+		}
+	}
 }
 
 extension HomeNavigationController : UINavigationControllerDelegate {

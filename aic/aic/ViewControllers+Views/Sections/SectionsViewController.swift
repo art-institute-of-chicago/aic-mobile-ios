@@ -162,6 +162,7 @@ class SectionsViewController : UIViewController {
     
     func animateInInitialView() {
 		self.view.alpha = 0.0
+		self.homeVC.view.alpha = 0.0
 		
 		// disable parallax effect
 		self.homeVC.sectionNavigationBar.disableParallaxEffect()
@@ -169,10 +170,14 @@ class SectionsViewController : UIViewController {
 		UIView.animate(withDuration: 0.5, delay: 0.3, options: UIViewAnimationOptions.curveEaseOut,
                                    animations:  {
 									self.view.alpha = 1.0
+									self.homeVC.view.alpha = 1.0
             }, completion: { (completed) in
 				if completed {
 					// re-enable parallax effect
 					self.homeVC.sectionNavigationBar.enableParallaxEffect()
+					
+					// show home tooltip, if needed
+					self.homeVC.showHomeTooltip()
 					
 					self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
 				}
@@ -187,7 +192,7 @@ class SectionsViewController : UIViewController {
 		showTourOnMap(tour: tour, language: language, stopIndex: nil)
 		
 		// Log Analytics
-		AICAnalytics.sendTourStartedEvent(tour: tour, source: "related_tours", tourStopIndex: nil)
+		AICAnalytics.sendTourStartedEvent(tour: tour)
 	}
 	
 	func showTourOnMap(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
@@ -209,7 +214,7 @@ class SectionsViewController : UIViewController {
 		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
 		
         // Log Analytics
-		AICAnalytics.sendTourStartedEvent(tour: tour, source: "", tourStopIndex: stopIndex)
+		AICAnalytics.sendTourStartedEvent(tour: tour)
     }
 	
 	func showArtworkOnMap(artwork: AICObjectModel) {
@@ -344,7 +349,7 @@ class SectionsViewController : UIViewController {
 		audioPlayerVC.showMiniPlayer()
 		
 		// Log analytics
-		AICAnalytics.sendPlayAudioFromTourEvent(artwork: tourStop.object, tour: tour)
+		AICAnalytics.sendPlayAudioFromTourStopEvent(artwork: tourStop.object, tour: tour)
 	}
     
     private func playTourOverview(tour: AICTourModel, language: Common.Language) {
@@ -352,7 +357,7 @@ class SectionsViewController : UIViewController {
 		audioPlayerVC.showMiniPlayer()
 		
 		// Log analytics
-		AICAnalytics.sendPlayAudioFromTourOverviewEvent(tour: tour)
+		AICAnalytics.sendPlayAudioFromTourEvent(tour: tour)
     }
 	
 	// MARK: Show/Hide Search Button

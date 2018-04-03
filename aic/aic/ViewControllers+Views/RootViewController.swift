@@ -71,7 +71,7 @@ class RootViewController: UIViewController {
         let appDefaults = [Common.UserDefaults.showLanguageSelectionUserDefaultsKey: true,
                            Common.UserDefaults.showHeadphonesUserDefaultsKey:true,
 						   Common.UserDefaults.showEnableLocationUserDefaultsKey:true,
-						   Common.UserDefaults.showMapTooltipsDefaultsKey:true]
+						   Common.UserDefaults.showTooltipsDefaultsKey:true]
         
         defaults.register(defaults: appDefaults)
         defaults.synchronize()
@@ -81,7 +81,7 @@ class RootViewController: UIViewController {
             defaults.set(true, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
             defaults.set(true, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
             defaults.set(true, forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
-			defaults.set(true, forKey: Common.UserDefaults.showMapTooltipsDefaultsKey)
+			defaults.set(true, forKey: Common.UserDefaults.showTooltipsDefaultsKey)
             defaults.synchronize()
         }
     }
@@ -182,11 +182,15 @@ extension RootViewController : AppDataManagerDelegate{
 // Loading VC delegate
 extension RootViewController : LoadingViewControllerDelegate {
     func loadingDidFinishPlayingIntroVideoA() {
-		self.mode = .language
+		if self.mode != .language {
+			self.mode = .language
+		}
     }
 	
 	func loadingDidFinish() {
-		self.mode = .mainApp
+		if self.mode != .mainApp {
+			self.mode = .mainApp
+		}
 	}
 }
 

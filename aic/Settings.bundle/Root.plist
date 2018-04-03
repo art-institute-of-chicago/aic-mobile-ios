@@ -46,9 +46,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Show Map Tooltips</string>
+			<string>Show Tooltips</string>
 			<key>Key</key>
-			<string>AICShowMapTooltips</string>
+			<string>AICShowTooltips</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
