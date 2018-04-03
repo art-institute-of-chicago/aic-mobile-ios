@@ -165,6 +165,14 @@ class AICAnalytics {
 		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
 		trackEvent(category: .language, action: .languageChanged, label: Common.stringForLanguage[language]!)
 	}
+	
+	static func sendLanguageTourEvent(language: Common.Language, tour: AICTourModel) {
+		trackEvent(category: .languageTour, action: Common.stringForLanguage[language]!, label: tour.translations[.english]!.title)
+	}
+	
+	static func sendLanguageAudioEvent(language: Common.Language, audio: AICAudioFileModel) {
+		trackEvent(category: .languageAudio, action: Common.stringForLanguage[language]!, label: audio.translations[.english]!.trackTitle)
+	}
     
     // MARK: Location
     static func sendLocationEnableHeadingEvent() {
@@ -290,7 +298,16 @@ class AICAnalytics {
 	static func sendSearchLoadedEvent(searchText: String, isAutocompleteString: Bool, isPromotedString: Bool) {
 		if searchText != lastSearchText {
 			lastSearchText = searchText
-			trackEvent(category: .search, action: .searchLoaded, label: searchText)
+			
+			if isAutocompleteString == true {
+				trackEvent(category: .search, action: .searchAutocomplete, label: searchText)
+			}
+			else if isPromotedString == true {
+				trackEvent(category: .search, action: .searchPromoted, label: searchText)
+			}
+			else {
+				trackEvent(category: .search, action: .searchLoaded, label: searchText)
+			}
 		}
 	}
 	

@@ -190,9 +190,6 @@ class SectionsViewController : UIViewController {
 	
 	func showTourOnMapFromLink(tour: AICTourModel, language: Common.Language) {
 		showTourOnMap(tour: tour, language: language, stopIndex: nil)
-		
-		// Log Analytics
-		AICAnalytics.sendTourStartedEvent(tour: tour)
 	}
 	
 	func showTourOnMap(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
@@ -215,6 +212,7 @@ class SectionsViewController : UIViewController {
 		
         // Log Analytics
 		AICAnalytics.sendTourStartedEvent(tour: tour)
+		AICAnalytics.sendLanguageTourEvent(language: language, tour: tour)
     }
 	
 	func showArtworkOnMap(artwork: AICObjectModel) {

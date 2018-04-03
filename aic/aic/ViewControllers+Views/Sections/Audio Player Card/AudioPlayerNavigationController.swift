@@ -681,6 +681,9 @@ extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
 				audioInfoVC.updateAudioContent(audio: currentAudioFile!)
 			}
 			selectedLanguage = nil
+			
+			// Log Analytics
+			AICAnalytics.sendLanguageAudioEvent(language: language, audio: currentAudioFile!)
 		}
 	}
 }

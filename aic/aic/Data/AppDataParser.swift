@@ -171,7 +171,7 @@ class AppDataParser {
 	// MARK: Galleries
 	
     private func parse(galleriesJSON: JSON) -> [AICGalleryModel] {
-        print(galleriesJSON.dictionaryValue.count)
+		
 		var galleries = [AICGalleryModel]()
         for (_, galleryJSON):(String, JSON) in galleriesJSON.dictionaryValue {
             do {
@@ -453,7 +453,7 @@ class AppDataParser {
 	
 	fileprivate func parse(toursJSON:JSON) -> [AICTourModel] {
 		var tours = [AICTourModel]()
-        print(toursJSON.arrayValue.count)
+		
         for tourJSON in toursJSON.arrayValue {
             do {
                 try handleParseError({
