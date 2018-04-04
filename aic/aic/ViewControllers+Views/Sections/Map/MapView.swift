@@ -158,10 +158,10 @@ class MapView: MKMapView {
         setCamera(newCamera, animated: animated)
     }
 	
-	func keepMapInView() {
+	func keepMapInView(zoomLimit: Double = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue) {
 		// Check altitude
-		if currentAltitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
-			showFullMap(useDefaultHeading: false, altitude: Common.Map.ZoomLevelAltitude.zoomLimit.rawValue)
+		if currentAltitude > zoomLimit {
+			showFullMap(useDefaultHeading: false, altitude: zoomLimit)
 		} else {
 			// Make sure our floorplan is on-screen
 			if let floorplanOverlay = floorplanOverlay {

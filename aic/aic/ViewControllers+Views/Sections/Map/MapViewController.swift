@@ -546,7 +546,7 @@ class MapViewController: UIViewController {
         
         // Set the annotations for this zoom level
         switch mapView.currentZoomLevel {
-        case .zoomLimit:
+        case .zoomLimit, .zoomFarLimit:
 			annotations.append(contentsOf: mapModel.landmarkAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.gardenAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
@@ -933,9 +933,13 @@ extension MapViewController : MKMapViewDelegate {
         self.mapView.calculateCurrentAltitude()
 		self.mapView.adjustPicthForZoomLevel()
         
-        // Store the location mode
-        if !floorSelectorVC.userHeadingIsEnabled() && mode != .giftshop && mode != .memberLounge && mode != .restrooms {
-			self.mapView.keepMapInView()
+        // Keep map in view
+		if !floorSelectorVC.userHeadingIsEnabled() {
+			var zoomLimit = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+			if mode == .giftshop || mode == .memberLounge || mode == .restrooms {
+				zoomLimit = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
+			}
+			self.mapView.keepMapInView(zoomLimit: zoomLimit)
         }
         
         if isSwitchingModes {
@@ -1008,8 +1012,12 @@ extension MapViewController : UIGestureRecognizerDelegate {
     @objc func mapViewWasPinched(_ gesture: UIPinchGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
-		if !floorSelectorVC.userHeadingIsEnabled() && mode != .giftshop && mode != .memberLounge && mode != .restrooms {
-			mapView.keepMapInView()
+		if !floorSelectorVC.userHeadingIsEnabled() {
+			var zoomLimit = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+			if mode == .giftshop || mode == .memberLounge || mode == .restrooms {
+				zoomLimit = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
+			}
+			mapView.keepMapInView(zoomLimit: zoomLimit)
 		}
 		self.delegate?.mapWasPressed()
     }
@@ -1017,8 +1025,12 @@ extension MapViewController : UIGestureRecognizerDelegate {
     @objc func mapViewWasPanned(_ gesture: UIPanGestureRecognizer) {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
-		if !floorSelectorVC.userHeadingIsEnabled() && mode != .giftshop && mode != .memberLounge && mode != .restrooms {
-        	mapView.keepMapInView()
+		if !floorSelectorVC.userHeadingIsEnabled() {
+			var zoomLimit = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+			if mode == .giftshop || mode == .memberLounge || mode == .restrooms {
+				zoomLimit = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
+			}
+			mapView.keepMapInView(zoomLimit: zoomLimit)
 		}
 		self.delegate?.mapWasPressed()
     }
