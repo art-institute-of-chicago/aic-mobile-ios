@@ -8,7 +8,6 @@
 
 import UIKit
 import Localize_Swift
-import Firebase
 
 class SearchNavigationController : CardNavigationController {
 	let backButton: UIButton = UIButton()

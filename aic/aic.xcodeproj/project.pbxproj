@@ -189,7 +189,6 @@
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
 		E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */; };
-		E407F9E61C9B225B00E285B4 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E407F9E51C9B225B00E285B4 /* SnapKit.framework */; };
 		E40D41E41C6CEBB700A57AF4 /* aicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D41E31C6CEBB700A57AF4 /* aicTests.swift */; };
 		E40D41EF1C6CEBB700A57AF4 /* aicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D41EE1C6CEBB700A57AF4 /* aicUITests.swift */; };
 		E411DE7F1CCD37A800E22047 /* AICGalleryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E411DE7E1CCD37A800E22047 /* AICGalleryModel.swift */; };
@@ -558,7 +557,6 @@
 				E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */,
 				E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */,
 				E43F36741D2B0E3600DA4DA6 /* AddressBook.framework in Frameworks */,
-				E407F9E61C9B225B00E285B4 /* SnapKit.framework in Frameworks */,
 				E4D790D81C8E792F0033EE0A /* SWXMLHash.framework in Frameworks */,
 				E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */,
 				E4223CE81CC8013300503D43 /* Alamofire.framework in Frameworks */,
@@ -1603,27 +1601,21 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-aic/Pods-aic-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Atributika/Atributika.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Atributika.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

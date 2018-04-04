@@ -9,9 +9,6 @@ import CoreData
 import MediaPlayer
 import CoreLocation
 import MapKit
-import Firebase
-import Fabric
-import Answers
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

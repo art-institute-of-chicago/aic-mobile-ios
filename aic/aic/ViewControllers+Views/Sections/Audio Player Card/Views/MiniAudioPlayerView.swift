@@ -6,7 +6,6 @@
 */
 
 import UIKit
-import SnapKit
 
 class MiniAudioPlayerView : UIView {
     let blurBGView: UIView = getBlurEffectView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.miniAudioPlayerHeight))

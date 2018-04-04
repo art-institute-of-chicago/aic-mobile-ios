@@ -5,7 +5,6 @@
 */
 
 import UIKit
-import SnapKit
 
 class AudioPlayerView : BaseView {
 	let titleLabel: UILabel = UILabel()

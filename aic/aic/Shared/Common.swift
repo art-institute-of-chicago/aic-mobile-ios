@@ -5,7 +5,6 @@
 
 import UIKit
 import CoreLocation
-import SnapKit
 import Localize_Swift
 
 struct Common {
