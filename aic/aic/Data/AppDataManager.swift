@@ -32,20 +32,25 @@ class AppDataManager {
     
     private (set) var isLoaded = false
     private var loadFailure = false
-	
-	private var forceAppDataDownload = false
     
-    func load() {
+	func load(forceAppDataDownload: Bool = false) {
+		var downloadDataEvenIfCached: Bool = forceAppDataDownload
 		
-		// Check software version number
-		forceAppDataDownload = false
+		// Save software version number
 		if let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String {
-			if let lastVersion = UserDefaults.standard.object(forKey: Common.UserDefaults.lastVersionNumberKey) as? String {
-				if version.compare(lastVersion, options: .numeric) == .orderedDescending {
-					forceAppDataDownload = true
+			
+			// Force AppData download if the last software version is older
+			if downloadDataEvenIfCached == false {
+				if let lastVersion = UserDefaults.standard.object(forKey: Common.UserDefaults.lastVersionNumberKey) as? String {
+					if version.compare(lastVersion, options: .numeric) == .orderedDescending {
+						downloadDataEvenIfCached = true
+					}
+				}
+				else {
+					downloadDataEvenIfCached = true
 				}
 			}
-			
+				
 			UserDefaults.standard.set(version, forKey: Common.UserDefaults.lastVersionNumberKey)
 		}
         
@@ -93,7 +98,7 @@ class AppDataManager {
 		mapFloorURLs = [:]
 		numberMapFloorsLoaded = 0
 		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey) { (stringsMatch) in
-            if !stringsMatch || self.forceAppDataDownload {
+            if !stringsMatch || downloadDataEvenIfCached {
                 //Try to download new app data
                 //If there is an issue with the server or reachability
                 //then fall back to the older local data, unless no local data

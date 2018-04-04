@@ -110,7 +110,9 @@ class RootViewController: UIViewController {
         loadingVC?.delegate = self
         view.addSubview(loadingVC!.view)
 		
+		// Load data
 		AppDataManager.sharedInstance.load()
+		
 		loadingVC?.showProgressBar()
     }
     
@@ -169,7 +171,7 @@ extension RootViewController : AppDataManagerDelegate{
         let alert = UIAlertController(title: Common.DataConstants.dataLoadFailureTitle, message: message, preferredStyle: UIAlertControllerStyle.alert)
         let action = UIAlertAction(title: Common.DataConstants.dataLoadFailureButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
             // Try to load the data again
-            AppDataManager.sharedInstance.load()
+            AppDataManager.sharedInstance.load(forceAppDataDownload: true)
         })
         
         alert.addAction(action)
