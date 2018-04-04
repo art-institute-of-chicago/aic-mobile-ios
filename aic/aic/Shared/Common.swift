@@ -433,7 +433,6 @@ struct Common {
         static let becomeMemberTitle = "Become a Member"
         static let becomeMemberJoinPromptMessage = "Enjoy free, yearlong admission."
         static let becomeMemberJoinMessage = "Join now"
-        static let becomeMemberJoinURL = "https://sales.artic.edu/memberships"
         static let becomeMemberAccessPrompt = "Already a member?"
         static let becomeMemberAccessButtonTitle = "Access Member Card"
         static let becomeMemberExistingMemberTitle = "Welcome Back"
@@ -496,8 +495,6 @@ struct Common {
 	
 	// MARK: Search
 	struct Search {
-		static let museumWebsiteURL = "http://www.artic.edu"
-		
 		enum Filter {
 			case empty
 			case suggested
@@ -519,6 +516,8 @@ struct Common {
 		case autocompleteEndpoint = "autocomplete_endpoint"
 		case toursEndpoint = "tours_endpoint"
 		case multiSearchEndpoint = "multisearch_endpoint"
-		case ticketsUrl = "tickets_endpoint"
+		case websiteUrl = "website_url"
+		case membershipUrl = "membership_url"
+		case ticketsUrl = "tickets_url"
 	}
 }

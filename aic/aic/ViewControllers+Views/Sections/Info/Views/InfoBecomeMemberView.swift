@@ -68,7 +68,7 @@ class InfoBecomeMemberView: BaseView {
         joinPromptLabel.textAlignment = .center
 		
 		let joinAttrText = NSMutableAttributedString(string: Common.Info.becomeMemberJoinMessage)
-		let joinURL = URL(string: Common.Info.becomeMemberJoinURL)!
+		let joinURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.membershipUrl]!)!
 		joinAttrText.addAttributes([NSAttributedStringKey.link : joinURL], range: NSMakeRange(0, joinAttrText.string.count))
 		
 		joinTextView.setDefaultsForAICAttributedTextView()

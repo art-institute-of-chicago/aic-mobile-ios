@@ -13,7 +13,7 @@ class MapContentCardNavigationController: CardNavigationController {
 	
 	private let titleLabel: UILabel = UILabel()
 	private let dividerLine: UIView = UIView()
-	private let contentVC: UIViewController
+	let contentVC: UIViewController
 	
 	init(contentVC: UIViewController) {
 		self.contentVC = contentVC
@@ -22,7 +22,7 @@ class MapContentCardNavigationController: CardNavigationController {
 	
 	init(contentView: UIView) {
 		self.contentVC = UIViewController()
-		self.contentVC.view.addSubview(contentView)
+		self.contentVC.view = contentView
 		super.init(nibName: nil, bundle: nil)
 	}
 	

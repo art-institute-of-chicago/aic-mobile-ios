@@ -104,16 +104,24 @@ class MapNavigationController : SectionNavigationController {
 				contentCard.setTitleText(text: "Exhibition".localized(using: "Map"))
 				break
 			case .dining:
-				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.diningTitle)
 				break
 			case .memberLounge:
 				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.membersLoungeTitle)
+				if let textContentView = contentCard.contentVC.view as? MapTextContentView {
+					textContentView.setText(text: AppDataManager.sharedInstance.app.generalInfo.membersLoungeText)
+				}
 				break
 			case .giftshop:
 				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.giftShopsTitle)
+				if let textContentView = contentCard.contentVC.view as? MapTextContentView {
+					textContentView.setText(text: AppDataManager.sharedInstance.app.generalInfo.giftShopsText)
+				}
 				break
 			case .restrooms:
 				contentCard.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.restroomsTitle)
+				if let textContentView = contentCard.contentVC.view as? MapTextContentView {
+					textContentView.setText(text: AppDataManager.sharedInstance.app.generalInfo.restroomsText)
+				}
 				break
 			case .tour:
 				break
@@ -450,7 +458,6 @@ class MapNavigationController : SectionNavigationController {
 		}
 		restaurantPageVC = RestaurantPageViewController(restaurants: AppDataManager.sharedInstance.app.restaurants)
 		mapContentCardVC = MapContentCardNavigationController(contentVC: restaurantPageVC!)
-		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.diningTitle)
 		mapContentCardVC!.cardDelegate = self
 		restaurantPageVC!.restaurantPageDelegate = self
 		
@@ -485,7 +492,7 @@ class MapNavigationController : SectionNavigationController {
 		if mapContentCardVC != nil {
 			mapContentCardVC!.view.removeFromSuperview()
 		}
-		let memberLoungeContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
+		let memberLoungeContentView = MapTextContentView(text: AppDataManager.sharedInstance.app.generalInfo.membersLoungeText)
 		mapContentCardVC = MapContentCardNavigationController(contentView: memberLoungeContentView)
 		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.membersLoungeTitle)
 		mapContentCardVC!.cardDelegate = self
@@ -518,7 +525,7 @@ class MapNavigationController : SectionNavigationController {
 		if mapContentCardVC != nil {
 			mapContentCardVC!.view.removeFromSuperview()
 		}
-		let giftshopContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
+		let giftshopContentView = MapTextContentView(text: AppDataManager.sharedInstance.app.generalInfo.giftShopsText)
 		mapContentCardVC = MapContentCardNavigationController(contentView: giftshopContentView)
 		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.giftShopsTitle)
 		mapContentCardVC!.cardDelegate = self
@@ -551,7 +558,7 @@ class MapNavigationController : SectionNavigationController {
 		if mapContentCardVC != nil {
 			mapContentCardVC!.view.removeFromSuperview()
 		}
-		let restroomsContentView = MapTextContentView(text: "Close to Explore Text".localized(using: "Map"))
+		let restroomsContentView = MapTextContentView(text: AppDataManager.sharedInstance.app.generalInfo.restroomsText)
 		mapContentCardVC = MapContentCardNavigationController(contentView: restroomsContentView)
 		mapContentCardVC!.setTitleText(text: AppDataManager.sharedInstance.app.generalInfo.restroomsTitle)
 		mapContentCardVC!.cardDelegate = self

@@ -60,7 +60,7 @@ class AppDataParser {
 		let searchStrings 		= parse(searchStringsJSON: appDataJson["search"]["search_strings"])
 		self.searchArtworks 	= parse(searchArtworks: appDataJson["search"])
 		let map 				= parse(mapFloorsJSON: appDataJson["map_floors"],
-										mapAnnotationsJSON: appDataJson["annontations"])
+										mapAnnotationsJSON: appDataJson["map_annontations"])
 		
 		let appData = AICAppDataModel(generalInfo: generalInfo,
 									  galleries: self.galleries,
@@ -147,10 +147,12 @@ class AppDataParser {
 		let mapSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "map_subtitle", optional: true)
 		let infoTitle = try getString(fromJSON: generalInfoJSON, forKey: "info_title", optional: true)
 		let infoSubtitle = try getString(fromJSON: generalInfoJSON, forKey: "info_subtitle", optional: true)
-		let diningTitle = try getString(fromJSON: generalInfoJSON, forKey: "dining_title", optional: true)
 		let giftShopsTitle = try getString(fromJSON: generalInfoJSON, forKey: "gift_shops_title", optional: true)
+		let giftShopsText = try getString(fromJSON: generalInfoJSON, forKey: "gift_shops_text", optional: true)
 		let membersLoungeTitle = try getString(fromJSON: generalInfoJSON, forKey: "members_lounge_title", optional: true)
+		let membersLoungeText = try getString(fromJSON: generalInfoJSON, forKey: "members_lounge_text", optional: true)
 		let restroomsTitle = try getString(fromJSON: generalInfoJSON, forKey: "restrooms_title", optional: true)
+		let restroomsText = try getString(fromJSON: generalInfoJSON, forKey: "restrooms_text", optional: true)
 		
 		return AICGeneralInfoTranslationModel(museumHours: museumHours.stringByDecodingHTMLEntities,
 											  homeMemberPrompt: homeMemberPrompt.stringByDecodingHTMLEntities,
@@ -161,10 +163,12 @@ class AppDataParser {
 											  mapSubtitle: mapSubtitle.stringByDecodingHTMLEntities,
 											  infoTitle: infoTitle.stringByDecodingHTMLEntities,
 											  infoSubtitle: infoSubtitle.stringByDecodingHTMLEntities,
-											  diningTitle: diningTitle.stringByDecodingHTMLEntities,
 											  giftShopsTitle: giftShopsTitle.stringByDecodingHTMLEntities,
+											  giftShopsText: giftShopsText.stringByDecodingHTMLEntities,
 											  membersLoungeTitle: membersLoungeTitle.stringByDecodingHTMLEntities,
-											  restroomsTitle: restroomsTitle.stringByDecodingHTMLEntities
+											  membersLoungeText: membersLoungeText.stringByDecodingHTMLEntities,
+											  restroomsTitle: restroomsTitle.stringByDecodingHTMLEntities,
+											  restroomsText: restroomsText.stringByDecodingHTMLEntities
 		)
 	}
 	
@@ -942,6 +946,8 @@ class AppDataParser {
 			dataSettings[.autocompleteEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.autocompleteEndpoint.rawValue)
 			dataSettings[.toursEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.toursEndpoint.rawValue)
 			dataSettings[.multiSearchEndpoint] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.multiSearchEndpoint.rawValue)
+			dataSettings[.websiteUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.websiteUrl.rawValue)
+			dataSettings[.membershipUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.membershipUrl.rawValue)
 			dataSettings[.ticketsUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.ticketsUrl.rawValue)
 		}
 		catch {

@@ -44,7 +44,7 @@ class NoResultsCell : UITableViewCell {
 		let visitWebsiteText = "Not Found Website Text".localized(using: "Search") + " " + visitWebsiteLink
 		let linkRange: NSRange = (visitWebsiteText as NSString).range(of: visitWebsiteLink)
 		let visitOurWebsiteAttrString = NSMutableAttributedString(string: visitWebsiteText)
-		let websiteURL = URL(string: Common.Search.museumWebsiteURL)!
+		let websiteURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.websiteUrl]!)!
 		visitOurWebsiteAttrString.addAttributes([NSAttributedStringKey.link : websiteURL.absoluteString], range: NSMakeRange(0, visitOurWebsiteAttrString.string.count))
 		visitOurWebsiteAttrString.addAttributes([NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue], range: linkRange)
 		
