@@ -76,7 +76,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 		
         // Configure
         backgroundColor = .clear
-        //layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
+        layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
         
 //        self.layer.masksToBounds = false
 //        self.layer.shadowOffset = CGSizeMake(0, 0)
@@ -240,7 +240,11 @@ class MapObjectAnnotationView: MapAnnotationView {
 						
 						self.transform = CGAffineTransform(scaleX: 1, y: 1);
 						self.bounds = self.backgroundView.frame.union(self.tailView.frame)
+						
 						self.updateCenterOffsetForTransformedSize()
+						
+						self.setNeedsLayout()
+						self.layoutIfNeeded()
 					}, completion: { (completed) in
 						if completed {
 							UIView.animate(withDuration: self.animationDuration, animations: {
@@ -262,7 +266,12 @@ class MapObjectAnnotationView: MapAnnotationView {
 					UIView.animate(withDuration: animationDuration, animations: {
 						self.backgroundView.backgroundColor = .white
 						self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-						self.bounds = self.backgroundView.frame
+						self.bounds = self.backgroundView.frame.union(self.tailView.frame)
+						
+						self.updateCenterOffsetForTransformedSize()
+						
+						self.setNeedsLayout()
+						self.layoutIfNeeded()
 						
 						self.tourStopNumberLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
 					})
@@ -276,7 +285,7 @@ class MapObjectAnnotationView: MapAnnotationView {
     }
     
     private func updateCenterOffsetForTransformedSize() {
-        let transformedBounds = self.bounds.applying(transform);
+        let transformedBounds = self.bounds.applying(transform)
         centerOffset = CGPoint(x: 0, y: -transformedBounds.height/2)
     }
     
@@ -364,13 +373,13 @@ class MapObjectAnnotationView: MapAnnotationView {
 			case .imageInfo:
 				self.backgroundView.backgroundColor = .white
 				self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-				self.bounds = self.backgroundView.frame
+				self.bounds = self.backgroundView.frame.union(self.tailView.frame)
 				break
                 
 			case .image, .smallImageInfo:
 				self.backgroundView.backgroundColor = .white
 				self.transform = CGAffineTransform(scaleX: self.minimizedScale, y: self.minimizedScale)
-				self.bounds = self.backgroundView.frame
+				self.bounds = self.backgroundView.frame.union(self.tailView.frame)
 				
 				self.tourStopNumberLabel.transform = CGAffineTransform(scaleX: 1.0 / self.minimizedScale, y: 1.0 / self.minimizedScale)
 				break
