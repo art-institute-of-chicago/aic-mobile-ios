@@ -291,9 +291,6 @@ class MapObjectAnnotationView: MapAnnotationView {
     
     private func loadImage() {
 		if let annotation = objectAnnotation {
-			if annotation.nid == 1938 {
-				print("rainy day")
-			}
 			// Try to load image from cache
 			if let image = ImageCache.default.retrieveImageInMemoryCache(forKey: annotation.thumbnailUrl.absoluteString) {
 				self.imageView.image = image

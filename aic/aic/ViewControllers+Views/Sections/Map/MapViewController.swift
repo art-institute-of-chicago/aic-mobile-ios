@@ -891,7 +891,7 @@ extension MapViewController : MKMapViewDelegate {
         }
         else if let view = view as? MapDepartmentAnnotationView {
             mapView.deselectAnnotation(view.annotation, animated: false)
-            self.mapView.zoomIn(onCenterCoordinate: view.annotation!.coordinate);
+			self.mapView.zoomIn(onCenterCoordinate: view.annotation!.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-10.0, heading: self.mapView.camera.heading)
         }
 		else if let view = view as? MapAmenityAnnotationView {
 			// Restaurants
