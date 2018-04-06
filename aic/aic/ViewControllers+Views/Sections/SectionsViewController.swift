@@ -697,9 +697,14 @@ extension SectionsViewController : TourTableViewControllerDelegate {
 // MARK: Artwork Content Card Delegate
 
 extension SectionsViewController : ArtworkTableViewControllerDelegate {
-	// Pressed "Start Tour" or tour stop in content card
+	// Pressed "Play Audio" in content card
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel) {
 		playSearchedArtwork(artwork: artwork)
+		
+		// Log Analytics
+		let searchTextField = searchVC.searchBar.value(forKey: "searchField") as? UITextField
+		let searchText = (searchTextField!.text ?? "")
+		AICAnalytics.sendSearchArtworkAndPlayedAudioEvent(artwork: artwork, searchText: searchText)
 	}
 	
 	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel) {

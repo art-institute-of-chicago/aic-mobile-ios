@@ -23,6 +23,7 @@ class AICAnalytics {
 		case member					= "member"
 		case search					= "search"
 		case searchArtwork			= "search_artwork"
+		case searchPlayArtwork		= "search_play_artwork"
 		case searchTour				= "search_tour"
 		case searchExhibition 		= "search_exhibition"
 	}
@@ -325,6 +326,10 @@ class AICAnalytics {
 	
 	static func sendSearchSelectedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchText: String) {
 		trackEvent(category: .searchArtwork, action: searchedArtwork.title, label: searchText)
+	}
+	
+	static func sendSearchArtworkAndPlayedAudioEvent(artwork: AICObjectModel, searchText: String) {
+		trackEvent(category: .searchPlayArtwork, action: artwork.title, label: searchText)
 	}
 	
 	static func sendSearchSelectedTourEvent(tour: AICTourModel, searchText: String) {
