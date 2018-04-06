@@ -66,6 +66,8 @@ class AICAnalytics {
 		case searchLoaded			= "loaded"
 		case searchAutocomplete		= "autocomplete"
 		case searchPromoted			= "promoted"
+		case searchNoResults		= "no_results"
+		case searchAbandoned		= "abandoned"
 	}
 	
 	fileprivate enum UserProperty : UInt {
@@ -310,6 +312,16 @@ class AICAnalytics {
 			}
 		}
 	}
+	
+	static func sendSearchNoResultsEvent(searchText: String) {
+		trackEvent(category: .search, action: .searchNoResults, label: searchText)
+	}
+	
+	static func sendSearchAbandonedEvent(searchText: String) {
+		trackEvent(category: .search, action: .searchAbandoned, label: searchText)
+	}
+	
+	// MARK: Search Selected Content
 	
 	static func sendSearchSelectedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchText: String) {
 		trackEvent(category: .searchArtwork, action: searchedArtwork.title, label: searchText)

@@ -38,6 +38,8 @@ class SearchNavigationController : CardNavigationController {
 		case autocompleteString
 	}
 	var trackLoadingType: TrackSearchLoadType = .none
+	var trackUserTypeSearchText: Bool = false
+	var trackUserSelectedContent: Bool = false
 	
 	init() {
 		currentTableView = resultsVC.tableView
@@ -187,6 +189,8 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.view.layoutIfNeeded()
 		
 		// Log analytics
+		trackUserTypeSearchText = false
+		trackUserSelectedContent = false
 		AICAnalytics.trackScreenView("Search", screenClass: "SearchNavigationController")
 	}
 	
@@ -195,6 +199,12 @@ class SearchNavigationController : CardNavigationController {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.resignFirstResponder()
 		searchTextField?.layoutIfNeeded()
+		
+		if let searchText = searchTextField?.text {
+			if trackUserTypeSearchText == true && trackUserSelectedContent == false {
+				AICAnalytics.sendSearchAbandonedEvent(searchText: searchText)
+			}
+		}
 	}
 	
 	override func handlePanGesture(recognizer: UIPanGestureRecognizer) {
@@ -304,7 +314,10 @@ class SearchNavigationController : CardNavigationController {
 extension SearchNavigationController : UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count > 0 {
-			trackLoadingType = searchText.count > 4 ? .typedString : .none
+			// Log Analytics
+			trackUserTypeSearchText = true
+			trackLoadingType = searchText.count >= 3 ? .typedString : .none
+			
 			loadSearch(searchText: searchText, showAutocomplete: true)
 		}
 		else {
@@ -328,9 +341,6 @@ extension SearchNavigationController : UISearchBarDelegate {
 				
 				trackLoadingType = .typedString
 				loadSearch(searchText: searchText, showAutocomplete: false)
-				
-				// Log analytics
-				AICAnalytics.sendSearchLoadedEvent(searchText: searchText, isAutocompleteString: false, isPromotedString: false)
 			}
 		}
 	}
@@ -356,10 +366,18 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 		self.view.layoutIfNeeded()
 		
 		// Log analytics
+		trackUserSelectedContent = false
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		if let searchText = searchTextField?.text {
 			if trackLoadingType != .none {
+				
+				// Log Search Loaded Event
 				AICAnalytics.sendSearchLoadedEvent(searchText: searchText, isAutocompleteString: trackLoadingType == .autocompleteString, isPromotedString: trackLoadingType == .promotedString)
+				
+				// Log Search No Results Event
+				if artworks.count == 0 && tours.count == 0 && exhibitions.count == 0 {
+					AICAnalytics.sendSearchNoResultsEvent(searchText: searchText)
+				}
 			}
 		}
 	}
