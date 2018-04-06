@@ -147,7 +147,7 @@ class MapObjectAnnotationView: MapAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setAnnotation(forObjectAnnotation annotation:MapObjectAnnotation) {
+    func setAnnotation(forObjectAnnotation annotation: MapObjectAnnotation) {
         self.annotation = annotation
         self.objectAnnotation = annotation
         self.setContentForCurrentMode(withAnimation: false)

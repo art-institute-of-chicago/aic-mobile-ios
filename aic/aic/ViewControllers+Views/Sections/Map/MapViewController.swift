@@ -332,7 +332,11 @@ class MapViewController: UIViewController {
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotations.append(contentsOf: objectAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
-		mapView.addAnnotations(objectAnnotations)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		mapView.addAnnotations(annotations)
     }
     
     private func updateMapForModeChange() {
@@ -363,6 +367,10 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
 				if annotation.nid == identifier {
+					if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
+						view.alpha = 1.0
+					}
+					
 					// Turn off user heading since we want to jump to a specific place
 					floorSelectorVC.disableUserHeading()
 					
@@ -479,6 +487,7 @@ class MapViewController: UIViewController {
 			showRestrooms()
 			break
 		case .tour:
+			updateTourAnnotations()
 			break
 		}
         
@@ -512,6 +521,7 @@ class MapViewController: UIViewController {
             break
 			
         case .tour:
+			updateTourAnnotations()
             updateTourAnnotationViews()
 			updateUserLocationAnnotationView()
             break
@@ -616,6 +626,20 @@ class MapViewController: UIViewController {
 			}
 		}
     }
+	
+	private func updateTourAnnotations() {
+		var annotations: [MKAnnotation] = []
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
+		for floor in mapModel.floors {
+			annotations.append(contentsOf: floor.tourStopAnnotations as [MKAnnotation])
+		}
+		annotations.append(mapView.userLocation)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
+		
+		mapView.addAnnotations(annotations)
+	}
 
     private func updateTourAnnotationViews() {
         for floor in mapModel.floors {
@@ -665,18 +689,13 @@ class MapViewController: UIViewController {
 	}
 	
 	private func updateDiningAnnotations() {
-		var annotationFilter:[MKAnnotation] = []
-		annotationFilter.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		annotationFilter.append(contentsOf: mapModel.diningAnnotations as [MKAnnotation])
-		annotationFilter.append(mapView.userLocation)
-		let allAnnotations = mapView.getAnnotations(filteredBy: annotationFilter)
-		
-		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
-		
 		var annotations: [MKAnnotation] = []
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotations.append(contentsOf: mapModel.diningAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
+		
+		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
+		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		mapView.addAnnotations(annotations)
 	}
@@ -848,7 +867,7 @@ extension MapViewController : MKMapViewDelegate {
 			return view
         }
 		
-		// Object annotations
+		// Exhibition annotations
 		if let exhibitionAnnotation = annotation as? MapExhibitionAnnotation {
 			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapExhibitionAnnotationView.reuseIdentifier) as? MapExhibitionAnnotationView else {
 				let view = MapExhibitionAnnotationView(annotation: exhibitionAnnotation, reuseIdentifier: MapExhibitionAnnotationView.reuseIdentifier)
