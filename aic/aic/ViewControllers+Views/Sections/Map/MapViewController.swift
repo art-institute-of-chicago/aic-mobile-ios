@@ -239,7 +239,7 @@ class MapViewController: UIViewController {
 		
 		updateMemberLoungeAnnotations()
 		
-		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].memberLoungeAnnotations as [MKAnnotation])
+		showAnnotationsGroup(annotations: mapModel.floors[currentFloor].memberLoungeAnnotations as [MKAnnotation])
 	}
 	
 	func showGiftShop() {
@@ -259,7 +259,7 @@ class MapViewController: UIViewController {
 		
 		updateGiftShopAnnotations()
 		
-		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].giftShopAnnotations as [MKAnnotation])
+		showAnnotationsGroup(annotations: mapModel.floors[currentFloor].giftShopAnnotations as [MKAnnotation])
 	}
 	
 	func showRestrooms() {
@@ -267,10 +267,10 @@ class MapViewController: UIViewController {
 		
 		updateRestroomAnnotations()
 		
-		showAnnotationsTopDown(annotations: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
+		showAnnotationsGroup(annotations: mapModel.floors[currentFloor].restroomAnnotations as [MKAnnotation])
 	}
 	
-	func showAnnotationsTopDown(annotations: [MKAnnotation]) {
+	func showAnnotationsGroup(annotations: [MKAnnotation]) {
 		floorSelectorVC.disableUserHeading()
 		
 		// Zoom in on the gift shop annotations
@@ -294,9 +294,9 @@ class MapViewController: UIViewController {
     // states depending on which floor is selected.
     func showTour(forTour tourModel: AICTourModel) {
         mode = .tour
-        
+		
         // Find the stops for this floor and set them on the model
-        var annotations: [MapObjectAnnotation] = []
+        var objectAnnotations: [MapObjectAnnotation] = []
 		// add overview
 		let tourOverviewStop = MapObjectAnnotation(tour: tourModel)
 		tourOverviewStop.tourStopOrder = 0
@@ -310,25 +310,29 @@ class MapViewController: UIViewController {
 			
             // Set their objects as active on the map floor
             floor.setTourStopAnnotations(forTourStopModels: floorStops)
-            annotations.append(contentsOf: floor.tourStopAnnotations)
+            objectAnnotations.append(contentsOf: floor.tourStopAnnotations)
         }
 		
 		// order annotations and assign tour stop numbers
 		// based on total number of stops, instead of number coming from CMS (some stops might be missing)
-		annotations.sort { (A, B) -> Bool in
+		objectAnnotations.sort { (A, B) -> Bool in
 			return A.tourStopOrder < B.tourStopOrder
 		}
 		var number: Int = 0
-		for annotation in annotations {
+		for annotation in objectAnnotations {
 			annotation.tourStopOrder = number
 			number += 1
 		}
 		
-        setCurrentFloor(forFloorNum: tourModel.location.floor, andResetMap: false)
+		// Set Floor
+		setCurrentFloor(forFloorNum: tourModel.location.floor, andResetMap: false)
 		
-		mapView.addAnnotations(annotations)
-		
-		highlightTourStop(identifier: tourModel.nid, location: tourModel.location)
+		// Add annotations
+		var annotations: [MKAnnotation] = []
+		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
+		annotations.append(contentsOf: objectAnnotations as [MKAnnotation])
+		annotations.append(mapView.userLocation)
+		mapView.addAnnotations(objectAnnotations)
     }
     
     private func updateMapForModeChange() {

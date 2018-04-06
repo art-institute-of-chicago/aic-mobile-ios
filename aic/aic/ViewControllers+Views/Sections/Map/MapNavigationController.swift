@@ -325,7 +325,6 @@ class MapNavigationController : SectionNavigationController {
 		
 		// Set TourStopPageVC to the right stop
 		if let index = tourStopIndex {
-			mapVC.highlightTourStop(identifier: tourModel!.stops[index].object.nid, location: tourModel!.stops[index].object.location)
 			tourStopPageVC!.setCurrentPage(pageIndex: index + 1) // add +1 for tour overview
 		}
 		else {
@@ -333,6 +332,22 @@ class MapNavigationController : SectionNavigationController {
 		}
 		
 		showMapContentCard()
+		
+		let highlightIndex: Int = tourStopIndex != nil ? tourStopIndex! : -1
+		self.perform(#selector(highlightTourStopAfterDelay(_:)), with: highlightIndex, afterDelay: 0.5)
+	}
+	
+	@objc private func highlightTourStopAfterDelay(_ stopIndex: AnyObject?) {
+		if let tour = tourModel {
+			if let index = stopIndex as? Int {
+				if index != -1 {
+					mapVC.highlightTourStop(identifier: tour.stops[index].object.nid, location: tour.stops[index].object.location)
+				}
+				else {
+					mapVC.highlightTourStop(identifier: tour.nid, location: tour.location)
+				}
+			}
+		}
 	}
 	
 	func showArtwork(artwork: AICObjectModel) {
@@ -720,7 +735,7 @@ extension MapNavigationController : RestaurantPageViewControllerDelegate {
 	}
 }
 
-// MARK: TourStopPageViewControllerDelegate
+// MARK: TooltipViewControllerDelegate
 
 extension MapNavigationController : TooltipViewControllerDelegate {
 	func tooltipsDismissedTooltip(index: Int) {
