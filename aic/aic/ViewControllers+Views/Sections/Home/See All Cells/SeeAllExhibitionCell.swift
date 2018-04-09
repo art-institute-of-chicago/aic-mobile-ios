@@ -27,6 +27,7 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 		exhibitionTitleLabel.textColor = .aicDarkGrayColor
 		exhibitionTitleLabel.numberOfLines = 0
 		exhibitionTitleLabel.lineBreakMode = .byWordWrapping
+		throughDateLabel.font = .aicTimeLocationFont
 		throughDateLabel.textColor = .aicDarkGrayColor
 		throughDateLabel.numberOfLines = 1
 	}

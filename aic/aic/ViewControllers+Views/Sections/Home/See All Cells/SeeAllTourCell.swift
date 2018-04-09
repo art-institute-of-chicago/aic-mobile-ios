@@ -27,6 +27,8 @@ class SeeAllTourCell : UICollectionViewCell {
 		
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
+		stopsNumberLabel.font = .aicSeeAllInfoFont
+		durationLabel.font = .aicSeeAllInfoFont
 		tourTitleLabel.textColor = .aicDarkGrayColor
 		tourTitleLabel.numberOfLines = 2
 		tourTitleLabel.lineBreakMode = .byTruncatingTail

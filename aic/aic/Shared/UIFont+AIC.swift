@@ -96,6 +96,12 @@ extension UIFont {
 	
 	static let aicTooltipDismissFont: UIFont = UIFont(name: "IdealSans-Light", size: 13.0)!.upperCaseNumbers()
 	
+	static let aicInfoOverlayFont: UIFont = UIFont(name: "IdealSans-Book", size: 13.0)!.upperCaseNumbers()
+	
+	static let aicSeeAllInfoFont: UIFont = UIFont(name: "IdealSans-Book", size: 12.0)!.upperCaseNumbers()
+	
+	static let aicTimeLocationFont: UIFont = UIFont(name: "SabonNextLTPro-Italic", size: 16.0)!.upperCaseNumbers()
+	
 	/// Font modified to use uppercase numbers
 	///
 	/// Every Font feature has a specific identifier (ex: "Number Case" is 21).

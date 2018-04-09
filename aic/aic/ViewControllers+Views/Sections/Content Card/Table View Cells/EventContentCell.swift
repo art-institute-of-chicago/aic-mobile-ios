@@ -32,6 +32,8 @@ class EventContentCell : UITableViewCell {
 		
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
+		monthDayLabel.font = .aicInfoOverlayFont
+		hoursMinutesLabel.font = .aicInfoOverlayFont
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 		buyTicketsButton.setIconImage(image: #imageLiteral(resourceName: "buttonTicketIcon"))
 		descriptionTextView.setDefaultsForAICAttributedTextView()

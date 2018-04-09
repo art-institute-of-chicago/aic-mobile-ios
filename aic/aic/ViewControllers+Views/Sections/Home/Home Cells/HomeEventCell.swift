@@ -26,6 +26,8 @@ class HomeEventCell : UICollectionViewCell {
 		
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
+		monthDayLabel.font = .aicInfoOverlayFont
+		hoursMinutesLabel.font = .aicInfoOverlayFont
 		eventTitleLabel.textColor = .aicDarkGrayColor
 		eventTitleLabel.numberOfLines = 0
 		eventTitleLabel.lineBreakMode = .byTruncatingTail

@@ -26,6 +26,8 @@ class SeeAllEventCell : UICollectionViewCell {
 		
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
+		monthDayLabel.font = .aicSeeAllInfoFont
+		hoursMinutesLabel.font = .aicSeeAllInfoFont
 		eventTitleLabel.textColor = .aicDarkGrayColor
 		eventTitleLabel.numberOfLines = 2
 		eventTitleLabel.lineBreakMode = .byTruncatingTail
