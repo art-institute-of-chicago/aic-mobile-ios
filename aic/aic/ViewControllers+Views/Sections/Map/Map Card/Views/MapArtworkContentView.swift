@@ -30,7 +30,7 @@ class MapArtworkContentView : UIView {
 				}
 			}
 		})
-		locationLabel.text = artwork.gallery.title //Common.Map.stringForFloorNumber[artwork.location.floor]
+		locationLabel.text = artwork.gallery.title
 	}
 	
 	init(searchedArtwork: AICSearchedArtworkModel) {
@@ -49,14 +49,14 @@ class MapArtworkContentView : UIView {
 					}
 				}
 			})
-			locationLabel.text = Common.Map.stringForFloorNumber[object.location.floor]
+			locationLabel.text = object.gallery.title
 		}
 		else {
 			titleLabel.text = searchedArtwork.title
 			imageView.kf.indicatorType = .activity
 			imageView.kf.setImage(with: searchedArtwork.thumbnailUrl)
 			
-			locationLabel.text = searchedArtwork.gallery.title // Common.Map.stringForFloorNumber[searchedArtwork.location.floor]
+			locationLabel.text = searchedArtwork.gallery.title
 			audioButton.isHidden = true
 			audioButton.isEnabled = false
 		}
@@ -75,7 +75,7 @@ class MapArtworkContentView : UIView {
 				}
 			}
 		})
-		locationLabel.text = "\t" + tourStop.object.gallery.title //Common.Map.stringForFloorNumber[tourStop.object.location.floor]
+		locationLabel.text = "\t" + tourStop.object.gallery.title
 	}
 	
 	init(tour: AICTourModel, language: Common.Language) {
@@ -85,7 +85,7 @@ class MapArtworkContentView : UIView {
 		titleLabel.text = tour.title
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: tour.imageUrl)
-		locationLabel.text = tour.stops.first!.object.gallery.title //Common.Map.stringForFloorNumber[tour.location.floor]
+		locationLabel.text = tour.stops.first!.object.gallery.title
 	}
 	
 	init(exhibition: AICExhibitionModel) {
