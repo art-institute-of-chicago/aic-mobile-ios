@@ -12,9 +12,7 @@ import MapKit
 import Kingfisher
 
 class MapExhibitionAnnotationView : MapAnnotationView {
-	class var reuseIdentifier:String {
-		return "mapExhibition"
-	}
+	static let reuseIdentifier: String = "mapExhibition"
 	
 	private let thumbImageView = AICImageView()
 	private let thumbHolderView = UIView() // Circle frame with tail

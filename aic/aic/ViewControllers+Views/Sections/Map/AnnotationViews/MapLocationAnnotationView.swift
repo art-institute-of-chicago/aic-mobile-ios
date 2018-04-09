@@ -7,9 +7,7 @@ import UIKit
 import MapKit
 
 class MapLocationAnnotationView : MapAnnotationView {
-    class var reuseIdentifier:String {
-        return "mapLocation"
-    }
+    static let reuseIdentifier: String = "mapLocation"
     
     private let pinImageView = UIImageView()
     

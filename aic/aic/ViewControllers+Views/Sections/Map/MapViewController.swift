@@ -161,6 +161,11 @@ class MapViewController: UIViewController {
 		if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
 			mapView.showFullMap(useDefaultHeading: true)
 		}
+		// Zooming in a bit to avoid the situation where you are in between artworks level and department level
+		else if mapView.camera.altitude < Common.Map.ZoomLevelAltitude.zoomDetail.rawValue+15.0 &&
+			mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-15.0 {
+			mapView.zoomIn(onCenterCoordinate: mapView.camera.centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue - 10.0, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+		}
     }
 	
 	func showArtwork(artwork: AICObjectModel) {
@@ -660,8 +665,6 @@ class MapViewController: UIViewController {
         for floor in mapModel.floors {
             for annotation in floor.tourStopAnnotations {
                 if let view = mapView.view(for: annotation) as? MapObjectAnnotationView {
-					view.setMode(mode: .image, inTour: true)
-					view.setTourStopNumber(number: annotation.tourStopOrder)
 					if annotation.floor == currentFloor {
 						view.alpha = 1.0
                     }
@@ -869,18 +872,19 @@ extension MapViewController : MKMapViewDelegate {
 
 		// Object annotations
 		if let objectAnnotation = annotation as? MapObjectAnnotation {
-			let objectIdentifier = String(MapObjectAnnotationView.reuseIdentifier)
-			
 			// TODO: Commenting this out as a temporary fix to bug where some tour stops disappear at times
-//			if let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier) as? MapObjectAnnotationView {
+//			if let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView {
 //				view.delegate = self
 //				view.setAnnotation(forObjectAnnotation: objectAnnotation)
 //				return view
 //			}
 			
-			let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: objectIdentifier)
+			let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: MapObjectAnnotationView.reuseIdentifier)
+			if mode == .tour {
+				view.setMode(mode: .image, inTour: true)
+				view.setTourStopNumber(number: objectAnnotation.tourStopOrder)
+			}
 			view.delegate = self
-			view.setAnnotation(forObjectAnnotation: objectAnnotation)
 			return view
         }
 		

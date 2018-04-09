@@ -13,9 +13,7 @@ protocol MapObjectAnnotationViewDelegate : class {
 }
 
 class MapObjectAnnotationView: MapAnnotationView {
-    class var reuseIdentifier: String {
-        return "mapObject"
-    }
+   static let reuseIdentifier: String = "mapObject"
     
     enum Mode {
 		case dot			// unselected: dot,			selected: expanded info

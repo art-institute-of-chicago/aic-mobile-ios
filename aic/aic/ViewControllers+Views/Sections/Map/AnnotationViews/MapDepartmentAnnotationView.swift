@@ -6,9 +6,7 @@
 import MapKit
 
 class MapDepartmentAnnotationView: MapAnnotationView {
-    class var reuseIdentifier:String {
-        return "mapDepartment"
-    }
+    static let reuseIdentifier: String = "mapDepartment"
 	
 	let imageSize: CGSize = CGSize(width: 46.0, height: 46.0)
     let insets:UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10)

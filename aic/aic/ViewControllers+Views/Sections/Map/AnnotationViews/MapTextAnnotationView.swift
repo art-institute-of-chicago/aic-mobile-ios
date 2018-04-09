@@ -7,7 +7,7 @@
 import MapKit
 
 class MapTextAnnotationView: MapAnnotationView {
-    var label:UILabel? = nil
+    var label: UILabel? = nil
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
