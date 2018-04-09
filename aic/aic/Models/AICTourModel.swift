@@ -15,7 +15,9 @@ struct AICTourModel {
 	var durationInMinutes: String? { return self.translations[self.language]!.durationInMinutes }
 	var overview: AICTourOverviewModel { return self.translations[self.language]!.overview }
 	
-	let isFeatured: Bool
+	let order: Int
+	let isFeatured: Bool // TODO: the isFeatured bool is currently ignored
+						// since everything is based on the order in the CMS ("weight" node in the JSON)
 	let category: AICTourCategoryModel?
     
     let additionalInformation: String? = nil

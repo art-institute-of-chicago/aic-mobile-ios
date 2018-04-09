@@ -482,6 +482,8 @@ class AppDataParser {
         let audioFileID         = try getInt(fromJSON: tourJSON, forKey: "tour_audio")
         let audioFile           = try getAudioFile(forNID:audioFileID)
 		
+		let order 				= try getInt(fromJSON: tourJSON, forKey: "weight")
+		
 		// isFeatured
 		var isFeatured: Bool = false
 		for tourId in self.featuredTours {
@@ -581,6 +583,7 @@ class AppDataParser {
 		}
         
 		return AICTourModel(nid:nid,
+							order: order,
 							isFeatured: isFeatured,
 							category: category,
 							imageUrl: imageUrl,

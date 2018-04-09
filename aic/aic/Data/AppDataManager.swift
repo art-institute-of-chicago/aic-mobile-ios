@@ -448,13 +448,20 @@ class AppDataManager {
 	
 	private func sortToursByFeatured(tours: [AICTourModel]) -> [AICTourModel] {
 		let result = tours.sorted(by: { (A, B) -> Bool in
-			if A.isFeatured && !B.isFeatured {
-				return true
+			// if both featured follow the regular order
+			if A.isFeatured && B.isFeatured {
+				return A.order < B.order
 			}
-			else if B.isFeatured && !A.isFeatured {
-				return false
+			
+			// if A is first, check if B is featured
+			if A.order < B.order {
+				let result = B.isFeatured ? false : true
+				return result
 			}
-			return A.nid > B.nid
+			
+			// if B is first, check if A is featured
+			let result = A.isFeatured ? true : false
+			return result
 		})
 		return result
 	}
@@ -474,8 +481,11 @@ class AppDataManager {
 	
 	func getToursForHome() -> [AICTourModel] {
 		var result: [AICTourModel] = []
-		let toursByFeatured: [AICTourModel] = sortToursByFeatured(tours: self.app.tours)
-		for tour in toursByFeatured {
+//		let toursOrdered: [AICTourModel] = sortToursByFeatured(tours: self.app.tours)
+		let toursOrdered = self.app.tours.sorted(by: { (A, B) -> Bool in
+			return A.order < B.order
+		})
+		for tour in toursOrdered {
 			result.append(tour)
 			if result.count == Common.Home.maxNumberOfTours {
 				break
@@ -521,7 +531,10 @@ class AppDataManager {
 	}
 	
 	func getToursForSeeAll() -> [AICTourModel] {
-		return sortToursByFeatured(tours: self.app.tours)
+		// return sortToursByFeatured(tours: self.app.tours)
+		return self.app.tours.sorted(by: { (A, B) -> Bool in
+			return A.order < B.order
+		})
 	}
 	
 	func getToursByCategoryForSeeAll() -> [AICTourCategoryModel : [AICTourModel]] {
@@ -536,7 +549,9 @@ class AppDataManager {
 				}
 			}
 			if tours.count > 0 {
-				result[category] = tours
+				result[category] = tours.sorted(by: { (A, B) -> Bool in
+					return A.order < B.order
+				})
 			}
 		}
 		return result
@@ -602,7 +617,9 @@ class AppDataManager {
             }
         }
         
-        return relatedTours
+		return relatedTours.sorted(by: { (A, B) -> Bool in
+			return A.order < B.order
+		})
     }
     
     func getGalleries(forFloorNumber floorNumber:Int) -> [AICGalleryModel] {
