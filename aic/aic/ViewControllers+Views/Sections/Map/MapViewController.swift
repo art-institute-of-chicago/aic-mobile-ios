@@ -44,6 +44,7 @@ class MapViewController: UIViewController {
     // Map View
     let mapView: MapView = MapView(frame: UIScreen.main.bounds)
     let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
+	var zoomLimitValue: Double = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
 
     // Floor Selector
     let floorSelectorVC = MapFloorSelectorViewController()
@@ -121,6 +122,35 @@ class MapViewController: UIViewController {
 	}
     
     // MARK: Mode Functions
+	
+	private func updateMapForModeChange() {
+		if mode == .giftshop || mode == .restrooms || mode == .memberLounge {
+			zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
+		}
+		else {
+			zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+		}
+		
+		// Deselect all annotations
+		deselectAllAnnotations()
+		
+		// Clear the active annotations from the previous mode
+		clearActiveAnnotations()
+		
+		// Set the new state
+		mapView.removeAnnotations(mapView.annotations)
+		
+		updateAnnotations()
+	}
+	
+	// Go through each floor and clear out it's location + tour objects
+	private func clearActiveAnnotations() {
+		for floor in mapModel.floors {
+			floor.clearActiveAnnotations()
+		}
+	}
+	
+	// MARK: Show Annotations
     
     // Show all the objects, landmarks and amenities on the map
     // Used when viewing the map by itself in the map (nearby) section
@@ -128,7 +158,6 @@ class MapViewController: UIViewController {
         // Switch modes
         mode = .allInformation
 		
-		// TODO: INITIAL ANIMATION
 		if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
 			mapView.showFullMap(useDefaultHeading: true)
 		}
@@ -284,8 +313,8 @@ class MapViewController: UIViewController {
 		if mapView.camera.altitude <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue {
 			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomMedium.rawValue
 		}
-		else if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomLimit.rawValue {
-			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+		else if mapView.camera.altitude > zoomLimitValue {
+			mapView.camera.altitude = zoomLimitValue
 		}
 		mapView.camera.heading = mapView.defaultHeading
 	}
@@ -337,27 +366,9 @@ class MapViewController: UIViewController {
 		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
 		
 		mapView.addAnnotations(annotations)
-    }
-    
-    private func updateMapForModeChange() {
-        // Deselect all annotations
-		deselectAllAnnotations()
-        
-        // Clear the active annotations from the previous mode
-        clearActiveAnnotations()
-        
-        // Set the new state
-        mapView.removeAnnotations(mapView.annotations)
-        
-        updateAnnotations()
-    }
-    
-    // Go through each floor and clear out it's location + tour objects
-    private func clearActiveAnnotations() {
-        for floor in mapModel.floors {
-            floor.clearActiveAnnotations()
-        }
-    }
+	}
+	
+	// MARK: Highlight Annotations
     
     // Highlights a specific tour object
     // Highlights item, switches to it's floor
@@ -375,11 +386,13 @@ class MapViewController: UIViewController {
 					floorSelectorVC.disableUserHeading()
 					
                     // Go to that floor
-                    setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
+					if location.floor != currentFloor {
+                    	setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
+					}
 					
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: 60.0)
-                    
+					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+					
                     // Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: false)
                 }
@@ -396,8 +409,10 @@ class MapViewController: UIViewController {
 					floorSelectorVC.disableUserHeading()
 					
 					// Go to that floor
-					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
-					
+					if location.floor != currentFloor {
+						setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
+					}
+						
 					// Zoom in on the item
 					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
 					
@@ -803,7 +818,7 @@ extension MapViewController : MKMapViewDelegate {
      This function sets the view when an annotation is added to the map.
      It tries to re-use existing views where available
      */
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // Department Annotations
         if let departmentAnnotation = annotation as? MapDepartmentAnnotation {
             guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapDepartmentAnnotationView.reuseIdentifier) as? MapDepartmentAnnotationView else {
@@ -856,12 +871,14 @@ extension MapViewController : MKMapViewDelegate {
 		if let objectAnnotation = annotation as? MapObjectAnnotation {
 			let objectIdentifier = String(MapObjectAnnotationView.reuseIdentifier)
 			
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier) as? MapObjectAnnotationView else {
-				let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: objectIdentifier)
-				view.delegate = self
-				return view
-			}
+			// TODO: Commenting this out as a temporary fix to bug where some tour stops disappear at times
+//			if let view = mapView.dequeueReusableAnnotationView(withIdentifier: objectIdentifier) as? MapObjectAnnotationView {
+//				view.delegate = self
+//				view.setAnnotation(forObjectAnnotation: objectAnnotation)
+//				return view
+//			}
 			
+			let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: objectIdentifier)
 			view.delegate = self
 			view.setAnnotation(forObjectAnnotation: objectAnnotation)
 			return view
@@ -884,7 +901,7 @@ extension MapViewController : MKMapViewDelegate {
                 let view = MapLocationAnnotationView(annotation: annotation, reuseIdentifier: MapLocationAnnotationView.reuseIdentifier)
                 return view
             }
-
+			
             view.annotation = locationAnnotation
             return view
         }
@@ -960,11 +977,7 @@ extension MapViewController : MKMapViewDelegate {
         
         // Keep map in view
 		if !floorSelectorVC.userHeadingIsEnabled() {
-			var zoomLimit = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
-			if mode == .giftshop || mode == .memberLounge || mode == .restrooms {
-				zoomLimit = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
-			}
-			self.mapView.keepMapInView(zoomLimit: zoomLimit)
+			self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
         }
         
         if isSwitchingModes {
@@ -1038,11 +1051,7 @@ extension MapViewController : UIGestureRecognizerDelegate {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
 		if !floorSelectorVC.userHeadingIsEnabled() {
-			var zoomLimit = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
-			if mode == .giftshop || mode == .memberLounge || mode == .restrooms {
-				zoomLimit = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
-			}
-			mapView.keepMapInView(zoomLimit: zoomLimit)
+			mapView.keepMapInView(zoomLimit: zoomLimitValue)
 		}
 		self.delegate?.mapWasPressed()
     }
@@ -1051,11 +1060,7 @@ extension MapViewController : UIGestureRecognizerDelegate {
         floorSelectorVC.disableUserHeading()
 		mapView.adjustPicthForZoomLevel()
 		if !floorSelectorVC.userHeadingIsEnabled() {
-			var zoomLimit = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
-			if mode == .giftshop || mode == .memberLounge || mode == .restrooms {
-				zoomLimit = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
-			}
-			mapView.keepMapInView(zoomLimit: zoomLimit)
+			mapView.keepMapInView(zoomLimit: zoomLimitValue)
 		}
 		self.delegate?.mapWasPressed()
     }

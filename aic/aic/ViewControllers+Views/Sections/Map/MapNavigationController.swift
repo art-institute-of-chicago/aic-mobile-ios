@@ -333,21 +333,11 @@ class MapNavigationController : SectionNavigationController {
 		
 		showMapContentCard()
 		
-		let highlightIndex: Int = tourStopIndex != nil ? tourStopIndex! : -1
-		self.perform(#selector(highlightTourStopAfterDelay(_:)), with: highlightIndex, afterDelay: 0.5)
+		self.perform(#selector(highlightTourOverview), with: nil, afterDelay: 0.6)
 	}
 	
-	@objc private func highlightTourStopAfterDelay(_ stopIndex: AnyObject?) {
-		if let tour = tourModel {
-			if let index = stopIndex as? Int {
-				if index != -1 {
-					mapVC.highlightTourStop(identifier: tour.stops[index].object.nid, location: tour.stops[index].object.location)
-				}
-				else {
-					mapVC.highlightTourStop(identifier: tour.nid, location: tour.location)
-				}
-			}
-		}
+	@objc private func highlightTourOverview() {
+		mapVC.highlightTourStop(identifier: tourModel!.nid, location: tourModel!.location)
 	}
 	
 	func showArtwork(artwork: AICObjectModel) {
@@ -602,6 +592,7 @@ class MapNavigationController : SectionNavigationController {
 	}
 	
 	// MARK: Audio Button
+	
 	@objc private func mapArtworkAudioButtonPressed(button: UIButton) {
 		if let searchedArtwork = searchedArtworkModel {
 			if let object = searchedArtwork.audioObject {
