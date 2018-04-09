@@ -409,7 +409,7 @@ struct Common {
             case zoomDetail = 50.0
             case zoomMax = 25.0
 
-            static let allValues = [zoomLimit, zoomDefault, zoomMedium, zoomDetail, zoomMax]
+            static let allValues = [zoomFarLimit, zoomLimit, zoomDefault, zoomMedium, zoomDetail, zoomMax]
         }
 
         enum AnnotationZPosition: CGFloat {
@@ -483,11 +483,13 @@ struct Common {
 			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
 			if Common.currentLanguage == .english {
 				dateFormatter.setLocalizedDateFormatFromTemplate("h:mma")
-				dateFormatter.amSymbol = "am"
-				dateFormatter.pmSymbol = "pm"
 			}
 			else {
 				dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm")
+			}
+			if Common.currentLanguage == .english || Common.currentLanguage == .spanish {
+				dateFormatter.amSymbol = "am"
+				dateFormatter.pmSymbol = "pm"
 			}
 			let hoursMinutesString = dateFormatter.string(from: date)
 			return hoursMinutesString
