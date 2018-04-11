@@ -1,8 +1,80 @@
 {
+  "data": {
+    "image_server_url": "http://localhost:8888",
+    "data_api_url": "http://localhost:8888",
+    "exhibitions_endpoint": "/search/exhibitions.json",
+    "artworks_endpoint": "/artworks",
+    "galleries_endpoint": "/galleries",
+    "images_endpoint": "/images",
+    "events_endpoint": "/search/events.json",
+    "autocomplete_endpoint": "/autocomplete",
+    "tours_endpoint": "/tours",
+    "multisearch_endpoint": "/search/msearch.json",
+    "membership_url": "http://localhost:8888",
+    "website_url": "http://localhost:8888",
+    "tickets_url": "http://localhost:8888"
+  },
+  "general_info": {
+    "nid": "1",
+    "translations": [
+      {
+        "language": "es",
+        "museum_hours": "Abierto todos los días de 10:30 a. m. a 5:00 p. m.; los jueves hasta las 8:00 p.m.\r\nCerrado en el Día de Acción de Gracias, Navidad y Año Nuevo.",
+        "home_member_prompt_text": "Explore el museo con su guía de bolsillo personalizada.",
+        "audio_title": "Buscarlo",
+        "audio_subtitle": "Ingrese el número en la etiqueta para obtener más información. ",
+        "map_title": "Ubicarse",
+        "map_subtitle": "Use el mapa para buscar comida, servicios y obras de arte complementadas con audio.",
+        "info_title": "Información",
+        "info_subtitle": "Acceda a su tarjeta de miembro, consulte el horario del museo o actualice su aplicación.",
+        "gift_shops_title": "Tienda de regalos",
+        "gift_shops_text": "Cerrar para explorar el mapa.",
+        "members_lounge_title": "Miembros Lounge",
+        "members_lounge_text": "Cerrar para explorar el mapa.",
+        "see_all_tours_intro": "Explore nuestra colección por medio de las audioguías enumeradas a continuación, usando nuestro mapa interactivo como guía. ¿Se olvidó los auriculares? Solo coloque el teléfono en el oído, como si fuera una llamada telefónica.",
+        "restrooms_title": "Baños",
+        "restrooms_text": "Cerrar para explorar el mapa."
+      },
+      {
+        "language": "zh-hant",
+        "museum_hours": "每天上午 10:30 到下午 5 点开放，周四开放到晚上 8 点感恩节、圣诞节和元旦闭馆。",
+        "home_member_prompt_text": "利用个人袖珍导游探索博物馆。",
+        "audio_title": "查看",
+        "audio_subtitle": "找到了您喜欢的艺术作品？输入耳机旁边的数字以了解更多信息。",
+        "map_title": "找到您的路线",
+        "map_subtitle": "使用地图查找食物、设施和带音频介绍的作品。",
+        "info_title": "信息",
+        "info_subtitle": "访问您的会员卡，查看博物馆开放时间，或更新应用程序设置。",
+        "gift_shops_title": "禮品店",
+        "gift_shops_text": "关闭以探索地图。",
+        "members_lounge_title": "會員休息室",
+        "members_lounge_text": "关闭以探索地图。",
+        "see_all_tours_intro": "使用我们的交互式地图作为指南，通过下面列出的音频之旅探索我们的收藏。 忘了你的耳机？ 就像打电话一样，将听筒放在耳边。",
+        "restrooms_title": "廁所",
+        "restrooms_text": "关闭以探索地图。"
+      }
+    ],
+    "museum_hours": "Open daily 10:30 a.m. to 5:00 p.m. and on Thursday until 8:00 p.m.",
+    "home_member_prompt_text": "Explore the museum with your personal, pocket-sized guide.",
+    "audio_title": "Look It Up",
+    "audio_subtitle": "Enter the number next to the headphone icon on the artwork label.",
+    "map_title": "Find Your Way",
+    "map_subtitle": "Use the map to find food, facilities, and audio-enhanced artworks.",
+    "info_title": "Information",
+    "info_subtitle": "Access your member card, see museum hours, or update your app settings.",
+    "gift_shops_title": "Gift Shops",
+    "gift_shops_text": "Close to explore the map.",
+    "members_lounge_title": "Members Lounge",
+    "members_lounge_text": "Close to explore the map.",
+    "see_all_tours_intro": "Explore our collection through the audio tours listed below. \r\n\r\nForgot your headphones? Just hold your phone to your ear as if on a phone call.",
+    "restrooms_title": "Restrooms",
+    "restrooms_text": "Close to explore the map."
+  },
   "galleries": {
     "1052": {
       "nid": 1052,
       "title": "Allerton Building",
+      "gallery_id": "2147483642",
       "closed": false,
       "location": "41.879565,-87.623865",
       "floor": 1
@@ -10,6 +82,7 @@
     "1074": {
       "nid": 1074,
       "title": "Fullerton Hall Lobby",
+      "gallery_id": "2147483599",
       "closed": false,
       "location": "41.87972653256,-87.62361109257",
       "floor": 1
@@ -17,6 +90,7 @@
     "1085": {
       "nid": 1085,
       "title": "Gallery 109",
+      "gallery_id": "2147483483",
       "closed": false,
       "location": "41.87917335208,-87.62359768152",
       "floor": 1
@@ -24,6 +98,7 @@
     "1107": {
       "nid": 1107,
       "title": "Gallery 185 (Griffin Court)",
+      "gallery_id": "24000",
       "closed": false,
       "location": "41.88007800938,-87.62213855982",
       "floor": 1
@@ -31,6 +106,7 @@
     "1110": {
       "nid": 1110,
       "title": "Gallery 200",
+      "gallery_id": "2147472011",
       "closed": false,
       "location": "41.87950685858,-87.6236513257",
       "floor": 2
@@ -38,6 +114,7 @@
     "1207": {
       "nid": 1207,
       "title": "McKinlock Court Building",
+      "gallery_id": "2147483306",
       "closed": false,
       "location": "41.879593,-87.621857",
       "floor": 1
@@ -45,6 +122,7 @@
     "1226": {
       "nid": 1226,
       "title": "Stock Exchange Trading Room",
+      "gallery_id": "346",
       "closed": false,
       "location": "41.87956676974,-87.62130975723",
       "floor": 1
@@ -52,6 +130,7 @@
     "1196": {
       "nid": 1196,
       "title": "Gallery 389 (corridor)",
+      "gallery_id": "24563",
       "closed": false,
       "location": "41.88038355299,-87.62205541134",
       "floor": 3
@@ -59,6 +138,7 @@
     "2040": {
       "nid": 2040,
       "title": "Gallery 100",
+      "gallery_id": "2147473950",
       "closed": false,
       "location": "41.87955079343,-87.62364596128",
       "floor": 1
@@ -66,6 +146,7 @@
     "2200": {
       "nid": 2200,
       "title": "Ryerson Library Study Room",
+      "gallery_id": "21231",
       "closed": false,
       "location": "41.879413,-87.623654",
       "floor": 1
@@ -79,8 +160,11 @@
       "title": "Fragment Gallery",
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1027
+      "audio_commentary": [
+        {
+          "object_selector_number": "101",
+          "audio": "1027"
+        }
       ]
     },
     "1037": {
@@ -92,8 +176,11 @@
       "object_selector_number": 109,
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1029
+      "audio_commentary": [
+        {
+          "object_selector_number": "102",
+          "audio": "1029"
+        }
       ]
     },
     "1038": {
@@ -103,8 +190,11 @@
       "title": "Grand Staircase",
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1026
+      "audio_commentary": [
+        {
+          "object_selector_number": "103",
+          "audio": "1026"
+        }
       ]
     },
     "1039": {
@@ -115,8 +205,11 @@
       "object_selector_number": 55,
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1030
+      "audio_commentary": [
+        {
+          "object_selector_number": "104",
+          "audio": "1030"
+        }
       ]
     },
     "1041": {
@@ -127,8 +220,11 @@
       "image_url": "http://localhost:8888/placeholder.png",
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1028
+      "audio_commentary": [
+        {
+          "object_selector_number": "105",
+          "audio": "1028"
+        }
       ]
     },
     "1043": {
@@ -139,8 +235,11 @@
       "artist_culture_place_delim": "Renzo Piano",
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1034
+      "audio_commentary": [
+        {
+          "object_selector_number": "106",
+          "audio": "1034"
+        }
       ]
     },
     "1044": {
@@ -151,8 +250,11 @@
       "artist_culture_place_delim": "Renzo Piano",
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1035
+      "audio_commentary": [
+        {
+          "object_selector_number": "107",
+          "audio": "1035"
+        }
       ]
     },
     "1045": {
@@ -165,8 +267,11 @@
       "image_url": "http://localhost:8888/placeholder.png",
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1031
+      "audio_commentary": [
+        {
+          "object_selector_number": "108",
+          "audio": "1031"
+        }
       ]
     },
     "1254": {
@@ -177,8 +282,11 @@
       "image_url": "http://localhost:8888/placeholder.png",
       "large_image_full_path": "http://localhost:8888/placeholder.png",
       "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-      "audio": [
-        1025
+      "audio_commentary": [
+        {
+          "object_selector_number": "109",
+          "audio": "1025"
+        }
       ]
     }
   },
@@ -187,124 +295,795 @@
       "nid": 1024,
       "title": "Introduction to \"City Within a City\"",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Erin Hogan: \tI just think about, like, Chicago trying to prove itself and trying to be cultural. And, like, so much energy, and this building is kind of, like, so ambitious. \r\n\r\nThe Architecture of the Art Institute of Chicago. Hello, everybody, I am Erin Hogan, and I am the former Director of Public Affairs and Communication at the Art Institute of Chicago, and I have just long been an admirer of the physical building of the Art Institute. I love this building so much because I see it as a living, breathing organism. Well, when you walk through the door on Michigan Avenue, which for the bulk of the Art Institute&#039;s history was our only entrance, you can see immediately that you are supposed to be awed. This is a grand, civic building. You have to ascend to it; you have to come up a flight of stairs to get into the building. \r\n\r\nTim Samuelson:  I mean, I really feel that buildings and places have a collective vibe. And you can feel it in a building like the Art Institute, in the different spaces. And you can feel the presence of different eras of the people who created them. And the best part of it is just working quietly behind the scenes. But it&#039;s very much there. \r\n \r\nJohn Vinci:  Well the Art Institute is a conglomerate of expansions. So this is what gave the Art Institute is a special quality to me, is these parts that made it more like a city rather than a museum designed in one foul swoop. \r\n\r\nErin Hogan: You know, we&#039;re all about art here, it is an art museum, but this is a tour in which you will not see any art at all. And you will walk past a lot of monumental works of art at a criminal pace while we talk about corners and walls and buildings. But hopefully it will give you an appreciation for the structure that is the Art Institute of Chicago. \r\n\r\nNarrator:  This audio guide is supported by Bloomberg Philanthropies. \r\n"
+      "audio_transcript": "Erin Hogan: \tI just think about, like, Chicago trying to prove itself and trying to be cultural. And, like, so much energy, and this building is kind of, like, so ambitious. \r\n\r\nThe Architecture of the Art Institute of Chicago. Hello, everybody, I am Erin Hogan, and I am the former Director of Public Affairs and Communication at the Art Institute of Chicago, and I have just long been an admirer of the physical building of the Art Institute. I love this building so much because I see it as a living, breathing organism. Well, when you walk through the door on Michigan Avenue, which for the bulk of the Art Institute&#039;s history was our only entrance, you can see immediately that you are supposed to be awed. This is a grand, civic building. You have to ascend to it; you have to come up a flight of stairs to get into the building. \r\n\r\nTim Samuelson:  I mean, I really feel that buildings and places have a collective vibe. And you can feel it in a building like the Art Institute, in the different spaces. And you can feel the presence of different eras of the people who created them. And the best part of it is just working quietly behind the scenes. But it&#039;s very much there. \r\n \r\nJohn Vinci:  Well the Art Institute is a conglomerate of expansions. So this is what gave the Art Institute is a special quality to me, is these parts that made it more like a city rather than a museum designed in one foul swoop. \r\n\r\nErin Hogan: You know, we&#039;re all about art here, it is an art museum, but this is a tour in which you will not see any art at all. And you will walk past a lot of monumental works of art at a criminal pace while we talk about corners and walls and buildings. But hopefully it will give you an appreciation for the structure that is the Art Institute of Chicago. \r\n\r\nNarrator:  This audio guide is supported by Bloomberg Philanthropies. \r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "Introduction to \"City Within a City\"",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "Introduction to \"City Within a City\"",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1025": {
       "nid": 1025,
       "title": "The Original Building",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Blair Kamin: Architecture is the art that most visibly and viscerally defines the city of Chicago. I&#039;m Blair Kamin. I&#039;m the architecture critic at the Chicago Tribune. The steps in front of the Art Institute are not simply a way to get from Point A to Point B, from Michigan Avenue to the Art Museum. They are a gathering place. They are a place that people wait, if they haven&#039;t bought a ticket yet. But they are also a place where people sit, where people observe the passing parade. There&#039;s always a guy out there, playing a drum, or a saxophone, and, uh, they create a little bit of an urban theater. \r\n\r\nErin Hogan: The architecture of the Art Institute of Chicago: the original building. \r\n\r\nBlair Kamin: The most distinctive part of the Art Institute of course is its Michigan Avenue facade. This is the Renaissance revival building that was constructed in 1893. The date is very significant. 1893, it&#039;s the year of the world&#039;s Colombian Exposition. \r\n\r\nAllison Fisher: Everyone was talking about the fair as the coming out, not only of a kind of new sense of design, but also of Chicago itself. My name is Allison Fisher, and I&#039;m an associate curator in the Department of Architecture and Design at the Art Institute of Chicago. You know Chicago had been a hugely financially important city for the country, but not one known for its sense of culture or indeed of the arts.\r\n \r\nTim Samuelson: I am Tim Samuelson, and I am the cultural historian for the city of Chicago. Everybody thinks of the Art Institute in terms of its achievements as a great art museum. But there&#039;s also a back story to the very origins of the building that make it a very special case. \r\n\r\nAllison Fisher: The short story is that there had been an Art Institute building across the street. It was becoming too small and was a kind of old fashioned design. So when the fair came to Chicago, the administration of the fair struck a deal with the trustees of the Art Institute, that they would do a cost sharing proposition. \r\n\r\nTim Samuelson: The Art institute paid for its shell and the building of the building and landed one of the prime spots for an art museum that you could ever have. \r\n\r\nBlair Kamin:  The placement of the Art Institute in Grant Park is an exception that proves the rule. Chicago has long protected Grant Park from the buildings. \r\n\r\nTim Samuelson: In the original plan of Chicago, it says there are basically to be no buildings, it&#039;s to be free and clear. The Art Institute builds their new building there. And then Montgomery Ward, the mail order firm, was filing law suits to keep buildings out of the park. And the Art Institutes in the middle of it. Though even Ward had to concede that the Art Institute was important. \r\n\r\nBlair Kamin: The museum is a temple. It&#039;s a place of culture and yet it is not far removed from the grit of the city, that makes money, that stacks wheat, that butchers hogs, or at least used to. And I think that makes it different. This is right in the middle of the hurley burley of the city. \r\n"
+      "audio_transcript": "Blair Kamin: Architecture is the art that most visibly and viscerally defines the city of Chicago. I&#039;m Blair Kamin. I&#039;m the architecture critic at the Chicago Tribune. The steps in front of the Art Institute are not simply a way to get from Point A to Point B, from Michigan Avenue to the Art Museum. They are a gathering place. They are a place that people wait, if they haven&#039;t bought a ticket yet. But they are also a place where people sit, where people observe the passing parade. There&#039;s always a guy out there, playing a drum, or a saxophone, and, uh, they create a little bit of an urban theater. \r\n\r\nErin Hogan: The architecture of the Art Institute of Chicago: the original building. \r\n\r\nBlair Kamin: The most distinctive part of the Art Institute of course is its Michigan Avenue facade. This is the Renaissance revival building that was constructed in 1893. The date is very significant. 1893, it&#039;s the year of the world&#039;s Colombian Exposition. \r\n\r\nAllison Fisher: Everyone was talking about the fair as the coming out, not only of a kind of new sense of design, but also of Chicago itself. My name is Allison Fisher, and I&#039;m an associate curator in the Department of Architecture and Design at the Art Institute of Chicago. You know Chicago had been a hugely financially important city for the country, but not one known for its sense of culture or indeed of the arts.\r\n \r\nTim Samuelson: I am Tim Samuelson, and I am the cultural historian for the city of Chicago. Everybody thinks of the Art Institute in terms of its achievements as a great art museum. But there&#039;s also a back story to the very origins of the building that make it a very special case. \r\n\r\nAllison Fisher: The short story is that there had been an Art Institute building across the street. It was becoming too small and was a kind of old fashioned design. So when the fair came to Chicago, the administration of the fair struck a deal with the trustees of the Art Institute, that they would do a cost sharing proposition. \r\n\r\nTim Samuelson: The Art institute paid for its shell and the building of the building and landed one of the prime spots for an art museum that you could ever have. \r\n\r\nBlair Kamin:  The placement of the Art Institute in Grant Park is an exception that proves the rule. Chicago has long protected Grant Park from the buildings. \r\n\r\nTim Samuelson: In the original plan of Chicago, it says there are basically to be no buildings, it&#039;s to be free and clear. The Art Institute builds their new building there. And then Montgomery Ward, the mail order firm, was filing law suits to keep buildings out of the park. And the Art Institutes in the middle of it. Though even Ward had to concede that the Art Institute was important. \r\n\r\nBlair Kamin: The museum is a temple. It&#039;s a place of culture and yet it is not far removed from the grit of the city, that makes money, that stacks wheat, that butchers hogs, or at least used to. And I think that makes it different. This is right in the middle of the hurley burley of the city. \r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "The Original Building",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "The Original Building",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1026": {
       "nid": 1026,
       "title": "The Woman's Board Grand Staircase",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Erin Hogan: The Architecture of the Art Institute of Chicago: The Woman&#039;s Board Grand Staircase. So we are now going up the majestic grand staircase, and the first thing you might notice on one of the ten days a year when there&#039;s actually a lot of sun, is that this is a beautiful, sunlight space. Partly because the Art Institute never quite gathered the funds and the initiative over the grand staircase a grand dome. So what it is, is scaffolding and a skylight. It wasn&#039;t the original plan, but sometimes the original plans are not fully achieved. The result, though, is that this is one of the very few places in the museum, with the exception of the modern wing where you kind of have a direct relationship to the outside. \r\n\r\nSo when you come up the staircase from the Michigan Avenue entrance and you stand at the first landing, take a right and go up a short flight of steps, and then another right to go up a longer flight of steps, and it&#039;s here that you can see some of the idiosyncrasies of this great, grand space. \r\n\r\nSo at the top of the stairs, I want to direct your attention to the architectural ornament and carving that runs outside of the Michlove Galleries of European Art, which you should be standing in front of now. If you look at the Egg and dart pattern, the blocks of the cornices there that run around, there&#039;s foliage decorations, none of which are fully finished. This unfinished state wraps entirely around this area, along with the top of some of the Corinthian columns, which front the Grand Staircase. \r\n\r\nI&#039;ve heard, over the years, various reasons why this architectural ornament was never finished. One was, like the Central Dome, the Art Institute kind of never quite had the funding to get the detail together. The one explanation that I am more interested in is that there was a stone mason strike at the time of the construction of the building, and that the stone masons literally put down their tools and walked off the job. \r\n\r\nIt makes me feel like there was a very human decision there of somebody was just like, I quit, because when you&#039;re in the building like this, you get this sense of grandeur and beauty, and then you look at something like that and you&#039;re like, that is the work of a dude who was just done. \r\n\r\nI do like the fact that parts of this building, especially the big grand building, is unfinished, because it reminds me as a visitor that this is a human project. You know, civic buildings are made in many ways to be impersonal buildings. But I like the fact here in the Art Institute that you can see even in its architectural details the humanity here. This is an organic building. \r\n\r\n"
+      "audio_transcript": "Erin Hogan: The Architecture of the Art Institute of Chicago: The Woman&#039;s Board Grand Staircase. So we are now going up the majestic grand staircase, and the first thing you might notice on one of the ten days a year when there&#039;s actually a lot of sun, is that this is a beautiful, sunlight space. Partly because the Art Institute never quite gathered the funds and the initiative over the grand staircase a grand dome. So what it is, is scaffolding and a skylight. It wasn&#039;t the original plan, but sometimes the original plans are not fully achieved. The result, though, is that this is one of the very few places in the museum, with the exception of the modern wing where you kind of have a direct relationship to the outside. \r\n\r\nSo when you come up the staircase from the Michigan Avenue entrance and you stand at the first landing, take a right and go up a short flight of steps, and then another right to go up a longer flight of steps, and it&#039;s here that you can see some of the idiosyncrasies of this great, grand space. \r\n\r\nSo at the top of the stairs, I want to direct your attention to the architectural ornament and carving that runs outside of the Michlove Galleries of European Art, which you should be standing in front of now. If you look at the Egg and dart pattern, the blocks of the cornices there that run around, there&#039;s foliage decorations, none of which are fully finished. This unfinished state wraps entirely around this area, along with the top of some of the Corinthian columns, which front the Grand Staircase. \r\n\r\nI&#039;ve heard, over the years, various reasons why this architectural ornament was never finished. One was, like the Central Dome, the Art Institute kind of never quite had the funding to get the detail together. The one explanation that I am more interested in is that there was a stone mason strike at the time of the construction of the building, and that the stone masons literally put down their tools and walked off the job. \r\n\r\nIt makes me feel like there was a very human decision there of somebody was just like, I quit, because when you&#039;re in the building like this, you get this sense of grandeur and beauty, and then you look at something like that and you&#039;re like, that is the work of a dude who was just done. \r\n\r\nI do like the fact that parts of this building, especially the big grand building, is unfinished, because it reminds me as a visitor that this is a human project. You know, civic buildings are made in many ways to be impersonal buildings. But I like the fact here in the Art Institute that you can see even in its architectural details the humanity here. This is an organic building. \r\n\r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "The Woman's Board Grand Staircase",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "The Woman's Board Grand Staircase",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1027": {
       "nid": 1027,
       "title": "Fragment Gallery",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Erin Hogan: So for this stop on the tour, stroll around the top of the Grand Staircase and take a look at the Fragments of Chicago&#039;s architectural past on display. \r\n\r\nTim Samuelson: It is a gallery of things of great beauty, and a hall of great shame. \r\n\r\nErin Hogan: Cultural historian of the city of Chicago, Tim Samuelson. \r\n\r\nTim Samuelson: This is a gallery of artifacts from some of the greatest architectural treasures of Chicago that were wantonly torn down over the years. And the buildings are gone. But there are the beautiful artifacts, and the pieces. But it&#039;s just like, you can look at the beautiful leaf from a tree and see the beauty in that, doesn&#039;t give you can idea of what the tree was like or its original context. But here is a gallery where these artifacts are literally hovering and floating above your head. \r\n\r\nErin Hogan: \tChicago is fiercely proud of its architecture in the way that other cities are proud of their food or music or fashion scene. Chicago has always been the number one city in the United States for architecture. That doesn&#039;t mean it&#039;s always the best at preserving its architecture. Allison Fisher is the curator of this collection. \r\n\r\nAllison Fisher: The Fragment Galleries I think are really important for the Art Institutes connection to physical space and time. And certainly we&#039;re a part of a large movement in the architectural community in Chicago, as well as a general cultural audience, to be more thoughtful about our built environment and what we gain and lose by demolishing and replacing buildings. \r\n\r\nErin Hogan: \tArchitecture critic for the Chicago Tribune, Blair Kamin. \r\n\r\nBlair Kamin: These fragments really communicate from the get go that these buildings had value. It&#039;s the first thing that you see as you ascend that staircase. So it&#039;s a dramatic statement of the museum saying, you know, the buildings across the street in the loop are often works of art, and shouldn&#039;t just be, they&#039;re not just dispensable. \r\n\r\nErin Hogan: Architect and preservationist, John Vinchi. \r\n\r\nJohn Vinci: Philosophically, the fact that the Art Institute would honor Chicago architecture to me is a very strong statement. Those elevator cages are some of the most complete that were salvaged. Other museums have parts of them. \r\n\r\nTim Samuelson: \tThe one in tact assembly where you can see what it was like to stand and wait for an elevator in the stock exchange. It&#039;s all recreated right before your eyes. \r\n\r\nJohn Vinci: I donated this one limestone cherub that&#039;s hanging there. That&#039;s from the Louis Sullivan house. And the fact that they have daylight on, and the daylight doesn&#039;t hurt them makes it even more special. \r\n\r\nTim Samuelson: \tThere&#039;s a decorative grill that Louis Sullivan had designed for a house for the McCormick family, that I would say is the most beautiful thing that he ever created, period. In fact if somebody said, you could only have one piece of Sullivan ornament left, that&#039;s the one I would take. It&#039;s an absolute bit of magic. \r\n\r\nBlair Kamin: Really, it&#039;s prophetic in a way, without being loud or activist. It has had an impact on the preservation of the past in Chicago. \r\n"
+      "audio_transcript": "Erin Hogan: So for this stop on the tour, stroll around the top of the Grand Staircase and take a look at the Fragments of Chicago&#039;s architectural past on display. \r\n\r\nTim Samuelson: It is a gallery of things of great beauty, and a hall of great shame. \r\n\r\nErin Hogan: Cultural historian of the city of Chicago, Tim Samuelson. \r\n\r\nTim Samuelson: This is a gallery of artifacts from some of the greatest architectural treasures of Chicago that were wantonly torn down over the years. And the buildings are gone. But there are the beautiful artifacts, and the pieces. But it&#039;s just like, you can look at the beautiful leaf from a tree and see the beauty in that, doesn&#039;t give you can idea of what the tree was like or its original context. But here is a gallery where these artifacts are literally hovering and floating above your head. \r\n\r\nErin Hogan: \tChicago is fiercely proud of its architecture in the way that other cities are proud of their food or music or fashion scene. Chicago has always been the number one city in the United States for architecture. That doesn&#039;t mean it&#039;s always the best at preserving its architecture. Allison Fisher is the curator of this collection. \r\n\r\nAllison Fisher: The Fragment Galleries I think are really important for the Art Institutes connection to physical space and time. And certainly we&#039;re a part of a large movement in the architectural community in Chicago, as well as a general cultural audience, to be more thoughtful about our built environment and what we gain and lose by demolishing and replacing buildings. \r\n\r\nErin Hogan: \tArchitecture critic for the Chicago Tribune, Blair Kamin. \r\n\r\nBlair Kamin: These fragments really communicate from the get go that these buildings had value. It&#039;s the first thing that you see as you ascend that staircase. So it&#039;s a dramatic statement of the museum saying, you know, the buildings across the street in the loop are often works of art, and shouldn&#039;t just be, they&#039;re not just dispensable. \r\n\r\nErin Hogan: Architect and preservationist, John Vinchi. \r\n\r\nJohn Vinci: Philosophically, the fact that the Art Institute would honor Chicago architecture to me is a very strong statement. Those elevator cages are some of the most complete that were salvaged. Other museums have parts of them. \r\n\r\nTim Samuelson: \tThe one in tact assembly where you can see what it was like to stand and wait for an elevator in the stock exchange. It&#039;s all recreated right before your eyes. \r\n\r\nJohn Vinci: I donated this one limestone cherub that&#039;s hanging there. That&#039;s from the Louis Sullivan house. And the fact that they have daylight on, and the daylight doesn&#039;t hurt them makes it even more special. \r\n\r\nTim Samuelson: \tThere&#039;s a decorative grill that Louis Sullivan had designed for a house for the McCormick family, that I would say is the most beautiful thing that he ever created, period. In fact if somebody said, you could only have one piece of Sullivan ornament left, that&#039;s the one I would take. It&#039;s an absolute bit of magic. \r\n\r\nBlair Kamin: Really, it&#039;s prophetic in a way, without being loud or activist. It has had an impact on the preservation of the past in Chicago. \r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "Fragment Gallery",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "Fragment Gallery",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1028": {
       "nid": 1028,
       "title": "Fullerton Hall",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Transcript to be added soon"
+      "audio_transcript": "Transcript to be added soon",
+      "translations": [
+        {
+          "language": "es",
+          "title": "Fullerton Hall",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "Fullerton Hall",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1029": {
       "nid": 1029,
       "title": "Ando Gallery",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Blair Kamin: As you come in, you are going through this kind of forest, this metaphorical forest, and the screens are beyond it. And so there&#039;s a moment of confusion, and then there&#039;s this clarity. \r\n\r\nErin Hogan: \tThe Architecture of the Art Institute of Chicago: The Ando Gallery.\r\n\r\nSo tucked away at the back of the Japanese Art Galleries is a beautiful room that opened in 1992 that the Art Institute commissioned from the Japanese architect Tadao Ando.  I tend to spend more time in this gallery wandering through the 16 pillars because I love that every step you take the pillars reorient your visual field. \r\n\r\nJanice Katz: They are there in order to create a mental transition. And supposedly by the time you get to the other side you should be focused and calm. My name is Janice Katz and I am the Associate Curator of Japanese Art here at the Art Institute of Chicago. Being designed as a gallery for Japanese screens, it certainly functions very well for that because as you&#039;ll note the ground line is continuous from the space where the visitors are through to the cases. And so they are in a way, inhabiting the same space as you are, which is how you would encounter them in Japan. \r\n\r\nIt&#039;s part of the museum where one can be alone with one&#039;s thoughts, more so than in other parts of the building. One can also being alone with a partner, and supposedly the Ando Gallery used to be one of the best public make out spots in Chicago. I don&#039;t know if it still is. \r\n\r\nErin Hogan: What I&#039;ve always appreciated about the Ando gallery is that it is an oasis of tranquility in a very busy museum, at the heart of a major American city, with trains and buses and pedestrians and cabs, but when you are in this gallery you don&#039;t really have a sense of any of that happening around you. This is a really enclosed, beautiful, tranquil space. I&#039;ve always considered it the chapel of the Art Institute. \r\n\r\nBlair Kamin. \r\n\r\nBlair Kamin: It&#039;s done with great subtly. It&#039;s not a kind of, showy, spectacle. But it&#039;s really done by a master who realizes that quiet moves can speak as powerfully and as profoundly as showy ones. It&#039;s rewarding in a deep way. \r\n"
+      "audio_transcript": "Blair Kamin: As you come in, you are going through this kind of forest, this metaphorical forest, and the screens are beyond it. And so there&#039;s a moment of confusion, and then there&#039;s this clarity. \r\n\r\nErin Hogan: \tThe Architecture of the Art Institute of Chicago: The Ando Gallery.\r\n\r\nSo tucked away at the back of the Japanese Art Galleries is a beautiful room that opened in 1992 that the Art Institute commissioned from the Japanese architect Tadao Ando.  I tend to spend more time in this gallery wandering through the 16 pillars because I love that every step you take the pillars reorient your visual field. \r\n\r\nJanice Katz: They are there in order to create a mental transition. And supposedly by the time you get to the other side you should be focused and calm. My name is Janice Katz and I am the Associate Curator of Japanese Art here at the Art Institute of Chicago. Being designed as a gallery for Japanese screens, it certainly functions very well for that because as you&#039;ll note the ground line is continuous from the space where the visitors are through to the cases. And so they are in a way, inhabiting the same space as you are, which is how you would encounter them in Japan. \r\n\r\nIt&#039;s part of the museum where one can be alone with one&#039;s thoughts, more so than in other parts of the building. One can also being alone with a partner, and supposedly the Ando Gallery used to be one of the best public make out spots in Chicago. I don&#039;t know if it still is. \r\n\r\nErin Hogan: What I&#039;ve always appreciated about the Ando gallery is that it is an oasis of tranquility in a very busy museum, at the heart of a major American city, with trains and buses and pedestrians and cabs, but when you are in this gallery you don&#039;t really have a sense of any of that happening around you. This is a really enclosed, beautiful, tranquil space. I&#039;ve always considered it the chapel of the Art Institute. \r\n\r\nBlair Kamin. \r\n\r\nBlair Kamin: It&#039;s done with great subtly. It&#039;s not a kind of, showy, spectacle. But it&#039;s really done by a master who realizes that quiet moves can speak as powerfully and as profoundly as showy ones. It&#039;s rewarding in a deep way. \r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "Ando Gallery",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "Ando Gallery",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1030": {
       "nid": 1030,
       "title": "McKinlock Court",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Erin Hogan:\tThe Architecture of the Art Institute of Chicago: McKinlock Court\r\n \r\nHere at this juncture at the end of Gonzalez Hall and McKinlock Court, this is actually my favorite spot in the entire museum. To me, this is the place where you really see the history of the building of the Art Institute unfold.\r\n \r\nMcKinlock Court was built in the twenties and it was actually supposed to be the model for future expansions of the Art Institute of Chicago: not grand wings but rather small, more modest, kind of bricks or blocks of galleries that could be successively added to over the years. If you go all the way over to the windows, you can look down into the beautiful interior of McKinlock Court, the courtyard of McKinlock Court. And you can see the Fountain of the Tritons, which was done in 1926 and installed in 1931. \r\n \r\nBut what I love the most about this spot is that this is the place where you see really the entire history of the Art Institute just as you spin around 360 degrees. You see the 1920s addition right there, with McKinlock Court. If you look to your right, you&#039;re looking into the Rice Building of American Art, which was done in 1988. If you look to your left, you&#039;re looking at the Modern Wing, designed by Renzo Piano, opened in 2009 and the museum&#039;s most recent addition. And then critically if you turn around and look where you just came from you are actually looking at the back of the Art Institute as it appeared in 1916. \r\n\r\nYou can actually walk over and put your hand on the wall and know that this was, at the time, the very end of the Art Institute. Of course that woudl have been hard for you to do becuase you would have been under water in 1916. At that point, none of Grant Park was built and Lake Michigan came all the way up to the end of the Art Institute and the railroad tracks. \r\n"
+      "audio_transcript": "Erin Hogan:\tThe Architecture of the Art Institute of Chicago: McKinlock Court\r\n \r\nHere at this juncture at the end of Gonzalez Hall and McKinlock Court, this is actually my favorite spot in the entire museum. To me, this is the place where you really see the history of the building of the Art Institute unfold.\r\n \r\nMcKinlock Court was built in the twenties and it was actually supposed to be the model for future expansions of the Art Institute of Chicago: not grand wings but rather small, more modest, kind of bricks or blocks of galleries that could be successively added to over the years. If you go all the way over to the windows, you can look down into the beautiful interior of McKinlock Court, the courtyard of McKinlock Court. And you can see the Fountain of the Tritons, which was done in 1926 and installed in 1931. \r\n \r\nBut what I love the most about this spot is that this is the place where you see really the entire history of the Art Institute just as you spin around 360 degrees. You see the 1920s addition right there, with McKinlock Court. If you look to your right, you&#039;re looking into the Rice Building of American Art, which was done in 1988. If you look to your left, you&#039;re looking at the Modern Wing, designed by Renzo Piano, opened in 2009 and the museum&#039;s most recent addition. And then critically if you turn around and look where you just came from you are actually looking at the back of the Art Institute as it appeared in 1916. \r\n\r\nYou can actually walk over and put your hand on the wall and know that this was, at the time, the very end of the Art Institute. Of course that woudl have been hard for you to do becuase you would have been under water in 1916. At that point, none of Grant Park was built and Lake Michigan came all the way up to the end of the Art Institute and the railroad tracks. \r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "McKinlock Court",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "McKinlock Court",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1031": {
       "nid": 1031,
       "title": "Stock Exchange Room",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Tim Samuelson: The best thing with the trading room is for people who know nothing about it to walk in and discover it. \r\n\r\nErin Hogan: Whenever I walk in here, all I can think is, Buy! Sell! Buy! Sell! \r\n\r\nThe Architecture of the Art Institute of Chicago: The Chicago Stock Exchange Trading Room. \r\n\r\nTim Samuelson: This is a room that quite frankly, when I walk into it, you basically swoon. \r\n\r\nErin Hogan:\tCultural historian of the City of Chicago, Tim Samuelson \r\n\r\nTim Samuelson:\tIf you were to take a single Louis Sullivan room and say, we&#039;re going to move it to the Art Institute of Chicago, with the great artworks of the museum, this was the one that they should have gotten because it is all about form, it is all about detail, it is all about color, combined in a way to evoke your emotions and engage the natural senses that are within everybody.\r\n \r\nErin Hogan: Can you tell us what this room was actually originally for? \r\n\r\nTim Samuelson: So this is a room where men would gather, trade stocks for different commodities and businesses in Chicago. They would stand and offer them up, shout out the prices, people would record the totes on chalkboards on the side. \r\n\r\nErin Hogan: And who designed it? \r\n\r\nTim Samuelson: \tThis is the work of the famed architectural partnership of Dankmar Adler and Louis Sullivan. Adler, the great engineer and coordinator of architectural projects, and Louis Sullivan, the greater dreamer of architecture, who could really create incredible buildings that could tease the emotions and really inspire, but at the same time, in a practical sense, doing the job they have to do. \r\n\r\nThe room was originally inside a large office building, and it had interior structure that had 24 columns in it to hold the partitions and structure of the building together. But here, on a lower floor, you had to open it up and concentrate all of those 24 columns into 4 really big columns--and if you look there are really big columns in here. And then, across you have flat plaster, and that is done by stenciling. This was done in collaboration with Sullivan&#039;s best friend, Louis J. Melay, who helped Sullivan realize in color what Sullivan was trying to do with architecture. The stenciling has 52 separate colors in it. And some of those colors are so close in value you can hardly tell them apart. But putting it together it makes this vibrant pattern that seems to be in motion that by realty is in static. It enlivens and almost expands the space, that the colors together create what is honestly a flat wall, but by illusion it&#039;s almost like a hologram. \r\n\r\nYou can go to the finest painting in this museum, and you&#039;re getting the same thing happening here in the realm of architecture. \r\n"
+      "audio_transcript": "Tim Samuelson: The best thing with the trading room is for people who know nothing about it to walk in and discover it. \r\n\r\nErin Hogan: Whenever I walk in here, all I can think is, Buy! Sell! Buy! Sell! \r\n\r\nThe Architecture of the Art Institute of Chicago: The Chicago Stock Exchange Trading Room. \r\n\r\nTim Samuelson: This is a room that quite frankly, when I walk into it, you basically swoon. \r\n\r\nErin Hogan:\tCultural historian of the City of Chicago, Tim Samuelson \r\n\r\nTim Samuelson:\tIf you were to take a single Louis Sullivan room and say, we&#039;re going to move it to the Art Institute of Chicago, with the great artworks of the museum, this was the one that they should have gotten because it is all about form, it is all about detail, it is all about color, combined in a way to evoke your emotions and engage the natural senses that are within everybody.\r\n \r\nErin Hogan: Can you tell us what this room was actually originally for? \r\n\r\nTim Samuelson: So this is a room where men would gather, trade stocks for different commodities and businesses in Chicago. They would stand and offer them up, shout out the prices, people would record the totes on chalkboards on the side. \r\n\r\nErin Hogan: And who designed it? \r\n\r\nTim Samuelson: \tThis is the work of the famed architectural partnership of Dankmar Adler and Louis Sullivan. Adler, the great engineer and coordinator of architectural projects, and Louis Sullivan, the greater dreamer of architecture, who could really create incredible buildings that could tease the emotions and really inspire, but at the same time, in a practical sense, doing the job they have to do. \r\n\r\nThe room was originally inside a large office building, and it had interior structure that had 24 columns in it to hold the partitions and structure of the building together. But here, on a lower floor, you had to open it up and concentrate all of those 24 columns into 4 really big columns--and if you look there are really big columns in here. And then, across you have flat plaster, and that is done by stenciling. This was done in collaboration with Sullivan&#039;s best friend, Louis J. Melay, who helped Sullivan realize in color what Sullivan was trying to do with architecture. The stenciling has 52 separate colors in it. And some of those colors are so close in value you can hardly tell them apart. But putting it together it makes this vibrant pattern that seems to be in motion that by realty is in static. It enlivens and almost expands the space, that the colors together create what is honestly a flat wall, but by illusion it&#039;s almost like a hologram. \r\n\r\nYou can go to the finest painting in this museum, and you&#039;re getting the same thing happening here in the realm of architecture. \r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "Stock Exchange Room",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "Stock Exchange Room",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1034": {
       "nid": 1034,
       "title": "Griffin Court",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Erin Hogan: \tThe Architecture of the Art Institute of Chicago: Griffin Court in the Modern Wing \r\n\r\nZoe Ryan: Hello, I&#039;m Zoe Ryan. I&#039;m the John H. Bryan Chair and Curator of Architecture and Design at the Art Institute of Chicago. The Modern Wing in many wings is a different type of front door to the museum. Gone is the grand staircase of the Michigan Avenue building. You walk in to the Griffin Court, the entrance of the Modern Wing, and it&#039;s flooded with light, and you sort of feel this sense of arrival. \r\n\r\nRenzo Piano: Hello? \r\n\r\nErin Hogan:\tHello, Mr. Piano, I don&#039;t know if you remember me. \r\n\r\nRenzo Piano: Of coure, hey, it&#039;s you! \r\n\r\nErin Hogan: Yes, it&#039;s me! \r\n\r\nI was lucky enough to catch the architect of the Modern Wing, Renzo Piano, on the phone in the midst of a very busy day in his office in Genoa. \r\n\r\nIt feels like a very light building. Can you talk about some of the tools in your toolbox that gave us that sense? \r\n\r\nRenzo Piano: Sense of lightness and sense of transparancy are very close friends. It&#039;s about working with the light. \r\n\r\nErin Hogan: \tArchitecture critic Blair Kamin.\r\n\r\nBlair Kamin: The architect&#039;s job is to create an environment that is as comfortable and conducive to viewing these great works of art as possible. And one of those distinguishing features of making those environments is the introduction of natural light. If the light wasn&#039;t right, the museum wouldn&#039;t be either. \r\n\r\nErin Hogan: \tMuseums are often caught between wanting to give people as much daylight as possible, but not allowing so much daylight as to be harmful for works of art. And what Renzo Piano did in the Modern Wing is come up with a really ingenious system of light filtration. \r\n\r\nRenzo Piano: The entire building is actually covered by the flying carpet, what one would call the flying carpet, that is filtering the light. \r\n\r\nErin Hogan: \tIf you look up at the top of Griffin Court, you&#039;ll notice that there is a grid above the skylight. And if you look at the flying carpet, the sun shade over the galleries on the east side, there is also a grid. When you stand in Griffin Court and you face north looking at the Gary Pavilion in Millennium Park, you can see through to the sky. But if you turn around and look to the south, the angle of the blades on the grid actually keep daylight out. So the building allows as much north light as possible, which is the safest kind of light for works of art, and blocks light coming from the south, which is the harshest light for works of art. \r\n\r\nNot only did Renzo bring in a lot of natural light, but the building itself also feels very light. There&#039;s a very subliminal, sneaky sense of floating or levitation in the Modern Wing. \r\n\r\nSo for example, if you look at the point where the walls meet the floors, there&#039;s about a one inch reveal that makes it seem like the walls are floating a little bit. In the benches in Griffin Court, you can see that they also  are on these little pegs so they seem to hover just slightly above the ground.\r\n\r\nBlair Kamin: When an architect designs a museum, there&#039;s often a tension between the container and the contained. The contained is the art. The container is the building. \r\n\r\nRenzo Piano: When you make a space for art, you have to accept one simple thing: that you are working for art. If you make a concert hall you make a house for the sound for music. If you make a museum, you make a house for art. \r\n\r\n"
+      "audio_transcript": "Erin Hogan: \tThe Architecture of the Art Institute of Chicago: Griffin Court in the Modern Wing \r\n\r\nZoe Ryan: Hello, I&#039;m Zoe Ryan. I&#039;m the John H. Bryan Chair and Curator of Architecture and Design at the Art Institute of Chicago. The Modern Wing in many wings is a different type of front door to the museum. Gone is the grand staircase of the Michigan Avenue building. You walk in to the Griffin Court, the entrance of the Modern Wing, and it&#039;s flooded with light, and you sort of feel this sense of arrival. \r\n\r\nRenzo Piano: Hello? \r\n\r\nErin Hogan:\tHello, Mr. Piano, I don&#039;t know if you remember me. \r\n\r\nRenzo Piano: Of coure, hey, it&#039;s you! \r\n\r\nErin Hogan: Yes, it&#039;s me! \r\n\r\nI was lucky enough to catch the architect of the Modern Wing, Renzo Piano, on the phone in the midst of a very busy day in his office in Genoa. \r\n\r\nIt feels like a very light building. Can you talk about some of the tools in your toolbox that gave us that sense? \r\n\r\nRenzo Piano: Sense of lightness and sense of transparancy are very close friends. It&#039;s about working with the light. \r\n\r\nErin Hogan: \tArchitecture critic Blair Kamin.\r\n\r\nBlair Kamin: The architect&#039;s job is to create an environment that is as comfortable and conducive to viewing these great works of art as possible. And one of those distinguishing features of making those environments is the introduction of natural light. If the light wasn&#039;t right, the museum wouldn&#039;t be either. \r\n\r\nErin Hogan: \tMuseums are often caught between wanting to give people as much daylight as possible, but not allowing so much daylight as to be harmful for works of art. And what Renzo Piano did in the Modern Wing is come up with a really ingenious system of light filtration. \r\n\r\nRenzo Piano: The entire building is actually covered by the flying carpet, what one would call the flying carpet, that is filtering the light. \r\n\r\nErin Hogan: \tIf you look up at the top of Griffin Court, you&#039;ll notice that there is a grid above the skylight. And if you look at the flying carpet, the sun shade over the galleries on the east side, there is also a grid. When you stand in Griffin Court and you face north looking at the Gary Pavilion in Millennium Park, you can see through to the sky. But if you turn around and look to the south, the angle of the blades on the grid actually keep daylight out. So the building allows as much north light as possible, which is the safest kind of light for works of art, and blocks light coming from the south, which is the harshest light for works of art. \r\n\r\nNot only did Renzo bring in a lot of natural light, but the building itself also feels very light. There&#039;s a very subliminal, sneaky sense of floating or levitation in the Modern Wing. \r\n\r\nSo for example, if you look at the point where the walls meet the floors, there&#039;s about a one inch reveal that makes it seem like the walls are floating a little bit. In the benches in Griffin Court, you can see that they also  are on these little pegs so they seem to hover just slightly above the ground.\r\n\r\nBlair Kamin: When an architect designs a museum, there&#039;s often a tension between the container and the contained. The contained is the art. The container is the building. \r\n\r\nRenzo Piano: When you make a space for art, you have to accept one simple thing: that you are working for art. If you make a concert hall you make a house for the sound for music. If you make a museum, you make a house for art. \r\n\r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "Griffin Court",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "Griffin Court",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1035": {
       "nid": 1035,
       "title": "The Third Floor Galleries of the Modern Wing",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "Erin Hogan: The Architecture of the Art Institute of Chicago: The Third Floor Galleries of the Modern Wing\r\n\r\nWe are now in Gallery 398 of the Modern Wing looking over Millennium Park, the beautiful Frank Gehry Pavilion. Hopefully you are here at the time of year when the Lurie Gardens are in bloom and you can see the history of Chicago architecture folding in front of you. We&#039;ve gone 180 degrees from the Michigan Avenue entrance. At the time, the museum was built to keep the city out. Renzo Piano&#039;s modern wing takes the exact opposite approach and brings the city into the museum and the museum into the city. \r\n\r\nRenzo Piano: What you see is actually in the sun. So you see, you see the park in the sun and you see it more the buildings of Chicago in the sun, in the light. So this is what is making magic there, the sun. \r\n\r\nBlair Kamin: You cannot understand the Modern Wing without understanding Millennium Park. \r\n\r\nErin Hogan: \tBlair Kamin \r\n\r\nBlair Kamin: Originally the Art Institute intended to put the Modern Wing on the south side of the building. And then Millennium Park was announced in 1998 and the museum realized, very smartly, that the action was on the north. The Modern Wing had an impact on Millennial Park. And that is most evident in the Lurie Garden across Monroe Street. If you look down at the Lurie Garden from the Modern Wing, you&#039;ll notice that the surface of the land is actually tilted upwards toward the Modern Wing, and that&#039;s not coincidental. The idea is that you&#039;re supposed to be able to look down, from the Modern Wing, more easily onto this garden. \r\n\r\nErin Hogan: John H. Bryan, Chair and Curator of Architecture and Design at the Art Institute of Chicago, Zoe Ryan. \r\n\r\nZoe Ryan: Renzo is really interested in siting his projects, really understanding how his projects fit within a given context. He&#039;s absolutely understanding that his building will sit amongst this incredible skyline.\r\n\r\nErin Hogan: So take a look out the windows of the Third Floor Galleries of the Modern Wing. To you left you can see the famous Michigan Avenue Cliff. These are all the late 19th and early 20th century buildings that really defined Chicago architecture. They are heavy; they are ornate. And then if you look directly across the park, you see the history of 20th and 21st century architecture in Chicago: the Hancock Building, the second tallest building in Chicago; to the right of the Hancock Building, Jeanne Gang&#039;s Aqua Tower with its wavy balconies; the Prudential building from 1955; next to the Prudential Building, the massive Aon Center with its granite cladding. You can see how the Art Institute fits in the midst of all of this, and talks to its neighbors. It talks to the 19th century buildings on the left; it talks to the 20th and 21st buildings straight in front of you. The Art Institute is literally embedded and nestled in the history of Chicago architecture. \r\n\r\nBlair Kamin: I think that in a way this nexus of Millennium Park and the Modern Wing revives and refreshes this intersection of landscape architecture, architecture, and art that we saw in the World&#039;s Colombian exhibition of 1893. Again, it&#039;s Chicago taking that essential part of its DNA and reinventing it for a new time and new circumstances and using new technologies. That&#039;s the best of the city, it&#039;s really what it does so well and why it&#039;s really viewed as a capital of culture and a capital of architecture. \r\n"
+      "audio_transcript": "Erin Hogan: The Architecture of the Art Institute of Chicago: The Third Floor Galleries of the Modern Wing\r\n\r\nWe are now in Gallery 398 of the Modern Wing looking over Millennium Park, the beautiful Frank Gehry Pavilion. Hopefully you are here at the time of year when the Lurie Gardens are in bloom and you can see the history of Chicago architecture folding in front of you. We&#039;ve gone 180 degrees from the Michigan Avenue entrance. At the time, the museum was built to keep the city out. Renzo Piano&#039;s modern wing takes the exact opposite approach and brings the city into the museum and the museum into the city. \r\n\r\nRenzo Piano: What you see is actually in the sun. So you see, you see the park in the sun and you see it more the buildings of Chicago in the sun, in the light. So this is what is making magic there, the sun. \r\n\r\nBlair Kamin: You cannot understand the Modern Wing without understanding Millennium Park. \r\n\r\nErin Hogan: \tBlair Kamin \r\n\r\nBlair Kamin: Originally the Art Institute intended to put the Modern Wing on the south side of the building. And then Millennium Park was announced in 1998 and the museum realized, very smartly, that the action was on the north. The Modern Wing had an impact on Millennial Park. And that is most evident in the Lurie Garden across Monroe Street. If you look down at the Lurie Garden from the Modern Wing, you&#039;ll notice that the surface of the land is actually tilted upwards toward the Modern Wing, and that&#039;s not coincidental. The idea is that you&#039;re supposed to be able to look down, from the Modern Wing, more easily onto this garden. \r\n\r\nErin Hogan: John H. Bryan, Chair and Curator of Architecture and Design at the Art Institute of Chicago, Zoe Ryan. \r\n\r\nZoe Ryan: Renzo is really interested in siting his projects, really understanding how his projects fit within a given context. He&#039;s absolutely understanding that his building will sit amongst this incredible skyline.\r\n\r\nErin Hogan: So take a look out the windows of the Third Floor Galleries of the Modern Wing. To you left you can see the famous Michigan Avenue Cliff. These are all the late 19th and early 20th century buildings that really defined Chicago architecture. They are heavy; they are ornate. And then if you look directly across the park, you see the history of 20th and 21st century architecture in Chicago: the Hancock Building, the second tallest building in Chicago; to the right of the Hancock Building, Jeanne Gang&#039;s Aqua Tower with its wavy balconies; the Prudential building from 1955; next to the Prudential Building, the massive Aon Center with its granite cladding. You can see how the Art Institute fits in the midst of all of this, and talks to its neighbors. It talks to the 19th century buildings on the left; it talks to the 20th and 21st buildings straight in front of you. The Art Institute is literally embedded and nestled in the history of Chicago architecture. \r\n\r\nBlair Kamin: I think that in a way this nexus of Millennium Park and the Modern Wing revives and refreshes this intersection of landscape architecture, architecture, and art that we saw in the World&#039;s Colombian exhibition of 1893. Again, it&#039;s Chicago taking that essential part of its DNA and reinventing it for a new time and new circumstances and using new technologies. That&#039;s the best of the city, it&#039;s really what it does so well and why it&#039;s really viewed as a capital of culture and a capital of architecture. \r\n",
+      "translations": [
+        {
+          "language": "es",
+          "title": "The Third Floor Galleries of the Modern Wing",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "The Third Floor Galleries of the Modern Wing",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     },
     "1380": {
       "nid": 1380,
       "title": "The Old Guitarist",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "&quot;Narrator: Pablo Picasso lived and worked in his studio called the Bateau-Lavoir in a poor district of Paris around the time he made this picture.  He would have seen mendicants like this gaunt man in the streets surrounding his studio.  As a young man filled with the physical and emotional energies of youth, coming to Paris for the first time, full of artistic ambition, he could not have been blind to the evidence of the frailty of life around him.  One wants to see in this arrangement of seemingly broken anatomical forms, the body of Christ being taken down from the cross and no doubt as a Spanish painter from an intensely Catholic country, those references were not far from Picasso&#039;s experience.  The young Picasso would also have been familiar with the work of Spanish masters.  Here, his use of white highlights to emphasize the planes of the skull and the expressiveness of the facial features calls to mind El Greco, an important Spanish painter and someone to whom modern painters looked from Cezanne to Picasso.  So while the young Picasso was certainly taking in the work of his avant-garde contemporaries, he is also recalling the traditions culturally and pictorially of his Spanish homeland.  As you look at a work of art and glance at the label for information about the title of the painting and for the name of the artist and dates, you should also look at the credit line.  In this case, you&#039;ll see that this picture came from the Helen Birch Bartlett collection.  To hear more about this extraordinary gift to the Art Institute, press play on your audio guide.&quot;"
+      "audio_transcript": "&quot;Narrator: Pablo Picasso lived and worked in his studio called the Bateau-Lavoir in a poor district of Paris around the time he made this picture.  He would have seen mendicants like this gaunt man in the streets surrounding his studio.  As a young man filled with the physical and emotional energies of youth, coming to Paris for the first time, full of artistic ambition, he could not have been blind to the evidence of the frailty of life around him.  One wants to see in this arrangement of seemingly broken anatomical forms, the body of Christ being taken down from the cross and no doubt as a Spanish painter from an intensely Catholic country, those references were not far from Picasso&#039;s experience.  The young Picasso would also have been familiar with the work of Spanish masters.  Here, his use of white highlights to emphasize the planes of the skull and the expressiveness of the facial features calls to mind El Greco, an important Spanish painter and someone to whom modern painters looked from Cezanne to Picasso.  So while the young Picasso was certainly taking in the work of his avant-garde contemporaries, he is also recalling the traditions culturally and pictorially of his Spanish homeland.  As you look at a work of art and glance at the label for information about the title of the painting and for the name of the artist and dates, you should also look at the credit line.  In this case, you&#039;ll see that this picture came from the Helen Birch Bartlett collection.  To hear more about this extraordinary gift to the Art Institute, press play on your audio guide.&quot;",
+      "translations": [
+        {
+          "language": "es",
+          "title": "The Old Guitarist",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        },
+        {
+          "language": "zh-hant",
+          "title": "The Old Guitarist",
+          "audio_file_url": "http://localhost:8888/unfa.mp3",
+          "audio_transcript": ""
+        }
+      ]
     }
   },
   "tours": [
     {
       "nid": 1023,
       "title": "Sample Tour",
+      "weight": 0,
       "image_url": "http://localhost:8888/placeholder.png",
       "description": "Sample Description : Uncover the secrets of the museum’s storied architecture. ",
       "intro": "Sample Intro : The Art Institute of Chicago reaches across eight separate buildings covering 1 million square feet, unfolding like a city within a city. From the bustling front steps to the tranquil Ando Gallery, go behind the scenes with experts like Chicago Tribune architecture critic Blair Kamin and Tim Samuelson, the official Cultural Historian of the City of Chicago, whose stories and insights bring the city, its art, and its architecture to life.",
       "tour_audio": 1024,
-      "stops": [
+      "location": "41.87954599481745, -87.62390507490352",
+      "translations": [
+      	{
+      		"language": "es",
+        	"title": "Sample Tour",
+        	"description": "",
+        	"intro": ""
+        },
+      	{
+      		"language": "zh-hant",
+        	"title": "Sample Tour",
+        	"description": "",
+        	"intro": ""
+        }
+      ],
+      "tour_stops": [
         {
           "sort": 0,
-          "audio": 1025,
-          "object": 1254
+          "object": 1254,
+          "audio_id": 1025,
+          "audio_bumper": null
         },
         {
           "sort": 1,
-          "audio": 1026,
-          "object": 1038
+          "object": 1038,
+          "audio_id": 1026,
+          "audio_bumper": null
         },
         {
           "sort": 2,
-          "audio": 1027,
-          "object": 1036
+          "object": 1036,
+          "audio_id": 1027,
+          "audio_bumper": null
         },
         {
           "sort": 3,
-          "audio": 1028,
-          "object": 1041
+          "object": 1041,
+          "audio_id": 1028,
+          "audio_bumper": null
         },
         {
           "sort": 4,
-          "audio": 1029,
-          "object": 1037
+          "object": 1037,
+          "audio_id": 1029,
+          "audio_bumper": null
         },
         {
           "sort": 5,
-          "audio": 1030,
-          "object": 1039
+          "object": 1039,
+          "audio_id": 1030,
+          "audio_bumper": null
         },
         {
           "sort": 6,
-          "audio": 1031,
-          "object": 1045
+          "object": 1045,
+          "audio_id": 1031,
+          "audio_bumper": null
         },
         {
           "sort": 7,
-          "audio": 1034,
-          "object": 1043
+          "object": 1043,
+          "audio_id": 1034,
+          "audio_bumper": null
         },
         {
           "sort": 8,
-          "audio": 1035,
-          "object": 1044
+          "object": 1044,
+          "audio_id": 1035,
+          "audio_bumper": null
         }
       ]
     }
-  ]
+  ],
+  "map_floors": {
+    "map_floor0": {
+      "label": "0",
+      "floor_plan": "http://localhost:8888/map_floor0.pdf",
+      "anchor_pixel_1": "855.955,1338.365",
+      "anchor_pixel_2": "1011.94,1338.365",
+      "anchor_location_1": "41.88002009571711,-87.62398928403854",
+      "anchor_location_2": "41.8800240897643,-87.62334823608397"
+    },
+    "map_floor1": {
+      "label": "1",
+      "floor_plan": "http://localhost:8888/map_floor1.pdf",
+      "anchor_pixel_1": "855.955,1338.365",
+      "anchor_pixel_2": "1011.94,1338.365",
+      "anchor_location_1": "41.88002009571711,-87.62398928403854",
+      "anchor_location_2": "41.8800240897643,-87.62334823608397"
+    },
+    "map_floor2": {
+      "label": "2",
+      "floor_plan": "http://localhost:8888/map_floor2.pdf",
+      "anchor_pixel_1": "855.955,1338.365",
+      "anchor_pixel_2": "1011.94,1338.365",
+      "anchor_location_1": "41.88002009571711,-87.62398928403854",
+      "anchor_location_2": "41.8800240897643,-87.62334823608397"
+    },
+    "map_floor3": {
+      "label": "3",
+      "floor_plan": "http://localhost:8888/map_floor3.pdf",
+      "anchor_pixel_1": "855.955,1338.365",
+      "anchor_pixel_2": "1011.94,1338.365",
+      "anchor_location_1": "41.88002009571711,-87.62398928403854",
+      "anchor_location_2": "41.8800240897643,-87.62334823608397"
+    }
+  },
+  "map_annontations": {
+    "3925": {
+      "title": "Floor 0 - WomensRoom",
+      "nid": "3925",
+      "type": "map_annotation",
+      "location": "41.879415568426559,-87.622237619295773",
+      "floor": "0",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Women's Room",
+      "image_url": null
+    },
+    "3926": {
+      "title": "Floor 0 - MensRoom",
+      "nid": "3926",
+      "type": "map_annotation",
+      "location": "41.879414176510537,-87.622313099197385",
+      "floor": "0",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Men's Room",
+      "image_url": null
+    },
+    "3929": {
+      "title": "Floor 0 - Dining - Museum Café",
+      "nid": "3929",
+      "type": "map_annotation",
+      "location": "41.879526175971904,-87.621493392211405",
+      "floor": "0",
+      "description": "Monday - Friday: 11am–4pm\r\nThursday: 5pm–7:30pm",
+      "label": "Museum Café",
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Dining",
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "3935": {
+      "title": "Floor 0 - Department - Textiles",
+      "nid": "3935",
+      "type": "map_annotation",
+      "location": "41.879380764014449,-87.621858511042802",
+      "floor": "0",
+      "description": null,
+      "label": "Textiles",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "3942": {
+      "title": "Floor 0 - Space - Grand Staircase",
+      "nid": "3942",
+      "type": "map_annotation",
+      "location": "41.8795920406452,-87.623642915653932",
+      "floor": "0",
+      "description": null,
+      "label": "Grand\r\nStaircase",
+      "annotation_type": "Text",
+      "text_type": "Space",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "3948": {
+      "title": "Floor 1 - Giftshop",
+      "nid": "3948",
+      "type": "map_annotation",
+      "location": "41.880614842103611,-87.622315867821243",
+      "floor": "1",
+      "description": null,
+      "label": "Modern Giftshop",
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Gift Shop",
+      "image_url": null
+    },
+    "3949": {
+      "title": "Floor 1 - Tickets",
+      "nid": "3949",
+      "type": "map_annotation",
+      "location": "41.880500347935715,-87.622106657877964",
+      "floor": "1",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Tickets",
+      "image_url": null
+    },
+    "3954": {
+      "title": "Floor 1 - MensRoom",
+      "nid": "3954",
+      "type": "map_annotation",
+      "location": "41.879769883468121,-87.622360001933273",
+      "floor": "1",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Men's Room",
+      "image_url": null
+    },
+    "3955": {
+      "title": "Floor 1 - WomensRoom",
+      "nid": "3955",
+      "type": "map_annotation",
+      "location": "41.879877394604584,-87.622359147557603",
+      "floor": "1",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Women's Room",
+      "image_url": null
+    },
+    "3964": {
+      "title": "Floor 1 - Elevator",
+      "nid": "3964",
+      "type": "map_annotation",
+      "location": "41.879523431143241,-87.623314337814236",
+      "floor": "1",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Elevator",
+      "image_url": null
+    },
+    "3970": {
+      "title": "Floor 1 - Elevator",
+      "nid": "3970",
+      "type": "map_annotation",
+      "location": "41.879688500859153,-87.623787320224437",
+      "floor": "1",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Elevator",
+      "image_url": null
+    },
+    "3974": {
+      "title": "Floor 1 - Department - Prints and Drawings",
+      "nid": "3974",
+      "type": "map_annotation",
+      "location": "41.879769515930661,-87.623404975799076",
+      "floor": "1",
+      "description": null,
+      "label": "Prints and Drawings",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "3977": {
+      "title": "Floor 1 - Department - American Art Before 1900",
+      "nid": "3977",
+      "type": "map_annotation",
+      "location": "41.879133252318418,-87.622144511135147",
+      "floor": "1",
+      "description": null,
+      "label": "American Art Before 1900",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "3978": {
+      "title": "Floor 1 - Department - Greek, Roman, and Byzantine Art",
+      "nid": "3978",
+      "type": "map_annotation",
+      "location": "41.879598605715827,-87.621848170609923",
+      "floor": "1",
+      "description": null,
+      "label": "Greek, Roman,\r\nand Byzantine Art",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "3988": {
+      "title": "Floor 1 - Space - Grand Staircase",
+      "nid": "3988",
+      "type": "map_annotation",
+      "location": "41.879594708821571,-87.62367017691632",
+      "floor": "1",
+      "description": null,
+      "label": "Grand Staircase",
+      "annotation_type": "Text",
+      "text_type": "Space",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "3991": {
+      "title": "Floor 1 - Space - Chicago Stock Exchange Trading Room",
+      "nid": "3991",
+      "type": "map_annotation",
+      "location": "41.879603649714653,-87.621254170621171",
+      "floor": "1",
+      "description": null,
+      "label": "Chicago\r\nStock Exchange\r\nTrading Room",
+      "annotation_type": "Text",
+      "text_type": "Space",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "3993": {
+      "title": "Floor 2 - Wheelchair Ramp",
+      "nid": "3993",
+      "type": "map_annotation",
+      "location": "41.879541459612447,-87.623033596976882",
+      "floor": "2",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Wheelchair Ramp",
+      "image_url": null
+    },
+    "3994": {
+      "title": "Floor 2 - MensRoom",
+      "nid": "3994",
+      "type": "map_annotation",
+      "location": "41.879744821422506,-87.622241319862582",
+      "floor": "2",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Men's Room",
+      "image_url": null
+    },
+    "3995": {
+      "title": "Floor 2 - Dining - Cafe Moderno",
+      "nid": "3995",
+      "type": "map_annotation",
+      "location": "41.879918483007529,-87.622124045917587",
+      "floor": "2",
+      "description": "Monday - Sunday: 10:30am–4:30pm\r\nThursdays to 7pm\r\n",
+      "label": "Cafe Moderno",
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Dining",
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "4000": {
+      "title": "Floor 2 - WomensRoom",
+      "nid": "4000",
+      "type": "map_annotation",
+      "location": "41.879744106910088,-87.622355999211222",
+      "floor": "2",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Women's Room",
+      "image_url": null
+    },
+    "4001": {
+      "title": "Floor 2 - Department - Impressionism",
+      "nid": "4001",
+      "type": "map_annotation",
+      "location": "41.879594059029152,-87.62307090481697",
+      "floor": "2",
+      "description": null,
+      "label": "Impressionism",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "4002": {
+      "title": "Floor 2 - Department - European Decorative Arts",
+      "nid": "4002",
+      "type": "map_annotation",
+      "location": "41.879354821371507,-87.623212193979597",
+      "floor": "2",
+      "description": null,
+      "label": "European Decorative\r\nArts",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "4007": {
+      "title": "Floor 2 - Department - Architecture and Design",
+      "nid": "4007",
+      "type": "map_annotation",
+      "location": "41.880054064152816,-87.622301314093789",
+      "floor": "2",
+      "description": null,
+      "label": "Architecture\r\nand Design",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "4013": {
+      "title": "Floor 3 - MensRoom",
+      "nid": "4013",
+      "type": "map_annotation",
+      "location": "41.879847238557424,-87.622269286426473",
+      "floor": "3",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Men's Room",
+      "image_url": null
+    },
+    "4014": {
+      "title": "Floor 3 - Dining - Terzo Piano",
+      "nid": "4014",
+      "type": "map_annotation",
+      "location": "41.880121639363438,-87.62230124870679",
+      "floor": "3",
+      "description": "Monday - Friday: 11am–3pm\r\nThurs: 5pm–8pm, Sun: 11am–3pm",
+      "label": "Terzo Piano",
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Dining",
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "4015": {
+      "title": "Floor 3 - WomensRoom",
+      "nid": "4015",
+      "type": "map_annotation",
+      "location": "41.880611092239008,-87.622424737818307",
+      "floor": "3",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Women's Room",
+      "image_url": null
+    },
+    "4020": {
+      "title": "Floor 3 - Department - Modern Art",
+      "nid": "4020",
+      "type": "map_annotation",
+      "location": "41.880501136864481,-87.621684219932888",
+      "floor": "3",
+      "description": null,
+      "label": "Modern Art",
+      "annotation_type": "Department",
+      "text_type": null,
+      "amenity_type": null,
+      "image_url": "http://localhost:8888/placeholder.png"
+    },
+    "4023": {
+      "title": "Floor 3 - Space - Bluhm Family Terrace",
+      "nid": "4023",
+      "type": "map_annotation",
+      "location": "41.880421627161965,-87.62230003394663",
+      "floor": "3",
+      "description": null,
+      "label": "Bluhm\r\nFamily \r\nTerrace",
+      "annotation_type": "Text",
+      "text_type": "Space",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "4027": {
+      "title": "Landmark - Michigan Avenue Building",
+      "nid": "4027",
+      "type": "map_annotation",
+      "location": "41.879590060328432,-87.623628320536938",
+      "floor": null,
+      "description": null,
+      "label": "Michigan\r\nAvenue\r\nBuilding",
+      "annotation_type": "Text",
+      "text_type": "Landmark",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "4028": {
+      "title": "Landmark - McKinlock Court",
+      "nid": "4028",
+      "type": "map_annotation",
+      "location": "41.879680399296142,-87.621841411180866",
+      "floor": null,
+      "description": null,
+      "label": "McKinlock Court",
+      "annotation_type": "Text",
+      "text_type": "Landmark",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "4029": {
+      "title": "Landmark - The Modern Wing",
+      "nid": "4029",
+      "type": "map_annotation",
+      "location": "41.880495475128811,-87.622170000107175",
+      "floor": null,
+      "description": null,
+      "label": "The Modern Wing",
+      "annotation_type": "Text",
+      "text_type": "Landmark",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "4030": {
+      "title": "Landmark - Rice Building",
+      "nid": "4030",
+      "type": "map_annotation",
+      "location": "41.878973285343022,-87.62213529150435",
+      "floor": null,
+      "description": null,
+      "label": "Rice Building",
+      "annotation_type": "Text",
+      "text_type": "Landmark",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "4044": {
+      "title": "Landmark - Ryan Learning Center",
+      "nid": "4044",
+      "type": "map_annotation",
+      "location": "41.88050706235679, -87.62168152363017",
+      "floor": null,
+      "description": null,
+      "label": "Ryan Learning Center",
+      "annotation_type": "Text",
+      "text_type": "Landmark",
+      "amenity_type": null,
+      "image_url": null
+    },
+    "4074": {
+      "title": "Floor 0 - Amenity - Member Lounge",
+      "nid": "4074",
+      "type": "map_annotation",
+      "location": "41.879724974687321,-87.621533759440026",
+      "floor": "0",
+      "description": null,
+      "label": null,
+      "annotation_type": "Amenity",
+      "text_type": null,
+      "amenity_type": "Members Lounge",
+      "image_url": null
+    }
+  },
+  "search": {
+    "search_strings": {
+      "0": "Essentials Tour",
+      "2": "Impressionism",
+      "4": "A Sunday on La Grande Jatte - 1884"
+    },
+    "search_objects": [
+      1039,
+      1041,
+      1043,
+      1044,
+      1045
+    ]
+  }
 }

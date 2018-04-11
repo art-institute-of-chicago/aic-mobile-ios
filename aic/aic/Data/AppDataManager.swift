@@ -238,7 +238,12 @@ class AppDataManager {
 	// MARK: Download Exhibitions
 	
 	private func downloadExhibitions() {
-		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]! + "/search?limit=99")!)
+		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
+		if url.range(of: "/search") == nil {
+			url.append("/search")
+		}
+		url.append("?limit=99")
+		let urlRequest = URLRequest(url: URL(string: url)!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
 			"fields": [
@@ -297,7 +302,12 @@ class AppDataManager {
 	// MARK: Download Events
 	
 	func downloadEvents() {
-		let urlRequest = URLRequest(url: URL(string: app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]! + "/search?limit=500")!)
+		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
+		if url.range(of: "/search") == nil {
+			url.append("/search")
+		}
+		url.append("?limit=500")
+		let urlRequest = URLRequest(url: URL(string: url)!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
 			"fields": [

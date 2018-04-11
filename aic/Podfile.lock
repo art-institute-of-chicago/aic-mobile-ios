@@ -2,7 +2,7 @@ PODS:
   - Alamofire (4.5.1)
   - Atributika (4.4.1)
   - GoogleAnalytics (3.17.0)
-  - Kingfisher (4.6.4)
+  - Kingfisher (4.7.0)
   - Localize-Swift (2.0.0)
   - PureLayout (3.0.2)
   - SwiftyJSON (3.1.4)
@@ -22,7 +22,7 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Atributika: 6c4d2a789a18ed64f2f5e7fe696da22973d8af0d
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
+  Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220

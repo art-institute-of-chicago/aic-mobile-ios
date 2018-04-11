@@ -541,7 +541,7 @@ class AppDataParser {
                 })
             } catch {
                 if Common.Testing.printDataErrors {
-                    //print("Could not parse stop data:\n\(stopData) in Tour \(nid)\n")
+					print("Could not parse stop data:\n\(stopData) in Tour \(nid)\n")
                 }
             }
             

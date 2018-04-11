@@ -1,7 +1,7 @@
 ![Art Institute of Chicago](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/master/aic-logo.gif)
 
 # Art Institute of Chicago Official Mobile App
-> A digital guide to the Art Institute of Chicago. Built with Swift 3 for iOS.
+> A digital guide to the Art Institute of Chicago. Built with Swift 4 for iOS.
 
 The Art Insitute of Chicago [Official Mobile App](http://extras.artic.edu/new-mobile/) is your personal,
 pocket-sized guide to our collection. The mobile experience merges location-aware technology with audio
@@ -18,10 +18,11 @@ Please note that while we took steps to generalize this project, it is not meant
 ## Table of Contents
 
 1. [Features](#features)
+	1. [Home](#home)
 	1. [Audio Guide](#audio-guide)
-	1. [On View](#on-view)
-	1. [Tours](#tours)
 	1. [Map](#map)
+	1. [Information](#information)
+	1. [Search](#search)
 1. [Getting Started](#getting-started)
 	1. [Prerequisites](#prerequisites)
 	1. [Installation](#installation)
@@ -46,9 +47,16 @@ Please note that while we took steps to generalize this project, it is not meant
 
 ## Features
 
-This app is split into five distinct sections. In the future, additional sections might be added as we improve our infrastructure.
+This app is split into four distinct sections. In the future, additional sections might be added as we improve our infrastructure.
 
 <table>
+  <tr>
+    <td><img src="Documentation/home.png" alt="Home Image"/></td>
+    <td valign="top">
+      <h3>Home</h3>
+      <p>Provides a summary of current tours/exhibits/events at the museum.</p>
+    </td>
+  </tr>
   <tr>
     <td><img src="Documentation/audioGuide.png" alt="Audio Guide Image"/></td>
     <td valign="top">
@@ -57,24 +65,10 @@ This app is split into five distinct sections. In the future, additional section
     </td>
   </tr>
   <tr>
-    <td><img src="Documentation/onView.png" alt="On View Image"/></td>
-    <td valign="top">
-      <h3>On View</h3>
-      <p>Provides a summary of current exhibits/events at the museum along with showing their location on the map.</p>
-    </td>
-  </tr>
-  <tr>
-    <td><img src="Documentation/tours.png" alt="Tours Image"/></td>
-    <td valign="top">
-      <h3>Tours</h3>
-      <p>Provides custom tours with unique audio content that work in tandem with the map and guide users on a narrated journey. This is the section that first appears when the app starts up, and is currently the main feature.</p>
-    </td>
-  </tr>
-  <tr>
     <td><img src="Documentation/map.png" alt="Map Image"/></td>
     <td valign="top">
       <h3>Map</h3>
-      <p>The map is prevalent throughout the application (it is always in the background or foreground), but in this section it has a number of information points (annotations) enabled at various zoom levels. These include:</p>
+      <p>The map has a number of information points (annotations) enabled at various zoom levels. These include:</p>
       <ul>
         <li>Departments</li>
         <li>Amenities (bathrooms, elevators, etc.)</li>
@@ -88,7 +82,19 @@ This app is split into five distinct sections. In the future, additional section
     <td><img src="Documentation/info.png" alt="Information Image"/></td>
     <td valign="top">
       <h3>Information</h3>
-      <p>This section shows basic museum info: hours, holidays, etc.</p>
+      <p>This section includes:</p>
+      <ul>
+        <li>Museum Information: basic museum info: hours, holidays, etc.</li>
+        <li>Language Settings: allowing you to switch the language of the app to English, Spanish or Chinese.</li>
+        <li>Location Settings: allowing you to modify your preference for tracking your location in the museum</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="Documentation/search.png" alt="Search Image"/></td>
+    <td valign="top">
+      <h3>Search</h3>
+      <p>Provides custom tours with unique audio content that work in tandem with the map and guide users on a narrated journey. This is the section that first appears when the app starts up, and is currently the main feature.</p>
     </td>
   </tr>
 </table>
@@ -496,7 +502,7 @@ Our membership system is based on Gateway's [Galaxy Connect](http://www.gatewayt
 
 The application relies on a few external libs, all of which are built using [Carthage](https://github.com/Carthage/Carthage), with the exception of Google Analytics, which is managed by [CocoaPods](https://cocoapods.org/).
 
-- [SnapKit](https://github.com/SnapKit/SnapKit) is used for handling the layout and managing views.
+- [PureLayout](https://github.com/PureLayout/PureLayout) is used for handling the layout and managing views.
 - [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) is used for parsing the App and Featured JSON data.
 - [SWXMLHash](https://github.com/drmohundro/SWXMLHash) is used for parsing the SOAP response from the Member Card API
 - [AlamoFire](https://github.com/Alamofire/Alamofire) is used for all networking requests of data, assets, SOAP, etc.
@@ -507,7 +513,7 @@ The application relies on a few external libs, all of which are built using [Car
 
 ## Analytics
 
-The app uses Google Analytics, which currently does not support Carthage (support is supposedly being evaluated by Google). To use this libray, CocoaPods is required. Ideally, down the line, the dependency on CocoaPods can be fully eliminated in favor of Carthage.
+The app uses Google Analytics. To use this libray, CocoaPods is required.
 
 After running `install.sh`, you will need to configure [GoogleService-Info.plist](#googleservice-infoplist) to enable analytics.
 
