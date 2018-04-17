@@ -5,7 +5,7 @@
 
 import UIKit
 import CoreLocation
-import SnapKit
+import Localize_Swift
 
 struct Common {
     
@@ -32,26 +32,13 @@ struct Common {
 
     // MARK: Data
     struct DataConstants {
-        static let totalDataFeeds = 2
-
-        struct NewsFeed {
-            static var Featured = "http://www.artic.edu/exhibitions-json/featured-exhibitions"
-        }
+        static let totalDataFeeds = 4
         
         static var appDataJSON = "http://localhost:8888/appData.json"
-
-        static var appDataExternalPrefix = "http://localhost:8888/"
-        static var appDataInternalPrefix = "http://localhost:8888/"
 
         // This URL is the link for requests to validate member card data. The member card feature is disabled by default
         // in the open source version of this application
         static var memberCardSOAPRequestURL = "http://link-to-member-card-validation.domain"
-
-        static let testMemberID:UInt64 = 0000000000000
-        static let testMemberZip:Int = 00000
-
-        static let testMultipleMemberID:UInt64 = 000000
-        static let testMultipleMemberZip:Int = 00000
 
         static let dataLoadFailureTitle = "Load Failure"
         static let dataLoadFailureMessage = "Please check your internet connection and try again."
@@ -62,51 +49,41 @@ struct Common {
 
         // Used to cache JSON data locally until remote file changes
         static let localAppDataFilename = "app.data"
-        static let localNewsFeedFilename = "news.data"
     }
 
     // MARK: Sections
     static let Sections:[Section:AICSectionModel] = [
-        Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
-            color: UIColor.aicAudioGuideColor(),
-            icon: UIImage(named:"iconNumPad")!,
-            title: "Look It Up",
-            description: "Find an artwork you like? Enter the artwork number to learn more.",
+		Section.home: AICSectionModel(nid:Section.home.rawValue,
+										 color: .aicHomeColor,
+										 background: #imageLiteral(resourceName: "backgroundHome"),
+										 icon: #imageLiteral(resourceName: "iconHome"),
+										 title: "Welcome",
+										 tabBarTitle: "Home",
+										 tabBarIcon: #imageLiteral(resourceName: "navHome")
+		),
+		Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
+            color: .aicAudioGuideColor,
+			background: nil,
+			icon: #imageLiteral(resourceName: "iconNumPad"),
+            title: "Audio Title",
             tabBarTitle: "Audio",
-            tabBarIcon: UIImage(named: "navNumPad")!
-        ),
-
-        Section.whatsOn: AICSectionModel(nid:Section.whatsOn.rawValue,
-            color: UIColor.aicWhatsonColor(),
-            icon: UIImage(named:"iconWhatsOn")!,
-            title: "On View Now",
-            description: "Preview the latest exhibitions at the Art Institute.",
-            tabBarTitle: "On View",
-            tabBarIcon: UIImage(named: "navWhatsOn")!
-        ),
-        Section.tours: AICSectionModel(nid:Section.tours.rawValue,
-            color: UIColor.aicToursColor(),
-            icon: UIImage(named:"iconTours")!,
-            title: "Take an Audio Tour",
-            description: "Listen to the latest stories from our ever-expanding repertoire of mobile tours.",
-            tabBarTitle: "Tours",
-            tabBarIcon: UIImage(named: "navTours")!
+            tabBarIcon: #imageLiteral(resourceName: "navNumPad")
         ),
         Section.map: AICSectionModel(nid:Section.map.rawValue,
-            color: UIColor.aicNearbyColor(),
-            icon: UIImage(named:"iconMap")!,
-            title: "Find Your Way",
-            description: "Use the map to explore the museum and find audio-enhanced artworks near you.",
+            color: .aicNearbyColor,
+			background: nil,
+			icon: #imageLiteral(resourceName: "iconMap"),
+            title: "Map Title",
             tabBarTitle: "Map",
-            tabBarIcon: UIImage(named: "navMap")!
+            tabBarIcon: #imageLiteral(resourceName: "navMap")
         ),
         Section.info: AICSectionModel(nid:Section.info.rawValue,
-            color: UIColor.aicInfoColor(),
-            icon: UIImage(named:"iconInfo")!,
-            title: "Need Information?",
-            description: "Here’s everything you need to visit us and keep in touch.",
+            color: .aicInfoColor,
+			background: #imageLiteral(resourceName: "backgroundInfo"),
+            icon: #imageLiteral(resourceName: "iconInfo"),
+            title: "Information Title",
             tabBarTitle: "Info",
-            tabBarIcon: UIImage(named: "navInfo")!
+            tabBarIcon: #imageLiteral(resourceName: "navInfo")
         )
     ]
 
@@ -120,16 +97,19 @@ struct Common {
         static let rentalRestartMinuteUserDefaultKey = "AICRentalRestartMinute"
         static let rentalRestartDaysFromNowUserDefaultKey = "AICRentalRestartDaysFromNow"
 
-        static let showInstructionsUserDefaultsKey = "AICShowInstructions"
+        static let showLanguageSelectionUserDefaultsKey = "AICShowLanguageSelection"
         static let showHeadphonesUserDefaultsKey = "AICShowHeadphones"
         static let showEnableLocationUserDefaultsKey = "AICShowEnableLocation"
+		static let showTooltipsDefaultsKey = "AICShowTooltips"
 
         static let memberInfoIDUserDefaultsKey = "AICMemberInfoName"
         static let memberInfoZipUserDefaultsKey = "AICMemberInfoZip"
+		static let memberFirstNameUserDefaultsKey = "AICMemberFirstName"
         static let memberInfoSelectedMemberDefaultsKey = "AICMemberInfoSelectedMember"
 
-        static let onDiskAppDataLastModifiedString = "AICAppDataLastModified"
-        static let onDiskNewsFeedLastModifiedString = "AICNewsFeedLastModified"
+        static let onDiskAppDataLastModifiedStringKey = "AICAppDataLastModified"
+		
+		static let lastVersionNumberKey = "AICLastVersionNumber"
     }
 
     // MARK: URL Scheme/Deep Links
@@ -140,7 +120,7 @@ struct Common {
         static let domain = "artic"
         static let tourCategory = "tour"
 
-        static func getURL(forTour tour:AICTourModel) -> String?{
+        static func getURL(forTour tour:AICTourModel) -> String? {
             if (loadedEnoughToLink){
                 return String("\(domain)://\(tourCategory)/\(tour.nid)")
             } else {
@@ -148,25 +128,79 @@ struct Common {
             }
         }
     }
+	
+	// MARK: Language
+	enum Language : String {
+		case english = "en"
+		case spanish = "es"
+		case chinese = "zh-Hans"
+	}
+	
+	static var currentLanguage: Language {
+		let current = Localize.currentLanguage()
+		if current.hasPrefix("es") {
+			return .spanish
+		}
+		else if current.hasPrefix("zh") {
+			return .chinese
+		}
+		return .english
+	}
+	
+	static var stringForLanguage: [Language : String] {
+		return [
+			Language.english : "English",
+			Language.spanish : "Spanish",
+			Language.chinese : "Chinese"]
+	}
 
     // MARK: Layout
-    struct Layout {
-        static var appFrame:CGRect = CGRect.zero
-
-		static var tabBarHeight:CGFloat {
+	struct Layout {
+		static var safeAreaTopMargin: CGFloat {
+			if UIDevice().type == .iPhoneX {
+				return 44
+			}
+			return 20
+		}
+		
+		static var navigationBarHeight: CGFloat = 240
+		
+		static var navigationBarMinimizedHeight: CGFloat {
+			if UIDevice().type == .iPhoneX {
+				return 73
+			}
+			return 64
+		}
+		
+		static var tabBarHeight: CGFloat {
 			if UIDevice().type == .iPhoneX {
 				return 83
 			}
 			return 49
 		}
+		
+		static var miniAudioPlayerHeight: CGFloat = 42.0
 
-        static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat = tabBarHeight {
-            didSet {
-                if tabBarHeightWithMiniAudioPlayerHeight != oldValue {
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.tabBarHeightDidChangeNotification), object: nil)
-                }
-            }
+        static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat {
+			return tabBarHeight + miniAudioPlayerHeight
         }
+		
+		static var cardFullscreenPositionY: CGFloat {
+			if UIDevice().type == .iPhoneX {
+				return 40
+			}
+			return 20
+		}
+		
+		static var cardMinimizedPositionY: CGFloat {
+			return UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.cardMinimizedContentHeight
+		}
+		
+		static var cardContentHeight: CGFloat {
+			return UIScreen.main.bounds.height - cardFullscreenPositionY - Common.Layout.tabBarHeight
+		}
+        
+        static var cardMinimizedContentHeight: CGFloat = 170.0 + Common.Layout.miniAudioPlayerHeight
 
         static let showTabBarTitles = true
 
@@ -204,12 +238,6 @@ struct Common {
 
 
         // Small
-        static let leaveTour = AICMessageSmallModel(title: "Leave this tour?",
-                                                    message: "If you continue, you will leave this page and end the tour.",
-                                                    actionButtonTitle: "Continue",
-                                                    cancelButtonTitle: "Cancel"
-        )
-
         static let locationDisabled = AICMessageSmallModel(title: "Your phone’s Location Services feature is off.",
                                                            message: "Turn on Location Services to easily navigate the museum and find museum features near you.",
                                                            actionButtonTitle: "Go to Settings",
@@ -223,18 +251,25 @@ struct Common {
         )
 
         // Large
-        static let useHeadphones = AICMessageLargeModel(iconImage: UIImage(named: "messageHeadphones")!,
-                                                        title: "Listen in.",
-                                                        message: "Use your headphones to listen.\n\nDon’t have headphones?\nHold the phone close to your ear.",
-                                                        actionButtonTitle: "OK",
+        static let useHeadphones = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageListenIn"),
+                                                        title: "Message Headphones Title",
+                                                        message: "Message Headphones Text",
+                                                        actionButtonTitle: "Message Headphones Action Button Title",
                                                         cancelButtonTitle: nil
         )
+        
+		static let leavingTour = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageTours"),
+                                                 title: "Message Leaving Tour Title",
+                                                 message: "Message Leaving Tour Text",
+                                                 actionButtonTitle: "Message Leaving Tour Action Button Title",
+                                                 cancelButtonTitle: "Message Leaving Tour Cancel Button Title"
+        )
 
-        static let enableLocation = AICMessageLargeModel(iconImage: UIImage(named: "messageLocation")!,
-                                                         title: "Where are you?",
-                                                         message: "We’d like to use your location to help you navigate the museum.",
-                                                         actionButtonTitle: "OK",
-                                                         cancelButtonTitle: "Not Now"
+        static let enableLocation = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageMap"),
+                                                         title: "Message Location Title",
+                                                         message: "Message Location Text",
+                                                         actionButtonTitle: "Message Location Action Button Title",
+                                                         cancelButtonTitle: "Message Location Cancel Button Title"
         )
     }
 
@@ -290,55 +325,60 @@ struct Common {
             return userLocation.distance(from: objectCLLocation)
         }
     }
+	
+	// MARK: Home
+	struct Home {
+		static let maxNumberOfTours: Int = 6
+		static let maxNumberOfExhibitions: Int = 6
+		static let maxNumberOfEvents: Int = 8
+	}
 
-    // MARK: Intro
-    // Content for each screen
-    struct Instructions {
-        static let screens = [
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconMapLarge")!,
-                title:"Find Your Way",
-                subtitle: "Use the map to explore the museum and find audio-enhanced artworks near you.",
-                color: UIColor.aicMapColor()
-            ),
-
-
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconWhatsOnLarge")!,
-                title:"On View Now",
-                subtitle: "Preview the latest exhibitions at the Art Institute.",
-                color: UIColor.aicWhatsonColor()
-            ),
-
-
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconNumPadLarge")!,
-                title:"Look It Up",
-                subtitle: "Find an artwork you like? Use the keypad to access audio-enhanced stories.",
-                color: UIColor.aicAudioGuideColor()
-            ),
-
-
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconInfoLarge")!,
-                title:"Member’s Access",
-                subtitle: "Enter your membership ID for easy access to the museum.",
-                color: UIColor.aicInfoColor()
-            ),
-
-            AICInstructionsScreenModel(iconImage: UIImage(named:"iconToursLarge")!,
-                title:"Go on a Tour",
-                subtitle: "Find a story that suits your interests in our ever-expanding portfolio of audio tours.",
-                color:UIColor.aicToursColor()
-            )
-        ]
+    // MARK: Tooltips
+    struct Tooltips {
+		static var mapPinchTooltip = AICTooltipModel(type: .popup,
+													 title: "Map Tooltip Pinch Title",
+													 text: "Map Tooltip Pinch Text",
+													 arrowPosition: CGPoint.zero,
+													 image: #imageLiteral(resourceName: "tooltipPinch")
+		)
+		static var mapFloorTooltip = AICTooltipModel(type: .arrow,
+													 title: "",
+													 text: "Map Tooltip Floor",
+													 arrowPosition: CGPoint.zero,
+													 image: nil
+		)
+		static var mapOrienationTooltip = AICTooltipModel(type: .arrow,
+														  title: "",
+														  text: "Map Tooltip Orientation",
+														  arrowPosition: CGPoint.zero,
+														  image: nil
+		)
+		static var mapArtworkTooltip = AICTooltipModel(type: .popup,
+													   title: "Map Tooltip Artwork Title",
+													   text: "Map Tooltip Artwork Text",
+													   arrowPosition: CGPoint.zero,
+													   image: #imageLiteral(resourceName: "tooltipArtwork")
+		)
     }
-
+	
     // MARK: Map
     struct Map {
-        static let backgroundOverlayAlpha:CGFloat = 0.75
+		// Location Manager
+		static let locationManager: CLLocationManager = CLLocationManager()
 
         static let totalFloors = 4
         static let startFloor = 1
+		
+		static var stringForFloorNumber: [Int : String] {
+			return [
+				0 : "Lower Level".localized(using: "Map"),
+				1 : "First Level".localized(using: "Map"),
+				2 : "Second Level".localized(using: "Map"),
+				3 : "Third Level".localized(using: "Map")]
+		}
 
         // File directories
-        static let mapsDirectory = "Assets/map"
+        static let mapsDirectory = "map"
         static let floorplanFileNamePrefix = "map_floor"
         static let amenityLandmarkSVGFileName = "map_amenities_landmarks"
 
@@ -354,18 +394,22 @@ struct Common {
         static let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.8800240897643,-87.62334823608397),
                                        pdfPoint: CGPoint(x: 1011.94, y: pdfSize.height-1061.635)
         )
-
+		
         static let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
 
         static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
-
+		
+		static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
+		
         enum ZoomLevelAltitude : Double {
-            case zoomedOut = 400.0
-            case zoomedIn = 200.0
-            case zoomedDetail = 40.0
-            case zoomedMax = 25.0
+			case zoomFarLimit = 1200
+            case zoomLimit = 340.0
+            case zoomDefault = 300.0
+			case zoomMedium = 150.0
+            case zoomDetail = 50.0
+            case zoomMax = 25.0
 
-            static let allValues = [zoomedOut, zoomedIn, zoomedDetail, zoomedMax]
+            static let allValues = [zoomFarLimit, zoomLimit, zoomDefault, zoomMedium, zoomDetail, zoomMax]
         }
 
         enum AnnotationZPosition: CGFloat {
@@ -378,67 +422,6 @@ struct Common {
             case objectsSelected = 40
         }
 
-        // Departments
-        enum Department: String {
-            case African = "african"
-            case AmericaBefore1900 = "americanbefore1900"
-            case AmericanDecorative = "americandecorative"
-            case AmericanFolk = "americanfolk"
-            case AmericanIndian = "americanindian"
-            case AmericanModern = "americanmodern"
-            case Architecture1 = "architecture0"
-            case Architecture2 = "architecture2"
-            case Armor = "armor"
-            case Chicago = "chicago"
-            case Chinese = "chinese"
-            case Contemporary = "contemporary"
-            case ContempSculpture = "contemporarysculpture"
-            case EuroBefore1900 = "europeanbefore1900"
-            case EuroDecorative = "europeandecorative"
-            case Film = "film"
-            case Greek = "greek"
-            case Impressionism = "impressionism"
-            case Indian = "indian"
-            case Islamic = "islamic"
-            case Modern = "modern"
-            case Paperweights = "paperweights"
-            case Photography0 = "photography0"
-            case Photography1 = "photography1"
-            case Print = "prints"
-            case Textiles = "textiles"
-            case Thorne = "thorne"
-        }
-
-        static let departmentTitles:[Department:String] = [
-            .African : "African Art",
-            .AmericaBefore1900 : "American Art Before 1900",
-            .AmericanDecorative : "American Decorative\nArts 1920-1970",
-            .AmericanFolk : "American Folk Art",
-            .AmericanIndian : "Indian Art of\nthe Americas",
-            .AmericanModern : "Modern American Art",
-            .Architecture1 : "Architecture\nand Design",
-            .Architecture2 : "Architecture\nand Design",
-            .Armor : "Arms and Armor",
-            .Chicago : "Chicago\nArchitecture",
-            .Chinese : "Chinese, Japanese,\nand Korean Art",
-            .Contemporary : "Contemporary Art 1945 - 1960",
-            .ContempSculpture : "Contemporary Sculpture",
-            .EuroBefore1900 : "European Art\nBefore 1900",
-            .EuroDecorative : "European Decorative\nArts",
-            .Film : "Film, Video,\nand New Media",
-            .Greek : "Greek, Roman,\nand Byzantine Art",
-            .Impressionism : "Impressionism",
-            .Indian : "Indian, Southeast Asian,\nand Himalayan Art",
-            .Islamic : "Islamic Art",
-            .Modern : "Modern Art",
-            .Paperweights : "Paperweights",
-            .Photography0 : "Photography",
-            .Photography1 : "Photography",
-            .Print : "Prints and Drawings",
-            .Textiles : "Textiles",
-            .Thorne : "Thorne Miniature Rooms"
-        ]
-
         // Annotation view settings
         static let thumbSize:CGFloat = 54
         static let thumbHolderMargin:CGFloat = 2
@@ -448,22 +431,18 @@ struct Common {
     struct Info {
 
         // Text and URL constants
-        static let becomeMemberTitle = "Become a member"
-        static let becomeMemberSupportMessage = "Enjoy free, yearlong admission."
-        static let becomeMemberJoinMessage = "Join now."
-        static let becomeMemberJoinURL = "https://sales.artic.edu/memberships"
+        static let becomeMemberTitle = "Become a Member"
+        static let becomeMemberJoinPromptMessage = "Enjoy free, yearlong admission."
+        static let becomeMemberJoinMessage = "Join now"
         static let becomeMemberAccessPrompt = "Already a member?"
         static let becomeMemberAccessButtonTitle = "Access Member Card"
         static let becomeMemberExistingMemberTitle = "Welcome Back"
-
-        static let museumInformationTitle = "Museum Information"
-        static let museumInformationHours = "Open daily 10:30am to 5:00pm\nThursday until 8:00pm\n\nClosed Thanksgiving, Christmas,\nand New Year’s Day"
+		
         static let museumInformationAddress = "111 S Michigan Ave\nChicago, IL 60603"
         static let museumInformationPhoneNumber = "+1 312 443 3600"
         static let museumInformationGetTicketsTitle = "Get Tickets"
         static let museumInformationGetTicketsURL = "https://sales.artic.edu/admissiondate"
 
-        static let creditsPotion = "Designed by Potion"
         static let potionURL = "http://www.potiondesign.com"
 
         static let memberCardTitle = "Member Card"
@@ -478,22 +457,70 @@ struct Common {
         static let alertMessageNotFound = "Could not find Member Information"
         static let alertMessageParseError = "Member Card data parse error"
         static let alertMessageCancelButtonTitle = "OK"
-
-        // Background images
-        static let backgroundAnimationTime = 3.0
-        static let memberCardImagesTotal = 3
-        static let memberCardImagePrefix = "memberCard"
-
-        static var memberCardImages:[UIImage] = {
-            var images:[UIImage] = []
-
-            for index in 1...memberCardImagesTotal {
-                let imageName = "\(memberCardImagePrefix)\(index)"
-                images.append(UIImage(named:imageName)!)
-            }
-
-            return images
-        }()
-
+		
+		// Date formats
+		static func throughDateString(endDate: Date) -> String {
+			let dateFormatter = DateFormatter()
+//			dateFormatter.dateFormat = "MMMM d, yyyy"
+			//DateFormatter.localizedString(from: endDate, dateStyle: .medium, timeStyle: .medium)
+			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
+			dateFormatter.setLocalizedDateFormatFromTemplate("MMMM d, yyyy")
+			let endDateFormatted = dateFormatter.string(from: endDate)
+			let throughString = "Through Date".localized(using: "Global")
+			return throughString + " " + endDateFormatted
+		}
+		
+		static func monthDayString(date: Date) -> String {
+			let dateFormatter = DateFormatter()
+			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
+			dateFormatter.setLocalizedDateFormatFromTemplate("MMMM d")
+			let monthDayString = dateFormatter.string(from: date)
+			return monthDayString
+		}
+		
+		static func hoursMinutesString(date: Date) -> String {
+			let dateFormatter = DateFormatter()
+			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
+			if Common.currentLanguage == .english {
+				dateFormatter.setLocalizedDateFormatFromTemplate("h:mma")
+			}
+			else {
+				dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm")
+			}
+			if Common.currentLanguage == .english || Common.currentLanguage == .spanish {
+				dateFormatter.amSymbol = "am"
+				dateFormatter.pmSymbol = "pm"
+			}
+			let hoursMinutesString = dateFormatter.string(from: date)
+			return hoursMinutesString
+		}
     }
+	
+	// MARK: Search
+	struct Search {
+		enum Filter {
+			case empty
+			case suggested
+			case artworks
+			case tours
+			case exhibitions
+		}
+	}
+	
+	// MARK: Data Settings
+	enum DataSetting: String {
+		case imageServerUrl = "image_server_url"
+		case dataApiUrl = "data_api_url"
+		case exhibitionsEndpoint = "exhibitions_endpoint"
+		case artworksEndpoint = "artworks_endpoint"
+		case galleriesEndpoint = "galleries_endpoint"
+		case imagesEndpoint = "images_endpoint"
+		case eventsEndpoint = "events_endpoint"
+		case autocompleteEndpoint = "autocomplete_endpoint"
+		case toursEndpoint = "tours_endpoint"
+		case multiSearchEndpoint = "multisearch_endpoint"
+		case websiteUrl = "website_url"
+		case membershipUrl = "membership_url"
+		case ticketsUrl = "tickets_url"
+	}
 }

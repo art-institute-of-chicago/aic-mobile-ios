@@ -1,0 +1,27 @@
+/* 
+  Tooltips.strings
+  aic
+
+  Created by Filippo Vanucci on 2/26/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Map Tooltip Pinch Title" = "Explora el mapa";
+
+"Map Tooltip Pinch Text" = "Pellizque para explorar el mapa.";
+
+"Map Tooltip Floor" = "Usted está en ";
+
+"Map Tooltip Floor Second Line" = "Tocar para cambiar las pistas.";
+
+"Map Tooltip Orientation" = "Presione para orientar el mapa";
+
+"Map Tooltip Artwork Title" = "Tocar los Pines de Audio para Escuchar";
+
+"Map Tooltip Artwork Text" = "Los pines transparentes indican audio en una pista diferente.";
+
+"Next" = "Siguiente";
+
+"Previous" = "Anterior";
+
+"Dismiss" = "Anular";

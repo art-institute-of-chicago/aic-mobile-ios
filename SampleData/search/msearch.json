@@ -1,0 +1,37 @@
+[
+  {
+    "data": [
+      {
+        "latlon": "41.87955079343,-87.62364596128",
+        "is_on_view": true,
+        "artist_display": "Artist Name, born 1937",
+        "gallery_id": 2147473950,
+        "id": 102234,
+        "title": "Sample Artwork"
+      }
+    ]
+  },
+  {
+  "data": [
+    {
+      "id": 1023,
+      "title": "Sample Tour"
+    }
+  ]
+},
+{
+  "data": [
+    {
+      "short_description": "Sample exhibition description.",
+      "aic_start_at": "2017-09-11T00:00:00-05:00",
+      "legacy_image_mobile_url": "http://localhost:8888/placeholder.png",
+      "legacy_image_desktop_url": "http://localhost:8888/placeholder.png",
+      "web_url": "http://localhost:8888/placeholder.png",
+      "gallery_id": 2147483642,
+      "id": 5393,
+      "aic_end_at": "2099-12-31T00:00:00-06:00",
+      "title": "Sample Exhibition"
+    }
+  ]
+}
+]

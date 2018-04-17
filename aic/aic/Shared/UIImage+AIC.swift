@@ -15,8 +15,8 @@ extension UIImage {
         context!.clip(to: rect, mask: self.cgImage!)
         context!.setFillColor(color.cgColor)
         context!.fill(rect)
-        let colorizedImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+        let colorizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         return colorizedImage!
     }
 }

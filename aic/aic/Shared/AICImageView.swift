@@ -20,7 +20,7 @@ class AICImageView : UIImageView {
     
     init() {
         super.init(frame:CGRect.zero)
-        self.backgroundColor = UIColor.gray
+        self.backgroundColor = .gray
         
         if AICImageView.manager == nil {
             let configuration = URLSessionConfiguration.default
@@ -29,11 +29,19 @@ class AICImageView : UIImageView {
             AICImageView.manager = Alamofire.SessionManager(configuration: configuration)
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		self.backgroundColor = .gray
+		
+		if AICImageView.manager == nil {
+			let configuration = URLSessionConfiguration.default
+			configuration.httpMaximumConnectionsPerHost =  5
+			configuration.timeoutIntervalForRequest = 30
+			AICImageView.manager = Alamofire.SessionManager(configuration: configuration)
+		}
+	}
+	
     override func layoutSubviews() {
         if self.image == nil {
             let centeredX = frame.size.width/2 - loadingIndicatorView.frame.size.width/2
@@ -65,7 +73,8 @@ class AICImageView : UIImageView {
             }else{
                 let uncroppedImage = UIImage(data: NSData(data: response.data!) as Data)
                 if uncroppedImage != nil {
-                    self?.image = UIImage(cgImage: (uncroppedImage!.cgImage!.cropping(to: cropRect!))!)
+					let imageCropRect = CGRect(x: cropRect!.origin.x * uncroppedImage!.size.width, y: cropRect!.origin.y * uncroppedImage!.size.height, width: cropRect!.width * uncroppedImage!.size.width, height: cropRect!.height * uncroppedImage!.size.height)
+                    self?.image = UIImage(cgImage: (uncroppedImage!.cgImage!.cropping(to: imageCropRect))!)
                     //If you'd like to verify the crops set a breakpoint here and
                     //take a look at uncroppedImage vs croppedImage
                     //let croppedImage = self?.image

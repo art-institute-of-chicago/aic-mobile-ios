@@ -5,7 +5,8 @@
 */
 
 struct AICTourStopModel {
-    let order:Int
-    let object:AICObjectModel
-    let audio:AICAudioFileModel
+    let order: Int
+    let object: AICObjectModel
+    let audio: AICAudioFileModel
+	let audioBumper: AICAudioFileModel?
 }

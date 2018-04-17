@@ -1,0 +1,21 @@
+/* 
+  Info.strings
+  aic
+
+  Created by Filippo Vanucci on 1/22/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Member Title" = "成为会员";
+
+"Member Join Prompt" = "享受免费的年票。";
+
+"Member Join Text" = "现在加入";
+
+"Member Access Prompt" = "已经是会员？";
+
+"Member Access Button" = "访问会员卡";
+
+"Version" = "版本";
+
+"Designed by" = "设计人员";

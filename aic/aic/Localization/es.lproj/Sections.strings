@@ -1,0 +1,33 @@
+/* 
+  Home.strings
+  aic
+
+  Created by Filippo Vanucci on 1/21/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Welcome" = "Bienvenido";
+
+"See All" = "Ver Todo";
+
+"Tours" = "Visitas";
+
+"On View" = "En vista";
+
+"Events" = "Eventos";
+
+"Audio Title" = "Buscarlo";
+
+"Information Title" = "Información";
+
+"Member Card" = "Tarjeta del Miembro";
+
+"Museum Information" = "Información sobre el Museo";
+
+"Language Settings" = "Configuración de Idiomas";
+
+"Location Settings" = "Configuración de Ubicación";
+
+"Map Title" = "Ubicarse";
+
+"Map Subtitle" = "Use el mapa para buscar comida, servicios y obras de arte complementadas con audio.";

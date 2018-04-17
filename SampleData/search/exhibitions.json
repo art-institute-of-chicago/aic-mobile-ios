@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "short_description": "Sample exhibition description.",
+      "aic_start_at": "2017-09-11T00:00:00-05:00",
+      "legacy_image_mobile_url": "http://localhost:8888/placeholder.png",
+      "legacy_image_desktop_url": "http://localhost:8888/placeholder.png",
+      "web_url": "http://localhost:8888/placeholder.png",
+      "gallery_id": 2147483642,
+      "id": 5393,
+      "aic_end_at": "2099-12-31T00:00:00-06:00",
+      "title": "Sample Exhibition"
+    }
+  ]
+}

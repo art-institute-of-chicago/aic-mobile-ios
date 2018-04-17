@@ -16,9 +16,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Show Instructions</string>
+			<string>Show Language Selection</string>
 			<key>Key</key>
-			<string>AICShowInstructions</string>
+			<string>AICShowLanguageSelection</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
@@ -39,6 +39,16 @@
 			<string>Show Enable Location Prompt</string>
 			<key>Key</key>
 			<string>AICShowEnableLocation</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Show Tooltips</string>
+			<key>Key</key>
+			<string>AICShowTooltips</string>
 			<key>DefaultValue</key>
 			<true/>
 		</dict>

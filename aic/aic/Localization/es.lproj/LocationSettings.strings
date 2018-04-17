@@ -1,0 +1,15 @@
+/* 
+  LocationSettings.strings
+  aic
+
+  Created by Filippo Vanucci on 1/24/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Location Settings Title" = "¿Dónde está usted?";
+
+"Location Settings Text" = "Nos gustaría usar su ubicación para ayudarle a navegar por el museo.";
+
+"Location Enabled" = "Ubicación habilitada";
+
+"Location Disabled" = "Ubicación deshabilitada";
