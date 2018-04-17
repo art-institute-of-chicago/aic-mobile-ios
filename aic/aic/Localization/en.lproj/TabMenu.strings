@@ -1,0 +1,15 @@
+/* 
+  TabMenu.strings
+  aic
+
+  Created by Filippo Vanucci on 1/19/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Home" = "Home";
+
+"Audio" = "Audio";
+
+"Map" = "Map";
+
+"Info" = "Info";

@@ -1,7 +1,7 @@
 ![Art Institute of Chicago](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/master/aic-logo.gif)
 
 # Art Institute of Chicago Official Mobile App
-> A digital guide to the Art Institute of Chicago. Built with Swift 3 for iOS.
+> A digital guide to the Art Institute of Chicago. Built with Swift 4 for iOS.
 
 The Art Insitute of Chicago [Official Mobile App](http://extras.artic.edu/new-mobile/) is your personal,
 pocket-sized guide to our collection. The mobile experience merges location-aware technology with audio
@@ -18,10 +18,12 @@ Please note that while we took steps to generalize this project, it is not meant
 ## Table of Contents
 
 1. [Features](#features)
+	1. [Home](#home)
 	1. [Audio Guide](#audio-guide)
-	1. [On View](#on-view)
-	1. [Tours](#tours)
 	1. [Map](#map)
+	1. [Tours](#tours)
+	1. [Search](#search)
+	1. [Information](#information)
 1. [Getting Started](#getting-started)
 	1. [Prerequisites](#prerequisites)
 	1. [Installation](#installation)
@@ -35,7 +37,10 @@ Please note that while we took steps to generalize this project, it is not meant
     1. [Aligning the Map](#aligning-the-map)
 1. [Data](#data)
     1. [App Data](#app-data)
-    1. [Featured Exhibitions](#featured-exhibitions)
+    1. [Data Aggregator](#data-aggregator)
+    	1. [Current Exhibitions Request](#current-exhibitions-request)
+    	1. [Current Events Request](#current-events-request)
+    	1. [Search Request](#search-request)
     1. [Member Card API](#member-card-api)
 1. [External Libs](#external-libs)
 1. [Analytics](#analytics)
@@ -46,9 +51,16 @@ Please note that while we took steps to generalize this project, it is not meant
 
 ## Features
 
-This app is split into five distinct sections. In the future, additional sections might be added as we improve our infrastructure.
+This app is split into four distinct sections. In the future, additional sections might be added as we improve our infrastructure.
 
 <table>
+  <tr>
+    <td><img src="Documentation/home.png" alt="Home Image"/></td>
+    <td valign="top">
+      <h3>Home</h3>
+      <p>Provides a summary of current tours/exhibits/events at the museum.</p>
+    </td>
+  </tr>
   <tr>
     <td><img src="Documentation/audioGuide.png" alt="Audio Guide Image"/></td>
     <td valign="top">
@@ -57,24 +69,10 @@ This app is split into five distinct sections. In the future, additional section
     </td>
   </tr>
   <tr>
-    <td><img src="Documentation/onView.png" alt="On View Image"/></td>
-    <td valign="top">
-      <h3>On View</h3>
-      <p>Provides a summary of current exhibits/events at the museum along with showing their location on the map.</p>
-    </td>
-  </tr>
-  <tr>
-    <td><img src="Documentation/tours.png" alt="Tours Image"/></td>
-    <td valign="top">
-      <h3>Tours</h3>
-      <p>Provides custom tours with unique audio content that work in tandem with the map and guide users on a narrated journey. This is the section that first appears when the app starts up, and is currently the main feature.</p>
-    </td>
-  </tr>
-  <tr>
     <td><img src="Documentation/map.png" alt="Map Image"/></td>
     <td valign="top">
       <h3>Map</h3>
-      <p>The map is prevalent throughout the application (it is always in the background or foreground), but in this section it has a number of information points (annotations) enabled at various zoom levels. These include:</p>
+      <p>The map has a number of information points (annotations) enabled at various zoom levels. These include:</p>
       <ul>
         <li>Departments</li>
         <li>Amenities (bathrooms, elevators, etc.)</li>
@@ -85,10 +83,29 @@ This app is split into five distinct sections. In the future, additional section
     </td>
   </tr>
   <tr>
+    <td><img src="Documentation/tours.png" alt="Tours Image"/></td>
+    <td valign="top">
+      <h3>Tours</h3>
+      <p>Provides custom tours with unique audio content that work in tandem with the map and guide users on a narrated journey.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="Documentation/search.png" alt="Search Image"/></td>
+    <td valign="top">
+      <h3>Search</h3>
+      <p>Provides the ability to search for artworks, tours and exhibitions currently on display at the museum. Using the search, users are also able to find the location on the map of artworks as well as gift shops, restrooms, dining locations and the member lounge.</p>
+    </td>
+  </tr>
+  <tr>
     <td><img src="Documentation/info.png" alt="Information Image"/></td>
     <td valign="top">
       <h3>Information</h3>
-      <p>This section shows basic museum info: hours, holidays, etc.</p>
+      <p>This section includes:</p>
+      <ul>
+        <li>Museum Information: basic museum info: hours, holidays, etc.</li>
+        <li>Language Settings: allowing you to switch the language of the app to English, Spanish or Chinese.</li>
+        <li>Location Settings: allowing you to modify your preference for tracking your location in the museum.</li>
+      </ul>
     </td>
   </tr>
 </table>
@@ -108,11 +125,8 @@ We included some SampleData with this repo, so you don't _need_ the CMS in order
 ### Prerequisites
 
 1. Mac OS X (tested with Sierra)
-1. Xcode 8+ (Swift 3 support)
-1. [Carthage](https://github.com/Carthage/Carthage)
+1. Xcode 9+ (Swift 4 support)
 1. [CocoaPods](https://cocoapods.org)
-
-Currently, we need both Carthage and CocoaPods to manage this project's dependencies. We need Google Analytics for tracking user sessions and actions throughout the app, but GA was not supported by Carthage during development. We may remove CocoaPods as a prerequisite in the future.
 
 Throughout this guide, we assume that you know the basics of using Git and Terminal, or another terminal emulator of your choice.
 
@@ -126,7 +140,7 @@ Clone this repo to your computer:
 git clone https://github.com/art-institute-of-chicago/aic-mobile-ios.git
 ```
 
-**Note:** We recommend against downloading the ZIP of this project to avoid "Missing Reference" issues. If you do download this project as a ZIP, you will need to fetch the `UIImageColors.swift` file from [jathu/UIImageColors](https://github.com/jathu/UIImageColors). Place the downloaded Swift file into the `aic/aic/ThirdParty/UIImageColors/` folder. This file will be automatically fetched if you clone the repository with Git.
+**Note:** We recommend against downloading the ZIP of this project to avoid "Missing Reference" issues.
 
 Once you have downloaded the repo, one way or another, open your terminal and change your directory to the top level of the project:
 
@@ -165,7 +179,6 @@ Go to Xcode, choose an iOS simulator (e.g. iPhone SE) for the `aic` build target
 
 **References:**
 * http://stackoverflow.com/questions/13695391/start-an-apache-server-in-any-directory-from-command-line
-* http://stackoverflow.com/questions/24583859/apache-localhost-username-not-working
 * http://stackoverflow.com/questions/24583859/apache-localhost-username-not-working
 
 
@@ -226,29 +239,11 @@ Here are the variables set through `Config.plist`:
     </td>
   </tr>
   <tr>
-    <td valign="top">feedFeaturedExhibitions</td>
-    <td valign="top">http://localhost:8888/exhibits.json</td>
-    <td valign="top">
-    <p>Your museum's event feed. See <a href="#featured-exhibitions">Featured Exhibitions</a>.</p>
-    </td>
-  </tr>
-  <tr>
     <td valign="top">appDataJSON</td>
     <td valign="top">http://localhost:8888/appData.json</td>
     <td valign="top">
     <p>Gallery, object, audio, and tour data. See <a href="#app-data">App Data</a>.</p>
     </td>
-  </tr>
-  <tr>
-    <td valign="top">appDataExternalPrefix</td>
-    <td valign="top">http://localhost:8888/</td>
-    <td valign="top" rowspan="2">
-      <p>All URLs in appDataJson will have instances of internalPrefix replaced with externalPrefix (<a href="#appdataexternalprefix--appdatainternalprefix">details</a>). </p>
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">appDataInternalPrefix</td>
-    <td valign="top">http://localhost:8888/</td>
   </tr>
   <tr>
     <td valign="top">memberCardSOAPRequestURL</td>
@@ -265,13 +260,7 @@ With this in mind, you will need to update `appDataJSON` with the full URL path 
 http://example.com/sites/default/files/appData.json
 ```
 
-Other settings maintained in `Common.swift` include text strings for various app sections and for the instruction slides that display when the app is launched for the first time, anchor points and bounding boxes for the PDF-based map view overlay, departmental map icon flag names, department titles, etc. For now, these sorts of hard-coded values will have to be modified in the code, but we are open to PRs that would help make it possible to define these things via the CMS.
-
-
-
-#### appDataExternalPrefix & appDataInternalPrefix
-
-In all URLs gathered from `appData.json`, [AppDataParser.swift](aic/aic/Data/AppDataParser.swift#L500) will replace instances of `appDataInternalPrefix` with `appDataExternalPrefix`. We needed this functionality because we draw our data from multiple APIs on the backend, and one of these APIs contains URLs that refer to a server that is accessible only behind our firewall. We needed to rewrite those URLs to point to our public server. This is a temporary measure that may be removed in the future. If you don't need this sort of functionality, feel free to set identical values for the two prefixes, and they should have no effect.
+Other settings maintained in `Common.swift` include text strings for various app sections and for the tooltip screens that display when the app is launched for the first time, anchor points and bounding boxes for the PDF-based map view overlay, departmental map icon flag names, department titles, etc. For now, these sorts of hard-coded values will have to be modified in the code, but we are open to PRs that would help make it possible to define these things via the CMS.
 
 
 
@@ -294,33 +283,43 @@ See the [Analytics](#analytics) section for more info.
 
 ## Map + Indoor Positioning
 
-The map in this application is a persistent background UI element and provides users with accurate location information throughout the Art Institutes galleries. To make indoor user-positioning as accurate as possible, the Art Institute has partnered with Apple via the [MapsConnect](https://mapsconnect.apple.com/) program. Through this program, we utilize Apple's [Indoor Survey App](https://itunes.apple.com/us/app/indoor-survey/id994269367?mt=8) to map the wireless signals throughout our buildings, creating a fingerprint of all of the areas of our venue.
+The map in this application provides users with accurate location information throughout the Art Institutes galleries. To make indoor user-positioning as accurate as possible, the Art Institute has partnered with Apple via the [MapsConnect](https://mapsconnect.apple.com/) program. Through this program, we utilize Apple's [Indoor Survey App](https://itunes.apple.com/us/app/indoor-survey/id994269367?mt=8) to map the wireless signals throughout our buildings, creating a fingerprint of all of the areas of our venue.
 
-These wireless fingerprints become a part Apple's venue database and are utilized by the CoreLocation API to place the users "blue dot" on the map. By utilizing [CoreLocation](https://developer.apple.com/reference/corelocation) in combination with the on-site survey, we are able to take advantage of advanced location metrics such as current floor level to provide a better navigation experience to our app users on-site.
+These wireless fingerprints become a part of Apple's venue database and are utilized by the CoreLocation API to place the users "blue dot" on the map. By utilizing [CoreLocation](https://developer.apple.com/reference/corelocation) in combination with the on-site survey, we are able to take advantage of advanced location metrics such as current floor level to provide a better navigation experience to our app users on-site.
 
 
 
 ### Map Overlay
 
-To present a custom map overlay on top of Apple's default map, we use custom PDFs that contain a rough outline of our galleries as derived from the CAD drawings of our museum. This is the same map that we utilize for our printed guides that are available to our on-site visitors. You can find the PDFs used for each floor level under `/aic/aic/Assets/map`. On compilation, Xcode takes these PDFs and automatically processes them for image tiling to optimize loading times at runtime.
+To present a custom map overlay on top of Apple's default map, we use custom PDFs that contain a rough outline of our galleries as derived from the CAD drawings of our museum. This is the same map that we utilize for our printed guides that are available to our on-site visitors. You can find the PDFs used for each floor level under `/SampleData`. The URLs to these PDF floor plans are parsed from `appData.json`. The app downloads these PDFs and processes them for image tiling to optimize loading times at runtime.
 
 
 
 ### Aligning the Map
 
-As a part of the Maps Connect program, we work with Apple to survey our site using higher-detailed floor plans than what we display in the app. Apple processes these plans and converts them into their custom Apple Venue Format (AVF), which is compatible with GeoJSON. As GeoJSON has latitude and longitude coordinates embedded within it, we are able to use these files to derive anchor points for our PDF overlay to ensure that "blue dot" locations displayed via CoreLocation align as closely as possible with our PDF overlay. These achor coordinates are defined in the `Common.swift` file inside of the `Map` struct with the `anchor1` and `anchor2` variables.
+As a part of the Maps Connect program, we work with Apple to survey our site using higher-detailed floor plans than what we display in the app. Apple processes these plans and converts them into their custom Apple Venue Format (AVF), which is compatible with GeoJSON. As GeoJSON has latitude and longitude coordinates embedded within it, we are able to use these files to derive anchor points for our PDF overlay to ensure that "blue dot" locations displayed via CoreLocation align as closely as possible with our PDF overlay. These achor coordinates are defined in the `appData.json` file in the `map_floors` json node. The app matches the `anchor_pixel_1` and `anchor_pixel_2` variables with the correspondent geolocations defined in `anchor_location_1` and `anchor_location_2`.
 
 
 
 ## Data
 
-The application currently uses three main data sources: app data, events, and membership. The first two are JSON documents; the latter is a custom SOAP API. This data is meant to be managed through the companion CMS, but as long as the expected data format is followed, feel free to serve the files statically (cf. [SampleData](SampleData)) or roll your own CMS.
+The application currently uses three main data sources: 
+
+- App data from the Mobile CMS
+- Data Aggregator
+- Membership API
+
+The first one is a JSON document.
+
+The Data Aggregator is the Art Institute's main API that aggregates all different types of data used accross the museum's digital applications and websites.
+
+For membership the app is querying a custom SOAP API. This data is meant to be managed through the companion CMS, but as long as the expected data format is followed, feel free to serve the files statically (cf. [SampleData](SampleData)) or roll your own CMS.
 
 
 
 ### App Data
 
-The main app data is pulled from an external-facing server each time the application loads. This data includes galleries, objects (artworks), tours, and audio files. We've included [appData.json](SampleData/appData.json) to demonstrate how "real" data would look like.
+The main app data is pulled from an external-facing server each time the application loads. This data includes galleries, objects (artworks), tours, audio files, map floors overlays, map annotations, and Data Aggregator API urls. We've included [appData.json](SampleData/appData.json) to demonstrate how "real" data would look like.
 
 Here's a breakdown of the expected data format:
 
@@ -340,10 +339,12 @@ Here's a breakdown of the expected data format:
     "1052": {
 
       "nid": 1052,
-
-      // Galleries are referenced by title, not nid
-      // Objects and exhibits that refer to invalid galleries will be hidden
+		
       "title": "Allerton Building",
+      
+      // Galleries are referenced by gallery_id
+      // Objects and exhibits that refer to invalid galleries will be hidden
+      "gallery_id": "2147483642"
 
       // If true, objects from this gallery will be hidden
       "closed": false,
@@ -360,40 +361,52 @@ Here's a breakdown of the expected data format:
   },
 
   "objects": {
+  
     "1036": {
+    	"nid": 1036,
 
-      "nid": 1036,
+     	"location": "41.87964734443971, -87.62376828224376",
 
-      "location": "41.87964734443971, -87.62376828224376",
+      	// Should match one of the "galleries" by name
+      	"gallery_location": "Allerton Building",
+		
+		"title": "Artwork Title",
 
-      // Should match one of the "galleries"
-      "gallery_location": "Allerton Building",
+      	// Shown when the individual object is opened
+      	"large_image_full_path": "http://localhost:8888/placeholder.png",
 
-      "title": "Artwork Title",
+      	// Shown as circular thumbnail on the map
+      	"thumbnail_full_path": "http://localhost:8888/placeholder.png",
 
-      // Shown when the individual object is opened
-      "large_image_full_path": "http://localhost:8888/placeholder.png",
-
-      // Shown as circular thumbnail on the map
-      "thumbnail_full_path": "http://localhost:8888/placeholder.png",
-
-      // Should match one of the audio_files
-      // (This particular example refers to a non-existing entry)
-      "audio": [
-        1028
-      ]
-
+		// An audio commentary is a pair of selector number (to enter on the Audio Guide key pad) and the correspondent audio file.
+      	// The audio id should match one of the audio_files
+      	"audio_commentary": [
+      	  {
+			object_selector_number: "101",
+			audio: "1027"
+		  }
+      	]
     }
+    
   },
 
   "audio_files": {
 
     "1027": {
-
       "nid": 1027,
       "title": "Introduction to Tour",
       "audio_file_url": "http://localhost:8888/unfa.mp3",
-      "audio_transcript": "This is an introduction."
+      "audio_transcript": "This is an introduction.",
+      
+       // Translations is an array of nodes, each one containing all the content translated in a language that is not English.
+      "translations": [
+      		{
+				"language": "es",
+				"title": "Spanish Title",
+				"audio_file_url": "http://localhost:8888/unfa.mp3",
+				"audio_transcript": "Spanish transcript"
+			}
+      ]
     }
 
   },
@@ -401,6 +414,7 @@ Here's a breakdown of the expected data format:
   // Note that "tours" is an Array of Objects, not Object of Objects.
   // This inconsistency is kept for historical compatibility reasons.
   "tours": [
+  
     {
       "nid": 1023,
       "title": "Lorem Ipsum",
@@ -410,18 +424,36 @@ Here's a breakdown of the expected data format:
 
       // Should match one of the "audio_files"
       "tour_audio": 1027,
+      
+      // Location where the tour starts
+      "location": "41.87954599481745, -87.62390507490352",
+      
+      // Translations is an array of nodes, each one containing all the content translated in a language that is not English.
+      "translations": [
+      		{
+				"language": "es",
+				"title": "Spanish Title",
+				"description": "Spanish description",
+				"intro": "Spanish intro"
+			}
+      ],
 
-      // "stops" is also an Array of Objects!
-      "stops": [
+      // "tour_stops" is also an Array of Objects!
+      "tour_stops": [
         {
           // Does not have to be consecutive or integer
           "sort": 0,
 
-          // Should match one of the "audio_files"
-          "audio": 1027,
-
           // Should match one of the "objects"
-          "object": 1036
+          "object": 1036,
+
+          // Should match one of the "audio_files"
+          "audio_id": 1027,
+          
+          // An Audio Bumper plays at the end of a stop to provide directions to the next stop in the tour
+          // The audio bumper for this stop plays at the end of the previous stop
+          // Should match one of the "audio_files"
+          "audio_bumper": 1027
         }
       ]
     }
@@ -434,80 +466,110 @@ For more details, see [AppDataParser.swift](aic/aic/Data/AppDataParser.swift). I
 
 
 
-### Featured Exhibitions
+### Data Aggregator
 
-This data feed is being recycled from the Art Institute of Chicago's website. It provides a list of current exhibitions, cross-referencing gallery and floor locations from the App Data file. Here is the annotated data structure:
+The Data Aggregator is the Art Institute's main API that aggregates all different types of data used accross the museum's digital applications and websites. The API is an open source project and its repository can be found here: 
+
+[https://github.com/art-institute-of-chicago/data-aggregator](https://github.com/art-institute-of-chicago/data-aggregator)
+
+From the `appData.json` file the iOS app retreives the URL of the Data Aggregator (`data_api_url`) and the API endpoints used throughout the app for retreiving the latest events and exhibitions as well as performing searches for tours, artworks and exhibitions.
 
 ```javascript
-[
-  {
-
-    "title": "Sample Exhibit",
-
-    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed est purus, mattis sed molestie ac, ultricies quis mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-
-    // Both of these are optional: without either, "body" is used
-    "intro_html": "Optional. Shows before you open the exhibit.",
-    "description_html": "Optional. Long-form text that shows when you open the exhibit.",
-
-    // Can have multiple galleries, separated by ", " but only the first one matters
-    // Should match one of the "galleries" defined in appData.json
-    "exhibition_location": "Ryerson Library Study Room",
-
-    // Should have two parts, separated by " to "
-    // Only the second half matters: outputs "Through [date]"
-    "date": "2017-03-20 00:00:00 to 2020-12-31 00:00:00",
-
-    // Used on the map in a circle
-    "thumbnail": "http://localhost:8888/placeholder.png",
-
-    // Used in the "On View" section
-    "feature_image_mobile": "http://localhost:8888/placeholder.png",
-
-    // This text appears overlayed over the tour image in "On View"
-    // We use it to mark "featured" or "new" items
-    "tour_banner": "Banner"
-
-  }
-]
+"data": {
+	// Data Aggregator API URL
+	"data_api_url": "http://localhost:8888",
+	
+	// Data Aggregator API endpoints
+	"exhibitions_endpoint": "/search/exhibitions.json",
+	"artworks_endpoint": "/artworks",
+	"galleries_endpoint": "/galleries",
+	"images_endpoint": "/images",
+	"events_endpoint": "/search/events.json",
+	"autocomplete_endpoint": "/autocomplete",
+	"tours_endpoint": "/tours",
+	"multisearch_endpoint": "/search/msearch.json",
+	
+	// URL to the museum web page where you can become a member
+	"membership_url": "http://localhost:8888",
+	
+	// URL to the museum website
+	"website_url": "http://localhost:8888",
+	
+	// URL to the museum web page where you can buy tickets
+	"tickets_url": "http://localhost:8888",
+	
+	// URL to download the museum artworks images
+	"image_server_url": "http://localhost:8888"
+}
 ```
 
-Check out this URL for the Art Institute of Chicago's "live" version:
-
-```
-http://www.artic.edu/exhibitions-json/featured-exhibitions
-```
-
-Please note that the app expects `exhibition_location` to match the `title` of one of the galleries listed in `appData.json`. If it cannot match the exhibit location, that exihibit will not appear in the app's "On View" section.
-
-For more details, see [AppDataParser.swift](aic/aic/Data/AppDataParser.swift#L53).
+Depending on the specific data needs, the app performs GET or POST methods to obtain that data. These methods are using [ElasticSearch](https://www.elastic.co/) syntax and POST requests are performed by sending query parameters defined in a dictionary and encoded in JSON format.
 
 
+
+#### Current Exhibitions Request
+
+The iOS app is sending POST requests to the Data Aggregator to get a list of exhibitions currently open at the museum.
+
+[Loading current exhibitions](aic/aic/Data/AppDataManager.swift#L240)
+
+In order to demonstrate how the Data Aggregator API returns data for the latest exhibitions and events, we included a JSON file as an example of API response in [SampleData/search/exhibitions.json](SampleData/search/exhibitions.json)
+
+
+
+#### Current Events Request
+
+The Data Aggregator is also queried to get a list of events for the next 2 weeks.
+
+[Loading current events](aic/aic/Data/AppDataManager.swift#L304)
+
+Here's an example of API response for current events: [SampleData/search/events.json](SampleData/search/events.json)
+
+
+
+#### Search Request
+
+All the search requests to the Data Aggregator are performed using the `multisearch_endpoint` of the API.
+Another endpoint that the app uses is the `autocomplete_endpoint` which is returning autocomplete strings to provide search suggestions.
+
+For more details about all the requests used for the search functionality, see [SearchDataManager.swift](aic/aic/Data/SearchDataManager.swift).
+
+The multi-search is a request that contains 3 different queries, each one for a different content type: artworks, tours, exhibitions.
+
+The Data Aggregator API returns data for each content type in a single JSON file, with 3 separate arrays of results, one per content type. An example of multi-search response can be found in [SampleData/search/msearch.json](SampleData/search/msearch.json)
+
+---------------------
+
+**Note:** The `appData.json` provided in the SampleData has the `exhibitions_endpoint`, `events_endpoint` and `multisearch_endpoint` pointing directly to the sample json files. These should not point to static files, but to API endpoints on a server, which is supposed to process the request and return data for your institution.
+
+---------------------
 
 ### Member Card API
 
 The member card information is validated through a simple SOAP API that exists on the Art Institute of Chicago's server. Given a member's ID number and ZIP code, this API attempts to validate the user and returns their information if successful.
 
-Our membership system is based on Gateway's [Galaxy Connect](http://www.gatewayticketing.com/solutions/membership/). You will likely have to substantially modify the membership components of this app to suit your institution. Because this functionality is so specific to the Art Institute, we disabled the member card view by default. All the relevant code is still there, however. Toggle `showMemberCardView` in [InfoSectionView.swift](aic/aic/ViewControllers/Sections/About/InfoSectionView.swift#L16) to get started.
+Our membership system is based on Gateway's [Galaxy Connect](http://www.gatewayticketing.com/solutions/membership/). You will likely have to substantially modify the membership components of this app to suit your institution. This functionality is very specific to the Art Institute.
 
 
 
 ## External Libs
 
-The application relies on a few external libs, all of which are built using [Carthage](https://github.com/Carthage/Carthage), with the exception of Google Analytics, which is managed by [CocoaPods](https://cocoapods.org/).
+The application relies on a few external libs, all of which are built using [Cocoapods](https://cocoapods.org/).
 
-- [SnapKit](https://github.com/SnapKit/SnapKit) is used for handling the layout and managing views.
-- [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) is used for parsing the App and Featured JSON data.
+- [PureLayout](https://github.com/PureLayout/PureLayout) is used for handling the layout and managing views.
+- [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) is used for parsing the JSON data.
 - [SWXMLHash](https://github.com/drmohundro/SWXMLHash) is used for parsing the SOAP response from the Member Card API
 - [AlamoFire](https://github.com/Alamofire/Alamofire) is used for all networking requests of data, assets, SOAP, etc.
-- [UIImageColors](https://github.com/jathu/UIImageColors) is used to find color profiles in the audio player and create a complementary background gradient.
+- [Kingfisher](https://github.com/onevcat/Kingfisher) is used for asynchronously load and cache images retreived from the different APIs.
+- [Localize-Swift](https://github.com/marmelroy/Localize-Swift) is used for the localization of content in English, Spanish and Chinese
+- [Atributika](https://github.com/psharanda/Atributika) is used for rendering HTML tags into iOS's attributed strings (rich text)
 - [GoogleAnalytics](https://cocoapods.org/pods/GoogleAnalytics) provides data analytics on general app usage.
 
 
 
 ## Analytics
 
-The app uses Google Analytics, which currently does not support Carthage (support is supposedly being evaluated by Google). To use this libray, CocoaPods is required. Ideally, down the line, the dependency on CocoaPods can be fully eliminated in favor of Carthage.
+The app uses Google Analytics, installed using CocoaPods.
 
 After running `install.sh`, you will need to configure [GoogleService-Info.plist](#googleservice-infoplist) to enable analytics.
 

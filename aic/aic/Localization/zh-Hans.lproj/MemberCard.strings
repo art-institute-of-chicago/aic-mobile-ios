@@ -1,0 +1,27 @@
+/* 
+  MemberCard.strings
+  aic
+
+  Created by Filippo Vanucci on 2/13/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Member Not Found Alert" = "无法找到会员信息";
+
+"Member Not Found Alert Ok Button" = "确定";
+
+"Member ID Field Title" = "会员账号";
+
+"Member ID Field Placeholder" = "输入您的会员账号";
+
+"Member ZipCode Field Title" = "邮编";
+
+"Member ZipCode Field Placeholder" = "输入您家庭所在的邮编";
+
+"Sign In" = "登录";
+
+"Change Info" = "更改信息";
+
+"Switch Cardholder" = "交换持卡人";
+
+"Expires" = "截止";

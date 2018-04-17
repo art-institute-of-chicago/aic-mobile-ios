@@ -1,0 +1,19 @@
+/* 
+  Map.strings
+  aic
+
+  Created by Filippo Vanucci on 2/8/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Lower Level" = "Planta baja";
+
+"First Level" = "Primer piso";
+
+"Second Level" = "Segundo piso";
+
+"Third Level" = "Tercer piso";
+
+"Exhibition" = "Exhibición";
+
+"Artwork" = "Obra de arte";

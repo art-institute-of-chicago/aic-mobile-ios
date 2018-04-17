@@ -117,12 +117,32 @@ public extension UIDevice {
 			"iPhone9,4"  : .iPhone7plus,
 			"iPhone10,1" : .iPhone8,
 			"iPhone10,2" : .iPhone8plus,
-			"iPhone10,3" : .iPhoneX
+			"iPhone10,3" : .iPhoneX,
+			"iPhone10,4" : .iPhone8,
+			"iPhone10,5" : .iPhone8plus,
+			"iPhone10,6" : .iPhoneX,
 		]
 		
 		if let model = modelMap[String(validatingUTF8: modelCode)!] {
 			return model
 		}
+		
+		// If we can't recognize the model, let's check the resolution
+		if UIDevice().userInterfaceIdiom == .phone {
+			switch UIScreen.main.nativeBounds.height {
+			case 1136:
+				return .iPhone5
+			case 1334:
+				return .iPhone8
+			case 2208:
+				return .iPhone8plus
+			case 2436:
+				return .iPhoneX
+			default:
+				return Model.unrecognized
+			}
+		}
+		
 		return Model.unrecognized
 	}
 }

@@ -4,6 +4,6 @@
  */
 
 struct AICMemberInfoModel {
-    let memberID:String
-    let memberZip:String
+    let memberID: String
+    let memberZip: String
 }

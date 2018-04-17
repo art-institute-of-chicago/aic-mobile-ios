@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventContentCell" rowHeight="357" id="ySn-aN-PuL" customClass="EventContentCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="436"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ySn-aN-PuL" id="aia-Sy-xUb">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="435.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-W8-qEM" customClass="AICImageView" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="3K1-W8-qEM" secondAttribute="height" multiplier="75:44" id="1JE-SD-tVz"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHx-n2-yhJ">
+                        <rect key="frame" x="0.0" y="182" width="375" height="38"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Op-bg-nI5">
+                                <rect key="frame" x="13" y="8.5" width="64.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="120" id="rny-e2-mq8"/>
+                                    <constraint firstAttribute="height" constant="21" id="sbf-8j-Equ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00am" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fad-jb-G6D">
+                                <rect key="frame" x="89.5" y="8.5" width="46.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Zur-Ib-hwk"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="stE-7J-yP0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fad-jb-G6D" firstAttribute="leading" secondItem="3Op-bg-nI5" secondAttribute="trailing" constant="12" id="PJL-eO-K0T"/>
+                            <constraint firstItem="fad-jb-G6D" firstAttribute="centerY" secondItem="gHx-n2-yhJ" secondAttribute="centerY" id="QcO-2f-tIy"/>
+                            <constraint firstAttribute="height" constant="38" id="hYW-yn-nLq"/>
+                            <constraint firstItem="3Op-bg-nI5" firstAttribute="centerY" secondItem="gHx-n2-yhJ" secondAttribute="centerY" id="lcV-aO-kQC"/>
+                            <constraint firstItem="3Op-bg-nI5" firstAttribute="leading" secondItem="gHx-n2-yhJ" secondAttribute="leading" constant="13" id="unl-GW-LvD"/>
+                        </constraints>
+                    </view>
+                    <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i29-cB-gnI" customClass="AICButton" customModule="aic" customModuleProvider="target">
+                        <rect key="frame" x="117" y="236.5" width="140" height="50"/>
+                        <color key="backgroundColor" red="0.2156862745" green="0.63529411759999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="140" id="7nl-39-1WU"/>
+                            <constraint firstAttribute="height" constant="50" id="d6J-sE-gUx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="Buy Tickets">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7vP-ys-6Vo">
+                        <rect key="frame" x="16" y="306" width="343" height="29.5"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eT9-Qh-kAN">
+                        <rect key="frame" x="16" y="370.5" width="343" height="38.5"/>
+                        <string key="text">Date
+Location</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7vP-ys-6Vo" firstAttribute="leading" secondItem="aia-Sy-xUb" secondAttribute="leading" constant="16" id="7Gu-WU-jNa"/>
+                    <constraint firstItem="gHx-n2-yhJ" firstAttribute="leading" secondItem="aia-Sy-xUb" secondAttribute="leading" id="8Wf-lR-QuV"/>
+                    <constraint firstItem="eT9-Qh-kAN" firstAttribute="top" secondItem="7vP-ys-6Vo" secondAttribute="bottom" constant="35" id="9Gm-nr-yE3"/>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="top" secondItem="aia-Sy-xUb" secondAttribute="top" id="JV0-br-X5H"/>
+                    <constraint firstAttribute="trailing" secondItem="eT9-Qh-kAN" secondAttribute="trailing" constant="16" id="KZu-02-DFN"/>
+                    <constraint firstItem="i29-cB-gnI" firstAttribute="top" secondItem="3K1-W8-qEM" secondAttribute="bottom" constant="16" id="NET-GA-OTx"/>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="width" secondItem="3K1-W8-qEM" secondAttribute="height" multiplier="75:44" id="Q9g-yX-JyW"/>
+                    <constraint firstAttribute="bottom" secondItem="7vP-ys-6Vo" secondAttribute="bottom" constant="100" id="QVK-RZ-jfm"/>
+                    <constraint firstItem="7vP-ys-6Vo" firstAttribute="top" secondItem="3K1-W8-qEM" secondAttribute="bottom" constant="86" id="TpN-i7-x9p"/>
+                    <constraint firstAttribute="trailing" secondItem="7vP-ys-6Vo" secondAttribute="trailing" constant="16" id="YQe-nt-AqH"/>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="centerX" secondItem="aia-Sy-xUb" secondAttribute="centerX" id="Zs4-Jd-eSJ"/>
+                    <constraint firstItem="i29-cB-gnI" firstAttribute="centerX" secondItem="aia-Sy-xUb" secondAttribute="centerX" id="aGu-ze-kt2"/>
+                    <constraint firstItem="eT9-Qh-kAN" firstAttribute="leading" secondItem="aia-Sy-xUb" secondAttribute="leading" constant="16" id="bjs-aj-WG8"/>
+                    <constraint firstAttribute="trailing" secondItem="3K1-W8-qEM" secondAttribute="trailing" id="e6f-V1-I9H"/>
+                    <constraint firstItem="3K1-W8-qEM" firstAttribute="leading" secondItem="aia-Sy-xUb" secondAttribute="leading" id="sIO-dI-xBe"/>
+                    <constraint firstAttribute="trailing" secondItem="gHx-n2-yhJ" secondAttribute="trailing" id="ve8-hG-2Qw"/>
+                    <constraint firstItem="gHx-n2-yhJ" firstAttribute="bottom" secondItem="3K1-W8-qEM" secondAttribute="bottom" id="veb-f4-k4f"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="buyTicketsButton" destination="i29-cB-gnI" id="JRB-3U-uh7"/>
+                <outlet property="descriptionTextView" destination="7vP-ys-6Vo" id="jrQ-uT-X8z"/>
+                <outlet property="descriptionToImageVerticalSpacing" destination="TpN-i7-x9p" id="owi-z3-pk6"/>
+                <outlet property="eventImageView" destination="3K1-W8-qEM" id="eAK-Cn-BXK"/>
+                <outlet property="hoursMinutesLabel" destination="fad-jb-G6D" id="uDg-fe-uSS"/>
+                <outlet property="locationAndDateLabel" destination="eT9-Qh-kAN" id="sgG-wH-q0L"/>
+                <outlet property="monthDayLabel" destination="3Op-bg-nI5" id="8JF-L6-aN9"/>
+                <outlet property="transparentOverlayView" destination="gHx-n2-yhJ" id="Tma-SQ-qZI"/>
+            </connections>
+            <point key="canvasLocation" x="9.5" y="126"/>
+        </tableViewCell>
+    </objects>
+</document>

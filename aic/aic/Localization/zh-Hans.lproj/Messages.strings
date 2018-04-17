@@ -1,0 +1,29 @@
+/* 
+  Messages.strings
+  aic
+
+  Created by Filippo Vanucci on 1/31/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Message Headphones Title" = "收听";
+
+"Message Headphones Text" = "使用你的耳机收听。没有配备耳机？请将听筒靠近耳朵。";
+
+"Message Headphones Action Button Title" = "确定";
+
+"Message Leaving Tour Title" = "退出当前游览?";
+
+"Message Leaving Tour Text" = "";
+
+"Message Leaving Tour Action Button Title" = "离开游览";
+
+"Message Leaving Tour Cancel Button Title" = "继续游览";
+
+"Message Location Title" = "您在哪里？";
+
+"Message Location Text" = "我们想使用您的位置帮助您找到博物馆。";
+
+"Message Location Action Button Title" = "确定";
+
+"Message Location Cancel Button Title" = "不是现在";

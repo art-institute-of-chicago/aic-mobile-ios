@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "short_description": "Sample event description.",
+      "image": "http://localhost:8888/placeholder.png",
+      "end_at": "2099-04-05T17:00:00-05:00",
+      "button_url": null,
+      "description": "<p>Sample event description.</p>",
+      "id": 29089477,
+      "button_text": null,
+      "title": "Sample Event",
+      "start_at": "2099-12-31T10:30:00-05:00"
+    }
+  ]
+}

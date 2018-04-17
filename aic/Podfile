@@ -6,7 +6,14 @@ target 'aic' do
   use_frameworks!
 
   # Pods for aic
-  pod 'Google/Analytics'
+  pod 'PureLayout'
+  pod 'SWXMLHash', '~> 4.2.1'
+  pod 'Alamofire', '~> 4.5.1'
+  pod 'Kingfisher', '~> 4.0'
+  pod 'SwiftyJSON', '~> 3.1.4'
+  pod 'Localize-Swift', '~> 2.0'
+  pod "Atributika"
+  pod 'GoogleAnalytics', '~> 3.17'
 
   target 'aicTests' do
     inherit! :search_paths

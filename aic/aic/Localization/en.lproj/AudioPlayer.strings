@@ -1,0 +1,23 @@
+/* 
+  AudioPlayer.strings
+  aic
+
+  Created by Filippo Vanucci on 2/2/18.
+  Copyright © 2018 Art Institute of Chicago. All rights reserved.
+*/
+
+"Loading Message" = "Loading";
+
+"Load Failure Title" = "Failed to load this item.";
+
+"Load Failure Message" = "We were unable to load the object at this time. Please check your connection and try again.";
+
+"Load Failure Reload Button Title" = "Try Again";
+
+"Load Failure Cancel Button Title" = "Cancel";
+
+"Transcript" = "Transcript";
+
+"Credits" = "Credits";
+
+"Related Tours" = "Related Tours";

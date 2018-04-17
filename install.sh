@@ -10,8 +10,6 @@ DIR_AIC="$DIR_APP/aic"
 # Install dependencies
 cd "$DIR_APP";
 
-carthage checkout --no-use-binaries;
-carthage build --platform ios;
 pod update;
 
 # Create dummy plists
@@ -31,14 +29,8 @@ if [ ! -f "$DIR_AIC/Config.plist" ]; then
 	    </dict>
 	    <key>DataConstants</key>
 	    <dict>
-	        <key>feedFeaturedExhibitions</key>
-	        <string>http://localhost:8888/featuredExhibitions.json</string>
 	        <key>appDataJSON</key>
 	        <string>http://localhost:8888/appData.json</string>
-	        <key>appDataExternalPrefix</key>
-	        <string>http://localhost:8888/</string>
-	        <key>appDataInternalPrefix</key>
-	        <string>http://localhost:8888/</string>
 	        <key>memberCardSOAPRequestURL</key>
 	        <string>http://localhost:8888/api/1?token=foobar</string>
 	        <key>ignoreOverrideImageCrop</key>
