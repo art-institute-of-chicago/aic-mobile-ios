@@ -5,10 +5,8 @@
 
 import CoreLocation
 
-struct AICExhibitionModel {
+class AICExhibitionModel : NSObject {
 	let id: Int
-	
-	let isFeatured: Bool
 	
     let title: String
     let shortDescription: String
@@ -18,4 +16,27 @@ struct AICExhibitionModel {
 	let endDate: Date
     
 	let location: CoordinateWithFloor? // TODO: making this optional, it's not always available in the data
+	
+	init(id: Int, title: String, shortDescription: String, imageUrl: URL?, startDate: Date, endDate: Date, location: CoordinateWithFloor?) {
+		self.id = id
+		self.title = title
+		self.shortDescription = shortDescription
+		self.imageUrl = imageUrl
+		self.startDate = startDate
+		self.endDate = endDate
+		self.location = location
+		super.init()
+	}
+}
+
+class AICExhibitionInCMS : NSObject {
+	let id: Int
+	let imageUrl: URL?
+	let sort: Int
+	
+	init(id: Int, imageUrl: URL?, sort: Int) {
+		self.id = id
+		self.imageUrl = imageUrl
+		self.sort = sort
+	}
 }

@@ -16,8 +16,7 @@ struct AICTourModel {
 	var overview: AICTourOverviewModel { return self.translations[self.language]!.overview }
 	
 	let order: Int
-	let isFeatured: Bool // TODO: the isFeatured bool is currently ignored
-						// since everything is based on the order in the CMS ("weight" node in the JSON)
+	
 	let category: AICTourCategoryModel?
     
     let additionalInformation: String? = nil
