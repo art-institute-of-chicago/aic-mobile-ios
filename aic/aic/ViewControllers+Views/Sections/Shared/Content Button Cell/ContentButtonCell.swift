@@ -70,6 +70,12 @@ class ContentButtonCell : UITableViewCell {
 		itemSubtitleLabel.text = subtitle
 		
 		audioIcon.isHidden = !showAudioIcon
+		
+		// Accessibility
+		self.isAccessibilityElement = true
+		self.accessibilityLabel = ""
+		self.accessibilityValue = itemTitleLabel.text! + ", " + itemSubtitleLabel.text!
+		self.accessibilityTraits = UIAccessibilityTraitButton
 	}
 }
 

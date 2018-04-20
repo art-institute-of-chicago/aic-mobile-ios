@@ -56,6 +56,13 @@ class MapContentCardNavigationController: CardNavigationController {
 		self.view.addSubview(dividerLine)
 		
 		createViewConstraints()
+		
+		// Accessibility
+		self.view.accessibilityElements = [
+			titleLabel,
+			closeButton,
+			contentVC.view
+		]
 	}
 	
 	func setTitleText(text: String) {
@@ -82,5 +89,10 @@ class MapContentCardNavigationController: CardNavigationController {
 		dividerLine.autoPinEdge(.leading, to: .leading, of: self.view,  withOffset: 16)
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self.view,  withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
+	}
+	
+	override func cardDidShowMinimized() {
+		// Accessibility
+		self.titleLabel.becomeFirstResponder()
 	}
 }

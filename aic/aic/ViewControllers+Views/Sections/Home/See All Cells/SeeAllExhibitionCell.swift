@@ -24,7 +24,7 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 		
 		exhibitionImageView.contentMode = .scaleAspectFill
 		exhibitionImageView.clipsToBounds = true
-		exhibitionTitleLabel.font = .aicTitleFont
+		exhibitionTitleLabel.font = .aicSeeAllExhibitionTitleFont
 		exhibitionTitleLabel.textColor = .aicDarkGrayColor
 		exhibitionTitleLabel.numberOfLines = 0
 		exhibitionTitleLabel.lineBreakMode = .byWordWrapping
@@ -43,6 +43,12 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
 			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
+			
+			// Accessibility
+			self.isAccessibilityElement = true
+			self.accessibilityLabel = "Exhibition"
+			self.accessibilityValue = exhibitionTitleLabel.text! + ", " + throughDateLabel.text!
+			self.accessibilityTraits = UIAccessibilityTraitButton
 		}
 	}
 }

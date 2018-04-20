@@ -29,10 +29,15 @@ class SuggestedSearchCell : UITableViewCell {
 		suggestedSearchLabel.textColor = .white
 	}
 	
-	var suggestedText: String = "" {
-		didSet {
-			suggestedSearchLabel.text = suggestedText
-		}
+	func setSuggestedText(text: String, color: UIColor) {
+		suggestedSearchLabel.text = text
+		suggestedSearchLabel.textColor = color
+		
+		// Accessibility
+		self.isAccessibilityElement = true
+		self.accessibilityLabel = "Search for"
+		self.accessibilityValue = text
+		self.accessibilityTraits = UIAccessibilityTraitButton
 	}
 	
 	override func setHighlighted(_ highlighted: Bool, animated: Bool) {

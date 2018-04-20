@@ -53,6 +53,11 @@ class NoResultsCell : UITableViewCell {
 		visitWebsiteTextView.textColor = .aicCardDarkLinkColor
 		visitWebsiteTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicCardDarkLinkColor]
 		visitWebsiteTextView.font = .aicSearchNoResultsWebsiteFont
+		
+		// Accessibility
+		self.isAccessibilityElement = true
+		self.accessibilityValue = visitWebsiteText
+		self.accessibilityTraits = UIAccessibilityTraitLink
 	}
 }
 

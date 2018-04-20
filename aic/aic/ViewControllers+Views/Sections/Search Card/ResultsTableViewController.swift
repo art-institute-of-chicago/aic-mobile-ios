@@ -57,6 +57,18 @@ class ResultsTableViewController : UITableViewController {
 	var filter: Common.Search.Filter = .empty {
 		didSet {
 			self.tableView.reloadData()
+			
+			if filter == .empty {
+				self.view.accessibilityElements = [
+					tableView
+				]
+			}
+			else {
+				self.view.accessibilityElements = [
+					
+					tableView
+				]
+			}
 		}
 	}
 	
@@ -227,8 +239,7 @@ extension ResultsTableViewController {
 		if filter == .empty {
 			if indexPath.section == 0 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: SuggestedSearchCell.reuseIdentifier, for: indexPath) as! SuggestedSearchCell
-				cell.suggestedSearchLabel.textColor = .white
-				cell.suggestedSearchLabel.text = promotedSearchStringItems[indexPath.row]
+				cell.setSuggestedText(text: promotedSearchStringItems[indexPath.row], color: .white)
 				return cell
 			}
 			else if indexPath.section == 1 {
@@ -242,8 +253,7 @@ extension ResultsTableViewController {
 		else if filter == .suggested {
 			if indexPath.section == 0 {
 				let cell = tableView.dequeueReusableCell(withIdentifier: SuggestedSearchCell.reuseIdentifier, for: indexPath) as! SuggestedSearchCell
-				cell.suggestedSearchLabel.textColor = .aicCardDarkTextColor
-				cell.suggestedSearchLabel.text = autocompleteStringItems[indexPath.row]
+				cell.setSuggestedText(text: autocompleteStringItems[indexPath.row], color: .aicCardDarkTextColor)
 				return cell
 			}
 			else if indexPath.section == 1 {

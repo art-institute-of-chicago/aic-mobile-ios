@@ -75,6 +75,22 @@ class ResultsFilterMenuView : UIView {
 		self.layoutIfNeeded()
 		scrollView.contentSize.width = exhibitionsButton.frame.origin.x + exhibitionsButton.frame.width
 		scrollView.contentSize.height = self.frame.height
+		
+		// Accessibility
+		suggestedButton.accessibilityLabel = "Filter results by"
+		suggestedButton.accessibilityValue = "Suggested"
+		artworksButton.accessibilityLabel = "Filter results by"
+		artworksButton.accessibilityValue = "Artworks"
+		toursButton.accessibilityLabel = "Filter results by"
+		toursButton.accessibilityValue = "Tours"
+		exhibitionsButton.accessibilityLabel = "Filter results by"
+		exhibitionsButton.accessibilityValue = "Exhibitions"
+		self.accessibilityElements = [
+			suggestedButton,
+			artworksButton,
+			toursButton,
+			exhibitionsButton
+		]
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

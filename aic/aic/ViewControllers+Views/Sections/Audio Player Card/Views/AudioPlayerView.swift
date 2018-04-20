@@ -41,6 +41,9 @@ class AudioPlayerView : BaseView {
         self.addSubview(slider)
 		
 		createConstraints()
+		
+		// Accessibility
+		playPauseButton.accessibilityLabel = "Play Pause Audio Track"
     }
 
     required init?(coder aDecoder: NSCoder) {

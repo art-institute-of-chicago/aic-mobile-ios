@@ -100,6 +100,9 @@ class LanguageSelectorView : UIView {
 		self.addSubview(selectedLanguageButton)
 		
 		createConstraints()
+		
+		// Accessibility
+		self.accessibilityElementsHidden = true
 	}
 	
 	private func createConstraints() {

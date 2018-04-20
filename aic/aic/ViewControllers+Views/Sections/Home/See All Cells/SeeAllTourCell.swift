@@ -64,6 +64,18 @@ class SeeAllTourCell : UICollectionViewCell {
 			else if let duration: String = self.tourModel!.durationInMinutes {
 				durationLabel.text = "\(duration)"
 			}
+			
+			// Accessibility
+			self.isAccessibilityElement = true
+			self.accessibilityLabel = "Tour"
+			var accessValue = tourTitleLabel.text!
+			accessValue += ", "
+			accessValue += stopsNumberLabel.text!
+			if durationLabel.text != nil { accessValue += ", " + durationLabel.text! }
+			accessValue += ", "
+			accessValue += shortDescriptionTextView.text!
+			self.accessibilityValue = accessValue
+			self.accessibilityTraits = UIAccessibilityTraitButton
 		}
 	}
 }

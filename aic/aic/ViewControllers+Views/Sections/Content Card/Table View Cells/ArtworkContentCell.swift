@@ -44,6 +44,10 @@ class ArtworkContentCell : UITableViewCell {
 				return
 			}
 			
+			var accessibilityItems: [Any] = [
+				showOnMapButton
+			]
+			
 			// Image
 			artworkImageView.kf.indicatorType = .activity
 			artworkImageView.kf.setImage(with: artworkModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
@@ -70,15 +74,21 @@ class ArtworkContentCell : UITableViewCell {
 			descriptionLabel.text = ""
 			descriptionLabel.font = .aicTextFont
 			
-			guard let _ = artworkModel.audioObject else {
+			if let _ = artworkModel.audioObject {
+				accessibilityItems.append(playAudioButton)
+			}
+			else {
 				playAudioButton.isHidden = true
 				playAudioButton.isEnabled = false
 				showOnMapButtonHorizontalOffset.constant = 0
 				self.setNeedsLayout()
 				self.layoutIfNeeded()
-				return
 			}
-//			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
+			
+			// Accessibility
+			accessibilityItems.append(artistDisplayLabel)
+			accessibilityItems.append(descriptionLabel)
+			self.accessibilityElements = accessibilityItems
 		}
 	}
 }

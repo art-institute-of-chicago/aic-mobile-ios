@@ -116,6 +116,18 @@ class SearchNavigationController : CardNavigationController {
 		
 		// Language
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+		
+		// Accessibility
+		downArrowButton.accessibilityLabel = "Close Search"
+		backButton.accessibilityElementsHidden = true
+		backButton.accessibilityLabel = "Back"
+		searchButton.accessibilityLabel = "Search"
+		self.accessibilityElements = [
+			downArrowButton,
+			searchBar,
+			searchButton,
+			resultsVC.tableView
+		]
 	}
 	
 	func createViewConstraints() {
@@ -154,6 +166,30 @@ class SearchNavigationController : CardNavigationController {
 		else {
 			currentTableView.panGestureRecognizer.isEnabled = true
 		}
+	}
+	
+	// MARK: Accessibility
+	
+	private func updateAccessibilityElementsForSearch() {
+		var accessibilityItems: [Any] = [
+			downArrowButton,
+			searchBar,
+			searchButton
+		]
+		if filterMenuView.isHidden == false {
+			accessibilityItems.append(filterMenuView)
+		}
+		accessibilityItems.append(resultsVC.view)
+		
+		self.accessibilityElements = accessibilityItems
+	}
+	
+	private func updateAccessibilityElementsForContentPage(contentVC: SearchContentViewController) {
+		self.accessibilityElements = [
+			downArrowButton,
+			backButton,
+			contentVC.view
+		]
 	}
 	
 	// MARK: Language
@@ -251,6 +287,9 @@ class SearchNavigationController : CardNavigationController {
 		
 		let contentVC = SearchContentViewController(tableVC: tableVC)
 		self.pushViewController(contentVC, animated: true)
+		
+		// Accessibility
+		updateAccessibilityElementsForContentPage(contentVC: contentVC)
 	}
 	
 	// MARK: Load Search
@@ -279,6 +318,9 @@ class SearchNavigationController : CardNavigationController {
 			filterMenuView.setSelected(filter: .suggested)
 			
 			resultsVC.filter = .suggested
+			
+			// Accessibility
+			updateAccessibilityElementsForSearch()
 		}
 		else {
 			resultsVC.tableView.reloadData()
@@ -306,6 +348,9 @@ class SearchNavigationController : CardNavigationController {
 		hideBackButton()
 		self.popViewController(animated: true)
 		self.view.layoutIfNeeded()
+		
+		// Accessibility
+		updateAccessibilityElementsForSearch()
 	}
 }
 
@@ -328,6 +373,9 @@ extension SearchNavigationController : UISearchBarDelegate {
 			filterMenuView.isHidden = true
 			
 			resultsVC.filter = .empty
+			
+			// Accessibility
+			updateAccessibilityElementsForSearch()
 		}
 	}
 	

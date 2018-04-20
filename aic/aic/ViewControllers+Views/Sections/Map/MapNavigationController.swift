@@ -66,6 +66,12 @@ class MapNavigationController : SectionNavigationController {
 		self.view.setNeedsLayout()
 		self.view.layoutIfNeeded()
 		self.view.layoutSubviews()
+		
+		// Accessibility
+		mapVC.view.accessibilityElementsHidden = true
+		self.accessibilityElements = [
+			sectionNavigationBar
+		]
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -589,6 +595,18 @@ class MapNavigationController : SectionNavigationController {
 		if mapContentCardVC!.currentState == .hidden {
 			mapContentCardVC!.showMinimized()
 		}
+		
+		// Accessibility
+		self.accessibilityElements = [
+			sectionNavigationBar,
+			mapContentCardVC!.view
+		]
+		if currentMode == .tour {
+			mapContentCardVC!.closeButton.accessibilityLabel = "Leave Tour"
+		}
+		else {
+			mapContentCardVC!.closeButton.accessibilityLabel = "Close"
+		}
 	}
 	
 	// MARK: Audio Button
@@ -693,8 +711,14 @@ extension MapNavigationController : CardNavigationControllerDelegate {
 	func cardDidHide(cardVC: CardNavigationController) {
 		if mapContentCardVC != nil {
 			mapContentCardVC!.view.removeFromSuperview()
+			mapContentCardVC = nil
 		}
 		showAllInformation()
+		
+		// Accessibility
+		self.accessibilityElements = [
+			sectionNavigationBar
+		]
 	}
 }
 

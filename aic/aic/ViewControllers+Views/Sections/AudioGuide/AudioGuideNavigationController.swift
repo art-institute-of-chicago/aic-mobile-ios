@@ -180,6 +180,9 @@ extension AudioGuideNavigationController : UICollectionViewDataSource {
         case "<":
 			cell.button.setImage(#imageLiteral(resourceName: "deleteButton"), for: .normal)
             cell.button.setImage(#imageLiteral(resourceName: "deleteButton").colorized(.white), for: .highlighted)
+			
+			// Accessibility
+			cell.button.accessibilityLabel = "Delete"
         default:
             cell.button.setTitle(titleLabel, for: .normal)
         }

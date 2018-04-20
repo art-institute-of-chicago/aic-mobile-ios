@@ -46,6 +46,8 @@ class ExhibitionContentCell : UITableViewCell {
 				return
 			}
 			
+			var accessibilityItems: [Any] = []
+			
 			// TODO: temporary fix for missing image
 			exhibitionImageView.kf.indicatorType = .activity
 			if let _ = exhibitionModel.imageUrl {
@@ -65,9 +67,18 @@ class ExhibitionContentCell : UITableViewCell {
 				showOnMapButton.isEnabled = false
 				buyTicketsButtonHorizontalOffset.constant = 0
 			}
+			else {
+				accessibilityItems.append(showOnMapButton)
+			}
 			
 			self.setNeedsLayout()
 			self.layoutIfNeeded()
+			
+			// Accessibility
+			accessibilityItems.append(buyTicketsButton)
+			accessibilityItems.append(descriptionLabel)
+			accessibilityItems.append(throughDateLabel)
+			self.accessibilityElements = accessibilityItems
 		}
 	}
 }

@@ -78,6 +78,8 @@ extension UIFont {
 	
 	static let aicSeeAllTitleFont: UIFont = UIFont(name: SansSerif_Medium, size: 17.0)!.upperCaseNumbers()
 	
+	static let aicSeeAllExhibitionTitleFont: UIFont = UIFont(name: SansSerif_Medium, size: 18.0)!.upperCaseNumbers()
+	
 	static let aicSeeAllInfoFont: UIFont = UIFont(name: SansSerif_Book, size: 12.0)!.upperCaseNumbers()
 	
 	/// Font modified to use uppercase numbers

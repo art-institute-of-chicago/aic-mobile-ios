@@ -114,6 +114,14 @@ class SectionNavigationBar : UIView {
 		
 		createConstraints()
 		layoutIfNeeded()
+		
+		// Accessibility
+		searchButton.accessibilityLabel = "Search"
+		self.accessibilityElements = [
+			titleLabel,
+			descriptionLabel,
+			searchButton
+		]
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -151,6 +159,23 @@ class SectionNavigationBar : UIView {
 	func setBackButtonHidden(_ hidden: Bool) {
 		backButton.isHidden = hidden
 		backButton.isEnabled = !hidden
+		
+		// Accessibility
+		if hidden {
+			self.accessibilityElements = [
+				titleLabel,
+				descriptionLabel,
+				searchButton
+			]
+		}
+		else {
+			self.accessibilityElements = [
+				backButton,
+				titleLabel,
+				descriptionLabel,
+				searchButton
+			]
+		}
 	}
 	
 	func updateHeight(contentOffset: CGPoint) {

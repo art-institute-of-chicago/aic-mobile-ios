@@ -37,6 +37,12 @@ class HomeNavigationController : SectionNavigationController {
 		homeVC.delegate = self
 		
 		self.pushViewController(homeVC, animated: false)
+		
+		// Accessibility
+		self.accessibilityElements = [
+			sectionNavigationBar,
+			homeVC.view
+		]
 	}
 	
 	func showHomeTooltip() {
@@ -47,6 +53,12 @@ class HomeNavigationController : SectionNavigationController {
 		if showMapTooltipsMessageValue {
 			homeVC.animateToursScrolling()
 		}
+	}
+	
+	func showSeeAllVC(contentType: SeeAllViewController.ContentType) {
+		let seeAllVC = SeeAllViewController(contentType: contentType)
+		seeAllVC.delegate = self
+		self.pushViewController(seeAllVC, animated: true)
 	}
 }
 
@@ -66,6 +78,12 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 		if viewController == homeVC && homeVC.scrollDelegate == nil {
 			homeVC.scrollDelegate = sectionNavigationBar
 		}
+		
+		// Accessibility
+		self.accessibilityElements = [
+			sectionNavigationBar,
+			viewController.view
+		]
 	}
 }
 
@@ -83,27 +101,21 @@ extension HomeNavigationController : HomeViewControllerDelegate {
 			content = .toursByCategory
 		}
 		
-		let seeAllVC = SeeAllViewController(contentType: content)
-		seeAllVC.delegate = self
-		self.pushViewController(seeAllVC, animated: true)
+		showSeeAllVC(contentType: content)
 	}
 	
 	func homeDidSelectSeeAllExhibitions() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
-		let seeAllVC = SeeAllViewController(contentType: .exhibitions)
-		seeAllVC.delegate = self
-		self.pushViewController(seeAllVC, animated: true)
+		showSeeAllVC(contentType: .exhibitions)
 	}
 	
 	func homeDidSelectSeeAllEvents() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
 		
-		let seeAllVC = SeeAllViewController(contentType: .events)
-		seeAllVC.delegate = self
-		self.pushViewController(seeAllVC, animated: true)
+		showSeeAllVC(contentType: .events)
 	}
 	
 	func homeDidSelectTour(tour: AICTourModel) {

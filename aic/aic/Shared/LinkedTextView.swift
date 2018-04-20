@@ -22,6 +22,9 @@ class LinkedTextView : UITextView {
 	}
 	
 	private func setup() {
+		if UIAccessibilityIsVoiceOverRunning() {
+			return
+		}
 		linkTapGestureRecognizer.cancelsTouchesInView = false
 		linkTapGestureRecognizer.delaysTouchesBegan = false
 		linkTapGestureRecognizer.delaysTouchesEnded = false
@@ -70,12 +73,12 @@ class LinkedTextView : UITextView {
 		}
 		
 		if url != nil {
-			if self.delegate != nil {
-				if self.delegate!.textView?(self, shouldInteractWith: url!, in: offsetRange) == false {
+			if let delegate = self.delegate {
+				if delegate.textView?(self, shouldInteractWith: url!, in: offsetRange, interaction: .invokeDefaultAction) == false {
 					return
 				}
 			}
-			UIApplication.shared.openURL(url!)
+			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
 		}
 	}
 }

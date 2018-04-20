@@ -35,6 +35,13 @@ class TourContentCell : UITableViewCell {
 		stopsNumberLabel.font = .aicInfoOverlayFont
 		durationLabel.font = .aicInfoOverlayFont
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+		
+		// Accessibility
+		self.accessibilityElements = [stopsNumberLabel,
+									  durationLabel,
+									  startTourButton,
+									  descriptionLabel
+		]
 	}
 	
 	var tourModel: AICTourModel? = nil {
