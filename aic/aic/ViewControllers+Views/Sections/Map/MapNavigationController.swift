@@ -323,12 +323,6 @@ class MapNavigationController : SectionNavigationController {
 		self.view.addSubview(mapContentCardVC!.view)
 		mapContentCardVC!.didMove(toParentViewController: self)
 		
-		// in case the tour card is open, to tell the map to animate the floor selector
-		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
-		
-		// Set map state
-		mapVC.showTour(forTour: tourModel!)
-		
 		// Set TourStopPageVC to the right stop
 		if let index = tourStopIndex {
 			tourStopPageVC!.setCurrentPage(pageIndex: index + 1) // add +1 for tour overview
@@ -337,13 +331,24 @@ class MapNavigationController : SectionNavigationController {
 			tourStopPageVC!.setCurrentPage(pageIndex: 0)
 		}
 		
+		// in case the tour card is open, to tell the map to animate the floor selector
+		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
+		
+		// Set map state
+		mapVC.showTour(forTour: tourModel!)
+		
 		showMapContentCard()
 		
-		self.perform(#selector(highlightTourOverview), with: nil, afterDelay: 0.6)
+		self.perform(#selector(highlightTourStop), with: nil, afterDelay: 1.0)
 	}
 	
-	@objc private func highlightTourOverview() {
-		mapVC.highlightTourStop(identifier: tourModel!.nid, location: tourModel!.location)
+	@objc private func highlightTourStop() {
+		var tourStopId = tourModel!.nid
+		if let index = tourStopIndex {
+			tourStopId = tourModel!.stops[index].object.nid
+		}
+		
+		mapVC.highlightTourStop(identifier: tourStopId, location: tourModel!.location)
 	}
 	
 	func showArtwork(artwork: AICObjectModel) {
