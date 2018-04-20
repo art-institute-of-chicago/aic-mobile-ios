@@ -82,6 +82,9 @@ class AudioInfoSectionView : UIView {
 		infoSectionHeight?.constant = 0
 		self.setNeedsLayout()
 		self.layoutIfNeeded()
+		
+		// Accessibility
+		self.accessibilityElementsHidden = true
 	}
 	
 	func show(collapseEnabled: Bool) {
@@ -101,6 +104,25 @@ class AudioInfoSectionView : UIView {
 		}
 		self.setNeedsLayout()
 		self.layoutIfNeeded()
+		
+		// Accessibility
+		self.accessibilityElementsHidden = false
+		if collapseEnabled {
+			self.accessibilityElements = [
+				tapArea
+			]
+			
+			tapArea.isAccessibilityElement = true
+			tapArea.accessibilityLabel = titleLabel.text!
+			tapArea.accessibilityValue = "Expand"
+			tapArea.accessibilityTraits = UIAccessibilityTraitButton
+		}
+		else {
+			self.accessibilityElements = [
+				titleLabel,
+				bodyTextView
+			]
+		}
 	}
 	
 	func set(relatedTours tours:[AICTourModel]) {
@@ -189,6 +211,12 @@ class AudioInfoSectionView : UIView {
 				self.infoSectionHeight?.constant = self.collapsedHeight
 				self.delegate?.audioInfoSectionDidUpdateHeight(audioInfoSectionView: self)
 			})
+			
+			// Accessibility
+			tapArea.accessibilityValue = "Expand"
+			self.accessibilityElements = [
+				tapArea
+			]
 		} else {
 			UIView.animate(withDuration: collapseAnimationDuration, animations: {
 				self.bodyTextView.alpha = 1
@@ -196,6 +224,14 @@ class AudioInfoSectionView : UIView {
 				self.infoSectionHeight?.constant = self.bodyTextView.frame.origin.y + self.bodyTextView.frame.height + 32
 				self.delegate?.audioInfoSectionDidUpdateHeight(audioInfoSectionView: self)
 			})
+			
+			// Accessibility
+			tapArea.accessibilityValue = "Collapse"
+			self.accessibilityElements = [
+				tapArea,
+				bodyTextView
+			]
+			bodyTextView.becomeFirstResponder()
 		}
 		
 		button.isSelected = !button.isSelected

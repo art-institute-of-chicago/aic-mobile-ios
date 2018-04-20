@@ -138,6 +138,7 @@
 		29E003EF20486F9300E1D305 /* AICRestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */; };
 		29E003F1204967A600E1D305 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E003F0204967A600E1D305 /* MapAnnotation.swift */; };
 		29E0D4A3206361B500DEEC24 /* SeeAllIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E0D4A2206361B500DEEC24 /* SeeAllIntroView.swift */; };
+		29E1A74B2089743500DAC5F2 /* AudioGuide.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29E1A74D2089743500DAC5F2 /* AudioGuide.strings */; };
 		29EABE4E1FE0448D0049E341 /* SeeAllEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */; };
 		29EABE501FE044A40049E341 /* SeeAllEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */; };
 		29EABE531FE07CF90049E341 /* TourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EABE521FE07CF90049E341 /* TourTableViewController.swift */; };
@@ -386,6 +387,9 @@
 		29E003EE20486F9300E1D305 /* AICRestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICRestaurantModel.swift; sourceTree = "<group>"; };
 		29E003F0204967A600E1D305 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		29E0D4A2206361B500DEEC24 /* SeeAllIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllIntroView.swift; sourceTree = "<group>"; };
+		29E1A74C2089743500DAC5F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AudioGuide.strings; sourceTree = "<group>"; };
+		29E1A74E2089744300DAC5F2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AudioGuide.strings; sourceTree = "<group>"; };
+		29E1A74F2089744400DAC5F2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AudioGuide.strings"; sourceTree = "<group>"; };
 		29EABE4D1FE0448D0049E341 /* SeeAllEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllEventCell.swift; sourceTree = "<group>"; };
 		29EABE4F1FE044A40049E341 /* SeeAllEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllEventCell.xib; sourceTree = "<group>"; };
 		29EABE521FE07CF90049E341 /* TourTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourTableViewController.swift; sourceTree = "<group>"; };
@@ -653,15 +657,16 @@
 				2968F6952012B33000638153 /* TabMenu.strings */,
 				298729F520155E2C00BB3B6A /* Sections.strings */,
 				298729FC2016378000BB3B6A /* Home.strings */,
+				29E1A74D2089743500DAC5F2 /* AudioGuide.strings */,
 				29872A03201684CD00BB3B6A /* Info.strings */,
+				2915B0F9202D3A2100DEBB03 /* Map.strings */,
 				2968F68D2012942800638153 /* LanguageSettings.strings */,
 				294C0B1D20193AC800F2ABB1 /* LocationSettings.strings */,
-				29CDAF98202225D500D1A30D /* Messages.strings */,
+				291AF3352033B2BE001099C7 /* MemberCard.strings */,
 				29C7D0CE202541E00015984B /* AudioPlayer.strings */,
-				2915B0F9202D3A2100DEBB03 /* Map.strings */,
 				2915B100202D3ACD00DEBB03 /* ContentCard.strings */,
 				2915B109202D433C00DEBB03 /* Search.strings */,
-				291AF3352033B2BE001099C7 /* MemberCard.strings */,
+				29CDAF98202225D500D1A30D /* Messages.strings */,
 				290A0FB02044CF15000CDA8F /* Tooltips.strings */,
 			);
 			path = Localization;
@@ -1191,6 +1196,7 @@
 				TargetAttributes = {
 					E40D41C81C6CEBB700A57AF4 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 6CA8WK4597;
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1249,6 +1255,7 @@
 				29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */,
 				29846120203C6D5C001E5378 /* Assets.xcassets in Resources */,
 				29846124203E3B19001E5378 /* NoResultsCell.xib in Resources */,
+				29E1A74B2089743500DAC5F2 /* AudioGuide.strings in Resources */,
 				29872A01201684CD00BB3B6A /* Info.strings in Resources */,
 				298729FA2016378000BB3B6A /* Home.strings in Resources */,
 				29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */,
@@ -1790,6 +1797,16 @@
 			name = Messages.strings;
 			sourceTree = "<group>";
 		};
+		29E1A74D2089743500DAC5F2 /* AudioGuide.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29E1A74C2089743500DAC5F2 /* en */,
+				29E1A74E2089744300DAC5F2 /* es */,
+				29E1A74F2089744400DAC5F2 /* zh-Hans */,
+			);
+			name = AudioGuide.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1901,7 +1918,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1916,7 +1933,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.anon-mobile-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
@@ -1937,7 +1954,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.5;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1953,7 +1970,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.anon-mobile-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
@@ -2086,7 +2103,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.5;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2101,7 +2118,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DAPP_STORE";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.anon-mobile-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";

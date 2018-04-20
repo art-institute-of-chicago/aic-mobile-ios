@@ -50,16 +50,20 @@ class AudioPlayerNavigationController : CardNavigationController {
         
         // Set Close State as MiniPlayer
         closedState = .mini_player
-        
-        // Add main VC as subview to rootVC
-        audioInfoVC.willMove(toParentViewController: rootVC)
-        rootVC.view.addSubview(audioInfoVC.view)
-        audioInfoVC.didMove(toParentViewController: rootVC)
-        
-        // Add subviews
-        rootVC.view.addSubview(miniAudioPlayerView)
-        
-        createViewConstraints()
+		
+		miniAudioPlayerView.frame.origin = CGPoint.zero
+		miniAudioPlayerView.frame.size = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.miniAudioPlayerHeight)
+		
+		audioInfoVC.view.frame.origin = CGPoint(x: 0, y: contentTopMargin)
+		audioInfoVC.view.frame.size = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardContentHeight + Common.Layout.tabBarHeight - contentTopMargin)
+		
+		// Add main VC as subview to rootVC
+		audioInfoVC.willMove(toParentViewController: rootVC)
+		rootVC.view.addSubview(audioInfoVC.view)
+		audioInfoVC.didMove(toParentViewController: rootVC)
+		
+		// Add subviews
+		rootVC.view.addSubview(miniAudioPlayerView)
 		
 		// Related Tours Link
 		audioInfoVC.relatedToursView.bodyTextView.delegate = self
@@ -86,6 +90,10 @@ class AudioPlayerNavigationController : CardNavigationController {
         // AV Session
         configureAVAudioSession()
         NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
+		
+		// Accessibility
+		downArrowButton.accessibilityLabel = "Close Audio Player"
+		closeButton.accessibilityLabel = "Close Audio Player"
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -96,18 +104,6 @@ class AudioPlayerNavigationController : CardNavigationController {
 		UIApplication.shared.beginReceivingRemoteControlEvents()
 		initializeMPRemote()
 	}
-    
-    func createViewConstraints() {
-        miniAudioPlayerView.autoPinEdge(.top, to: .top, of: rootVC.view)
-        miniAudioPlayerView.autoPinEdge(.leading, to: .leading, of: rootVC.view)
-        miniAudioPlayerView.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-        miniAudioPlayerView.autoSetDimension(.height, toSize: Common.Layout.miniAudioPlayerHeight)
-        
-        audioInfoVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: contentTopMargin)
-        audioInfoVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
-        audioInfoVC.view.autoPinEdge(.trailing, to: .trailing, of: rootVC.view)
-        audioInfoVC.view.autoSetDimension(.height, toSize: Common.Layout.cardContentHeight + Common.Layout.tabBarHeight - contentTopMargin)
-    }
     
     // Progress Bar Color
     
@@ -469,21 +465,41 @@ class AudioPlayerNavigationController : CardNavigationController {
     override func showFullscreen() {
         super.showFullscreen()
         self.view.backgroundColor = .aicDarkGrayColor
-        self.downArrowImageView.alpha = 1.0
-        self.miniAudioPlayerView.alpha = 0.0
-    }
+        self.downArrowButton.alpha = 1.0
+		self.miniAudioPlayerView.alpha = 0.0
+		
+		// Accessibility
+		audioInfoVC.willMove(toParentViewController: self)
+		self.view.addSubview(audioInfoVC.view)
+		audioInfoVC.didMove(toParentViewController: self)
+		self.view.accessibilityElementsHidden = false
+		self.view.accessibilityElements = [
+			downArrowButton,
+			audioInfoVC.view
+		]
+	}
     
     override func showMiniPlayer() {
         super.showMiniPlayer()
         UIView.animate(withDuration: 0.25) {
-            self.downArrowImageView.alpha = 0.0
+            self.downArrowButton.alpha = 0.0
         }
+		
+		// Accessibility
+		self.view.addSubview(miniAudioPlayerView)
+		self.view.accessibilityElementsHidden = false
+		self.view.accessibilityElements = [
+			miniAudioPlayerView
+		]
     }
 	
 	override func cardDidShowFullscreen() {
-		
 		// Log analytics
 		AICAnalytics.trackScreenView("Audio Player", screenClass: "AudioPlayerNavigationController")
+		
+		// Accessibility
+		downArrowButton.isAccessibilityElement = true
+		miniAudioPlayerView.removeFromSuperview()
 	}
 	
 	override func cardWillShowMiniPlayer() {
@@ -497,10 +513,22 @@ class AudioPlayerNavigationController : CardNavigationController {
         UIView.animate(withDuration: 0.25, delay: 0.25, animations: {
             self.view.backgroundColor = .clear
         }, completion: nil)
+		
+		// Accessibility
+		downArrowButton.isAccessibilityElement = false
+		audioInfoVC.view.removeFromSuperview()
     }
 	
 	override func cardWillHide() {
 		audioInfoVC.languageSelector.close()
+	}
+	
+	override func cardDidHide() {
+		
+		// Accessibility
+		self.view.accessibilityElementsHidden = true
+		self.view.accessibilityElements = [
+		]
 	}
 }
 

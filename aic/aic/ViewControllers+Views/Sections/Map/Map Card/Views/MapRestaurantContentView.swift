@@ -49,6 +49,10 @@ class MapRestaurantContentView : UIView {
 		self.addSubview(descriptionLabel)
 		
 		createViewConstraints()
+		
+		// Accessibility
+		titleLabel.accessibilityLabel = "Restaurant"
+		titleLabel.accessibilityValue = restaurant.title
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

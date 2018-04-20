@@ -37,7 +37,7 @@ class InfoBecomeMemberView: BaseView {
                     accessPromptLabel.removeFromSuperview()
                 }
             } else if joinPromptLabel.superview == nil && joinTextView.superview == nil && accessPromptLabel.superview == nil{
-                titleLabel.text = Common.Info.becomeMemberTitle
+                titleLabel.text = "Member Title".localized(using: "Info")
                 addSubview(joinPromptLabel)
                 addSubview(joinTextView)
                 addSubview(accessPromptLabel)
@@ -50,7 +50,7 @@ class InfoBecomeMemberView: BaseView {
 		
 		if savedMember == nil {
 			//Prompt user to become a member
-			titleLabel.text = Common.Info.becomeMemberTitle
+			titleLabel.text = "Member Title".localized(using: "Info")
 		}else{
 			//Welcome back existing members
 			titleLabel.text = Common.Info.becomeMemberExistingMemberTitle
@@ -62,12 +62,12 @@ class InfoBecomeMemberView: BaseView {
 		titleDividerLine.backgroundColor = .aicDividerLineColor
 		
         joinPromptLabel.numberOfLines = 0
-        joinPromptLabel.text = Common.Info.becomeMemberJoinPromptMessage
+        joinPromptLabel.text = "Member Join Prompt".localized(using: "Info")
         joinPromptLabel.font = .aicPageTextFont
 		joinPromptLabel.textColor = .aicDarkGrayColor
         joinPromptLabel.textAlignment = .center
 		
-		let joinAttrText = NSMutableAttributedString(string: Common.Info.becomeMemberJoinMessage)
+		let joinAttrText = NSMutableAttributedString(string: "Member Join Text".localized(using: "Info"))
 		let joinURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.membershipUrl]!)!
 		joinAttrText.addAttributes([NSAttributedStringKey.link : joinURL], range: NSMakeRange(0, joinAttrText.string.count))
 		
@@ -76,14 +76,15 @@ class InfoBecomeMemberView: BaseView {
 		joinTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicInfoColor]
 		joinTextView.textAlignment = NSTextAlignment.center
 		joinTextView.font = .aicPageTextFont
+		joinTextView.delegate = self
 		
-		accessPromptLabel.text = Common.Info.becomeMemberAccessPrompt
+		accessPromptLabel.text = "Member Access Prompt".localized(using: "Info")
 		accessPromptLabel.font = .aicPageTextFont
 		accessPromptLabel.textColor = .aicDarkGrayColor
 		accessPromptLabel.textAlignment = NSTextAlignment.center
 		
 		accessButton.setColorMode(colorMode: AICButton.orangeMode)
-		accessButton.setTitle(Common.Info.becomeMemberAccessButtonTitle, for: .normal)
+		accessButton.setTitle("Member Access Button".localized(using: "Info"), for: .normal)
 		
 		bottomDividerLine.backgroundColor = .aicDividerLineColor
 		
@@ -103,6 +104,9 @@ class InfoBecomeMemberView: BaseView {
 		
 		// Set Delegates
 		joinTextView.delegate = self
+		
+		// Accessibility
+		joinTextView.accessibilityTraits = UIAccessibilityTraitLink
     }
 	
     required init?(coder aDecoder: NSCoder) {
@@ -153,7 +157,7 @@ class InfoBecomeMemberView: BaseView {
 
 // Observe links for passing analytics
 extension InfoBecomeMemberView  : UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 		// Log Analytics
 		AICAnalytics.sendMemberJoinPressedEvent()
 		

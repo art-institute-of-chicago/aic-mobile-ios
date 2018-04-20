@@ -29,12 +29,21 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasReleased(_:)), for: UIControlEvents.touchCancel)
         
         addSubview(button)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
+	func reset() {
+		button.layer.borderColor = UIColor(white: 1, alpha: 0.5).cgColor
+		button.layer.borderWidth = 2
+		button.layer.cornerRadius = frame.width/2.0
+		button.setImage(nil, for: .normal)
+		button.setImage(nil, for: .highlighted)
+		button.setTitle(nil, for: .normal)
+		button.accessibilityLabel = nil
+	}
     
     func hideBorder() {
         button.layer.borderColor = UIColor.clear.cgColor

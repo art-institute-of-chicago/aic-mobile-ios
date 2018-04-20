@@ -29,6 +29,13 @@ class ContentCardNavigationController : CardNavigationController {
         tableVC.didMove(toParentViewController: rootVC)
 		
 		createViewConstraints()
+		
+		// Accessibility
+		downArrowButton.accessibilityLabel = "Close Card"
+		self.accessibilityElements = [
+			downArrowButton,
+			tableVC.tableView
+		]
 	}
 	
 	func createViewConstraints() {

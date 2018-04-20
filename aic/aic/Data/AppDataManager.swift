@@ -456,42 +456,8 @@ class AppDataManager {
 		return dayEvents
 	}
 	
-	private func sortToursByFeatured(tours: [AICTourModel]) -> [AICTourModel] {
-		let result = tours.sorted(by: { (A, B) -> Bool in
-			// if both featured follow the regular order
-			if A.isFeatured && B.isFeatured {
-				return A.order < B.order
-			}
-			
-			// if A is first, check if B is featured
-			if A.order < B.order {
-				let result = B.isFeatured ? false : true
-				return result
-			}
-			
-			// if B is first, check if A is featured
-			let result = A.isFeatured ? true : false
-			return result
-		})
-		return result
-	}
-	
-	private func sortExhibitionsByFeatured(exhibitions: [AICExhibitionModel]) -> [AICExhibitionModel] {
-		let result = exhibitions.sorted(by: { (A, B) -> Bool in
-			if A.isFeatured && !B.isFeatured {
-				return true
-			}
-			else if B.isFeatured && !A.isFeatured {
-				return false
-			}
-			return A.startDate < B.startDate
-		})
-		return result
-	}
-	
 	func getToursForHome() -> [AICTourModel] {
 		var result: [AICTourModel] = []
-//		let toursOrdered: [AICTourModel] = sortToursByFeatured(tours: self.app.tours)
 		let toursOrdered = self.app.tours.sorted(by: { (A, B) -> Bool in
 			return A.order < B.order
 		})
@@ -506,8 +472,7 @@ class AppDataManager {
 	
 	func getExhibitionsForHome() -> [AICExhibitionModel] {
 		var result: [AICExhibitionModel] = []
-		let exhibitionsByFeatured: [AICExhibitionModel] = sortExhibitionsByFeatured(exhibitions: self.exhibitions)
-		for exhibition in exhibitionsByFeatured {
+		for exhibition in self.exhibitions {
 			result.append(exhibition)
 			if result.count == Common.Home.maxNumberOfExhibitions {
 				break
@@ -541,7 +506,6 @@ class AppDataManager {
 	}
 	
 	func getToursForSeeAll() -> [AICTourModel] {
-		// return sortToursByFeatured(tours: self.app.tours)
 		return self.app.tours.sorted(by: { (A, B) -> Bool in
 			return A.order < B.order
 		})
@@ -568,7 +532,7 @@ class AppDataManager {
 	}
 	
 	func getExhibitionsForSeeAll() -> [AICExhibitionModel] {
-		return sortExhibitionsByFeatured(exhibitions: self.exhibitions)
+		return self.exhibitions
 	}
 	
 	func getCroppedImageForEvent(image: UIImage, viewSize: CGSize) -> UIImage {

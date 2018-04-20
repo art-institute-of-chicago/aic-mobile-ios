@@ -41,6 +41,18 @@ class HomeExhibitionCell : UICollectionViewCell {
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
 			throughDateTextView.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
+			
+			// Accessibility
+			self.accessibilityElements = [
+				exhibitionTitleLabel,
+				throughDateTextView
+			]
+			
+			// Accessibility
+			self.isAccessibilityElement = true
+			self.accessibilityLabel = "Exhibition"
+			self.accessibilityValue = exhibitionTitleLabel.text! + ", " + throughDateTextView.text!
+			self.accessibilityTraits = UIAccessibilityTraitButton
 		}
 	}
 }

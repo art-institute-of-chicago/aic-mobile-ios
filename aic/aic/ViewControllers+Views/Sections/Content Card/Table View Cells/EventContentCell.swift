@@ -48,6 +48,11 @@ class EventContentCell : UITableViewCell {
 				return
 			}
 			
+			var accessibilityItems: [Any] = [
+				monthDayLabel,
+				hoursMinutesLabel
+			]
+			
 			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
 				if image != nil {
 					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
@@ -93,10 +98,17 @@ class EventContentCell : UITableViewCell {
 			}
 			else {
 				buyTicketsButton.setTitle(eventModel.buttonText, for: .normal)
+				
+				accessibilityItems.append(buyTicketsButton)
 			}
 			
 			self.setNeedsLayout()
 			self.layoutIfNeeded()
+			
+			// Accessibility
+			accessibilityItems.append(descriptionTextView)
+			accessibilityItems.append(locationAndDateLabel)
+			self.accessibilityElements = accessibilityItems
 		}
 	}
 }

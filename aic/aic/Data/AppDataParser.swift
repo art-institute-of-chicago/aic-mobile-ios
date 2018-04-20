@@ -35,10 +35,8 @@ class AppDataParser {
 	private var audioFiles = [AICAudioFileModel]()
 	private var objects = [AICObjectModel]()
 	private var restaurants = [AICRestaurantModel]()
-	private var featuredTours = [Int]()
-	private var featuredExhibitions: [Int] = []
 	private var tourCategories = [AICTourCategoryModel]()
-	private var exhibitionOptionalImages: [Int : URL] = [:]
+	private var exhibitionsInCMS = [AICExhibitionInCMS]()
 	private var searchArtworks = [AICObjectModel]()
 	private var mapFloorsURLs: [URL] = []
     
@@ -47,13 +45,11 @@ class AppDataParser {
     func parse(appData data: Data) -> AICAppDataModel {
         let appDataJson = JSON(data: data)
 		
-		self.featuredTours		= parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_tours")
-		self.featuredExhibitions = parseFeaturedItems(dashboardJSON: appDataJson["dashboard"], arrayKey: "featured_exhibitions")
 		let generalInfo 		= parse(generalInfoJSON: appDataJson["general_info"])
 		self.galleries			= parse(galleriesJSON: appDataJson["galleries"])
 		self.audioFiles 		= parse(audioFilesJSON: appDataJson["audio_files"])
         self.objects 			= parse(objectsJSON: appDataJson["objects"])
-		self.exhibitionOptionalImages = parse(exhibitionImagesJSON: appDataJson["exhibitions"])
+		self.exhibitionsInCMS	= parse(exhibitionsInCMSJSON: appDataJson["exhibitions"])
 		self.tourCategories 	= parse(tourCategoriesJSON: appDataJson["tour_categories"])
 		let tours 				= parse(toursJSON: appDataJson["tours"])
 		let dataSettings 		= parse(dataSettingsJSON: appDataJson["data"])
@@ -80,27 +76,11 @@ class AppDataParser {
 		self.audioFiles.removeAll()
 		self.objects.removeAll()
 		self.restaurants.removeAll()
-		self.featuredTours.removeAll()
 		self.searchArtworks.removeAll()
 		self.tourCategories.removeAll()
 		
 		return appData
     }
-	
-	// MARK: Featured Tours and Exhibitions
-	
-	func parseFeaturedItems(dashboardJSON: JSON, arrayKey: String) -> [Int] {
-		var featuredItems: [Int] = []
-		do {
-			featuredItems = try getIntArray(fromJSON: dashboardJSON, forArrayKey: arrayKey)
-		}
-		catch {
-			if Common.Testing.printDataErrors {
-				print("Could not parse Featured Items list for key '\(arrayKey)':\n\(dashboardJSON)\n")
-			}
-		}
-		return featuredItems
-	}
 	
 	// MARK: General Info
 	
@@ -484,15 +464,6 @@ class AppDataParser {
 		
 		let order 				= try getInt(fromJSON: tourJSON, forKey: "weight")
 		
-		// isFeatured
-		var isFeatured: Bool = false
-		for tourId in self.featuredTours {
-			if tourId == nid {
-				isFeatured = true
-				break
-			}
-		}
-		
 		// Category
 		var category: AICTourCategoryModel? = nil
 		let categoryID = try getString(fromJSON: tourJSON, forKey: "category", optional: true)
@@ -584,7 +555,6 @@ class AppDataParser {
         
 		return AICTourModel(nid:nid,
 							order: order,
-							isFeatured: isFeatured,
 							category: category,
 							imageUrl: imageUrl,
 							location: coordinate,
@@ -914,24 +884,28 @@ class AppDataParser {
 								  location: location)
 	}
 	
-	// MARK: Exhibition Images
+	// MARK: Exhibitions in CMS
 	
-	func parse(exhibitionImagesJSON: JSON) -> [Int : URL] {
-		var exhibitionImages = [Int : URL]()
-		for (exhibitionId, exhibitionImageJSON):(String, JSON) in exhibitionImagesJSON.dictionaryValue {
+	func parse(exhibitionsInCMSJSON: JSON) -> [AICExhibitionInCMS] {
+		var exhibitionsInCMS: [AICExhibitionInCMS] = []
+		for exhibitionJSON in exhibitionsInCMSJSON.arrayValue {
 			do {
 				try handleParseError({
-					let imageUrl: URL = try getURL(fromJSON: exhibitionImageJSON, forKey: "image_url")!
-					exhibitionImages[Int(exhibitionId)!] = imageUrl
+					let exhibitionId: Int = try getInt(fromJSON: exhibitionJSON, forKey: "exhibition_id")
+					let imageUrl: URL? = try getURL(fromJSON: exhibitionJSON, forKey: "image_url", optional: true)
+					let sort: Int = try getInt(fromJSON: exhibitionJSON, forKey: "sort")
+					exhibitionsInCMS.append(AICExhibitionInCMS(id: exhibitionId,
+															   imageUrl: imageUrl,
+															   sort: sort))
 				})
 			}
 			catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Exhibition Images:\n\(exhibitionImagesJSON)\n")
+					print("Could not parse Exhibition in CMS:\n\(exhibitionJSON)\n")
 				}
 			}
 		}
-		return exhibitionImages
+		return exhibitionsInCMS
 	}
 	
 	// MARK: Data Settings
@@ -982,27 +956,30 @@ class AppDataParser {
 			}
 		}
 		
-		// Order by recently opened
-		exhibitionItems = exhibitionItems.sorted(by: { $0.startDate.compare($1.startDate) == .orderedAscending })
+		// Order by order in the CMS
+		let exhibitionsOrdered: [AICExhibitionModel] = exhibitionItems.sorted(by: { (A, B) -> Bool in
+			var Asort = Int.max
+			var Bsort = Int.max
+			
+			// find exhibitions in CMS array to get the sort index
+			if self.exhibitionsInCMS.filter({ $0.id == A.id }).count > 0 {
+				Asort = self.exhibitionsInCMS.filter({ $0.id == A.id }).first!.sort
+			}
+			if self.exhibitionsInCMS.filter({ $0.id == B.id }).count > 0 {
+				Bsort = self.exhibitionsInCMS.filter({ $0.id == B.id }).first!.sort
+			}
+			
+			return Asort < Bsort
+		})
 		
-		self.featuredExhibitions.removeAll()
-		self.exhibitionOptionalImages.removeAll()
+		self.exhibitionsInCMS.removeAll()
 		
-		return exhibitionItems
+		return exhibitionsOrdered
 	}
 	
 	private func parse(exhibitionJSON: JSON) throws -> AICExhibitionModel {
 		let id = try getInt(fromJSON: exhibitionJSON, forKey: "id")
 		let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
-		
-		// featured
-		var isFeatured: Bool = false
-		for exhibitionId in self.featuredExhibitions {
-			if exhibitionId == id {
-				isFeatured = true
-				break
-			}
-		}
 		
 		// optional description
 		let description: String = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
@@ -1014,8 +991,11 @@ class AppDataParser {
 		}
 		
 		// Override with exhibitions optional images from CMS, if available
-		if let url = self.exhibitionOptionalImages[id] {
-			imageURL = url
+		if self.exhibitionsInCMS.filter({ $0.id == id }).count > 0 {
+			let url = self.exhibitionsInCMS.filter({ $0.id == id }).first!.imageUrl
+			if url != nil {
+				imageURL = url
+			}
 		}
 		
 		// optional location
@@ -1045,7 +1025,6 @@ class AppDataParser {
 		
 		// Return news item
 		return AICExhibitionModel(id: id,
-								  isFeatured: isFeatured,
 								  title: title.stringByDecodingHTMLEntities,
 								  shortDescription: description.stringByDecodingHTMLEntities,
 								  imageUrl: imageURL,
@@ -1214,17 +1193,6 @@ class AppDataParser {
 				print("Could not parse AIC Search Autocomplete\n")
 			}
 		}
-		
-//		do {
-//			let json = JSON(data: data)
-//			for index in 0..<json.arrayValue.count {
-//				if index == 0 {
-//
-//				}
-//			}
-//		}
-//		catch {
-//		}
 		
 		return results
 	}

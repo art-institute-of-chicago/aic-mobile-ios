@@ -11,6 +11,7 @@ import UIKit
 @objc protocol CardNavigationControllerDelegate : class {
     @objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)
 	@objc optional func cardWillShowFullscreen(cardVC: CardNavigationController)
+	@objc optional func cardDidShowMinimized(cardVC: CardNavigationController)
 	@objc optional func cardWillShowMiniplayer(cardVC: CardNavigationController)
 	@objc optional func cardDidShowMiniplayer(cardVC: CardNavigationController)
 	@objc optional func cardWillHide(cardVC: CardNavigationController)
@@ -39,7 +40,7 @@ class CardNavigationController : UINavigationController {
 	let tapToCloseGesture: UITapGestureRecognizer = UITapGestureRecognizer()
     let cardPanGesture: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
-    let downArrowImageView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "cardDownArrow"))
+    let downArrowButton: UIButton = UIButton()
 	let closeButton: UIButton = UIButton()
 	
     private (set) var contentTopMargin: CGFloat = 30
@@ -64,30 +65,37 @@ class CardNavigationController : UINavigationController {
         // Hide Navigation Bar
         self.navigationBar.isTranslucent = false
         self.setNavigationBarHidden(true, animated: false)
-        
-        // Add subviews
-        self.view.addSubview(downArrowImageView)
-		self.view.addSubview(closeButton)
-        
-        // Arrow constraints
-		downArrowImageView.contentMode = .center
-		downArrowImageView.autoSetDimensions(to: CGSize(width: 150, height: 32))
-        downArrowImageView.autoPinEdge(.top, to: .top, of: self.view)
-        downArrowImageView.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		
+		// Down Arrow Button
+		downArrowButton.setImage(#imageLiteral(resourceName: "cardDownArrow"), for: .normal)
+		downArrowButton.setImage(#imageLiteral(resourceName: "cardDownArrow"), for: .highlighted)
+		downArrowButton.addTarget(self, action: #selector(downArrowButtonPressed(button:)), for: .touchUpInside)
+		downArrowButton.isEnabled = true
 		
 		// Close Button
 		closeButton.setImage(#imageLiteral(resourceName: "closeCard"), for: .normal)
 		closeButton.imageEdgeInsets = UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 11)
-		closeButton.autoSetDimensions(to: CGSize(width: 37, height: 37))
-		closeButton.autoPinEdge(.top, to: .top, of: self.view)
-		closeButton.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		closeButton.addTarget(self, action: #selector(closeButtonPressed(button:)), for: .touchUpInside)
 		closeButton.isEnabled = false
 		closeButton.isHidden = true
 		
+		// Add subviews
+		self.view.addSubview(downArrowButton)
+		self.view.addSubview(closeButton)
+		
         // Root view controller
         rootVC.view.backgroundColor = .clear
         self.pushViewController(rootVC, animated: false)
+		
+		// Constraints
+		downArrowButton.imageView!.contentMode = .center
+		downArrowButton.autoSetDimensions(to: CGSize(width: UIScreen.main.bounds.width-200, height: 40))
+		downArrowButton.autoPinEdge(.top, to: .top, of: self.view)
+		downArrowButton.autoAlignAxis(.vertical, toSameAxisOf: self.view)
+		
+		closeButton.autoSetDimensions(to: CGSize(width: 37, height: 37))
+		closeButton.autoPinEdge(.top, to: .top, of: self.view)
+		closeButton.autoPinEdge(.trailing, to: .trailing, of: self.view)
         
         updateViewConstraints()
         self.view.layoutIfNeeded()
@@ -96,11 +104,6 @@ class CardNavigationController : UINavigationController {
         cardPanGesture.addTarget(self, action: #selector(handlePanGesture(recognizer:)))
         cardPanGesture.delegate = self
         self.view.addGestureRecognizer(cardPanGesture)
-		
-		// Tap to Close Gesture
-		tapToCloseGesture.addTarget(self, action: #selector(handleTapGesture(recognizer:)))
-		downArrowImageView.isUserInteractionEnabled = true
-		downArrowImageView.addGestureRecognizer(tapToCloseGesture)
 	}
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,6 +151,7 @@ class CardNavigationController : UINavigationController {
         }, completion: { (completed) in
             self.currentState = .minimized
             self.cardDidShowMinimized()
+			self.cardDelegate?.cardDidShowMinimized?(cardVC: self)
         })
     }
     
@@ -200,7 +204,8 @@ class CardNavigationController : UINavigationController {
 	
 	private func setCloseButtonEnabled(enabled: Bool) {
 		cardPanGesture.isEnabled = !enabled
-		downArrowImageView.isHidden = enabled
+		downArrowButton.isHidden = enabled
+		downArrowButton.isEnabled = !enabled
 		closeButton.isEnabled = enabled
 		closeButton.isHidden = !enabled
 	}
@@ -286,19 +291,16 @@ extension CardNavigationController : UIGestureRecognizerDelegate {
         recognizer.setTranslation(CGPoint.zero, in: view)
     }
 	
-	@objc internal func handleTapGesture(recognizer: UITapGestureRecognizer) {
-		let location = recognizer.location(in: view)
-		if location.y < 40.0 && location.x > 100 && location.x < self.view.frame.width - 100 {
-			if currentState == openState {
-				if closedState == .minimized {
-					showMinimized()
-				}
-				else if closedState == .mini_player {
-					showMiniPlayer()
-				}
-				else if closedState == .hidden {
-					hide()
-				}
+	@objc internal func downArrowButtonPressed(button: UIButton) {
+		if currentState == openState {
+			if closedState == .minimized {
+				showMinimized()
+			}
+			else if closedState == .mini_player {
+				showMiniPlayer()
+			}
+			else if closedState == .hidden {
+				hide()
 			}
 		}
 	}

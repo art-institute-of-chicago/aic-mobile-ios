@@ -57,6 +57,19 @@ class SeeAllEventCell : UICollectionViewCell {
 			shortDescriptionTextView.text = eventModel.shortDescription
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
 			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
+			
+			// Accessibility
+			self.isAccessibilityElement = true
+			self.accessibilityLabel = "Event"
+			var accessValue = eventTitleLabel.text!
+			accessValue += ", "
+			accessValue += monthDayLabel.text!
+			accessValue += ", "
+			accessValue += hoursMinutesLabel.text!
+			accessValue += ", "
+			accessValue += shortDescriptionTextView.text!
+			self.accessibilityValue = accessValue
+			self.accessibilityTraits = UIAccessibilityTraitButton
 		}
 	}
 }

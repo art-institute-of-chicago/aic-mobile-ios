@@ -148,8 +148,8 @@ class AudioInfoViewController : UIViewController {
 		}
 		updateLanguage(language: audio.language)
 		
-		transcriptView.show(collapseEnabled: true)
 		transcriptView.bodyTextView.text = audio.transcript
+		transcriptView.show(collapseEnabled: true)
 		
 		var creditsString = ""
 		if (artwork.credits ?? "").isEmpty == false { creditsString += artwork.credits! }
@@ -159,8 +159,8 @@ class AudioInfoViewController : UIViewController {
 		}
 		
 		if creditsString.isEmpty == false {
-			creditsView.show(collapseEnabled: true)
 			creditsView.bodyTextView.text = creditsString
+			creditsView.show(collapseEnabled: true)
 		}
 		else {
 			creditsView.hide()

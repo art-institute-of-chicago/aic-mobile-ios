@@ -431,11 +431,6 @@ struct Common {
     struct Info {
 
         // Text and URL constants
-        static let becomeMemberTitle = "Become a Member"
-        static let becomeMemberJoinPromptMessage = "Enjoy free, yearlong admission."
-        static let becomeMemberJoinMessage = "Join now"
-        static let becomeMemberAccessPrompt = "Already a member?"
-        static let becomeMemberAccessButtonTitle = "Access Member Card"
         static let becomeMemberExistingMemberTitle = "Welcome Back"
 		
         static let museumInformationAddress = "111 S Michigan Ave\nChicago, IL 60603"
@@ -444,15 +439,6 @@ struct Common {
         static let museumInformationGetTicketsURL = "https://sales.artic.edu/admissiondate"
 
         static let potionURL = "http://www.potiondesign.com"
-
-        static let memberCardTitle = "Member Card"
-        static let memberIDTitle = "Your Member ID"
-        static let memberIDPlaceholder = "Enter your Member ID..."
-        static let memberZipTitle = "Your Zip Code"
-        static let memberZipPlaceholder = "Enter your home zip code..."
-        static let memberSignInTitle = "Sign In"
-        static let memberUpdateTitle = "Change Information"
-        static let memberSwitchCardHolder = "Switch Cardholder"
 
         static let alertMessageNotFound = "Could not find Member Information"
         static let alertMessageParseError = "Member Card data parse error"

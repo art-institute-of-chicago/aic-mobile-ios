@@ -11,7 +11,7 @@ import PureLayout
 
 class InfoFooterView: UIView {
 	let bloombergCreditsImageView = UIImageView()
-	let potionCreditsTextView = LinkedTextView()
+	let potionCreditsTextView = UITextView()
 	
 	let bloomberCreditsTopMargin: CGFloat = 62
 	let potionCreditsTopMargin: CGFloat = 38
@@ -40,6 +40,12 @@ class InfoFooterView: UIView {
 
 		addSubview(bloombergCreditsImageView)
 		addSubview(potionCreditsTextView)
+		
+		// Accessibility
+		bloombergCreditsImageView.isAccessibilityElement = true
+		bloombergCreditsImageView.accessibilityLabel = "Sponsored by Bloomberg Philantropies"
+		bloombergCreditsImageView.accessibilityTraits = UIAccessibilityTraitImage
+		potionCreditsTextView.accessibilityTraits = UIAccessibilityTraitLink
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -60,7 +66,7 @@ class InfoFooterView: UIView {
 
 // Observe links for passing analytics
 extension InfoFooterView  : UITextViewDelegate {
-	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 		// Log Analytics
 		
 		return true

@@ -34,6 +34,11 @@ class MapItemCell : UICollectionViewCell {
 		iconImageView.layer.cornerRadius = 24
 		iconImageView.layer.borderColor = UIColor.white.cgColor
 		iconImageView.layer.borderWidth = 0
+		
+		// Accessibility
+		self.isAccessibilityElement = true
+		self.accessibilityLabel = "Search on the map"
+		self.accessibilityTraits = UIAccessibilityTraitButton
 	}
 	
 	func setItemIcon(image: UIImage, highlightImage: UIImage? = nil) {

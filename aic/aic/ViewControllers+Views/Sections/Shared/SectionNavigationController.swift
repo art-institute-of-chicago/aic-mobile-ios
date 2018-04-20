@@ -64,6 +64,9 @@ class SectionNavigationController : UINavigationController {
 		self.setNavigationBarHidden(true, animated: false)
 		
 		updateLanguage()
+		
+		// Accessibility
+		sectionNavigationBar.titleLabel.becomeFirstResponder()
 	}
 	
 	override func popToRootViewController(animated: Bool) -> [UIViewController]? {

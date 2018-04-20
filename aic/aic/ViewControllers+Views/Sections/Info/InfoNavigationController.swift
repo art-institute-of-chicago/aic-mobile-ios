@@ -33,6 +33,12 @@ class InfoNavigationController : SectionNavigationController {
 		infoVC.delegate = self
 		
 		self.pushViewController(infoVC, animated: false)
+		
+		// Accessibility
+		self.accessibilityElements = [
+			sectionNavigationBar,
+			infoVC.view
+		]
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -76,6 +82,12 @@ extension InfoNavigationController : UINavigationControllerDelegate {
 		if viewController == infoVC && infoVC.scrollDelegate == nil {
 			infoVC.scrollDelegate = sectionNavigationBar
 		}
+		
+		// Accessibility
+		self.accessibilityElements = [
+			sectionNavigationBar,
+			viewController.view
+		]
 	}
 }
 

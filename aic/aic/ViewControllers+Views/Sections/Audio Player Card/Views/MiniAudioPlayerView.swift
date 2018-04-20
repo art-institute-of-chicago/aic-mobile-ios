@@ -48,6 +48,15 @@ class MiniAudioPlayerView : UIView {
 		addSubview(progressBar)
 		
 		createConstraints()
+		
+		// Accessibility
+		closeButton.accessibilityLabel = "Close Audio Player"
+		playPauseButton.accessibilityLabel = "Play Pause Audio Track"
+		self.accessibilityElements = [
+			playPauseButton,
+			titleLabel,
+			closeButton
+		]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -104,6 +113,10 @@ class MiniAudioPlayerView : UIView {
         activityIndicator.stopAnimating()
         
         titleLabel.text = title
+		
+		// Accessibility
+		titleLabel.accessibilityLabel = "Audio Track"
+		titleLabel.accessibilityValue = title
     }
     
     // MARK: Progress Bar

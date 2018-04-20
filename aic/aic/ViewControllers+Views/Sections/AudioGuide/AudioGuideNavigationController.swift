@@ -63,6 +63,9 @@ class AudioGuideNavigationController : SectionNavigationController {
 		self.pushViewController(rootVC, animated: false)
 		
 		createViewConstraints()
+		
+		// Language
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +117,14 @@ class AudioGuideNavigationController : SectionNavigationController {
 		}
 		
 		collectionView.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: Common.Layout.navigationBarHeight + collectionViewTopOffset, relation: .greaterThanOrEqual)
+	}
+	
+	// MARK: Language
+	
+	override func updateLanguage() {
+		super.updateLanguage()
+		
+		collectionView.reloadData()
 	}
     
     func reset() {
@@ -175,11 +186,19 @@ extension AudioGuideNavigationController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AudioGuideCollectionViewCell
 		
-		let titleLabel = buttonValueMap[((indexPath as NSIndexPath).section * AudioGuideNavigationController.numCols) + (indexPath as NSIndexPath).row]
+		// reset reused cell
+		cell.reset()
+		
+		let titleLabel = buttonValueMap[(indexPath.section * AudioGuideNavigationController.numCols) + indexPath.row]
         switch titleLabel! {
         case "<":
 			cell.button.setImage(#imageLiteral(resourceName: "deleteButton"), for: .normal)
             cell.button.setImage(#imageLiteral(resourceName: "deleteButton").colorized(.white), for: .highlighted)
+			
+			// Accessibility
+			cell.button.accessibilityLabel = "Delete"
+		case "GO":
+			cell.button.setTitle("Go".localized(using: "AudioGuide"), for: .normal)
         default:
             cell.button.setTitle(titleLabel, for: .normal)
         }

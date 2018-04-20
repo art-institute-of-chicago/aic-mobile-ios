@@ -31,6 +31,8 @@ class MapArtworkContentView : UIView {
 			}
 		})
 		locationLabel.text = artwork.gallery.title
+		
+		setupAccessibility()
 	}
 	
 	init(searchedArtwork: AICSearchedArtworkModel) {
@@ -60,6 +62,8 @@ class MapArtworkContentView : UIView {
 			audioButton.isHidden = true
 			audioButton.isEnabled = false
 		}
+		
+		setupAccessibility()
 	}
 	
 	init(tourStop: AICTourStopModel, stopNumber: Int, language: Common.Language) {
@@ -76,6 +80,8 @@ class MapArtworkContentView : UIView {
 			}
 		})
 		locationLabel.text = "\t" + tourStop.object.gallery.title
+		
+		setupAccessibility()
 	}
 	
 	init(tour: AICTourModel, language: Common.Language) {
@@ -86,6 +92,8 @@ class MapArtworkContentView : UIView {
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: tour.imageUrl)
 		locationLabel.text = tour.stops.first!.object.gallery.title
+		
+		setupAccessibility()
 	}
 	
 	init(exhibition: AICExhibitionModel) {
@@ -98,6 +106,8 @@ class MapArtworkContentView : UIView {
 		locationLabel.text = Common.Map.stringForFloorNumber[exhibition.location!.floor]
 		audioButton.isHidden = true
 		audioButton.isEnabled = false
+		
+		setupAccessibility()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -138,6 +148,16 @@ class MapArtworkContentView : UIView {
 		self.addSubview(audioButton)
 		
 		createViewConstraints()
+	}
+	
+	// MARK: Accessibility
+	
+	private func setupAccessibility() {
+		imageButton.isAccessibilityElement = false
+		locationLabel.isAccessibilityElement = false
+		titleLabel.accessibilityLabel = "Tour Stop"
+		titleLabel.accessibilityValue = titleLabel.text! + ", " + locationLabel.text!
+		audioButton.accessibilityLabel = "Play Audio Track"
 	}
 	
 	private func createViewConstraints() {
