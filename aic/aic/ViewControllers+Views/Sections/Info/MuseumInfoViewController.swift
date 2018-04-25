@@ -81,9 +81,15 @@ extension MuseumInfoViewController : UIGestureRecognizerDelegate {
 extension MuseumInfoViewController : UITextViewDelegate {
 	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 		if URL.absoluteString.range(of: "tel:") != nil {
+			// Log analytics
+			AICAnalytics.sendMuseumInfoPhoneLinkEvent()
+			
 			return true
 		}
 		else {
+			// Log analytics
+			AICAnalytics.sendMuseumInfoAddressLinkEvent()
+			
 			openMuseumAddressURL()
 		}
 		return false

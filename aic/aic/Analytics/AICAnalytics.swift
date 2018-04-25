@@ -21,6 +21,7 @@ class AICAnalytics {
 		case event					= "event"
 		case map					= "map"
 		case member					= "member"
+		case museumInfo				= "museum_info"
 		case search					= "search"
 		case searchArtwork			= "search_artwork"
 		case searchPlayArtwork		= "search_play_artwork"
@@ -63,6 +64,9 @@ class AICAnalytics {
 		
 		case memberShowCard			= "show_card"
 		case memberJoinPressed		= "join_pressed"
+		
+		case museumInfoPhoneLink	= "phone_link"
+		case museumInfoAddressLink	= "address_link"
 		
 		case searchLoaded			= "loaded"
 		case searchAutocomplete		= "autocomplete"
@@ -300,6 +304,16 @@ class AICAnalytics {
     static func sendMemberJoinPressedEvent() {
 		trackEvent(category: .member, action: .memberJoinPressed)
     }
+	
+	// MARK: Museum Info Links
+	
+	static func sendMuseumInfoPhoneLinkEvent() {
+		trackEvent(category: .museumInfo, action: .museumInfoPhoneLink)
+	}
+	
+	static func sendMuseumInfoAddressLinkEvent() {
+		trackEvent(category: .museumInfo, action: .museumInfoAddressLink)
+	}
 	
 	// MARK: Search
 	
