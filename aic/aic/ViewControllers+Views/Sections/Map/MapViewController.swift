@@ -651,7 +651,7 @@ class MapViewController: UIViewController {
 	private func updateTourAnnotations() {
 		var annotations: [MKAnnotation] = []
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
-		if mapView.currentAltitude <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue {
+		if mapView.currentAltitude <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue + 50.0 {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].galleryAnnotations as [MKAnnotation])
 		}
 		for floor in mapModel.floors {
