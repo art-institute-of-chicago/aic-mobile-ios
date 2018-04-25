@@ -469,6 +469,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
 		AICAnalytics.sendSearchSelectedArtworkEvent(searchedArtwork: artwork, searchText: searchText)
+		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
@@ -480,6 +481,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
 		AICAnalytics.sendSearchSelectedTourEvent(tour: tour, searchText: searchText)
+		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
@@ -491,6 +493,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
 		AICAnalytics.sendSearchSelectedExhibitionEvent(exhibition: exhibition, searchText: searchText)
+		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {

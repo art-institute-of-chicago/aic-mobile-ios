@@ -73,6 +73,7 @@ class AICAnalytics {
 		case searchPromoted			= "promoted"
 		case searchNoResults		= "no_results"
 		case searchAbandoned		= "abandoned"
+		case searchResultTapped		= "result_tapped"
 	}
 	
 	fileprivate enum UserProperty : UInt {
@@ -339,6 +340,10 @@ class AICAnalytics {
 	
 	static func sendSearchAbandonedEvent(searchText: String) {
 		trackEvent(category: .search, action: .searchAbandoned, label: searchText)
+	}
+	
+	static func sendSearchResultTappedEvent(searchText: String) {
+		trackEvent(category: .search, action: .searchResultTapped, label: searchText)
 	}
 	
 	// MARK: Search Selected Content
