@@ -214,7 +214,7 @@ class AICAnalytics {
 	// MARK: Playback
 	
 	static func sendPlaybackInterruptedEvent(audio: AICAudioFileModel, pctComplete: Int) {
-		trackEvent(category: .playback, action: .playbackInterrupted, label: audio.translations[.english]!.trackTitle)
+		trackEvent(category: .playback, action: .playbackInterrupted, label: audio.translations[.english]!.trackTitle, value: pctComplete)
 	}
 	
 	static func sendPlaybackCompletedEvent(audio: AICAudioFileModel) {
