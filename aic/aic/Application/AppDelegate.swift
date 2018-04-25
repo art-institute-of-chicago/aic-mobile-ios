@@ -21,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		AICAnalytics.configure()
 		AICAnalytics.sendAppOpenEvent()
 		
+		// Update analytics User Properties
+		if CLLocationManager.authorizationStatus() == .denied {
+			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
+		}
+		
 		// Turn off caching
 		let sharedCache = URLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil)
 		URLCache.shared = sharedCache
@@ -113,10 +118,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         rootVC.resumeLoadingIfNotComplete()
+		
+		setStatusBar()
         
         // Log analytics
         AICAnalytics.sendAppForegroundEvent()
-        setStatusBar()
+		
+		// Update analytics User Properties
+		if CLLocationManager.authorizationStatus() == .denied {
+			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
+		}
     }
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {

@@ -186,8 +186,13 @@ class AICAnalytics {
 		trackEvent(category: .location, action: .locationOnSite)
     }
 	
-	static func updateUserLocationProperty(isOnSite: Bool) {
-		setUserProperty(property: .onSite, value: isOnSite ? "Yes" : "No")
+	static func updateUserLocationProperty(isOnSite: Bool?) {
+		if isOnSite != nil {
+			setUserProperty(property: .onSite, value: isOnSite! ? "Yes" : "No")
+		}
+		else {
+			setUserProperty(property: .onSite, value: "Undefined")
+		}
 	}
 	
 	// MARK: Audio Player
