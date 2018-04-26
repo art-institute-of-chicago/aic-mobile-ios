@@ -259,17 +259,17 @@ class SectionNavigationBar : UIView {
 		isAnimating = true
 		headerAnimatedColorView.alpha = 0.0
 		
-			UIView.animate(withDuration: 0.75, delay: 0, options: [.curveEaseIn], animations: {
-				self.headerAnimatedColorView.alpha = 1.0
-			}) { (completedHalf) in
-				UIView.animate(withDuration: 0.75, delay: 0, options: [.curveEaseOut], animations: {
-					self.headerAnimatedColorView.alpha = 0.0
-				}) { (completed) in
-					if completed && self.isAnimating {
-						self.startColorAnimation()
-					}
+		UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseIn], animations: {
+			self.headerAnimatedColorView.alpha = 1.0
+		}) { (completedHalf) in
+			UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseIn], animations: {
+				self.headerAnimatedColorView.alpha = 0.0
+			}) { (completed) in
+				if completed && self.isAnimating {
+					self.startColorAnimation()
 				}
 			}
+		}
 	}
 	
 	func stopColorAnimation() {

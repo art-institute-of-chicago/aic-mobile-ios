@@ -57,18 +57,6 @@ class ResultsTableViewController : UITableViewController {
 	var filter: Common.Search.Filter = .empty {
 		didSet {
 			self.tableView.reloadData()
-			
-			if filter == .empty {
-				self.view.accessibilityElements = [
-					tableView
-				]
-			}
-			else {
-				self.view.accessibilityElements = [
-					
-					tableView
-				]
-			}
 		}
 	}
 	
@@ -107,6 +95,11 @@ class ResultsTableViewController : UITableViewController {
         self.filter = .empty
 		
 		resetContentLoaded()
+		
+		// Accessibility
+		self.view.accessibilityElements = [
+			tableView
+		]
 	}
 	
 	// MARK: Content Loaded
@@ -135,7 +128,7 @@ class ResultsTableViewController : UITableViewController {
 		return loaded
 	}
 	
-	private func isAllContentLoadedWithNoResults() -> Bool {
+	func isAllContentLoadedWithNoResults() -> Bool {
 		return contentLoadedForFilter[.artworks] == true
 			&& contentLoadedForFilter[.tours] == true
 			&& contentLoadedForFilter[.exhibitions] == true
