@@ -61,6 +61,7 @@ class InfoNavigationController : SectionNavigationController {
 	func showMemberCard() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
+		self.sectionNavigationBar.startColorAnimation()
 		
 		self.pushViewController(memberCardVC, animated: true)
 	}
@@ -71,6 +72,7 @@ extension InfoNavigationController : UINavigationControllerDelegate {
 		if viewController == infoVC {
 			self.sectionNavigationBar.sectionViewControllerWillAppearWithScrollView(scrollView: infoVC.scrollView)
 			self.sectionNavigationBar.setBackButtonHidden(true)
+			self.sectionNavigationBar.stopColorAnimation()
 		}
 		else {
 			infoVC.scrollDelegate = nil

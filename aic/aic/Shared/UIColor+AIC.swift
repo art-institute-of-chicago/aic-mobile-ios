@@ -94,6 +94,8 @@ extension UIColor {
 	
 	static let aicMemberCardLoginFieldColor: UIColor = UIColor(white: 240.0 / 255.0, alpha: 1.0)
 	
+	static let aicMemberCardRedColor: UIColor = UIColor(red: 145.0 / 255.0, green: 7.0 / 255.0, blue: 45.0 / 255.0, alpha: 1.0)
+	
 	static let aicTooltipBackgroundColor: UIColor = UIColor(red: 94.0 / 255.0, green: 115.0 / 255.0, blue: 178.0 / 255.0, alpha: 1.0)
 	
     func lighter(_ amount : CGFloat = 0.25) -> PXColor {
