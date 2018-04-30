@@ -1119,16 +1119,29 @@ extension MapViewController : CLLocationManagerDelegate {
             
             if !floorSelectorVC.userLocationIsEnabled() {
                 floorSelectorVC.locationMode = .Enabled
-                
-                // Log analytics
-                AICAnalytics.sendLocationOnSiteEvent()
             }
+			
+			// Log analytics
+			// Log onsite location state, only if it hasn't been logged already or if the user moved location out/in the museum
+			if Common.Location.hasLoggedOnsite == false || Common.Location.previousOnSiteState == false {
+				AICAnalytics.sendLocationOnSiteEvent()
+				Common.Location.hasLoggedOnsite = true
+				Common.Location.previousOnSiteState = true
+			}
 			
 			// Update analytics User Properties
 			AICAnalytics.updateUserLocationProperty(isOnSite: true)
 			
         } else {
             floorSelectorVC.locationMode = .Offsite
+			
+			// Log analytics
+			// Log onsite location state, only if it hasn't been logged already or if the user moved location out/in the museum
+			if Common.Location.hasLoggedOnsite == false || Common.Location.previousOnSiteState == true {
+				AICAnalytics.sendLocationOffSiteEvent()
+				Common.Location.hasLoggedOnsite = true
+				Common.Location.previousOnSiteState = false
+			}
 			
 			// Update analytics User Properties
 			AICAnalytics.updateUserLocationProperty(isOnSite: false)
@@ -1170,5 +1183,19 @@ extension MapViewController : CLLocationManagerDelegate {
         if status == CLAuthorizationStatus.denied {
             floorSelectorVC.locationMode = .Disabled
         }
+		
+		// Analytics
+		// If location status changes to enabled, log location onsite
+		if status != Common.Location.previousAuthorizationStatus {
+			if status == .authorizedAlways || status == .authorizedWhenInUse {
+				Common.Location.hasLoggedOnsite = false // next time you get the location update, track the onsite or offsite event
+			}
+			else if status == .denied {
+				AICAnalytics.sendLocationDisabledEvent()
+				Common.Location.hasLoggedOnsite = true
+			}
+			
+			Common.Location.previousAuthorizationStatus = status
+		}
     }
 }

@@ -269,7 +269,7 @@ struct Common {
                                                          title: "Message Location Title",
                                                          message: "Message Location Text",
                                                          actionButtonTitle: "Message Location Action Button Title",
-                                                         cancelButtonTitle: "Message Location Cancel Button Title"
+                                                         cancelButtonTitle: nil
         )
     }
 
@@ -324,6 +324,10 @@ struct Common {
             let objectCLLocation = CLLocation(latitude: objectLocation.coordinate.latitude, longitude: objectLocation.coordinate.longitude)
             return userLocation.distance(from: objectCLLocation)
         }
+		
+		static var hasLoggedOnsite: Bool = false
+		static var previousOnSiteState: Bool? = nil
+		static var previousAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     }
 	
 	// MARK: Home

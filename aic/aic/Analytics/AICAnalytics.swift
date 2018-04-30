@@ -38,6 +38,8 @@ class AICAnalytics {
 		case languageChanged		= "changed"
 		
 		case locationOnSite			= "on_site"
+		case locationOffSite		= "off_site"
+		case locationDisabled		= "disabled"
 		case locationHeadingEnabled = "heading_enabled"
 		
 		case playAudioTour			= "tour"
@@ -189,7 +191,15 @@ class AICAnalytics {
     
     static func sendLocationOnSiteEvent() {
 		trackEvent(category: .location, action: .locationOnSite)
-    }
+	}
+	
+	static func sendLocationOffSiteEvent() {
+		trackEvent(category: .location, action: .locationOffSite)
+	}
+	
+	static func sendLocationDisabledEvent() {
+		trackEvent(category: .location, action: .locationDisabled)
+	}
 	
 	static func updateUserLocationProperty(isOnSite: Bool?) {
 		if isOnSite != nil {

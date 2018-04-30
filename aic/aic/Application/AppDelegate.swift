@@ -22,8 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		AICAnalytics.sendAppOpenEvent()
 		
 		// Update analytics User Properties
-		if CLLocationManager.authorizationStatus() == .denied {
+		if 	CLLocationManager.authorizationStatus() == .denied ||
+			CLLocationManager.authorizationStatus() == .notDetermined {
 			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
+		}
+		
+		// Set initial state for location tracking
+		Common.Location.hasLoggedOnsite = false
+		Common.Location.previousOnSiteState = nil
+		Common.Location.previousAuthorizationStatus = CLLocationManager.authorizationStatus()
+		if CLLocationManager.authorizationStatus() == .denied {
+			AICAnalytics.sendLocationDisabledEvent()
+			Common.Location.hasLoggedOnsite = true
 		}
 		
 		// Turn off caching
@@ -125,7 +135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AICAnalytics.sendAppForegroundEvent()
 		
 		// Update analytics User Properties
-		if CLLocationManager.authorizationStatus() == .denied {
+		if 	CLLocationManager.authorizationStatus() == .denied ||
+			CLLocationManager.authorizationStatus() == .notDetermined {
 			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
 		}
     }
