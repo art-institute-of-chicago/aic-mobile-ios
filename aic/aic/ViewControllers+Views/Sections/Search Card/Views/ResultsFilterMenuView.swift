@@ -135,18 +135,30 @@ class ResultsFilterMenuView : UIView {
 		if button == suggestedButton {
 			setSelected(filter: .suggested)
 			self.delegate?.filterMenuSelected(filter: .suggested)
+			
+			// Log Analytics
+			AICAnalytics.sendSearchCategorySwitchedEvent(category: "Suggested")
 		}
 		else if button == artworksButton {
 			setSelected(filter: .artworks)
 			self.delegate?.filterMenuSelected(filter: .artworks)
+			
+			// Log Analytics
+			AICAnalytics.sendSearchCategorySwitchedEvent(category: "Artworks")
 		}
 		else if button == toursButton {
 			setSelected(filter: .tours)
 			self.delegate?.filterMenuSelected(filter: .tours)
+			
+			// Log Analytics
+			AICAnalytics.sendSearchCategorySwitchedEvent(category: "Tours")
 		}
 		else if button == exhibitionsButton {
 			setSelected(filter: .exhibitions)
 			self.delegate?.filterMenuSelected(filter: .exhibitions)
+			
+			// Log Analytics
+			AICAnalytics.sendSearchCategorySwitchedEvent(category: "Exhibitions")
 		}
 	}
 }
