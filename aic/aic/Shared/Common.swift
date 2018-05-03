@@ -269,7 +269,7 @@ struct Common {
                                                          title: "Message Location Title",
                                                          message: "Message Location Text",
                                                          actionButtonTitle: "Message Location Action Button Title",
-                                                         cancelButtonTitle: nil
+                                                         cancelButtonTitle: "Message Location Cancel Button Title"
         )
     }
 

@@ -19,7 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		
 		AICAnalytics.configure()
-		AICAnalytics.sendAppOpenEvent()
+		
+		if  CLLocationManager.authorizationStatus() == .notDetermined {
+			AICAnalytics.sendAppOpenEvent(locationEnabled: nil)
+		}
+		else if CLLocationManager.authorizationStatus() == .denied {
+			AICAnalytics.sendAppOpenEvent(locationEnabled: false)
+		}
+		else {
+			AICAnalytics.sendAppOpenEvent(locationEnabled: true)
+		}
 		
 		// Update analytics User Properties
 		if 	CLLocationManager.authorizationStatus() == .denied ||
@@ -132,7 +141,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		setStatusBar()
         
         // Log analytics
-        AICAnalytics.sendAppForegroundEvent()
+		if  CLLocationManager.authorizationStatus() == .notDetermined {
+			AICAnalytics.sendAppForegroundEvent(locationEnabled: nil)
+		}
+		else if CLLocationManager.authorizationStatus() == .denied {
+			AICAnalytics.sendAppForegroundEvent(locationEnabled: false)
+		}
+		else {
+			AICAnalytics.sendAppForegroundEvent(locationEnabled: true)
+		}
 		
 		// Update analytics User Properties
 		if 	CLLocationManager.authorizationStatus() == .denied ||

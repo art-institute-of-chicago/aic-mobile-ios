@@ -40,6 +40,7 @@ class AICAnalytics {
 		case locationOnSite			= "on_site"
 		case locationOffSite		= "off_site"
 		case locationDisabled		= "disabled"
+		case locationNotNowPressed	= "not_now_pressed"
 		case locationHeadingEnabled = "heading_enabled"
 		
 		case playAudioTour			= "tour"
@@ -153,12 +154,28 @@ class AICAnalytics {
 	
     // MARK: App
     
-	static func sendAppOpenEvent() {
-		trackEvent(category: .app, action: .appOpen)
+	static func sendAppOpenEvent(locationEnabled: Bool?) {
+		if locationEnabled == nil {
+			trackEvent(category: .app, action: .appOpen, label: "location_not_determined")
+		}
+		else if locationEnabled == false {
+			trackEvent(category: .app, action: .appOpen, label: "location_disabled")
+		}
+		else if locationEnabled == true {
+			trackEvent(category: .app, action: .appOpen, label: "location_enabled")
+		}
     }
     
-    static func sendAppForegroundEvent() {
-		trackEvent(category: .app, action: .appForeground)
+    static func sendAppForegroundEvent(locationEnabled: Bool?) {
+		if locationEnabled == nil {
+			trackEvent(category: .app, action: .appForeground, label: "location_not_determined")
+		}
+		else if locationEnabled == false {
+			trackEvent(category: .app, action: .appForeground, label: "location_disabled")
+		}
+		else if locationEnabled == true {
+			trackEvent(category: .app, action: .appForeground, label: "location_enabled")
+		}
     }
     
     static func sendAppBackgroundEvent() {
@@ -200,6 +217,10 @@ class AICAnalytics {
 	
 	static func sendLocationDisabledEvent() {
 		trackEvent(category: .location, action: .locationDisabled)
+	}
+	
+	static func sendLocationNotNowPressedEvent() {
+		trackEvent(category: .location, action: .locationNotNowPressed)
 	}
 	
 	static func updateUserLocationProperty(isOnSite: Bool?) {
