@@ -21,6 +21,7 @@ class AICAnalytics {
 		case event					= "event"
 		case map					= "map"
 		case member					= "member"
+		case museumInfo				= "museum_info"
 		case search					= "search"
 		case searchArtwork			= "search_artwork"
 		case searchPlayArtwork		= "search_play_artwork"
@@ -37,6 +38,9 @@ class AICAnalytics {
 		case languageChanged		= "changed"
 		
 		case locationOnSite			= "on_site"
+		case locationOffSite		= "off_site"
+		case locationDisabled		= "disabled"
+		case locationNotNowPressed	= "not_now_pressed"
 		case locationHeadingEnabled = "heading_enabled"
 		
 		case playAudioTour			= "tour"
@@ -64,11 +68,16 @@ class AICAnalytics {
 		case memberShowCard			= "show_card"
 		case memberJoinPressed		= "join_pressed"
 		
+		case museumInfoPhoneLink	= "phone_link"
+		case museumInfoAddressLink	= "address_link"
+		
 		case searchLoaded			= "loaded"
 		case searchAutocomplete		= "autocomplete"
 		case searchPromoted			= "promoted"
 		case searchNoResults		= "no_results"
 		case searchAbandoned		= "abandoned"
+		case searchResultTapped		= "result_tapped"
+		case searchCategorySwitched = "category_switched"
 	}
 	
 	fileprivate enum UserProperty : UInt {
@@ -145,12 +154,28 @@ class AICAnalytics {
 	
     // MARK: App
     
-	static func sendAppOpenEvent() {
-		trackEvent(category: .app, action: .appOpen)
+	static func sendAppOpenEvent(locationEnabled: Bool?) {
+		if locationEnabled == nil {
+			trackEvent(category: .app, action: .appOpen, label: "location_not_determined")
+		}
+		else if locationEnabled == false {
+			trackEvent(category: .app, action: .appOpen, label: "location_disabled")
+		}
+		else if locationEnabled == true {
+			trackEvent(category: .app, action: .appOpen, label: "location_enabled")
+		}
     }
     
-    static func sendAppForegroundEvent() {
-		trackEvent(category: .app, action: .appForeground)
+    static func sendAppForegroundEvent(locationEnabled: Bool?) {
+		if locationEnabled == nil {
+			trackEvent(category: .app, action: .appForeground, label: "location_not_determined")
+		}
+		else if locationEnabled == false {
+			trackEvent(category: .app, action: .appForeground, label: "location_disabled")
+		}
+		else if locationEnabled == true {
+			trackEvent(category: .app, action: .appForeground, label: "location_enabled")
+		}
     }
     
     static func sendAppBackgroundEvent() {
@@ -184,10 +209,27 @@ class AICAnalytics {
     
     static func sendLocationOnSiteEvent() {
 		trackEvent(category: .location, action: .locationOnSite)
-    }
+	}
 	
-	static func updateUserLocationProperty(isOnSite: Bool) {
-		setUserProperty(property: .onSite, value: isOnSite ? "Yes" : "No")
+	static func sendLocationOffSiteEvent() {
+		trackEvent(category: .location, action: .locationOffSite)
+	}
+	
+	static func sendLocationDisabledEvent() {
+		trackEvent(category: .location, action: .locationDisabled)
+	}
+	
+	static func sendLocationNotNowPressedEvent() {
+		trackEvent(category: .location, action: .locationNotNowPressed)
+	}
+	
+	static func updateUserLocationProperty(isOnSite: Bool?) {
+		if isOnSite != nil {
+			setUserProperty(property: .onSite, value: isOnSite! ? "Yes" : "No")
+		}
+		else {
+			setUserProperty(property: .onSite, value: "Undefined")
+		}
 	}
 	
 	// MARK: Audio Player
@@ -214,7 +256,7 @@ class AICAnalytics {
 	// MARK: Playback
 	
 	static func sendPlaybackInterruptedEvent(audio: AICAudioFileModel, pctComplete: Int) {
-		trackEvent(category: .playback, action: .playbackInterrupted, label: audio.translations[.english]!.trackTitle)
+		trackEvent(category: .playback, action: .playbackInterrupted, label: audio.translations[.english]!.trackTitle, value: pctComplete)
 	}
 	
 	static func sendPlaybackCompletedEvent(audio: AICAudioFileModel) {
@@ -296,6 +338,16 @@ class AICAnalytics {
 		trackEvent(category: .member, action: .memberJoinPressed)
     }
 	
+	// MARK: Museum Info Links
+	
+	static func sendMuseumInfoPhoneLinkEvent() {
+		trackEvent(category: .museumInfo, action: .museumInfoPhoneLink)
+	}
+	
+	static func sendMuseumInfoAddressLinkEvent() {
+		trackEvent(category: .museumInfo, action: .museumInfoAddressLink)
+	}
+	
 	// MARK: Search
 	
 	static func sendSearchLoadedEvent(searchText: String, isAutocompleteString: Bool, isPromotedString: Bool) {
@@ -320,6 +372,14 @@ class AICAnalytics {
 	
 	static func sendSearchAbandonedEvent(searchText: String) {
 		trackEvent(category: .search, action: .searchAbandoned, label: searchText)
+	}
+	
+	static func sendSearchResultTappedEvent(searchText: String) {
+		trackEvent(category: .search, action: .searchResultTapped, label: searchText)
+	}
+	
+	static func sendSearchCategorySwitchedEvent(category: String) {
+		trackEvent(category: .search, action: .searchCategorySwitched, label: category)
 	}
 	
 	// MARK: Search Selected Content

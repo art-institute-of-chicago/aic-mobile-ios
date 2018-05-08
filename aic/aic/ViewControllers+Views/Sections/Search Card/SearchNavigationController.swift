@@ -33,7 +33,8 @@ class SearchNavigationController : CardNavigationController {
 	// Analytics
 	enum TrackSearchLoadType {
 		case none
-		case typedString
+		case loadWhileTyping
+		case searchButton
 		case promotedString
 		case autocompleteString
 	}
@@ -130,7 +131,7 @@ class SearchNavigationController : CardNavigationController {
 		]
 	}
 	
-	func createViewConstraints() {
+	private func createViewConstraints() {
 		searchBar.autoPinEdge(.top, to: .top, of: self.view, withOffset: 32)
 		searchBarLeadingConstraint = searchBar.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 2)
 		searchBar.autoPinEdge(.trailing, to: .leading, of: searchButton, withOffset: 12)
@@ -252,7 +253,7 @@ class SearchNavigationController : CardNavigationController {
 		super.handlePanGesture(recognizer: recognizer)
 	}
 	
-	func showBackButton() {
+	private func showBackButton() {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.clearButtonMode = .never
 		searchBar.isUserInteractionEnabled = false
@@ -264,7 +265,7 @@ class SearchNavigationController : CardNavigationController {
 		}
 	}
 	
-	func hideBackButton() {
+	private func hideBackButton() {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.clearButtonMode = .always
 		searchBar.isUserInteractionEnabled = true
@@ -276,7 +277,7 @@ class SearchNavigationController : CardNavigationController {
 		}
 	}
 	
-	func showSearchContentViewController(tableVC: UITableViewController) {
+	private func showSearchContentViewController(tableVC: UITableViewController) {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.resignFirstResponder()
 		searchTextField?.layoutIfNeeded()
@@ -294,7 +295,7 @@ class SearchNavigationController : CardNavigationController {
 	
 	// MARK: Load Search
 	
-	func loadSearch(searchText: String, showAutocomplete: Bool) {
+	private func loadSearch(searchText: String, showAutocomplete: Bool) {
 		resultsVC.resetContentLoaded()
 		
 		// Reset perform requests in SearchDataManager
@@ -329,7 +330,7 @@ class SearchNavigationController : CardNavigationController {
 	
 	// MARK: Buttons
 	
-	@objc func searchButtonPressed(button: UIButton) {
+	@objc private func searchButtonPressed(button: UIButton) {
 		if let searchText = searchBar.text {
 			if searchText.isEmpty == false {
 				// dismiss the keyboard when the user taps to close the card
@@ -337,13 +338,13 @@ class SearchNavigationController : CardNavigationController {
 				searchTextField?.resignFirstResponder()
 				searchTextField?.layoutIfNeeded()
 				
-				trackLoadingType = .typedString
+				trackLoadingType = .searchButton
 				loadSearch(searchText: searchText, showAutocomplete: false)
 			}
 		}
 	}
 	
-	@objc func backButtonPressed(button: UIButton) {
+	@objc private func backButtonPressed(button: UIButton) {
 		currentTableView = resultsVC.tableView
 		hideBackButton()
 		self.popViewController(animated: true)
@@ -351,6 +352,21 @@ class SearchNavigationController : CardNavigationController {
 		
 		// Accessibility
 		updateAccessibilityElementsForSearch()
+	}
+	
+	@objc private func trackLoadedSearch() {
+		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
+		if let searchText = searchTextField?.text {
+			if trackLoadingType != .none {
+				// Log Search Loaded Event
+				AICAnalytics.sendSearchLoadedEvent(searchText: searchText, isAutocompleteString: trackLoadingType == .autocompleteString, isPromotedString: trackLoadingType == .promotedString)
+				
+				// Log Search No Results Event
+				if resultsVC.isAllContentLoadedWithNoResults() {
+					AICAnalytics.sendSearchNoResultsEvent(searchText: searchText)
+				}
+			}
+		}
 	}
 }
 
@@ -361,8 +377,12 @@ extension SearchNavigationController : UISearchBarDelegate {
 		if searchText.count > 0 {
 			// Log Analytics
 			trackUserTypeSearchText = true
-			trackLoadingType = searchText.count >= 3 ? .typedString : .none
+			trackLoadingType = searchText.count >= 3 ? .loadWhileTyping : .none
 			
+			// Reset previous perform requests to track loaded search
+			NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(trackLoadedSearch), object: nil)
+			
+			// Load new search
 			loadSearch(searchText: searchText, showAutocomplete: true)
 		}
 		else {
@@ -387,7 +407,7 @@ extension SearchNavigationController : UISearchBarDelegate {
 				searchTextField?.resignFirstResponder()
 				searchTextField?.layoutIfNeeded()
 				
-				trackLoadingType = .typedString
+				trackLoadingType = .searchButton
 				loadSearch(searchText: searchText, showAutocomplete: false)
 			}
 		}
@@ -415,19 +435,9 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 		
 		// Log analytics
 		trackUserSelectedContent = false
-		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
-		if let searchText = searchTextField?.text {
-			if trackLoadingType != .none {
-				
-				// Log Search Loaded Event
-				AICAnalytics.sendSearchLoadedEvent(searchText: searchText, isAutocompleteString: trackLoadingType == .autocompleteString, isPromotedString: trackLoadingType == .promotedString)
-				
-				// Log Search No Results Event
-				if artworks.count == 0 && tours.count == 0 && exhibitions.count == 0 {
-					AICAnalytics.sendSearchNoResultsEvent(searchText: searchText)
-				}
-			}
-		}
+		// Reset previous perform requests to track loaded search
+		NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(trackLoadedSearch), object: nil)
+		self.perform(#selector(trackLoadedSearch), with: nil, afterDelay: 1.0) // track loaded search after a few seconds
 	}
 	
 	func searchDataFailure(filter: Common.Search.Filter) {
@@ -469,6 +479,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
 		AICAnalytics.sendSearchSelectedArtworkEvent(searchedArtwork: artwork, searchText: searchText)
+		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
@@ -480,6 +491,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
 		AICAnalytics.sendSearchSelectedTourEvent(tour: tour, searchText: searchText)
+		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
@@ -491,6 +503,7 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
 		AICAnalytics.sendSearchSelectedExhibitionEvent(exhibition: exhibition, searchText: searchText)
+		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {

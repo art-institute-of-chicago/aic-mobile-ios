@@ -650,6 +650,9 @@ extension MapNavigationController : MessageViewControllerDelegate {
 	func messageViewCancelSelected(messageVC: MessageViewController) {
 		if messageVC == enableLocationMessageVC {
 			hideEnableLocationMessage()
+			
+			// Log analytics
+			AICAnalytics.sendLocationNotNowPressedEvent()
 		}
 	}
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class SectionNavigationBar : UIView {
 	let headerView: UIView = UIView()
+	let headerAnimatedColorView: UIView = UIView()
 	let backdropImageView:UIImageView = UIImageView()
 	let backButton: UIButton = UIButton()
 	let iconImageView:UIImageView = UIImageView()
@@ -32,6 +33,8 @@ class SectionNavigationBar : UIView {
 	
 	internal let titleString:String
 	
+	private var isAnimating: Bool = false
+	
 	enum State {
 		case open
 		case collapsed
@@ -48,6 +51,9 @@ class SectionNavigationBar : UIView {
 		headerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.navigationBarHeight)
 		headerView.clipsToBounds = true
 		headerView.backgroundColor = section.color
+		
+		headerAnimatedColorView.alpha = 0.0
+		headerAnimatedColorView.backgroundColor = .aicMemberCardRedColor
 		
 		if let _ = section.background {
 			self.backdropImageView.image = section.background
@@ -102,6 +108,7 @@ class SectionNavigationBar : UIView {
 		searchButton.layer.cornerRadius = 18
 		
 		// Add Subviews
+		headerView.addSubview(headerAnimatedColorView)
 		headerView.addSubview(backdropImageView)
 		headerView.addSubview(iconImageView)
 		headerView.addSubview(titleLabel)
@@ -203,6 +210,8 @@ class SectionNavigationBar : UIView {
 	}
 	
 	func createConstraints() {
+		headerAnimatedColorView.autoPinEdgesToSuperviewEdges()
+		
 		backButton.autoPinEdge(.bottom, to: .top, of: headerView, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
 		backButton.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: backButtonLeftMargin)
 		
@@ -244,6 +253,30 @@ class SectionNavigationBar : UIView {
 	
 	func enableParallaxEffect() {
 		addParallexEffect(toView: backdropImageView, left: 0, right: 0, top: -30, bottom: 30)
+	}
+	
+	func startColorAnimation() {
+		isAnimating = true
+		headerAnimatedColorView.alpha = 0.0
+		
+		UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseIn], animations: {
+			self.headerAnimatedColorView.alpha = 1.0
+		}) { (completedHalf) in
+			UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseIn], animations: {
+				self.headerAnimatedColorView.alpha = 0.0
+			}) { (completed) in
+				if completed && self.isAnimating {
+					self.startColorAnimation()
+				}
+			}
+		}
+	}
+	
+	func stopColorAnimation() {
+		isAnimating = false
+		UIView.animate(withDuration: 0.1) {
+			self.headerAnimatedColorView.alpha = 0.0
+		}
 	}
 }
 
