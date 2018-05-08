@@ -44,6 +44,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 	var autoPlay: Bool = false
     
     var isUpdatingObjectViewProgressSlider = false
+	
+	// Audio Guide Number (track it to log analytics when loading fails)
+	var audioGuideNumber: Int? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +116,7 @@ class AudioPlayerNavigationController : CardNavigationController {
     
     // MARK: Play Audio
     
-	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel) {
+	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel, audioGuideNumber: Int? = nil) {
 		currentAudioBumper = nil
 		currentTourStopAudioFile = nil
 		
@@ -121,6 +124,8 @@ class AudioPlayerNavigationController : CardNavigationController {
 		currentImageURL = artwork.imageUrl
 		
 		self.autoPlay = true
+		
+		self.audioGuideNumber = audioGuideNumber
 		
         if load(audioFile: audio, coverImageURL: artwork.imageUrl as URL) {
 			miniAudioPlayerView.reset()
@@ -140,6 +145,8 @@ class AudioPlayerNavigationController : CardNavigationController {
 		currentImageURL = tour.imageUrl
 		
 		self.autoPlay = true
+		
+		self.audioGuideNumber = nil
 		
 		// set correct language on audio
 		var audio = tour.overview.audio
@@ -167,6 +174,8 @@ class AudioPlayerNavigationController : CardNavigationController {
 		
 		self.autoPlay = true
 		
+		self.audioGuideNumber = nil
+		
 		// set correct language on audio
 		var audio = tourStop.audio
 		audio.language = tour.language
@@ -188,6 +197,8 @@ class AudioPlayerNavigationController : CardNavigationController {
 	}
 	
 	private func playAudioBumper(audioBumper: AICAudioFileModel) {
+		self.audioGuideNumber = nil
+		
 		if load(audioFile: audioBumper, coverImageURL: self.currentImageURL!) {
 		}
 	}
@@ -201,8 +212,13 @@ class AudioPlayerNavigationController : CardNavigationController {
             if (audioFile.nid != currentAudioFile.nid) {
 				// Log analytics
 				// GA only accepts int values, so send an int from 1-10
-				let progressValue: Int = Int(currentAudioFileMaxProgress * 100)
-				AICAnalytics.sendPlaybackInterruptedEvent(audio: currentAudioFile, pctComplete: progressValue)
+				let pctComplete = Int(currentAudioFileMaxProgress * 100)
+				if pctComplete > 95 {
+					AICAnalytics.sendPlaybackCompletedEvent(audio: currentAudioFile)
+				}
+				else {
+					AICAnalytics.sendPlaybackInterruptedEvent(audio: currentAudioFile, pctComplete: pctComplete)
+				}
             }
 			// If it's same nid and language, don't load audio
 			else if selectedLanguage == nil {
@@ -326,6 +342,11 @@ class AudioPlayerNavigationController : CardNavigationController {
 		}))
 		
         self.present(alertView, animated: true, completion: nil)
+		
+		// Log Analytics
+		if let number = audioGuideNumber {
+			AICAnalytics.sendErrorsAudioGuideFailEvent(number: number)
+		}
     }
     
     // Set the loading status as the track title
@@ -611,6 +632,11 @@ extension AudioPlayerNavigationController {
     @objc internal func audioPlayerDidFinishPlaying(_ notification:Notification) {
         synchronizePlayPauseButtons(isPlaying: false)
 		
+		// Log analytics
+		if let currentAudio = currentAudioFile {
+			AICAnalytics.sendPlaybackCompletedEvent(audio: currentAudio)
+		}
+		
 		// check that we are playing tour stop audio, before you play bumper or original track
 		if let currentAudio = currentAudioFile,
 			let currentTourStopAudio = currentTourStopAudioFile,
@@ -646,11 +672,6 @@ extension AudioPlayerNavigationController {
 				hide()
 			}
 		}
-		
-		// Log analytics
-		if let currentAudio = currentAudioFile {
-			AICAnalytics.sendPlaybackCompletedEvent(audio: currentAudio)
-		}
 	}
     
     // Audio player Slider Events
@@ -678,7 +699,13 @@ extension AudioPlayerNavigationController {
 		// Log Analytics
 		if let audio = currentAudioFile {
 			if currentAudioFileMaxProgress < 1.0 {
-				AICAnalytics.sendPlaybackInterruptedEvent(audio: audio, pctComplete: Int(currentAudioFileMaxProgress * 100))
+				let pctComplete = Int(currentAudioFileMaxProgress * 100)
+				if pctComplete > 95 {
+					AICAnalytics.sendPlaybackCompletedEvent(audio: audio)
+				}
+				else {
+					AICAnalytics.sendPlaybackInterruptedEvent(audio: audio, pctComplete: pctComplete)
+				}
 			}
 		}
 		
