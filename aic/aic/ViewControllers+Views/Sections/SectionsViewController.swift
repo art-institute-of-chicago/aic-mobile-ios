@@ -217,6 +217,9 @@ class SectionsViewController : UIViewController {
 					self.homeVC.showHomeTooltip()
 					
 					self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
+					
+					// Accessibility
+					self.homeVC.sectionNavigationBar.titleLabel.becomeFirstResponder()
 				}
         })
         Common.DeepLinks.loadedEnoughToLink = true

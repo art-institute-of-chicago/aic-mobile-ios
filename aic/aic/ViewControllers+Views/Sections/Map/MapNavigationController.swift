@@ -70,7 +70,8 @@ class MapNavigationController : SectionNavigationController {
 		// Accessibility
 		mapVC.view.accessibilityElementsHidden = true
 		self.accessibilityElements = [
-			sectionNavigationBar
+			sectionNavigationBar,
+			tabBarController!.tabBar
 		]
 	}
 	
@@ -92,6 +93,19 @@ class MapNavigationController : SectionNavigationController {
 		if let contentCard = mapContentCardVC {
 			mapVC.setViewableArea(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: contentCard.view.frame.origin.y))
 		}
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		// Accessibility
+		tabBarController!.tabBar.isAccessibilityElement = true
+		sectionNavigationBar.titleLabel.becomeFirstResponder()
+		self.perform(#selector(accessibilityReEnableTabBar), with: nil, afterDelay: 2.0)
+	}
+	
+	@objc private func accessibilityReEnableTabBar() {
+		tabBarController!.tabBar.isAccessibilityElement = false
 	}
 	
 	// MARK: Language
@@ -604,7 +618,8 @@ class MapNavigationController : SectionNavigationController {
 		// Accessibility
 		self.accessibilityElements = [
 			sectionNavigationBar,
-			mapContentCardVC!.view
+			mapContentCardVC!.view,
+			tabBarController!.tabBar
 		]
 		if currentMode == .tour {
 			mapContentCardVC!.closeButton.accessibilityLabel = "Leave Tour"
@@ -725,8 +740,10 @@ extension MapNavigationController : CardNavigationControllerDelegate {
 		
 		// Accessibility
 		self.accessibilityElements = [
-			sectionNavigationBar
+			sectionNavigationBar,
+			tabBarController!.tabBar
 		]
+		UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, sectionNavigationBar.titleLabel)
 	}
 }
 

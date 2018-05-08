@@ -37,12 +37,19 @@ class HomeNavigationController : SectionNavigationController {
 		homeVC.delegate = self
 		
 		self.pushViewController(homeVC, animated: false)
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 		
 		// Accessibility
-		self.accessibilityElements = [
-			sectionNavigationBar,
-			homeVC.view
-		]
+		tabBarController!.tabBar.isAccessibilityElement = true
+		sectionNavigationBar.titleLabel.becomeFirstResponder()
+		self.perform(#selector(accessibilityReEnableTabBar), with: nil, afterDelay: 2.0)
+	}
+	
+	@objc private func accessibilityReEnableTabBar() {
+		tabBarController!.tabBar.isAccessibilityElement = false
 	}
 	
 	func showHomeTooltip() {
@@ -82,8 +89,10 @@ extension HomeNavigationController : UINavigationControllerDelegate {
 		// Accessibility
 		self.accessibilityElements = [
 			sectionNavigationBar,
-			viewController.view
+			viewController.view,
+			tabBarController!.tabBar
 		]
+		sectionNavigationBar.titleLabel.becomeFirstResponder()
 	}
 }
 

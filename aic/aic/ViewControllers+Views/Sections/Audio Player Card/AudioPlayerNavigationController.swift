@@ -500,6 +500,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 		// Accessibility
 		downArrowButton.isAccessibilityElement = true
 		miniAudioPlayerView.removeFromSuperview()
+		UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, audioInfoVC.audioPlayerView.titleLabel)
 	}
 	
 	override func cardWillShowMiniPlayer() {
