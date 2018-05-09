@@ -67,6 +67,7 @@ class SectionNavigationController : UINavigationController {
 		
 		// Accessibility
 		sectionNavigationBar.titleLabel.becomeFirstResponder()
+		UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, sectionNavigationBar)
 	}
 	
 	override func popToRootViewController(animated: Bool) -> [UIViewController]? {

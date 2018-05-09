@@ -27,6 +27,7 @@ class AICAnalytics {
 		case searchPlayArtwork		= "search_play_artwork"
 		case searchTour				= "search_tour"
 		case searchExhibition 		= "search_exhibition"
+		case errors					= "errors"
 	}
 	
 	fileprivate enum Action : String {
@@ -78,6 +79,8 @@ class AICAnalytics {
 		case searchAbandoned		= "abandoned"
 		case searchResultTapped		= "result_tapped"
 		case searchCategorySwitched = "category_switched"
+		
+		case errorsAudioGuideFail	= "audio_guide_fail"
 	}
 	
 	fileprivate enum UserProperty : UInt {
@@ -398,5 +401,11 @@ class AICAnalytics {
 	
 	static func sendSearchSelectedExhibitionEvent(exhibition: AICExhibitionModel, searchText: String) {
 		trackEvent(category: .searchExhibition, action: exhibition.title, label: searchText)
+	}
+	
+	// MARK: Errors
+	
+	static func sendErrorsAudioGuideFailEvent(number: Int) {
+		trackEvent(category: .errors, action: .errorsAudioGuideFail, label: String(number))
 	}
 }

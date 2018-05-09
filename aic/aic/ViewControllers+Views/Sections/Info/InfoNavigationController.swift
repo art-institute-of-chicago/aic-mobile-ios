@@ -33,12 +33,6 @@ class InfoNavigationController : SectionNavigationController {
 		infoVC.delegate = self
 		
 		self.pushViewController(infoVC, animated: false)
-		
-		// Accessibility
-		self.accessibilityElements = [
-			sectionNavigationBar,
-			infoVC.view
-		]
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +50,15 @@ class InfoNavigationController : SectionNavigationController {
 			
 			showMemberCard()
 		}
+		
+		// Accessibility
+		tabBarController!.tabBar.isAccessibilityElement = true
+		sectionNavigationBar.titleLabel.becomeFirstResponder()
+		self.perform(#selector(accessibilityReEnableTabBar), with: nil, afterDelay: 2.0)
+	}
+	
+	@objc private func accessibilityReEnableTabBar() {
+		tabBarController!.tabBar.isAccessibilityElement = false
 	}
 	
 	func showMemberCard() {
@@ -88,8 +91,10 @@ extension InfoNavigationController : UINavigationControllerDelegate {
 		// Accessibility
 		self.accessibilityElements = [
 			sectionNavigationBar,
-			viewController.view
+			viewController.view,
+			tabBarController!.tabBar
 		]
+		sectionNavigationBar.titleLabel.becomeFirstResponder()
 	}
 }
 

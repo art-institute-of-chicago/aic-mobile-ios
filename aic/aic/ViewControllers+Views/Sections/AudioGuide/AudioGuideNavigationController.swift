@@ -76,6 +76,19 @@ class AudioGuideNavigationController : SectionNavigationController {
 		}
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		// Accessibility
+		tabBarController!.tabBar.isAccessibilityElement = true
+		sectionNavigationBar.titleLabel.becomeFirstResponder()
+		self.perform(#selector(accessibilityReEnableTabBar), with: nil, afterDelay: 2.0)
+	}
+	
+	@objc private func accessibilityReEnableTabBar() {
+		tabBarController!.tabBar.isAccessibilityElement = false
+	}
+	
 	static func createCollectionView() -> UICollectionView {
 		// Adjust size for iPhone 5 screen size
 		if UIScreen.main.bounds.height < 600 {

@@ -217,6 +217,9 @@ class SectionsViewController : UIViewController {
 					self.homeVC.showHomeTooltip()
 					
 					self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
+					
+					// Accessibility
+					self.homeVC.sectionNavigationBar.titleLabel.becomeFirstResponder()
 				}
         })
         Common.DeepLinks.loadedEnoughToLink = true
@@ -341,8 +344,8 @@ class SectionsViewController : UIViewController {
     
     // MARK: Play Audio
 	
-	private func playArtwork(artwork: AICObjectModel, audio: AICAudioFileModel) {
-		audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio)
+	private func playArtwork(artwork: AICObjectModel, audio: AICAudioFileModel, audiogGuideNumber: Int? = nil) {
+		audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, audioGuideNumber: audiogGuideNumber)
 		showHeadphonesMessage()
     }
     
@@ -350,7 +353,7 @@ class SectionsViewController : UIViewController {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: audioGuideID)
 		audio.language = Common.currentLanguage
 		
-		playArtwork(artwork: artwork, audio: audio)
+		playArtwork(artwork: artwork, audio: audio, audiogGuideNumber: audioGuideID)
 		audioPlayerCardVC.showFullscreen()
         
         // Log analytics
