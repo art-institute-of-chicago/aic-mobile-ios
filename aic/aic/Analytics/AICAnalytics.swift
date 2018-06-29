@@ -80,7 +80,8 @@ class AICAnalytics {
 		case searchResultTapped		= "result_tapped"
 		case searchCategorySwitched = "category_switched"
 		
-		case errorsAudioGuideFail	= "audio_guide_fail"
+		case errorsAudioGuideWrongNumber = "audio_guide_wrong_number"
+		case errorsAudioLoadFail 	= "audio_load_fail"
 	}
 	
 	fileprivate enum UserProperty : UInt {
@@ -405,7 +406,11 @@ class AICAnalytics {
 	
 	// MARK: Errors
 	
-	static func sendErrorsAudioGuideFailEvent(number: Int) {
-		trackEvent(category: .errors, action: .errorsAudioGuideFail, label: String(number))
+	static func sendErrorsAudioGuideWrongNumberEvent(number: Int) {
+		trackEvent(category: .errors, action: .errorsAudioGuideWrongNumber, label: String(number))
+	}
+	
+	static func sendErrorsAudioLoadFailEvent(audioId: Int) {
+		trackEvent(category: .errors, action: .errorsAudioLoadFail, label: String(audioId))
 	}
 }

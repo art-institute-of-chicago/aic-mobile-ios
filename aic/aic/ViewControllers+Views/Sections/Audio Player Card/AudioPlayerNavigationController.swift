@@ -344,9 +344,7 @@ class AudioPlayerNavigationController : CardNavigationController {
         self.present(alertView, animated: true, completion: nil)
 		
 		// Log Analytics
-		if let number = audioGuideNumber {
-			AICAnalytics.sendErrorsAudioGuideFailEvent(number: number)
-		}
+		AICAnalytics.sendErrorsAudioLoadFailEvent(audioId: audioFile.nid)
     }
     
     // Set the loading status as the track title
