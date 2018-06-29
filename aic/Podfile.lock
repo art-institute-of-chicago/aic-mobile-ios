@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (4.5.1)
-  - Atributika (4.4.2)
+  - Atributika (4.4.3)
   - GoogleAnalytics (3.17.0)
-  - Kingfisher (4.7.0)
+  - Kingfisher (4.8.0)
   - Localize-Swift (2.0.0)
   - PureLayout (3.0.2)
   - SwiftyJSON (3.1.4)
@@ -18,11 +18,22 @@ DEPENDENCIES:
   - SwiftyJSON (~> 3.1.4)
   - SWXMLHash (~> 4.2.1)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Atributika
+    - GoogleAnalytics
+    - Kingfisher
+    - Localize-Swift
+    - PureLayout
+    - SwiftyJSON
+    - SWXMLHash
+
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
-  Atributika: 61cf7794646bd033cd19aad1b8f7e1cae8daa877
+  Atributika: c2ecee6c96af80c29d6ed1606e70fa137e51790f
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
@@ -30,4 +41,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 30da0b1cf5b8c05fca839cb4233dcd17a1f6e2eb
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

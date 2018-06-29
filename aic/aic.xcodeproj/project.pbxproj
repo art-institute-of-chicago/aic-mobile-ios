@@ -1131,7 +1131,6 @@
 				E40D41C61C6CEBB700A57AF4 /* Frameworks */,
 				E40D41C71C6CEBB700A57AF4 /* Resources */,
 				70F646A8A467859D6A97D54B /* [CP] Embed Pods Frameworks */,
-				AE00A031CFD2B4C7DF3530AF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1150,8 +1149,6 @@
 				E40D41DB1C6CEBB700A57AF4 /* Sources */,
 				E40D41DC1C6CEBB700A57AF4 /* Frameworks */,
 				E40D41DD1C6CEBB700A57AF4 /* Resources */,
-				6B22A942B4FB74B79F81CB08 /* [CP] Embed Pods Frameworks */,
-				98C7B9BAE8E352905357417F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1171,8 +1168,6 @@
 				E40D41E61C6CEBB700A57AF4 /* Sources */,
 				E40D41E71C6CEBB700A57AF4 /* Frameworks */,
 				E40D41E81C6CEBB700A57AF4 /* Resources */,
-				065CF15F7F9884E370AE5158 /* [CP] Copy Pods Resources */,
-				5409741AA6BFBA179CF0E8A5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1308,21 +1303,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		065CF15F7F9884E370AE5158 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		0F03D992B8AA88C3AD4F780F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1359,36 +1339,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5409741AA6BFBA179CF0E8A5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6B22A942B4FB74B79F81CB08 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-aicTests/Pods-aicTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		70F646A8A467859D6A97D54B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1417,36 +1367,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-aic/Pods-aic-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		98C7B9BAE8E352905357417F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-aicTests/Pods-aicTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AE00A031CFD2B4C7DF3530AF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-aic/Pods-aic-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D14437E377A505ECF6DAD190 /* [CP] Check Pods Manifest.lock */ = {
