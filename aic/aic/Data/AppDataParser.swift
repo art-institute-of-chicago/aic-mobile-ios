@@ -233,7 +233,7 @@ class AppDataParser {
 		let floorNumber		= gallery.location.floor
         
         let title           = try getString(fromJSON: objectJSON, forKey: "title")
-        
+		
         // Optional Fields
 		var objectId: Int? = nil
 		do {
@@ -260,13 +260,12 @@ class AppDataParser {
         // Get images
         var image: URL! = nil
         var thumbnail: URL! = nil
-        var imageHasBeenOverridden = false
         
         do {
             // Try to load override images
             image           = try getURL(fromJSON: objectJSON, forKey: "image_url")
             thumbnail       = image
-            imageHasBeenOverridden = true
+            //imageHasBeenOverridden = true
         } catch {
             // Try loading from cms default images
             image           = try getURL(fromJSON: objectJSON, forKey: "large_image_full_path")
@@ -274,14 +273,8 @@ class AppDataParser {
         }
         
         // Get Image Crop Rects if they exist
-        var thumbnailCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "thumbnail_crop_v2")
-        var imageCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "large_image_crop_v2")
-        
-        if imageHasBeenOverridden || !Common.DataConstants.ignoreOverrideImageCrop {
-            //Feature #886 - Ignore / Allow crops for overriden images
-            thumbnailCropRect = nil
-            imageCropRect = nil
-        }
+        let thumbnailCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "thumbnail_crop_v2")
+        let imageCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "large_image_crop_v2")
         
         // Ingest all audio IDs
         var audioCommentaries = [AICAudioCommentaryModel]()
