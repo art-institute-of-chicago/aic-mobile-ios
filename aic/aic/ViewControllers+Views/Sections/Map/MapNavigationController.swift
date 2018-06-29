@@ -189,7 +189,7 @@ class MapNavigationController : SectionNavigationController {
 				// page for audio track
 				var previousStopPage = -1
 				var nextTourStopIndex = -1
-				if audio.nid == tour.overview.audio.nid {
+				if audio.nid == tour.audioCommentary.audioFile.nid {
 					nextTourStopIndex = 0
 					previousStopPage = 0
 				}

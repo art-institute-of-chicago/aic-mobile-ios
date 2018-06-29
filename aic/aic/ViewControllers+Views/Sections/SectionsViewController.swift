@@ -359,6 +359,14 @@ class SectionsViewController : UIViewController {
         // Log analytics
 		AICAnalytics.sendPlayAudioFromAudioGuideEvent(artwork: artwork, selectorNumber: audioGuideID, language: audio.language)
     }
+	
+	private func playAudioGuideTour(tour: AICTourModel) {
+		audioPlayerCardVC.playTourOverviewAudio(tour: tour)
+		audioPlayerCardVC.showFullscreen()
+		
+		// Log analytics
+		AICAnalytics.sendPlayAudioFromTourEvent(tour: tour)
+	}
     
     private func playMapArtwork(artwork: AICObjectModel) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
@@ -602,9 +610,13 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 // MARK: AudioGuide Delegate
 
 extension SectionsViewController : AudioGuideNavigationControllerDelegate {
-    func audioGuideDidSelectObject(object: AICObjectModel, audioGuideID: Int) {
-        playAudioGuideArtwork(artwork: object, audioGuideID: audioGuideID)
-    }
+	func audioGuideDidSelectObjectAudio(object: AICObjectModel, audioGuideID: Int) {
+		playAudioGuideArtwork(artwork: object, audioGuideID: audioGuideID)
+	}
+	
+	func audioGuideDidSelectTourAudio(tour: AICTourModel, audioGuideID: Int) {
+		playAudioGuideTour(tour: tour)
+	}
 }
 
 // MARK: Map Delegate

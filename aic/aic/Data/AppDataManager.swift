@@ -391,6 +391,10 @@ class AppDataManager {
 		}) }).first
     }
 	
+	func getTour(forSelectorNumber number: Int) -> AICTourModel? {
+		return app.tours.filter({ $0.audioCommentary.selectorNumber == number }).first
+	}
+	
 	func getAudioFile(forObject object: AICObjectModel, selectorNumber: Int?) -> AICAudioFileModel {
 		// If a selectorNumber is specified, check that the object has it in its list
 		if let number = selectorNumber {

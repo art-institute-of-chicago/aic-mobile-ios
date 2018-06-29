@@ -139,7 +139,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 		let nextTourStop = tour.stops.first!
 		setAudioBumperFor(nextTourStop: nextTourStop)
 		
-		currentTourStopAudioFile = tour.overview.audio
+		currentTourStopAudioFile = tour.audioCommentary.audioFile
 		
 		currentTrackTitle = tour.title
 		currentImageURL = tour.imageUrl
@@ -149,12 +149,12 @@ class AudioPlayerNavigationController : CardNavigationController {
 		self.audioGuideNumber = nil
 		
 		// set correct language on audio
-		var audio = tour.overview.audio
+		var audio = tour.audioCommentary.audioFile
 		audio.language = tour.language
 		
 		if load(audioFile: audio, coverImageURL: tour.imageUrl as URL) {
 			miniAudioPlayerView.reset()
-			audioInfoVC.setTourOverviewContent(tourOverview: tour.overview)
+			audioInfoVC.setTourContent(tour: tour)
 		}
 	}
 	

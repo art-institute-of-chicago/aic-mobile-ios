@@ -9,10 +9,6 @@
 import UIKit
 
 class AudioInfoViewController : UIViewController {
-    var artworkModel: AICObjectModel? = nil
-	var tourOverviewModel: AICTourOverviewModel? = nil
-    var tourModel: AICTourModel? = nil
-    
     let scrollView: UIScrollView = UIScrollView()
     let imageView: UIImageView = UIImageView()
 	let languageSelector: LanguageSelectorView = LanguageSelectorView()
@@ -122,7 +118,6 @@ class AudioInfoViewController : UIViewController {
 	func setArtworkContent(artwork: AICObjectModel, audio: AICAudioFileModel, tour: AICTourModel? = nil) {
 		reset()
 		
-        artworkModel = artwork
         setImage(imageURL: artwork.imageUrl)
 		if let description = artwork.tombstone {
 			setDescription(description: description)
@@ -178,12 +173,11 @@ class AudioInfoViewController : UIViewController {
 		updateLayout()
 	}
 	
-	func setTourOverviewContent(tourOverview: AICTourOverviewModel) {
+	func setTourContent(tour: AICTourModel) {
 		reset()
 		
-		tourOverviewModel = tourOverview
-		setImage(imageURL: tourOverview.imageUrl)
-		setDescription(description: tourOverview.description)
+		setImage(imageURL: tour.imageUrl)
+		setDescription(description: tour.longDescription)
 		
 		updateLayout()
 	}

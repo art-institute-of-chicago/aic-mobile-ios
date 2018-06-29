@@ -7,7 +7,8 @@ import UIKit
 import Localize_Swift
 
 protocol AudioGuideNavigationControllerDelegate : class {
-    func audioGuideDidSelectObject(object:AICObjectModel, audioGuideID: Int)
+    func audioGuideDidSelectObjectAudio(object:AICObjectModel, audioGuideID: Int)
+	func audioGuideDidSelectTourAudio(tour:AICTourModel, audioGuideID: Int)
 }
 
 class AudioGuideNavigationController : SectionNavigationController {
@@ -252,18 +253,23 @@ extension AudioGuideNavigationController {
         let strVal = buttonValueMap[button.tag]!
         switch strVal {
         case "GO":
-            guard let id:Int = Int(currentInputValue) else {
+            guard let id: Int = Int(currentInputValue) else {
                 shakeForIncorrect()
                 return
             }
-            
-            guard let object = AppDataManager.sharedInstance.getObject(forSelectorNumber: id) else {
-                shakeForIncorrect()
+			
+			if let tour = AppDataManager.sharedInstance.getTour(forSelectorNumber: id) {
+				sectionDelegate?.audioGuideDidSelectTourAudio(tour: tour, audioGuideID: id)
+				clearInput()
+				return
+			}
+            else if let object = AppDataManager.sharedInstance.getObject(forSelectorNumber: id) {
+				sectionDelegate?.audioGuideDidSelectObjectAudio(object: object, audioGuideID: id)
+				clearInput()
                 return
             }
-                
-            sectionDelegate?.audioGuideDidSelectObject(object: object, audioGuideID: id)
-            clearInput()
+			
+			shakeForIncorrect()
             
         case "<":
             removeLastNumberPadInput()

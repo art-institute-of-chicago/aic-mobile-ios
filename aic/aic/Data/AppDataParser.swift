@@ -457,6 +457,15 @@ class AppDataParser {
 		
 		let order 				= try getInt(fromJSON: tourJSON, forKey: "weight")
 		
+		// Selector number (optional)
+		var selectorNumber: Int?  = nil
+		do {
+			selectorNumber = try getInt(fromJSON: tourJSON, forKey: "selector_number")
+		} catch {}
+		
+		// Audio Commentary
+		let audioCommentary = AICAudioCommentaryModel(selectorNumber: selectorNumber, audioFile: audioFile)
+		
 		// Category
 		var category: AICTourCategoryModel? = nil
 		let categoryID = try getString(fromJSON: tourJSON, forKey: "category", optional: true)
@@ -547,6 +556,7 @@ class AppDataParser {
 		}
         
 		return AICTourModel(nid:nid,
+							audioCommentary: audioCommentary,
 							order: order,
 							category: category,
 							imageUrl: imageUrl,
@@ -566,19 +576,11 @@ class AppDataParser {
 		
 		let durationInMinutes = try? getString(fromJSON: tourJSON, forKey: "tour_duration")
 		
-		// Create overview
-		let overview = AICTourOverviewModel(title: title.stringByDecodingHTMLEntities,
-											description: longDescription.stringByDecodingHTMLEntities,
-											imageUrl: imageUrl,
-											audio: audioFile,
-											credits: "Copyright 2016 Art Institue of Chicago"
-		)
-		
 		return AICTourTranslationModel(title: title.stringByDecodingHTMLEntities,
 									   shortDescription: shortDescription.stringByDecodingHTMLEntities,
 									   longDescription: longDescription.stringByDecodingHTMLEntities,
 									   durationInMinutes: durationInMinutes,
-									   overview: overview
+									   credits: "Copyright 2016 Art Institue of Chicago"
 		)
 	}
 	

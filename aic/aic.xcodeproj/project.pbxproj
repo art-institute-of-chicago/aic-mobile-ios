@@ -174,7 +174,6 @@
 		E43F368B1D2B2F9900DA4DA6 /* AICAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F368A1D2B2F9900DA4DA6 /* AICAnalytics.swift */; };
 		E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */; };
 		E44084A71CC96C8E00AABC92 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */; };
-		E456CF761CE426DF00D25E5B /* AICTourOverviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */; };
 		E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */; };
 		E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */; };
 		E458502F1CAC8C1A00131A66 /* AICExhibitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */; };
@@ -443,7 +442,6 @@
 		E43F368A1D2B2F9900DA4DA6 /* AICAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AICAnalytics.swift; path = Analytics/AICAnalytics.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICSectionModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTourOverviewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E456F9BA1D2DB54A00DEA3C9 /* aic-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "aic-bridging-header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -978,7 +976,6 @@
 				E47A97191CF262760041D0A6 /* AICTooltipModel.swift */,
 				29AC50192059C4210085EE5B /* AICTourCategoryModel.swift */,
 				E4D159341CBAE3E900536B4D /* AICTourModel.swift */,
-				E456CF751CE426DE00D25E5B /* AICTourOverviewModel.swift */,
 				E411DE801CCD50BE00E22047 /* AICTourStopModel.swift */,
 				E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */,
 			);
@@ -1395,7 +1392,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */,
-				E456CF761CE426DF00D25E5B /* AICTourOverviewModel.swift in Sources */,
 				2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */,
 				294C0B50201A76F700F2ABB1 /* MapDepartmentAnnotationView.swift in Sources */,
 				295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */,

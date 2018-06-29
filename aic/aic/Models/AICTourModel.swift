@@ -13,7 +13,8 @@ struct AICTourModel {
 	var shortDescription: String { return self.translations[self.language]!.shortDescription }
 	var longDescription: String { return self.translations[self.language]!.longDescription }
 	var durationInMinutes: String? { return self.translations[self.language]!.durationInMinutes }
-	var overview: AICTourOverviewModel { return self.translations[self.language]!.overview }
+	
+	let audioCommentary: AICAudioCommentaryModel
 	
 	let order: Int
 	
@@ -86,5 +87,5 @@ struct AICTourTranslationModel {
 	let shortDescription: String
 	let longDescription: String
 	let durationInMinutes: String?
-	let overview: AICTourOverviewModel
+	let credits: String
 }
