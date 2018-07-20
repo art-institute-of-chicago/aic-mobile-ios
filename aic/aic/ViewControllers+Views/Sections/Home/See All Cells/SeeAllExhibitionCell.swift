@@ -28,7 +28,6 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 		exhibitionTitleLabel.textColor = .aicDarkGrayColor
 		exhibitionTitleLabel.numberOfLines = 0
 		exhibitionTitleLabel.lineBreakMode = .byWordWrapping
-		throughDateLabel.font = .aicTextItalicFont
 		throughDateLabel.textColor = .aicDarkGrayColor
 		throughDateLabel.numberOfLines = 1
 	}
@@ -42,7 +41,7 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 			// set up UI
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
-			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
+            throughDateLabel.attributedText = getAttributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 18)
 			
 			// Accessibility
 			self.isAccessibilityElement = true

@@ -18,7 +18,7 @@ class EventContentCell : UITableViewCell {
 	@IBOutlet weak var transparentOverlayView: UIView!
 	@IBOutlet var monthDayLabel: UILabel!
 	@IBOutlet var hoursMinutesLabel: UILabel!
-	@IBOutlet weak var locationAndDateLabel: UILabel!
+	@IBOutlet weak var locationAndDateLabel: UILabelPadding!
 	
 	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
 	let descriptionVerticalSpacingMin: CGFloat = 32

@@ -15,7 +15,7 @@ class ExhibitionContentCell : UITableViewCell {
 	@IBOutlet var exhibitionImageView: AICImageView!
 	@IBOutlet var showOnMapButton: AICButton!
 	@IBOutlet var buyTicketsButton: AICButton!
-	@IBOutlet var descriptionLabel: UILabel!
+	@IBOutlet var descriptionLabel: UILabelPadding!
 	@IBOutlet var throughDateLabel: UILabel!
 	
 	@IBOutlet weak var showOnMapButtonHorizontalOffset: NSLayoutConstraint!

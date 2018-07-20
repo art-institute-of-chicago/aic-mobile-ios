@@ -15,7 +15,7 @@ class SectionNavigationBar : UIView {
 	let backButton: UIButton = UIButton()
 	let iconImageView:UIImageView = UIImageView()
 	let titleLabel:UILabel = UILabel()
-	let descriptionLabel:UILabel = UILabel()
+	let descriptionLabel:UILabelPadding = UILabelPadding()
 	let searchButton: UIButton = UIButton()
 	
 	private let margins = UIEdgeInsetsMake(40, 30, 30, 30)
@@ -88,16 +88,8 @@ class SectionNavigationBar : UIView {
 		}
 		
 		if section.nid != Section.home.rawValue {
-			let paragraphStyle = NSMutableParagraphStyle()
-			paragraphStyle.lineSpacing = 6
-			let descriptonAttrString = NSMutableAttributedString(string:"")
-			descriptonAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, descriptonAttrString.length))
-			
 			descriptionLabel.numberOfLines = 2
-			descriptionLabel.font = .aicSectionDescriptionFont
 			descriptionLabel.textColor = .white
-			descriptionLabel.attributedText = descriptonAttrString
-			descriptionLabel.textAlignment = NSTextAlignment.center
 			descriptionLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - margins.right - margins.left
 			descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
 		}

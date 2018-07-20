@@ -12,7 +12,7 @@ extension UITextView {
         backgroundColor = .clear
         isScrollEnabled = false
         isEditable = false
-        textContainerInset = UIEdgeInsets.zero
+        textContainerInset = UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
         textContainer.lineFragmentPadding = 0
     }
 }

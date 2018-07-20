@@ -32,7 +32,6 @@ class HomeEventCell : UICollectionViewCell {
 		eventTitleLabel.textColor = .aicDarkGrayColor
 		eventTitleLabel.numberOfLines = 0
 		eventTitleLabel.lineBreakMode = .byTruncatingTail
-		shortDescriptionTextView.font = .aicTextFont
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
 		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
@@ -52,7 +51,7 @@ class HomeEventCell : UICollectionViewCell {
 				}
 			}
 			eventTitleLabel.text = eventModel.title
-			shortDescriptionTextView.text = eventModel.shortDescription
+            shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: eventModel.shortDescription, font: .aicTextFont, lineHeight: 22)
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
 			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
 			

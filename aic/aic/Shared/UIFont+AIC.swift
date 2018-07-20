@@ -10,15 +10,15 @@ extension UIFont {
 	
 	static let aicSectionTitleFont: UIFont = UIFont(name: SansSerif_Medium, size: 30.0)!.upperCaseNumbers()
 	
-	static let aicSectionDescriptionFont: UIFont = UIFont(name: Serif_Regular, size: 16.0)!.upperCaseNumbers()
+	static let aicSectionDescriptionFont: UIFont = UIFont(name: Serif_Regular, size: 17.0)!.upperCaseNumbers()
 	
 	static let aicTitleFont: UIFont = UIFont(name: SansSerif_Medium, size: 21.0)!.upperCaseNumbers()
 	
-	static let aicTextFont: UIFont = UIFont(name: Serif_Regular, size: 16.0)!.upperCaseNumbers()
+	static let aicTextFont: UIFont = UIFont(name: Serif_Regular, size: 17.0)!.upperCaseNumbers()
 	
-	static let aicTextBoldFont: UIFont = UIFont(name: Serif_Bold, size: 16.0)!.upperCaseNumbers()
+	static let aicTextBoldFont: UIFont = UIFont(name: Serif_Bold, size: 17.0)!.upperCaseNumbers()
 	
-	static let aicTextItalicFont: UIFont = UIFont(name: Serif_Italic, size: 16.0)!.upperCaseNumbers()
+	static let aicTextItalicFont: UIFont = UIFont(name: Serif_Italic, size: 17.0)!.upperCaseNumbers()
 	
 	static let aicPageTitleFont: UIFont = UIFont(name: SansSerif_Book, size: 28.0)!.upperCaseNumbers()
 	
@@ -46,7 +46,7 @@ extension UIFont {
 	
 	static let aicHomeSmallTitleFont: UIFont = UIFont(name: SansSerif_Book, size: 17.0)!.upperCaseNumbers()
 	
-	static let aicHomeShortTextFont: UIFont = UIFont(name: Serif_Regular, size: 14)!.upperCaseNumbers()
+	static let aicHomeShortTextFont: UIFont = UIFont(name: Serif_Regular, size: 17)!.upperCaseNumbers()
 	
 	static let aicSearchBarFont: UIFont = UIFont(name: SansSerif_Book, size: 17.0)!.upperCaseNumbers()
 	

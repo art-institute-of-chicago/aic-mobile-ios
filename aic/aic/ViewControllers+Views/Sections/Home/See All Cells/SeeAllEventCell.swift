@@ -35,7 +35,6 @@ class SeeAllEventCell : UICollectionViewCell {
 		eventTitleLabel.numberOfLines = 2
 		eventTitleLabel.lineBreakMode = .byTruncatingTail
 		dividerLine.backgroundColor = .aicDividerLineColor
-		shortDescriptionTextView.font = .aicTextFont
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
 		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
@@ -54,7 +53,7 @@ class SeeAllEventCell : UICollectionViewCell {
 				}
 			}
 			eventTitleLabel.text = eventModel.title
-			shortDescriptionTextView.text = eventModel.shortDescription
+            shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: eventModel.shortDescription, font: .aicTextFont, lineHeight: 20)
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
 			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
 			

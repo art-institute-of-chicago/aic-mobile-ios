@@ -34,7 +34,6 @@ class HomeTourCell : UICollectionViewCell {
 		tourTitleLabel.textColor = .aicDarkGrayColor
 		tourTitleLabel.numberOfLines = 0
 		tourTitleLabel.lineBreakMode = .byTruncatingTail
-		shortDescriptionTextView.font = .aicTextFont
 		shortDescriptionTextView.textColor = .aicDarkGrayColor
 		shortDescriptionTextView.textContainerInset.left = -4
 		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
@@ -54,7 +53,7 @@ class HomeTourCell : UICollectionViewCell {
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			tourTitleLabel.text = self.tourModel!.title
-			shortDescriptionTextView.text = self.tourModel!.shortDescription
+            shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 22)
 			stopsNumberLabel.text = "\(self.tourModel!.stops.count) " + "Stops".localized(using: "Home")
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true
