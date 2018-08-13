@@ -14,7 +14,7 @@ class ArtworkContentCell : UITableViewCell {
 	@IBOutlet var artworkImageView: AICImageView!
 	@IBOutlet var showOnMapButton: AICButton!
 	@IBOutlet weak var playAudioButton: AICButton!
-	@IBOutlet weak var artistDisplayLabel: UILabel!
+	@IBOutlet weak var artistDisplayLabel: UILabelPadding!
 	@IBOutlet weak var descriptionLabel: UILabel!
 	
 	@IBOutlet var artworkImageHeight: NSLayoutConstraint!

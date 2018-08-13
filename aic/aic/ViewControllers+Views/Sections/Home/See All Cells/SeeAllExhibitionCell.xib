@@ -42,7 +42,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="vHX-0H-J1H"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="SabonNextLTPro-Italic" family="Sabon Next LT Pro" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="Amiri-Italic" family="Amiri Italic" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>

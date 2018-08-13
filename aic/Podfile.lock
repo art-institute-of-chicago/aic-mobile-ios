@@ -19,7 +19,7 @@ DEPENDENCIES:
   - SWXMLHash (~> 4.2.1)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Atributika
     - GoogleAnalytics
@@ -41,4 +41,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 30da0b1cf5b8c05fca839cb4233dcd17a1f6e2eb
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.5.0
