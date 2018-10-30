@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05A2B2FB21024A780059C123 /* UILabelPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A2B2FA21024A780059C123 /* UILabelPadding.swift */; };
 		0E2D15591DA8134200D06A4A /* AICMemberCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D15581DA8134200D06A4A /* AICMemberCardModel.swift */; };
 		1370EED7178BE85DDE6304C6 /* Pods_aicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */; };
 		28F7980E1E7B40E600D22E0E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F7980D1E7B40E600D22E0E /* Common.swift */; };
@@ -224,6 +225,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05A2B2FA21024A780059C123 /* UILabelPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelPadding.swift; sourceTree = "<group>"; };
 		0E2D15581DA8134200D06A4A /* AICMemberCardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberCardModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0E3350C21DA6C7A500CE3612 /* aic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aic.entitlements; sourceTree = "<group>"; };
 		1E88FB8CA5CC2BB16C8482A6 /* Pods-aicRental.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicRental.release.xcconfig"; path = "Pods/Target Support Files/Pods-aicRental/Pods-aicRental.release.xcconfig"; sourceTree = "<group>"; };
@@ -941,6 +943,7 @@
 				E42677E21CC558060046BB27 /* AICButton.swift */,
 				E4F518FA1D2586B0004BFB44 /* AICImageView.swift */,
 				29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */,
+				05A2B2FA21024A780059C123 /* UILabelPadding.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
 				E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */,
 				290B6CCA208510DE0022F6AE /* UIFont+FontNames.swift */,
@@ -1391,6 +1394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05A2B2FB21024A780059C123 /* UILabelPadding.swift in Sources */,
 				294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */,
 				2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */,
 				294C0B50201A76F700F2ABB1 /* MapDepartmentAnnotationView.swift in Sources */,
@@ -1849,7 +1853,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
@@ -1886,7 +1890,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
@@ -2034,7 +2038,7 @@
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DAPP_STORE";
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
