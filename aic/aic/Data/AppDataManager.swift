@@ -315,12 +315,13 @@ class AppDataManager {
 				"title",
 				"description",
 				"short_description",
-				"image",
+				"image_url",
 				"location",
 				"start_at",
 				"end_at",
 				"button_text",
-				"button_url"
+				"button_url",
+                "is_private"
 			],
 			"sort": ["start_at", "end_at"],
 			"query": [
@@ -335,7 +336,12 @@ class AppDataManager {
 							"range": [
 								"end_at": ["gte": "now"]
 							]
-						]
+                        ],
+                        [
+                            "term": [
+                                "is_private": false
+                            ]
+                        ]
 					]
 				]
 			]

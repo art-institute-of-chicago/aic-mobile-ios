@@ -1058,7 +1058,7 @@ class AppDataParser {
 		let title = try getString(fromJSON: eventJson, forKey: "title")
 		let longDescription = try getString(fromJSON: eventJson, forKey: "description")
 		let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description")
-		let imageUrl: URL = try getURL(fromJSON: eventJson, forKey: "image")!
+		let imageUrl: URL = try getURL(fromJSON: eventJson, forKey: "image_url")!
 		let eventUrl = try getURL(fromJSON: eventJson, forKey: "button_url", optional: true)
 		let buttonText = try getString(fromJSON: eventJson, forKey: "button_text", optional: true)
 		let locationText = try getString(fromJSON: eventJson, forKey: "location", optional: true)

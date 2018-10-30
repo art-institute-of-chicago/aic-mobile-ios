@@ -505,7 +505,7 @@ struct Common {
 		case artworksEndpoint = "artworks_endpoint"
 		case galleriesEndpoint = "galleries_endpoint"
 		case imagesEndpoint = "images_endpoint"
-		case eventsEndpoint = "events_endpoint"
+		case eventsEndpoint = "events_endpoint_v2"
 		case autocompleteEndpoint = "autocomplete_endpoint"
 		case toursEndpoint = "tours_endpoint"
 		case multiSearchEndpoint = "multisearch_endpoint"
