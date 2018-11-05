@@ -1238,10 +1238,10 @@ class AppDataParser {
 						catch {}
 						
 						if thumbnailUrl == nil {
-							thumbnailUrl = URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
+							thumbnailUrl = URL(string: "https://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
 						}
 						if imageUrl == nil {
-							imageUrl = URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
+							imageUrl = URL(string: "https://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
 						}
 						
 						let galleryId 		= try getInt(fromJSON: resultJSON, forKey: "gallery_id")

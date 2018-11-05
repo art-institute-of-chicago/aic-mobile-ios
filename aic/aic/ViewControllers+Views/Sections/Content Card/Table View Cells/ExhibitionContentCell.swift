@@ -54,7 +54,7 @@ class ExhibitionContentCell : UITableViewCell {
 				exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			}
 			else {
-				let imageUrl = URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
+				let imageUrl = URL(string: "https://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
 				exhibitionImageView.kf.setImage(with: imageUrl)
 			}
 			
