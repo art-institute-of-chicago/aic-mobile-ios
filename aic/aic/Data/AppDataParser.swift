@@ -980,10 +980,10 @@ class AppDataParser {
 		let description: String = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
 		
 		// Image
-		var imageURL: URL? = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_mobile_url", optional: true)
-		if imageURL == nil {
-			imageURL = try getURL(fromJSON: exhibitionJSON, forKey: "legacy_image_desktop_url", optional: true)
-		}
+        var imageURL: URL? = nil
+        let exhibitionUrl = try getString(fromJSON: exhibitionJSON, forKey: "image_url")
+        let fullExhibitionUrl: String = exhibitionUrl + "&w=600"
+		imageURL = URL(string: fullExhibitionUrl)
 		
 		// Override with exhibitions optional images from CMS, if available
 		if self.exhibitionsInCMS.filter({ $0.id == id }).count > 0 {
