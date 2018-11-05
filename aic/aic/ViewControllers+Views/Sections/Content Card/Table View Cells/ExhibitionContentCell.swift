@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import Atributika
 
 class ExhibitionContentCell : UITableViewCell {
 	static let reuseIdentifier = "exhibitionContentCell"
@@ -57,8 +58,28 @@ class ExhibitionContentCell : UITableViewCell {
 				let imageUrl = URL(string: "https://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
 				exhibitionImageView.kf.setImage(with: imageUrl)
 			}
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 0.0
+            paragraphStyle.minimumLineHeight = 22
+            paragraphStyle.maximumLineHeight = 22
+            
+            let emStyle = Style("em").font(.aicTextItalicFont)
+            let iStyle = Style("i").font(.aicTextItalicFont)
+            let strongStyle = Style("strong").font(.aicTextBoldFont)
+            let bStyle = Style("b").font(.aicTextBoldFont)
+            let allStyle = Style.font(.aicTextFont).baselineOffset(22.0 - Float(UIFont.aicTitleFont.pointSize)).paragraphStyle(paragraphStyle)
+            
+            let exhibitionDescription = exhibitionModel.shortDescription
+                .replacingOccurrences(of: "</p>", with: "</p>\n")
+                .replacingOccurrences(of: "<li>", with: "<li>•\t")
+            
+            let eventDescriptionAttributedString = exhibitionDescription
+                .style(tags: emStyle, iStyle, strongStyle, bStyle)
+                .styleAll(allStyle)
+                .attributedString
 			
-			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: exhibitionModel.shortDescription, font: .aicTextFont, lineHeight: 22)
+			descriptionLabel.attributedText =  eventDescriptionAttributedString
 			descriptionLabel.textColor = .white
 			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
 			
