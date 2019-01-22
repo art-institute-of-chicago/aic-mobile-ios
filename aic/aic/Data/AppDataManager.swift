@@ -335,11 +335,6 @@ class AppDataManager {
 							"range": [
 								"end_at": ["gte": "now"]
 							]
-                        ],
-                        [
-                            "term": [
-                                "is_private": false
-                            ]
                         ]
 					]
 				]
