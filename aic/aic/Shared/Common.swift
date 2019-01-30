@@ -173,7 +173,7 @@ struct Common {
 		}
 		
 		static var tabBarHeight: CGFloat {
-			if UIDevice().type == .iPhoneX {
+            if UIDevice().type == .iPhoneX || UIDevice().type == .iPhoneXS || UIDevice().type == .iPhoneXS_Max || UIDevice().type == .iPhoneXR {
 				return 83
 			}
 			return 49
