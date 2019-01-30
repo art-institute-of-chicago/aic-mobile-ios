@@ -43,8 +43,11 @@ public enum Model : String {
 	iPhone7plus      = "iPhone 7 Plus",
 	iPhone8          = "iPhone 8",
 	iPhone8plus      = "iPhone 8 Plus",
-	iPhoneX          = "iPhone X",
-	unrecognized     = "?unrecognized?"
+    iPhoneX          = "iPhone X",
+    iPhoneXS         = "iPhone XS",
+    iPhoneXS_Max     = "iPhone XS Max",
+    iPhoneXR         = "iPhone XR",
+    unrecognized     = "?unrecognized?"
 }
 
 public extension UIDevice {
@@ -120,7 +123,10 @@ public extension UIDevice {
 			"iPhone10,3" : .iPhoneX,
 			"iPhone10,4" : .iPhone8,
 			"iPhone10,5" : .iPhone8plus,
-			"iPhone10,6" : .iPhoneX,
+            "iPhone10,6" : .iPhoneX,
+            "iPhone11,2" : .iPhoneXS,
+            "iPhone11,4" : .iPhoneXS_Max,
+            "iPhone11,8" : .iPhoneXR
 		]
 		
 		if let model = modelMap[String(validatingUTF8: modelCode)!] {
