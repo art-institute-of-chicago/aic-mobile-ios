@@ -53,8 +53,8 @@ class LoadingViewController: UIViewController {
 				resolutionString = String(height)
 			case 2208:
 				resolutionString = String(height)
-			case 2436:
-				resolutionString = String(height)
+			case 2436, 1624: // 1624 is the height for XR, and this video is only video that will work for XR
+				resolutionString = "2436"
 			default:
 				resolutionString = "1334"
 			}
