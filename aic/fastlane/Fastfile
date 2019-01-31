@@ -1,0 +1,31 @@
+default_platform(:ios)
+
+platform :ios do
+
+  lane :build_enterprise do
+    gym(
+      workspace: "aic.xcworkspace",
+      scheme: "aic",
+      export_method: "enterprise",
+      configuration: "Debug")
+  end
+
+  lane :build_adhoc do
+    gym(
+      workspace: "aic.xcworkspace",
+      scheme: "aic",
+      export_method: "adhoc",
+      configuration: "Debug")
+  end
+
+  lane :test_flight do
+     gym(
+      workspace: "aic.xcworkspace",
+      scheme: "aic",
+      export_method: "app-store",
+      configuration: "AppStore"
+    )
+    pilot()
+  end
+
+end
