@@ -49,3 +49,7 @@ tmp/
 
 #Member Card assets
 aic/aic/Assets.xcassets/InfoView/
+
+aic/fastlane/report.xml
+aic/fastlane/README.md
+
