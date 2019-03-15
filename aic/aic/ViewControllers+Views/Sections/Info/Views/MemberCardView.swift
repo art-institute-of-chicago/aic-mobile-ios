@@ -30,7 +30,7 @@ class MemberCardView : UIView {
 		membershipInfoLabel.text = "Member\nExpires: "
 		membershipInfoLabel.font = .aicPageTextFont
 		membershipInfoLabel.textColor = .black
-		membershipInfoLabel.numberOfLines = 2
+		membershipInfoLabel.numberOfLines = 3
 		membershipInfoLabel.textAlignment = .left
 		
 		barcodeReciprocalBadgeImageView.contentMode = .scaleAspectFill
@@ -90,11 +90,11 @@ class MemberCardView : UIView {
 		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 		let expirationDateString = dateFormatter.string(from: memberCard.expirationDate)
 		
-		membershipInfoLabel.text = memberCard.memberLevel
+        membershipInfoLabel.text = "ID: " + String!(memberCard.cardId) + "\n" + memberCard.memberLevel
 		if memberCard.isLifeMembership == false {
-			membershipInfoLabel.text = memberCard.memberLevel + "\n" + "Expires".localized(using: "MemberCard") + ": " + expirationDateString
+			membershipInfoLabel.text = "ID: " + String!(memberCard.cardId) + "\n" + memberCard.memberLevel + "\n" + "Expires".localized(using: "MemberCard") + ": " + expirationDateString
 		}
-		
+        
 		// Barcode
 		let data = String(memberCard.cardId).data(using: String.Encoding.ascii)
 		let filter = CIFilter(name: "CIPDF417BarcodeGenerator")
