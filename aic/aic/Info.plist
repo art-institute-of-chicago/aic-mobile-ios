@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.4</string>
+	<string>2.0.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -43,12 +43,14 @@
 		<dict>
 			<key>artic.edu</key>
 			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.1</string>
+				<string>TLSv1.0</string>
 			</dict>
 			<key>localhost</key>
 			<dict>
@@ -57,7 +59,7 @@
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.1</string>
+				<string>TLSv1.0</string>
 			</dict>
 		</dict>
 	</dict>
@@ -65,22 +67,22 @@
 	<string>See where you are on the map and find museum features near you.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>fonts/sourcesanspro/SourceSansPro-Black.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-BlackItalic.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-Bold.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-BoldItalic.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-ExtraLight.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-ExtraLightItalic.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-Italic.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-Light.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-LightItalic.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-Regular.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-Semibold.ttf</string>
-		<string>fonts/sourcesanspro/SourceSansPro-SemiboldItalic.ttf</string>
-		<string>fonts/lora/Lora-Bold.ttf</string>
-		<string>fonts/lora/Lora-BoldItalic.ttf</string>
-		<string>fonts/lora/Lora-Italic.ttf</string>
-		<string>fonts/lora/Lora-Regular.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-Black.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-BlackItalic.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-Bold.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-BoldItalic.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-ExtraLight.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-ExtraLightItalic.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-Italic.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-Light.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-LightItalic.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-Regular.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-Semibold.ttf</string>
+        <string>fonts/sourcesanspro/SourceSansPro-SemiboldItalic.ttf</string>
+        <string>fonts/lora/Lora-Bold.ttf</string>
+        <string>fonts/lora/Lora-BoldItalic.ttf</string>
+        <string>fonts/lora/Lora-Italic.ttf</string>
+        <string>fonts/lora/Lora-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
