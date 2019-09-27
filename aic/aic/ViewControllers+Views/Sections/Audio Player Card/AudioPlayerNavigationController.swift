@@ -386,21 +386,29 @@ class AudioPlayerNavigationController : CardNavigationController {
         // of the command center, or else disabling other commands does not work.
         // For example:
         MPRemoteCommandCenter.shared().playCommand.isEnabled = true;
-        MPRemoteCommandCenter.shared().playCommand.addTarget(self, action: #selector(play))
+		MPRemoteCommandCenter.shared().playCommand.addTarget { (mprcommand) -> MPRemoteCommandHandlerStatus in
+			return self.play()
+		}
         
         MPRemoteCommandCenter.shared().pauseCommand.isEnabled = true
-        MPRemoteCommandCenter.shared().pauseCommand.addTarget(self, action: #selector(pause))
+		MPRemoteCommandCenter.shared().pauseCommand.addTarget { (mprcommand) -> MPRemoteCommandHandlerStatus in
+			return self.pause()
+		}
         
         MPRemoteCommandCenter.shared().skipForwardCommand.isEnabled = true
         MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [NSNumber(value: remoteSkipTime)]
-        MPRemoteCommandCenter.shared().skipForwardCommand.addTarget(self, action: #selector(skipForward))
+		MPRemoteCommandCenter.shared().skipForwardCommand.addTarget { (mprcommand) -> MPRemoteCommandHandlerStatus in
+			return self.skipForward()
+		}
         
         MPRemoteCommandCenter.shared().skipBackwardCommand.isEnabled = true
         MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [NSNumber(value: remoteSkipTime)]
-        MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget(self, action: #selector(skipBackward))
+		MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget { (mprcommand) -> MPRemoteCommandHandlerStatus in
+			return self.skipBackward()
+		}
     }
     
-    @objc internal func play() {
+    @objc internal func play() -> MPRemoteCommandHandlerStatus {
         if let currentItem = avPlayer.currentItem {
             // If we are at the end, start from the beginning
             let currentTime = floor(CMTimeGetSeconds(currentItem.currentTime()))
@@ -410,7 +418,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 				if let audio = currentAudioFile {
 					showLoadError(forAudioFile: audio, coverImageURL: currentImageURL!)
 				}
-				return
+				return .success
 			}
 			
             if currentTime >= duration {
@@ -423,10 +431,13 @@ class AudioPlayerNavigationController : CardNavigationController {
             
             // Enable proximity sensing, needed when user is holding phone to their ear to listen to audio
             UIDevice.current.isProximityMonitoringEnabled = true
+			
+			return .success
         }
+		return .commandFailed
     }
     
-    @objc internal func pause() {
+    @objc internal func pause() -> MPRemoteCommandHandlerStatus {
         if avPlayer.currentItem != nil {
             avPlayer.pause()
             synchronizePlayPauseButtons(isPlaying: false)
@@ -438,7 +449,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 			
             // Enable proximity sensing, needed when user is holding phone to their ear to listen to audio
             UIDevice.current.isProximityMonitoringEnabled = false
+			return .success
         }
+		return .commandFailed
     }
     
     internal func seekToTime(_ timeInSeconds:Double) {
@@ -448,7 +461,7 @@ class AudioPlayerNavigationController : CardNavigationController {
         }
     }
     
-    @objc internal func skipForward() {
+    @objc internal func skipForward() -> MPRemoteCommandHandlerStatus {
         if let currentItem = avPlayer.currentItem {
             let duration = CMTimeGetSeconds(currentItem.duration)
             let currentTime = CMTimeGetSeconds(avPlayer.currentTime())
@@ -459,10 +472,12 @@ class AudioPlayerNavigationController : CardNavigationController {
             }
             
             seekToTime(skipTime)
+			return .success
         }
+		return .commandFailed
     }
     
-    @objc internal func skipBackward() {
+    @objc internal func skipBackward() -> MPRemoteCommandHandlerStatus {
         if avPlayer.currentItem != nil {
             let currentTime = CMTimeGetSeconds(avPlayer.currentTime())
             var skipTime = currentTime - Double(remoteSkipTime)
@@ -471,7 +486,9 @@ class AudioPlayerNavigationController : CardNavigationController {
             }
             
             seekToTime(skipTime)
-        }
+			return .success
+		}
+		return .commandFailed
     }
     
     fileprivate func synchronizePlayPauseButtons(isPlaying: Bool) {
