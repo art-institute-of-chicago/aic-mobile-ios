@@ -15,5 +15,5 @@ extension UIFont {
 	
 	static let SansSerif_Medium = "SourceSansPro-Semibold"
 	static let SansSerif_Book = "SourceSansPro-Regular"
-	static let SansSerif_BookItalic = "SourceSansPro-Italic"
+	static let SansSerif_BookItalic = "SourceSansPro-It"
 }
