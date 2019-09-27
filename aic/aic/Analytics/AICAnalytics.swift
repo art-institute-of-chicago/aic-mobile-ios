@@ -4,6 +4,8 @@
  currently using Google Analytics
 */
 
+import Firebase
+
 class AICAnalytics {
 	// Analytics tracker
 	static fileprivate var tracker: GAITracker? = nil
@@ -96,22 +98,27 @@ class AICAnalytics {
 	static fileprivate var lastSearchText: String = ""
     
     static func configure() {
-		if let gai = GAI.sharedInstance(),
-			let googleAnalyticsPlist = Bundle.main.path(forResource: "GoogleService-Info", ofType: ".plist"),
-			let googleDict = NSDictionary(contentsOfFile: googleAnalyticsPlist),
-			let trackingId = googleDict["TRACKING_ID"] as? String
-		{
-			gai.dispatchInterval = 30
-			gai.trackUncaughtExceptions = false  // report uncaught exceptions
-			#if APP_STORE
-			gai.logger.logLevel = .error
-			#else
-			gai.logger.logLevel = .warning
-			#endif
-			AICAnalytics.tracker = gai.tracker(withTrackingId: trackingId)
-		} else {
-			assertionFailure("Google Analytics not configured correctly")
-		}
+		
+		//-------- FIREBASE
+		FirebaseApp.configure()
+		
+		//-------- GA
+//		if let gai = GAI.sharedInstance(),
+//			let googleAnalyticsPlist = Bundle.main.path(forResource: "GoogleService-Info", ofType: ".plist"),
+//			let googleDict = NSDictionary(contentsOfFile: googleAnalyticsPlist),
+//			let trackingId = googleDict["TRACKING_ID"] as? String
+//		{
+//			gai.dispatchInterval = 30
+//			gai.trackUncaughtExceptions = false  // report uncaught exceptions
+//			#if APP_STORE
+//			gai.logger.logLevel = .error
+//			#else
+//			gai.logger.logLevel = .warning
+//			#endif
+//			AICAnalytics.tracker = gai.tracker(withTrackingId: trackingId)
+//		} else {
+//			assertionFailure("Google Analytics not configured correctly")
+//		}
 		
 		// Google Analytics Custom Dimensions
 		let userDefaults = UserDefaults.standard
