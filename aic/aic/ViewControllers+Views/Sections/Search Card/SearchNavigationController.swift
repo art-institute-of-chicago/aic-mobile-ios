@@ -239,7 +239,17 @@ class SearchNavigationController : CardNavigationController {
 		
 		if let searchText = searchTextField?.text {
 			if trackUserTypeSearchText == true && trackUserSelectedContent == false {
-				AICAnalytics.sendSearchAbandonedEvent(searchText: searchText)
+				var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
+				if trackLoadingType == .autocompleteString {
+					searchTermSource = .Autocomplete
+				}
+				else if trackLoadingType == .promotedString {
+					searchTermSource = .Promoted
+				}
+				else {
+					searchTermSource = .TextInput
+				}
+				AICAnalytics.sendSearchAbandonedEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 			}
 		}
 	}
@@ -358,12 +368,19 @@ class SearchNavigationController : CardNavigationController {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		if let searchText = searchTextField?.text {
 			if trackLoadingType != .none {
-				// Log Search Loaded Event
-				AICAnalytics.sendSearchLoadedEvent(searchText: searchText, isAutocompleteString: trackLoadingType == .autocompleteString, isPromotedString: trackLoadingType == .promotedString)
-				
 				// Log Search No Results Event
 				if resultsVC.isAllContentLoadedWithNoResults() {
-					AICAnalytics.sendSearchNoResultsEvent(searchText: searchText)
+					var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
+					if trackLoadingType == .autocompleteString {
+						searchTermSource = .Autocomplete
+					}
+					else if trackLoadingType == .promotedString {
+						searchTermSource = .Promoted
+					}
+					else {
+						searchTermSource = .TextInput
+					}
+					AICAnalytics.sendSearchNoResultsEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 				}
 			}
 		}
@@ -478,8 +495,18 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		// Log analytics
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
-		AICAnalytics.sendSearchSelectedArtworkEvent(searchedArtwork: artwork, searchText: searchText)
-		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
+		var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
+		if trackLoadingType == .autocompleteString {
+			searchTermSource = .Autocomplete
+		}
+		else if trackLoadingType == .promotedString {
+			searchTermSource = .Promoted
+		}
+		else {
+			searchTermSource = .TextInput
+		}
+		AICAnalytics.sendSearchTappedArtworkEvent(searchedArtwork: artwork, searchTerm: searchText, searchTermSource: searchTermSource)
+		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
@@ -490,8 +517,18 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		// Log analytics
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
-		AICAnalytics.sendSearchSelectedTourEvent(tour: tour, searchText: searchText)
-		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
+		var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
+		if trackLoadingType == .autocompleteString {
+			searchTermSource = .Autocomplete
+		}
+		else if trackLoadingType == .promotedString {
+			searchTermSource = .Promoted
+		}
+		else {
+			searchTermSource = .TextInput
+		}
+		AICAnalytics.sendSearchTappedTourEvent(tour: tour, searchTerm: searchText, searchTermSource: searchTermSource)
+		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
@@ -502,8 +539,18 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 		// Log analytics
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		let searchText = (searchTextField!.text ?? "")
-		AICAnalytics.sendSearchSelectedExhibitionEvent(exhibition: exhibition, searchText: searchText)
-		AICAnalytics.sendSearchResultTappedEvent(searchText: searchText)
+		var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
+		if trackLoadingType == .autocompleteString {
+			searchTermSource = .Autocomplete
+		}
+		else if trackLoadingType == .promotedString {
+			searchTermSource = .Promoted
+		}
+		else {
+			searchTermSource = .TextInput
+		}
+		AICAnalytics.sendSearchTappedExhibitionEvent(exhibition: exhibition, searchTerm: searchText, searchTermSource: searchTermSource)
+		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {

@@ -140,6 +140,12 @@ class AICAnalytics {
 		case OnSite = "On Site"
 	}
 	
+	enum SearchTermSource : String {
+		case TextInput = "Text Input"
+		case Promoted = "Promoted Text"
+		case Autocomplete = "Autocomplete Suggestion"
+	}
+	
 	enum MiscLink : String {
 		case InfoPhone = "Info Phone"
 		case InfoAddress = "Info Address"
@@ -155,7 +161,7 @@ class AICAnalytics {
 	
 	static fileprivate var previousScreen: String? = nil
 	static fileprivate var currentScreen: String? = nil
-	static fileprivate var lastSearchText: String = ""
+	static fileprivate var lastSearchTerm: String = ""
 	
 	static func configure() {
 		
@@ -185,19 +191,6 @@ class AICAnalytics {
 	
 	private static func trackEvent(_ event: Event, parameters: [String : String]? = nil) {
 		Analytics.logEvent(event.rawValue, parameters: parameters)
-	}
-	
-	private static func trackEvent(category: Category, action: Action, label: String = "", value: Int = 0) {
-		trackEvent(category: category.rawValue, action: action.rawValue, label: label, value: value)
-	}
-	
-	private static func trackEvent(category: Category, action: String, label: String = "", value: Int = 0) {
-		trackEvent(category: category.rawValue, action: action, label: label, value: value)
-	}
-	
-	private static func trackEvent(category: String, action: String, label: String = "", value: Int = 0) {
-		let event = GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: NSNumber(value: value as Int)).build() as NSDictionary?
-		if event != nil { AICAnalytics.tracker?.send(event as? [AnyHashable: Any]) }
 	}
 	
 	// MARK: Set User Property
@@ -345,54 +338,61 @@ class AICAnalytics {
 	
 	// MARK: Search
 	
-	static func sendSearchLoadedEvent(searchText: String, isAutocompleteString: Bool, isPromotedString: Bool) {
-		if searchText != lastSearchText {
-			lastSearchText = searchText
+	static func sendSearchEvent(searchTerm: String, searchTermSource: SearchTermSource) {
+		if searchTerm != lastSearchTerm {
+			lastSearchTerm = searchTerm
 			
-			if isAutocompleteString == true {
-				trackEvent(category: .search, action: .searchAutocomplete, label: searchText)
-			}
-			else if isPromotedString == true {
-				trackEvent(category: .search, action: .searchPromoted, label: searchText)
-			}
-			else {
-				trackEvent(category: .search, action: .searchLoaded, label: searchText)
-			}
+			let parameters: [String : String] = [
+				"search_term" : searchTerm,
+				"search_term_source" : searchTermSource.rawValue
+			]
+			trackEvent(.search, parameters: parameters)
 		}
 	}
 	
-	static func sendSearchNoResultsEvent(searchText: String) {
-		trackEvent(category: .search, action: .searchNoResults, label: searchText)
+	static func sendSearchNoResultsEvent(searchTerm: String, searchTermSource: SearchTermSource) {
+		let parameters: [String : String] = [
+			"search_term" : searchTerm,
+			"search_term_source" : searchTermSource.rawValue
+		]
+		trackEvent(.searchNoResults, parameters: parameters)
 	}
 	
-	static func sendSearchAbandonedEvent(searchText: String) {
-		trackEvent(category: .search, action: .searchAbandoned, label: searchText)
-	}
-	
-	static func sendSearchResultTappedEvent(searchText: String) {
-		trackEvent(category: .search, action: .searchResultTapped, label: searchText)
-	}
-	
-	static func sendSearchCategorySwitchedEvent(category: String) {
-		trackEvent(category: .search, action: .searchCategorySwitched, label: category)
+	static func sendSearchAbandonedEvent(searchTerm: String, searchTermSource: SearchTermSource) {
+		let parameters: [String : String] = [
+			"search_term" : searchTerm,
+			"search_term_source" : searchTermSource.rawValue
+		]
+		trackEvent(.searchAbandoned, parameters: parameters)
 	}
 	
 	// MARK: Search Selected Content
 	
-	static func sendSearchSelectedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchText: String) {
-		trackEvent(category: .searchArtwork, action: searchedArtwork.title, label: searchText)
+	static func sendSearchTappedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchTerm: String, searchTermSource: SearchTermSource) {
+		let parameters: [String : String] = [
+			"title" : searchedArtwork.title,
+			"search_term" : searchTerm,
+			"search_term_source" : searchTermSource.rawValue
+		]
+		trackEvent(.searchTappedArtwork, parameters: parameters)
 	}
 	
-	static func sendSearchArtworkAndPlayedAudioEvent(artwork: AICObjectModel, searchText: String) {
-		trackEvent(category: .searchPlayArtwork, action: artwork.title, label: searchText)
+	static func sendSearchTappedTourEvent(tour: AICTourModel, searchTerm: String, searchTermSource: SearchTermSource) {
+		let parameters: [String : String] = [
+			"title" : tour.translations[.english]!.title,
+			"search_term" : searchTerm,
+			"search_term_source" : searchTermSource.rawValue
+		]
+		trackEvent(.searchTappedTour, parameters: parameters)
 	}
 	
-	static func sendSearchSelectedTourEvent(tour: AICTourModel, searchText: String) {
-		trackEvent(category: .searchTour, action: tour.translations[.english]!.title, label: searchText)
-	}
-	
-	static func sendSearchSelectedExhibitionEvent(exhibition: AICExhibitionModel, searchText: String) {
-		trackEvent(category: .searchExhibition, action: exhibition.title, label: searchText)
+	static func sendSearchTappedExhibitionEvent(exhibition: AICExhibitionModel, searchTerm: String, searchTermSource: SearchTermSource) {
+		let parameters: [String : String] = [
+			"title" : exhibition.title,
+			"search_term" : searchTerm,
+			"search_term_source" : searchTermSource.rawValue
+		]
+		trackEvent(.searchTappedExhibition, parameters: parameters)
 	}
 	
 	// MARK: Errors
