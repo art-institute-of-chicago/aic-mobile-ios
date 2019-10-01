@@ -272,7 +272,7 @@ extension AudioGuideNavigationController {
 			shakeForIncorrect()
 			
 			// Log Analytics
-			AICAnalytics.sendErrorsAudioGuideWrongNumberEvent(number: id)
+			AICAnalytics.sendErrorAudioGuideBadNumberEvent(number: id)
 			
         case "<":
             removeLastNumberPadInput()

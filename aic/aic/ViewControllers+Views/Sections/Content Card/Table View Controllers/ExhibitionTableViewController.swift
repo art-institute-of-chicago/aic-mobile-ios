@@ -59,7 +59,7 @@ class ExhibitionTableViewController : UITableViewController {
 	
 	@objc func exhibitionBuyTicketsButtonPressed(button: UIButton) {
 		// Log analytics
-		AICAnalytics.sendExhibitionLinkPressedEvent(exhibition: exhibitionModel)
+		AICAnalytics.sendExhibitionBuyLinkEvent(exhibition: exhibitionModel)
 		
 		if let url = URL(string: AppDataManager.sharedInstance.app.dataSettings[.ticketsUrl]!) {
 			UIApplication.shared.open(url, options: [:], completionHandler: nil)

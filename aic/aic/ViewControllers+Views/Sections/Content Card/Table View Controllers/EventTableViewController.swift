@@ -49,7 +49,7 @@ class EventTableViewController : UITableViewController {
 	
 	@objc func buyTicketsButtonPressed(button: UIButton) {
 		// Log analytics
-		AICAnalytics.sendEventLinkPressedEvent(event: eventModel)
+		AICAnalytics.sendEventRegisterLinkEvent(event: eventModel)
 		
 		UIApplication.shared.open(eventModel.eventUrl!, options: [:], completionHandler: nil)
 	}

@@ -186,7 +186,7 @@ class LanguageSelectionViewController : UIViewController {
 		self.perform(#selector(hideLanguageSelection), with: nil, afterDelay: 1.0)
 		
 		// Log analytics
-		AICAnalytics.sendLanguageSelectedEvent(language: selectedLanguage)
+		AICAnalytics.sendLanguageFirstSelectionEvent(language: selectedLanguage)
 	}
 	
 	@objc func hideLanguageSelection() {

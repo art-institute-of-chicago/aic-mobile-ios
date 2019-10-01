@@ -17,17 +17,17 @@ protocol AudioPlayerNavigationControllerDelegate : class {
 }
 
 class AudioPlayerNavigationController : CardNavigationController {
-    var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
-    let miniAudioPlayerView: MiniAudioPlayerView = MiniAudioPlayerView()
+	var audioInfoVC: AudioInfoViewController = AudioInfoViewController()
+	let miniAudioPlayerView: MiniAudioPlayerView = MiniAudioPlayerView()
 	
 	weak var sectionDelegate: AudioPlayerNavigationControllerDelegate? = nil
 	
 	let remoteSkipTime: Int = 10 // Number of seconds to skip forward/back with MPRemoteCommandCenter seek
-    
-    // AVPlayer
-    fileprivate let avPlayer = AVPlayer()
-    private var audioProgressTimer: Timer?
-    private var audioPlayerProgressTimer: Timer? = nil
+	
+	// AVPlayer
+	fileprivate let avPlayer = AVPlayer()
+	private var audioProgressTimer: Timer?
+	private var audioPlayerProgressTimer: Timer? = nil
 	
 	// Audio
 	var currentAudioFile: AICAudioFileModel? = nil
@@ -42,17 +42,17 @@ class AudioPlayerNavigationController : CardNavigationController {
 	var currentImageURL: URL? = nil
 	
 	var autoPlay: Bool = false
-    
-    var isUpdatingObjectViewProgressSlider = false
+	
+	var isUpdatingObjectViewProgressSlider = false
 	
 	// Audio Guide Number (track it to log analytics when loading fails)
 	var audioGuideNumber: Int? = nil
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Set Close State as MiniPlayer
-        closedState = .mini_player
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		// Set Close State as MiniPlayer
+		closedState = .mini_player
 		
 		miniAudioPlayerView.frame.origin = CGPoint.zero
 		miniAudioPlayerView.frame.size = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.miniAudioPlayerHeight)
@@ -74,30 +74,30 @@ class AudioPlayerNavigationController : CardNavigationController {
 		// Language Selector Delegate
 		audioInfoVC.languageSelector.delegate = self
 		
-        // Mini Player Tap and Close Events
-        let miniAudioPlayerTap = UITapGestureRecognizer(target: self, action:#selector(miniAudioPlayerTapped))
-        miniAudioPlayerView.addGestureRecognizer(miniAudioPlayerTap)
-        
-        miniAudioPlayerView.closeButton.addTarget(self, action: #selector(miniAudioPlayerCloseButtonPressed(button:)), for: .touchUpInside)
-        
-        // Audio Player Slider
-        audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderValueChanged(slider:)), for: UIControlEvents.valueChanged)
-        audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderStartedSliding(slider:)), for: UIControlEvents.touchDown)
-        audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderFinishedSliding(slider:)), for: [UIControlEvents.touchUpInside, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel]
-        )
-        
-        // Play/Pause Button
-		miniAudioPlayerView.playPauseButton.addTarget(self, action: #selector(playPauseButtonPressed(button:)), for: .touchUpInside)
-        audioInfoVC.audioPlayerView.playPauseButton.addTarget(self, action: #selector(playPauseButtonPressed(button:)), for: .touchUpInside)
+		// Mini Player Tap and Close Events
+		let miniAudioPlayerTap = UITapGestureRecognizer(target: self, action:#selector(miniAudioPlayerTapped))
+		miniAudioPlayerView.addGestureRecognizer(miniAudioPlayerTap)
 		
-        // AV Session
-        configureAVAudioSession()
-        NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
+		miniAudioPlayerView.closeButton.addTarget(self, action: #selector(miniAudioPlayerCloseButtonPressed(button:)), for: .touchUpInside)
+		
+		// Audio Player Slider
+		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderValueChanged(slider:)), for: UIControlEvents.valueChanged)
+		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderStartedSliding(slider:)), for: UIControlEvents.touchDown)
+		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderFinishedSliding(slider:)), for: [UIControlEvents.touchUpInside, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel]
+		)
+		
+		// Play/Pause Button
+		miniAudioPlayerView.playPauseButton.addTarget(self, action: #selector(playPauseButtonPressed(button:)), for: .touchUpInside)
+		audioInfoVC.audioPlayerView.playPauseButton.addTarget(self, action: #selector(playPauseButtonPressed(button:)), for: .touchUpInside)
+		
+		// AV Session
+		configureAVAudioSession()
+		NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
 		
 		// Accessibility
 		downArrowButton.accessibilityLabel = "Close Audio Player"
 		closeButton.accessibilityLabel = "Close Audio Player"
-    }
+	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
@@ -107,15 +107,15 @@ class AudioPlayerNavigationController : CardNavigationController {
 		UIApplication.shared.beginReceivingRemoteControlEvents()
 		initializeMPRemote()
 	}
-    
-    // Progress Bar Color
-    
-    func setProgressBarColor(color: UIColor) {
+	
+	// Progress Bar Color
+	
+	func setProgressBarColor(color: UIColor) {
 		miniAudioPlayerView.setProgressBarColor(color: color)
-    }
-    
-    // MARK: Play Audio
-    
+	}
+	
+	// MARK: Play Audio
+	
 	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel, audioGuideNumber: Int? = nil) {
 		currentAudioBumper = nil
 		currentTourStopAudioFile = nil
@@ -127,11 +127,11 @@ class AudioPlayerNavigationController : CardNavigationController {
 		
 		self.audioGuideNumber = audioGuideNumber
 		
-        if load(audioFile: audio, coverImageURL: artwork.imageUrl as URL) {
+		if load(audioFile: audio, coverImageURL: artwork.imageUrl as URL) {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setArtworkContent(artwork: artwork, audio: audio)
-        }
-    }
+		}
+	}
 	
 	func playTourOverviewAudio(tour: AICTourModel) {
 		currentTourLanguage = tour.language
@@ -202,29 +202,24 @@ class AudioPlayerNavigationController : CardNavigationController {
 		if load(audioFile: audioBumper, coverImageURL: self.currentImageURL!) {
 		}
 	}
-    
-    // MARK: Load Audio
-    
-    private func load(audioFile: AICAudioFileModel, coverImageURL: URL) -> Bool {
+	
+	// MARK: Load Audio
+	
+	private func load(audioFile: AICAudioFileModel, coverImageURL: URL) -> Bool {
 		
-        if let currentAudioFile = currentAudioFile {
-            // If it's a new artwork, log analytics
-            if (audioFile.nid != currentAudioFile.nid) {
+		if let currentAudioFile = currentAudioFile {
+			// If it's a new artwork, log analytics
+			if (audioFile.nid != currentAudioFile.nid) {
 				// Log analytics
 				// GA only accepts int values, so send an int from 1-10
-				let pctComplete = Int(currentAudioFileMaxProgress * 100)
-				if pctComplete > 95 {
-					AICAnalytics.sendPlaybackCompletedEvent(audio: currentAudioFile)
-				}
-				else {
-					AICAnalytics.sendPlaybackInterruptedEvent(audio: currentAudioFile, pctComplete: pctComplete)
-				}
-            }
+				var pctComplete = Int(currentAudioFileMaxProgress * 100)
+				AICAnalytics.sendAudioStoppedEvent(audio: currentAudioFile, percentPlayed: pctComplete)
+			}
 			// If it's same nid and language, don't load audio
 			else if selectedLanguage == nil {
 				return false
 			}
-        }
+		}
 		
 		self.currentAudioFile = audioFile
 		self.currentAudioFileMaxProgress = 0
@@ -234,16 +229,16 @@ class AudioPlayerNavigationController : CardNavigationController {
 		if selectedLanguage != nil {
 			currentAudioFile!.language = selectedLanguage!
 		}
-        
-        // Clear out current player
-        audioPlayerProgressTimer?.invalidate()
-        
-        // Reset visuals
-        miniAudioPlayerView.resetProgress()
-        audioInfoVC.audioPlayerView.resetProgress()
-        
-        // Set the player view to show loading status
-        showLoadingMessage()
+		
+		// Clear out current player
+		audioPlayerProgressTimer?.invalidate()
+		
+		// Reset visuals
+		miniAudioPlayerView.resetProgress()
+		audioInfoVC.audioPlayerView.resetProgress()
+		
+		// Set the player view to show loading status
+		showLoadingMessage()
 		
 		// Load the file
 		let asset = AVURLAsset(url: currentAudioFile!.url)
@@ -301,9 +296,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 				}
 			})
 		}
-        
-        return true
-    }
+		
+		return true
+	}
 	
 	private func setMediaInformation(image: UIImage) {
 		// MPMediaItemPropertyArtwork
@@ -325,42 +320,42 @@ class AudioPlayerNavigationController : CardNavigationController {
 		
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = songInfo
 	}
-    
-    private func showLoadError(forAudioFile audioFile: AICAudioFileModel, coverImageURL: URL) {
+	
+	private func showLoadError(forAudioFile audioFile: AICAudioFileModel, coverImageURL: URL) {
 		// Preset a UIAlertView that allows the user to try to load the file.
-        let alertView = UIAlertController(title: "Load Failure Title".localized(using: "AudioPlayer"), message: "Load Failure Message".localized(using: "AudioPlayer"), preferredStyle: .alert)
+		let alertView = UIAlertController(title: "Load Failure Title".localized(using: "AudioPlayer"), message: "Load Failure Message".localized(using: "AudioPlayer"), preferredStyle: .alert)
 		
 		// Retry Action
-        alertView.addAction(UIAlertAction(title: "Load Failure Reload Button Title".localized(using: "AudioPlayer"), style: .default, handler: { (alertAction) -> Void in
-            self.currentAudioFile = nil
-            _ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
-        }))
+		alertView.addAction(UIAlertAction(title: "Load Failure Reload Button Title".localized(using: "AudioPlayer"), style: .default, handler: { (alertAction) -> Void in
+			self.currentAudioFile = nil
+			_ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
+		}))
 		
 		// Cancel Action
 		alertView.addAction(UIAlertAction(title: "Load Failure Cancel Button Title".localized(using: "AudioPlayer"), style: .cancel, handler: { (alertAction) -> Void in
 			self.hide()
 		}))
 		
-        self.present(alertView, animated: true, completion: nil)
+		self.present(alertView, animated: true, completion: nil)
 		
 		// Log Analytics
-		AICAnalytics.sendErrorsAudioLoadFailEvent(audioId: audioFile.nid)
-    }
-    
-    // Set the loading status as the track title
-    private func showLoadingMessage() {
-        let localizedLoadingMessage = "Loading Message".localized(using: "AudioPlayer")
-        miniAudioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
-        audioInfoVC.showLoadingMessage(message: localizedLoadingMessage)
-    }
-    
-    private func showAudioControls() {
-        miniAudioPlayerView.showTrackTitle(title: self.currentTrackTitle)
-        audioInfoVC.showTrackTitle(title: self.currentTrackTitle)
-    }
-    
-    // MARK: Audio Playback
-    
+		AICAnalytics.sendErrorAudioLoadFailEvent(number: audioFile.nid)
+	}
+	
+	// Set the loading status as the track title
+	private func showLoadingMessage() {
+		let localizedLoadingMessage = "Loading Message".localized(using: "AudioPlayer")
+		miniAudioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
+		audioInfoVC.showLoadingMessage(message: localizedLoadingMessage)
+	}
+	
+	private func showAudioControls() {
+		miniAudioPlayerView.showTrackTitle(title: self.currentTrackTitle)
+		audioInfoVC.showTrackTitle(title: self.currentTrackTitle)
+	}
+	
+	// MARK: Audio Playback
+	
     @objc internal func configureAVAudioSession() {
         do {
             // Determine playback category based on bluetooth connection to avoid HFP playback through A2DP headphones
@@ -649,7 +644,7 @@ extension AudioPlayerNavigationController {
 		
 		// Log analytics
 		if let currentAudio = currentAudioFile {
-			AICAnalytics.sendPlaybackCompletedEvent(audio: currentAudio)
+			AICAnalytics.sendAudioStoppedEvent(audio: currentAudio, percentPlayed: 100)
 		}
 		
 		// check that we are playing tour stop audio, before you play bumper or original track
@@ -714,13 +709,8 @@ extension AudioPlayerNavigationController {
 		// Log Analytics
 		if let audio = currentAudioFile {
 			if currentAudioFileMaxProgress < 1.0 {
-				let pctComplete = Int(currentAudioFileMaxProgress * 100)
-				if pctComplete > 95 {
-					AICAnalytics.sendPlaybackCompletedEvent(audio: audio)
-				}
-				else {
-					AICAnalytics.sendPlaybackInterruptedEvent(audio: audio, pctComplete: pctComplete)
-				}
+				var pctComplete = Int(currentAudioFileMaxProgress * 100)
+				AICAnalytics.sendAudioStoppedEvent(audio: audio, percentPlayed: pctComplete)
 			}
 		}
 		
@@ -760,9 +750,6 @@ extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
 				audioInfoVC.updateAudioContent(audio: currentAudioFile!)
 			}
 			selectedLanguage = nil
-			
-			// Log Analytics
-			AICAnalytics.sendLanguageAudioEvent(language: language, audio: currentAudioFile!)
 		}
 	}
 }

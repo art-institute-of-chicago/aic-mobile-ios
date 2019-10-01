@@ -159,7 +159,7 @@ class InfoBecomeMemberView: BaseView {
 extension InfoBecomeMemberView  : UITextViewDelegate {
 	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 		// Log Analytics
-		AICAnalytics.sendMemberJoinPressedEvent()
+		AICAnalytics.sendMiscLinkTappedEvent(link: AICAnalytics.MiscLink.MemberJoin)
 		
 		return true
 	}

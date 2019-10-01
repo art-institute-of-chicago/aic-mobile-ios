@@ -20,28 +20,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		AICAnalytics.configure()
 		
-		if  CLLocationManager.authorizationStatus() == .notDetermined {
-			AICAnalytics.sendAppOpenEvent(locationEnabled: nil)
-		}
-		else if CLLocationManager.authorizationStatus() == .denied {
-			AICAnalytics.sendAppOpenEvent(locationEnabled: false)
-		}
-		else {
-			AICAnalytics.sendAppOpenEvent(locationEnabled: true)
-		}
+//		if  CLLocationManager.authorizationStatus() == .notDetermined {
+//			AICAnalytics.sendAppOpenEvent(location: AICAnalytics.LocationState.NotNow)
+//		}
+//		else if CLLocationManager.authorizationStatus() == .denied {
+//			AICAnalytics.sendAppOpenEvent(location: AICAnalytics.LocationState.Disabled)
+//		}
+//		else {
+//			//Common.Map.locationManager.delegate = self
+//		}
 		
 		// Update analytics User Properties
-		if 	CLLocationManager.authorizationStatus() == .denied ||
-			CLLocationManager.authorizationStatus() == .notDetermined {
-			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
-		}
+//		if 	CLLocationManager.authorizationStatus() == .denied ||
+//			CLLocationManager.authorizationStatus() == .notDetermined {
+//			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
+//		}
 		
 		// Set initial state for location tracking
 		Common.Location.hasLoggedOnsite = false
 		Common.Location.previousOnSiteState = nil
 		Common.Location.previousAuthorizationStatus = CLLocationManager.authorizationStatus()
 		if CLLocationManager.authorizationStatus() == .denied {
-			AICAnalytics.sendLocationDisabledEvent()
+			AICAnalytics.sendLocationDetectedEvent(location: AICAnalytics.LocationState.Disabled)
 			Common.Location.hasLoggedOnsite = true
 		}
 		
@@ -125,10 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 	func applicationWillResignActive(_ application: UIApplication) {
 	}
-	
-	func applicationDidEnterBackground(_ application: UIApplication) {
-		AICAnalytics.sendAppBackgroundEvent()
-	}
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Resume data loading if necessary
@@ -141,22 +137,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		setStatusBar()
         
         // Log analytics
-		if  CLLocationManager.authorizationStatus() == .notDetermined {
-			AICAnalytics.sendAppForegroundEvent(locationEnabled: nil)
-		}
-		else if CLLocationManager.authorizationStatus() == .denied {
-			AICAnalytics.sendAppForegroundEvent(locationEnabled: false)
-		}
-		else {
-			AICAnalytics.sendAppForegroundEvent(locationEnabled: true)
-		}
-		
-		// Update analytics User Properties
-		if 	CLLocationManager.authorizationStatus() == .denied ||
-			CLLocationManager.authorizationStatus() == .notDetermined {
-			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
-		}
-    }
+//		if  CLLocationManager.authorizationStatus() == .notDetermined {
+//			AICAnalytics.sendAppForegroundEvent(locationEnabled: nil)
+//		}
+//		else if CLLocationManager.authorizationStatus() == .denied {
+//			AICAnalytics.sendAppForegroundEvent(locationEnabled: false)
+//		}
+//		else {
+//			AICAnalytics.sendAppForegroundEvent(locationEnabled: true)
+//		}
+//
+//		// Update analytics User Properties
+//		if 	CLLocationManager.authorizationStatus() == .denied ||
+//			CLLocationManager.authorizationStatus() == .notDetermined {
+//			AICAnalytics.updateUserLocationProperty(isOnSite: nil)
+//		}
+	}
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {
 	}

@@ -86,6 +86,66 @@ class AICAnalytics {
 		case errorsAudioLoadFail 	= "audio_load_fail"
 	}
 	
+	fileprivate enum Event : String {
+		case appOpen				= "app_open"
+		case languageFirstSelection	= "language_first_selection"
+		case audioPlayed			= "audio_played"
+		case audioStopped			= "audio_stopped"
+		case tourStarted			= "tour_started"
+		case tourLeft				= "tour_left"
+		case eventViewed			= "event_viewed"
+		case eventRegisterLink		= "event_register_link"
+		case exhibitionViewed		= "exhibition_viewed"
+		case exhibitionBuyLink		= "exhibition_buy_link"
+		case exhibitionMap			= "exhibition_map"
+		case artworkMap				= "artwork_map"
+		case search					= "search"
+		case searchNoResults		= "search_no_results"
+		case searchAbandoned		= "search_abandoned"
+		case searchTappedArtwork	= "search_tapped_artwork"
+		case searchTappedTour		= "search_tapped_tour"
+		case searchTappedExhibition	= "search_tapped_exhibition"
+		case searchFacilities		= "search_facilities"
+		case locationDetected		= "location_detected"
+		case locationHeadingEnabled	= "location_heading_enabled"
+		case memberCardShown		= "member_card_shown"
+		case error					= "error"
+		case miscLinkTapped			= "misc_link_tapped"
+	}
+	
+	enum PlaybackSource : String {
+		case Map = "Map"
+		case AudioGuide = "Audio Guide"
+		case Search = "Search"
+		case SearchIcon = "Search Icon"
+		case TourStop = "Tour Stop"
+	}
+	
+	enum PlaybackCompletion : String {
+		case Completed = "Completed"
+		case Interrupted = "Interrupted"
+	}
+	
+	enum Facility : String {
+		case Dining = "Dining"
+		case MemberLounge = "Lounge"
+		case GiftShop = "Gift Shop"
+		case Restroom = "Restroom"
+	}
+	
+	enum LocationState : String {
+		case Disabled = "Disabled"
+		case NotNow = "Not Now"
+		case OffSite = "Off Site"
+		case OnSite = "On Site"
+	}
+	
+	enum MiscLink : String {
+		case InfoPhone = "Info Phone"
+		case InfoAddress = "Info Address"
+		case MemberJoin = "MemberJoin"
+	}
+	
 	fileprivate enum UserProperty : UInt {
 		case membership				= 2
 		case appLanguage			= 3
@@ -93,57 +153,39 @@ class AICAnalytics {
 		case onSite					= 5
 	}
 	
-    static fileprivate var previousScreen: String? = nil
-    static fileprivate var currentScreen: String? = nil
+	static fileprivate var previousScreen: String? = nil
+	static fileprivate var currentScreen: String? = nil
 	static fileprivate var lastSearchText: String = ""
-    
-    static func configure() {
+	
+	static func configure() {
 		
-		//-------- FIREBASE
 		FirebaseApp.configure()
 		
-		//-------- GA
-//		if let gai = GAI.sharedInstance(),
-//			let googleAnalyticsPlist = Bundle.main.path(forResource: "GoogleService-Info", ofType: ".plist"),
-//			let googleDict = NSDictionary(contentsOfFile: googleAnalyticsPlist),
-//			let trackingId = googleDict["TRACKING_ID"] as? String
-//		{
-//			gai.dispatchInterval = 30
-//			gai.trackUncaughtExceptions = false  // report uncaught exceptions
-//			#if APP_STORE
-//			gai.logger.logLevel = .error
-//			#else
-//			gai.logger.logLevel = .warning
-//			#endif
-//			AICAnalytics.tracker = gai.tracker(withTrackingId: trackingId)
-//		} else {
-//			assertionFailure("Google Analytics not configured correctly")
-//		}
-		
-		// Google Analytics Custom Dimensions
+		// Set User Properties
 		let userDefaults = UserDefaults.standard
 		let membership = userDefaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) != nil ? "Member" : "None"
 		let deviceLanguage = NSLocale.preferredLanguages.first!
 		setUserProperty(property: .membership, value: membership)
 		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[Common.currentLanguage]!)
 		setUserProperty(property: .deviceLanguage, value: deviceLanguage)
-    }
+	}
 	
 	// MARK: Track Screens
 	
 	static func trackScreenView(_ screenName: String, screenClass: String) {
 		if screenName != currentScreen {
-			AICAnalytics.tracker?.set(kGAIScreenName, value: screenName)
-			let builder = GAIDictionaryBuilder.createScreenView()
-			let dictionary = builder?.build() as NSDictionary?
-			AICAnalytics.tracker?.send(dictionary as? [AnyHashable : Any])
-			
+			Analytics.setScreenName(screenName, screenClass: screenClass)
+
 			previousScreen = currentScreen
 			currentScreen = screenName
 		}
 	}
 	
 	// MARK: Track Events
+	
+	private static func trackEvent(_ event: Event, parameters: [String : String]? = nil) {
+		Analytics.logEvent(event.rawValue, parameters: parameters)
+	}
 	
 	private static func trackEvent(category: Category, action: Action, label: String = "", value: Int = 0) {
 		trackEvent(category: category.rawValue, action: action.rawValue, label: label, value: value)
@@ -159,79 +201,41 @@ class AICAnalytics {
 	}
 	
 	// MARK: Set User Property
+	
 	private static func setUserProperty(property: UserProperty, value: String) {
-		AICAnalytics.tracker?.set(GAIFields.customDimension(for: property.rawValue), value: value)
+		//Analytics.setUserProperty(<#T##value: String?##String?#>, forName: <#T##String#>)
+		//AICAnalytics.tracker?.set(GAIFields.customDimension(for: property.rawValue), value: value)
 	}
 	
-    // MARK: App
-    
-	static func sendAppOpenEvent(locationEnabled: Bool?) {
-		if locationEnabled == nil {
-			trackEvent(category: .app, action: .appOpen, label: "location_not_determined")
-		}
-		else if locationEnabled == false {
-			trackEvent(category: .app, action: .appOpen, label: "location_disabled")
-		}
-		else if locationEnabled == true {
-			trackEvent(category: .app, action: .appOpen, label: "location_enabled")
-		}
-    }
-    
-    static func sendAppForegroundEvent(locationEnabled: Bool?) {
-		if locationEnabled == nil {
-			trackEvent(category: .app, action: .appForeground, label: "location_not_determined")
-		}
-		else if locationEnabled == false {
-			trackEvent(category: .app, action: .appForeground, label: "location_disabled")
-		}
-		else if locationEnabled == true {
-			trackEvent(category: .app, action: .appForeground, label: "location_enabled")
-		}
-    }
-    
-    static func sendAppBackgroundEvent() {
-		trackEvent(category: .app, action: .appBackground)
-    }
+	// MARK: App
+	
+	static func sendAppOpenEvent(location: LocationState) {
+		let parameters: [String : String] = [
+			"location" : location.rawValue,
+			"language" : Common.stringForLanguage[Common.currentLanguage]!
+		]
+		trackEvent(.appOpen, parameters: parameters)
+	}
 	
 	// MARK: Language
 	
-	static func sendLanguageSelectedEvent(language: Common.Language) {
+	static func sendLanguageFirstSelectionEvent(language: Common.Language) {
 		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
-		trackEvent(category: .language, action: .languageSelected, label: Common.stringForLanguage[language]!)
+		trackEvent(.languageFirstSelection, parameters: ["start_language" : Common.stringForLanguage[language]!])
 	}
 	
-	static func sendLanguageChangedEvent(language: Common.Language) {
+	static func updateLanguageSelection(language: Common.Language) {
 		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
-		trackEvent(category: .language, action: .languageChanged, label: Common.stringForLanguage[language]!)
 	}
 	
-	static func sendLanguageTourEvent(language: Common.Language, tour: AICTourModel) {
-		trackEvent(category: .languageTour, action: Common.stringForLanguage[language]!, label: tour.translations[.english]!.title)
+	// MARK: Location
+	
+	static func sendLocationEnableHeadingEvent() {
+		trackEvent(.locationHeadingEnabled)
 	}
 	
-	static func sendLanguageAudioEvent(language: Common.Language, audio: AICAudioFileModel) {
-		trackEvent(category: .languageAudio, action: Common.stringForLanguage[language]!, label: audio.translations[.english]!.trackTitle)
-	}
-    
-    // MARK: Location
-    static func sendLocationEnableHeadingEvent() {
-		trackEvent(category: .location, action: .locationHeadingEnabled)
-    }
-    
-    static func sendLocationOnSiteEvent() {
-		trackEvent(category: .location, action: .locationOnSite)
-	}
-	
-	static func sendLocationOffSiteEvent() {
-		trackEvent(category: .location, action: .locationOffSite)
-	}
-	
-	static func sendLocationDisabledEvent() {
-		trackEvent(category: .location, action: .locationDisabled)
-	}
-	
-	static func sendLocationNotNowPressedEvent() {
-		trackEvent(category: .location, action: .locationNotNowPressed)
+	static func sendLocationDetectedEvent(location: LocationState) {
+		trackEvent(.locationDetected, parameters: ["location" : location.rawValue])
 	}
 	
 	static func updateUserLocationProperty(isOnSite: Bool?) {
@@ -244,119 +248,99 @@ class AICAnalytics {
 	}
 	
 	// MARK: Audio Player
-	static func sendPlayAudioFromMapEvent(artwork: AICObjectModel) {
-		trackEvent(category: .playAudio, action: .playAudioMap, label: artwork.title)
+	
+	static func sendAudioPlayedEvent(source: PlaybackSource, language: Common.Language, artwork: AICObjectModel?, tour: AICTourModel?) {
+		var parameters: [String : String] = [
+			"playback_source" : source.rawValue,
+			"playback_language" : Common.stringForLanguage[language]!
+		]
+		if let artworkModel: AICObjectModel = artwork {
+			parameters["title"] = artworkModel.title
+		}
+		if let tourModel: AICTourModel = tour {
+			parameters["tour_title"] = tourModel.translations[.english]!.title
+		}
+		trackEvent(.audioPlayed, parameters: parameters)
 	}
 	
-	static func sendPlayAudioFromAudioGuideEvent(artwork: AICObjectModel, selectorNumber: Int, language: Common.Language) {
-		trackEvent(category: .playAudio, action: .playAudioAudioGuide, label: artwork.title)
+	static func sendAudioStoppedEvent(audio: AICAudioFileModel, percentPlayed: Int) {
+		let percent = percentPlayed > 95 ? 100 : percentPlayed
+		let parameters: [String : String] = [
+			"title" : audio.translations[.english]!.trackTitle,
+			"completion" : percent == 100 ? PlaybackCompletion.Completed.rawValue : PlaybackCompletion.Interrupted.rawValue,
+			"percent_played" : String(percent)
+		]
+		trackEvent(.audioPlayed, parameters: parameters)
 	}
 	
-	static func sendPlayAudioFromTourEvent(tour: AICTourModel) {
-		trackEvent(category: .playAudio, action: .playAudioTour, label: tour.translations[.english]!.title)
-	}
+	// MARK: Tours
 	
-	static func sendPlayAudioFromTourStopEvent(artwork: AICObjectModel, tour: AICTourModel) {
-		trackEvent(category: .playAudio, action: .playAudioTourStop, label: artwork.title)
-	}
-	
-	static func sendPlayAudioFromSearchedArtworkEvent(artwork: AICObjectModel) {
-		trackEvent(category: .playAudio, action: .playAudioSearch, label: artwork.title)
-	}
-	
-	// MARK: Playback
-	
-	static func sendPlaybackInterruptedEvent(audio: AICAudioFileModel, pctComplete: Int) {
-		trackEvent(category: .playback, action: .playbackInterrupted, label: audio.translations[.english]!.trackTitle, value: pctComplete)
-	}
-	
-	static func sendPlaybackCompletedEvent(audio: AICAudioFileModel) {
-		trackEvent(category: .playback, action: .playbackCompleted, label: audio.translations[.english]!.trackTitle)
-	}
-    
-    // MARK: Tours
-    
-	static func sendTourOpenedEvent(tour: AICTourModel) {
-		trackEvent(category: .tour, action: .opened, label: tour.translations[.english]!.title)
-	}
-	
-	static func sendTourStartedEvent(tour: AICTourModel) {
-		trackEvent(category: .tour, action: .tourStarted, label: tour.translations[.english]!.title)
+	static func sendTourStartedEvent(tour: AICTourModel, language: Common.Language) {
+		let parameters: [String : String] = [
+			"title" : tour.translations[.english]!.title,
+			"tour_language" : Common.stringForLanguage[language]!
+		]
+		trackEvent(.tourStarted, parameters: parameters)
 	}
 	
 	static func sendTourLeftEvent(tour: AICTourModel) {
-		trackEvent(category: .tour, action: .tourLeft, label: tour.translations[.english]!.title)
+		let parameters: [String : String] = [
+			"title" : tour.translations[.english]!.title
+		]
+		trackEvent(.tourLeft, parameters: parameters)
 	}
 	
 	// MARK: Exhibitions
 	
-	static func sendExhibitionOpenedEvent(exhibition: AICExhibitionModel) {
-		trackEvent(category: .exhibition, action: .opened, label: exhibition.title)
+	static func sendExhibitionViewedEvent(exhibition: AICExhibitionModel) {
+		trackEvent(.exhibitionViewed, parameters: ["title" : exhibition.title])
 	}
 	
-	static func sendExhibitionLinkPressedEvent(exhibition: AICExhibitionModel) {
-		trackEvent(category: .exhibition, action: .linkPressed, label: exhibition.title)
+	static func sendExhibitionBuyLinkEvent(exhibition: AICExhibitionModel) {
+		trackEvent(.exhibitionBuyLink, parameters: ["title" : exhibition.title])
+	}
+	
+	static func sendExhibitionMapEvent(exhibition: AICExhibitionModel) {
+		trackEvent(.exhibitionMap, parameters: ["title" : exhibition.title])
 	}
 	
 	// MARK: Events
 	
-	static func sendEventOpenedEvent(event: AICEventModel) {
-		trackEvent(category: .event, action: .opened, label: event.title)
+	static func sendEventViewedEvent(event: AICEventModel) {
+		trackEvent(.eventViewed, parameters: ["title" : event.title])
 	}
 	
-	static func sendEventLinkPressedEvent(event: AICEventModel) {
-		trackEvent(category: .event, action: .linkPressed, label: event.title)
+	static func sendEventRegisterLinkEvent(event: AICEventModel) {
+		trackEvent(.eventRegisterLink, parameters: ["title" : event.title])
 	}
 	
-	// MARK: Map
+	// MARK: Artwork
 	
-	static func sendMapShowArtworkEvent(artwork: AICObjectModel) {
-		trackEvent(category: .map, action: .mapShowArtwork, label: artwork.title)
+	static func sendArtworkMapEvent(artwork: AICObjectModel) {
+		trackEvent(.artworkMap, parameters: ["title" : artwork.title])
 	}
 	
-	static func sendMapShowSearchedArtworkEvent(searchedArtwork: AICSearchedArtworkModel) {
-		trackEvent(category: .map, action: .mapShowArtwork, label: searchedArtwork.title)
+	static func sendArtworkMapEvent(searchedArtwork: AICSearchedArtworkModel) {
+		trackEvent(.artworkMap, parameters: ["title" : searchedArtwork.title])
 	}
 	
-	static func sendMapShowExhibitionEvent(exhibition: AICExhibitionModel) {
-		trackEvent(category: .map, action: .mapShowExhibition, label: exhibition.title)
+	// MARK: Search Facilities
+	
+	static func sendSearchFacilitiesEvent(facility: Facility) {
+		trackEvent(.searchFacilities, parameters: ["facility" : facility.rawValue])
 	}
 	
-	static func sendMapShowDiningEvent() {
-		trackEvent(category: .map, action: .mapShowDining)
-	}
+	// MARK: Members
 	
-	static func sendMapShowMemberLoungeEvent() {
-		trackEvent(category: .map, action: .mapShowMemberLounge)
-	}
-	
-	static func sendMapShowGiftShopsEvent() {
-		trackEvent(category: .map, action: .mapShowGiftShops)
-	}
-	
-	static func sendMapShowRestroomsEvent() {
-		trackEvent(category: .map, action: .mapShowRestrooms)
-	}
-	
-    // MARK: Members
-	
-	static func sendMemberShowCardEvent() {
+	static func sendMemberCardShownEvent() {
 		setUserProperty(property: .membership, value: "Member")
-		trackEvent(category: .member, action: .memberShowCard)
-    }
-	
-    static func sendMemberJoinPressedEvent() {
-		trackEvent(category: .member, action: .memberJoinPressed)
-    }
-	
-	// MARK: Museum Info Links
-	
-	static func sendMuseumInfoPhoneLinkEvent() {
-		trackEvent(category: .museumInfo, action: .museumInfoPhoneLink)
+		trackEvent(.memberCardShown)
 	}
 	
-	static func sendMuseumInfoAddressLinkEvent() {
-		trackEvent(category: .museumInfo, action: .museumInfoAddressLink)
+	// MARK: Misc Links
+	
+	static func sendMiscLinkTappedEvent(link: MiscLink) {
+		trackEvent(.miscLinkTapped, parameters: ["link" : link.rawValue])
 	}
 	
 	// MARK: Search
@@ -413,11 +397,19 @@ class AICAnalytics {
 	
 	// MARK: Errors
 	
-	static func sendErrorsAudioGuideWrongNumberEvent(number: Int) {
-		trackEvent(category: .errors, action: .errorsAudioGuideWrongNumber, label: String(number))
+	static func sendErrorAudioGuideBadNumberEvent(number: Int) {
+		let parameters: [String : String] = [
+			"type" : "Bad Number",
+			"code" : String(number)
+		]
+		trackEvent(.error, parameters: parameters)
 	}
 	
-	static func sendErrorsAudioLoadFailEvent(audioId: Int) {
-		trackEvent(category: .errors, action: .errorsAudioLoadFail, label: String(audioId))
+	static func sendErrorAudioLoadFailEvent(number: Int) {
+		let parameters: [String : String] = [
+			"type" : "Audio Load Fail",
+			"code" : String(number)
+		]
+		trackEvent(.error, parameters: parameters)
 	}
 }

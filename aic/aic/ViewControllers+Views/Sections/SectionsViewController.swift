@@ -251,8 +251,7 @@ class SectionsViewController : UIViewController {
 		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
 		
         // Log Analytics
-		AICAnalytics.sendTourStartedEvent(tour: tour)
-		AICAnalytics.sendLanguageTourEvent(language: language, tour: tour)
+		AICAnalytics.sendTourStartedEvent(tour: tour, language: language)
     }
 	
 	func showArtworkOnMap(artwork: AICObjectModel) {
@@ -347,37 +346,47 @@ class SectionsViewController : UIViewController {
 	private func playArtwork(artwork: AICObjectModel, audio: AICAudioFileModel, audiogGuideNumber: Int? = nil) {
 		audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, audioGuideNumber: audiogGuideNumber)
 		showHeadphonesMessage()
-    }
-    
-    private func playAudioGuideArtwork(artwork: AICObjectModel, audioGuideID: Int) {
+	}
+	
+	private func playAudioGuideArtwork(artwork: AICObjectModel, audioGuideID: Int) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: audioGuideID)
 		audio.language = Common.currentLanguage
 		
 		playArtwork(artwork: artwork, audio: audio, audiogGuideNumber: audioGuideID)
 		audioPlayerCardVC.showFullscreen()
-        
-        // Log analytics
-		AICAnalytics.sendPlayAudioFromAudioGuideEvent(artwork: artwork, selectorNumber: audioGuideID, language: audio.language)
-    }
+		
+		// Log analytics
+		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.AudioGuide,
+										  language: audio.language,
+										  artwork: artwork,
+										  tour: nil)
+	}
 	
 	private func playAudioGuideTour(tour: AICTourModel) {
 		audioPlayerCardVC.playTourOverviewAudio(tour: tour)
 		audioPlayerCardVC.showFullscreen()
 		
 		// Log analytics
-		AICAnalytics.sendPlayAudioFromTourEvent(tour: tour)
+		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.AudioGuide,
+										  language: tour.language,
+										  artwork: nil,
+										  tour: tour)
 	}
-    
-    private func playMapArtwork(artwork: AICObjectModel) {
+	
+	private func playMapArtwork(artwork: AICObjectModel, isFromSearchIcon: Bool = false) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
 		audio.language = Common.currentLanguage
 		
 		playArtwork(artwork: artwork, audio: audio)
 		audioPlayerCardVC.showMiniPlayer()
 		
-        // Log analytics
-		AICAnalytics.sendPlayAudioFromMapEvent(artwork: artwork)
-    }
+		// Log analytics
+		let source = isFromSearchIcon ? AICAnalytics.PlaybackSource.SearchIcon : AICAnalytics.PlaybackSource.Map
+		AICAnalytics.sendAudioPlayedEvent(source: source,
+										  language: audio.language,
+										  artwork: artwork,
+										  tour: nil)
+	}
 	
 	private func playSearchedArtwork(artwork: AICObjectModel) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
@@ -387,7 +396,10 @@ class SectionsViewController : UIViewController {
 		audioPlayerCardVC.showMiniPlayer()
 		
 		// Log analytics
-		AICAnalytics.sendPlayAudioFromSearchedArtworkEvent(artwork: artwork)
+		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.Search,
+										  language: audio.language,
+										  artwork: artwork,
+										  tour: nil)
 	}
 	
 	private func playTourStop(tourStop: AICTourStopModel, tour: AICTourModel) {
@@ -395,16 +407,22 @@ class SectionsViewController : UIViewController {
 		audioPlayerCardVC.showMiniPlayer()
 		
 		// Log analytics
-		AICAnalytics.sendPlayAudioFromTourStopEvent(artwork: tourStop.object, tour: tour)
+		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.TourStop,
+										  language: tour.language,
+										  artwork: tourStop.object,
+										  tour: tour)
 	}
-    
-    private func playTourOverview(tour: AICTourModel, language: Common.Language) {
+	
+	private func playTourOverview(tour: AICTourModel, language: Common.Language) {
 		audioPlayerCardVC.playTourOverviewAudio(tour: tour)
 		audioPlayerCardVC.showMiniPlayer()
 		
 		// Log analytics
-		AICAnalytics.sendPlayAudioFromTourEvent(tour: tour)
-    }
+		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.TourStop,
+										  language: tour.language,
+										  artwork: nil,
+										  tour: tour)
+	}
 	
 	// MARK: Show/Hide Search Button
 	
@@ -570,9 +588,6 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 		let tourTableVC = TourTableViewController(tour: tour)
 		tourTableVC.tourTableDelegate = self
 		showContentCard(ContentCardNavigationController(tableVC: tourTableVC))
-		
-		// Log analytics
-		AICAnalytics.sendTourOpenedEvent(tour: tour)
 	}
 	
 	func showExhibitionCard(exhibition: AICExhibitionModel) {
@@ -581,7 +596,7 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 		showContentCard(ContentCardNavigationController(tableVC: exhibitionTableVC))
 		
 		// Log analytics
-		AICAnalytics.sendExhibitionOpenedEvent(exhibition: exhibition)
+		AICAnalytics.sendExhibitionViewedEvent(exhibition: exhibition)
 	}
 	
 	func showEventCard(event: AICEventModel) {
@@ -589,7 +604,7 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 		showContentCard(ContentCardNavigationController(tableVC: eventTableVC))
 		
 		// Log analytics
-		AICAnalytics.sendEventOpenedEvent(event: event)
+		AICAnalytics.sendEventViewedEvent(event: event)
 	}
 	
 	func showContentCard(_ contentCardVC: ContentCardNavigationController) {
@@ -622,8 +637,8 @@ extension SectionsViewController : AudioGuideNavigationControllerDelegate {
 // MARK: Map Delegate
 
 extension SectionsViewController : MapNavigationControllerDelegate {
-	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel) {
-		playMapArtwork(artwork: artwork)
+	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel, isFromSearchIcon: Bool) {
+		playMapArtwork(artwork: artwork, isFromSearchIcon: isFromSearchIcon)
 	}
 	
 	func mapDidSelectPlayAudioForTour(tour: AICTourModel, language: Common.Language) {
@@ -767,11 +782,6 @@ extension SectionsViewController : ArtworkTableViewControllerDelegate {
 	// Pressed "Play Audio" in content card
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel) {
 		playSearchedArtwork(artwork: artwork)
-		
-		// Log Analytics
-		let searchTextField = searchCardVC.searchBar.value(forKey: "searchField") as? UITextField
-		let searchText = (searchTextField!.text ?? "")
-		AICAnalytics.sendSearchArtworkAndPlayedAudioEvent(artwork: artwork, searchText: searchText)
 	}
 	
 	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel) {

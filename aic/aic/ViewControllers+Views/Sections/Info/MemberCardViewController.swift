@@ -118,7 +118,7 @@ class MemberCardViewController : UIViewController {
 		cardView.isHidden = false
 		
 		// Log analytics
-		AICAnalytics.sendMemberShowCardEvent()
+		AICAnalytics.sendMemberCardShownEvent()
 	}
 	
 	// MARK: Load Member
