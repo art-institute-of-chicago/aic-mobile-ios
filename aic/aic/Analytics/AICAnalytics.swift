@@ -136,7 +136,10 @@ class AICAnalytics {
 	
 	static func sendLanguageFirstSelectionEvent(language: Common.Language) {
 		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
-		trackEvent(.languageFirstSelection, parameters: ["start_language" : Common.stringForLanguage[language]!])
+		let parameters: [String : String] = [
+			"start_language" : Common.stringForLanguage[language]!
+		]
+		trackEvent(.languageFirstSelection, parameters: parameters)
 	}
 	
 	static func updateLanguageSelection(language: Common.Language) {
@@ -150,7 +153,10 @@ class AICAnalytics {
 	}
 	
 	static func sendLocationDetectedEvent(location: LocationState) {
-		trackEvent(.locationDetected, parameters: ["location" : location.rawValue])
+		let parameters: [String : String] = [
+			"start_language" : location.rawValue
+		]
+		trackEvent(.locationDetected, parameters: parameters)
 	}
 	
 	static func updateUserLocationProperty(isOnSite: Bool?) {
@@ -208,41 +214,65 @@ class AICAnalytics {
 	// MARK: Exhibitions
 	
 	static func sendExhibitionViewedEvent(exhibition: AICExhibitionModel) {
-		trackEvent(.exhibitionViewed, parameters: ["title" : exhibition.title])
+		let parameters: [String : String] = [
+			"title" : exhibition.title
+		]
+		trackEvent(.exhibitionViewed, parameters: parameters)
 	}
 	
 	static func sendExhibitionBuyLinkEvent(exhibition: AICExhibitionModel) {
-		trackEvent(.exhibitionBuyLink, parameters: ["title" : exhibition.title])
+		let parameters: [String : String] = [
+			"title" : exhibition.title
+		]
+		trackEvent(.exhibitionBuyLink, parameters: parameters)
 	}
 	
 	static func sendExhibitionMapEvent(exhibition: AICExhibitionModel) {
-		trackEvent(.exhibitionMap, parameters: ["title" : exhibition.title])
+		let parameters: [String : String] = [
+			"title" : exhibition.title
+		]
+		trackEvent(.exhibitionMap, parameters: parameters)
 	}
 	
 	// MARK: Events
 	
 	static func sendEventViewedEvent(event: AICEventModel) {
-		trackEvent(.eventViewed, parameters: ["title" : event.title])
+		let parameters: [String : String] = [
+			"title" : event.title
+		]
+		trackEvent(.eventViewed, parameters: parameters)
 	}
 	
 	static func sendEventRegisterLinkEvent(event: AICEventModel) {
-		trackEvent(.eventRegisterLink, parameters: ["title" : event.title])
+		let parameters: [String : String] = [
+			"title" : event.title
+		]
+		trackEvent(.eventRegisterLink, parameters: parameters)
 	}
 	
 	// MARK: Artwork
 	
 	static func sendArtworkMapEvent(artwork: AICObjectModel) {
-		trackEvent(.artworkMap, parameters: ["title" : artwork.title])
+		let parameters: [String : String] = [
+			"title" : artwork.title
+		]
+		trackEvent(.artworkMap, parameters: parameters)
 	}
 	
 	static func sendArtworkMapEvent(searchedArtwork: AICSearchedArtworkModel) {
-		trackEvent(.artworkMap, parameters: ["title" : searchedArtwork.title])
+		let parameters: [String : String] = [
+			"title" : searchedArtwork.title
+		]
+		trackEvent(.artworkMap, parameters: parameters)
 	}
 	
 	// MARK: Search Facilities
 	
 	static func sendSearchFacilitiesEvent(facility: Facility) {
-		trackEvent(.searchFacilities, parameters: ["facility" : facility.rawValue])
+		let parameters: [String : String] = [
+			"facility" : facility.rawValue
+		]
+		trackEvent(.searchFacilities, parameters: parameters)
 	}
 	
 	// MARK: Members
@@ -255,7 +285,10 @@ class AICAnalytics {
 	// MARK: Misc Links
 	
 	static func sendMiscLinkTappedEvent(link: MiscLink) {
-		trackEvent(.miscLinkTapped, parameters: ["link" : link.rawValue])
+		let parameters: [String : String] = [
+			"link" : link.rawValue
+		]
+		trackEvent(.miscLinkTapped, parameters: parameters)
 	}
 	
 	// MARK: Search
