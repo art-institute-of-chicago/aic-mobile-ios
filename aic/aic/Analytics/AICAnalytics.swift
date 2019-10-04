@@ -93,8 +93,9 @@ class AICAnalytics {
 		let userDefaults = UserDefaults.standard
 		let membership = userDefaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) != nil ? "Member" : "None"
 		let deviceLanguage = NSLocale.preferredLanguages.first!
+        let languageString: String = Common.stringForLanguage[Common.currentLanguage]!
 		setUserProperty(property: .membership, value: membership)
-		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[Common.currentLanguage]!)
+		setUserProperty(property: .appLanguage, value: languageString)
 		setUserProperty(property: .deviceLanguage, value: deviceLanguage)
 	}
 	
@@ -125,9 +126,10 @@ class AICAnalytics {
 	// MARK: App
 	
 	static func sendAppOpenEvent(location: LocationState) {
+        let languageString: String = Common.stringForLanguage[Common.currentLanguage]!
 		let parameters: [String : String] = [
 			"location" : location.rawValue,
-			"language" : Common.stringForLanguage[Common.currentLanguage]!
+			"language" : languageString
 		]
 		trackEvent(.appOpen, parameters: parameters)
 	}
@@ -135,15 +137,17 @@ class AICAnalytics {
 	// MARK: Language
 	
 	static func sendLanguageFirstSelectionEvent(language: Common.Language) {
-		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
-		let parameters: [String : String] = [
-			"start_language" : Common.stringForLanguage[language]!
-		]
+		let languageString: String = Common.stringForLanguage[language]!
+        setUserProperty(property: .appLanguage, value: languageString)
+        let parameters: [String : String] = [
+            "start_language" : languageString
+        ]
 		trackEvent(.languageFirstSelection, parameters: parameters)
 	}
 	
 	static func updateLanguageSelection(language: Common.Language) {
-		setUserProperty(property: .appLanguage, value: Common.stringForLanguage[language]!)
+        let languageString: String = Common.stringForLanguage[language]!
+		setUserProperty(property: .appLanguage, value: languageString)
 	}
 	
 	// MARK: Location
@@ -154,7 +158,7 @@ class AICAnalytics {
 	
 	static func sendLocationDetectedEvent(location: LocationState) {
 		let parameters: [String : String] = [
-			"start_language" : location.rawValue
+			"location" : location.rawValue
 		]
 		trackEvent(.locationDetected, parameters: parameters)
 	}
@@ -171,9 +175,10 @@ class AICAnalytics {
 	// MARK: Audio Player
 	
 	static func sendAudioPlayedEvent(source: PlaybackSource, language: Common.Language, artwork: AICObjectModel?, tour: AICTourModel?) {
+        let languageString: String = Common.stringForLanguage[language]!
 		var parameters: [String : String] = [
 			"playback_source" : source.rawValue,
-			"playback_language" : Common.stringForLanguage[language]!
+			"playback_language" : languageString
 		]
 		if let artworkModel: AICObjectModel = artwork {
 			parameters["title"] = artworkModel.title
@@ -191,15 +196,16 @@ class AICAnalytics {
 			"completion" : percent == 100 ? PlaybackCompletion.Completed.rawValue : PlaybackCompletion.Interrupted.rawValue,
 			"percent_played" : String(percent)
 		]
-		trackEvent(.audioPlayed, parameters: parameters)
+		trackEvent(.audioStopped, parameters: parameters)
 	}
 	
 	// MARK: Tours
 	
 	static func sendTourStartedEvent(tour: AICTourModel, language: Common.Language) {
+        let languageString: String = Common.stringForLanguage[language]!
 		let parameters: [String : String] = [
 			"title" : tour.translations[.english]!.title,
-			"tour_language" : Common.stringForLanguage[language]!
+			"tour_language" : languageString
 		]
 		trackEvent(.tourStarted, parameters: parameters)
 	}
