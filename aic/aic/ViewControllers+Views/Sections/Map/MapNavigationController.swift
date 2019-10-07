@@ -400,7 +400,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendArtworkMapEvent(artwork: artwork)
+		AICAnalytics.sendSearchIconMapEvent(artwork: artwork)
 	}
 	
 	func showSearchedArtwork(searchedArtwork: AICSearchedArtworkModel) {
@@ -438,7 +438,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendArtworkMapEvent(searchedArtwork: searchedArtwork)
+		AICAnalytics.sendSearchArtworkMapEvent(searchedArtwork: searchedArtwork)
 	}
 	
 	func showExhibition(exhibition: AICExhibitionModel) {

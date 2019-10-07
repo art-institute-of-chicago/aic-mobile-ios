@@ -21,7 +21,6 @@ class AICAnalytics {
 		case exhibitionViewed		= "exhibition_viewed"
 		case exhibitionBuyLink		= "exhibition_buy_link"
 		case exhibitionMap			= "exhibition_map"
-		case artworkMap				= "artwork_map"
 		case search					= "search"
 		case searchNoResults		= "search_no_results"
 		case searchAbandoned		= "search_abandoned"
@@ -29,6 +28,8 @@ class AICAnalytics {
 		case searchTappedTour		= "search_tapped_tour"
 		case searchTappedExhibition	= "search_tapped_exhibition"
 		case searchFacilities		= "search_facilities"
+        case searchArtworkMap       = "search_artwork_map"
+        case searchIconMap          = "search_icon_map"
 		case locationDetected		= "location_detected"
 		case locationHeadingEnabled	= "location_heading_enabled"
 		case memberCardShown		= "member_card_shown"
@@ -274,31 +275,6 @@ class AICAnalytics {
 		trackEvent(.eventRegisterLink, parameters: parameters)
 	}
 	
-	// MARK: Artwork
-	
-	static func sendArtworkMapEvent(artwork: AICObjectModel) {
-		let parameters: [String : String] = [
-			"title" : artwork.title
-		]
-		trackEvent(.artworkMap, parameters: parameters)
-	}
-	
-	static func sendArtworkMapEvent(searchedArtwork: AICSearchedArtworkModel) {
-		let parameters: [String : String] = [
-			"title" : searchedArtwork.title
-		]
-		trackEvent(.artworkMap, parameters: parameters)
-	}
-	
-	// MARK: Search Facilities
-	
-	static func sendSearchFacilitiesEvent(facility: Facility) {
-		let parameters: [String : String] = [
-			"facility" : facility.rawValue
-		]
-		trackEvent(.searchFacilities, parameters: parameters)
-	}
-	
 	// MARK: Members
 	
 	static func sendMemberCardShownEvent() {
@@ -345,7 +321,7 @@ class AICAnalytics {
 		trackEvent(.searchAbandoned, parameters: parameters)
 	}
 	
-	// MARK: Search Selected Content
+	// MARK: Search Tapped Content
 	
 	static func sendSearchTappedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [
@@ -373,4 +349,31 @@ class AICAnalytics {
 		]
 		trackEvent(.searchTappedExhibition, parameters: parameters)
 	}
+    
+    // MARK: Search Facilities
+    
+    static func sendSearchFacilitiesEvent(facility: Facility) {
+        let parameters: [String : String] = [
+            "facility" : facility.rawValue
+        ]
+        trackEvent(.searchFacilities, parameters: parameters)
+    }
+    
+    // MARK: Search Artwork Map
+    
+    static func sendSearchArtworkMapEvent(searchedArtwork: AICSearchedArtworkModel) {
+        let parameters: [String : String] = [
+            "title" : searchedArtwork.title
+        ]
+        trackEvent(.searchArtworkMap, parameters: parameters)
+    }
+    
+    // MARK: Search Icon Map
+    
+    static func sendSearchIconMapEvent(artwork: AICObjectModel) {
+        let parameters: [String : String] = [
+            "title" : artwork.title
+        ]
+        trackEvent(.searchIconMap, parameters: parameters)
+    }
 }
