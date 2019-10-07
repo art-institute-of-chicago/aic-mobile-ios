@@ -13,6 +13,7 @@ class AICAnalytics {
 		case languageFirstSelection	= "language_first_selection"
 		case audioPlayed			= "audio_played"
 		case audioStopped			= "audio_stopped"
+        case audioError             = "audio_error"
 		case tourStarted			= "tour_started"
 		case tourLeft				= "tour_left"
 		case eventViewed			= "event_viewed"
@@ -31,7 +32,6 @@ class AICAnalytics {
 		case locationDetected		= "location_detected"
 		case locationHeadingEnabled	= "location_heading_enabled"
 		case memberCardShown		= "member_card_shown"
-		case error					= "error"
 		case miscLinkTapped			= "misc_link_tapped"
 	}
 	
@@ -198,6 +198,24 @@ class AICAnalytics {
 		]
 		trackEvent(.audioStopped, parameters: parameters)
 	}
+    
+    // MARK: Audio Errors
+    
+    static func sendErrorAudioGuideBadNumberEvent(number: Int) {
+        let parameters: [String : String] = [
+            "type" : "Bad Number",
+            "code" : String(number)
+        ]
+        trackEvent(.audioError, parameters: parameters)
+    }
+    
+    static func sendErrorAudioLoadFailEvent(number: Int) {
+        let parameters: [String : String] = [
+            "type" : "Audio Load Fail",
+            "code" : String(number)
+        ]
+        trackEvent(.audioError, parameters: parameters)
+    }
 	
 	// MARK: Tours
 	
@@ -354,23 +372,5 @@ class AICAnalytics {
 			"search_term_source" : searchTermSource.rawValue
 		]
 		trackEvent(.searchTappedExhibition, parameters: parameters)
-	}
-	
-	// MARK: Errors
-	
-	static func sendErrorAudioGuideBadNumberEvent(number: Int) {
-		let parameters: [String : String] = [
-			"type" : "Bad Number",
-			"code" : String(number)
-		]
-		trackEvent(.error, parameters: parameters)
-	}
-	
-	static func sendErrorAudioLoadFailEvent(number: Int) {
-		let parameters: [String : String] = [
-			"type" : "Audio Load Fail",
-			"code" : String(number)
-		]
-		trackEvent(.error, parameters: parameters)
 	}
 }
