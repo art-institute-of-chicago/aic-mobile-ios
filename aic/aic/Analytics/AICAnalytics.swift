@@ -121,18 +121,7 @@ class AICAnalytics {
 	private static func setUserProperty(property: UserProperty, value: String) {
         Analytics.setUserProperty(value, forName: property.rawValue)
 	}
-	
-	// MARK: App
-	
-	static func sendAppOpenEvent(location: LocationState) {
-        let languageString: String = Common.stringForLanguage[Common.currentLanguage]!
-		let parameters: [String : String] = [
-			"location" : location.rawValue,
-			"language" : languageString
-		]
-		trackEvent(.appOpen, parameters: parameters)
-	}
-	
+    
 	// MARK: Language
 	
 	static func sendLanguageFirstSelectionEvent(language: Common.Language) {
