@@ -75,11 +75,10 @@ class AICAnalytics {
 		case MemberJoin = "MemberJoin"
 	}
 	
-	fileprivate enum UserProperty : UInt {
-		case membership				= 2
-		case appLanguage			= 3
-		case deviceLanguage			= 4
-		case onSite					= 5
+	fileprivate enum UserProperty : String {
+        case membership				= "Membership"
+		case appLanguage			= "Language"
+		case deviceLanguage			= "DeviceLanguage"
 	}
 	
 	static fileprivate var previousScreen: String? = nil
@@ -120,8 +119,7 @@ class AICAnalytics {
 	// MARK: Set User Property
 	
 	private static func setUserProperty(property: UserProperty, value: String) {
-		//Analytics.setUserProperty(<#T##value: String?##String?#>, forName: <#T##String#>)
-		//AICAnalytics.tracker?.set(GAIFields.customDimension(for: property.rawValue), value: value)
+        Analytics.setUserProperty(value, forName: property.rawValue)
 	}
 	
 	// MARK: App
@@ -165,12 +163,12 @@ class AICAnalytics {
 	}
 	
 	static func updateUserLocationProperty(isOnSite: Bool?) {
-		if isOnSite != nil {
-			setUserProperty(property: .onSite, value: isOnSite! ? "Yes" : "No")
-		}
-		else {
-			setUserProperty(property: .onSite, value: "Undefined")
-		}
+//		if isOnSite != nil {
+//			setUserProperty(property: .onSite, value: isOnSite! ? "Yes" : "No")
+//		}
+//		else {
+//			setUserProperty(property: .onSite, value: "Undefined")
+//		}
 	}
 	
 	// MARK: Audio Player
