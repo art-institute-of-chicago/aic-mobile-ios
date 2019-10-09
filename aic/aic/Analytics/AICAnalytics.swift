@@ -80,6 +80,8 @@ class AICAnalytics {
 		case appLanguage			= "Language"
 		case deviceLanguage			= "DeviceLanguage"
 	}
+    
+    static fileprivate let parameterMaxLength = 95
 	
 	static fileprivate var previousScreen: String? = nil
 	static fileprivate var currentScreen: String? = nil
@@ -169,10 +171,10 @@ class AICAnalytics {
 			"playback_language" : languageString
 		]
 		if let artworkModel: AICObjectModel = artwork {
-			parameters["title"] = artworkModel.title
+            parameters["title"] = artworkModel.title.truncate(length: parameterMaxLength)
 		}
 		if let tourModel: AICTourModel = tour {
-			parameters["tour_title"] = tourModel.translations[.english]!.title
+			parameters["tour_title"] = tourModel.translations[.english]!.title.truncate(length: parameterMaxLength)
 		}
 		trackEvent(.audioPlayed, parameters: parameters)
 	}
@@ -180,7 +182,7 @@ class AICAnalytics {
 	static func sendAudioStoppedEvent(audio: AICAudioFileModel, percentPlayed: Int) {
 		let percent = percentPlayed > 95 ? 100 : percentPlayed
 		let parameters: [String : String] = [
-			"title" : audio.translations[.english]!.trackTitle,
+			"title" : audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength),
 			"completion" : percent == 100 ? PlaybackCompletion.Completed.rawValue : PlaybackCompletion.Interrupted.rawValue,
 			"percent_played" : String(percent)
 		]
@@ -210,7 +212,7 @@ class AICAnalytics {
 	static func sendTourStartedEvent(tour: AICTourModel, language: Common.Language) {
         let languageString: String = Common.stringForLanguage[language]!
 		let parameters: [String : String] = [
-			"title" : tour.translations[.english]!.title,
+            "title" : tour.translations[.english]!.title.truncate(length: parameterMaxLength),
 			"tour_language" : languageString
 		]
 		trackEvent(.tourStarted, parameters: parameters)
@@ -218,7 +220,7 @@ class AICAnalytics {
 	
 	static func sendTourLeftEvent(tour: AICTourModel) {
 		let parameters: [String : String] = [
-			"title" : tour.translations[.english]!.title
+			"title" : tour.translations[.english]!.title.truncate(length: parameterMaxLength)
 		]
 		trackEvent(.tourLeft, parameters: parameters)
 	}
@@ -227,21 +229,21 @@ class AICAnalytics {
 	
 	static func sendExhibitionViewedEvent(exhibition: AICExhibitionModel) {
 		let parameters: [String : String] = [
-			"title" : exhibition.title
+			"title" : exhibition.title.truncate(length: parameterMaxLength)
 		]
 		trackEvent(.exhibitionViewed, parameters: parameters)
 	}
 	
 	static func sendExhibitionBuyLinkEvent(exhibition: AICExhibitionModel) {
 		let parameters: [String : String] = [
-			"title" : exhibition.title
+			"title" : exhibition.title.truncate(length: parameterMaxLength)
 		]
 		trackEvent(.exhibitionBuyLink, parameters: parameters)
 	}
 	
 	static func sendExhibitionMapEvent(exhibition: AICExhibitionModel) {
 		let parameters: [String : String] = [
-			"title" : exhibition.title
+			"title" : exhibition.title.truncate(length: parameterMaxLength)
 		]
 		trackEvent(.exhibitionMap, parameters: parameters)
 	}
@@ -250,14 +252,14 @@ class AICAnalytics {
 	
 	static func sendEventViewedEvent(event: AICEventModel) {
 		let parameters: [String : String] = [
-			"title" : event.title
+			"title" : event.title.truncate(length: parameterMaxLength)
 		]
 		trackEvent(.eventViewed, parameters: parameters)
 	}
 	
 	static func sendEventRegisterLinkEvent(event: AICEventModel) {
 		let parameters: [String : String] = [
-			"title" : event.title
+			"title" : event.title.truncate(length: parameterMaxLength)
 		]
 		trackEvent(.eventRegisterLink, parameters: parameters)
 	}
@@ -285,7 +287,7 @@ class AICAnalytics {
 			lastSearchTerm = searchTerm
 			
 			let parameters: [String : String] = [
-				"search_term" : searchTerm,
+				"search_term" : searchTerm.truncate(length: parameterMaxLength),
 				"search_term_source" : searchTermSource.rawValue
 			]
 			trackEvent(.search, parameters: parameters)
@@ -294,7 +296,7 @@ class AICAnalytics {
 	
 	static func sendSearchNoResultsEvent(searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [
-			"search_term" : searchTerm,
+			"search_term" : searchTerm.truncate(length: parameterMaxLength),
 			"search_term_source" : searchTermSource.rawValue
 		]
 		trackEvent(.searchNoResults, parameters: parameters)
@@ -302,7 +304,7 @@ class AICAnalytics {
 	
 	static func sendSearchAbandonedEvent(searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [
-			"search_term" : searchTerm,
+			"search_term" : searchTerm.truncate(length: parameterMaxLength),
 			"search_term_source" : searchTermSource.rawValue
 		]
 		trackEvent(.searchAbandoned, parameters: parameters)
@@ -312,8 +314,8 @@ class AICAnalytics {
 	
 	static func sendSearchTappedArtworkEvent(searchedArtwork: AICSearchedArtworkModel, searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [
-			"title" : searchedArtwork.title,
-			"search_term" : searchTerm,
+			"title" : searchedArtwork.title.truncate(length: parameterMaxLength),
+			"search_term" : searchTerm.truncate(length: parameterMaxLength),
 			"search_term_source" : searchTermSource.rawValue
 		]
 		trackEvent(.searchTappedArtwork, parameters: parameters)
@@ -321,8 +323,8 @@ class AICAnalytics {
 	
 	static func sendSearchTappedTourEvent(tour: AICTourModel, searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [
-			"title" : tour.translations[.english]!.title,
-			"search_term" : searchTerm,
+			"title" : tour.translations[.english]!.title.truncate(length: parameterMaxLength),
+			"search_term" : searchTerm.truncate(length: parameterMaxLength),
 			"search_term_source" : searchTermSource.rawValue
 		]
 		trackEvent(.searchTappedTour, parameters: parameters)
@@ -330,8 +332,8 @@ class AICAnalytics {
 	
 	static func sendSearchTappedExhibitionEvent(exhibition: AICExhibitionModel, searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [
-			"title" : exhibition.title,
-			"search_term" : searchTerm,
+			"title" : exhibition.title.truncate(length: parameterMaxLength),
+			"search_term" : searchTerm.truncate(length: parameterMaxLength),
 			"search_term_source" : searchTermSource.rawValue
 		]
 		trackEvent(.searchTappedExhibition, parameters: parameters)
@@ -350,7 +352,7 @@ class AICAnalytics {
     
     static func sendSearchArtworkMapEvent(searchedArtwork: AICSearchedArtworkModel) {
         let parameters: [String : String] = [
-            "title" : searchedArtwork.title
+            "title" : searchedArtwork.title.truncate(length: parameterMaxLength)
         ]
         trackEvent(.searchArtworkMap, parameters: parameters)
     }
@@ -359,7 +361,7 @@ class AICAnalytics {
     
     static func sendSearchIconMapEvent(artwork: AICObjectModel) {
         let parameters: [String : String] = [
-            "title" : artwork.title
+            "title" : artwork.title.truncate(length: parameterMaxLength)
         ]
         trackEvent(.searchIconMap, parameters: parameters)
     }
