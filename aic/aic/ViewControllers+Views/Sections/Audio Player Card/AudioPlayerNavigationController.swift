@@ -38,7 +38,12 @@ class AudioPlayerNavigationController : CardNavigationController {
 	var currentTourLanguage: Common.Language = .english
 	var currentTourStopAudioFile: AICAudioFileModel? = nil
 	var currentAudioBumper: AICAudioFileModel? = nil
-	var currentTrackTitle: String = ""
+    var previousTrackTitle: String = ""
+    var currentTrackTitle: String = "" {
+        didSet {
+            previousTrackTitle = oldValue
+        }
+    }
 	var currentImageURL: URL? = nil
 	
 	var autoPlay: Bool = false
@@ -211,9 +216,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 			// If it's a new artwork, log analytics
 			if (audioFile.nid != currentAudioFile.nid) {
 				// Log analytics
-				// GA only accepts int values, so send an int from 1-10
-				var pctComplete = Int(currentAudioFileMaxProgress * 100)
-				AICAnalytics.sendAudioStoppedEvent(audio: currentAudioFile, percentPlayed: pctComplete)
+				// GA only accepts int values, so send an int from 1-100
+				let pctComplete = Int(currentAudioFileMaxProgress * 100)
+                AICAnalytics.sendAudioStoppedEvent(title: previousTrackTitle, percentPlayed: pctComplete)
 			}
 			// If it's same nid and language, don't load audio
 			else if selectedLanguage == nil {
@@ -223,7 +228,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 		
 		self.currentAudioFile = audioFile
 		self.currentAudioFileMaxProgress = 0
-		
+        
 		// even if the player defaults to a language
 		// check to see if the user changed it
 		if selectedLanguage != nil {
@@ -556,6 +561,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 	}
 	
 	override func cardDidHide() {
+        currentAudioFile = nil
 		
 		// Accessibility
 		self.view.accessibilityElementsHidden = true
@@ -644,7 +650,7 @@ extension AudioPlayerNavigationController {
 		
 		// Log analytics
 		if let currentAudio = currentAudioFile {
-			AICAnalytics.sendAudioStoppedEvent(audio: currentAudio, percentPlayed: 100)
+			AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, percentPlayed: 100)
 		}
 		
 		// check that we are playing tour stop audio, before you play bumper or original track
@@ -678,7 +684,7 @@ extension AudioPlayerNavigationController {
 			// rewind to 0
 			seekToTime(0.0)
 			// and hide
-			if self.currentState != .fullscreen {
+            if self.currentState != .fullscreen {
 				hide()
 			}
 		}
@@ -710,7 +716,7 @@ extension AudioPlayerNavigationController {
 		if let audio = currentAudioFile {
 			if currentAudioFileMaxProgress < 1.0 {
 				var pctComplete = Int(currentAudioFileMaxProgress * 100)
-				AICAnalytics.sendAudioStoppedEvent(audio: audio, percentPlayed: pctComplete)
+				AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, percentPlayed: pctComplete)
 			}
 		}
 		

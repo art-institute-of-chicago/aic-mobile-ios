@@ -104,7 +104,7 @@ class AICAnalytics {
 	// MARK: Track Screens
 	
 	static func trackScreenView(_ screenName: String, screenClass: String) {
-		if screenName != currentScreen {
+        if screenName != currentScreen {
 			Analytics.setScreenName(screenName, screenClass: screenClass)
 
 			previousScreen = currentScreen
@@ -115,7 +115,7 @@ class AICAnalytics {
 	// MARK: Track Events
 	
 	private static func trackEvent(_ event: Event, parameters: [String : String]? = nil) {
-		Analytics.logEvent(event.rawValue, parameters: parameters)
+        Analytics.logEvent(event.rawValue, parameters: parameters)
 	}
 	
 	// MARK: Set User Property
@@ -179,11 +179,12 @@ class AICAnalytics {
 		trackEvent(.audioPlayed, parameters: parameters)
 	}
 	
-	static func sendAudioStoppedEvent(audio: AICAudioFileModel, percentPlayed: Int) {
+	static func sendAudioStoppedEvent(title: String, percentPlayed: Int) {
 		let percent = percentPlayed > 95 ? 100 : percentPlayed
+        let completion: PlaybackCompletion = percent == 100 ? .Completed : .Interrupted
 		let parameters: [String : String] = [
-			"title" : audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength),
-			"completion" : percent == 100 ? PlaybackCompletion.Completed.rawValue : PlaybackCompletion.Interrupted.rawValue,
+			"title" : title.truncate(length: parameterMaxLength),
+            "completion" : completion.rawValue,
 			"percent_played" : String(percent)
 		]
 		trackEvent(.audioStopped, parameters: parameters)
