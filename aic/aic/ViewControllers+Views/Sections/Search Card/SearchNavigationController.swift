@@ -403,6 +403,8 @@ extension SearchNavigationController : UISearchBarDelegate {
 			loadSearch(searchText: searchText, showAutocomplete: true)
 		}
 		else {
+            trackUserTypeSearchText = false
+            
 			resultsTopMarginConstraint?.constant = resultsTopMargin
 			self.view.setNeedsLayout()
 			self.view.layoutIfNeeded()
