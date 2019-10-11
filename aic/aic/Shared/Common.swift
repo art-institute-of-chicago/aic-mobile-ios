@@ -157,7 +157,13 @@ struct Common {
     // MARK: Layout
 	struct Layout {
 		static var safeAreaTopMargin: CGFloat {
-			if UIDevice().type == .iPhoneX {
+			if UIDevice().type == .iPhoneX ||
+				UIDevice().type == .iPhoneXS ||
+				UIDevice().type == .iPhoneXS_Max ||
+				UIDevice().type == .iPhoneXR ||
+				UIDevice().type == .iPhone11 ||
+				UIDevice().type == .iPhone11_Pro ||
+				UIDevice().type == .iPhone11_Pro_Max {
 				return 44
 			}
 			return 20
@@ -166,14 +172,26 @@ struct Common {
 		static var navigationBarHeight: CGFloat = 240
 		
 		static var navigationBarMinimizedHeight: CGFloat {
-			if UIDevice().type == .iPhoneX {
+			if UIDevice().type == .iPhoneX ||
+				UIDevice().type == .iPhoneXS ||
+				UIDevice().type == .iPhoneXS_Max ||
+				UIDevice().type == .iPhoneXR ||
+				UIDevice().type == .iPhone11 ||
+				UIDevice().type == .iPhone11_Pro ||
+				UIDevice().type == .iPhone11_Pro_Max {
 				return 73
 			}
 			return 64
 		}
 		
 		static var tabBarHeight: CGFloat {
-            if UIDevice().type == .iPhoneX || UIDevice().type == .iPhoneXS || UIDevice().type == .iPhoneXS_Max || UIDevice().type == .iPhoneXR {
+            if UIDevice().type == .iPhoneX ||
+				UIDevice().type == .iPhoneXS ||
+				UIDevice().type == .iPhoneXS_Max ||
+				UIDevice().type == .iPhoneXR ||
+				UIDevice().type == .iPhone11 ||
+				UIDevice().type == .iPhone11_Pro ||
+				UIDevice().type == .iPhone11_Pro_Max {
 				return 83
 			}
 			return 49
@@ -186,7 +204,13 @@ struct Common {
         }
 		
 		static var cardFullscreenPositionY: CGFloat {
-			if UIDevice().type == .iPhoneX {
+			if UIDevice().type == .iPhoneX ||
+				UIDevice().type == .iPhoneXS ||
+				UIDevice().type == .iPhoneXS_Max ||
+				UIDevice().type == .iPhoneXR ||
+				UIDevice().type == .iPhone11 ||
+				UIDevice().type == .iPhone11_Pro ||
+				UIDevice().type == .iPhone11_Pro_Max {
 				return 40
 			}
 			return 20

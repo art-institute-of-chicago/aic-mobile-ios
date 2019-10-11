@@ -122,7 +122,13 @@ class AudioGuideNavigationController : SectionNavigationController {
 		collectionView.autoAlignAxis(.vertical, toSameAxisOf: rootVC.view)
 
 		var collectionViewTopOffset: CGFloat = -25
-		if UIDevice().type == .iPhoneX {
+		if UIDevice().type == .iPhoneX ||
+			UIDevice().type == .iPhoneXS ||
+			UIDevice().type == .iPhoneXS_Max ||
+			UIDevice().type == .iPhoneXR ||
+			UIDevice().type == .iPhone11 ||
+			UIDevice().type == .iPhone11_Pro ||
+			UIDevice().type == .iPhone11_Pro_Max {
 			collectionViewTopOffset = 15
 		}
 		else if UIScreen.main.bounds.height < 600 {
@@ -272,7 +278,7 @@ extension AudioGuideNavigationController {
 			shakeForIncorrect()
 			
 			// Log Analytics
-			AICAnalytics.sendErrorsAudioGuideWrongNumberEvent(number: id)
+			AICAnalytics.sendErrorAudioGuideBadNumberEvent(number: id)
 			
         case "<":
             removeLastNumberPadInput()

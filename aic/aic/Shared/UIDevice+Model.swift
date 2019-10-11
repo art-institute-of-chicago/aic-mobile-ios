@@ -47,6 +47,9 @@ public enum Model : String {
     iPhoneXS         = "iPhone XS",
     iPhoneXS_Max     = "iPhone XS Max",
     iPhoneXR         = "iPhone XR",
+	iPhone11		 = "iPhone 11",
+	iPhone11_Pro	 = "iPhone 11 Pro",
+	iPhone11_Pro_Max = "iPhone 11 Pro Max",
     unrecognized     = "?unrecognized?"
 }
 
@@ -126,7 +129,10 @@ public extension UIDevice {
             "iPhone10,6" : .iPhoneX,
             "iPhone11,2" : .iPhoneXS,
             "iPhone11,4" : .iPhoneXS_Max,
-            "iPhone11,8" : .iPhoneXR
+            "iPhone11,8" : .iPhoneXR,
+            "iPhone12,1" : .iPhone11,
+            "iPhone12,3" : .iPhone11_Pro,
+            "iPhone12,5" : .iPhone11_Pro_Max
 		]
 		
 		if let model = modelMap[String(validatingUTF8: modelCode)!] {

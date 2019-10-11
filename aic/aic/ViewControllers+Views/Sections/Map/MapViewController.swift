@@ -1124,7 +1124,7 @@ extension MapViewController : CLLocationManagerDelegate {
 			// Log analytics
 			// Log onsite location state, only if it hasn't been logged already or if the user moved location out/in the museum
 			if Common.Location.hasLoggedOnsite == false || Common.Location.previousOnSiteState == false {
-				AICAnalytics.sendLocationOnSiteEvent()
+				AICAnalytics.sendLocationDetectedEvent(location: AICAnalytics.LocationState.OnSite)
 				Common.Location.hasLoggedOnsite = true
 				Common.Location.previousOnSiteState = true
 			}
@@ -1138,7 +1138,7 @@ extension MapViewController : CLLocationManagerDelegate {
 			// Log analytics
 			// Log onsite location state, only if it hasn't been logged already or if the user moved location out/in the museum
 			if Common.Location.hasLoggedOnsite == false || Common.Location.previousOnSiteState == true {
-				AICAnalytics.sendLocationOffSiteEvent()
+				AICAnalytics.sendLocationDetectedEvent(location: AICAnalytics.LocationState.OffSite)
 				Common.Location.hasLoggedOnsite = true
 				Common.Location.previousOnSiteState = false
 			}
@@ -1191,7 +1191,7 @@ extension MapViewController : CLLocationManagerDelegate {
 				Common.Location.hasLoggedOnsite = false // next time you get the location update, track the onsite or offsite event
 			}
 			else if status == .denied {
-				AICAnalytics.sendLocationDisabledEvent()
+				AICAnalytics.sendLocationDetectedEvent(location: AICAnalytics.LocationState.Disabled)
 				Common.Location.hasLoggedOnsite = true
 			}
 			

@@ -45,6 +45,11 @@ extension String {
         
         return scanner.scanDecimal(nil) && scanner.isAtEnd
     }
+    
+    // Returns string truncated if it's longer than a certain character count
+    func truncate(length: Int, trailing: String = "…") -> String {
+      return (self.count > length) ? self.prefix(length) + trailing : self
+    }
 }
 
 // HTML Parsing from

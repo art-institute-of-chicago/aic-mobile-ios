@@ -116,7 +116,7 @@ class LanguageViewController : UIViewController {
 		}
 		
 		// Log analytics
-		AICAnalytics.sendLanguageChangedEvent(language: Common.currentLanguage)
+		AICAnalytics.updateLanguageSelection(language: Common.currentLanguage)
 	}
 }
 

@@ -11,7 +11,7 @@ import CoreLocation
 import Localize_Swift
 
 protocol MapNavigationControllerDelegate : class {
-	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel)
+	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel, isFromSearchIcon: Bool)
 	func mapDidSelectPlayAudioForTour(tour: AICTourModel, language: Common.Language)
 	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, tour: AICTourModel, language: Common.Language)
 	func mapDidPresseCloseTourButton()
@@ -400,7 +400,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendMapShowArtworkEvent(artwork: artwork)
+		AICAnalytics.sendSearchIconMapEvent(artwork: artwork)
 	}
 	
 	func showSearchedArtwork(searchedArtwork: AICSearchedArtworkModel) {
@@ -438,7 +438,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendMapShowSearchedArtworkEvent(searchedArtwork: searchedArtwork)
+		AICAnalytics.sendSearchArtworkMapEvent(searchedArtwork: searchedArtwork)
 	}
 	
 	func showExhibition(exhibition: AICExhibitionModel) {
@@ -472,7 +472,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendMapShowExhibitionEvent(exhibition: exhibition)
+		AICAnalytics.sendExhibitionMapEvent(exhibition: exhibition)
 	}
 	
 	func showDining() {
@@ -508,7 +508,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendMapShowDiningEvent()
+		AICAnalytics.sendSearchFacilitiesEvent(facility: AICAnalytics.Facility.Dining)
 	}
 	
 	func showMemberLounge() {
@@ -541,7 +541,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendMapShowMemberLoungeEvent()
+		AICAnalytics.sendSearchFacilitiesEvent(facility: AICAnalytics.Facility.MemberLounge)
 	}
 	
 	func showGiftShop() {
@@ -574,7 +574,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendMapShowGiftShopsEvent()
+		AICAnalytics.sendSearchFacilitiesEvent(facility: AICAnalytics.Facility.GiftShop)
 	}
 	
 	func showRestrooms() {
@@ -607,7 +607,7 @@ class MapNavigationController : SectionNavigationController {
 		showMapContentCard()
 		
 		// Log analytics
-		AICAnalytics.sendMapShowRestroomsEvent()
+		AICAnalytics.sendSearchFacilitiesEvent(facility: AICAnalytics.Facility.Restroom)
 	}
 	
 	private func showMapContentCard() {
@@ -634,11 +634,11 @@ class MapNavigationController : SectionNavigationController {
 	@objc private func mapArtworkAudioButtonPressed(button: UIButton) {
 		if let searchedArtwork = searchedArtworkModel {
 			if let object = searchedArtwork.audioObject {
-				self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: object)
+				self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: object, isFromSearchIcon: false)
 			}
 		}
 		else if let artwork = artworkModel {
-			self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork)
+			self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork, isFromSearchIcon: true)
 		}
 	}
 	
@@ -667,7 +667,7 @@ extension MapNavigationController : MessageViewControllerDelegate {
 			hideEnableLocationMessage()
 			
 			// Log analytics
-			AICAnalytics.sendLocationNotNowPressedEvent()
+			AICAnalytics.sendLocationDetectedEvent(location: AICAnalytics.LocationState.NotNow)
 		}
 	}
 }
@@ -689,7 +689,7 @@ extension MapNavigationController : MapViewControllerDelegate {
 			}
 		}
 		else {
-			self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork)
+			self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork, isFromSearchIcon: currentMode == .artwork)
 		}
 	}
 	
