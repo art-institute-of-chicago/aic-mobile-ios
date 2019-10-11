@@ -343,91 +343,49 @@ class SectionsViewController : UIViewController {
     
     // MARK: Play Audio
 	
-	private func playArtwork(artwork: AICObjectModel, audio: AICAudioFileModel, audiogGuideNumber: Int? = nil) {
-		audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, audioGuideNumber: audiogGuideNumber)
-		showHeadphonesMessage()
-	}
-	
 	private func playAudioGuideArtwork(artwork: AICObjectModel, audioGuideID: Int) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: audioGuideID)
 		audio.language = Common.currentLanguage
 		
-		playArtwork(artwork: artwork, audio: audio, audiogGuideNumber: audioGuideID)
+        audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: .AudioGuide, audioGuideNumber: audioGuideID)
+        showHeadphonesMessage()
 		audioPlayerCardVC.showFullscreen()
-		
-		// Log analytics
-		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.AudioGuide,
-										  language: audio.language,
-                                          audio: audio,
-										  artwork: artwork,
-										  tour: nil)
 	}
 	
 	private func playAudioGuideTour(tour: AICTourModel) {
-		audioPlayerCardVC.playTourOverviewAudio(tour: tour)
+        audioPlayerCardVC.playTourOverviewAudio(tour: tour, source: .AudioGuide)
+        showHeadphonesMessage()
 		audioPlayerCardVC.showFullscreen()
-		
-		// Log analytics
-		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.AudioGuide,
-										  language: tour.language,
-                                          audio: tour.audioCommentary.audioFile,
-										  artwork: nil,
-										  tour: tour)
 	}
 	
 	private func playMapArtwork(artwork: AICObjectModel, isFromSearchIcon: Bool = false) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
 		audio.language = Common.currentLanguage
 		
-		playArtwork(artwork: artwork, audio: audio)
+        let source = isFromSearchIcon ? AICAnalytics.PlaybackSource.SearchIcon : AICAnalytics.PlaybackSource.Map
+        
+        audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: source)
+        showHeadphonesMessage()
 		audioPlayerCardVC.showMiniPlayer()
-		
-		// Log analytics
-		let source = isFromSearchIcon ? AICAnalytics.PlaybackSource.SearchIcon : AICAnalytics.PlaybackSource.Map
-		AICAnalytics.sendAudioPlayedEvent(source: source,
-										  language: audio.language,
-                                          audio: audio,
-										  artwork: artwork,
-										  tour: nil)
 	}
 	
 	private func playSearchedArtwork(artwork: AICObjectModel) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
 		audio.language = Common.currentLanguage
 		
-		playArtwork(artwork: artwork, audio: audio)
+        audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: .Search)
+        showHeadphonesMessage()
 		audioPlayerCardVC.showMiniPlayer()
-		
-		// Log analytics
-		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.Search,
-										  language: audio.language,
-                                          audio: audio,
-										  artwork: artwork,
-										  tour: nil)
 	}
 	
 	private func playTourStop(tourStop: AICTourStopModel, tour: AICTourModel) {
 		audioPlayerCardVC.playTourStopAudio(tourStop: tourStop, tour: tour)
 		audioPlayerCardVC.showMiniPlayer()
-		
-		// Log analytics
-		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.TourStop,
-										  language: tour.language,
-                                          audio: tourStop.audio,
-										  artwork: tourStop.object,
-										  tour: tour)
 	}
 	
 	private func playTourOverview(tour: AICTourModel, language: Common.Language) {
-		audioPlayerCardVC.playTourOverviewAudio(tour: tour)
+		audioPlayerCardVC.playTourOverviewAudio(tour: tour, source: .TourStop)
 		audioPlayerCardVC.showMiniPlayer()
-		
-		// Log analytics
-		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.TourStop,
-										  language: tour.language,
-                                          audio: tour.audioCommentary.audioFile,
-										  artwork: nil,
-										  tour: tour)
 	}
 	
 	// MARK: Show/Hide Search Button

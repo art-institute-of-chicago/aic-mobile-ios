@@ -45,6 +45,12 @@ class AudioPlayerNavigationController : CardNavigationController {
         }
     }
 	var currentImageURL: URL? = nil
+    
+    // Analytics data
+    var analyticsSource: AICAnalytics.PlaybackSource = .AudioGuide
+    var analyticsArtwork: AICObjectModel? = nil
+    var analyticsTour: AICTourModel? = nil
+
 	
 	var autoPlay: Bool = false
 	
@@ -121,7 +127,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 	
 	// MARK: Play Audio
 	
-	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel, audioGuideNumber: Int? = nil) {
+	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel, source: AICAnalytics.PlaybackSource, audioGuideNumber: Int? = nil) {
 		currentAudioBumper = nil
 		currentTourStopAudioFile = nil
 		
@@ -136,9 +142,19 @@ class AudioPlayerNavigationController : CardNavigationController {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setArtworkContent(artwork: artwork, audio: audio)
 		}
+        
+        // Log analytics
+        AICAnalytics.sendAudioPlayedEvent(source: source,
+                                          language: audio.language,
+                                          audio: audio,
+                                          artwork: artwork,
+                                          tour: nil)
+        analyticsSource = source
+        analyticsArtwork = artwork
+        analyticsTour = nil
 	}
 	
-	func playTourOverviewAudio(tour: AICTourModel) {
+    func playTourOverviewAudio(tour: AICTourModel, source: AICAnalytics.PlaybackSource) {
 		currentTourLanguage = tour.language
 		
 		let nextTourStop = tour.stops.first!
@@ -161,6 +177,16 @@ class AudioPlayerNavigationController : CardNavigationController {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setTourContent(tour: tour)
 		}
+        
+        // Log analytics
+        AICAnalytics.sendAudioPlayedEvent(source: source,
+                                          language: tour.language,
+                                          audio: audio,
+                                          artwork: nil,
+                                          tour: tour)
+        analyticsSource = source
+        analyticsArtwork = nil
+        analyticsTour = tour
 	}
 	
 	func playTourStopAudio(tourStop: AICTourStopModel, tour: AICTourModel) {
@@ -189,6 +215,16 @@ class AudioPlayerNavigationController : CardNavigationController {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio, tour: tour)
 		}
+        
+        // Log analytics
+        AICAnalytics.sendAudioPlayedEvent(source: .TourStop,
+                                          language: tour.language,
+                                          audio: tourStop.audio,
+                                          artwork: tourStop.object,
+                                          tour: tour)
+        analyticsSource = .TourStop
+        analyticsArtwork = tourStop.object
+        analyticsTour = tour
 	}
 	
 	private func setAudioBumperFor(nextTourStop: AICTourStopModel) {
@@ -749,13 +785,20 @@ extension AudioPlayerNavigationController {
 
 extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
 	func languageSelectorDidSelect(language: Common.Language) {
-		if let _ = currentAudioFile {
+		if let audio = currentAudioFile {
 			selectedLanguage = language // set the language to indicate the language has been selected using the LanguageSelector
-			if load(audioFile: currentAudioFile!, coverImageURL: currentImageURL!) {
+			if load(audioFile: audio, coverImageURL: currentImageURL!) {
 				miniAudioPlayerView.reset()
 				audioInfoVC.updateAudioContent(audio: currentAudioFile!)
 			}
 			selectedLanguage = nil
+            
+            // Log Analytics
+            AICAnalytics.sendAudioPlayedEvent(source: analyticsSource,
+                                              language: language,
+                                              audio: audio,
+                                              artwork: analyticsArtwork,
+                                              tour: analyticsTour)
 		}
 	}
 }
