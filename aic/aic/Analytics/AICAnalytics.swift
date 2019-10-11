@@ -283,18 +283,6 @@ class AICAnalytics {
 	
 	// MARK: Search
 	
-	static func sendSearchEvent(searchTerm: String, searchTermSource: SearchTermSource) {
-		if searchTerm != lastSearchTerm {
-			lastSearchTerm = searchTerm
-			
-			let parameters: [String : String] = [
-				"search_term" : searchTerm.truncate(length: parameterMaxLength),
-				"search_term_source" : searchTermSource.rawValue
-			]
-			trackEvent(.search, parameters: parameters)
-		}
-	}
-	
 	static func sendSearchNoResultsEvent(searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [
 			"search_term" : searchTerm.truncate(length: parameterMaxLength),

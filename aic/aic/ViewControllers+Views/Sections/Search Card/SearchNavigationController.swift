@@ -227,8 +227,6 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.view.layoutIfNeeded()
 		
 		// Log analytics
-		trackUserTypeSearchText = false
-		trackUserSelectedContent = false
 		AICAnalytics.trackScreenView("Search", screenClass: "SearchNavigationController")
 	}
 	
@@ -369,6 +367,9 @@ class SearchNavigationController : CardNavigationController {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		if let searchText = searchTextField?.text {
 			if trackLoadingType != .none {
+                // pretend user selected content so you don't track abandoned
+                trackUserSelectedContent = true
+                
 				// Log Search No Results Event
 				if resultsVC.isAllContentLoadedWithNoResults() {
 					var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
@@ -435,8 +436,7 @@ extension SearchNavigationController : UISearchBarDelegate, UITextFieldDelegate 
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         if let searchText = searchBar.text {
-            if searchText.isEmpty == false {
-                
+            if trackUserTypeSearchText == true && trackUserSelectedContent == false {
                 // Log Analytics
                 var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
                 if trackLoadingType == .autocompleteString {
@@ -531,7 +531,6 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 			searchTermSource = .TextInput
 		}
 		AICAnalytics.sendSearchTappedArtworkEvent(searchedArtwork: artwork, searchTerm: searchText, searchTermSource: searchTermSource)
-		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
@@ -553,7 +552,6 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 			searchTermSource = .TextInput
 		}
 		AICAnalytics.sendSearchTappedTourEvent(tour: tour, searchTerm: searchText, searchTermSource: searchTermSource)
-		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
@@ -575,7 +573,6 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 			searchTermSource = .TextInput
 		}
 		AICAnalytics.sendSearchTappedExhibitionEvent(exhibition: exhibition, searchTerm: searchText, searchTermSource: searchTermSource)
-		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {
