@@ -358,6 +358,7 @@ class SectionsViewController : UIViewController {
 		// Log analytics
 		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.AudioGuide,
 										  language: audio.language,
+                                          audio: audio,
 										  artwork: artwork,
 										  tour: nil)
 	}
@@ -369,6 +370,7 @@ class SectionsViewController : UIViewController {
 		// Log analytics
 		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.AudioGuide,
 										  language: tour.language,
+                                          audio: tour.audioCommentary.audioFile,
 										  artwork: nil,
 										  tour: tour)
 	}
@@ -384,6 +386,7 @@ class SectionsViewController : UIViewController {
 		let source = isFromSearchIcon ? AICAnalytics.PlaybackSource.SearchIcon : AICAnalytics.PlaybackSource.Map
 		AICAnalytics.sendAudioPlayedEvent(source: source,
 										  language: audio.language,
+                                          audio: audio,
 										  artwork: artwork,
 										  tour: nil)
 	}
@@ -398,6 +401,7 @@ class SectionsViewController : UIViewController {
 		// Log analytics
 		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.Search,
 										  language: audio.language,
+                                          audio: audio,
 										  artwork: artwork,
 										  tour: nil)
 	}
@@ -409,6 +413,7 @@ class SectionsViewController : UIViewController {
 		// Log analytics
 		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.TourStop,
 										  language: tour.language,
+                                          audio: tourStop.audio,
 										  artwork: tourStop.object,
 										  tour: tour)
 	}
@@ -420,6 +425,7 @@ class SectionsViewController : UIViewController {
 		// Log analytics
 		AICAnalytics.sendAudioPlayedEvent(source: AICAnalytics.PlaybackSource.TourStop,
 										  language: tour.language,
+                                          audio: tour.audioCommentary.audioFile,
 										  artwork: nil,
 										  tour: tour)
 	}

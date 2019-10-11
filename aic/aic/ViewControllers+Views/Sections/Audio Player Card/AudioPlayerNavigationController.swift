@@ -212,13 +212,13 @@ class AudioPlayerNavigationController : CardNavigationController {
 	
 	private func load(audioFile: AICAudioFileModel, coverImageURL: URL) -> Bool {
 		
-		if let currentAudioFile = currentAudioFile {
+		if let previousAudioFile = currentAudioFile {
 			// If it's a new artwork, log analytics
-			if (audioFile.nid != currentAudioFile.nid) {
+			if (audioFile.nid != previousAudioFile.nid) {
 				// Log analytics
 				// GA only accepts int values, so send an int from 1-100
 				let pctComplete = Int(currentAudioFileMaxProgress * 100)
-                AICAnalytics.sendAudioStoppedEvent(title: previousTrackTitle, percentPlayed: pctComplete)
+                AICAnalytics.sendAudioStoppedEvent(title: previousTrackTitle, audio: previousAudioFile, percentPlayed: pctComplete)
 			}
 			// If it's same nid and language, don't load audio
 			else if selectedLanguage == nil {
@@ -650,7 +650,7 @@ extension AudioPlayerNavigationController {
 		
 		// Log analytics
 		if let currentAudio = currentAudioFile {
-			AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, percentPlayed: 100)
+            AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, audio: currentAudio, percentPlayed: 100)
 		}
 		
 		// check that we are playing tour stop audio, before you play bumper or original track
@@ -716,7 +716,7 @@ extension AudioPlayerNavigationController {
 		if let audio = currentAudioFile {
 			if currentAudioFileMaxProgress < 1.0 {
 				var pctComplete = Int(currentAudioFileMaxProgress * 100)
-				AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, percentPlayed: pctComplete)
+                AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, audio: audio, percentPlayed: pctComplete)
 			}
 		}
 		
