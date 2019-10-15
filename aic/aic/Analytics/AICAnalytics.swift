@@ -164,11 +164,12 @@ class AICAnalytics {
 	
 	// MARK: Audio Player
 	
-	static func sendAudioPlayedEvent(source: PlaybackSource, language: Common.Language, artwork: AICObjectModel?, tour: AICTourModel?) {
+    static func sendAudioPlayedEvent(source: PlaybackSource, language: Common.Language, audio: AICAudioFileModel, artwork: AICObjectModel?, tour: AICTourModel?) {
         let languageString: String = Common.stringForLanguage[language]!
 		var parameters: [String : String] = [
 			"playback_source" : source.rawValue,
-			"playback_language" : languageString
+			"playback_language" : languageString,
+            "audio_title" : audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength)
 		]
 		if let artworkModel: AICObjectModel = artwork {
             parameters["title"] = artworkModel.title.truncate(length: parameterMaxLength)
@@ -179,11 +180,12 @@ class AICAnalytics {
 		trackEvent(.audioPlayed, parameters: parameters)
 	}
 	
-	static func sendAudioStoppedEvent(title: String, percentPlayed: Int) {
+	static func sendAudioStoppedEvent(title: String, audio: AICAudioFileModel, percentPlayed: Int) {
 		let percent = percentPlayed > 95 ? 100 : percentPlayed
         let completion: PlaybackCompletion = percent == 100 ? .Completed : .Interrupted
 		let parameters: [String : String] = [
 			"title" : title.truncate(length: parameterMaxLength),
+            "audio_title" : audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength),
             "completion" : completion.rawValue,
 			"percent_played" : String(percent)
 		]
@@ -282,18 +284,6 @@ class AICAnalytics {
 	}
 	
 	// MARK: Search
-	
-	static func sendSearchEvent(searchTerm: String, searchTermSource: SearchTermSource) {
-		if searchTerm != lastSearchTerm {
-			lastSearchTerm = searchTerm
-			
-			let parameters: [String : String] = [
-				"search_term" : searchTerm.truncate(length: parameterMaxLength),
-				"search_term_source" : searchTermSource.rawValue
-			]
-			trackEvent(.search, parameters: parameters)
-		}
-	}
 	
 	static func sendSearchNoResultsEvent(searchTerm: String, searchTermSource: SearchTermSource) {
 		let parameters: [String : String] = [

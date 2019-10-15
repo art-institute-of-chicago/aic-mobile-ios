@@ -77,6 +77,7 @@ class SearchNavigationController : CardNavigationController {
 		searchBar.placeholder = "Search Prompt".localized(using: "Search")
 		searchBar.keyboardAppearance = .dark
 		searchBar.delegate = self
+        searchBar.searchTextField.delegate = self
 		
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.backgroundColor = .aicDarkGrayColor
@@ -226,8 +227,6 @@ class SearchNavigationController : CardNavigationController {
 		resultsVC.view.layoutIfNeeded()
 		
 		// Log analytics
-		trackUserTypeSearchText = false
-		trackUserSelectedContent = false
 		AICAnalytics.trackScreenView("Search", screenClass: "SearchNavigationController")
 	}
 	
@@ -368,6 +367,9 @@ class SearchNavigationController : CardNavigationController {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		if let searchText = searchTextField?.text {
 			if trackLoadingType != .none {
+                // pretend user selected content so you don't track abandoned
+                trackUserSelectedContent = true
+                
 				// Log Search No Results Event
 				if resultsVC.isAllContentLoadedWithNoResults() {
 					var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
@@ -389,7 +391,7 @@ class SearchNavigationController : CardNavigationController {
 
 // MARK: Search Bar Delegate
 
-extension SearchNavigationController : UISearchBarDelegate {
+extension SearchNavigationController : UISearchBarDelegate, UITextFieldDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count > 0 {
 			// Log Analytics
@@ -431,6 +433,27 @@ extension SearchNavigationController : UISearchBarDelegate {
 			}
 		}
 	}
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        if let searchText = searchBar.text {
+            if trackUserTypeSearchText == true && trackUserSelectedContent == false {
+                // Log Analytics
+                var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
+                if trackLoadingType == .autocompleteString {
+                    searchTermSource = .Autocomplete
+                }
+                else if trackLoadingType == .promotedString {
+                    searchTermSource = .Promoted
+                }
+                else {
+                    searchTermSource = .TextInput
+                }
+                AICAnalytics.sendSearchAbandonedEvent(searchTerm: searchText, searchTermSource: searchTermSource)
+            }
+        }
+        
+        return true
+    }
 }
 
 // MARK: Search Data Manager Delegate
@@ -508,7 +531,6 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 			searchTermSource = .TextInput
 		}
 		AICAnalytics.sendSearchTappedArtworkEvent(searchedArtwork: artwork, searchTerm: searchText, searchTermSource: searchTermSource)
-		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(tour: AICTourModel) {
@@ -530,7 +552,6 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 			searchTermSource = .TextInput
 		}
 		AICAnalytics.sendSearchTappedTourEvent(tour: tour, searchTerm: searchText, searchTermSource: searchTermSource)
-		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(exhibition: AICExhibitionModel) {
@@ -552,7 +573,6 @@ extension SearchNavigationController : ResultsTableViewControllerDelegate {
 			searchTermSource = .TextInput
 		}
 		AICAnalytics.sendSearchTappedExhibitionEvent(exhibition: exhibition, searchTerm: searchText, searchTermSource: searchTermSource)
-		AICAnalytics.sendSearchEvent(searchTerm: searchText, searchTermSource: searchTermSource)
 	}
 	
 	func resultsTableDidSelect(filter: Common.Search.Filter) {

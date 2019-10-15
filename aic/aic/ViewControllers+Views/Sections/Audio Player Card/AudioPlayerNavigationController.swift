@@ -45,6 +45,12 @@ class AudioPlayerNavigationController : CardNavigationController {
         }
     }
 	var currentImageURL: URL? = nil
+    
+    // Analytics data
+    var analyticsSource: AICAnalytics.PlaybackSource = .AudioGuide
+    var analyticsArtwork: AICObjectModel? = nil
+    var analyticsTour: AICTourModel? = nil
+
 	
 	var autoPlay: Bool = false
 	
@@ -121,7 +127,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 	
 	// MARK: Play Audio
 	
-	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel, audioGuideNumber: Int? = nil) {
+	func playArtworkAudio(artwork: AICObjectModel, audio: AICAudioFileModel, source: AICAnalytics.PlaybackSource, audioGuideNumber: Int? = nil) {
 		currentAudioBumper = nil
 		currentTourStopAudioFile = nil
 		
@@ -136,9 +142,19 @@ class AudioPlayerNavigationController : CardNavigationController {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setArtworkContent(artwork: artwork, audio: audio)
 		}
+        
+        // Log analytics
+        AICAnalytics.sendAudioPlayedEvent(source: source,
+                                          language: audio.language,
+                                          audio: audio,
+                                          artwork: artwork,
+                                          tour: nil)
+        analyticsSource = source
+        analyticsArtwork = artwork
+        analyticsTour = nil
 	}
 	
-	func playTourOverviewAudio(tour: AICTourModel) {
+    func playTourOverviewAudio(tour: AICTourModel, source: AICAnalytics.PlaybackSource) {
 		currentTourLanguage = tour.language
 		
 		let nextTourStop = tour.stops.first!
@@ -161,6 +177,16 @@ class AudioPlayerNavigationController : CardNavigationController {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setTourContent(tour: tour)
 		}
+        
+        // Log analytics
+        AICAnalytics.sendAudioPlayedEvent(source: source,
+                                          language: tour.language,
+                                          audio: audio,
+                                          artwork: nil,
+                                          tour: tour)
+        analyticsSource = source
+        analyticsArtwork = nil
+        analyticsTour = tour
 	}
 	
 	func playTourStopAudio(tourStop: AICTourStopModel, tour: AICTourModel) {
@@ -189,6 +215,16 @@ class AudioPlayerNavigationController : CardNavigationController {
 			miniAudioPlayerView.reset()
 			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio, tour: tour)
 		}
+        
+        // Log analytics
+        AICAnalytics.sendAudioPlayedEvent(source: .TourStop,
+                                          language: tour.language,
+                                          audio: tourStop.audio,
+                                          artwork: tourStop.object,
+                                          tour: tour)
+        analyticsSource = .TourStop
+        analyticsArtwork = tourStop.object
+        analyticsTour = tour
 	}
 	
 	private func setAudioBumperFor(nextTourStop: AICTourStopModel) {
@@ -212,13 +248,13 @@ class AudioPlayerNavigationController : CardNavigationController {
 	
 	private func load(audioFile: AICAudioFileModel, coverImageURL: URL) -> Bool {
 		
-		if let currentAudioFile = currentAudioFile {
+		if let previousAudioFile = currentAudioFile {
 			// If it's a new artwork, log analytics
-			if (audioFile.nid != currentAudioFile.nid) {
+			if (audioFile.nid != previousAudioFile.nid) {
 				// Log analytics
 				// GA only accepts int values, so send an int from 1-100
 				let pctComplete = Int(currentAudioFileMaxProgress * 100)
-                AICAnalytics.sendAudioStoppedEvent(title: previousTrackTitle, percentPlayed: pctComplete)
+                AICAnalytics.sendAudioStoppedEvent(title: previousTrackTitle, audio: previousAudioFile, percentPlayed: pctComplete)
 			}
 			// If it's same nid and language, don't load audio
 			else if selectedLanguage == nil {
@@ -650,7 +686,7 @@ extension AudioPlayerNavigationController {
 		
 		// Log analytics
 		if let currentAudio = currentAudioFile {
-			AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, percentPlayed: 100)
+            AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, audio: currentAudio, percentPlayed: 100)
 		}
 		
 		// check that we are playing tour stop audio, before you play bumper or original track
@@ -716,7 +752,7 @@ extension AudioPlayerNavigationController {
 		if let audio = currentAudioFile {
 			if currentAudioFileMaxProgress < 1.0 {
 				var pctComplete = Int(currentAudioFileMaxProgress * 100)
-				AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, percentPlayed: pctComplete)
+                AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, audio: audio, percentPlayed: pctComplete)
 			}
 		}
 		
@@ -749,13 +785,20 @@ extension AudioPlayerNavigationController {
 
 extension AudioPlayerNavigationController : LanguageSelectorViewDelegate {
 	func languageSelectorDidSelect(language: Common.Language) {
-		if let _ = currentAudioFile {
+		if let audio = currentAudioFile {
 			selectedLanguage = language // set the language to indicate the language has been selected using the LanguageSelector
-			if load(audioFile: currentAudioFile!, coverImageURL: currentImageURL!) {
+			if load(audioFile: audio, coverImageURL: currentImageURL!) {
 				miniAudioPlayerView.reset()
 				audioInfoVC.updateAudioContent(audio: currentAudioFile!)
 			}
 			selectedLanguage = nil
+            
+            // Log Analytics
+            AICAnalytics.sendAudioPlayedEvent(source: analyticsSource,
+                                              language: language,
+                                              audio: audio,
+                                              artwork: analyticsArtwork,
+                                              tour: analyticsTour)
 		}
 	}
 }
