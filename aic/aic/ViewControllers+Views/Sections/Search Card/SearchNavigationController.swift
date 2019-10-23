@@ -238,6 +238,8 @@ class SearchNavigationController : CardNavigationController {
 		
 		if let searchText = searchTextField?.text {
 			if trackUserTypeSearchText == true && trackUserSelectedContent == false {
+                trackUserTypeSearchText = false // for this text, stop traking analytics until user changes search
+                
 				var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
 				if trackLoadingType == .autocompleteString {
 					searchTermSource = .Autocomplete
@@ -367,10 +369,7 @@ class SearchNavigationController : CardNavigationController {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		if let searchText = searchTextField?.text {
 			if trackLoadingType != .none {
-                // pretend user selected content so you don't track abandoned
-                trackUserSelectedContent = true
-                
-				// Log Search No Results Event
+                // Log Search No Results Event
 				if resultsVC.isAllContentLoadedWithNoResults() {
 					var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
 					if trackLoadingType == .autocompleteString {
@@ -476,7 +475,7 @@ extension SearchNavigationController : SearchDataManagerDelegate {
 		self.view.layoutIfNeeded()
 		
 		// Log analytics
-		trackUserSelectedContent = false
+		trackUserSelectedContent = resultsVC.isAllContentLoadedWithNoResults() // if no results, pretend user selected content so you don't track abandoned
 		// Reset previous perform requests to track loaded search
 		NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(trackLoadedSearch), object: nil)
 		self.perform(#selector(trackLoadedSearch), with: nil, afterDelay: 1.0) // track loaded search after a few seconds
