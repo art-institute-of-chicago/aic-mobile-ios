@@ -305,7 +305,7 @@ class AppDataManager {
 		if url.range(of: "/search") == nil {
 			url.append("/search")
 		}
-		url.append("?limit=500")
+		url.append("?limit=100")
 		let urlRequest = URLRequest(url: URL(string: url)!)
 		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
