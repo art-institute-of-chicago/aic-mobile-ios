@@ -77,7 +77,6 @@ class SearchNavigationController : CardNavigationController {
 		searchBar.placeholder = "Search Prompt".localized(using: "Search")
 		searchBar.keyboardAppearance = .dark
 		searchBar.delegate = self
-        searchBar.searchTextField.delegate = self
 		
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		searchTextField?.backgroundColor = .aicDarkGrayColor
