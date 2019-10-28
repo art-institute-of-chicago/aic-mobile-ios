@@ -601,6 +601,7 @@ class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].spaceAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
+            annotations.append(contentsOf: mapModel.floors[currentFloor].objectAnnotations as [MKAnnotation])
 //			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
 			break
             
