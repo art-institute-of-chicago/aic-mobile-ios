@@ -7,13 +7,13 @@ import UIKit
 
 class MapFloorSelectorButton: UIButton {
     private struct ColorScheme {
-        let labelColor:UIColor
-        let deselectedColor:UIColor
-        let selectedColor:UIColor
+        let labelColor: UIColor
+        let deselectedColor: UIColor
+        let selectedColor: UIColor
     }
-    
+
     private let defaultColorScheme = ColorScheme(labelColor: .aicFloorTextColor, deselectedColor: .aicFloorUnselectedColor, selectedColor: .aicFloorColor)
-    
+
     private let userLocationColorScheme = ColorScheme(labelColor: .white, deselectedColor: .aicBluedotUnselectedColor, selectedColor: .aicBluedotColor)
 
     var isUserLocationFloor = false {
@@ -26,18 +26,18 @@ class MapFloorSelectorButton: UIButton {
             updateColors()
         }
     }
-    
-    init(size:CGFloat, floorNum:Int, floorLabel: String) {
-        
+
+    init(size: CGFloat, floorNum: Int, floorLabel: String) {
+
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         super.init(frame: frame)
-        
+
         setTitle(floorLabel, for: [])
         setTitleColor(.black, for: [])
         setTitleColor(.blue, for: .highlighted)
-		
+
 		titleLabel!.font = .aicPageTextFont
-        
+
         backgroundColor = .white
         tag = floorNum
     }
@@ -45,14 +45,13 @@ class MapFloorSelectorButton: UIButton {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
     private func updateColors() {
         let colorScheme = isUserLocationFloor ? userLocationColorScheme : defaultColorScheme
-        
+
         setTitleColor(colorScheme.labelColor, for: [])
         setTitleColor(colorScheme.labelColor, for: .highlighted)
-        
+
         backgroundColor = isSelectedFloor ? colorScheme.selectedColor : colorScheme.deselectedColor
     }
 }

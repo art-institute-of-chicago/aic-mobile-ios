@@ -8,28 +8,28 @@
 
 import UIKit
 
-class ContentCardNavigationController : CardNavigationController {
+class ContentCardNavigationController: CardNavigationController {
 	var tableVC: UITableViewController
-	
+
 	init(tableVC: UITableViewController) {
 		self.tableVC = tableVC
 		super.init(nibName: nil, bundle: nil)
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
+
         // Add main VC as subview to rootVC
         tableVC.willMove(toParent: rootVC)
         rootVC.view.addSubview(tableVC.view)
         tableVC.didMove(toParent: rootVC)
-		
+
 		createViewConstraints()
-		
+
 		// Accessibility
 		downArrowButton.accessibilityLabel = "Close Card"
 		self.accessibilityElements = [
@@ -37,7 +37,7 @@ class ContentCardNavigationController : CardNavigationController {
 			tableVC.tableView
 		]
 	}
-	
+
 	func createViewConstraints() {
         tableVC.view.autoPinEdge(.top, to: .top, of: rootVC.view, withOffset: contentTopMargin)
         tableVC.view.autoPinEdge(.leading, to: .leading, of: rootVC.view)
@@ -57,4 +57,3 @@ extension ContentCardNavigationController {
         return false
     }
 }
-

@@ -68,7 +68,7 @@ class VisibleMapRegionDelegate: NSObject {
         var didClampZoom = false
 
         // Has the zoom level stabilized?
-        if (lastAltitude != camera.altitude) {
+        if lastAltitude != camera.altitude {
             // Not yet! Someone is changing the zoom!
             lastAltitude = camera.altitude
 
@@ -76,7 +76,7 @@ class VisibleMapRegionDelegate: NSObject {
             didClampZoom = clampZoomToFloorplan(mapView, floorplanBoundingMapRect: boundingMapRectIncludingRotations, floorplanCenter: floorplanCenter)
         }
 
-        if (!didClampZoom) {
+        if !didClampZoom {
             // Once the zoom level has stabilized, auto-scroll if needed.
             clampScrollToFloorplan(mapView, floorplanBoundingPDFBoxRect: boundingPDFBox, optionalCameraHeading: needResetCameraOrientation ? floorplanUprightMKMapCameraHeading : Double.nan)
             needResetCameraOrientation = false
@@ -108,7 +108,7 @@ class VisibleMapRegionDelegate: NSObject {
     */
     func floorplanDoesNotFillScreen(_ mapView: MKMapView, floorplanBoundingMapRect: MKMapRect) -> Bool {
 
-        if (floorplanBoundingMapRect.contains(mapView.visibleMapRect)) {
+        if floorplanBoundingMapRect.contains(mapView.visibleMapRect) {
             // Your view is already entirely inside the floorplan.
             return false
         }
@@ -138,7 +138,7 @@ class VisibleMapRegionDelegate: NSObject {
         let maxZoomedOut: MKMapRect = mapView.mapRectThatFits(floorplanBoundingMapRect)
         let maxZoomedOutArea: Double = maxZoomedOut.size.area()
 
-        if (maxZoomedOutArea < mapViewVisibleMapRectArea) {
+        if maxZoomedOutArea < mapViewVisibleMapRectArea {
             // You have zoomed out too far?
 
             let zoomFactor: Double = sqrt(maxZoomedOutArea / mapViewVisibleMapRectArea)
@@ -155,7 +155,7 @@ class VisibleMapRegionDelegate: NSObject {
                 Assumption: We will never see a lowestGoodAltitude smaller than
                 0.5x a stable MapKit altitude.
             */
-            if (newAltitudeUsable < currentAltitude) {
+            if newAltitudeUsable < currentAltitude {
                 // Zoom back in.
                 return newAltitudeUsable
             }
@@ -174,12 +174,12 @@ class VisibleMapRegionDelegate: NSObject {
     */
     func clampZoomToFloorplan(_ mapView: MKMapView, floorplanBoundingMapRect: MKMapRect, floorplanCenter: CLLocationCoordinate2D) -> Bool {
 
-        if (floorplanDoesNotFillScreen(mapView, floorplanBoundingMapRect: floorplanBoundingMapRect)) {
+        if floorplanDoesNotFillScreen(mapView, floorplanBoundingMapRect: floorplanBoundingMapRect) {
             // Clamp!
 
             let newAltitude: CLLocationDistance = getZoomAdjustment(mapView, floorplanBoundingMapRect: floorplanBoundingMapRect)
 
-            if (!newAltitude.isNaN) {
+            if !newAltitude.isNaN {
                 // We have a zoom change to make!
 
                 let newCamera: MKMapCamera = mapView.camera.copy() as! MKMapCamera
@@ -248,13 +248,13 @@ class VisibleMapRegionDelegate: NSObject {
         */
         let scrollNeeded = scrollDistancePixels > 1.0
 
-        if (rotationNeeded || scrollNeeded) {
+        if rotationNeeded || scrollNeeded {
             let newCamera = mapView.camera.copy() as! MKMapCamera
-            if (rotationNeeded) {
+            if rotationNeeded {
                 // Rotation the camera (e.g. to make the floorplan upright).
                 newCamera.heading = optionalCameraHeading
             }
-            if (scrollNeeded) {
+            if scrollNeeded {
                 // Scroll back toward the floorplan.
                 var cameraCenter = MKMapPoint(mapView.camera.centerCoordinate)
                 cameraCenter.x += dxOffset
@@ -263,6 +263,6 @@ class VisibleMapRegionDelegate: NSObject {
             }
             mapView.setCamera(newCamera, animated: true)
         }
-        
+
     }
 }

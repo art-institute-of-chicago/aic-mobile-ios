@@ -32,8 +32,8 @@ class FloorplanOverlayRenderer: MKOverlayRenderer {
         - note: Overrides the drawMapRect method for MKOverlayRenderer.
     */
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-        if (!overlay.boundingMapRect.intersects(mapRect)) {
-            return;
+        if !overlay.boundingMapRect.intersects(mapRect) {
+            return
         }
         assert(overlay.isKind(of: FloorplanOverlay.self), "Wrong overlay type")
 
@@ -79,7 +79,7 @@ class FloorplanOverlayRenderer: MKOverlayRenderer {
             For additional debugging, uncomment the following two lines to
             highlight the floorplan's boundingMapRect in cyan.
         */
-        if (SHOW_DIAGNOSTIC_VISUALS == true) {
+        if SHOW_DIAGNOSTIC_VISUALS == true {
             context.setFillColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 0.5)
             context.fill(mapkitToGraphicsConversion)
         }
@@ -98,7 +98,7 @@ class FloorplanOverlayRenderer: MKOverlayRenderer {
             The following diagnostic visuals are provided for debugging only.
             In production, you'll want to remove them.
         */
-        if (SHOW_DIAGNOSTIC_VISUALS == true) {
+        if SHOW_DIAGNOSTIC_VISUALS == true {
             drawDiagnosticVisuals(context, floorplanOverlay: floorplanOverlay)
         }
     }
@@ -165,7 +165,7 @@ class FloorplanOverlayRenderer: MKOverlayRenderer {
         */
         context.setFillColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
         context.fill(CGRect(x: -0.5, y: -0.5, width: 10.0, height: 1.0))
-        
+
         /**
             Draw a 1pt x 10pt blue rectangle that covers the square centered at
             (0.0, 0.0) through the square centered at (0.0, 10.0).

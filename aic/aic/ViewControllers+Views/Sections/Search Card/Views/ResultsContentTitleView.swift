@@ -8,53 +8,52 @@
 
 import UIKit
 
-class ResultsContentTitleView : UITableViewHeaderFooterView {
+class ResultsContentTitleView: UITableViewHeaderFooterView {
 	static let reuseIdentifier: String = "resultsContentTitleView"
-	
+
 	let dividerLine: UIView = UIView()
 	let contentTitleLabel: UILabel = UILabel()
 	let seeAllButton: UIButton = UIButton()
-	
+
 	static let titleHeight: CGFloat = 65
-	
+
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
-		
+
 		self.contentView.backgroundColor = .aicDarkGrayColor
-		
+
 		dividerLine.backgroundColor = .aicDividerLineDarkColor
-		
+
 		contentTitleLabel.font = .aicContentTitleFont
 		contentTitleLabel.textColor = .white
-		
+
 		seeAllButton.semanticContentAttribute = .forceRightToLeft
 		seeAllButton.titleLabel?.font = .aicHomeSeeAllFont
 		seeAllButton.setTitle("See all", for: .normal)
 		seeAllButton.setTitleColor(.aicCardDarkTextColor, for: .normal)
 		seeAllButton.setImage(#imageLiteral(resourceName: "homeSeeAllArrow").colorized(.aicCardDarkTextColor), for: .normal)
-		
+
 		self.contentView.addSubview(dividerLine)
 		self.contentView.addSubview(contentTitleLabel)
 		self.contentView.addSubview(seeAllButton)
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	override func updateConstraints() {
 		dividerLine.autoPinEdge(.top, to: .top, of: self, withOffset: 8)
 		dividerLine.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
-		
+
 		contentTitleLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 17)
 		contentTitleLabel.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
-		
+
 		seeAllButton.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 21)
 		seeAllButton.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -8)
-		
+
 		super.updateConstraints()
 	}
 }
-

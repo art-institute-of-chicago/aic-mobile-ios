@@ -10,16 +10,16 @@ import UIKit
 /// HomeExhibitionCell
 ///
 /// UICollectionViewCell for list of Exhibitions featured in Homepage
-class HomeExhibitionCell : UICollectionViewCell {
+class HomeExhibitionCell: UICollectionViewCell {
 	static let reuseIdentifier = "homeExhibitionCell"
-	
+
 	@IBOutlet var exhibitionImageView: AICImageView!
 	@IBOutlet var exhibitionTitleLabel: UILabel!
 	@IBOutlet var throughDateTextView: UITextView!
-	
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
+
 		exhibitionImageView.contentMode = .scaleAspectFill
 		exhibitionImageView.clipsToBounds = true
 		exhibitionTitleLabel.font = .aicTitleFont
@@ -29,24 +29,24 @@ class HomeExhibitionCell : UICollectionViewCell {
 		throughDateTextView.textColor = .aicDarkGrayColor
 		throughDateTextView.textContainerInset.left = -4
 	}
-	
+
 	var exhibitionModel: AICExhibitionModel? {
 		didSet {
 			guard let exhibitionModel = self.exhibitionModel else {
 				return
 			}
-			
+
 			// set up UI
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
             throughDateTextView.attributedText = getAttributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 22)
-			
+
 			// Accessibility
 			self.accessibilityElements = [
 				exhibitionTitleLabel,
 				throughDateTextView
 			]
-			
+
 			// Accessibility
 			self.isAccessibilityElement = true
 			self.accessibilityLabel = "Exhibition"
@@ -55,4 +55,3 @@ class HomeExhibitionCell : UICollectionViewCell {
 		}
 	}
 }
-

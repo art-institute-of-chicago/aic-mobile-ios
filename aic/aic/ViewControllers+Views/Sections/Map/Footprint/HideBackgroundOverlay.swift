@@ -36,6 +36,4 @@ class HideBackgroundOverlay: MKPolygon {
         return true
     }
 
-
 }
-

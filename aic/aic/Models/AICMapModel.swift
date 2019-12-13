@@ -13,7 +13,7 @@ struct AICMapModel {
     private (set) var imageAnnotations: [MapImageAnnotation] = []
     private (set) var landmarkAnnotations: [MapTextAnnotation] = []
     private (set) var gardenAnnotations: [MapTextAnnotation] = []
-	
+
 	var diningAnnotations: [MapAmenityAnnotation] {
 		var result = [MapAmenityAnnotation]()
 		for floor in AppDataManager.sharedInstance.app.map.floors {
@@ -21,7 +21,7 @@ struct AICMapModel {
 		}
 		return result
 	}
-    
+
     // Floors
     let floors: [AICMapFloorModel]
 }

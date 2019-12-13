@@ -7,15 +7,15 @@
 import MapKit
 
 class MapAmenityAnnotationView: MapAnnotationView {
-    
+
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        
+
         layer.zPosition = Common.Map.AnnotationZPosition.amenities.rawValue
 		isEnabled = false
 
         self.layer.drawsAsynchronously = true
-        
+
         // Load in the base image (white image we colorize based on section)
         if let amenityAnnotation = annotation as? MapAmenityAnnotation {
 			switch amenityAnnotation.type {
@@ -49,11 +49,11 @@ class MapAmenityAnnotationView: MapAnnotationView {
 			}
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-	
+
 	override func setSelected(_ selected: Bool, animated: Bool) {
 		if self.isSelected != selected {
 			self.isSelected = selected
@@ -61,8 +61,7 @@ class MapAmenityAnnotationView: MapAnnotationView {
 				UIView.animate(withDuration: 0.25, animations: {
 					self.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
 				})
-			}
-			else {
+			} else {
 				UIView.animate(withDuration: 0.25, animations: {
 					self.transform = CGAffineTransform(scaleX: 1, y: 1)
 				})

@@ -6,9 +6,9 @@
 import UIKit
 
 struct AICMessageModel {
-    let iconImage:UIImage
-    let title:String
-    let message:String
-    let actionButtonTitle:String
-    let cancelButtonTitle:String?
+    let iconImage: UIImage
+    let title: String
+    let message: String
+    let actionButtonTitle: String
+    let cancelButtonTitle: String?
 }

@@ -8,18 +8,18 @@
 
 import UIKit
 
-class SectionNavigationBar : UIView {
+class SectionNavigationBar: UIView {
 	let headerView: UIView = UIView()
 	let headerAnimatedColorView: UIView = UIView()
-	let backdropImageView:UIImageView = UIImageView()
+	let backdropImageView: UIImageView = UIImageView()
 	let backButton: UIButton = UIButton()
-	let iconImageView:UIImageView = UIImageView()
-	let titleLabel:UILabel = UILabel()
-	let descriptionLabel:UILabelPadding = UILabelPadding()
+	let iconImageView: UIImageView = UIImageView()
+	let titleLabel: UILabel = UILabel()
+	let descriptionLabel: UILabelPadding = UILabelPadding()
 	let searchButton: UIButton = UIButton()
-	
+
 	private let margins = UIEdgeInsets(top: 40, left: 30, bottom: 30, right: 30)
-	
+
 	private let backButtonBottomMargin: CGFloat = 1
 	private let backButtonLeftMargin: CGFloat = 3
 	private let backButtonContentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -30,49 +30,48 @@ class SectionNavigationBar : UIView {
 	private var titleMinimumScale: CGFloat = 0.7
 	private let descriptionTopMargin: CGFloat = 65
 	private let searchButtonBackgroundAlpha: CGFloat = 0.4
-	
-	internal let titleString:String
-	
+
+	internal let titleString: String
+
 	private var isAnimating: Bool = false
-	
+
 	enum State {
 		case open
 		case collapsed
 		case hidden
 	}
 	var currentState: State = .open
-	
+
 	init(section: AICSectionModel) {
 		titleString = section.title
 		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.navigationBarMinimizedHeight))
-		
+
 		self.backgroundColor = .clear
-		
+
 		headerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Common.Layout.navigationBarHeight)
 		headerView.clipsToBounds = true
 		headerView.backgroundColor = section.color
-		
+
 		headerAnimatedColorView.alpha = 0.0
 		headerAnimatedColorView.backgroundColor = .aicMemberCardRedColor
-		
+
 		if let _ = section.background {
 			self.backdropImageView.image = section.background
 		}
-		
+
 		backButton.setImage(#imageLiteral(resourceName: "backButton"), for: .normal)
 		backButton.contentEdgeInsets = backButtonContentInsets
 		setBackButtonHidden(true)
-		
+
 		iconImageView.image = section.icon
-		
+
 		enableParallaxEffect()
-		
+
 		titleLabel.numberOfLines = 1
 		if section.nid == Section.home.rawValue {
 			titleLabel.font = .aicHomeSectionTitleFont
 			titleBottomMargin = -1
-		}
-		else {
+		} else {
 			titleLabel.font = .aicSectionTitleFont
 		}
 		titleLabel.textColor = .white
@@ -81,24 +80,24 @@ class SectionNavigationBar : UIView {
 		titleLabel.adjustsFontSizeToFitWidth = true
 		titleLabel.minimumScaleFactor = 0.2
 		titleLabel.text = section.title
-		
+
 		if section.nid == Section.home.rawValue {
 			titleTopMargin = 176
 			titleMinimumScale = 0.5
 		}
-		
+
 		if section.nid != Section.home.rawValue {
 			descriptionLabel.numberOfLines = 2
 			descriptionLabel.textColor = .white
 			descriptionLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - margins.right - margins.left
 			descriptionLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
 		}
-		
+
 		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
 		searchButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
 		searchButton.backgroundColor = UIColor(white: 0.0, alpha: searchButtonBackgroundAlpha)
 		searchButton.layer.cornerRadius = 18
-		
+
 		// Add Subviews
 		headerView.addSubview(headerAnimatedColorView)
 		headerView.addSubview(backdropImageView)
@@ -110,10 +109,10 @@ class SectionNavigationBar : UIView {
 		headerView.addSubview(backButton)
 		addSubview(headerView)
 		addSubview(searchButton)
-		
+
 		createConstraints()
 		layoutIfNeeded()
-		
+
 		// Accessibility
 		searchButton.accessibilityLabel = "Search"
 		self.accessibilityElements = [
@@ -122,11 +121,11 @@ class SectionNavigationBar : UIView {
 			searchButton
 		]
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	func collapse() {
 		currentState = .collapsed
 		self.layer.removeAllAnimations()
@@ -140,7 +139,7 @@ class SectionNavigationBar : UIView {
 			self.layoutIfNeeded()
 		}
 	}
-	
+
 	func hide() {
 		currentState = .hidden
 		self.layer.removeAllAnimations()
@@ -154,11 +153,11 @@ class SectionNavigationBar : UIView {
 			self.layoutIfNeeded()
 		}
 	}
-	
+
 	func setBackButtonHidden(_ hidden: Bool) {
 		backButton.isHidden = hidden
 		backButton.isEnabled = !hidden
-		
+
 		// Accessibility
 		if hidden {
 			self.accessibilityElements = [
@@ -166,8 +165,7 @@ class SectionNavigationBar : UIView {
 				descriptionLabel,
 				searchButton
 			]
-		}
-		else {
+		} else {
 			self.accessibilityElements = [
 				backButton,
 				titleLabel,
@@ -176,7 +174,7 @@ class SectionNavigationBar : UIView {
 			]
 		}
 	}
-	
+
 	func updateHeight(contentOffset: CGPoint) {
 		var frameHeight = Common.Layout.navigationBarHeight + (contentOffset.y * -1.0)
 		frameHeight = clamp(val: frameHeight, minVal: Common.Layout.navigationBarMinimizedHeight, maxVal: 99999.0)
@@ -184,41 +182,40 @@ class SectionNavigationBar : UIView {
 		alphaVal = clamp(val: alphaVal, minVal: 0.0, maxVal: 1.0)
 		var titleScale = CGFloat(map(val: Double(frameHeight), oldRange1: Double(Common.Layout.navigationBarMinimizedHeight), oldRange2: Double(Common.Layout.navigationBarHeight), newRange1: Double(titleMinimumScale), newRange2: 1.0))
 		titleScale = clamp(val: titleScale, minVal: titleMinimumScale, maxVal: 1.0)
-		
+
 		self.headerView.frame.size.height = frameHeight
 		self.backdropImageView.alpha = alphaVal
 		self.iconImageView.alpha = alphaVal
 		self.descriptionLabel.alpha = alphaVal
 		self.searchButton.backgroundColor = UIColor(white: 0.0, alpha: searchButtonBackgroundAlpha * alphaVal)
 		self.titleLabel.transform = CGAffineTransform(scaleX: titleScale, y: titleScale)
-		
+
 		if frameHeight == Common.Layout.navigationBarMinimizedHeight {
 			currentState = .collapsed
-		}
-		else if frameHeight > Common.Layout.navigationBarMinimizedHeight {
+		} else if frameHeight > Common.Layout.navigationBarMinimizedHeight {
 			currentState = .open
 		}
 		self.layoutIfNeeded()
 	}
-	
+
 	func createConstraints() {
 		headerAnimatedColorView.autoPinEdgesToSuperviewEdges()
-		
+
 		backButton.autoPinEdge(.bottom, to: .top, of: headerView, withOffset: Common.Layout.navigationBarMinimizedHeight - backButtonBottomMargin)
 		backButton.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: backButtonLeftMargin)
-		
+
 		if let _ = self.backdropImageView.image {
 			backdropImageView.autoPinEdge(.top, to: .top, of: headerView)
 			backdropImageView.autoPinEdge(.leading, to: .leading, of: headerView)
 			backdropImageView.autoPinEdge(.trailing, to: .trailing, of: headerView)
 			backdropImageView.autoMatch(.height, to: .width, of: backdropImageView, withMultiplier: backdropImageView.image!.size.height / backdropImageView.image!.size.width)
 		}
-		
+
 		iconImageView.autoAlignAxis(.vertical, toSameAxisOf: headerView)
 		iconImageView.autoPinEdge(.bottom, to: .top, of: titleLabel, withOffset: -iconBottomMargin)
 		iconImageView.autoSetDimension(.width, toSize: iconImageView.image!.size.width)
 		iconImageView.autoSetDimension(.height, toSize: iconImageView.image!.size.height)
-		
+
 		NSLayoutConstraint.autoSetPriority(.defaultLow) {
 			titleLabel.autoPinEdge(.top, to: .top, of: headerView, withOffset: titleTopMargin)
 		}
@@ -227,33 +224,33 @@ class SectionNavigationBar : UIView {
 		NSLayoutConstraint.autoSetPriority(.defaultHigh) {
 			titleLabel.autoPinEdge(.bottom, to: .bottom, of: headerView, withOffset: -titleBottomMargin, relation: .lessThanOrEqual)
 		}
-		
+
 		if descriptionLabel.superview != nil {
 			descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel)
 			descriptionLabel.autoSetDimensions(to: CGSize(width: 300.0, height: 60.0))
 			descriptionLabel.autoAlignAxis(.vertical, toSameAxisOf: headerView)
 		}
-		
+
 		searchButton.autoSetDimensions(to: CGSize(width: 36, height: 36))
 		searchButton.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -11)
 		searchButton.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -5)
 	}
-	
+
 	func disableParallaxEffect() {
 		backdropImageView.motionEffects.removeAll()
 	}
-	
+
 	func enableParallaxEffect() {
 		addParallexEffect(toView: backdropImageView, left: 0, right: 0, top: -30, bottom: 30)
 	}
-	
+
 	func startColorAnimation() {
 		isAnimating = true
 		headerAnimatedColorView.alpha = 0.0
-		
+
 		UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseIn], animations: {
 			self.headerAnimatedColorView.alpha = 1.0
-		}) { (completedHalf) in
+		}) { (_) in
 			UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseIn], animations: {
 				self.headerAnimatedColorView.alpha = 0.0
 			}) { (completed) in
@@ -263,7 +260,7 @@ class SectionNavigationBar : UIView {
 			}
 		}
 	}
-	
+
 	func stopColorAnimation() {
 		isAnimating = false
 		UIView.animate(withDuration: 0.1) {
@@ -272,11 +269,11 @@ class SectionNavigationBar : UIView {
 	}
 }
 
-extension SectionNavigationBar : SectionViewControllerScrollDelegate {
+extension SectionNavigationBar: SectionViewControllerScrollDelegate {
 	func sectionViewControllerDidScroll(scrollView: UIScrollView) {
 		updateHeight(contentOffset: scrollView.contentOffset)
 	}
-	
+
 	func sectionViewControllerWillAppearWithScrollView(scrollView: UIScrollView) {
 		UIView.animate(withDuration: 0.5) {
 			self.updateHeight(contentOffset: scrollView.contentOffset)

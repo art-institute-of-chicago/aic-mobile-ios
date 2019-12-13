@@ -7,7 +7,7 @@
 import UIKit
 
 extension UITextView {
-    
+
     func setDefaultsForAICAttributedTextView() {
         backgroundColor = .clear
         isScrollEnabled = false

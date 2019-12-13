@@ -6,7 +6,6 @@
     This class describes a floorplan for an indoor venue.
 */
 
-
 import Foundation
 import MapKit
 
@@ -103,7 +102,7 @@ import MapKit
             when we dealloc.
             (see "The Create Rule" on developer.apple.com for more)
         */
-        
+
         pdfDoc = CGPDFDocument(floorplanUrl as CFURL)!
 
         /*

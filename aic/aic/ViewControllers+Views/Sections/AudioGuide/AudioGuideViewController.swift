@@ -8,11 +8,11 @@
 
 import UIKit
 
-class AudioGuideViewController : UIViewController {
-	
+class AudioGuideViewController: UIViewController {
+
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
+
 		// Log analytics
 		AICAnalytics.trackScreenView("Audio Guide", screenClass: "AudioGuideViewController")
 	}

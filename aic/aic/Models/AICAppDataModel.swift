@@ -12,7 +12,7 @@ struct AICAppDataModel {
 	var tourCategories: [AICTourCategoryModel]	= []
 	var map: AICMapModel
 	var restaurants: [AICRestaurantModel] = []
-	var dataSettings: [Common.DataSetting : String]	= [:]
+	var dataSettings: [Common.DataSetting: String]	= [:]
 	var searchStrings: [String]			= []
 	var searchArtworks: [AICObjectModel] = []
 }

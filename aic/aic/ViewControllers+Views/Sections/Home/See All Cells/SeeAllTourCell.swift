@@ -12,19 +12,19 @@ import Localize_Swift
 /// SeeAllTourCell
 ///
 /// UICollectionViewCell for list of all Tours
-class SeeAllTourCell : UICollectionViewCell {
+class SeeAllTourCell: UICollectionViewCell {
 	static let reuseIdentifier = "seeAllTourCell"
-	
+
 	@IBOutlet var tourImageView: AICImageView!
 	@IBOutlet var tourTitleLabel: UILabel!
 	@IBOutlet var dividerLine: UIView!
 	@IBOutlet var shortDescriptionTextView: UITextView!
 	@IBOutlet var stopsNumberLabel: UILabel!
 	@IBOutlet var durationLabel: UILabel!
-	
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
+
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
 		stopsNumberLabel.font = .aicSeeAllInfoFont
@@ -40,30 +40,29 @@ class SeeAllTourCell : UICollectionViewCell {
 		shortDescriptionTextView.textContainerInset.left = -4
 		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
 	}
-	
+
 	var tourModel: AICTourModel? = nil {
 		didSet {
 			guard let tourModel = self.tourModel else {
 				return
 			}
-			
+
 			if let _ = tourModel.translations[Common.currentLanguage] {
 				self.tourModel!.language = Common.currentLanguage
 			}
-			
+
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			tourTitleLabel.text = self.tourModel!.title
             shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 20)
 			stopsNumberLabel.text = "\(tourModel.stops.count) " + "Stops".localized(using: "Home")
-			
+
 			if (self.tourModel!.durationInMinutes ?? "").isEmpty {
 				durationLabel.isHidden = true
-			}
-			else if let duration: String = self.tourModel!.durationInMinutes {
+			} else if let duration: String = self.tourModel!.durationInMinutes {
 				durationLabel.text = "\(duration)"
 			}
-			
+
 			// Accessibility
 			self.isAccessibilityElement = true
 			self.accessibilityLabel = "Tour"

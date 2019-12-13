@@ -7,14 +7,14 @@ import Kingfisher
 
 class MapDepartmentAnnotation: MapAnnotation {
     var title: String?
-    var image: UIImage? = nil
-    
+    var image: UIImage?
+
     init(coordinate: CLLocationCoordinate2D, title: String, imageUrl: URL) {
         self.title = title
         self.image = nil
 		super.init(coordinate: coordinate)
-		
-		ImageDownloader.default.downloadImage(with: imageUrl, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, error, url, data) in
+
+		ImageDownloader.default.downloadImage(with: imageUrl, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, _, _, _) in
 			if image != nil {
 				self.image = image!
 			}

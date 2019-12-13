@@ -4,8 +4,8 @@
  */
 
 struct AICMessageSmallModel {
-    let title:String
-    let message:String
-    let actionButtonTitle:String
-    let cancelButtonTitle:String?
+    let title: String
+    let message: String
+    let actionButtonTitle: String
+    let cancelButtonTitle: String?
 }

@@ -6,10 +6,10 @@
 import UIKit
 import MapKit
 
-class MapLocationAnnotation : NSObject, MKAnnotation {
+class MapLocationAnnotation: NSObject, MKAnnotation {
     // MARK: Properties
     var coordinate: CLLocationCoordinate2D
-    
+
     // MARK: Initialization
 	init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate

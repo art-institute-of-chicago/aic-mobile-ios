@@ -75,7 +75,7 @@ extension CGPoint {
         - returns: the mean point of the two CGPoint objects.
     */
     static func pointAverage(_ a: CGPoint, b: CGPoint) -> CGPoint {
-        return CGPoint(x:(a.x + b.x) * 0.5, y:(a.y + b.y) * 0.5)
+        return CGPoint(x: (a.x + b.x) * 0.5, y: (a.y + b.y) * 0.5)
     }
 }
 
@@ -87,7 +87,6 @@ extension CGVector {
     func dotProductWithVector(_ other: CGVector) -> CGFloat {
         return dx * other.dx + dy * other.dy
     }
-
 
     /**
         - parameter scale: how much to scale (e.g. 1.0, 1.5, 0.2, etc).
@@ -137,10 +136,10 @@ extension MKMapRect {
         - returns: an MKMapRect converted to an MKPolygon.
     */
     func polygonFromMapRect() -> MKPolygon {
-        var corners =  [MKMapPoint(x: maxX,  y: maxY),
-                        MKMapPoint(x: minX,  y: maxY),
-                        MKMapPoint(x: minX,  y: minY),
-                        MKMapPoint(x: maxX,  y: minY)]
+        var corners =  [MKMapPoint(x: maxX, y: maxY),
+                        MKMapPoint(x: minX, y: maxY),
+                        MKMapPoint(x: minX, y: minY),
+                        MKMapPoint(x: maxX, y: minY)]
 
         return MKPolygon(points: &corners, count: corners.count)
     }

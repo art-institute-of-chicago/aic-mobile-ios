@@ -8,7 +8,7 @@ import CoreLocation
 import Localize_Swift
 
 struct Common {
-    
+
     // MARK: Testing
     struct Testing {
 
@@ -33,7 +33,7 @@ struct Common {
     // MARK: Data
     struct DataConstants {
         static let totalDataFeeds = 4
-        
+
         static var appDataJSON = "http://localhost:8888/appData.json"
 
         // This URL is the link for requests to validate member card data. The member card feature is disabled by default
@@ -52,8 +52,8 @@ struct Common {
     }
 
     // MARK: Sections
-    static let Sections:[Section:AICSectionModel] = [
-		Section.home: AICSectionModel(nid:Section.home.rawValue,
+    static let Sections: [Section: AICSectionModel] = [
+		Section.home: AICSectionModel(nid: Section.home.rawValue,
 										 color: .aicHomeColor,
 										 background: #imageLiteral(resourceName: "backgroundHome"),
 										 icon: #imageLiteral(resourceName: "iconHome"),
@@ -61,7 +61,7 @@ struct Common {
 										 tabBarTitle: "Home",
 										 tabBarIcon: #imageLiteral(resourceName: "navHome")
 		),
-		Section.audioGuide: AICSectionModel(nid:Section.audioGuide.rawValue,
+		Section.audioGuide: AICSectionModel(nid: Section.audioGuide.rawValue,
             color: .aicAudioGuideColor,
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconNumPad"),
@@ -69,7 +69,7 @@ struct Common {
             tabBarTitle: "Audio",
             tabBarIcon: #imageLiteral(resourceName: "navNumPad")
         ),
-        Section.map: AICSectionModel(nid:Section.map.rawValue,
+        Section.map: AICSectionModel(nid: Section.map.rawValue,
             color: .aicNearbyColor,
 			background: nil,
 			icon: #imageLiteral(resourceName: "iconMap"),
@@ -77,7 +77,7 @@ struct Common {
             tabBarTitle: "Map",
             tabBarIcon: #imageLiteral(resourceName: "navMap")
         ),
-        Section.info: AICSectionModel(nid:Section.info.rawValue,
+        Section.info: AICSectionModel(nid: Section.info.rawValue,
             color: .aicInfoColor,
 			background: #imageLiteral(resourceName: "backgroundInfo"),
             icon: #imageLiteral(resourceName: "iconInfo"),
@@ -86,7 +86,6 @@ struct Common {
             tabBarIcon: #imageLiteral(resourceName: "navInfo")
         )
     ]
-
 
     // MARK: User Defaults
     struct UserDefaults {
@@ -108,50 +107,49 @@ struct Common {
         static let memberInfoSelectedMemberDefaultsKey = "AICMemberInfoSelectedMember"
 
         static let onDiskAppDataLastModifiedStringKey = "AICAppDataLastModified"
-		
+
 		static let lastVersionNumberKey = "AICLastVersionNumber"
     }
 
     // MARK: URL Scheme/Deep Links
     struct DeepLinks {
-        
+
         static var loadedEnoughToLink = false
-        
+
         static let domain = "artic"
         static let tourCategory = "tour"
 
-        static func getURL(forTour tour:AICTourModel) -> String? {
-            if (loadedEnoughToLink){
+        static func getURL(forTour tour: AICTourModel) -> String? {
+            if loadedEnoughToLink {
                 return String("\(domain)://\(tourCategory)/\(tour.nid)")
             } else {
                 return nil
             }
         }
     }
-	
+
 	// MARK: Language
-	enum Language : String {
+	enum Language: String {
 		case english = "en"
 		case spanish = "es"
 		case chinese = "zh-Hans"
 	}
-	
+
 	static var currentLanguage: Language {
 		let current = Localize.currentLanguage()
 		if current.hasPrefix("es") {
 			return .spanish
-		}
-		else if current.hasPrefix("zh") {
+		} else if current.hasPrefix("zh") {
 			return .chinese
 		}
 		return .english
 	}
-	
-	static var stringForLanguage: [Language : String] {
+
+	static var stringForLanguage: [Language: String] {
 		return [
-			Language.english : "English",
-			Language.spanish : "Spanish",
-			Language.chinese : "Chinese"]
+			Language.english: "English",
+			Language.spanish: "Spanish",
+			Language.chinese: "Chinese"]
 	}
 
     // MARK: Layout
@@ -168,9 +166,9 @@ struct Common {
 			}
 			return 20
 		}
-		
+
 		static var navigationBarHeight: CGFloat = 240
-		
+
 		static var navigationBarMinimizedHeight: CGFloat {
 			if UIDevice().type == .iPhoneX ||
 				UIDevice().type == .iPhoneXS ||
@@ -183,7 +181,7 @@ struct Common {
 			}
 			return 64
 		}
-		
+
 		static var tabBarHeight: CGFloat {
             if UIDevice().type == .iPhoneX ||
 				UIDevice().type == .iPhoneXS ||
@@ -196,13 +194,13 @@ struct Common {
 			}
 			return 49
 		}
-		
+
 		static var miniAudioPlayerHeight: CGFloat = 42.0
 
-        static var tabBarHeightWithMiniAudioPlayerHeight:CGFloat {
+        static var tabBarHeightWithMiniAudioPlayerHeight: CGFloat {
 			return tabBarHeight + miniAudioPlayerHeight
         }
-		
+
 		static var cardFullscreenPositionY: CGFloat {
 			if UIDevice().type == .iPhoneX ||
 				UIDevice().type == .iPhoneXS ||
@@ -215,20 +213,20 @@ struct Common {
 			}
 			return 20
 		}
-		
+
 		static var cardMinimizedPositionY: CGFloat {
 			return UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.cardMinimizedContentHeight
 		}
-		
+
 		static var cardContentHeight: CGFloat {
 			return UIScreen.main.bounds.height - cardFullscreenPositionY - Common.Layout.tabBarHeight
 		}
-        
+
         static var cardMinimizedContentHeight: CGFloat = 170.0 + Common.Layout.miniAudioPlayerHeight
 
         static let showTabBarTitles = true
 
-        static var showStatusBar:Bool = true {
+        static var showStatusBar: Bool = true {
             didSet {
                 UIView.animate(withDuration: 0.75) {
                     UIApplication.shared.keyWindow?.rootViewController?.setNeedsStatusBarAppearanceUpdate()
@@ -236,7 +234,7 @@ struct Common {
             }
         }
 
-        enum Priority : Int {
+        enum Priority: Int {
             case low = 1
             case medium = 250
             case high = 500
@@ -260,7 +258,6 @@ struct Common {
         // Animation
         static let fadeInAnimationDuration = 0.5
 
-
         // Small
         static let locationDisabled = AICMessageSmallModel(title: "Your phone’s Location Services feature is off.",
                                                            message: "Turn on Location Services to easily navigate the museum and find museum features near you.",
@@ -281,7 +278,7 @@ struct Common {
                                                         actionButtonTitle: "Message Headphones Action Button Title",
                                                         cancelButtonTitle: nil
         )
-        
+
 		static let leavingTour = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageTours"),
                                                  title: "Message Leaving Tour Title",
                                                  message: "Message Leaving Tour Text",
@@ -306,9 +303,9 @@ struct Common {
         static let timeToChangeFloors = 1.0 // Minutes
 
         // Get the time (in minutes) to walk from one
-        static func getTime(fromUserLocation userLocation:CLLocation, toObjectLocation objectLocation: CoordinateWithFloor) -> Int {
+        static func getTime(fromUserLocation userLocation: CLLocation, toObjectLocation objectLocation: CoordinateWithFloor) -> Int {
             // Get the distancse
-            let distanceInMeters = getDistance(fromUserLocation: userLocation, toObjectLocation: objectLocation);
+            let distanceInMeters = getDistance(fromUserLocation: userLocation, toObjectLocation: objectLocation)
             let distanceInKilometers = distanceInMeters/1000.0
 
             // Convert to time
@@ -329,12 +326,12 @@ struct Common {
         }
 
         // Get the object that is closest to a user location
-        static func getClosestObject(toUserLocation userLocation:CLLocation, forObjects objects:[AICObjectModel]) -> AICObjectModel {
-            var closestObject:AICObjectModel? = nil
-            var closestDistance:Double = Double.greatestFiniteMagnitude
+        static func getClosestObject(toUserLocation userLocation: CLLocation, forObjects objects: [AICObjectModel]) -> AICObjectModel {
+            var closestObject: AICObjectModel?
+            var closestDistance: Double = Double.greatestFiniteMagnitude
 
             for object in objects {
-                let distance = getDistance(fromUserLocation: userLocation, toObjectLocation: object.location);
+                let distance = getDistance(fromUserLocation: userLocation, toObjectLocation: object.location)
                 if distance < closestDistance {
                     closestObject = object
                     closestDistance = distance
@@ -344,16 +341,16 @@ struct Common {
             return closestObject!
         }
 
-        static func getDistance(fromUserLocation userLocation:CLLocation, toObjectLocation objectLocation:CoordinateWithFloor) -> Double {
+        static func getDistance(fromUserLocation userLocation: CLLocation, toObjectLocation objectLocation: CoordinateWithFloor) -> Double {
             let objectCLLocation = CLLocation(latitude: objectLocation.coordinate.latitude, longitude: objectLocation.coordinate.longitude)
             return userLocation.distance(from: objectCLLocation)
         }
-		
+
 		static var hasLoggedOnsite: Bool = false
-		static var previousOnSiteState: Bool? = nil
+		static var previousOnSiteState: Bool?
 		static var previousAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     }
-	
+
 	// MARK: Home
 	struct Home {
 		static let maxNumberOfTours: Int = 6
@@ -388,7 +385,7 @@ struct Common {
 													   image: #imageLiteral(resourceName: "tooltipArtwork")
 		)
     }
-	
+
     // MARK: Map
     struct Map {
 		// Location Manager
@@ -396,13 +393,13 @@ struct Common {
 
         static let totalFloors = 4
         static let startFloor = 1
-		
-		static var stringForFloorNumber: [Int : String] {
+
+		static var stringForFloorNumber: [Int: String] {
 			return [
-				0 : "Lower Level".localized(using: "Map"),
-				1 : "First Level".localized(using: "Map"),
-				2 : "Second Level".localized(using: "Map"),
-				3 : "Third Level".localized(using: "Map")]
+				0: "Lower Level".localized(using: "Map"),
+				1: "First Level".localized(using: "Map"),
+				2: "Second Level".localized(using: "Map"),
+				3: "Third Level".localized(using: "Map")]
 		}
 
         // File directories
@@ -411,25 +408,25 @@ struct Common {
         static let amenityLandmarkSVGFileName = "map_amenities_landmarks"
 
         // Map SVG File
-        static let mapSVGFileURL = Bundle.main.url(forResource: Common.Map.amenityLandmarkSVGFileName, withExtension: "svg", subdirectory:Common.Map.mapsDirectory)
+        static let mapSVGFileURL = Bundle.main.url(forResource: Common.Map.amenityLandmarkSVGFileName, withExtension: "svg", subdirectory: Common.Map.mapsDirectory)
 
         // Anchor pair for mapping GeoCoords to PDF Coords
         static let pdfSize = CGSize(width: 2400, height: 2400)
-        static let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.88002009571711,-87.62398928403854),
+        static let anchor1 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.88002009571711, -87.62398928403854),
                                        pdfPoint: CGPoint(x: 855.955, y: pdfSize.height-1061.635)
         )
 
-        static let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.8800240897643,-87.62334823608397),
+        static let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: CLLocationCoordinate2DMake(41.8800240897643, -87.62334823608397),
                                        pdfPoint: CGPoint(x: 1011.94, y: pdfSize.height-1061.635)
         )
-		
+
         static let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
 
         static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
-		
+
 		static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
-		
-        enum ZoomLevelAltitude : Double {
+
+        enum ZoomLevelAltitude: Double {
 			case zoomFarLimit = 1200
             case zoomLimit = 340.0
             case zoomDefault = 300.0
@@ -451,16 +448,16 @@ struct Common {
         }
 
         // Annotation view settings
-        static let thumbSize:CGFloat = 54
-        static let thumbHolderMargin:CGFloat = 2
+        static let thumbSize: CGFloat = 54
+        static let thumbHolderMargin: CGFloat = 2
     }
 
-    //MARK: Info
+    // MARK: Info
     struct Info {
 
         // Text and URL constants
         static let becomeMemberExistingMemberTitle = "Welcome Back"
-		
+
         static let museumInformationAddress = "111 S Michigan Ave\nChicago, IL 60603"
         static let museumInformationPhoneNumber = "+1 312 443 3600"
         static let museumInformationGetTicketsTitle = "Get Tickets"
@@ -471,7 +468,7 @@ struct Common {
         static let alertMessageNotFound = "Could not find Member Information"
         static let alertMessageParseError = "Member Card data parse error"
         static let alertMessageCancelButtonTitle = "OK"
-		
+
 		// Date formats
 		static func throughDateString(endDate: Date) -> String {
 			let dateFormatter = DateFormatter()
@@ -483,7 +480,7 @@ struct Common {
 			let throughString = "Through Date".localized(using: "Global")
 			return throughString + " " + endDateFormatted
 		}
-		
+
 		static func monthDayString(date: Date) -> String {
 			let dateFormatter = DateFormatter()
 			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
@@ -491,14 +488,13 @@ struct Common {
 			let monthDayString = dateFormatter.string(from: date)
 			return monthDayString
 		}
-		
+
 		static func hoursMinutesString(date: Date) -> String {
 			let dateFormatter = DateFormatter()
 			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
 			if Common.currentLanguage == .english {
 				dateFormatter.setLocalizedDateFormatFromTemplate("h:mma")
-			}
-			else {
+			} else {
 				dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm")
 			}
 			if Common.currentLanguage == .english || Common.currentLanguage == .spanish {
@@ -509,7 +505,7 @@ struct Common {
 			return hoursMinutesString
 		}
     }
-	
+
 	// MARK: Search
 	struct Search {
 		enum Filter {
@@ -520,7 +516,7 @@ struct Common {
 			case exhibitions
 		}
 	}
-	
+
 	// MARK: Data Settings
 	enum DataSetting: String {
 		case imageServerUrl = "image_server_url"

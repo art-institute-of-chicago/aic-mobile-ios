@@ -6,7 +6,7 @@
 import UIKit
 import MapKit
 
-class MapObjectAnnotation : MapAnnotation {
+class MapObjectAnnotation: MapAnnotation {
 	var nid: Int?	// nid from CMS used to match with Tour Stop
 	var floor: Int
     var clLocation: CLLocation
@@ -14,7 +14,7 @@ class MapObjectAnnotation : MapAnnotation {
 	var thumbnailUrl: URL
 	var thumbnailCropRect: CGRect?
 	var tourStopOrder: Int = 0
-	
+
 	// Objects with audio
     init(object: AICObjectModel) {
 		self.nid = object.nid
@@ -25,14 +25,13 @@ class MapObjectAnnotation : MapAnnotation {
 		self.thumbnailCropRect = object.thumbnailCropRect
 		super.init(coordinate: object.location.coordinate)
     }
-	
+
 	// Artworks from search
 	init(searchedArtwork: AICSearchedArtworkModel) {
 		if let object = searchedArtwork.audioObject {
 			self.nid = object.nid
 			self.thumbnailCropRect = object.thumbnailCropRect
-		}
-		else {
+		} else {
 			self.nid = searchedArtwork.artworkId
 		}
 		self.floor = searchedArtwork.location.floor
@@ -41,7 +40,7 @@ class MapObjectAnnotation : MapAnnotation {
 		self.thumbnailUrl = searchedArtwork.thumbnailUrl
 		super.init(coordinate: searchedArtwork.location.coordinate)
 	}
-	
+
 	// Tour Overview Stop
 	init(tour: AICTourModel) {
 		self.nid = tour.nid

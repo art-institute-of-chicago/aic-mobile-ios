@@ -83,7 +83,7 @@ struct MKMapPointDisplacement {
     - returns: MKMapRect constructed from the four corners of a (probably
         rotated) rectangle.
 */
-func MKMapRectRotatedMake(_ corner1: MKMapPoint, corner2: MKMapPoint, corner3: MKMapPoint, corner4: MKMapPoint) -> MKMapRectRotated{
+func MKMapRectRotatedMake(_ corner1: MKMapPoint, corner2: MKMapPoint, corner3: MKMapPoint, corner4: MKMapPoint) -> MKMapRectRotated {
 
     // Average the points to get the center of the rect in MKMapPoint space.
     let averageX = (corner1.x + corner2.x + corner3.x + corner4.x) / 4.0
@@ -141,7 +141,7 @@ func MKMapRectRotatedNearestPoint(_ mapRectRotated: MKMapRectRotated, point: MKM
     let heightDistance = dxCenter * mapRectRotated.heightDirection.eX + dyCenter * mapRectRotated.heightDirection.eY
 
     // "If this rectangle _were_ upright, this would be the result."
-    let widthNearestPoint  = clamp(widthDistance,  min: -0.5 * mapRectRotated.rectSize.width,  max: 0.5 * mapRectRotated.rectSize.width)
+    let widthNearestPoint  = clamp(widthDistance, min: -0.5 * mapRectRotated.rectSize.width, max: 0.5 * mapRectRotated.rectSize.width)
     let heightNearestPoint = clamp(heightDistance, min: -0.5 * mapRectRotated.rectSize.height, max: 0.5 * mapRectRotated.rectSize.height)
 
     /*

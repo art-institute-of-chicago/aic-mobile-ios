@@ -11,19 +11,19 @@ import UIKit
 /// SeeAllEventCell
 ///
 /// UICollectionViewCell for list of all Events
-class SeeAllEventCell : UICollectionViewCell {
+class SeeAllEventCell: UICollectionViewCell {
 	static let reuseIdentifier = "seeAllEventCell"
-	
+
 	@IBOutlet var eventImageView: AICImageView!
 	@IBOutlet var eventTitleLabel: UILabel!
 	@IBOutlet var dividerLine: UIView!
 	@IBOutlet var shortDescriptionTextView: UITextView!
 	@IBOutlet var monthDayLabel: UILabel!
 	@IBOutlet var hoursMinutesLabel: UILabel!
-	
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
+
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
 		monthDayLabel.font = .aicSeeAllInfoFont
@@ -39,15 +39,15 @@ class SeeAllEventCell : UICollectionViewCell {
 		shortDescriptionTextView.textContainerInset.left = -4
 		shortDescriptionTextView.textContainer.lineBreakMode = .byTruncatingTail
 	}
-	
+
 	var eventModel: AICEventModel? = nil {
 		didSet {
 			guard let eventModel = self.eventModel else {
 				return
 			}
-			
+
 			// set up UI
-			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
+			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, _, _, _) in
 				if image != nil {
 					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
 				}
@@ -56,7 +56,7 @@ class SeeAllEventCell : UICollectionViewCell {
             shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: eventModel.shortDescription, font: .aicTextFont, lineHeight: 20)
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
 			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
-			
+
 			// Accessibility
 			self.isAccessibilityElement = true
 			self.accessibilityLabel = "Event"

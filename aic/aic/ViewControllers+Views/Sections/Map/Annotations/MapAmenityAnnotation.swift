@@ -5,7 +5,7 @@
 
 import MapKit
 
-enum MapAmenityAnnotationType : String {
+enum MapAmenityAnnotationType: String {
 	case AudioGuide = "Audio Guide"
     case Checkroom = "Check Room"
     case Dining = "Dining"
@@ -25,7 +25,7 @@ class MapAmenityAnnotation: MapAnnotation {
 	var nid: Int?
 	var floor: Int
     var type: MapAmenityAnnotationType
-    
+
 	init(nid: Int, coordinate: CLLocationCoordinate2D, floor: Int, type: MapAmenityAnnotationType) {
 		self.nid = nid
 		self.floor = floor

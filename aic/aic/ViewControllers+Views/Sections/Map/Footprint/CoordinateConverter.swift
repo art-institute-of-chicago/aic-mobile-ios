@@ -329,5 +329,5 @@ class CoordinateConverter: NSObject {
             return CLLocationDirection(result)
         }
     }
-    
+
 }
