@@ -25,7 +25,7 @@ class NoResultsCell : UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		selectionStyle = UITableViewCellSelectionStyle.none
+		selectionStyle = .none
 		
 		self.backgroundColor = .aicDarkGrayColor
 		
@@ -46,18 +46,18 @@ class NoResultsCell : UITableViewCell {
 		let linkRange: NSRange = (visitWebsiteText as NSString).range(of: visitWebsiteLink)
 		let visitOurWebsiteAttrString = NSMutableAttributedString(string: visitWebsiteText)
 		let websiteURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.websiteUrl]!)!
-		visitOurWebsiteAttrString.addAttributes([NSAttributedStringKey.link : websiteURL.absoluteString], range: NSMakeRange(0, visitOurWebsiteAttrString.string.count))
-		visitOurWebsiteAttrString.addAttributes([NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue], range: linkRange)
+		visitOurWebsiteAttrString.addAttributes([.link : websiteURL.absoluteString], range: NSRange(location: 0, length: visitOurWebsiteAttrString.string.count))
+		visitOurWebsiteAttrString.addAttributes([.underlineStyle : NSUnderlineStyle.single], range: linkRange)
 		
 		visitWebsiteTextView.attributedText = visitOurWebsiteAttrString
 		visitWebsiteTextView.textColor = .aicCardDarkLinkColor
-		visitWebsiteTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicCardDarkLinkColor]
+		visitWebsiteTextView.linkTextAttributes = [.foregroundColor : UIColor.aicCardDarkLinkColor]
 		visitWebsiteTextView.font = .aicSearchNoResultsWebsiteFont
 		
 		// Accessibility
 		self.isAccessibilityElement = true
 		self.accessibilityValue = visitWebsiteText
-		self.accessibilityTraits = UIAccessibilityTraitLink
+		self.accessibilityTraits = .link
 	}
 }
 

@@ -47,7 +47,7 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 			self.isAccessibilityElement = true
 			self.accessibilityLabel = "Exhibition"
 			self.accessibilityValue = exhibitionTitleLabel.text! + ", " + throughDateLabel.text!
-			self.accessibilityTraits = UIAccessibilityTraitButton
+			self.accessibilityTraits = .button
 		}
 	}
 }

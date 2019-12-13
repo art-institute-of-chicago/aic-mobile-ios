@@ -155,7 +155,7 @@ class MessageViewController : UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         let textAttrString = NSMutableAttributedString(string: messageModel.message.localized(using: "Messages"))
-        textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
+		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: textAttrString.length))
         messageLabel.attributedText = textAttrString
         messageLabel.textAlignment = .center
 		

@@ -144,7 +144,7 @@ import MapKit
         boundingMapRectIncludingRotations = coordinateConverter.boundingMapRectIncludingRotations(pdfBoxRectangle)
 
         // For coordinate just return the centroid of boundingMapRect
-        coordinate = MKCoordinateForMapPoint(boundingMapRect.getCenter())
+        coordinate = boundingMapRect.getCenter().coordinate
     }
 
     /**

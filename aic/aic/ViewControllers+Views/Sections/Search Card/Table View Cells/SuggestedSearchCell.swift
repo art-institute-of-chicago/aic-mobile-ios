@@ -20,7 +20,7 @@ class SuggestedSearchCell : UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		selectionStyle = UITableViewCellSelectionStyle.none
+		selectionStyle = .none
 		layoutMargins = UIEdgeInsets.zero
 		
 		self.backgroundColor = .aicDarkGrayColor
@@ -37,7 +37,7 @@ class SuggestedSearchCell : UITableViewCell {
 		self.isAccessibilityElement = true
 		self.accessibilityLabel = "Search for"
 		self.accessibilityValue = text
-		self.accessibilityTraits = UIAccessibilityTraitButton
+		self.accessibilityTraits = .button
 	}
 	
 	override func setHighlighted(_ highlighted: Bool, animated: Bool) {

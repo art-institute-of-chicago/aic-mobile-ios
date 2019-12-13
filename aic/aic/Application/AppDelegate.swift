@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var deepLinkString: String? = nil
 	
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		
 		AICAnalytics.configure()
 		
@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tomorrowMorning = calendar.date(from: tomorrowMorningComponents)
         
         let timer = Timer(fireAt: tomorrowMorning!, interval: 0, target: self, selector: #selector(AppDelegate.resetEnterpriseApp), userInfo: nil, repeats: false)
-        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+        RunLoop.main.add(timer, forMode: .common)
 
     }
 
@@ -161,7 +161,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	// URL Deep Linking
-	func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+	func application(_ app: UIApplication,
+					 open url: URL,
+					 options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
 		if url.host == nil {
 			return true
 		}

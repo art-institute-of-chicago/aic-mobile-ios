@@ -29,7 +29,7 @@ class ContentButtonCell : UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		selectionStyle = UITableViewCellSelectionStyle.none
+		selectionStyle = .none
 		
 		self.backgroundColor = .aicDarkGrayColor
 		
@@ -75,7 +75,7 @@ class ContentButtonCell : UITableViewCell {
 		self.isAccessibilityElement = true
 		self.accessibilityLabel = ""
 		self.accessibilityValue = itemTitleLabel.text! + ", " + itemSubtitleLabel.text!
-		self.accessibilityTraits = UIAccessibilityTraitButton
+		self.accessibilityTraits = .button
 	}
 }
 

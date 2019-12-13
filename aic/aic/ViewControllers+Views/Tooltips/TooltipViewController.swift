@@ -214,4 +214,3 @@ extension TooltipViewController : UIPageViewControllerDelegate {
 		}
 	}
 }
-

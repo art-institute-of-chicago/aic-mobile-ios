@@ -33,7 +33,7 @@ class ResultsFilterMenuView : UIView {
 		
 		scrollView.backgroundColor = .clear
 		scrollView.showsHorizontalScrollIndicator = false
-		scrollView.contentInset = UIEdgeInsetsMake(0, 16, 0, 16)
+		scrollView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 		
 		suggestedButton.setTitle("Suggested", for: .normal)
 		suggestedButton.titleLabel?.font = .aicSearchResultsFilterFont

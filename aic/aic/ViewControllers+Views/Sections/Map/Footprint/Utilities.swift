@@ -129,7 +129,7 @@ extension MKMapRect {
         - parameter rect: A rectangle.
     */
     func getCenter() -> MKMapPoint {
-        return MKMapPointMake(MKMapRectGetMidX(self), MKMapRectGetMidY(self))
+        return MKMapPoint(x: midX, y: midY)
     }
 
     /**
@@ -137,10 +137,10 @@ extension MKMapRect {
         - returns: an MKMapRect converted to an MKPolygon.
     */
     func polygonFromMapRect() -> MKPolygon {
-        var corners =  [MKMapPointMake(MKMapRectGetMaxX(self),  MKMapRectGetMaxY(self)),
-                        MKMapPointMake(MKMapRectGetMinX(self),  MKMapRectGetMaxY(self)),
-                        MKMapPointMake(MKMapRectGetMinX(self),  MKMapRectGetMinY(self)),
-                        MKMapPointMake(MKMapRectGetMaxX(self),  MKMapRectGetMinY(self))]
+        var corners =  [MKMapPoint(x: maxX,  y: maxY),
+                        MKMapPoint(x: minX,  y: maxY),
+                        MKMapPoint(x: minX,  y: minY),
+                        MKMapPoint(x: maxX,  y: minY)]
 
         return MKPolygon(points: &corners, count: corners.count)
     }

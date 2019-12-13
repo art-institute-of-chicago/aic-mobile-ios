@@ -24,9 +24,9 @@ class ContentCardNavigationController : CardNavigationController {
 		super.viewDidLoad()
         
         // Add main VC as subview to rootVC
-        tableVC.willMove(toParentViewController: rootVC)
+        tableVC.willMove(toParent: rootVC)
         rootVC.view.addSubview(tableVC.view)
-        tableVC.didMove(toParentViewController: rootVC)
+        tableVC.didMove(toParent: rootVC)
 		
 		createViewConstraints()
 		

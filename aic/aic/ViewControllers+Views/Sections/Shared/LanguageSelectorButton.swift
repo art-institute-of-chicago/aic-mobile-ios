@@ -48,8 +48,8 @@ class LanguageSelectorButton : UIButton {
 		if hasArrow == true {
 			self.setImage(#imageLiteral(resourceName: "languageSelectorExpand"), for: .normal)
 			// margin between text and icon, it might change with different button labels
-			self.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0)
-			self.imageEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
+			self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+			self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
 		}
 		
 		let normalColor: UIColor = hasArrow ? .white : .black

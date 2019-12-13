@@ -47,9 +47,9 @@ class MapContentCardNavigationController: CardNavigationController {
 		dividerLine.backgroundColor = .white
 		
 		// Add main VC as subview to rootVC
-		contentVC.willMove(toParentViewController: rootVC)
+		contentVC.willMove(toParent: rootVC)
 		rootVC.view.addSubview(contentVC.view)
-		contentVC.didMove(toParentViewController: rootVC)
+		contentVC.didMove(toParent: rootVC)
 		
 		// Add subviews
 		self.view.addSubview(titleLabel)

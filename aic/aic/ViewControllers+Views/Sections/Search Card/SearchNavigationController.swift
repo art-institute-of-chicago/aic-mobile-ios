@@ -85,7 +85,7 @@ class SearchNavigationController : CardNavigationController {
 		searchTextField?.leftViewMode = .never
 		
 		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
-		searchButton.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+		searchButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
 		
 		dividerLine.backgroundColor = .white
@@ -103,9 +103,9 @@ class SearchNavigationController : CardNavigationController {
 		self.view.addSubview(dividerLine)
         
         // Add main VC as subview to rootVC
-        resultsVC.willMove(toParentViewController: rootVC)
+        resultsVC.willMove(toParent: rootVC)
         rootVC.view.addSubview(resultsVC.view)
-        resultsVC.didMove(toParentViewController: rootVC)
+        resultsVC.didMove(toParent: rootVC)
 		
 		// Add filter menu
 		rootVC.view.insertSubview(filterMenuView, aboveSubview: resultsVC.view)
@@ -601,7 +601,10 @@ extension SearchNavigationController : FilterMenuDelegate {
 // MARK: UINavigationControllerDelegate
 
 extension SearchNavigationController : UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController,
+							  animationControllerFor operation: UINavigationController.Operation,
+							  from fromVC: UIViewController,
+							  to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         slideAnimator.isAnimatingIn = (operation == .push)
         return slideAnimator
     }

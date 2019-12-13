@@ -32,7 +32,7 @@ class FloorplanOverlayRenderer: MKOverlayRenderer {
         - note: Overrides the drawMapRect method for MKOverlayRenderer.
     */
     override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-        if (!MKMapRectIntersectsRect(self.overlay.boundingMapRect, mapRect)) {
+        if (!overlay.boundingMapRect.intersects(mapRect)) {
             return;
         }
         assert(overlay.isKind(of: FloorplanOverlay.self), "Wrong overlay type")
@@ -52,10 +52,10 @@ class FloorplanOverlayRenderer: MKOverlayRenderer {
         let graphicsFloorplanHeight = mapkitToGraphicsConversion.height
 
         // Now, how does this compare to MapKit coordinates?
-        let mapkitFloorplanCenter = MKMapPoint(x: MKMapRectGetMidX(overlay.boundingMapRect), y: MKMapRectGetMidY(overlay.boundingMapRect))
+        let mapkitFloorplanCenter = MKMapPoint(x: overlay.boundingMapRect.midX, y: overlay.boundingMapRect.midY)
 
-        let mapkitFloorplanWidth = MKMapRectGetWidth(overlay.boundingMapRect)
-        let mapkitFloorplanHeight = MKMapRectGetHeight(overlay.boundingMapRect)
+        let mapkitFloorplanWidth = overlay.boundingMapRect.width
+        let mapkitFloorplanHeight = overlay.boundingMapRect.height
 
         /*
             Create the transformation that converts to Graphics coordinates from

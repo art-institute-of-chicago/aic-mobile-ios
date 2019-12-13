@@ -51,7 +51,7 @@ class LocationSettingsViewController : UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 		
 		// Coming back from Settings
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: UIApplication.willEnterForegroundNotification, object: nil)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -99,7 +99,7 @@ class LocationSettingsViewController : UIViewController {
 			Common.Map.locationManager.startUpdatingHeading()
 		}
 		else {
-			UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+			UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
 		}
 	}
 }

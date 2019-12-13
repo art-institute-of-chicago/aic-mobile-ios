@@ -113,7 +113,7 @@ class AudioInfoSectionView : UIView {
 			tapArea.isAccessibilityElement = true
 			tapArea.accessibilityLabel = titleLabel.text!
 			tapArea.accessibilityValue = "Expand"
-			tapArea.accessibilityTraits = UIAccessibilityTraitButton
+			tapArea.accessibilityTraits = .button
 		}
 		else {
 			self.accessibilityElements = [
@@ -137,8 +137,8 @@ class AudioInfoSectionView : UIView {
 				if let url = URL(string: urlString) {
 					let linkAttrString = NSMutableAttributedString(string: linkText)
 					
-					let range = NSMakeRange(0, linkAttrString.string.count)
-					linkAttrString.addAttributes([NSAttributedStringKey.link : url], range: range)
+					let range = NSRange(location: 0, length: linkAttrString.string.count)
+					linkAttrString.addAttributes([.link : url], range: range)
 					
 					toursAttributedString.append(linkAttrString)
 					linksCount += 1
@@ -149,14 +149,14 @@ class AudioInfoSectionView : UIView {
 		// Add spacing between tours
 		let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.paragraphSpacing = 14.0
-		let range = NSMakeRange(0, toursAttributedString.length)
-		toursAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
+		let range = NSRange(location: 0, length: toursAttributedString.length)
+		toursAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
 		
 		if linksCount > 0 {
 			titleLabel.text = "Related Tours".localized(using: "AudioPlayer")
 			
 			bodyTextView.attributedText = toursAttributedString
-			bodyTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicHomeLightColor]
+			bodyTextView.linkTextAttributes = [.foregroundColor: UIColor.aicHomeLightColor]
 			bodyTextView.font = .aicTitleFont
 			
 			infoSectionHeight?.constant = bodyTextView.frame.origin.y + bodyTextView.frame.height + 40

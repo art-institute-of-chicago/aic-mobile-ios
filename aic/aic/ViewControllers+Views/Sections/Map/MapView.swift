@@ -19,11 +19,11 @@ class MapView: MKMapView {
     var floorplanOverlay: FloorplanOverlay? = nil {
         didSet {
             if let previousOverlay = oldValue {
-                remove(previousOverlay)
+                removeOverlay(previousOverlay)
             }
             
             if floorplanOverlay != nil {
-                add(floorplanOverlay!)
+                addOverlay(floorplanOverlay!)
             }
         }
     }
@@ -85,7 +85,7 @@ class MapView: MKMapView {
     func getAnnotations(filteredBy annotationsToFilterOut:[MKAnnotation]) -> [MKAnnotation] {
         return annotations.filter({
             let thisAnnotation = $0
-            return annotationsToFilterOut.index(where: {$0 === thisAnnotation}) == nil
+            return annotationsToFilterOut.firstIndex(where: {$0 === thisAnnotation}) == nil
         })
     }
     
@@ -127,10 +127,10 @@ class MapView: MKMapView {
             let heading = useDefaultHeading ? defaultHeading : camera.heading
 			
 			let buildingRect = overlay.boundingMapRect
-			let userMapPoint = MKMapPointForCoordinate(userLocation.coordinate)
-			var centerPoint = MKCoordinateForMapPoint(buildingRect.getCenter()) // Common.Map.defaultLocation
+			let userMapPoint = MKMapPoint(userLocation.coordinate)
+			var centerPoint = buildingRect.getCenter().coordinate // Common.Map.defaultLocation
 			
-			let distanceFromBuildingCenter = MKMetersBetweenMapPoints(userMapPoint, buildingRect.getCenter())
+			let distanceFromBuildingCenter = userMapPoint.distance(to: buildingRect.getCenter())
 			if  distanceFromBuildingCenter < Common.Location.minDistanceFromMuseumForLocation {
 				centerPoint = userLocation.coordinate
 			}
@@ -166,8 +166,8 @@ class MapView: MKMapView {
 			// Make sure our floorplan is on-screen
 			if let floorplanOverlay = floorplanOverlay {
 				let buildingRect = floorplanOverlay.boundingMapRect
-				let cameraCenter = MKMapPointForCoordinate(camera.centerCoordinate)
-				let distanceFromBuildingCenter = MKMetersBetweenMapPoints(cameraCenter, buildingRect.getCenter())
+				let cameraCenter = MKMapPoint(camera.centerCoordinate)
+				let distanceFromBuildingCenter = cameraCenter.distance(to: buildingRect.getCenter())
 				
 				if  distanceFromBuildingCenter > Common.Location.minDistanceFromMuseumForLocation {
 					zoomIn(onCenterCoordinate: floorplanOverlay.coordinate, altitude: camera.altitude, heading: nil, pitch: camera.pitch)
@@ -194,7 +194,7 @@ class MapView: MKMapView {
 				if pitch == perspectivePitch {
 					let distanceMeters = currentAltitude * Double(tan(pitch))
 					distanceCamera = sqrt((currentAltitude * currentAltitude) + (distanceMeters * distanceMeters))
-					let oneMeterRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, 1, 1)
+					let oneMeterRegion = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 1, longitudinalMeters: 1)
 					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * (oneMeterRegion.span.latitudeDelta * distanceMeters))
 					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * (oneMeterRegion.span.longitudeDelta * distanceMeters))
 				}

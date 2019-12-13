@@ -59,7 +59,7 @@ class Wrapper<T> {
 */
 func getOffsetRect(forText text:String, forFont font:UIFont) -> CGRect {
     let textString = text as NSString
-    let textAttributes = [NSAttributedStringKey.font: font]
+    let textAttributes = [NSAttributedString.Key.font: font]
     
     return textString.boundingRect(with: CGSize(width: 2000, height: 2000), options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil)
 }
@@ -99,10 +99,10 @@ func getAttributedStringWithLineHeight(text:String, font:UIFont, lineHeight:CGFl
 	
 	let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
 	
-    let range = NSMakeRange(0, attrString.length)
-    attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
-    attrString.addAttribute(NSAttributedStringKey.baselineOffset, value: baselineOffset, range: range)
-    attrString.addAttribute(NSAttributedStringKey.font, value: font, range: range)
+	let range = NSRange(location: 0, length: attrString.length)
+    attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+    attrString.addAttribute(.baselineOffset, value: baselineOffset, range: range)
+    attrString.addAttribute(.font, value: font, range: range)
     
     return attrString
 }
@@ -123,10 +123,10 @@ func getAttributedStringWithHTMLEnabled(text: String, font: UIFont, lineHeight: 
 		
 		let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
 		
-		let range = NSMakeRange(0, attributedString.length)
-		attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: range)
-		attributedString.addAttribute(NSAttributedStringKey.baselineOffset, value: baselineOffset, range: range)
-		attributedString.addAttribute(NSAttributedStringKey.font, value: font, range: range)
+		let range = NSRange(location: 0, length: attributedString.length)
+		attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+		attributedString.addAttribute(.baselineOffset, value: baselineOffset, range: range)
+		attributedString.addAttribute(.font, value: font, range: range)
 		
 		return attributedString
 	}
@@ -140,7 +140,7 @@ func getAttributedStringWithHTMLEnabled(text: String, font: UIFont, lineHeight: 
 
 /// View with a blur effect, should be uniform in app
 func getBlurEffectView(frame: CGRect) -> UIVisualEffectView {
-    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
     let blurEffectView = UIVisualEffectView(effect: blurEffect)
     blurEffectView.frame = frame
     blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
@@ -154,7 +154,7 @@ func splashImage(forOrientation orientation: UIInterfaceOrientation, screenSize:
     var viewSize        = screenSize
     var viewOrientation = "Portrait"
     
-    if UIInterfaceOrientationIsLandscape(orientation) {
+    if orientation.isLandscape {
         viewSize        = CGSize(width: screenSize.height, height: screenSize.width)
         viewOrientation = "Landscape"
     }
@@ -163,7 +163,7 @@ func splashImage(forOrientation orientation: UIInterfaceOrientation, screenSize:
         if let imagesArray = imagesDict["UILaunchImages"] as? [[String: String]] {
             for dict in imagesArray {
                 if let sizeString = dict["UILaunchImageSize"], let imageOrientation = dict["UILaunchImageOrientation"] {
-                    let imageSize = CGSizeFromString(sizeString)
+                    let imageSize = NSCoder.cgSize(for: sizeString)
                     if imageSize.equalTo(viewSize) && viewOrientation == imageOrientation {
                         if let imageName = dict["UILaunchImageName"] {
                             return imageName

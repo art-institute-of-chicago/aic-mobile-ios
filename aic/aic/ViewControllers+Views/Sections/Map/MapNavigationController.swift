@@ -333,9 +333,9 @@ class MapNavigationController : SectionNavigationController {
 		tourStopPageVC!.tourStopPageDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// Set TourStopPageVC to the right stop
 		if let index = tourStopIndex {
@@ -387,9 +387,9 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// in case the tour card is open, to tell the map to animate the floor selector
 		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
@@ -425,9 +425,9 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// in case the tour card is open, to tell the map to animate the floor selector
 		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
@@ -459,9 +459,9 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// in case the tour card is open, to tell the map to animate the floor selector
 		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
@@ -492,9 +492,9 @@ class MapNavigationController : SectionNavigationController {
 		restaurantPageVC!.restaurantPageDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// in case the tour card is open, to tell the map to animate the floor selector
 		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
@@ -528,9 +528,9 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// in case the tour card is open, to tell the map to animate the floor selector
 		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
@@ -561,9 +561,9 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// in case the tour card is open, to tell the map to animate the floor selector
 		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
@@ -594,9 +594,9 @@ class MapNavigationController : SectionNavigationController {
 		mapContentCardVC!.cardDelegate = self
 		
 		// Add card to view
-		mapContentCardVC!.willMove(toParentViewController: self)
+		mapContentCardVC!.willMove(toParent: self)
 		self.view.addSubview(mapContentCardVC!.view)
-		mapContentCardVC!.didMove(toParentViewController: self)
+		mapContentCardVC!.didMove(toParent: self)
 		
 		// in case the tour card is open, to tell the map to animate the floor selector
 		self.mapVC.setViewableArea(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
@@ -743,7 +743,7 @@ extension MapNavigationController : CardNavigationControllerDelegate {
 			sectionNavigationBar,
 			tabBarController!.tabBar
 		]
-		UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, sectionNavigationBar.titleLabel)
+		UIAccessibility.post(notification: .screenChanged, argument: sectionNavigationBar.titleLabel)
 	}
 }
 

@@ -41,7 +41,7 @@ class TourTableViewController : UITableViewController {
 		
 		self.tableView.backgroundColor = .aicDarkGrayColor
 		self.tableView.separatorStyle = .none
-		self.tableView.rowHeight = UITableViewAutomaticDimension // Necessary for AutoLayout of cells
+		self.tableView.rowHeight = UITableView.automaticDimension // Necessary for AutoLayout of cells
 		self.tableView.estimatedRowHeight = 200
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)

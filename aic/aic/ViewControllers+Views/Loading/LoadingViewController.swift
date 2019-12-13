@@ -121,7 +121,7 @@ class LoadingViewController: UIViewController {
 		}
 		
         // No Looping
-        avPlayer.actionAtItemEnd = AVPlayerActionAtItemEnd.none
+        avPlayer.actionAtItemEnd = .none
 		
 		// Progress Bar
 		//progressHighlightView.layer.cornerRadius = progressSize.height

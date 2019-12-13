@@ -24,7 +24,7 @@ class TourContentCell : UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		selectionStyle = UITableViewCellSelectionStyle.none
+		selectionStyle = .none
 		
 		self.backgroundColor = .aicDarkGrayColor
 		

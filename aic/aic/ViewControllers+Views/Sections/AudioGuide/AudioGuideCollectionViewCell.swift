@@ -18,15 +18,15 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
         button.alpha = 1.0
         
         button.frame.size = frame.size
-        button.setTitleColor(.white, for: UIControlState())
+        button.setTitleColor(.white, for: [])
         button.titleLabel?.font = .aicNumberPadFont
         
         setButtonNormalState()
         
-        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasPressed(_:)), for: UIControlEvents.touchDown)
-        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasReleased(_:)), for: UIControlEvents.touchUpInside)
-        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasReleased(_:)), for: UIControlEvents.touchUpOutside)
-        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasReleased(_:)), for: UIControlEvents.touchCancel)
+        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasPressed(_:)), for: .touchDown)
+        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasReleased(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasReleased(_:)), for: .touchUpOutside)
+        button.addTarget(self, action: #selector(AudioGuideCollectionViewCell.wasReleased(_:)), for: .touchCancel)
         
         addSubview(button)
     }

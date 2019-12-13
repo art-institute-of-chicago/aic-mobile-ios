@@ -49,7 +49,7 @@ class AICButton: UIButton {
 		highlighted: ColorSet(borderColor: .white, backgroundColor: UIColor(white: 216.0 / 255.0, alpha: 0.5), textColor: .white)
 	)
 	
-    private let insets = UIEdgeInsetsMake(10, 10, 10, 10)
+    private let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 	private let mediumSize: CGSize = CGSize(width: 190, height: 50)
 	private let smallSize: CGSize = CGSize(width: 140, height: 50)
 	private let borderWidth: CGFloat = 2.0

@@ -101,8 +101,8 @@ class CoordinateConverter: NSObject {
             Next, to compute the direction between two geographical coordinates,
             we first need to convert to MapKit coordinates...
         */
-        let fromAnchorMercatorCoordinate = MKMapPointForCoordinate(anchors.fromAnchor.latitudeLongitudeCoordinate)
-        let toAnchorMercatorCoordinate = MKMapPointForCoordinate(anchors.toAnchor.latitudeLongitudeCoordinate)
+        let fromAnchorMercatorCoordinate = MKMapPoint(anchors.fromAnchor.latitudeLongitudeCoordinate)
+        let toAnchorMercatorCoordinate = MKMapPoint(anchors.toAnchor.latitudeLongitudeCoordinate)
 
         let pdfDisplacement = CGPoint(x: anchors.toAnchor.pdfPoint.x - anchors.fromAnchor.pdfPoint.x, y: anchors.toAnchor.pdfPoint.y - anchors.fromAnchor.pdfPoint.y)
 
@@ -154,7 +154,7 @@ class CoordinateConverter: NSObject {
         */
         let tangentMercatorCoordinate = MKMapPoint.midpoint(fromAnchorMercatorCoordinate, b: toAnchorMercatorCoordinate)
 
-        tangentLatitudeLongitudeCoordinate = MKCoordinateForMapPoint(tangentMercatorCoordinate)
+        tangentLatitudeLongitudeCoordinate = tangentMercatorCoordinate.coordinate
 
         tangentPDFPoint = CGPoint.pointAverage(anchors.fromAnchor.pdfPoint, b: anchors.toAnchor.pdfPoint)
 
@@ -184,7 +184,7 @@ class CoordinateConverter: NSObject {
                                       )
 
         let metersPerMapPoint = MKMetersPerMapPointAtLatitude(tangentLatitudeLongitudeCoordinate.latitude)
-        let tangentMercatorCoordinate = MKMapPointForCoordinate(tangentLatitudeLongitudeCoordinate)
+        let tangentMercatorCoordinate = MKMapPoint(tangentLatitudeLongitudeCoordinate)
 
         /*
             Each meter is about (1.0 / metersPerMapPoint) 'MKMapPoint's, as long
@@ -212,7 +212,7 @@ class CoordinateConverter: NSObject {
     */
     func transformerFromPDFToMk() -> CGAffineTransform {
         let metersPerMapPoint = MKMetersPerMapPointAtLatitude(tangentLatitudeLongitudeCoordinate.latitude)
-        let tangentMercatorCoordinate = MKMapPointForCoordinate(tangentLatitudeLongitudeCoordinate)
+        let tangentMercatorCoordinate = MKMapPoint(tangentLatitudeLongitudeCoordinate)
 
         /*
             CGAffineTransform operations are easier to construct in reverse-order.
@@ -298,10 +298,12 @@ class CoordinateConverter: NSObject {
             Return a square MKMapRect centered at boundsCenterMercator with edge
             length diameterMercator
         */
-        return MKMapRectMake(
-            boundsCenter.x - boundsDiameter / 2.0,
-            boundsCenter.y - boundsDiameter / 2.0,
-            boundsDiameter, boundsDiameter)
+        return MKMapRect(
+            x: boundsCenter.x - boundsDiameter / 2.0,
+            y: boundsCenter.y - boundsDiameter / 2.0,
+            width: boundsDiameter,
+			height: boundsDiameter
+		)
     }
 
     /**

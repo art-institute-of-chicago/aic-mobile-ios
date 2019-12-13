@@ -72,9 +72,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 		audioInfoVC.view.frame.size = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardContentHeight + Common.Layout.tabBarHeight - contentTopMargin)
 		
 		// Add main VC as subview to rootVC
-		audioInfoVC.willMove(toParentViewController: rootVC)
+		audioInfoVC.willMove(toParent: rootVC)
 		rootVC.view.addSubview(audioInfoVC.view)
-		audioInfoVC.didMove(toParentViewController: rootVC)
+		audioInfoVC.didMove(toParent: rootVC)
 		
 		// Add subviews
 		rootVC.view.addSubview(miniAudioPlayerView)
@@ -92,9 +92,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 		miniAudioPlayerView.closeButton.addTarget(self, action: #selector(miniAudioPlayerCloseButtonPressed(button:)), for: .touchUpInside)
 		
 		// Audio Player Slider
-		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderValueChanged(slider:)), for: UIControlEvents.valueChanged)
-		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderStartedSliding(slider:)), for: UIControlEvents.touchDown)
-		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderFinishedSliding(slider:)), for: [UIControlEvents.touchUpInside, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel]
+		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderValueChanged(slider:)), for: .valueChanged)
+		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderStartedSliding(slider:)), for: .touchDown)
+		audioInfoVC.audioPlayerView.slider.addTarget(self, action: #selector(audioPlayerSliderFinishedSliding(slider:)), for: [.touchUpInside, .touchUpOutside, .touchCancel]
 		)
 		
 		// Play/Pause Button
@@ -103,7 +103,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 		
 		// AV Session
 		configureAVAudioSession()
-		NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: NSNotification.Name.AVAudioSessionRouteChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(configureAVAudioSession), name: AVAudioSession.routeChangeNotification, object: nil)
 		
 		// Accessibility
 		downArrowButton.accessibilityLabel = "Close Audio Player"
@@ -400,11 +400,18 @@ class AudioPlayerNavigationController : CardNavigationController {
     @objc internal func configureAVAudioSession() {
         do {
             // Determine playback category based on bluetooth connection to avoid HFP playback through A2DP headphones
-            let bluetoothConnected = (AVAudioSession.sharedInstance().currentRoute.outputs.filter({$0.portType == AVAudioSessionPortBluetoothA2DP || $0.portType == AVAudioSessionPortBluetoothHFP }).first != nil)
-            let playbackCategory = bluetoothConnected ? AVAudioSessionCategoryPlayback : AVAudioSessionCategoryPlayAndRecord
+			let bluetoothConnected = AVAudioSession
+				.sharedInstance()
+				.currentRoute
+				.outputs
+				.filter {
+					$0.portType == .bluetoothA2DP || $0.portType == .bluetoothHFP
+				}
+				.first != nil
+            let playbackCategory = bluetoothConnected ? AVAudioSession.Category.playback : AVAudioSession.Category.playAndRecord
             
             // Init session with correct category
-            try AVAudioSession.sharedInstance().setCategory(playbackCategory, with: AVAudioSessionCategoryOptions.allowBluetooth)
+            try AVAudioSession.sharedInstance().setCategory(playbackCategory, options: .allowBluetooth)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("Could not initialize audio session")
@@ -541,9 +548,9 @@ class AudioPlayerNavigationController : CardNavigationController {
 		self.miniAudioPlayerView.alpha = 0.0
 		
 		// Accessibility
-		audioInfoVC.willMove(toParentViewController: self)
+		audioInfoVC.willMove(toParent: self)
 		self.view.addSubview(audioInfoVC.view)
-		audioInfoVC.didMove(toParentViewController: self)
+		audioInfoVC.didMove(toParent: self)
 		self.view.accessibilityElementsHidden = false
 		self.view.accessibilityElements = [
 			downArrowButton,
@@ -572,7 +579,7 @@ class AudioPlayerNavigationController : CardNavigationController {
 		// Accessibility
 		downArrowButton.isAccessibilityElement = true
 		miniAudioPlayerView.removeFromSuperview()
-		UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, audioInfoVC.audioPlayerView.titleLabel)
+		UIAccessibility.post(notification: .screenChanged, argument: audioInfoVC.audioPlayerView.titleLabel)
 	}
 	
 	override func cardWillShowMiniPlayer() {
@@ -626,7 +633,7 @@ extension AudioPlayerNavigationController {
         // Make sure an audio file is loaded
         if avPlayer.currentItem != nil {
             // If it is, respond to event
-            if event?.type == UIEventType.remoteControl {
+            if event?.type == .remoteControl {
                 switch (event?.subtype)! {
                     
                 // Play/Pause buttons
@@ -657,7 +664,7 @@ extension AudioPlayerNavigationController {
     // every frame
     @objc internal func updateAudioPlayerProgress() {
         
-        if avPlayer.currentItem != nil && avPlayer.currentItem!.status == AVPlayerItemStatus.readyToPlay {
+        if avPlayer.currentItem != nil && avPlayer.currentItem?.status == .readyToPlay {
             let progress = CMTimeGetSeconds(avPlayer.currentTime())
             let duration = CMTimeGetSeconds(avPlayer.currentItem!.asset.duration)
             
