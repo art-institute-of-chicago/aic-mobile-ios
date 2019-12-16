@@ -315,13 +315,13 @@ class AudioPlayerNavigationController: CardNavigationController {
 					}
 
 					// Retrieve cover image
-					KingfisherManager.shared.retrieveImage(with: ImageResource(downloadURL: coverImageURL, cacheKey: coverImageURL.absoluteString), options: KingfisherManager.shared.defaultOptions, progressBlock: nil, completionHandler: { (image, _, _, _) in
-						if image == nil {
+					KingfisherManager.shared.retrieveImage(with: ImageResource(downloadURL: coverImageURL, cacheKey: coverImageURL.absoluteString), options: KingfisherManager.shared.defaultOptions, progressBlock: nil, completionHandler: { (result) in
+						guard let result = try? result.get() else {
 							self.audioInfoVC.imageView.image = nil
 							return
 						}
 
-						self.setMediaInformation(image: image!)
+						self.setMediaInformation(image: result.image)
 					})
 
 					// Auto-play on load
