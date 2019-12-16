@@ -1,18 +1,18 @@
 /*
- Abstract:
- Model for map, containing all annotations + overlays
- Parses these from SVG File
- */
+Abstract:
+Model for map, containing all annotations + overlays
+Parses these from SVG File
+*/
 
 import Foundation
 import CoreGraphics
 import MapKit
 
 struct AICMapModel {
-    // Global Annotations
-    private (set) var imageAnnotations: [MapImageAnnotation] = []
-    private (set) var landmarkAnnotations: [MapTextAnnotation] = []
-    private (set) var gardenAnnotations: [MapTextAnnotation] = []
+	// Global Annotations
+	private (set) var imageAnnotations: [MapImageAnnotation] = []
+	private (set) var landmarkAnnotations: [MapTextAnnotation] = []
+	private (set) var gardenAnnotations: [MapTextAnnotation] = []
 
 	var diningAnnotations: [MapAmenityAnnotation] {
 		var result = [MapAmenityAnnotation]()
@@ -22,6 +22,6 @@ struct AICMapModel {
 		return result
 	}
 
-    // Floors
-    let floors: [AICMapFloorModel]
+	// Floors
+	let floors: [AICMapFloorModel]
 }

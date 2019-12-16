@@ -1,7 +1,7 @@
 /*
- Abstract:
- Abstracted analytics centralized commands
- currently using Google Analytics
+Abstract:
+Abstracted analytics centralized commands
+currently using Google Analytics
 */
 
 import Firebase
@@ -13,7 +13,7 @@ class AICAnalytics {
 		case languageFirstSelection	= "language_first_selection"
 		case audioPlayed			= "audio_played"
 		case audioStopped			= "audio_stopped"
-        case audioError             = "audio_error"
+		case audioError             = "audio_error"
 		case tourStarted			= "tour_started"
 		case tourLeft				= "tour_left"
 		case eventViewed			= "event_viewed"
@@ -28,8 +28,8 @@ class AICAnalytics {
 		case searchTappedTour		= "search_tapped_tour"
 		case searchTappedExhibition	= "search_tapped_exhibition"
 		case searchFacilities		= "search_facilities"
-        case searchArtworkMap       = "search_artwork_map"
-        case searchIconMap          = "search_icon_map"
+		case searchArtworkMap       = "search_artwork_map"
+		case searchIconMap          = "search_icon_map"
 		case locationDetected		= "location_detected"
 		case locationHeadingEnabled	= "location_heading_enabled"
 		case memberCardShown		= "member_card_shown"
@@ -76,12 +76,12 @@ class AICAnalytics {
 	}
 
 	fileprivate enum UserProperty: String {
-        case membership				= "Membership"
+		case membership				= "Membership"
 		case appLanguage			= "Language"
 		case deviceLanguage			= "DeviceLanguage"
 	}
 
-    static fileprivate let parameterMaxLength = 95
+	static fileprivate let parameterMaxLength = 95
 
 	static fileprivate var previousScreen: String?
 	static fileprivate var currentScreen: String?
@@ -95,7 +95,7 @@ class AICAnalytics {
 		let userDefaults = UserDefaults.standard
 		let membership = userDefaults.object(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey) != nil ? "Member" : "None"
 		let deviceLanguage = NSLocale.preferredLanguages.first!
-        let languageString: String = Common.stringForLanguage[Common.currentLanguage]!
+		let languageString: String = Common.stringForLanguage[Common.currentLanguage]!
 		setUserProperty(property: .membership, value: membership)
 		setUserProperty(property: .appLanguage, value: languageString)
 		setUserProperty(property: .deviceLanguage, value: deviceLanguage)
@@ -104,7 +104,7 @@ class AICAnalytics {
 	// MARK: Track Screens
 
 	static func trackScreenView(_ screenName: String, screenClass: String) {
-        if screenName != currentScreen {
+		if screenName != currentScreen {
 			Analytics.setScreenName(screenName, screenClass: screenClass)
 
 			previousScreen = currentScreen
@@ -115,28 +115,28 @@ class AICAnalytics {
 	// MARK: Track Events
 
 	private static func trackEvent(_ event: Event, parameters: [String: String]? = nil) {
-        Analytics.logEvent(event.rawValue, parameters: parameters)
+		Analytics.logEvent(event.rawValue, parameters: parameters)
 	}
 
 	// MARK: Set User Property
 
 	private static func setUserProperty(property: UserProperty, value: String) {
-        Analytics.setUserProperty(value, forName: property.rawValue)
+		Analytics.setUserProperty(value, forName: property.rawValue)
 	}
 
 	// MARK: Language
 
 	static func sendLanguageFirstSelectionEvent(language: Common.Language) {
 		let languageString: String = Common.stringForLanguage[language]!
-        setUserProperty(property: .appLanguage, value: languageString)
-        let parameters: [String: String] = [
-            "start_language": languageString
-        ]
+		setUserProperty(property: .appLanguage, value: languageString)
+		let parameters: [String: String] = [
+			"start_language": languageString
+		]
 		trackEvent(.languageFirstSelection, parameters: parameters)
 	}
 
 	static func updateLanguageSelection(language: Common.Language) {
-        let languageString: String = Common.stringForLanguage[language]!
+		let languageString: String = Common.stringForLanguage[language]!
 		setUserProperty(property: .appLanguage, value: languageString)
 	}
 
@@ -154,25 +154,25 @@ class AICAnalytics {
 	}
 
 	static func updateUserLocationProperty(isOnSite: Bool?) {
-//		if isOnSite != nil {
-//			setUserProperty(property: .onSite, value: isOnSite! ? "Yes" : "No")
-//		}
-//		else {
-//			setUserProperty(property: .onSite, value: "Undefined")
-//		}
+		//		if isOnSite != nil {
+		//			setUserProperty(property: .onSite, value: isOnSite! ? "Yes" : "No")
+		//		}
+		//		else {
+		//			setUserProperty(property: .onSite, value: "Undefined")
+		//		}
 	}
 
 	// MARK: Audio Player
 
-    static func sendAudioPlayedEvent(source: PlaybackSource, language: Common.Language, audio: AICAudioFileModel, artwork: AICObjectModel?, tour: AICTourModel?) {
-        let languageString: String = Common.stringForLanguage[language]!
+	static func sendAudioPlayedEvent(source: PlaybackSource, language: Common.Language, audio: AICAudioFileModel, artwork: AICObjectModel?, tour: AICTourModel?) {
+		let languageString: String = Common.stringForLanguage[language]!
 		var parameters: [String: String] = [
 			"playback_source": source.rawValue,
 			"playback_language": languageString,
-            "audio_title": audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength)
+			"audio_title": audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength)
 		]
 		if let artworkModel: AICObjectModel = artwork {
-            parameters["title"] = artworkModel.title.truncate(length: parameterMaxLength)
+			parameters["title"] = artworkModel.title.truncate(length: parameterMaxLength)
 		}
 		if let tourModel: AICTourModel = tour {
 			parameters["tour_title"] = tourModel.translations[.english]!.title.truncate(length: parameterMaxLength)
@@ -182,40 +182,40 @@ class AICAnalytics {
 
 	static func sendAudioStoppedEvent(title: String, audio: AICAudioFileModel, percentPlayed: Int) {
 		let percent = percentPlayed > 95 ? 100 : percentPlayed
-        let completion: PlaybackCompletion = percent == 100 ? .Completed : .Interrupted
+		let completion: PlaybackCompletion = percent == 100 ? .Completed : .Interrupted
 		let parameters: [String: String] = [
 			"title": title.truncate(length: parameterMaxLength),
-            "audio_title": audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength),
-            "completion": completion.rawValue,
+			"audio_title": audio.translations[.english]!.trackTitle.truncate(length: parameterMaxLength),
+			"completion": completion.rawValue,
 			"percent_played": String(percent)
 		]
 		trackEvent(.audioStopped, parameters: parameters)
 	}
 
-    // MARK: Audio Errors
+	// MARK: Audio Errors
 
-    static func sendErrorAudioGuideBadNumberEvent(number: Int) {
-        let parameters: [String: String] = [
-            "type": "Bad Number",
-            "code": String(number)
-        ]
-        trackEvent(.audioError, parameters: parameters)
-    }
+	static func sendErrorAudioGuideBadNumberEvent(number: Int) {
+		let parameters: [String: String] = [
+			"type": "Bad Number",
+			"code": String(number)
+		]
+		trackEvent(.audioError, parameters: parameters)
+	}
 
-    static func sendErrorAudioLoadFailEvent(number: Int) {
-        let parameters: [String: String] = [
-            "type": "Audio Load Fail",
-            "code": String(number)
-        ]
-        trackEvent(.audioError, parameters: parameters)
-    }
+	static func sendErrorAudioLoadFailEvent(number: Int) {
+		let parameters: [String: String] = [
+			"type": "Audio Load Fail",
+			"code": String(number)
+		]
+		trackEvent(.audioError, parameters: parameters)
+	}
 
 	// MARK: Tours
 
 	static func sendTourStartedEvent(tour: AICTourModel, language: Common.Language) {
-        let languageString: String = Common.stringForLanguage[language]!
+		let languageString: String = Common.stringForLanguage[language]!
 		let parameters: [String: String] = [
-            "title": tour.translations[.english]!.title.truncate(length: parameterMaxLength),
+			"title": tour.translations[.english]!.title.truncate(length: parameterMaxLength),
 			"tour_language": languageString
 		]
 		trackEvent(.tourStarted, parameters: parameters)
@@ -330,30 +330,30 @@ class AICAnalytics {
 		trackEvent(.searchTappedExhibition, parameters: parameters)
 	}
 
-    // MARK: Search Facilities
+	// MARK: Search Facilities
 
-    static func sendSearchFacilitiesEvent(facility: Facility) {
-        let parameters: [String: String] = [
-            "facility": facility.rawValue
-        ]
-        trackEvent(.searchFacilities, parameters: parameters)
-    }
+	static func sendSearchFacilitiesEvent(facility: Facility) {
+		let parameters: [String: String] = [
+			"facility": facility.rawValue
+		]
+		trackEvent(.searchFacilities, parameters: parameters)
+	}
 
-    // MARK: Search Artwork Map
+	// MARK: Search Artwork Map
 
-    static func sendSearchArtworkMapEvent(searchedArtwork: AICSearchedArtworkModel) {
-        let parameters: [String: String] = [
-            "title": searchedArtwork.title.truncate(length: parameterMaxLength)
-        ]
-        trackEvent(.searchArtworkMap, parameters: parameters)
-    }
+	static func sendSearchArtworkMapEvent(searchedArtwork: AICSearchedArtworkModel) {
+		let parameters: [String: String] = [
+			"title": searchedArtwork.title.truncate(length: parameterMaxLength)
+		]
+		trackEvent(.searchArtworkMap, parameters: parameters)
+	}
 
-    // MARK: Search Icon Map
+	// MARK: Search Icon Map
 
-    static func sendSearchIconMapEvent(artwork: AICObjectModel) {
-        let parameters: [String: String] = [
-            "title": artwork.title.truncate(length: parameterMaxLength)
-        ]
-        trackEvent(.searchIconMap, parameters: parameters)
-    }
+	static func sendSearchIconMapEvent(artwork: AICObjectModel) {
+		let parameters: [String: String] = [
+			"title": artwork.title.truncate(length: parameterMaxLength)
+		]
+		trackEvent(.searchIconMap, parameters: parameters)
+	}
 }

@@ -1,6 +1,6 @@
 /*
- Abstract:
- Data model for info received from member card API
+Abstract:
+Data model for info received from member card API
 */
 
 import Foundation

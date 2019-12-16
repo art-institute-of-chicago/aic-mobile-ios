@@ -17,23 +17,23 @@ import Localize_Swift
 class MessageViewController: UIViewController {
 	let blurBGView: UIView = getBlurEffectView(frame: UIScreen.main.bounds)
 	let contentView = UIView()
-    let iconImageView = UIImageView()
-    let dividerLine = UIView()
+	let iconImageView = UIImageView()
+	let dividerLine = UIView()
 	let titleLabel = UILabel()
 	let messageLabel = UILabel()
 	let buttonsView = UIView()
-    let actionButton: AICButton = AICButton(isSmall: true)
-    var cancelButton: AICButton?
+	let actionButton: AICButton = AICButton(isSmall: true)
+	var cancelButton: AICButton?
 
 	let fadeInOutAnimationDuration = 0.4
 	let contentViewFadeInOutAnimationDuration = 0.4
 
-    let messageModel: AICMessageModel
+	let messageModel: AICMessageModel
 
 	weak var delegate: MessageViewControllerDelegate?
 
-    init(message: AICMessageModel) {
-        messageModel = message
+	init(message: AICMessageModel) {
+		messageModel = message
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -52,44 +52,44 @@ class MessageViewController: UIViewController {
 
 		contentView.backgroundColor = .clear
 
-        iconImageView.image = messageModel.iconImage
-        iconImageView.frame.size = iconImageView.image!.size
+		iconImageView.image = messageModel.iconImage
+		iconImageView.frame.size = iconImageView.image!.size
 
 		dividerLine.backgroundColor = .aicDividerLineTransparentColor
 
-        titleLabel.font = .aicPageTitleFont
-        titleLabel.numberOfLines = 0
-        titleLabel.textColor = .white
-        titleLabel.textAlignment = .center
+		titleLabel.font = .aicPageTitleFont
+		titleLabel.numberOfLines = 0
+		titleLabel.textColor = .white
+		titleLabel.textAlignment = .center
 
-        messageLabel.font = .aicPageTextFont
-        messageLabel.numberOfLines = 0
-        messageLabel.textColor = .white
-        messageLabel.textAlignment = .center
+		messageLabel.font = .aicPageTextFont
+		messageLabel.numberOfLines = 0
+		messageLabel.textColor = .white
+		messageLabel.textAlignment = .center
 
 		buttonsView.backgroundColor = .clear
 		buttonsView.clipsToBounds = false
 
-        actionButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
+		actionButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
 
-        if (messageModel.cancelButtonTitle ?? "").isEmpty == false {
-            cancelButton = AICButton(isSmall: true)
-            cancelButton?.setColorMode(colorMode: AICButton.transparentMode)
-            cancelButton?.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
-        }
+		if (messageModel.cancelButtonTitle ?? "").isEmpty == false {
+			cancelButton = AICButton(isSmall: true)
+			cancelButton?.setColorMode(colorMode: AICButton.transparentMode)
+			cancelButton?.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
+		}
 
 		// Add subviews
-        self.view.insertSubview(blurBGView, at: 0)
+		self.view.insertSubview(blurBGView, at: 0)
 		self.view.addSubview(contentView)
-        contentView.addSubview(iconImageView)
+		contentView.addSubview(iconImageView)
 		contentView.addSubview(dividerLine)
-        contentView.addSubview(titleLabel)
+		contentView.addSubview(titleLabel)
 		contentView.addSubview(messageLabel)
 		contentView.addSubview(buttonsView)
-        buttonsView.addSubview(actionButton)
-        if cancelButton != nil {
-            buttonsView.addSubview(cancelButton!)
-        }
+		buttonsView.addSubview(actionButton)
+		if cancelButton != nil {
+			buttonsView.addSubview(cancelButton!)
+		}
 
 		createViewConstraints()
 
@@ -100,19 +100,19 @@ class MessageViewController: UIViewController {
 	func createViewConstraints() {
 		contentView.autoPinEdgesToSuperviewEdges()
 
-        iconImageView.autoSetDimensions(to: iconImageView.image!.size)
-        iconImageView.autoAlignAxis(.vertical, toSameAxisOf: contentView)
-        iconImageView.autoAlignAxis(.horizontal, toSameAxisOf: dividerLine, withOffset: -65)
+		iconImageView.autoSetDimensions(to: iconImageView.image!.size)
+		iconImageView.autoAlignAxis(.vertical, toSameAxisOf: contentView)
+		iconImageView.autoAlignAxis(.horizontal, toSameAxisOf: dividerLine, withOffset: -65)
 
 		dividerLine.autoPinEdge(.top, to: .top, of: contentView, withOffset: 153 + Common.Layout.safeAreaTopMargin)
 		dividerLine.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
 		dividerLine.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
 
-        titleLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 30)
-        titleLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
-        titleLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
-        titleLabel.autoAlignAxis(.vertical, toSameAxisOf: contentView)
+		titleLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 30)
+		titleLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
+		titleLabel.autoAlignAxis(.vertical, toSameAxisOf: contentView)
 
 		messageLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 30)
 		messageLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 40)
@@ -124,13 +124,13 @@ class MessageViewController: UIViewController {
 		buttonsView.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
 		buttonsView.autoSetDimension(.height, toSize: 100)
 
-        actionButton.autoPinEdge(.top, to: .top, of: buttonsView)
-        actionButton.autoAlignAxis(.vertical, toSameAxisOf: buttonsView)
+		actionButton.autoPinEdge(.top, to: .top, of: buttonsView)
+		actionButton.autoAlignAxis(.vertical, toSameAxisOf: buttonsView)
 
-        if cancelButton != nil {
-            cancelButton?.autoPinEdge(.top, to: .bottom, of: actionButton, withOffset: 16)
-            cancelButton?.autoAlignAxis(.vertical, toSameAxisOf: buttonsView)
-        }
+		if cancelButton != nil {
+			cancelButton?.autoPinEdge(.top, to: .bottom, of: actionButton, withOffset: 16)
+			cancelButton?.autoAlignAxis(.vertical, toSameAxisOf: buttonsView)
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -138,43 +138,43 @@ class MessageViewController: UIViewController {
 
 		updateLanguage()
 
-        contentView.alpha = 0.0
+		contentView.alpha = 0.0
 	}
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 
-        UIView.animate(withDuration: self.contentViewFadeInOutAnimationDuration, animations: {
-            self.contentView.alpha = 1.0
-        })
-    }
+		UIView.animate(withDuration: self.contentViewFadeInOutAnimationDuration, animations: {
+			self.contentView.alpha = 1.0
+		})
+	}
 
 	@objc func updateLanguage() {
-        titleLabel.text = messageModel.title.localized(using: "Messages")
+		titleLabel.text = messageModel.title.localized(using: "Messages")
 
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-        let textAttrString = NSMutableAttributedString(string: messageModel.message.localized(using: "Messages"))
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineSpacing = 6
+		let textAttrString = NSMutableAttributedString(string: messageModel.message.localized(using: "Messages"))
 		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: textAttrString.length))
-        messageLabel.attributedText = textAttrString
-        messageLabel.textAlignment = .center
+		messageLabel.attributedText = textAttrString
+		messageLabel.textAlignment = .center
 
 		actionButton.setColorMode(colorMode: AICButton.greenBlueMode)
-        actionButton.setTitle(messageModel.actionButtonTitle.localized(using: "Messages"), for: .normal)
+		actionButton.setTitle(messageModel.actionButtonTitle.localized(using: "Messages"), for: .normal)
 
-        if cancelButton != nil {
+		if cancelButton != nil {
 			cancelButton!.setColorMode(colorMode: AICButton.transparentMode)
-            cancelButton?.setTitle(messageModel.cancelButtonTitle?.localized(using: "Messages"), for: .normal)
-        }
-    }
+			cancelButton?.setTitle(messageModel.cancelButtonTitle?.localized(using: "Messages"), for: .normal)
+		}
+	}
 
-    @objc func buttonPressed(button: UIButton) {
-        if button == actionButton {
-            self.delegate?.messageViewActionSelected(messageVC: self)
-        } else if button == cancelButton {
+	@objc func buttonPressed(button: UIButton) {
+		if button == actionButton {
+			self.delegate?.messageViewActionSelected(messageVC: self)
+		} else if button == cancelButton {
 			actionButton.setColorMode(colorMode: AICButton.transparentMode)
 			cancelButton!.setColorMode(colorMode: AICButton.greenBlueMode)
-            self.delegate?.messageViewCancelSelected?(messageVC: self)
-        }
-    }
+			self.delegate?.messageViewCancelSelected?(messageVC: self)
+		}
+	}
 }

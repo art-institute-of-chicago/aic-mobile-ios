@@ -1,19 +1,19 @@
 /*
- Abstract:
- Main View controller
+Abstract:
+Main View controller
 */
 
 import UIKit
 
 class RootViewController: UIViewController {
-    enum Mode {
-        case loading
-        case language
-        case mainApp
-    }
+	enum Mode {
+		case loading
+		case language
+		case mainApp
+	}
 
-    var mode: Mode = .loading {
-        didSet {
+	var mode: Mode = .loading {
+		didSet {
 			switch self.mode {
 			case .loading:
 				showLoadingVC()
@@ -22,171 +22,171 @@ class RootViewController: UIViewController {
 			case .mainApp:
 				showMainApp()
 			}
-        }
-    }
+		}
+	}
 
-    var loadingVC: LoadingViewController?
+	var loadingVC: LoadingViewController?
 	var languageVC: LanguageSelectionViewController?
 	var sectionsVC: SectionsViewController?
 
-    var shouldShowLanguageSelection: Bool = false
+	var shouldShowLanguageSelection: Bool = false
 
-    override var prefersStatusBarHidden: Bool {
-        return !Common.Layout.showStatusBar
-    }
+	override var prefersStatusBarHidden: Bool {
+		return !Common.Layout.showStatusBar
+	}
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle.lightContent
-    }
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return UIStatusBarStyle.lightContent
+	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.frame = UIScreen.main.bounds
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.frame = UIScreen.main.bounds
 
-        registerSettingsBundle()
+		registerSettingsBundle()
 
-        // Check for first launch
-        let defaults = UserDefaults.standard
-        shouldShowLanguageSelection = defaults.bool(forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
+		// Check for first launch
+		let defaults = UserDefaults.standard
+		shouldShowLanguageSelection = defaults.bool(forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
 
-        // Set delegates
-        AppDataManager.sharedInstance.delegate = self
+		// Set delegates
+		AppDataManager.sharedInstance.delegate = self
 
-        startLoading()
-    }
+		startLoading()
+	}
 
-    override func viewWillAppear(_ animated: Bool) {
-        view.frame.origin.y = 0
-        view.frame.size.height = UIScreen.main.bounds.height
-    }
+	override func viewWillAppear(_ animated: Bool) {
+		view.frame.origin.y = 0
+		view.frame.size.height = UIScreen.main.bounds.height
+	}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
 
-    // Register the app defaults
-    private func registerSettingsBundle() {
-        let defaults = UserDefaults.standard
-        let appDefaults = [Common.UserDefaults.showLanguageSelectionUserDefaultsKey: true,
-                           Common.UserDefaults.showHeadphonesUserDefaultsKey: true,
+	// Register the app defaults
+	private func registerSettingsBundle() {
+		let defaults = UserDefaults.standard
+		let appDefaults = [Common.UserDefaults.showLanguageSelectionUserDefaultsKey: true,
+						   Common.UserDefaults.showHeadphonesUserDefaultsKey: true,
 						   Common.UserDefaults.showEnableLocationUserDefaultsKey: true,
 						   Common.UserDefaults.showTooltipsDefaultsKey: true]
 
-        defaults.register(defaults: appDefaults)
-        defaults.synchronize()
+		defaults.register(defaults: appDefaults)
+		defaults.synchronize()
 
-        // Reset defaults if testing instructions
-        if Common.Testing.alwaysShowInstructions {
-            defaults.set(true, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
-            defaults.set(true, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
-            defaults.set(true, forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
+		// Reset defaults if testing instructions
+		if Common.Testing.alwaysShowInstructions {
+			defaults.set(true, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
+			defaults.set(true, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
+			defaults.set(true, forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
 			defaults.set(true, forKey: Common.UserDefaults.showTooltipsDefaultsKey)
-            defaults.synchronize()
-        }
-    }
+			defaults.synchronize()
+		}
+	}
 
-    private func startLoading() {
-        cleanUpViews()
-        showLoadingVC()
-    }
+	private func startLoading() {
+		cleanUpViews()
+		showLoadingVC()
+	}
 
-    // If loading got stopped (backgrounding the app?)
-    // finish it up
-    func resumeLoadingIfNotComplete() {
-        if mode != .mainApp {
-            startLoading()
-        }
-    }
+	// If loading got stopped (backgrounding the app?)
+	// finish it up
+	func resumeLoadingIfNotComplete() {
+		if mode != .mainApp {
+			startLoading()
+		}
+	}
 
-    // Show a tour, called from deep link handling in app delegate
-    func startTour(tour: AICTourModel) {
-        // If we haven't loaded yet we should save the tour here
+	// Show a tour, called from deep link handling in app delegate
+	func startTour(tour: AICTourModel) {
+		// If we haven't loaded yet we should save the tour here
 		sectionsVC?.showTourOnMapFromLink(tour: tour, language: Common.currentLanguage)
-    }
+	}
 
-    private func showLoadingVC() {
-        loadingVC = LoadingViewController(showFullVideo: !shouldShowLanguageSelection)
-        loadingVC?.delegate = self
-        view.addSubview(loadingVC!.view)
+	private func showLoadingVC() {
+		loadingVC = LoadingViewController(showFullVideo: !shouldShowLanguageSelection)
+		loadingVC?.delegate = self
+		view.addSubview(loadingVC!.view)
 
 		// Load data
 		AppDataManager.sharedInstance.load()
 
 		loadingVC?.showProgressBar()
-    }
+	}
 
-    private func showLanguageVC() {
-        languageVC = LanguageSelectionViewController()
+	private func showLanguageVC() {
+		languageVC = LanguageSelectionViewController()
 		languageVC?.delegate = self
-        self.view.addSubview(languageVC!.view)
+		self.view.addSubview(languageVC!.view)
 
 		self.perform(#selector(preloadIntroVideoB), with: nil, afterDelay: languageVC!.fadeInOutAnimationDuration + languageVC!.contentViewFadeInOutAnimationDuration)
-    }
+	}
 
 	@objc func preloadIntroVideoB() {
 		loadingVC?.loadIntroVideoB()
 	}
 
-    // Remove the intro and show the main app
-    private func showMainApp() {
+	// Remove the intro and show the main app
+	private func showMainApp() {
 		if sectionsVC == nil {
 			sectionsVC = SectionsViewController()
 			sectionsVC?.delegate = self
 		}
-        view.insertSubview(sectionsVC!.view, aboveSubview: loadingVC!.view)
+		view.insertSubview(sectionsVC!.view, aboveSubview: loadingVC!.view)
 
-        sectionsVC!.animateInInitialView()
-    }
+		sectionsVC!.animateInInitialView()
+	}
 
-    fileprivate func cleanUpViews() {
-        // Remove and clean up language + loading
-        languageVC?.view.removeFromSuperview()
+	fileprivate func cleanUpViews() {
+		// Remove and clean up language + loading
+		languageVC?.view.removeFromSuperview()
 		languageVC?.delegate = nil
-        languageVC = nil
+		languageVC = nil
 
-        loadingVC?.view.removeFromSuperview()
+		loadingVC?.view.removeFromSuperview()
 		loadingVC?.delegate = nil
-        loadingVC = nil
-    }
+		loadingVC = nil
+	}
 }
 
 // App Data Delegate
 extension RootViewController: AppDataManagerDelegate {
-    // Animate progress bar, play video when finished animating to 100%
-    func downloadProgress(withPctCompleted pct: Float) {
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            self.loadingVC?.updateProgress(forPercentComplete: pct)
-            }, completion: { (_: Bool) in
-                if pct == 1.0 {
-                    self.loadingVC?.playIntroVideo()
-                }
-            }
-        )
-    }
+	// Animate progress bar, play video when finished animating to 100%
+	func downloadProgress(withPctCompleted pct: Float) {
+		UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+			self.loadingVC?.updateProgress(forPercentComplete: pct)
+		}, completion: { (_: Bool) in
+			if pct == 1.0 {
+				self.loadingVC?.playIntroVideo()
+			}
+		}
+		)
+	}
 
-    func downloadFailure(withMessage message: String) {
-        let message =  message + "\n\n\(Common.DataConstants.dataLoadFailureMessage)"
+	func downloadFailure(withMessage message: String) {
+		let message =  message + "\n\n\(Common.DataConstants.dataLoadFailureMessage)"
 
-        let alert = UIAlertController(title: Common.DataConstants.dataLoadFailureTitle, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: Common.DataConstants.dataLoadFailureButtonTitle, style: .default, handler: { (_) in
-            // Try to load the data again
-            AppDataManager.sharedInstance.load(forceAppDataDownload: true)
-        })
+		let alert = UIAlertController(title: Common.DataConstants.dataLoadFailureTitle, message: message, preferredStyle: .alert)
+		let action = UIAlertAction(title: Common.DataConstants.dataLoadFailureButtonTitle, style: .default, handler: { (_) in
+			// Try to load the data again
+			AppDataManager.sharedInstance.load(forceAppDataDownload: true)
+		})
 
-        alert.addAction(action)
+		alert.addAction(action)
 
-        present(alert, animated: true)
-    }
+		present(alert, animated: true)
+	}
 }
 
 // Loading VC delegate
 extension RootViewController: LoadingViewControllerDelegate {
-    func loadingDidFinishPlayingIntroVideoA() {
+	func loadingDidFinishPlayingIntroVideoA() {
 		if self.mode != .language {
 			self.mode = .language
 		}
-    }
+	}
 
 	func loadingDidFinish() {
 		if self.mode != .mainApp {
@@ -213,7 +213,7 @@ extension RootViewController: LanguageSelectionViewControllerDelegate {
 
 // Sections view controller Delegate
 extension RootViewController: SectionsViewControllerDelegate {
-    func sectionsViewControllerDidFinishAnimatingIn() {
+	func sectionsViewControllerDidFinishAnimatingIn() {
 		self.cleanUpViews()
-    }
+	}
 }

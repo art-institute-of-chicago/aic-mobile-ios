@@ -1,19 +1,19 @@
 /*
- Abstract:
- AIC colors extending UIColor
+Abstract:
+AIC colors extending UIColor
 */
 
 import UIKit
 
 #if os(OSX)
 
-    import Cocoa
-    public  typealias PXColor = NSColor
+import Cocoa
+public  typealias PXColor = NSColor
 
 #else
 
-    import UIKit
-    public  typealias PXColor = UIColor
+import UIKit
+public  typealias PXColor = UIColor
 
 #endif
 
@@ -88,7 +88,7 @@ extension UIColor {
 
 	static let aicCardDarkLinkColor: UIColor = UIColor(red: 48.0 / 255.0, green: 162.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0)
 
-    static let aicAudioPlayerBackgroundColor: UIColor = UIColor(white: 25.0 / 255.0, alpha: 1.0)
+	static let aicAudioPlayerBackgroundColor: UIColor = UIColor(white: 25.0 / 255.0, alpha: 1.0)
 
 	static let aicMapCardBackgroundColor: UIColor = UIColor(red: 119.0 / 255.0, green: 137.0 / 255.0, blue: 167.0 / 255.0, alpha: 1.0)
 
@@ -98,40 +98,40 @@ extension UIColor {
 
 	static let aicTooltipBackgroundColor: UIColor = UIColor(red: 94.0 / 255.0, green: 115.0 / 255.0, blue: 178.0 / 255.0, alpha: 1.0)
 
-    func lighter(_ amount: CGFloat = 0.25) -> PXColor {
-        return hueColorWithBrightnessAmount(1 + amount)
-    }
+	func lighter(_ amount: CGFloat = 0.25) -> PXColor {
+		return hueColorWithBrightnessAmount(1 + amount)
+	}
 
-    func darker(_ amount: CGFloat = 0.25) -> PXColor {
-        return hueColorWithBrightnessAmount(1 - amount)
-    }
+	func darker(_ amount: CGFloat = 0.25) -> PXColor {
+		return hueColorWithBrightnessAmount(1 - amount)
+	}
 
-    fileprivate func hueColorWithBrightnessAmount(_ amount: CGFloat) -> PXColor {
-        var hue: CGFloat = 0
-        var saturation: CGFloat = 0
-        var brightness: CGFloat = 0
-        var alpha: CGFloat = 0
+	fileprivate func hueColorWithBrightnessAmount(_ amount: CGFloat) -> PXColor {
+		var hue: CGFloat = 0
+		var saturation: CGFloat = 0
+		var brightness: CGFloat = 0
+		var alpha: CGFloat = 0
 
-        #if os(iOS)
+		#if os(iOS)
 
-            if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
-                return PXColor( hue: hue,
-                                saturation: saturation,
-                                brightness: brightness * amount,
-                                alpha: alpha )
-            } else {
-                return self
-            }
+		if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+			return PXColor( hue: hue,
+							saturation: saturation,
+							brightness: brightness * amount,
+							alpha: alpha )
+		} else {
+			return self
+		}
 
-        #else
+		#else
 
-            getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-            return PXColor( hue: hue,
-                            saturation: saturation,
-                            brightness: brightness * amount,
-                            alpha: alpha )
+		getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+		return PXColor( hue: hue,
+						saturation: saturation,
+						brightness: brightness * amount,
+						alpha: alpha )
 
-        #endif
+		#endif
 
-    }
+	}
 }

@@ -54,7 +54,7 @@ class SeeAllTourCell: UICollectionViewCell {
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			tourTitleLabel.text = self.tourModel!.title
-            shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 20)
+			shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 20)
 			stopsNumberLabel.text = "\(tourModel.stops.count) " + "Stops".localized(using: "Home")
 
 			if (self.tourModel!.durationInMinutes ?? "").isEmpty {

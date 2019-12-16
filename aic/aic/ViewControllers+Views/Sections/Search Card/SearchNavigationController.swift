@@ -18,7 +18,7 @@ class SearchNavigationController: CardNavigationController {
 	let resultsVC: ResultsTableViewController = ResultsTableViewController()
 	var currentTableView: UITableView
 
-    private let slideAnimator: SearchSlideAnimator = SearchSlideAnimator()
+	private let slideAnimator: SearchSlideAnimator = SearchSlideAnimator()
 
 	private var searchBarLeadingConstraint: NSLayoutConstraint?
 	private var searchBarActiveLeading: CGFloat = 2
@@ -44,7 +44,7 @@ class SearchNavigationController: CardNavigationController {
 
 	init() {
 		currentTableView = resultsVC.tableView
-        super.init(nibName: nil, bundle: nil)
+		super.init(nibName: nil, bundle: nil)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -102,18 +102,18 @@ class SearchNavigationController: CardNavigationController {
 		self.view.addSubview(backButton)
 		self.view.addSubview(dividerLine)
 
-        // Add main VC as subview to rootVC
-        resultsVC.willMove(toParent: rootVC)
-        rootVC.view.addSubview(resultsVC.view)
-        resultsVC.didMove(toParent: rootVC)
+		// Add main VC as subview to rootVC
+		resultsVC.willMove(toParent: rootVC)
+		rootVC.view.addSubview(resultsVC.view)
+		resultsVC.didMove(toParent: rootVC)
 
 		// Add filter menu
 		rootVC.view.insertSubview(filterMenuView, aboveSubview: resultsVC.view)
 
 		createViewConstraints()
 
-        // NavigationController Delegate
-        self.delegate = self
+		// NavigationController Delegate
+		self.delegate = self
 
 		// Language
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
@@ -236,7 +236,7 @@ class SearchNavigationController: CardNavigationController {
 
 		if let searchText = searchTextField?.text {
 			if trackUserTypeSearchText == true && trackUserSelectedContent == false {
-                trackUserTypeSearchText = false // for this text, stop traking analytics until user changes search
+				trackUserTypeSearchText = false // for this text, stop traking analytics until user changes search
 
 				var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
 				if trackLoadingType == .autocompleteString {
@@ -364,7 +364,7 @@ class SearchNavigationController: CardNavigationController {
 		let searchTextField = searchBar.value(forKey: "searchField") as? UITextField
 		if let searchText = searchTextField?.text {
 			if trackLoadingType != .none {
-                // Log Search No Results Event
+				// Log Search No Results Event
 				if resultsVC.isAllContentLoadedWithNoResults() {
 					var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
 					if trackLoadingType == .autocompleteString {
@@ -396,7 +396,7 @@ extension SearchNavigationController: UISearchBarDelegate, UITextFieldDelegate {
 			// Load new search
 			loadSearch(searchText: searchText, showAutocomplete: true)
 		} else {
-            trackUserTypeSearchText = false
+			trackUserTypeSearchText = false
 
 			resultsTopMarginConstraint?.constant = resultsTopMargin
 			self.view.setNeedsLayout()
@@ -425,24 +425,24 @@ extension SearchNavigationController: UISearchBarDelegate, UITextFieldDelegate {
 		}
 	}
 
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        if let searchText = searchBar.text {
-            if trackUserTypeSearchText == true && trackUserSelectedContent == false {
-                // Log Analytics
-                var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
-                if trackLoadingType == .autocompleteString {
-                    searchTermSource = .Autocomplete
-                } else if trackLoadingType == .promotedString {
-                    searchTermSource = .Promoted
-                } else {
-                    searchTermSource = .TextInput
-                }
-                AICAnalytics.sendSearchAbandonedEvent(searchTerm: searchText, searchTermSource: searchTermSource)
-            }
-        }
+	func textFieldShouldClear(_ textField: UITextField) -> Bool {
+		if let searchText = searchBar.text {
+			if trackUserTypeSearchText == true && trackUserSelectedContent == false {
+				// Log Analytics
+				var searchTermSource: AICAnalytics.SearchTermSource = .TextInput
+				if trackLoadingType == .autocompleteString {
+					searchTermSource = .Autocomplete
+				} else if trackLoadingType == .promotedString {
+					searchTermSource = .Promoted
+				} else {
+					searchTermSource = .TextInput
+				}
+				AICAnalytics.sendSearchAbandonedEvent(searchTerm: searchText, searchTermSource: searchTermSource)
+			}
+		}
 
-        return true
-    }
+		return true
+	}
 }
 
 // MARK: Search Data Manager Delegate
@@ -586,13 +586,13 @@ extension SearchNavigationController: FilterMenuDelegate {
 // MARK: UINavigationControllerDelegate
 
 extension SearchNavigationController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController,
+	func navigationController(_ navigationController: UINavigationController,
 							  animationControllerFor operation: UINavigationController.Operation,
 							  from fromVC: UIViewController,
 							  to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        slideAnimator.isAnimatingIn = (operation == .push)
-        return slideAnimator
-    }
+		slideAnimator.isAnimatingIn = (operation == .push)
+		return slideAnimator
+	}
 }
 
 // MARK: Pan Gesture

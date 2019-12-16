@@ -1,12 +1,12 @@
 /*
- Abstract:
- Defines a data structure for AIC News Items
- */
+Abstract:
+Defines a data structure for AIC News Items
+*/
 
 import Foundation
 
 struct AICTourModel {
-    let nid: Int
+	let nid: Int
 
 	// Translated content
 	var title: String { return self.translations[self.language]!.title }
@@ -20,8 +20,8 @@ struct AICTourModel {
 
 	let category: AICTourCategoryModel?
 
-    let additionalInformation: String? = nil
-    let imageUrl: URL
+	let additionalInformation: String? = nil
+	let imageUrl: URL
 
 	let location: CoordinateWithFloor
 
@@ -55,22 +55,22 @@ struct AICTourModel {
 		return languages
 	}
 
-    func getObjectsForStops() -> [AICObjectModel] {
-        var objects: [AICObjectModel] = []
-        for stop in stops {
-            objects.append(stop.object)
-        }
-        return objects
-    }
+	func getObjectsForStops() -> [AICObjectModel] {
+		var objects: [AICObjectModel] = []
+		for stop in stops {
+			objects.append(stop.object)
+		}
+		return objects
+	}
 
-    func getIndex(forStopObject stopObject: AICObjectModel) -> Int? {
-        for (index, stop) in stops.enumerated() {
-            if stop.object.nid == stopObject.nid {
-                return index
-            }
-        }
-        return nil
-    }
+	func getIndex(forStopObject stopObject: AICObjectModel) -> Int? {
+		for (index, stop) in stops.enumerated() {
+			if stop.object.nid == stopObject.nid {
+				return index
+			}
+		}
+		return nil
+	}
 
 	func getIndex(forStopAudio audio: AICAudioFileModel) -> Int? {
 		for (index, stop) in stops.enumerated() {

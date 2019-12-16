@@ -1,46 +1,46 @@
 /*
- Abstract:
- Section View controller for Number Pad section
+Abstract:
+Section View controller for Number Pad section
 */
 
 import UIKit
 import Localize_Swift
 
 protocol AudioGuideNavigationControllerDelegate: class {
-    func audioGuideDidSelectObjectAudio(object: AICObjectModel, audioGuideID: Int)
+	func audioGuideDidSelectObjectAudio(object: AICObjectModel, audioGuideID: Int)
 	func audioGuideDidSelectTourAudio(tour: AICTourModel, audioGuideID: Int)
 }
 
 class AudioGuideNavigationController: SectionNavigationController {
 	let rootVC: AudioGuideViewController = AudioGuideViewController()
 
-    static var buttonSizeRatio: CGFloat = 0.1946 // Ratio of preferred button size to screen width
-    static let colSpacingRatio: CGFloat = 0.048
+	static var buttonSizeRatio: CGFloat = 0.1946 // Ratio of preferred button size to screen width
+	static let colSpacingRatio: CGFloat = 0.048
 	// No top margin on iPhone 5, should define this width somewhere this is gross
 	let numberPadTopMargin = UIScreen.main.bounds.width > 320 ? 30 : 0
 
 	static let numCols = 3
-    static let numRows = 4
-    let buttonValueMap = [0: "1", 1: "2", 2: "3",
-                          3: "4", 4: "5", 5: "6",
-                          6: "7", 7: "8", 8: "9",
-                          9: "<", 10: "0", 11: "GO"]
+	static let numRows = 4
+	let buttonValueMap = [0: "1", 1: "2", 2: "3",
+						  3: "4", 4: "5", 5: "6",
+						  6: "7", 7: "8", 8: "9",
+						  9: "<", 10: "0", 11: "GO"]
 	private let maxInputCharacters = 5
 	private(set) var currentInputValue = ""
 
-    // Delegate
-    weak var sectionDelegate: AudioGuideNavigationControllerDelegate?
+	// Delegate
+	weak var sectionDelegate: AudioGuideNavigationControllerDelegate?
 
-    // Collection view that holds the buttons
-    var collectionView: UICollectionView = createCollectionView()
+	// Collection view that holds the buttons
+	var collectionView: UICollectionView = createCollectionView()
 
-    override init(section: AICSectionModel) {
+	override init(section: AICSectionModel) {
 		super.init(section: section)
-    }
+	}
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -146,9 +146,9 @@ class AudioGuideNavigationController: SectionNavigationController {
 		collectionView.reloadData()
 	}
 
-    func reset() {
-        clearInput()
-    }
+	func reset() {
+		clearInput()
+	}
 
 	private func clearInput() {
 		currentInputValue = ""
@@ -202,44 +202,44 @@ class AudioGuideNavigationController: SectionNavigationController {
 
 // MARK: UICollectionViewDataSource
 extension AudioGuideNavigationController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AudioGuideCollectionViewCell
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AudioGuideCollectionViewCell
 
 		// reset reused cell
 		cell.reset()
 
 		let titleLabel = buttonValueMap[(indexPath.section * AudioGuideNavigationController.numCols) + indexPath.row]
-        switch titleLabel! {
-        case "<":
+		switch titleLabel! {
+		case "<":
 			cell.button.setImage(#imageLiteral(resourceName: "deleteButton"), for: .normal)
-            cell.button.setImage(#imageLiteral(resourceName: "deleteButton").colorized(.white), for: .highlighted)
+			cell.button.setImage(#imageLiteral(resourceName: "deleteButton").colorized(.white), for: .highlighted)
 
 			// Accessibility
 			cell.button.accessibilityLabel = "Delete"
 		case "GO":
 			cell.button.setTitle("Go".localized(using: "AudioGuide"), for: .normal)
-        default:
-            cell.button.setTitle(titleLabel, for: .normal)
-        }
+		default:
+			cell.button.setTitle(titleLabel, for: .normal)
+		}
 
-        if indexPath.row == 9 {
-            cell.hideBorder()
-        }
+		if indexPath.row == 9 {
+			cell.hideBorder()
+		}
 
-        cell.button.tag = (indexPath as NSIndexPath).row
-        cell.button.addTarget(self, action: #selector(AudioGuideNavigationController.buttonPressed(_:)), for: .touchUpInside)
+		cell.button.tag = (indexPath as NSIndexPath).row
+		cell.button.addTarget(self, action: #selector(AudioGuideNavigationController.buttonPressed(_:)), for: .touchUpInside)
 
-        // Configure the cell
-        return cell
-    }
+		// Configure the cell
+		return cell
+	}
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return 1
+	}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return AudioGuideNavigationController.numRows * AudioGuideNavigationController.numCols
-    }
+	}
 }
 
 extension AudioGuideNavigationController: UICollectionViewDelegate {
@@ -254,14 +254,14 @@ extension AudioGuideNavigationController: UICollectionViewDelegate {
 
 // MARK: Gesture handlers
 extension AudioGuideNavigationController {
-    @objc internal func buttonPressed(_ button: UIButton) {
-        let strVal = buttonValueMap[button.tag]!
-        switch strVal {
-        case "GO":
-            guard let id: Int = Int(currentInputValue) else {
-                shakeForIncorrect()
-                return
-            }
+	@objc internal func buttonPressed(_ button: UIButton) {
+		let strVal = buttonValueMap[button.tag]!
+		switch strVal {
+		case "GO":
+			guard let id: Int = Int(currentInputValue) else {
+				shakeForIncorrect()
+				return
+			}
 
 			if let tour = AppDataManager.sharedInstance.getTour(forSelectorNumber: id) {
 				sectionDelegate?.audioGuideDidSelectTourAudio(tour: tour, audioGuideID: id)
@@ -270,19 +270,19 @@ extension AudioGuideNavigationController {
 			} else if let object = AppDataManager.sharedInstance.getObject(forSelectorNumber: id) {
 				sectionDelegate?.audioGuideDidSelectObjectAudio(object: object, audioGuideID: id)
 				clearInput()
-                return
-            }
+				return
+			}
 
 			shakeForIncorrect()
 
 			// Log Analytics
 			AICAnalytics.sendErrorAudioGuideBadNumberEvent(number: id)
 
-        case "<":
-            removeLastNumberPadInput()
+		case "<":
+			removeLastNumberPadInput()
 
-        default:
-            addNumberPadInput(value: button.titleLabel!.text!)
-        }
-    }
+		default:
+			addNumberPadInput(value: button.titleLabel!.text!)
+		}
+	}
 }

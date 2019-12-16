@@ -1,7 +1,7 @@
 /*
- Abstract:
- Validates and Retrieves member card information
- */
+Abstract:
+Validates and Retrieves member card information
+*/
 
 import Alamofire
 import SWXMLHash
@@ -17,38 +17,38 @@ class MemberDataManager {
 	private (set) var currentMemberCard: AICMemberCardModel?
 	var currentMemberNameIndex: Int = 0
 
-    weak var delegate: MemberDataManagerDelegate?
+	weak var delegate: MemberDataManagerDelegate?
 
 	private let dataParser = AppDataParser()
 
 	func validateMember(memberID: String, zipCode: String) {
-//		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
-//		url += "/api/v1/members"
-//		url += "/" + memberID + "?zip=" + zipCode
-//		let request = URLRequest(url: URL(string: url)!)
-//
-//		Alamofire.request(request as URLRequestConvertible)
-//			.validate()
-//			.responseData { response in
-//				switch response.result {
-//				case .success(let value):
-//					do {
-//						let memberCard = try self.dataParser.parse(memberData: value, zipCode: zipCode)
-//						self.currentMemberCard = memberCard
-//						self.saveCurrentMember()
-//						self.delegate?.memberCardDidLoadForMember(memberCard: memberCard)
-//					}
-//					catch {
-//						if Common.Testing.printDataErrors {
-//							print("Could not parse AIC Member Card Data:\n\(value)\n")
-//						}
-//						self.delegate?.memberCardDataLoadingFailed()
-//					}
-//				case .failure(let error):
-//					self.delegate?.memberCardDataLoadingFailed()
-//					print(error)
-//				}
-//		}
+		//		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
+		//		url += "/api/v1/members"
+		//		url += "/" + memberID + "?zip=" + zipCode
+		//		let request = URLRequest(url: URL(string: url)!)
+		//
+		//		Alamofire.request(request as URLRequestConvertible)
+		//			.validate()
+		//			.responseData { response in
+		//				switch response.result {
+		//				case .success(let value):
+		//					do {
+		//						let memberCard = try self.dataParser.parse(memberData: value, zipCode: zipCode)
+		//						self.currentMemberCard = memberCard
+		//						self.saveCurrentMember()
+		//						self.delegate?.memberCardDidLoadForMember(memberCard: memberCard)
+		//					}
+		//					catch {
+		//						if Common.Testing.printDataErrors {
+		//							print("Could not parse AIC Member Card Data:\n\(value)\n")
+		//						}
+		//						self.delegate?.memberCardDataLoadingFailed()
+		//					}
+		//				case .failure(let error):
+		//					self.delegate?.memberCardDataLoadingFailed()
+		//					print(error)
+		//				}
+		//		}
 
 		var SOAPRequest =   "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
 		SOAPRequest +=      "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:xmethods-delayed-quotes\">\n"
@@ -134,33 +134,33 @@ class MemberDataManager {
 					var isLifeMembership = false
 
 					switch memberLevel! {
-						case "Life Membership":
-							memberLevel = "Life Member"
-							isLifeMembership = true
-						case "Premium Member":
-							isReciprocal = true
-						case "Lionhearted Council":
-							isReciprocal = true
-						case "Lionhearted Roundtable":
-							isReciprocal = true
-						case "Lionhearted Circle":
-							isReciprocal = true
-						case "Sustaining Fellow Young":
-							isReciprocal = true
-						case "Sustaining Fellow":
-							isReciprocal = true
-						case "Sustaining Fellow Bronze":
-							isReciprocal = true
-						case "Sustaining Fellow Silver":
-							isReciprocal = true
-						case "Sustaining Fellow Sterling":
-							isReciprocal = true
-						case "Sustaining Fellow Gold":
-							isReciprocal = true
-						case "Sustaining Fellow Platinum":
-							isReciprocal = true
-						default:
-							isReciprocal = false
+					case "Life Membership":
+						memberLevel = "Life Member"
+						isLifeMembership = true
+					case "Premium Member":
+						isReciprocal = true
+					case "Lionhearted Council":
+						isReciprocal = true
+					case "Lionhearted Roundtable":
+						isReciprocal = true
+					case "Lionhearted Circle":
+						isReciprocal = true
+					case "Sustaining Fellow Young":
+						isReciprocal = true
+					case "Sustaining Fellow":
+						isReciprocal = true
+					case "Sustaining Fellow Bronze":
+						isReciprocal = true
+					case "Sustaining Fellow Silver":
+						isReciprocal = true
+					case "Sustaining Fellow Sterling":
+						isReciprocal = true
+					case "Sustaining Fellow Gold":
+						isReciprocal = true
+					case "Sustaining Fellow Platinum":
+						isReciprocal = true
+					default:
+						isReciprocal = false
 					}
 
 					// Try to get second member info

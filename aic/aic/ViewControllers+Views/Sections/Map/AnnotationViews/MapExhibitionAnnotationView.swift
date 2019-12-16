@@ -40,7 +40,7 @@ class MapExhibitionAnnotationView: MapAnnotationView {
 		//self.layer.shouldRasterize = true
 
 		thumbHolderView.frame = CGRect(x: 0, y: 0, width: thumbHolderWidth, height: thumbHolderHeight)
-//		thumbHolderView.layer.cornerRadius = thumbHolderWidth/2.0
+		//		thumbHolderView.layer.cornerRadius = thumbHolderWidth/2.0
 		thumbHolderView.backgroundColor = .white
 
 		thumbHolderTailView.image = #imageLiteral(resourceName: "calloutTail")
@@ -48,7 +48,7 @@ class MapExhibitionAnnotationView: MapAnnotationView {
 		thumbHolderTailView.frame.origin = CGPoint(x: thumbHolderWidth/2 - thumbHolderTailView.frame.width/2, y: thumbHolderView.frame.height - thumbHolderTailView.frame.height/2)
 
 		thumbImageView.contentMode = .scaleAspectFill
-//		thumbImageView.layer.cornerRadius = Common.Map.thumbSize/2
+		//		thumbImageView.layer.cornerRadius = Common.Map.thumbSize/2
 		thumbImageView.layer.masksToBounds = true
 		thumbImageView.frame.origin = CGPoint(x: Common.Map.thumbHolderMargin, y: Common.Map.thumbHolderMargin)
 		thumbImageView.frame.size = CGSize(width: Common.Map.thumbSize, height: Common.Map.thumbSize)

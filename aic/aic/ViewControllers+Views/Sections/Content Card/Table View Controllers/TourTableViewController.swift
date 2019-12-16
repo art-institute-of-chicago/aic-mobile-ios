@@ -43,8 +43,8 @@ class TourTableViewController: UITableViewController {
 		self.tableView.separatorStyle = .none
 		self.tableView.rowHeight = UITableView.automaticDimension // Necessary for AutoLayout of cells
 		self.tableView.estimatedRowHeight = 200
-        self.tableView.showsVerticalScrollIndicator = false
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+		self.tableView.showsVerticalScrollIndicator = false
+		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "TourContentCell", bundle: Bundle.main), forCellReuseIdentifier: TourContentCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
@@ -119,10 +119,10 @@ extension TourTableViewController {
 
 // MARK: Scroll Delegate
 extension TourTableViewController {
-    /// Avoid bouncing at the top of the TableView
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+	/// Avoid bouncing at the top of the TableView
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		scrollView.bounces = (scrollView.contentOffset.y > 20)
-    }
+	}
 }
 
 // MARK: Interaction
@@ -132,7 +132,7 @@ extension TourTableViewController {
 		if indexPath.row == 1 {
 			self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: nil)
 		}
-		// tour stop
+			// tour stop
 		else if indexPath.row > 1 {
 			let stopIndex: Int = indexPath.row - 2
 			if stopIndex < tourModel.stops.count {

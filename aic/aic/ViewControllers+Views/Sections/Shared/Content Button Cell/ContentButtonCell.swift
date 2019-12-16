@@ -61,7 +61,7 @@ class ContentButtonCell: UITableViewCell {
 				}
 			})
 		}
-		// Otherwise show placeholder image
+			// Otherwise show placeholder image
 		else {
 			itemImageView.image = #imageLiteral(resourceName: "artworkPlaceholder")
 		}

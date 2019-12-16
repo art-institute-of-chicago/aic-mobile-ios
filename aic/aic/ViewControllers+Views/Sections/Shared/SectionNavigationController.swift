@@ -127,8 +127,8 @@ class SectionNavigationController: UINavigationController {
 		}
 
 		sectionNavigationBar.titleLabel.text = titleText
-        sectionNavigationBar.descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: subtitleText, font: .aicSectionDescriptionFont, lineHeight: 22)
-        sectionNavigationBar.descriptionLabel.textAlignment = NSTextAlignment.center
+		sectionNavigationBar.descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: subtitleText, font: .aicSectionDescriptionFont, lineHeight: 22)
+		sectionNavigationBar.descriptionLabel.textAlignment = NSTextAlignment.center
 
 	}
 

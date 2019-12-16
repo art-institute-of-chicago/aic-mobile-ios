@@ -90,7 +90,7 @@ class MemberCardView: UIView {
 		dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 		let expirationDateString = dateFormatter.string(from: memberCard.expirationDate)
 
-        membershipInfoLabel.text = "ID: " + memberCard.cardId + "\n" + memberCard.memberLevel
+		membershipInfoLabel.text = "ID: " + memberCard.cardId + "\n" + memberCard.memberLevel
 		if memberCard.isLifeMembership == false {
 			membershipInfoLabel.text = "ID: " + memberCard.cardId + "\n" + memberCard.memberLevel + "\n" + "Expires".localized(using: "MemberCard") + ": " + expirationDateString
 		}

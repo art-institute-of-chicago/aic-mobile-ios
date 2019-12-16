@@ -1,7 +1,7 @@
 /*
- Abstract:
- Parses the main app data file
- */
+Abstract:
+Parses the main app data file
+*/
 
 import SwiftyJSON
 import CoreLocation
@@ -10,26 +10,26 @@ import MapKit
 import Alamofire
 
 class AppDataParser {
-    enum ParseError: Error {
-        case objectParseFailure
-        case missingKey(key: String)
-        case badURLString(string: String)
+	enum ParseError: Error {
+		case objectParseFailure
+		case missingKey(key: String)
+		case badURLString(string: String)
 		case badBoolString(string: String)
 		case badFloatString(string: String)
-        case badIntString(string: String)
-        case badCLLocationString(string: String)
+		case badIntString(string: String)
+		case badCLLocationString(string: String)
 		case badPointString(string: String)
-        case newsBadDateString(dateString: String)
-        case audioFileNotFound(nid: Int)
-        case objectNotFound(nid: Int)
-        case galleryDisabled(galleryName: String)
-        case galleryNameNotFound(galleryName: String)
+		case newsBadDateString(dateString: String)
+		case audioFileNotFound(nid: Int)
+		case objectNotFound(nid: Int)
+		case galleryDisabled(galleryName: String)
+		case galleryNameNotFound(galleryName: String)
 		case galleryIdNotFound(galleryId: Int)
-        case tourStopsNotFound
-        case jsonObjectNotFoundForKey(key: String)
-        case noValidTourStops
+		case tourStopsNotFound
+		case jsonObjectNotFoundForKey(key: String)
+		case noValidTourStops
 		case searchAutocompleteFailure
-    }
+	}
 
 	private var galleries = [AICGalleryModel]()
 	private var audioFiles = [AICAudioFileModel]()
@@ -40,16 +40,16 @@ class AppDataParser {
 	private var searchArtworks = [AICObjectModel]()
 	private var mapFloorsURLs: [URL] = []
 
-    // MARK: App Data
+	// MARK: App Data
 
-    func parse(appData data: Data) -> AICAppDataModel {
+	func parse(appData data: Data) -> AICAppDataModel {
 		// TODO: Proper error handling for SwiftyJSON
-        let appDataJson = try! JSON(data: data)
+		let appDataJson = try! JSON(data: data)
 
 		let generalInfo 		= parse(generalInfoJSON: appDataJson["general_info"])
 		self.galleries			= parse(galleriesJSON: appDataJson["galleries"])
 		self.audioFiles 		= parse(audioFilesJSON: appDataJson["audio_files"])
-        self.objects 			= parse(objectsJSON: appDataJson["objects"])
+		self.objects 			= parse(objectsJSON: appDataJson["objects"])
 		self.exhibitionsInCMS	= parse(exhibitionsInCMSJSON: appDataJson["exhibitions"])
 		self.tourCategories 	= parse(tourCategoriesJSON: appDataJson["tour_categories"])
 		let tours 				= parse(toursJSON: appDataJson["tours"])
@@ -81,7 +81,7 @@ class AppDataParser {
 		self.tourCategories.removeAll()
 
 		return appData
-    }
+	}
 
 	// MARK: General Info
 
@@ -154,126 +154,126 @@ class AppDataParser {
 
 	// MARK: Galleries
 
-    private func parse(galleriesJSON: JSON) -> [AICGalleryModel] {
+	private func parse(galleriesJSON: JSON) -> [AICGalleryModel] {
 
 		var galleries = [AICGalleryModel]()
-        for (_, galleryJSON):(String, JSON) in galleriesJSON.dictionaryValue {
-            do {
-                try handleParseError({ [unowned self] in
-                    let gallery = try self.parse(galleryJSON: galleryJSON)
-                    galleries.append(gallery)
-                    })
-            } catch {
-                if Common.Testing.printDataErrors {
-                    print("Could not parse AIC Gallery Data:\n\(galleryJSON)\n")
-                }
-            }
-        }
+		for (_, galleryJSON):(String, JSON) in galleriesJSON.dictionaryValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let gallery = try self.parse(galleryJSON: galleryJSON)
+					galleries.append(gallery)
+				})
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Gallery Data:\n\(galleryJSON)\n")
+				}
+			}
+		}
 		return galleries
-    }
+	}
 
-    func parse(galleryJSON: JSON?) throws -> AICGalleryModel {
-        let nid         = try getInt(fromJSON: galleryJSON!, forKey: "nid")
-        let title       = try getString(fromJSON: galleryJSON!, forKey: "title")
+	func parse(galleryJSON: JSON?) throws -> AICGalleryModel {
+		let nid         = try getInt(fromJSON: galleryJSON!, forKey: "nid")
+		let title       = try getString(fromJSON: galleryJSON!, forKey: "title")
 
 		let galleryId	= try getInt(fromJSON: galleryJSON!, forKey: "gallery_id")
 
-        var displayTitle = title.replacingOccurrences(of: "Gallery ", with: "")
-        displayTitle = displayTitle.replacingOccurrences(of: "Galleries ", with: "")
+		var displayTitle = title.replacingOccurrences(of: "Gallery ", with: "")
+		displayTitle = displayTitle.replacingOccurrences(of: "Galleries ", with: "")
 
-        //Check for gallery disabled
+		//Check for gallery disabled
 		let isOpen: Bool = !(try getBool(fromJSON: galleryJSON!, forKey: "closed"))
 
-        let location = try getCLLocation2d(fromJSON: galleryJSON!, forKey: "location")
+		let location = try getCLLocation2d(fromJSON: galleryJSON!, forKey: "location")
 
-        // Floor 0 comes through as LL, so parse that out
-        let lowerLevel = try? getString(fromJSON: galleryJSON!, forKey: "floor")
-        let floorNumber: Int! = lowerLevel == "LL" ? 0 : try getInt(fromJSON: galleryJSON!, forKey: "floor")
+		// Floor 0 comes through as LL, so parse that out
+		let lowerLevel = try? getString(fromJSON: galleryJSON!, forKey: "floor")
+		let floorNumber: Int! = lowerLevel == "LL" ? 0 : try getInt(fromJSON: galleryJSON!, forKey: "floor")
 
-        let gallery = AICGalleryModel(id: nid,
+		let gallery = AICGalleryModel(id: nid,
 									  galleryId: galleryId,
-                                      title: title,
-                                      displayTitle: displayTitle,
-                                      location: CoordinateWithFloor(coordinate: location, floor: floorNumber),
-                                      isOpen: isOpen
-        )
+									  title: title,
+									  displayTitle: displayTitle,
+									  location: CoordinateWithFloor(coordinate: location, floor: floorNumber),
+									  isOpen: isOpen
+		)
 
-        return gallery
-    }
+		return gallery
+	}
 
 	// MARK: Objects
 
-    fileprivate func parse(objectsJSON: JSON) -> [AICObjectModel] {
+	fileprivate func parse(objectsJSON: JSON) -> [AICObjectModel] {
 		var objects = [AICObjectModel]()
-        for (_, objectData):(String, JSON) in objectsJSON.dictionaryValue {
-            do {
-                try handleParseError({ [unowned self] in
-                    let object = try self.parse(objectJSON: objectData)
-                    objects.append(object)
+		for (_, objectData):(String, JSON) in objectsJSON.dictionaryValue {
+			do {
+				try handleParseError({ [unowned self] in
+					let object = try self.parse(objectJSON: objectData)
+					objects.append(object)
 				})
-            } catch {
-                if Common.Testing.printDataErrors {
-                    print("Could not parse AIC Object Data:\n\(objectData)\n")
-                }
-            }
-        }
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse AIC Object Data:\n\(objectData)\n")
+				}
+			}
+		}
 		return objects
-    }
+	}
 
-    fileprivate func parse(objectJSON: JSON) throws -> AICObjectModel {
-        let nid             = try getInt(fromJSON: objectJSON, forKey: "nid")
+	fileprivate func parse(objectJSON: JSON) throws -> AICObjectModel {
+		let nid             = try getInt(fromJSON: objectJSON, forKey: "nid")
 		let location        = try getCLLocation2d(fromJSON: objectJSON, forKey: "location")
 
-        let galleryName     = try getString(fromJSON: objectJSON, forKey: "gallery_location")
-        let gallery     	= try getGallery(forGalleryName: galleryName)
+		let galleryName     = try getString(fromJSON: objectJSON, forKey: "gallery_location")
+		let gallery     	= try getGallery(forGalleryName: galleryName)
 		let floorNumber		= gallery.location.floor
 
-        let title           = try getString(fromJSON: objectJSON, forKey: "title")
+		let title           = try getString(fromJSON: objectJSON, forKey: "title")
 
-        // Optional Fields
+		// Optional Fields
 		var objectId: Int?
 		do {
 			objectId = try getInt(fromJSON: objectJSON, forKey: "id")
 		} catch {}
 
 		var tombstone: String?
-        do {
-            tombstone = try getString(fromJSON: objectJSON, forKey: "artist_culture_place_delim").replacingOccurrences(of: "|", with: "\r")
-        } catch {}
+		do {
+			tombstone = try getString(fromJSON: objectJSON, forKey: "artist_culture_place_delim").replacingOccurrences(of: "|", with: "\r")
+		} catch {}
 
-        var credits: String?
-        do {
-            credits = try getString(fromJSON: objectJSON, forKey: "credit_line")
+		var credits: String?
+		do {
+			credits = try getString(fromJSON: objectJSON, forKey: "credit_line")
 			credits = credits!.stringByDecodingHTMLEntities
-        } catch {}
+		} catch {}
 
-        var imageCopyright: String?
-        do {
-            imageCopyright = try getString(fromJSON: objectJSON, forKey: "copyright_notice")
+		var imageCopyright: String?
+		do {
+			imageCopyright = try getString(fromJSON: objectJSON, forKey: "copyright_notice")
 			imageCopyright = imageCopyright!.stringByDecodingHTMLEntities
-        } catch {}
+		} catch {}
 
-        // Get images
-        var image: URL! = nil
-        var thumbnail: URL! = nil
+		// Get images
+		var image: URL! = nil
+		var thumbnail: URL! = nil
 
-        do {
-            // Try to load override images
-            image           = try getURL(fromJSON: objectJSON, forKey: "image_url")
-            thumbnail       = image
-            //imageHasBeenOverridden = true
-        } catch {
-            // Try loading from cms default images
-            image           = try getURL(fromJSON: objectJSON, forKey: "large_image_full_path")
-            thumbnail       = try getURL(fromJSON: objectJSON, forKey: "thumbnail_full_path")
-        }
+		do {
+			// Try to load override images
+			image           = try getURL(fromJSON: objectJSON, forKey: "image_url")
+			thumbnail       = image
+			//imageHasBeenOverridden = true
+		} catch {
+			// Try loading from cms default images
+			image           = try getURL(fromJSON: objectJSON, forKey: "large_image_full_path")
+			thumbnail       = try getURL(fromJSON: objectJSON, forKey: "thumbnail_full_path")
+		}
 
-        // Get Image Crop Rects if they exist
-        let thumbnailCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "thumbnail_crop_v2")
-        let imageCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "large_image_crop_v2")
+		// Get Image Crop Rects if they exist
+		let thumbnailCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "thumbnail_crop_v2")
+		let imageCropRect: CGRect? = try? getRect(fromJSON: objectJSON, forKey: "large_image_crop_v2")
 
-        // Ingest all audio IDs
-        var audioCommentaries = [AICAudioCommentaryModel]()
+		// Ingest all audio IDs
+		var audioCommentaries = [AICAudioCommentaryModel]()
 		if let audioCommentariesJSON = objectJSON["audio_commentary"].array {
 			for audioCommentaryJSON in audioCommentariesJSON {
 				do {
@@ -287,21 +287,21 @@ class AppDataParser {
 			}
 		}
 
-        return AICObjectModel(nid: nid,
+		return AICObjectModel(nid: nid,
 							  objectId: objectId,
-                              thumbnailUrl: thumbnail,
-                              thumbnailCropRect: thumbnailCropRect,
-                              imageUrl: image,
-                              imageCropRect: imageCropRect,
-                              title: title.stringByDecodingHTMLEntities,
-                              audioCommentaries: audioCommentaries,
-                              tombstone: tombstone,
-                              credits: credits,
-                              imageCopyright: imageCopyright,
-                              location: CoordinateWithFloor(coordinate: location, floor: floorNumber),
+							  thumbnailUrl: thumbnail,
+							  thumbnailCropRect: thumbnailCropRect,
+							  imageUrl: image,
+							  imageCropRect: imageCropRect,
+							  title: title.stringByDecodingHTMLEntities,
+							  audioCommentaries: audioCommentaries,
+							  tombstone: tombstone,
+							  credits: credits,
+							  imageCopyright: imageCopyright,
+							  location: CoordinateWithFloor(coordinate: location, floor: floorNumber),
 							  gallery: gallery
-        )
-    }
+		)
+	}
 
 	// MARK: Audio Commentary
 
@@ -325,22 +325,22 @@ class AppDataParser {
 	fileprivate func parse(audioFilesJSON: JSON) -> [AICAudioFileModel] {
 		var audioFiles = [AICAudioFileModel]()
 		for (_, audioFileData):(String, JSON) in audioFilesJSON.dictionaryValue {
-            do {
-                try handleParseError({
-                    let audioFile = try self.parse(audioFileJSON: audioFileData)
-                    audioFiles.append(audioFile)
-                })
-            } catch {
-                if Common.Testing.printDataErrors {
-                    print("Could not parse Audio File Data:\n\(audioFileData)\n")
-                }
-            }
-        }
+			do {
+				try handleParseError({
+					let audioFile = try self.parse(audioFileJSON: audioFileData)
+					audioFiles.append(audioFile)
+				})
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse Audio File Data:\n\(audioFileData)\n")
+				}
+			}
+		}
 		return audioFiles
-    }
+	}
 
-    fileprivate func parse(audioFileJSON: JSON) throws -> AICAudioFileModel {
-        let nid 	= try getInt(fromJSON: audioFileJSON, forKey: "nid")
+	fileprivate func parse(audioFileJSON: JSON) throws -> AICAudioFileModel {
+		let nid 	= try getInt(fromJSON: audioFileJSON, forKey: "nid")
 		let title	= try getString(fromJSON: audioFileJSON, forKey: "title")
 
 		var translations: [Common.Language: AICAudioFileTranslationModel] = [:]
@@ -423,27 +423,27 @@ class AppDataParser {
 	fileprivate func parse(toursJSON: JSON) -> [AICTourModel] {
 		var tours = [AICTourModel]()
 
-        for tourJSON in toursJSON.arrayValue {
-            do {
-                try handleParseError({
-                    let tour = try self.parse(tourJSON: tourJSON)
-                    tours.append(tour)
-                })
-            } catch {
-                if Common.Testing.printDataErrors {
-                    print("Could not parse Tour Data:\n\(tourJSON)\n")
-                }
-            }
-        }
+		for tourJSON in toursJSON.arrayValue {
+			do {
+				try handleParseError({
+					let tour = try self.parse(tourJSON: tourJSON)
+					tours.append(tour)
+				})
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse Tour Data:\n\(tourJSON)\n")
+				}
+			}
+		}
 		return tours
-    }
+	}
 
-    fileprivate func parse(tourJSON: JSON) throws -> AICTourModel {
-        let nid                 = try getInt(fromJSON: tourJSON, forKey: "nid")
+	fileprivate func parse(tourJSON: JSON) throws -> AICTourModel {
+		let nid                 = try getInt(fromJSON: tourJSON, forKey: "nid")
 		let imageUrl: URL       = try getURL(fromJSON: tourJSON, forKey: "image_url")!
 
-        let audioFileID         = try getInt(fromJSON: tourJSON, forKey: "tour_audio")
-        let audioFile           = try getAudioFile(forNID: audioFileID)
+		let audioFileID         = try getInt(fromJSON: tourJSON, forKey: "tour_audio")
+		let audioFile           = try getAudioFile(forNID: audioFileID)
 
 		let order 				= try getInt(fromJSON: tourJSON, forKey: "weight")
 
@@ -467,23 +467,23 @@ class AppDataParser {
 			}
 		}
 
-        // Create Stops
-        var stops: [AICTourStopModel] = []
-        guard let stopsData = tourJSON["tour_stops"].array else {
-            throw ParseError.tourStopsNotFound
-        }
+		// Create Stops
+		var stops: [AICTourStopModel] = []
+		guard let stopsData = tourJSON["tour_stops"].array else {
+			throw ParseError.tourStopsNotFound
+		}
 
-        var stop = 0
-        for stopData in stopsData {
-            do {
-                try handleParseError({
-                    let order       = try self.getInt(fromJSON: stopData, forKey: "sort")
+		var stop = 0
+		for stopData in stopsData {
+			do {
+				try handleParseError({
+					let order       = try self.getInt(fromJSON: stopData, forKey: "sort")
 
 					let objectID    = try self.getInt(fromJSON: stopData, forKey: "object")
 					let object      = try self.getObject(forNID: objectID)
 
-                    let audioFileID = try self.getInt(fromJSON: stopData, forKey: "audio_id")
-                    let audioFile   = try self.getAudioFile(forNID: audioFileID)
+					let audioFileID = try self.getInt(fromJSON: stopData, forKey: "audio_id")
+					let audioFile   = try self.getAudioFile(forNID: audioFileID)
 
 					// Selector number is optional
 					var audioBumper: AICAudioFileModel?
@@ -494,26 +494,26 @@ class AppDataParser {
 						audioBumper = nil
 					}
 
-                    let stop = AICTourStopModel(order: order,
-                                                object: object,
-                                                audio: audioFile,
+					let stop = AICTourStopModel(order: order,
+												object: object,
+												audio: audioFile,
 												audioBumper: audioBumper
-                    )
+					)
 
-                    stops.append(stop)
-                })
-            } catch {
-                if Common.Testing.printDataErrors {
+					stops.append(stop)
+				})
+			} catch {
+				if Common.Testing.printDataErrors {
 					print("Could not parse stop data:\n\(stopData) in Tour \(nid)\n")
-                }
-            }
+				}
+			}
 
-            stop = stop + 1
-        }
+			stop = stop + 1
+		}
 
-        if stops.count == 0 {
-            throw ParseError.noValidTourStops
-        }
+		if stops.count == 0 {
+			throw ParseError.noValidTourStops
+		}
 
 		let location = try getCLLocation2d(fromJSON: tourJSON, forKey: "location")
 
@@ -550,11 +550,11 @@ class AppDataParser {
 							category: category,
 							imageUrl: imageUrl,
 							location: coordinate,
-                            allStops: stops,
+							allStops: stops,
 							translations: translations,
 							language: .english
-        )
-    }
+		)
+	}
 
 	func parseTranslation(tourJSON: JSON, imageUrl: URL, audioFile: AICAudioFileModel) throws -> AICTourTranslationModel {
 		let title				= try getString(fromJSON: tourJSON, forKey: "title")
@@ -617,8 +617,8 @@ class AppDataParser {
 				let anchor2 = GeoAnchor(latitudeLongitudeCoordinate: anchorLocation2, pdfPoint: anchorPixel2)
 
 				let floorOverlay = FloorplanOverlay(floorplanUrl: floorPdfURL,
-											 withPDFBox: CGPDFBox.trimBox,
-											 andAnchors: GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2))
+													withPDFBox: CGPDFBox.trimBox,
+													andAnchors: GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2))
 				floorOverlays.append(floorOverlay)
 
 				// Galleries
@@ -685,10 +685,10 @@ class AppDataParser {
 						let departmentAnnotation = try parse(departmentAnnotationJSON: annotationJSON)
 						floorDepartmentAnnotations[floorNumber!]!.append(departmentAnnotation)
 					}
-//					else if type == "Image" {
-//						let imageAnnotation = try parse(imageAnnotationJSON: annotationJSON)
-//						imageAnnotations.append(imageAnnotation)
-//					}
+					//					else if type == "Image" {
+					//						let imageAnnotation = try parse(imageAnnotationJSON: annotationJSON)
+					//						imageAnnotations.append(imageAnnotation)
+					//					}
 
 					// Restaurant Model
 					if type == "Amenity" && floorNumber != nil {
@@ -731,9 +731,9 @@ class AppDataParser {
 
 				continue
 
-//				if floorFarObjectAnnotations[floorNumber]!.count > 10 {
-//
-//				}
+				//				if floorFarObjectAnnotations[floorNumber]!.count > 10 {
+				//
+				//				}
 
 				// for each square in our grid, pick one annotation to show
 				y = 800.0
@@ -959,9 +959,9 @@ class AppDataParser {
 		let description: String = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
 
 		// Image
-        var imageURL: URL?
-        let exhibitionUrl = try getString(fromJSON: exhibitionJSON, forKey: "image_url")
-        let fullExhibitionUrl: String = exhibitionUrl + "&w=600"
+		var imageURL: URL?
+		let exhibitionUrl = try getString(fromJSON: exhibitionJSON, forKey: "image_url")
+		let fullExhibitionUrl: String = exhibitionUrl + "&w=600"
 		imageURL = URL(string: fullExhibitionUrl)
 
 		// Override with exhibitions optional images from CMS, if available
@@ -1190,7 +1190,7 @@ class AppDataParser {
 																	  gallery: object.gallery)
 						searchedArtworks.append(searchedArtwork)
 					}
-					// Otherwise we parse from the data api
+						// Otherwise we parse from the data api
 					else if isOnView {
 						let title: String = try getString(fromJSON: resultJSON, forKey: "title")
 						let artistDisplay: String = try getString(fromJSON: resultJSON, forKey: "artist_display")
@@ -1290,34 +1290,34 @@ class AppDataParser {
 		return searchedExhibitions
 	}
 
-    // MARK: Error-Throwing data parsing functions
+	// MARK: Error-Throwing data parsing functions
 
-    // Try to unwrap a string from JSON
+	// Try to unwrap a string from JSON
 	private func getString(fromJSON json: JSON, forKey key: String, optional: Bool = false) throws -> String {
-        guard let str = json[key].string else {
+		guard let str = json[key].string else {
 			if optional == false {
-            	throw ParseError.missingKey(key: key)
+				throw ParseError.missingKey(key: key)
 			} else {
 				return ""
 			}
-        }
+		}
 
-        return str
-    }
+		return str
+	}
 
 	private func getBool(fromJSON json: JSON, forKey key: String, optional: Bool = false, optionalValue: Bool = false) throws -> Bool {
-        guard let bool = json[key].bool else {
+		guard let bool = json[key].bool else {
 			if optional == false {
 				let str = try getString(fromJSON: json, forKey: key)
 				throw ParseError.badBoolString(string: str)
 			} else {
 				return optionalValue
 			}
-        }
+		}
 
-        return bool
+		return bool
 
-    }
+	}
 
 	// Try to parse an float from a JSON string
 	private func getFloat(fromJSON json: JSON, forKey key: String) throws -> CGFloat {
@@ -1336,61 +1336,61 @@ class AppDataParser {
 		return CGFloat(float)
 	}
 
-    // Try to parse an int from a JSON string
-    private func getInt(fromJSON json: JSON, forKey key: String) throws -> Int {
-        guard let int = json[key].int else {
+	// Try to parse an int from a JSON string
+	private func getInt(fromJSON json: JSON, forKey key: String) throws -> Int {
+		guard let int = json[key].int else {
 
-            let str = try getString(fromJSON: json, forKey: key)
-            let int = Int(str)
+			let str = try getString(fromJSON: json, forKey: key)
+			let int = Int(str)
 
-            if int == nil {
-                throw ParseError.badIntString(string: str)
-            }
+			if int == nil {
+				throw ParseError.badIntString(string: str)
+			}
 
-            return int!
-        }
+			return int!
+		}
 
-        return int
-    }
+		return int
+	}
 
-    private func getIntArray(fromJSON json: JSON, forArrayKey key: String) throws -> [Int] {
+	private func getIntArray(fromJSON json: JSON, forArrayKey key: String) throws -> [Int] {
 
-        guard let jsonArray = json[key].array else {
-            throw ParseError.missingKey(key: key)
-        }
+		guard let jsonArray = json[key].array else {
+			throw ParseError.missingKey(key: key)
+		}
 
-        var intArray = [Int]()
+		var intArray = [Int]()
 
-        for index in 0 ..< jsonArray.count {
-                let arrayInt = try self.getInt(fromJSON: json, forArrayKey: key, atIndex: index)
-                intArray.append(arrayInt)
-        }
+		for index in 0 ..< jsonArray.count {
+			let arrayInt = try self.getInt(fromJSON: json, forArrayKey: key, atIndex: index)
+			intArray.append(arrayInt)
+		}
 
-        return intArray
-    }
+		return intArray
+	}
 
-    private func getRect(fromJSON json: JSON, forKey key: String) throws -> CGRect {
-        guard let cropDict = json[key].dictionary else {
-            throw ParseError.missingKey(key: key)
-        }
+	private func getRect(fromJSON json: JSON, forKey key: String) throws -> CGRect {
+		guard let cropDict = json[key].dictionary else {
+			throw ParseError.missingKey(key: key)
+		}
 
-        guard let x = cropDict["x"]?.floatValue else {
-            throw ParseError.missingKey(key: "x")
-        }
-        guard let y = cropDict["y"]?.floatValue else {
-            throw ParseError.missingKey(key: "y")
-        }
-        guard let width = cropDict["width"]?.floatValue else {
-            throw ParseError.missingKey(key: "width")
-        }
-        guard let height = cropDict["height"]?.floatValue else {
-            throw ParseError.missingKey(key: "height")
-        }
+		guard let x = cropDict["x"]?.floatValue else {
+			throw ParseError.missingKey(key: "x")
+		}
+		guard let y = cropDict["y"]?.floatValue else {
+			throw ParseError.missingKey(key: "y")
+		}
+		guard let width = cropDict["width"]?.floatValue else {
+			throw ParseError.missingKey(key: "width")
+		}
+		guard let height = cropDict["height"]?.floatValue else {
+			throw ParseError.missingKey(key: "height")
+		}
 
-        return CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
-    }
+		return CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+	}
 
-    // Try to get a URL from a string
+	// Try to get a URL from a string
 	private func getURL(fromJSON json: JSON, forKey key: String, optional: Bool = false) throws -> URL? {
 		let stringVal = json[key].string
 		if stringVal == nil {
@@ -1410,26 +1410,26 @@ class AppDataParser {
 		}
 
 		return url
-    }
+	}
 
-    // Try to Parse out the lat + long from a CMS location string,
-    // i.e. "location": "41.879225,-87.622289"
-    private func getCLLocation2d(fromJSON json: JSON, forKey key: String) throws -> CLLocationCoordinate2D {
-        let stringVal   = try getString(fromJSON: json, forKey: key)
+	// Try to Parse out the lat + long from a CMS location string,
+	// i.e. "location": "41.879225,-87.622289"
+	private func getCLLocation2d(fromJSON json: JSON, forKey key: String) throws -> CLLocationCoordinate2D {
+		let stringVal   = try getString(fromJSON: json, forKey: key)
 
-        let latLongString = stringVal.replacingOccurrences(of: " ", with: "")
-        let latLong: [String] = latLongString.components(separatedBy: ",")
-        if latLong.count == 2 {
-            let latitude    = CLLocationDegrees(latLong[0])
-            let longitude   = CLLocationDegrees(latLong[1])
+		let latLongString = stringVal.replacingOccurrences(of: " ", with: "")
+		let latLong: [String] = latLongString.components(separatedBy: ",")
+		if latLong.count == 2 {
+			let latitude    = CLLocationDegrees(latLong[0])
+			let longitude   = CLLocationDegrees(latLong[1])
 
-            if latitude != nil && longitude != nil {
-                return CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
-            }
-        }
+			if latitude != nil && longitude != nil {
+				return CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
+			}
+		}
 
-        throw ParseError.badCLLocationString(string: stringVal)
-    }
+		throw ParseError.badCLLocationString(string: stringVal)
+	}
 
 	private func getPoint(fromJSON json: JSON, forKey key: String) throws -> CGPoint {
 		var stringVal = try getString(fromJSON: json, forKey: key)
@@ -1446,54 +1446,54 @@ class AppDataParser {
 		throw ParseError.badPointString(string: stringVal)
 	}
 
-    private func getInt(fromJSON json: JSON, forArrayKey arrayKey: String, atIndex index: Int) throws -> Int {
+	private func getInt(fromJSON json: JSON, forArrayKey arrayKey: String, atIndex index: Int) throws -> Int {
 
-        let array = json[arrayKey]
+		let array = json[arrayKey]
 
-        if array != JSON.null {
+		if array != JSON.null {
 
-            if let int = array[index].int {
-                return int
-            } else {
-                if let stringValue = array[index].string {
-                    if let intValue = Int(stringValue) {
-                        return intValue
-                    } else {
-                        throw ParseError.badIntString(string: stringValue)
-                    }
-                }
-            }
-        }
+			if let int = array[index].int {
+				return int
+			} else {
+				if let stringValue = array[index].string {
+					if let intValue = Int(stringValue) {
+						return intValue
+					} else {
+						throw ParseError.badIntString(string: stringValue)
+					}
+				}
+			}
+		}
 
-        throw ParseError.missingKey(key: arrayKey)
+		throw ParseError.missingKey(key: arrayKey)
 
-    }
+	}
 
-    private func getAudioFile(forNID nid: Int) throws -> AICAudioFileModel {
-        for audioFile in self.audioFiles {
-            if audioFile.nid == nid {
-                return audioFile
-            }
-        }
+	private func getAudioFile(forNID nid: Int) throws -> AICAudioFileModel {
+		for audioFile in self.audioFiles {
+			if audioFile.nid == nid {
+				return audioFile
+			}
+		}
 
-        throw ParseError.audioFileNotFound(nid: nid)
-    }
+		throw ParseError.audioFileNotFound(nid: nid)
+	}
 
-    private func getObject(forNID nid: Int) throws -> AICObjectModel {
-        guard let object = self.objects.filter({ $0.nid == nid}).first else {
-            throw ParseError.objectNotFound(nid: nid)
-        }
+	private func getObject(forNID nid: Int) throws -> AICObjectModel {
+		guard let object = self.objects.filter({ $0.nid == nid}).first else {
+			throw ParseError.objectNotFound(nid: nid)
+		}
 
-        return object
-    }
+		return object
+	}
 
-    private func getGallery(forGalleryName galleryName: String) throws -> AICGalleryModel {
+	private func getGallery(forGalleryName galleryName: String) throws -> AICGalleryModel {
 		guard let gallery = self.galleries.filter({$0.title == galleryName && $0.isOpen == true}).first else {
 			throw ParseError.galleryNameNotFound(galleryName: galleryName)
 		}
 
-        return gallery
-    }
+		return gallery
+	}
 
 	private func getGallery(forGalleryId galleryId: Int) throws -> AICGalleryModel {
 		guard let gallery = AppDataManager.sharedInstance.app.galleries.filter({$0.galleryId == galleryId && $0.isOpen == true}).first else {
@@ -1518,43 +1518,43 @@ class AppDataParser {
 		return .english
 	}
 
-    // Print messages for errors
-    private func handleParseError(_ closure: () throws -> Void) throws {
-        let errorMessage: String?
+	// Print messages for errors
+	private func handleParseError(_ closure: () throws -> Void) throws {
+		let errorMessage: String?
 
-        do {
-            try closure()
-            return
-        } catch ParseError.missingKey(let key) {
-            errorMessage = "The key \"\(key)\" trying to be retrieved does not exist."
-        } catch ParseError.badBoolString(let string) {
+		do {
+			try closure()
+			return
+		} catch ParseError.missingKey(let key) {
+			errorMessage = "The key \"\(key)\" trying to be retrieved does not exist."
+		} catch ParseError.badBoolString(let string) {
 			errorMessage = "Could not cast string \"\(string)\" to Bool"
 		} catch ParseError.badIntString(let string) {
-            errorMessage = "Could not cast string \"\(string)\" to Int"
-        } catch ParseError.badURLString(let string) {
-            errorMessage = "Could not create NSURL from string \"\(string)\""
-        } catch ParseError.badCLLocationString(let string) {
-            errorMessage = "Could not create CLLocationCoordinate2D from string \"\(string)\""
-        } catch ParseError.badPointString(let string) {
+			errorMessage = "Could not cast string \"\(string)\" to Int"
+		} catch ParseError.badURLString(let string) {
+			errorMessage = "Could not create NSURL from string \"\(string)\""
+		} catch ParseError.badCLLocationString(let string) {
+			errorMessage = "Could not create CLLocationCoordinate2D from string \"\(string)\""
+		} catch ParseError.badPointString(let string) {
 			errorMessage = "Could not create CGPoint from string \"\(string)\""
 		} catch ParseError.audioFileNotFound(let nid) {
-            errorMessage = "Could not find Audio File for nid \(nid)"
-        } catch ParseError.objectNotFound(let nid) {
-            errorMessage = "Could not find Object for nid \(nid)"
-        } catch ParseError.galleryDisabled(let galleryName) {
-            errorMessage = "Gallery '\(galleryName)' is disabled, ignoring."
-        } catch ParseError.galleryNameNotFound(let galleryName) {
-            errorMessage = "Could not find gallery for gallery name '\(galleryName)'"
-        } catch ParseError.galleryIdNotFound(let galleryId) {
+			errorMessage = "Could not find Audio File for nid \(nid)"
+		} catch ParseError.objectNotFound(let nid) {
+			errorMessage = "Could not find Object for nid \(nid)"
+		} catch ParseError.galleryDisabled(let galleryName) {
+			errorMessage = "Gallery '\(galleryName)' is disabled, ignoring."
+		} catch ParseError.galleryNameNotFound(let galleryName) {
+			errorMessage = "Could not find gallery for gallery name '\(galleryName)'"
+		} catch ParseError.galleryIdNotFound(let galleryId) {
 			errorMessage = "Could not find gallery for gallery Id '\(galleryId)'"
 		} catch ParseError.jsonObjectNotFoundForKey(let key) {
-            errorMessage = "Could not find Json object for key '\(key)'"
-        }
+			errorMessage = "Could not find Json object for key '\(key)'"
+		}
 
-        if errorMessage != nil && Common.Testing.printDataErrors {
-            print(errorMessage!)
-        }
+		if errorMessage != nil && Common.Testing.printDataErrors {
+			print(errorMessage!)
+		}
 
-        throw ParseError.objectParseFailure
-    }
+		throw ParseError.objectParseFailure
+	}
 }

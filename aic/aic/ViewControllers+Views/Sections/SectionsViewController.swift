@@ -1,6 +1,6 @@
 /*
- Abstract:
- Main Section controller, contains MapView, UITabBar and Object View.
+Abstract:
+Main Section controller, contains MapView, UITabBar and Object View.
 */
 
 import UIKit
@@ -8,14 +8,14 @@ import MapKit
 import Localize_Swift
 
 protocol SectionsViewControllerDelegate: class {
-    func sectionsViewControllerDidFinishAnimatingIn()
+	func sectionsViewControllerDidFinishAnimatingIn()
 }
 
 class SectionsViewController: UIViewController {
-    weak var delegate: SectionsViewControllerDelegate?
+	weak var delegate: SectionsViewControllerDelegate?
 
 	// AudioPlayer Card
-    let audioPlayerCardVC: AudioPlayerNavigationController = AudioPlayerNavigationController()
+	let audioPlayerCardVC: AudioPlayerNavigationController = AudioPlayerNavigationController()
 
 	// Content Card
 	var contentCardVC: ContentCardNavigationController?
@@ -23,68 +23,68 @@ class SectionsViewController: UIViewController {
 	// Search Card
 	let searchCardVC: SearchNavigationController = SearchNavigationController()
 
-    // TabBar
-    var sectionTabBarController: UITabBarController = UITabBarController()
+	// TabBar
+	var sectionTabBarController: UITabBarController = UITabBarController()
 
-    // Sections
+	// Sections
 	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
 	var audioGuideVC: AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
 	var mapVC: MapNavigationController = MapNavigationController(section: Common.Sections[.map]!)
 	var infoVC: InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
 
-    var sectionViewControllers: [SectionNavigationController] = []
+	var sectionViewControllers: [SectionNavigationController] = []
 
-    var currentViewController: SectionNavigationController
-    var previousViewController: SectionNavigationController?
+	var currentViewController: SectionNavigationController
+	var previousViewController: SectionNavigationController?
 
-    // Messages
+	// Messages
 	private var headphonesMessageVC: MessageViewController?
 	private var leaveTourMessageVC: MessageViewController?
 
 	// Content on Map
-    private var requestedTour: AICTourModel?
+	private var requestedTour: AICTourModel?
 	private var requestedArtwork: AICObjectModel?
 	private var requestedSearchedArtwork: AICSearchedArtworkModel?
 	private var requestedExhibition: AICExhibitionModel?
 	private var requestedMapMode: MapViewController.Mode?
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		currentViewController = homeVC
-        super.init(nibName: nil, bundle: nil)
-    }
+		super.init(nibName: nil, bundle: nil)
+	}
 
 	required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 
-    override func viewDidLoad() {
-        // Set the view controllers for the tab bar
-        sectionViewControllers = [
+	override func viewDidLoad() {
+		// Set the view controllers for the tab bar
+		sectionViewControllers = [
 			homeVC,
-            audioGuideVC,
-            mapVC,
-            infoVC
-        ]
+			audioGuideVC,
+			mapVC,
+			infoVC
+		]
 
-        // Setup and add the tabbar
+		// Setup and add the tabbar
 		sectionTabBarController.view.frame = UIScreen.main.bounds
 		sectionTabBarController.tabBar.tintColor = .aicHomeColor
-        sectionTabBarController.tabBar.backgroundColor = .aicTabbarColor
-        sectionTabBarController.tabBar.barStyle = UIBarStyle.black
+		sectionTabBarController.tabBar.backgroundColor = .aicTabbarColor
+		sectionTabBarController.tabBar.barStyle = UIBarStyle.black
 		sectionTabBarController.viewControllers = sectionViewControllers
 
-        // Add Views
+		// Add Views
 		sectionTabBarController.willMove(toParent: self)
-        view.addSubview(sectionTabBarController.view)
+		view.addSubview(sectionTabBarController.view)
 		sectionTabBarController.didMove(toParent: self)
 
-        audioPlayerCardVC.willMove(toParent: sectionTabBarController)
-        sectionTabBarController.view.insertSubview(audioPlayerCardVC.view, belowSubview: sectionTabBarController.tabBar)
-        audioPlayerCardVC.didMove(toParent: sectionTabBarController)
+		audioPlayerCardVC.willMove(toParent: sectionTabBarController)
+		sectionTabBarController.view.insertSubview(audioPlayerCardVC.view, belowSubview: sectionTabBarController.tabBar)
+		audioPlayerCardVC.didMove(toParent: sectionTabBarController)
 
 		searchCardVC.willMove(toParent: self.sectionTabBarController)
 		sectionTabBarController.view.insertSubview(searchCardVC.view, belowSubview: audioPlayerCardVC.view)
@@ -94,11 +94,11 @@ class SectionsViewController: UIViewController {
 		homeVC.sectionDelegate = self
 		mapVC.sectionDelegate = self
 		audioGuideVC.sectionDelegate = self
-        sectionTabBarController.delegate = self
+		sectionTabBarController.delegate = self
 		searchCardVC.cardDelegate = self
 		searchCardVC.sectionsVC = self
 		searchCardVC.resultsVC.sectionsVC = self
-        audioPlayerCardVC.cardDelegate = self
+		audioPlayerCardVC.cardDelegate = self
 		audioPlayerCardVC.sectionDelegate = self
 
 		// Search Buttons
@@ -112,7 +112,7 @@ class SectionsViewController: UIViewController {
 		// Accessibility
 		searchCardVC.view.accessibilityElementsHidden = true
 		audioPlayerCardVC.view.accessibilityElementsHidden = true
-    }
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -155,7 +155,7 @@ class SectionsViewController: UIViewController {
 
 	// MARK: Section Navigation
 
-    private func setSelectedSection(sectionVC: SectionNavigationController) {
+	private func setSelectedSection(sectionVC: SectionNavigationController) {
 		if searchCardVC.currentState == .fullscreen {
 			searchCardVC.hide()
 		}
@@ -164,8 +164,8 @@ class SectionsViewController: UIViewController {
 			return
 		}
 
-        previousViewController = currentViewController
-        currentViewController = sectionVC
+		previousViewController = currentViewController
+		currentViewController = sectionVC
 
 		// Card operations
 		if currentViewController != previousViewController {
@@ -191,10 +191,10 @@ class SectionsViewController: UIViewController {
 			}
 		}
 
-        sectionVC.view.setNeedsUpdateConstraints()
-    }
+		sectionVC.view.setNeedsUpdateConstraints()
+	}
 
-    func animateInInitialView() {
+	func animateInInitialView() {
 		self.view.alpha = 0.0
 		self.homeVC.view.alpha = 0.0
 
@@ -202,26 +202,26 @@ class SectionsViewController: UIViewController {
 		self.homeVC.sectionNavigationBar.disableParallaxEffect()
 
 		UIView.animate(withDuration: 0.5, delay: 0.3, options: .curveEaseOut,
-                                   animations: {
-									self.view.alpha = 1.0
-									self.homeVC.view.alpha = 1.0
-            }, completion: { (completed) in
-				if completed {
-					// re-enable parallax effect
-					self.homeVC.sectionNavigationBar.enableParallaxEffect()
+					   animations: {
+						self.view.alpha = 1.0
+						self.homeVC.view.alpha = 1.0
+		}, completion: { (completed) in
+			if completed {
+				// re-enable parallax effect
+				self.homeVC.sectionNavigationBar.enableParallaxEffect()
 
-					// show home tooltip, if needed
-					self.homeVC.showHomeTooltip()
+				// show home tooltip, if needed
+				self.homeVC.showHomeTooltip()
 
-					self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
+				self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
 
-					// Accessibility
-					self.homeVC.sectionNavigationBar.titleLabel.becomeFirstResponder()
-				}
-        })
-        Common.DeepLinks.loadedEnoughToLink = true
-        (UIApplication.shared.delegate as? AppDelegate)?.triggerDeepLinkIfPresent()
-    }
+				// Accessibility
+				self.homeVC.sectionNavigationBar.titleLabel.becomeFirstResponder()
+			}
+		})
+		Common.DeepLinks.loadedEnoughToLink = true
+		(UIApplication.shared.delegate as? AppDelegate)?.triggerDeepLinkIfPresent()
+	}
 
 	// MARK: Show On Map
 
@@ -247,9 +247,9 @@ class SectionsViewController: UIViewController {
 
 		mapVC.showTour(tour: tour, language: language, stopIndex: stopIndex)
 
-        // Log Analytics
+		// Log Analytics
 		AICAnalytics.sendTourStartedEvent(tour: tour, language: language)
-    }
+	}
 
 	func showArtworkOnMap(artwork: AICObjectModel) {
 		setSelectedSection(sectionVC: mapVC)
@@ -338,20 +338,20 @@ class SectionsViewController: UIViewController {
 		mapVC.showRestrooms()
 	}
 
-    // MARK: Play Audio
+	// MARK: Play Audio
 
 	private func playAudioGuideArtwork(artwork: AICObjectModel, audioGuideID: Int) {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: audioGuideID)
 		audio.language = Common.currentLanguage
 
-        audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: .AudioGuide, audioGuideNumber: audioGuideID)
-        showHeadphonesMessage()
+		audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: .AudioGuide, audioGuideNumber: audioGuideID)
+		showHeadphonesMessage()
 		audioPlayerCardVC.showFullscreen()
 	}
 
 	private func playAudioGuideTour(tour: AICTourModel) {
-        audioPlayerCardVC.playTourOverviewAudio(tour: tour, source: .AudioGuide)
-        showHeadphonesMessage()
+		audioPlayerCardVC.playTourOverviewAudio(tour: tour, source: .AudioGuide)
+		showHeadphonesMessage()
 		audioPlayerCardVC.showFullscreen()
 	}
 
@@ -359,10 +359,10 @@ class SectionsViewController: UIViewController {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
 		audio.language = Common.currentLanguage
 
-        let source = isFromSearchIcon ? AICAnalytics.PlaybackSource.SearchIcon : AICAnalytics.PlaybackSource.Map
+		let source = isFromSearchIcon ? AICAnalytics.PlaybackSource.SearchIcon : AICAnalytics.PlaybackSource.Map
 
-        audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: source)
-        showHeadphonesMessage()
+		audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: source)
+		showHeadphonesMessage()
 		audioPlayerCardVC.showMiniPlayer()
 	}
 
@@ -370,8 +370,8 @@ class SectionsViewController: UIViewController {
 		var audio = AppDataManager.sharedInstance.getAudioFile(forObject: artwork, selectorNumber: nil)
 		audio.language = Common.currentLanguage
 
-        audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: .Search)
-        showHeadphonesMessage()
+		audioPlayerCardVC.playArtworkAudio(artwork: artwork, audio: audio, source: .Search)
+		showHeadphonesMessage()
 		audioPlayerCardVC.showMiniPlayer()
 	}
 
@@ -394,37 +394,37 @@ class SectionsViewController: UIViewController {
 		}
 	}
 
-    // MARK: Headphones Messages
+	// MARK: Headphones Messages
 
-    fileprivate func showHeadphonesMessage() {
-        let defaults = UserDefaults.standard
-        let showHeadphonesMessage = defaults.bool(forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
+	fileprivate func showHeadphonesMessage() {
+		let defaults = UserDefaults.standard
+		let showHeadphonesMessage = defaults.bool(forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
 
-        if showHeadphonesMessage {
-            headphonesMessageVC = MessageViewController(message: Common.Messages.useHeadphones)
-            headphonesMessageVC!.delegate = self
+		if showHeadphonesMessage {
+			headphonesMessageVC = MessageViewController(message: Common.Messages.useHeadphones)
+			headphonesMessageVC!.delegate = self
 
-            // Modal presentation style
-            headphonesMessageVC!.definesPresentationContext = true
-            headphonesMessageVC!.providesPresentationContextTransitionStyle = true
-            headphonesMessageVC!.modalPresentationStyle = .overFullScreen
-            headphonesMessageVC!.modalTransitionStyle = .crossDissolve
+			// Modal presentation style
+			headphonesMessageVC!.definesPresentationContext = true
+			headphonesMessageVC!.providesPresentationContextTransitionStyle = true
+			headphonesMessageVC!.modalPresentationStyle = .overFullScreen
+			headphonesMessageVC!.modalTransitionStyle = .crossDissolve
 
-            self.present(headphonesMessageVC!, animated: true, completion: nil)
-        }
-    }
+			self.present(headphonesMessageVC!, animated: true, completion: nil)
+		}
+	}
 
-    fileprivate func hideHeadphonesMessage() {
-        if let messageView = headphonesMessageVC {
-            // Update user defaults
-            let defaults = UserDefaults.standard
-            defaults.set(false, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
-            defaults.synchronize()
+	fileprivate func hideHeadphonesMessage() {
+		if let messageView = headphonesMessageVC {
+			// Update user defaults
+			let defaults = UserDefaults.standard
+			defaults.set(false, forKey: Common.UserDefaults.showHeadphonesUserDefaultsKey)
+			defaults.synchronize()
 
-            messageView.dismiss(animated: true, completion: nil)
-            headphonesMessageVC = nil
-        }
-    }
+			messageView.dismiss(animated: true, completion: nil)
+			headphonesMessageVC = nil
+		}
+	}
 
 	// MARK: Leave Tour Message
 
@@ -619,7 +619,7 @@ extension SectionsViewController: MapNavigationControllerDelegate {
 // MARK: Message Delegate
 
 extension SectionsViewController: MessageViewControllerDelegate {
-    func messageViewActionSelected(messageVC: MessageViewController) {
+	func messageViewActionSelected(messageVC: MessageViewController) {
 		if messageVC == headphonesMessageVC {
 			hideHeadphonesMessage()
 		} else if messageVC == leaveTourMessageVC {
@@ -633,32 +633,32 @@ extension SectionsViewController: MessageViewControllerDelegate {
 			showRequestedMapContentIfNeeded()
 			resetRequestedMapContent()
 		}
-    }
+	}
 
-    func messageViewCancelSelected(messageVC: MessageViewController) {
-        if messageVC == leaveTourMessageVC {
-            hideLeaveTourMessage()
+	func messageViewCancelSelected(messageVC: MessageViewController) {
+		if messageVC == leaveTourMessageVC {
+			hideLeaveTourMessage()
 
 			resetRequestedMapContent()
-        }
-    }
+		}
+	}
 }
 
 // MARK: Card Delegate
 
 extension SectionsViewController: CardNavigationControllerDelegate {
-    // When the Audio Player goes fullscreen hide the TabBar
-    func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint) {
-        if cardVC == audioPlayerCardVC {
-            let screenHeight = UIScreen.main.bounds.height
+	// When the Audio Player goes fullscreen hide the TabBar
+	func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint) {
+		if cardVC == audioPlayerCardVC {
+			let screenHeight = UIScreen.main.bounds.height
 
-            var percentageY: CGFloat = position.y / (screenHeight - self.sectionTabBarController.tabBar.frame.height - Common.Layout.miniAudioPlayerHeight)
-            percentageY = clamp(val: percentageY, minVal: 0.0, maxVal: 1.0)
+			var percentageY: CGFloat = position.y / (screenHeight - self.sectionTabBarController.tabBar.frame.height - Common.Layout.miniAudioPlayerHeight)
+			percentageY = clamp(val: percentageY, minVal: 0.0, maxVal: 1.0)
 
-            // Set the sectionVC tab bar to hide as we show audioPlayerVC
-            self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * percentageY)
-        }
-    }
+			// Set the sectionVC tab bar to hide as we show audioPlayerVC
+			self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * percentageY)
+		}
+	}
 
 	func cardWillShowFullscreen(cardVC: CardNavigationController) {
 		setSearchButtonEnabled(false)

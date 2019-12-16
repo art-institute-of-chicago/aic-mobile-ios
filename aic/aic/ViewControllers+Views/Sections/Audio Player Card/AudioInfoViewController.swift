@@ -9,19 +9,19 @@
 import UIKit
 
 class AudioInfoViewController: UIViewController {
-    let scrollView: UIScrollView = UIScrollView()
-    let imageView: UIImageView = UIImageView()
+	let scrollView: UIScrollView = UIScrollView()
+	let imageView: UIImageView = UIImageView()
 	let languageSelector: LanguageSelectorView = LanguageSelectorView()
-    let audioPlayerView: AudioPlayerView = AudioPlayerView()
+	let audioPlayerView: AudioPlayerView = AudioPlayerView()
 	let descriptionLabel = UILabelPadding()
 	let relatedToursView = AudioInfoSectionView()
 	let transcriptView = AudioInfoSectionView()
 	let creditsView = AudioInfoSectionView()
 
-    var imageViewHeight: NSLayoutConstraint?
-    let imageMaxHeight: CGFloat = 344.0
+	var imageViewHeight: NSLayoutConstraint?
+	let imageMaxHeight: CGFloat = 344.0
 
-    override func viewDidLoad() {
+	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		self.view.backgroundColor = .clear
@@ -55,34 +55,34 @@ class AudioInfoViewController: UIViewController {
 		self.view.addSubview(scrollView)
 
 		createViewConstraints()
-    }
+	}
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 
-        self.view.layoutIfNeeded()
-        self.scrollView.contentSize.width = self.view.frame.width
-        self.scrollView.contentSize.height = creditsView.frame.origin.y + creditsView.frame.height
+		self.view.layoutIfNeeded()
+		self.scrollView.contentSize.width = self.view.frame.width
+		self.scrollView.contentSize.height = creditsView.frame.origin.y + creditsView.frame.height
 
-        //updateLanguage()
-    }
+		//updateLanguage()
+	}
 
 	// MARK: Constraints
 
-    func createViewConstraints() {
-        scrollView.autoPinEdge(.top, to: .top, of: self.view)
-        scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
-        scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-        scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view)
+	func createViewConstraints() {
+		scrollView.autoPinEdge(.top, to: .top, of: self.view)
+		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
+		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view)
 
-        imageView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.miniAudioPlayerHeight - 30.0)
-        imageView.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
-        imageView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
-        imageViewHeight = imageView.autoSetDimension(.height, toSize: imageMaxHeight)
+		imageView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.miniAudioPlayerHeight - 30.0)
+		imageView.autoPinEdge(.leading, to: .leading, of: self.view, withOffset: 16)
+		imageView.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
+		imageViewHeight = imageView.autoSetDimension(.height, toSize: imageMaxHeight)
 
-        audioPlayerView.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 16)
-        audioPlayerView.autoPinEdge(.leading, to: .leading, of: self.view)
-        audioPlayerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+		audioPlayerView.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 16)
+		audioPlayerView.autoPinEdge(.leading, to: .leading, of: self.view)
+		audioPlayerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 
 		languageSelector.autoSetDimensions(to: LanguageSelectorView.selectorSize)
 		languageSelector.autoPinEdge(.bottom, to: .top, of: audioPlayerView, withOffset: -16)
@@ -103,7 +103,7 @@ class AudioInfoViewController: UIViewController {
 		creditsView.autoPinEdge(.top, to: .bottom, of: transcriptView)
 		creditsView.autoPinEdge(.leading, to: .leading, of: self.view)
 		creditsView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-    }
+	}
 
 	private func updateLayout() {
 		self.view.layoutSubviews()
@@ -118,7 +118,7 @@ class AudioInfoViewController: UIViewController {
 	func setArtworkContent(artwork: AICObjectModel, audio: AICAudioFileModel, tour: AICTourModel? = nil) {
 		reset()
 
-        setImage(imageURL: artwork.imageUrl)
+		setImage(imageURL: artwork.imageUrl)
 		if let description = artwork.tombstone {
 			setDescription(description: description)
 		}
@@ -142,8 +142,8 @@ class AudioInfoViewController: UIViewController {
 		}
 		updateLanguage(language: audio.language)
 
-        transcriptView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: audio.transcript, font: .aicTextFont, lineHeight: 22)
-        transcriptView.bodyTextView.textColor = .white
+		transcriptView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: audio.transcript, font: .aicTextFont, lineHeight: 22)
+		transcriptView.bodyTextView.textColor = .white
 		transcriptView.show(collapseEnabled: true)
 
 		var creditsString = ""
@@ -154,15 +154,15 @@ class AudioInfoViewController: UIViewController {
 		}
 
 		if creditsString.isEmpty == false {
-            creditsView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: creditsString, font: .aicTextFont, lineHeight: 22)
-            creditsView.bodyTextView.textColor = .white
+			creditsView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: creditsString, font: .aicTextFont, lineHeight: 22)
+			creditsView.bodyTextView.textColor = .white
 			creditsView.show(collapseEnabled: true)
 		} else {
 			creditsView.hide()
 		}
 
 		updateLayout()
-    }
+	}
 
 	func updateAudioContent(audio: AICAudioFileModel) {
 		updateLanguage(language: audio.language)
@@ -198,27 +198,27 @@ class AudioInfoViewController: UIViewController {
 		transcriptView.titleLabel.text = "Transcript".localized(using: "AudioPlayer")
 	}
 
-    private func setImage(imageURL: URL) {
+	private func setImage(imageURL: URL) {
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: imageURL)
-//		imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
-//            // calculate image dimension to adjust height of imageview
-//            if let _ = image {
-//                let imageAspectRatio = image!.size.width / image!.size.height
-//                let viewAspectRatio = self.imageView.frame.width / self.imageViewHeight!.constant
-//
-//                if imageAspectRatio > viewAspectRatio {
-//                    self.imageViewHeight!.constant = self.imageView.frame.width * (image!.size.height / image!.size.width)
-//                }
-//                else {
-//                    self.imageViewHeight!.constant = self.imageMaxHeight
-//                }
-//
-//				self.updateLayout()
-//            }
-//        }
+		//		imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
+		//            // calculate image dimension to adjust height of imageview
+		//            if let _ = image {
+		//                let imageAspectRatio = image!.size.width / image!.size.height
+		//                let viewAspectRatio = self.imageView.frame.width / self.imageViewHeight!.constant
+		//
+		//                if imageAspectRatio > viewAspectRatio {
+		//                    self.imageViewHeight!.constant = self.imageView.frame.width * (image!.size.height / image!.size.width)
+		//                }
+		//                else {
+		//                    self.imageViewHeight!.constant = self.imageMaxHeight
+		//                }
+		//
+		//				self.updateLayout()
+		//            }
+		//        }
 		updateLayout()
-    }
+	}
 
 	private func setDescription(description: String) {
 		descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: description, font: .aicTextFont, lineHeight: 22)
@@ -238,10 +238,10 @@ class AudioInfoViewController: UIViewController {
 
 // MARK: Scroll Delegate
 extension AudioInfoViewController: UIScrollViewDelegate {
-    /// Avoid bouncing at the top of the TableView
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+	/// Avoid bouncing at the top of the TableView
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		scrollView.bounces = (scrollView.contentOffset.y > 20)
-    }
+	}
 }
 
 // MARK: AudioInfoSectionViewDelegate

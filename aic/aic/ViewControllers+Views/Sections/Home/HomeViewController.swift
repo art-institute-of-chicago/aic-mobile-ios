@@ -20,14 +20,14 @@ protocol HomeViewControllerDelegate: class {
 }
 
 class ClickThroughView: UIView {
-//	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-//		for view in subviews {
-//			if view.point(inside: point, with: event) {
-//				return view
-//			}
-//		}
-//		return nil
-//	}
+	//	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+	//		for view in subviews {
+	//			if view.point(inside: point, with: event) {
+	//				return view
+	//			}
+	//		}
+	//		return nil
+	//	}
 }
 
 class HomeViewController: SectionViewController {

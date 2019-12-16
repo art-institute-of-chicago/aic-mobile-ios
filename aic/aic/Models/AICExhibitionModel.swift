@@ -1,6 +1,6 @@
 /*
- Abstract:
- Defines a data structure for AIC Exhibition Model
+Abstract:
+Defines a data structure for AIC Exhibition Model
 */
 
 import CoreLocation
@@ -8,9 +8,9 @@ import CoreLocation
 class AICExhibitionModel: NSObject {
 	let id: Int
 
-    let title: String
-    let shortDescription: String
-    var imageUrl: URL?
+	let title: String
+	let shortDescription: String
+	var imageUrl: URL?
 
 	let startDate: Date
 	let endDate: Date

@@ -39,8 +39,8 @@ class ArtworkTableViewController: UITableViewController {
 		self.tableView.separatorStyle = .none
 		self.tableView.rowHeight = UITableView.automaticDimension // Necessary for AutoLayout of cells
 		self.tableView.estimatedRowHeight = 200
-        self.tableView.showsVerticalScrollIndicator = false
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+		self.tableView.showsVerticalScrollIndicator = false
+		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "ArtworkContentCell", bundle: Bundle.main), forCellReuseIdentifier: ArtworkContentCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
 
@@ -104,8 +104,8 @@ extension ArtworkTableViewController {
 
 // MARK: Scroll Delegate
 extension ArtworkTableViewController {
-    /// Avoid bouncing at the top of the TableView
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+	/// Avoid bouncing at the top of the TableView
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		scrollView.bounces = (scrollView.contentOffset.y > 20)
-    }
+	}
 }

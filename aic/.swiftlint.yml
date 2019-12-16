@@ -1,3 +1,4 @@
+indentation: tabs
 disabled_rules:
   - vertical_parameter_alignment
   - line_length

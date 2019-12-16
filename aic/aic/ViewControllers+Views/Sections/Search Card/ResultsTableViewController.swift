@@ -92,7 +92,7 @@ class ResultsTableViewController: UITableViewController {
 
 		promotedSearchStringItems = AppDataManager.sharedInstance.app.searchStrings
 
-        self.filter = .empty
+		self.filter = .empty
 
 		resetContentLoaded()
 
@@ -489,9 +489,9 @@ extension ResultsTableViewController {
 // MARK: Scroll Delegate
 extension ResultsTableViewController {
 	/// Avoid bouncing at the top of the TableView
-//	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//		scrollView.bounces = (scrollView.contentOffset.y > 20)
-//	}
+	//	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+	//		scrollView.bounces = (scrollView.contentOffset.y > 20)
+	//	}
 }
 
 // MARK: See All Buttons Events

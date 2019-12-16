@@ -1,7 +1,7 @@
 /*
- Abstract:
- Prompt to become a member or log in
- */
+Abstract:
+Prompt to become a member or log in
+*/
 
 import UIKit
 
@@ -15,38 +15,38 @@ class InfoBecomeMemberView: BaseView {
 	let bottomDividerLine = UIView()
 
 	let titleLabelHeight: CGFloat = 80
-    let joinPromptMarginTop: CGFloat = 16
+	let joinPromptMarginTop: CGFloat = 16
 	let joinTextMarginTop: CGFloat = 5
-    let accessPromptMarginTop: CGFloat = 28
-    let accessButtonMarginTop: CGFloat = 20
+	let accessPromptMarginTop: CGFloat = 28
+	let accessButtonMarginTop: CGFloat = 20
 	let accessButtonMarginBottom: CGFloat = 20
 
-    var savedMember: AICMemberInfoModel? {
-        didSet {
-            //Configure view appropriately if a member signs in
-            if savedMember != nil {
-                titleLabel.text = Common.Info.becomeMemberExistingMemberTitle
+	var savedMember: AICMemberInfoModel? {
+		didSet {
+			//Configure view appropriately if a member signs in
+			if savedMember != nil {
+				titleLabel.text = Common.Info.becomeMemberExistingMemberTitle
 
-                if joinPromptLabel.superview != nil {
-                    joinPromptLabel.removeFromSuperview()
-                }
-                if joinTextView.superview != nil {
-                    joinTextView.removeFromSuperview()
-                }
-                if accessPromptLabel.superview != nil {
-                    accessPromptLabel.removeFromSuperview()
-                }
-            } else if joinPromptLabel.superview == nil && joinTextView.superview == nil && accessPromptLabel.superview == nil {
-                titleLabel.text = "Member Title".localized(using: "Info")
-                addSubview(joinPromptLabel)
-                addSubview(joinTextView)
-                addSubview(accessPromptLabel)
-            }
-        }
-    }
+				if joinPromptLabel.superview != nil {
+					joinPromptLabel.removeFromSuperview()
+				}
+				if joinTextView.superview != nil {
+					joinTextView.removeFromSuperview()
+				}
+				if accessPromptLabel.superview != nil {
+					accessPromptLabel.removeFromSuperview()
+				}
+			} else if joinPromptLabel.superview == nil && joinTextView.superview == nil && accessPromptLabel.superview == nil {
+				titleLabel.text = "Member Title".localized(using: "Info")
+				addSubview(joinPromptLabel)
+				addSubview(joinTextView)
+				addSubview(accessPromptLabel)
+			}
+		}
+	}
 
-    init() {
-        super.init(frame: CGRect.zero)
+	init() {
+		super.init(frame: CGRect.zero)
 
 		if savedMember == nil {
 			//Prompt user to become a member
@@ -57,15 +57,15 @@ class InfoBecomeMemberView: BaseView {
 		}
 		titleLabel.font = .aicTitleFont
 		titleLabel.textColor = .aicDarkGrayColor
-        titleLabel.textAlignment = NSTextAlignment.center
+		titleLabel.textAlignment = NSTextAlignment.center
 
 		titleDividerLine.backgroundColor = .aicDividerLineColor
 
-        joinPromptLabel.numberOfLines = 0
-        joinPromptLabel.text = "Member Join Prompt".localized(using: "Info")
-        joinPromptLabel.font = .aicPageTextFont
+		joinPromptLabel.numberOfLines = 0
+		joinPromptLabel.text = "Member Join Prompt".localized(using: "Info")
+		joinPromptLabel.font = .aicPageTextFont
 		joinPromptLabel.textColor = .aicDarkGrayColor
-        joinPromptLabel.textAlignment = .center
+		joinPromptLabel.textAlignment = .center
 
 		let joinAttrText = NSMutableAttributedString(string: "Member Join Text".localized(using: "Info"))
 		let joinURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.membershipUrl]!)!
@@ -92,7 +92,7 @@ class InfoBecomeMemberView: BaseView {
 		addSubview(titleLabel)
 		addSubview(titleDividerLine)
 
-        //Only show join prompts if no member has been saved
+		//Only show join prompts if no member has been saved
 		if savedMember == nil {
 			addSubview(joinPromptLabel)
 			addSubview(joinTextView)
@@ -107,11 +107,11 @@ class InfoBecomeMemberView: BaseView {
 
 		// Accessibility
 		joinTextView.accessibilityTraits = .link
-    }
+	}
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	override func updateConstraints() {
 		if didSetupConstraints == false {

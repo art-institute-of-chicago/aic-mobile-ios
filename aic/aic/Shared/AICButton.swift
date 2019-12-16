@@ -1,6 +1,6 @@
 /*
- Abstract:
- Shared button class for UIButtons in app with the same style
+Abstract:
+Shared button class for UIButtons in app with the same style
 */
 
 import UIKit
@@ -49,14 +49,14 @@ class AICButton: UIButton {
 		highlighted: ColorSet(borderColor: .white, backgroundColor: UIColor(white: 216.0 / 255.0, alpha: 0.5), textColor: .white)
 	)
 
-    private let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+	private let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 	private let mediumSize: CGSize = CGSize(width: 190, height: 50)
 	private let smallSize: CGSize = CGSize(width: 140, height: 50)
 	private let borderWidth: CGFloat = 2.0
 	private var buttonColorMode: ButtonColorMode = AICButton.greenBlueMode
 
-    override var isHighlighted: Bool {
-        didSet {
+	override var isHighlighted: Bool {
+		didSet {
 			if isHighlighted {
 				backgroundColor = buttonColorMode.highlighted.backgroundColor
 				layer.borderColor = buttonColorMode.highlighted.borderColor.cgColor
@@ -64,8 +64,8 @@ class AICButton: UIButton {
 				backgroundColor = buttonColorMode.normal.backgroundColor
 				layer.borderColor = buttonColorMode.normal.borderColor.cgColor
 			}
-        }
-    }
+		}
+	}
 
 	init(isSmall: Bool) {
 		super.init(frame: CGRect.zero)
@@ -73,11 +73,11 @@ class AICButton: UIButton {
 		let frameSize = isSmall ? smallSize : mediumSize
 		self.autoSetDimensions(to: CGSize(width: frameSize.width - (borderWidth), height: frameSize.height - (borderWidth)))
 		setup()
-    }
+	}
 
-    required init?(coder aDecoder: NSCoder) {
+	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-    }
+	}
 
 	override func awakeFromNib() {
 		setup()

@@ -1,8 +1,8 @@
 /*
- Abstract:
- An annotation that is represented only by an imageName
- currently used by the Lions
- */
+Abstract:
+An annotation that is represented only by an imageName
+currently used by the Lions
+*/
 
 import MapKit
 import Kingfisher
@@ -12,7 +12,7 @@ class MapImageAnnotation: MapAnnotation {
 
 	var image: UIImage?
 
-    init(coordinate: CLLocationCoordinate2D, imageUrl: URL) {
+	init(coordinate: CLLocationCoordinate2D, imageUrl: URL) {
 		self.identifier = imageUrl.absoluteString
 		self.image = nil
 		super.init(coordinate: coordinate)
@@ -22,7 +22,7 @@ class MapImageAnnotation: MapAnnotation {
 				self.image = image!
 			}
 		}
-    }
+	}
 
 	init(coordinate: CLLocationCoordinate2D, image: UIImage, identifier: String) {
 		self.identifier = identifier

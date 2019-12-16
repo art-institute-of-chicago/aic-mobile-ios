@@ -218,25 +218,25 @@ class MapNavigationController: SectionNavigationController {
 		let showEnableLocationMessageValue = defaults.bool(forKey: Common.UserDefaults.showEnableLocationUserDefaultsKey)
 
 		// If we do show it
-        if showEnableLocationMessageValue {
+		if showEnableLocationMessageValue {
 			showEnableLocationMessage()
-        } else {  // Otherwise try to start the location manager
-            // Init location manager
-            Common.Map.locationManager.requestWhenInUseAuthorization()
-            Common.Map.locationManager.startUpdatingLocation()
-            Common.Map.locationManager.startUpdatingHeading()
-        }
+		} else {  // Otherwise try to start the location manager
+			// Init location manager
+			Common.Map.locationManager.requestWhenInUseAuthorization()
+			Common.Map.locationManager.startUpdatingLocation()
+			Common.Map.locationManager.startUpdatingHeading()
+		}
 	}
 
 	fileprivate func showEnableLocationMessage() {
-        enableLocationMessageVC = MessageViewController(message: Common.Messages.enableLocation)
+		enableLocationMessageVC = MessageViewController(message: Common.Messages.enableLocation)
 		enableLocationMessageVC!.delegate = self
 
-        // Modal presentation style
-        enableLocationMessageVC!.definesPresentationContext = true
-        enableLocationMessageVC!.providesPresentationContextTransitionStyle = true
-        enableLocationMessageVC!.modalPresentationStyle = .overFullScreen
-        enableLocationMessageVC!.modalTransitionStyle = .crossDissolve
+		// Modal presentation style
+		enableLocationMessageVC!.definesPresentationContext = true
+		enableLocationMessageVC!.providesPresentationContextTransitionStyle = true
+		enableLocationMessageVC!.modalPresentationStyle = .overFullScreen
+		enableLocationMessageVC!.modalTransitionStyle = .crossDissolve
 
 		self.present(enableLocationMessageVC!, animated: true, completion: nil)
 	}

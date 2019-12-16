@@ -1,18 +1,18 @@
 /*
- Abstract:
- Plays intro video and shows loading view
- */
+Abstract:
+Plays intro video and shows loading view
+*/
 
 import UIKit
 import AVFoundation
 
 protocol LoadingViewControllerDelegate: class {
-    func loadingDidFinishPlayingIntroVideoA()
+	func loadingDidFinishPlayingIntroVideoA()
 	func loadingDidFinish()
 }
 
 class LoadingViewController: UIViewController {
-    weak var delegate: LoadingViewControllerDelegate?
+	weak var delegate: LoadingViewControllerDelegate?
 
 	let loadingImage = UIImageView()
 	let progressBackgroundView = UIView()
@@ -35,7 +35,7 @@ class LoadingViewController: UIViewController {
 
 	var progressHighlightWidth: NSLayoutConstraint?
 
-    var pctComplete: Float = 0.0
+	var pctComplete: Float = 0.0
 
 	let showFullVideo: Bool
 
@@ -97,8 +97,8 @@ class LoadingViewController: UIViewController {
 		NotificationCenter.default.removeObserver(self)
 	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
 		self.view.backgroundColor = .aicHomeColor
 
@@ -111,15 +111,15 @@ class LoadingViewController: UIViewController {
 
 		NotificationCenter.default.addObserver(self, selector: #selector(videoFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer)
 
-        // Create the player
+		// Create the player
 		if showFullVideo {
 			avPlayer = AVQueuePlayer(items: [playerItemFull])
 		} else {
 			avPlayer = AVQueuePlayer(items: [playerItemA, playerItemB])
 		}
 
-        // No Looping
-        avPlayer.actionAtItemEnd = .none
+		// No Looping
+		avPlayer.actionAtItemEnd = .none
 
 		// Progress Bar
 		//progressHighlightView.layer.cornerRadius = progressSize.height
@@ -150,7 +150,7 @@ class LoadingViewController: UIViewController {
 		self.view.addSubview(loadingImage)
 
 		createViewConstraints()
-    }
+	}
 
 	func createViewConstraints() {
 		loadingImage.autoPinEdgesToSuperviewEdges()
@@ -190,7 +190,7 @@ class LoadingViewController: UIViewController {
 		self.view.layoutIfNeeded()
 	}
 
-    func playIntroVideo() {
+	func playIntroVideo() {
 		if loadingImage.superview != nil {
 			UIView.animate(withDuration: 0.3, animations: {
 				self.loadingImage.alpha = 0.0
@@ -202,18 +202,18 @@ class LoadingViewController: UIViewController {
 		}
 
 		avPlayer.play()
-    }
+	}
 
 	@objc func loadIntroVideoB() {
 		avPlayer.advanceToNextItem()
 		avPlayer.pause()
 	}
 
-    @objc func videoFinishedPlaying() {
+	@objc func videoFinishedPlaying() {
 		if avPlayer.currentItem == playerItemA {
 			delegate?.loadingDidFinishPlayingIntroVideoA()
 		} else {
 			self.delegate?.loadingDidFinish()
 		}
-    }
+	}
 }

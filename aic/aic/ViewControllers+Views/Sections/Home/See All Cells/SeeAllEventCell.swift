@@ -53,7 +53,7 @@ class SeeAllEventCell: UICollectionViewCell {
 				}
 			}
 			eventTitleLabel.text = eventModel.title
-            shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: eventModel.shortDescription, font: .aicTextFont, lineHeight: 20)
+			shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: eventModel.shortDescription, font: .aicTextFont, lineHeight: 20)
 			monthDayLabel.text = Common.Info.monthDayString(date: eventModel.startDate)
 			hoursMinutesLabel.text = Common.Info.hoursMinutesString(date: eventModel.startDate)
 

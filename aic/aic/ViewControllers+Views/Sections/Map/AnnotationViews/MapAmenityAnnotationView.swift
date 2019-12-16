@@ -1,58 +1,58 @@
 /*
- Abstract:
- Custom annotation view for amenities, i.e. Bathrooms, Tickets, etc.
- Shows an appropriate icon, which is included in xcassets
+Abstract:
+Custom annotation view for amenities, i.e. Bathrooms, Tickets, etc.
+Shows an appropriate icon, which is included in xcassets
 */
 
 import MapKit
 
 class MapAmenityAnnotationView: MapAnnotationView {
 
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+	override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+		super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
-        layer.zPosition = Common.Map.AnnotationZPosition.amenities.rawValue
+		layer.zPosition = Common.Map.AnnotationZPosition.amenities.rawValue
 		isEnabled = false
 
-        self.layer.drawsAsynchronously = true
+		self.layer.drawsAsynchronously = true
 
-        // Load in the base image (white image we colorize based on section)
-        if let amenityAnnotation = annotation as? MapAmenityAnnotation {
+		// Load in the base image (white image we colorize based on section)
+		if let amenityAnnotation = annotation as? MapAmenityAnnotation {
 			switch amenityAnnotation.type {
-				case .Checkroom:
-					image = #imageLiteral(resourceName: "Checkroom")
-				case .Dining:
-					image = #imageLiteral(resourceName: "Dining")
-					isEnabled = true
-				case .Escalator:
-					image = #imageLiteral(resourceName: "Escalator")
-				case .Elevator:
-					image = #imageLiteral(resourceName: "Elevator")
-				case .WomensRoom:
-					image = #imageLiteral(resourceName: "WomensRoom")
-				case .MembersLounge:
-					image = #imageLiteral(resourceName: "MembersLounge")
-				case .MensRoom:
-					image = #imageLiteral(resourceName: "MensRoom")
-				case .WheelchairRamp:
-					image = #imageLiteral(resourceName: "WheelchairRamp")
-				case .FamilyRestroom:
-					image = #imageLiteral(resourceName: "FamilyRestroom")
-				case .Information:
-					image = #imageLiteral(resourceName: "Information")
-				case .Tickets:
-					image = #imageLiteral(resourceName: "Tickets")
-				case .Giftshop:
-					image = #imageLiteral(resourceName: "Giftshop")
-				case .AudioGuide:
-					image = #imageLiteral(resourceName: "AudioGuide")
+			case .Checkroom:
+				image = #imageLiteral(resourceName: "Checkroom")
+			case .Dining:
+				image = #imageLiteral(resourceName: "Dining")
+				isEnabled = true
+			case .Escalator:
+				image = #imageLiteral(resourceName: "Escalator")
+			case .Elevator:
+				image = #imageLiteral(resourceName: "Elevator")
+			case .WomensRoom:
+				image = #imageLiteral(resourceName: "WomensRoom")
+			case .MembersLounge:
+				image = #imageLiteral(resourceName: "MembersLounge")
+			case .MensRoom:
+				image = #imageLiteral(resourceName: "MensRoom")
+			case .WheelchairRamp:
+				image = #imageLiteral(resourceName: "WheelchairRamp")
+			case .FamilyRestroom:
+				image = #imageLiteral(resourceName: "FamilyRestroom")
+			case .Information:
+				image = #imageLiteral(resourceName: "Information")
+			case .Tickets:
+				image = #imageLiteral(resourceName: "Tickets")
+			case .Giftshop:
+				image = #imageLiteral(resourceName: "Giftshop")
+			case .AudioGuide:
+				image = #imageLiteral(resourceName: "AudioGuide")
 			}
-        }
-    }
+		}
+	}
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
 	override func setSelected(_ selected: Bool, animated: Bool) {
 		if self.isSelected != selected {

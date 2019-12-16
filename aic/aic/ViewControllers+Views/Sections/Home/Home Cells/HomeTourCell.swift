@@ -53,7 +53,7 @@ class HomeTourCell: UICollectionViewCell {
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			tourTitleLabel.text = self.tourModel!.title
-            shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 22)
+			shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 22)
 			stopsNumberLabel.text = "\(self.tourModel!.stops.count) " + "Stops".localized(using: "Home")
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true

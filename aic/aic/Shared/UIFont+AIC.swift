@@ -1,7 +1,7 @@
 /*
- Abstract:
- Fonts for the app
- */
+Abstract:
+Fonts for the app
+*/
 
 import UIKit
 
@@ -28,7 +28,7 @@ extension UIFont {
 
 	static let aicNumberPadFont: UIFont = UIFont(name: SansSerif_Book, size: 30.0)!.upperCaseNumbers()
 
-    static let aicMapSpacesFont: UIFont = UIFont(name: SansSerif_Medium, size: 16.0)!.upperCaseNumbers()
+	static let aicMapSpacesFont: UIFont = UIFont(name: SansSerif_Medium, size: 16.0)!.upperCaseNumbers()
 
 	static let aicMapTextFont: UIFont = UIFont(name: SansSerif_Medium, size: 15.0)!.upperCaseNumbers()
 

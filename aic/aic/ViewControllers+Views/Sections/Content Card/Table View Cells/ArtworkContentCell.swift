@@ -52,19 +52,19 @@ class ArtworkContentCell: UITableViewCell {
 			artworkImageView.kf.indicatorType = .activity
 			artworkImageView.kf.setImage(with: artworkModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { _, _, _, _ in
 				// calculate image dimension to adjust height of imageview
-//				if let _ = image {
-//					let imageAspectRatio = image!.size.width / image!.size.height
-//					let viewAspectRatio = self.artworkImageView.frame.width / self.artworkImageHeight.constant
-//
-//					if imageAspectRatio > viewAspectRatio {
-//						UIView.animate(withDuration: 0.3, animations: {
-//							self.artworkImageHeight.constant =  self.artworkImageView.frame.width * (image!.size.height / image!.size.width)
-//							self.setNeedsLayout()
-//							self.layoutIfNeeded()
-//							self.layoutSubviews()
-//						})
-//					}
-//				}
+				//				if let _ = image {
+				//					let imageAspectRatio = image!.size.width / image!.size.height
+				//					let viewAspectRatio = self.artworkImageView.frame.width / self.artworkImageHeight.constant
+				//
+				//					if imageAspectRatio > viewAspectRatio {
+				//						UIView.animate(withDuration: 0.3, animations: {
+				//							self.artworkImageHeight.constant =  self.artworkImageView.frame.width * (image!.size.height / image!.size.width)
+				//							self.setNeedsLayout()
+				//							self.layoutIfNeeded()
+				//							self.layoutSubviews()
+				//						})
+				//					}
+				//				}
 			}
 
 			artistDisplayLabel.attributedText = getAttributedStringWithLineHeight(text: artworkModel.artistDisplay, font: .aicTextFont, lineHeight: 22)
