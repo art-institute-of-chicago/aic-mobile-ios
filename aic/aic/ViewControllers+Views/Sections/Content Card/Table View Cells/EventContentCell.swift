@@ -53,9 +53,9 @@ class EventContentCell: UITableViewCell {
 				hoursMinutesLabel
 			]
 
-			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, _, _, _) in
-				if image != nil {
-					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
+			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (result) in
+				if let result = try? result.get() {
+					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: result.image, viewSize: self.eventImageView.frame.size)
 				}
 			}
 

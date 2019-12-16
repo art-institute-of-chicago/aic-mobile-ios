@@ -50,7 +50,7 @@ class ArtworkContentCell: UITableViewCell {
 
 			// Image
 			artworkImageView.kf.indicatorType = .activity
-			artworkImageView.kf.setImage(with: artworkModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { _, _, _, _ in
+			artworkImageView.kf.setImage(with: artworkModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (_) in
 				// calculate image dimension to adjust height of imageview
 				//				if let _ = image {
 				//					let imageAspectRatio = image!.size.width / image!.size.height

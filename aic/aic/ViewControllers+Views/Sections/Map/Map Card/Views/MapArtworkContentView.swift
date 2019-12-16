@@ -23,10 +23,10 @@ class MapArtworkContentView: UIView {
 
 		titleLabel.text = artwork.title
 		imageView.kf.indicatorType = .activity
-		imageView.kf.setImage(with: artwork.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
-			if image != nil {
+		imageView.kf.setImage(with: artwork.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (result) in
+			if let result = try? result.get() {
 				if let cropRect = artwork.imageCropRect {
-					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: result.image, viewSize: self.imageView.frame.size, cropRect: cropRect)
 				}
 			}
 		})
@@ -42,13 +42,11 @@ class MapArtworkContentView: UIView {
 		if let object = searchedArtwork.audioObject {
 			titleLabel.text = object.title
 			imageView.kf.indicatorType = .activity
-			imageView.kf.setImage(with: object.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
-				if image != nil {
-					if let cropRect = object.imageCropRect {
-						let imageCropped = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
+			imageView.kf.setImage(with: object.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (result) in
+				if let result = try? result.get(), let cropRect = object.imageCropRect {
+					let imageCropped = AppDataManager.sharedInstance.getCroppedImage(image: result.image, viewSize: self.imageView.frame.size, cropRect: cropRect)
 
-						self.imageView.image = imageCropped
-					}
+					self.imageView.image = imageCropped
 				}
 			})
 			locationLabel.text = object.gallery.title
@@ -71,11 +69,9 @@ class MapArtworkContentView: UIView {
 
 		titleLabel.text = "\(stopNumber).\t" + tourStop.object.title
 		imageView.kf.indicatorType = .activity
-		imageView.kf.setImage(with: tourStop.object.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
-			if image != nil {
-				if let cropRect = tourStop.object.imageCropRect {
-					self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.imageView.frame.size, cropRect: cropRect)
-				}
+		imageView.kf.setImage(with: tourStop.object.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (result) in
+			if let result = try? result.get(), let cropRect = tourStop.object.imageCropRect {
+				self.imageView.image = AppDataManager.sharedInstance.getCroppedImage(image: result.image, viewSize: self.imageView.frame.size, cropRect: cropRect)
 			}
 		})
 		locationLabel.text = "\t" + tourStop.object.gallery.title

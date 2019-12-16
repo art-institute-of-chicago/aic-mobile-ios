@@ -17,9 +17,9 @@ class MapImageAnnotation: MapAnnotation {
 		self.image = nil
 		super.init(coordinate: coordinate)
 
-		ImageDownloader.default.downloadImage(with: imageUrl, retrieveImageTask: nil, options: nil, progressBlock: nil) { (image, _, _, _) in
-			if image != nil {
-				self.image = image!
+		ImageDownloader.default.downloadImage(with: imageUrl, options: nil, progressBlock: nil) { (result) in
+			if let result = try? result.get() {
+				self.image = result.image
 			}
 		}
 	}

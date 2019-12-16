@@ -291,9 +291,9 @@ class MapObjectAnnotationView: MapAnnotationView {
 				self.cropImage()
 			} else {
 				imageView.kf.indicatorType = .activity
-				imageView.kf.setImage(with: annotation.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
-					if image != nil {
-						self.imageView.image = image
+				imageView.kf.setImage(with: annotation.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (result) in
+					if let result = try? result.get() {
+						self.imageView.image = result.image
 						self.cropImage()
 					}
 				})

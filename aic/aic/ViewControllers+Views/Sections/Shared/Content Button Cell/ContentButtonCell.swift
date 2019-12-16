@@ -53,11 +53,9 @@ class ContentButtonCell: UITableViewCell {
 		self.imageUrl = imageUrl
 		if let url = imageUrl {
 			itemImageView.kf.indicatorType = .activity
-			itemImageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, _, _, _) in
-				if image != nil {
-					if cropRect != nil {
-						self.itemImageView.image = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.itemImageView.frame.size, cropRect: cropRect!)
-					}
+			itemImageView.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (result) in
+				if let result = try? result.get(), let cropRect = cropRect {
+					self.itemImageView.image = AppDataManager.sharedInstance.getCroppedImage(image: result.image, viewSize: self.itemImageView.frame.size, cropRect: cropRect)
 				}
 			})
 		}

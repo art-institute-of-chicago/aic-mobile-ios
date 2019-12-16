@@ -54,13 +54,13 @@ class MapItemCell: UICollectionViewCell {
 			}
 
 			iconImageView.kf.indicatorType = .activity
-			iconImageView.kf.setImage(with: artworkModel.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, _, _, _) in
-				if image != nil {
+			iconImageView.kf.setImage(with: artworkModel.thumbnailUrl, placeholder: nil, options: nil, progressBlock: nil) { (result) in
+				if let result = try? result.get() {
 					if let cropRect = artworkModel.thumbnailCropRect {
-						self.defaultImage = AppDataManager.sharedInstance.getCroppedImage(image: image!, viewSize: self.iconImageView.frame.size, cropRect: cropRect)
+						self.defaultImage = AppDataManager.sharedInstance.getCroppedImage(image: result.image, viewSize: self.iconImageView.frame.size, cropRect: cropRect)
 						self.iconImageView.image = self.defaultImage
 					} else {
-						self.defaultImage = image!
+						self.defaultImage = result.image
 					}
 					self.highlightImage = self.defaultImage.colorized(UIColor(white: 0.75, alpha: 1))
 				}
