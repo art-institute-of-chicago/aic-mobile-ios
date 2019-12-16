@@ -974,7 +974,6 @@ extension MapViewController: MKMapViewDelegate {
 	*/
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
 		self.mapView.calculateCurrentAltitude()
-		self.mapView.adjustPicthForZoomLevel()
 
 		// Keep map in view
 		if !floorSelectorVC.userHeadingIsEnabled() {
@@ -1047,7 +1046,6 @@ extension MapViewController: UIGestureRecognizerDelegate {
 
 	@objc func mapViewWasPinched(_ gesture: UIPinchGestureRecognizer) {
 		floorSelectorVC.disableUserHeading()
-		mapView.adjustPicthForZoomLevel()
 		if !floorSelectorVC.userHeadingIsEnabled() {
 			mapView.keepMapInView(zoomLimit: zoomLimitValue)
 		}
@@ -1056,7 +1054,6 @@ extension MapViewController: UIGestureRecognizerDelegate {
 
 	@objc func mapViewWasPanned(_ gesture: UIPanGestureRecognizer) {
 		floorSelectorVC.disableUserHeading()
-		mapView.adjustPicthForZoomLevel()
 		if !floorSelectorVC.userHeadingIsEnabled() {
 			mapView.keepMapInView(zoomLimit: zoomLimitValue)
 		}

@@ -715,10 +715,7 @@ class AppDataParser {
 			// Add object visible from far to each floor
 			let rows: Int = 3
 			let cols: Int = 2
-			var x = 800.0
-			var y = 800.0
-			let rowSize: Double = 800.0 / Double(rows)
-			let colSize: Double = 800.0 / Double(cols)
+
 			for floorNumber in 0..<Common.Map.totalFloors {
 				// first add all artworks from the search
 				for artwork in self.searchArtworks {
@@ -727,33 +724,6 @@ class AppDataParser {
 							floorFarObjectAnnotations[floorNumber]!.append(objectAnnotation)
 						}
 					}
-				}
-
-				continue
-
-				//				if floorFarObjectAnnotations[floorNumber]!.count > 10 {
-				//
-				//				}
-
-				// for each square in our grid, pick one annotation to show
-				y = 800.0
-				while y < 1600 {
-					x = 800.0
-					while x < 1600 {
-						let p1 = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: x, y: y))
-						let p2 = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: x+colSize, y: y+rowSize))
-						let gridMapRect = MKMapRect(x: fmin(p1.x, p2.x), y: fmin(p1.y, p2.y), width: fabs(p1.x-p2.x), height: fabs(p1.y-p2.y))
-
-						for objectAnnotation in floorObjectAnnotations[floorNumber]! {
-							let mapPoint = MKMapPoint(objectAnnotation.clLocation.coordinate)
-							if gridMapRect.contains(mapPoint) {
-								floorFarObjectAnnotations[floorNumber]!.append(objectAnnotation)
-								break
-							}
-						}
-						x += colSize
-					}
-					y += rowSize
 				}
 			}
 

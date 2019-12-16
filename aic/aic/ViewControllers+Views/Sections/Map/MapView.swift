@@ -176,38 +176,6 @@ class MapView: MKMapView {
 		}
 	}
 
-	/// Function to keep same altitude when switching the camera pitch from top-down to perspective
-	/// Based on:
-	/// https://stackoverflow.com/questions/6633850/calculate-new-coordinate-x-meters-and-y-degree-away-from-one-coordinate
-	func adjustPicthForZoomLevel() {
-		return
-		if self.currentZoomLevel != self.previousZoomLevel {
-			var pitch: CGFloat = topDownPitch
-			if currentAltitude < Common.Map.ZoomLevelAltitude.zoomMedium.rawValue {
-				pitch = perspectivePitch
-			}
-
-			if abs(pitch - camera.pitch) > 10 {
-				let angle = camera.heading.degreesToRadians
-				var lookAtCoordinate = CLLocationCoordinate2D()
-				var distanceCamera = currentAltitude
-				if pitch == perspectivePitch {
-					let distanceMeters = currentAltitude * Double(tan(pitch))
-					distanceCamera = sqrt((currentAltitude * currentAltitude) + (distanceMeters * distanceMeters))
-					let oneMeterRegion = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 1, longitudinalMeters: 1)
-					lookAtCoordinate.latitude = centerCoordinate.latitude + (cos(angle) * (oneMeterRegion.span.latitudeDelta * distanceMeters))
-					lookAtCoordinate.longitude = centerCoordinate.longitude + (sin(angle) * (oneMeterRegion.span.longitudeDelta * distanceMeters))
-				} else {
-					lookAtCoordinate.latitude = centerCoordinate.latitude - (cos(angle) * 0.0003)
-					lookAtCoordinate.longitude = centerCoordinate.longitude - (sin(angle) * 0.0003)
-					distanceCamera = currentAltitude
-				}
-				let cam = MKMapCamera(lookingAtCenter: lookAtCoordinate, fromDistance: distanceCamera, pitch: pitch, heading: camera.heading)
-				setCamera(cam, animated: true)
-			}
-		}
-	}
-
 	// Find the altitude based on our start value and the current map visible to bounds ratio
 	func calculateStartingHeight() {
 		// Set the starting height for checking altitude while zooming
