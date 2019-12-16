@@ -210,6 +210,32 @@ class MapNavigationController: SectionNavigationController {
 		}
 	}
 
+	// MARK: Notify Tour Stops VC of audio playback status
+
+	func audioPlaybackDidStart(audio: AICAudioFileModel) {
+		guard let tour = tourModel,
+			let tourStopsVC = tourStopPageVC
+			else { return }
+
+		if audio.nid == tour.audioCommentary.audioFile.nid {
+			tourStopsVC.currentlyPlayingAudioTourIndex = 0
+		} else if let audioIndex = tour.getIndex(forStopAudio: audio) {
+			tourStopsVC.currentlyPlayingAudioTourIndex = audioIndex + 1
+		}
+	}
+
+	func audioPlaybackDidPause(audio: AICAudioFileModel) {
+		guard let tourStopsVC = tourStopPageVC else { return }
+
+		tourStopsVC.currentlyPlayingAudioTourIndex = -1
+	}
+
+	func audioPlaybackDidFinish(audio: AICAudioFileModel) {
+		guard let tourStopsVC = tourStopPageVC else { return }
+
+		tourStopsVC.currentlyPlayingAudioTourIndex = -1
+	}
+
 	// MARK: Location Manager
 
 	fileprivate func startLocationManager() {
