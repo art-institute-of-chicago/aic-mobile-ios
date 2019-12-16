@@ -86,7 +86,7 @@ class ExhibitionContentCell: UITableViewCell {
 				showOnMapButton.isHidden = true
 				showOnMapButton.isEnabled = false
 				buyTicketsButtonHorizontalOffset.constant = 0
-			} else {
+			} else if let showOnMapButton = showOnMapButton {
 				accessibilityItems.append(showOnMapButton)
 			}
 
@@ -94,9 +94,15 @@ class ExhibitionContentCell: UITableViewCell {
 			self.layoutIfNeeded()
 
 			// Accessibility
-			accessibilityItems.append(buyTicketsButton)
-			accessibilityItems.append(descriptionLabel)
-			accessibilityItems.append(throughDateLabel)
+			accessibilityItems
+				.append(
+					contentsOf: [
+						buyTicketsButton,
+						descriptionLabel,
+						throughDateLabel
+						]
+						.compactMap { $0 }
+			)
 			self.accessibilityElements = accessibilityItems
 		}
 	}

@@ -51,7 +51,8 @@ class EventContentCell: UITableViewCell {
 			var accessibilityItems: [Any] = [
 				monthDayLabel,
 				hoursMinutesLabel
-			]
+				]
+				.compactMap { $0 }
 
 			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (result) in
 				if let result = try? result.get() {
@@ -99,7 +100,7 @@ class EventContentCell: UITableViewCell {
 				buyTicketsButton.isEnabled = false
 				buyTicketsButton.isHidden = true
 				descriptionToImageVerticalSpacing.constant = descriptionVerticalSpacingMin
-			} else {
+			} else if let buyTicketsButton = buyTicketsButton {
 				buyTicketsButton.setTitle(eventModel.buttonText, for: .normal)
 
 				accessibilityItems.append(buyTicketsButton)
@@ -109,8 +110,13 @@ class EventContentCell: UITableViewCell {
 			self.layoutIfNeeded()
 
 			// Accessibility
-			accessibilityItems.append(descriptionTextView)
-			accessibilityItems.append(locationAndDateLabel)
+			accessibilityItems.append(
+				contentsOf: [
+					descriptionTextView,
+					locationAndDateLabel
+					]
+					.compactMap { $0 }
+			)
 			self.accessibilityElements = accessibilityItems
 		}
 	}

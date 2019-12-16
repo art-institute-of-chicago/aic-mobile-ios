@@ -62,7 +62,8 @@ class MapContentCardNavigationController: CardNavigationController {
 			titleLabel,
 			closeButton,
 			contentVC.view
-		]
+			]
+			.compactMap { $0 }
 	}
 
 	func setTitleText(text: String) {

@@ -99,7 +99,8 @@ class ResultsTableViewController: UITableViewController {
 		// Accessibility
 		self.view.accessibilityElements = [
 			tableView
-		]
+			]
+			.compactMap { $0 }
 	}
 
 	// MARK: Content Loaded

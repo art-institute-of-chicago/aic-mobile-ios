@@ -127,8 +127,9 @@ class SearchNavigationController: CardNavigationController {
 			downArrowButton,
 			searchBar,
 			searchButton,
-			resultsVC.tableView
-		]
+			resultsVC.tableView as Any
+			]
+			.compactMap { $0 }
 	}
 
 	private func createViewConstraints() {
@@ -179,7 +180,9 @@ class SearchNavigationController: CardNavigationController {
 		if filterMenuView.isHidden == false {
 			accessibilityItems.append(filterMenuView)
 		}
-		accessibilityItems.append(resultsVC.view)
+		if let resultsView = resultsVC.view {
+			accessibilityItems.append(resultsView)
+		}
 
 		self.accessibilityElements = accessibilityItems
 	}
@@ -189,7 +192,8 @@ class SearchNavigationController: CardNavigationController {
 			downArrowButton,
 			backButton,
 			contentVC.view
-		]
+			]
+			.compactMap { $0 }
 	}
 
 	// MARK: Language

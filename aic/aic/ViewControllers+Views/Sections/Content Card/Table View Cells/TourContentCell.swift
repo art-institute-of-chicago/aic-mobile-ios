@@ -37,11 +37,13 @@ class TourContentCell: UITableViewCell {
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 
 		// Accessibility
-		self.accessibilityElements = [stopsNumberLabel,
-									  durationLabel,
-									  startTourButton,
-									  descriptionLabel
-		]
+		self.accessibilityElements = [
+			stopsNumberLabel,
+			durationLabel,
+			startTourButton,
+			descriptionLabel
+			]
+			.compactMap { $0 }
 	}
 
 	var tourModel: AICTourModel? = nil {

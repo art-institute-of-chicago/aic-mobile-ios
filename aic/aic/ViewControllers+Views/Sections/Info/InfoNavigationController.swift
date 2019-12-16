@@ -91,8 +91,9 @@ extension InfoNavigationController: UINavigationControllerDelegate {
 		self.accessibilityElements = [
 			sectionNavigationBar,
 			viewController.view,
-			tabBarController!.tabBar
-		]
+			tabBarController?.tabBar
+			]
+			.compactMap { $0 }
 		sectionNavigationBar.titleLabel.becomeFirstResponder()
 	}
 }

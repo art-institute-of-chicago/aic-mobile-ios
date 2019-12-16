@@ -46,7 +46,8 @@ class ArtworkContentCell: UITableViewCell {
 
 			var accessibilityItems: [Any] = [
 				showOnMapButton
-			]
+				]
+				.compactMap { $0 }
 
 			// Image
 			artworkImageView.kf.indicatorType = .activity
@@ -74,7 +75,7 @@ class ArtworkContentCell: UITableViewCell {
 			descriptionLabel.text = ""
 			descriptionLabel.font = .aicTextFont
 
-			if let _ = artworkModel.audioObject {
+			if let _ = artworkModel.audioObject, let playAudioButton = playAudioButton {
 				accessibilityItems.append(playAudioButton)
 			} else {
 				playAudioButton.isHidden = true
@@ -85,8 +86,13 @@ class ArtworkContentCell: UITableViewCell {
 			}
 
 			// Accessibility
-			accessibilityItems.append(artistDisplayLabel)
-			accessibilityItems.append(descriptionLabel)
+			accessibilityItems.append(
+				contentsOf: [
+					artistDisplayLabel,
+					descriptionLabel
+					]
+					.compactMap { $0 }
+			)
 			self.accessibilityElements = accessibilityItems
 		}
 	}

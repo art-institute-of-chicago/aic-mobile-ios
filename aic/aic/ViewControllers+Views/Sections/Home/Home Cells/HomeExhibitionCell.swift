@@ -45,7 +45,8 @@ class HomeExhibitionCell: UICollectionViewCell {
 			self.accessibilityElements = [
 				exhibitionTitleLabel,
 				throughDateTextView
-			]
+				]
+				.compactMap { $0 }
 
 			// Accessibility
 			self.isAccessibilityElement = true

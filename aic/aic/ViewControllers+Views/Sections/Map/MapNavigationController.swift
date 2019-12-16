@@ -616,9 +616,10 @@ class MapNavigationController: SectionNavigationController {
 		// Accessibility
 		self.accessibilityElements = [
 			sectionNavigationBar,
-			mapContentCardVC!.view,
-			tabBarController!.tabBar
-		]
+			mapContentCardVC?.view,
+			tabBarController?.tabBar
+			]
+			.compactMap { $0 }
 		if currentMode == .tour {
 			mapContentCardVC!.closeButton.accessibilityLabel = "Leave Tour"
 		} else {

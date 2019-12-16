@@ -31,7 +31,7 @@ class MapTextAnnotationView: MapAnnotationView {
 		let label = self.label!
 
 		// Determine the font based on the type of text annotation
-		var font: UIFont! = nil
+		let font: UIFont
 
 		switch annotation.type {
 		case .Space:

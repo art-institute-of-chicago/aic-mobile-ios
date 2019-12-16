@@ -554,7 +554,8 @@ class AudioPlayerNavigationController: CardNavigationController {
 		self.view.accessibilityElements = [
 			downArrowButton,
 			audioInfoVC.view
-		]
+			]
+			.compactMap { $0 }
 	}
 
 	override func showMiniPlayer() {

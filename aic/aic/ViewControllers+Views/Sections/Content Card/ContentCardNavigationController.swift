@@ -35,7 +35,8 @@ class ContentCardNavigationController: CardNavigationController {
 		self.accessibilityElements = [
 			downArrowButton,
 			tableVC.tableView
-		]
+			]
+			.compactMap { $0 }
 	}
 
 	func createViewConstraints() {
