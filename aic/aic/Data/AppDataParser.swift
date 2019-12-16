@@ -712,10 +712,8 @@ class AppDataParser {
 				2: [MapObjectAnnotation](),
 				3: [MapObjectAnnotation]()
 			]
-			// Add object visible from far to each floor
-			let rows: Int = 3
-			let cols: Int = 2
 
+			// Add object visible from far to each floor
 			for floorNumber in 0..<Common.Map.totalFloors {
 				// first add all artworks from the search
 				for artwork in self.searchArtworks {
