@@ -151,6 +151,7 @@
 		29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */; };
 		29F26201200FFADF0000BF05 /* ArtworkContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */; };
 		29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */; };
+		3099149B23A8385E00E32ACE /* InfoBuyTicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
 		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
 		E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */; };
@@ -403,6 +404,7 @@
 		29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtworkContentCell.xib; sourceTree = "<group>"; };
 		29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllHeaderView.swift; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
+		3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBuyTicketsView.swift; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		34A42DED784747728FEECA5D /* Pods_aicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		544B0D3199A7D98737E36C68 /* Pods_aic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -696,6 +698,7 @@
 			children = (
 				E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */,
 				2902E0AF1FC47FF60070C78C /* InfoButton.swift */,
+				3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */,
 				29C91B0C1FC4A31C008C3E9E /* InfoFooterView.swift */,
 				295AC0981FDF923B009A0FAF /* InfoPageView.swift */,
 				29BF45D920333F8900919FE8 /* MemberCardView.swift */,
@@ -1509,6 +1512,7 @@
 				290A0FB62044D60F000CDA8F /* TooltipArrowView.swift in Sources */,
 				293127811FDF0EC5008BFAB1 /* ContentButtonCell.swift in Sources */,
 				294C0B21201A52BC00F2ABB1 /* EventContentCell.swift in Sources */,
+				3099149B23A8385E00E32ACE /* InfoBuyTicketsView.swift in Sources */,
 				E4223CE51CC7FE6600503D43 /* MemberDataManager.swift in Sources */,
 				2941CE7C1FE0928D00B7CCEE /* TourContentCell.swift in Sources */,
 				29C7D0D220260AD50015984B /* AudioInfoViewController.swift in Sources */,

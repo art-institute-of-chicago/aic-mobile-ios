@@ -17,13 +17,14 @@ protocol InfoViewControllerDelegate: class {
 }
 
 class InfoViewController: SectionViewController {
-	let scrollView: UIScrollView = UIScrollView()
-	let whiteBackgroundView: UIView = UIView()
-	let becomeMemberView: InfoBecomeMemberView = InfoBecomeMemberView()
-	let museumInfoButton: InfoButton = InfoButton()
-	let languageButton: InfoButton = InfoButton()
-	let locationButton: InfoButton = InfoButton()
-	let footerView: InfoFooterView = InfoFooterView()
+	let scrollView = UIScrollView()
+	let whiteBackgroundView = UIView()
+	let buyTicketsView = InfoBuyTicketsView()
+	let becomeMemberView = InfoBecomeMemberView()
+	let museumInfoButton = InfoButton()
+	let languageButton = InfoButton()
+	let locationButton = InfoButton()
+	let footerView = InfoFooterView()
 
 	let footerTopMargin: CGFloat = 15.0
 
@@ -56,6 +57,7 @@ class InfoViewController: SectionViewController {
 
 		whiteBackgroundView.backgroundColor = .white
 
+		buyTicketsView.buyButton.addTarget(self, action: #selector(buyTicketsBuyButtonPressed(button:)), for: .touchUpInside)
 		becomeMemberView.accessButton.addTarget(self, action: #selector(accessMemberCardButtonPressed(button:)), for: .touchUpInside)
 
 		museumInfoButton.setTitle("Museum Information", for: .normal)
@@ -69,6 +71,7 @@ class InfoViewController: SectionViewController {
 
 		self.view.addSubview(scrollView)
 		scrollView.addSubview(whiteBackgroundView)
+		scrollView.addSubview(buyTicketsView)
 		scrollView.addSubview(becomeMemberView)
 		scrollView.addSubview(museumInfoButton)
 		scrollView.addSubview(languageButton)
@@ -100,7 +103,11 @@ class InfoViewController: SectionViewController {
 		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
 
-		becomeMemberView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarHeight)
+		buyTicketsView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarHeight)
+		buyTicketsView.autoPinEdge(.leading, to: .leading, of: self.view)
+		buyTicketsView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+
+		becomeMemberView.autoPinEdge(.top, to: .bottom, of: buyTicketsView)
 		becomeMemberView.autoPinEdge(.leading, to: .leading, of: self.view)
 		becomeMemberView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 
@@ -152,6 +159,12 @@ class InfoViewController: SectionViewController {
 			self.delegate?.languageButtonPressed()
 		} else if button == locationButton {
 			self.delegate?.locationButtonPressed()
+		}
+	}
+
+	@objc func buyTicketsBuyButtonPressed(button: UIButton) {
+		if let url = URL(string: AppDataManager.sharedInstance.app.dataSettings[.ticketsUrl]!) {
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
 		}
 	}
 
