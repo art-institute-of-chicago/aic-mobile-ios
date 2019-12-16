@@ -756,7 +756,7 @@ extension AudioPlayerNavigationController {
 		// Log Analytics
 		if let audio = currentAudioFile {
 			if currentAudioFileMaxProgress < 1.0 {
-				var pctComplete = Int(currentAudioFileMaxProgress * 100)
+				let pctComplete = Int(currentAudioFileMaxProgress * 100)
 				AICAnalytics.sendAudioStoppedEvent(title: currentTrackTitle, audio: audio, percentPlayed: pctComplete)
 			}
 		}

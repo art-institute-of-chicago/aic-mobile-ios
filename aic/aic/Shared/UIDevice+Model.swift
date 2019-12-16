@@ -64,7 +64,7 @@ public extension UIDevice {
 			modelCode = String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
 		}
 
-		var modelMap : [ String: Model ] = [
+		let modelMap : [ String: Model ] = [
 			"i386": .simulator,
 			"x86_64": .simulator,
 			"iPod1,1": .iPod1,
