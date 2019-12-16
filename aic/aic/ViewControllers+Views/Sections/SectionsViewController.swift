@@ -460,7 +460,7 @@ class SectionsViewController: UIViewController {
 						tour.language = previousTour.language
 					}
 
-					audioPlayerCardVC.pause()
+					_ = audioPlayerCardVC.pause()
 					audioPlayerCardVC.hide()
 
 					showTourOnMap(tour: tour, language: tour.language, stopIndex: nil)

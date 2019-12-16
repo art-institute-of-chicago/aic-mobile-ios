@@ -133,6 +133,6 @@ class SectionNavigationController: UINavigationController {
 	}
 
 	@objc private func backButtonPressed(button: UIButton) {
-		self.popToRootViewController(animated: true)
+		_ = self.popToRootViewController(animated: true)
 	}
 }

@@ -326,7 +326,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 
 					// Auto-play on load
 					if self.autoPlay == true {
-						self.play()
+						_ = self.play()
 					}
 
 					break
@@ -638,19 +638,19 @@ extension AudioPlayerNavigationController {
 
 				// Play/Pause buttons
 				case UIEventSubtype.remoteControlPlay:
-					play()
+					_ = play()
 					break
 
 				case UIEventSubtype.remoteControlPause:
-					pause()
+					_ = pause()
 					break
 
 				// Headphone remote control toggle
 				case UIEventSubtype.remoteControlTogglePlayPause:
 					if avPlayer.rate != 0 && avPlayer.error == nil {
-						pause()
+						_ = pause()
 					} else {
-						play()
+						_ = play()
 					}
 					break
 				default:
@@ -761,7 +761,7 @@ extension AudioPlayerNavigationController {
 			}
 		}
 
-		pause()
+		_ = pause()
 		hide()
 		currentAudioFile = nil
 		// TODO: remove track from MPNowPlayingInfoCenter and RemoteControl
@@ -777,11 +777,11 @@ extension AudioPlayerNavigationController {
 			if avPlayer.currentItem?.duration == avPlayer.currentTime() {
 				seekToTime(0)
 			}
-			play()
+			_ = play()
 		}
 			// Pause
 		else {
-			pause()
+			_ = pause()
 		}
 	}
 }
@@ -813,7 +813,7 @@ extension AudioPlayerNavigationController: LanguageSelectorViewDelegate {
 extension AudioPlayerNavigationController: UITextViewDelegate {
 	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 		if URL.absoluteString.range(of: "artic") != nil {
-			pause()
+			_ = pause()
 			showMiniPlayer()
 			return true
 		}
