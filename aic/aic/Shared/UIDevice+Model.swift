@@ -54,7 +54,7 @@ public enum Model: String {
 }
 
 public extension UIDevice {
-	public var type: Model {
+	var type: Model {
 		var modelCode: String = ""
 		if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
 			modelCode = simulatorModelIdentifier
