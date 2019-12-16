@@ -1078,7 +1078,7 @@ class AppDataParser {
 
 		for (_, stringJSON):(String, JSON) in searchStringsJSON.dictionaryValue {
 			do {
-				try handleParseError({ [unowned self] in
+				try handleParseError({
 					let searchString = stringJSON.string
 					searchStrings.append(searchString!)
 				})
@@ -1116,7 +1116,7 @@ class AppDataParser {
 		var autocompleteStrings = [String]()
 
 		do {
-			try handleParseError({ [unowned self] in
+			try handleParseError({
 				let json = try JSON(data: autocompleteData)
 				if let jsonArray: [JSON] = json.array {
 					if jsonArray.count == 0 {
@@ -1140,7 +1140,7 @@ class AppDataParser {
 		var results: [Common.Search.Filter: [Any]] = [:]
 
 		do {
-			try handleParseError({ [unowned self] in
+			try handleParseError({
 				let json = try JSON(data: data)
 				if let jsonArray: [JSON] = json.array {
 					for index in 0...jsonArray.count-1 {
