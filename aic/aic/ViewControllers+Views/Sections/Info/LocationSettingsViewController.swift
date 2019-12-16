@@ -85,6 +85,8 @@ class LocationSettingsViewController: UIViewController {
 			case .notDetermined:
 				Common.Map.locationManager.delegate = self
 				locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
+			@unknown default:
+				break
 			}
 		} else {
 			locationButton.setTitle("Location Disabled".localized(using: "LocationSettings"), for: .normal)
