@@ -135,7 +135,7 @@ class AppDataManager {
 												 lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey,
 												 fileName: Common.DataConstants.localAppDataFilename)
 						}
-					case .failure(let error):
+					case .failure:
 						// Load cached app data from disk
 						self.appData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename)
 					}
