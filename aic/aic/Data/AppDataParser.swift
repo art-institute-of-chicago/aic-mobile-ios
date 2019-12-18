@@ -43,7 +43,8 @@ class AppDataParser {
     // MARK: App Data
 	
     func parse(appData data: Data) -> AICAppDataModel {
-        let appDataJson = JSON(data: data)
+		// TODO: Proper error handling for SwiftyJSON
+        let appDataJson = try! JSON(data: data)
 		
 		let generalInfo 		= parse(generalInfoJSON: appDataJson["general_info"])
 		self.galleries			= parse(galleriesJSON: appDataJson["galleries"])
@@ -590,7 +591,7 @@ class AppDataParser {
 		var result: [URL] = []
 		
 		do {
-			let appDataJSON = JSON(data: fromAppData)
+			let appDataJSON = try JSON(data: fromAppData)
 			let mapFloorsJSON = appDataJSON["map_floors"]
 			
 			for floorNumber in 0..<Common.Map.totalFloors {
@@ -935,7 +936,8 @@ class AppDataParser {
 	func parse(exhibitionsData data: Data) -> [AICExhibitionModel] {
 		var exhibitionItems: [AICExhibitionModel] = []
 		
-		let json = JSON(data: data)
+		// TODO: Proper error handling for SwiftyJSON
+		let json = try! JSON(data: data)
 		let dataJSON: JSON = json["data"]
 		for exhibitionJSON: JSON in dataJSON.arrayValue {
 			do {
@@ -1034,7 +1036,8 @@ class AppDataParser {
 	func parse(eventsData data: Data) -> [AICEventModel] {
 		var eventItems:[AICEventModel] = []
 		
-		let json = JSON(data: data)
+		// TODO: Proper error handling for SwiftyJSON
+		let json = try! JSON(data: data)
 		let dataJson: JSON = json["data"]
 		for eventJson: JSON in dataJson.arrayValue {
 			do {
@@ -1142,7 +1145,7 @@ class AppDataParser {
 		
 		do {
 			try handleParseError({ [unowned self] in
-				let json = JSON(data: autocompleteData)
+				let json = try JSON(data: autocompleteData)
 				if let jsonArray: [JSON] = json.array {
 					if jsonArray.count == 0 {
 						return
@@ -1167,7 +1170,7 @@ class AppDataParser {
 		
 		do {
 			try handleParseError({ [unowned self] in
-				let json = JSON(data: data)
+				let json = try JSON(data: data)
 				if let jsonArray: [JSON] = json.array {
 					for index in 0...jsonArray.count-1 {
 						if index == 0 {
