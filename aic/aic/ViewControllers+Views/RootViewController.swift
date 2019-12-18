@@ -155,7 +155,7 @@ class RootViewController: UIViewController {
 extension RootViewController : AppDataManagerDelegate{
     // Animate progress bar, play video when finished animating to 100%
     func downloadProgress(withPctCompleted pct: Float) {
-        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             self.loadingVC?.updateProgress(forPercentComplete: pct)
             }, completion:  { (value:Bool) in
                 if pct == 1.0 {
@@ -168,8 +168,8 @@ extension RootViewController : AppDataManagerDelegate{
     func downloadFailure(withMessage message: String) {
         let message =  message + "\n\n\(Common.DataConstants.dataLoadFailureMessage)"
         
-        let alert = UIAlertController(title: Common.DataConstants.dataLoadFailureTitle, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        let action = UIAlertAction(title: Common.DataConstants.dataLoadFailureButtonTitle, style: UIAlertActionStyle.default, handler: { (action) in
+        let alert = UIAlertController(title: Common.DataConstants.dataLoadFailureTitle, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: Common.DataConstants.dataLoadFailureButtonTitle, style: .default, handler: { (action) in
             // Try to load the data again
             AppDataManager.sharedInstance.load(forceAppDataDownload: true)
         })

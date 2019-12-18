@@ -54,9 +54,9 @@ class MapTextAnnotationView: MapAnnotationView {
         paragraphStyle.maximumLineHeight = 18
         
         let attrString = NSMutableAttributedString(string: annotation.labelText)
-        let range = NSMakeRange(0, attrString.length)
-        attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range: range)
-        attrString.addAttribute(NSAttributedStringKey.font, value:font, range: range)
+		let range = NSRange(location: 0, length: attrString.length)
+        attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        attrString.addAttribute(.font, value: font, range: range)
 		
 		label.textColor = .white
         label.attributedText = attrString

@@ -74,7 +74,7 @@ class MapViewController: UIViewController {
         view.addSubview(floorSelectorVC.view)
 		
 		// Set the overlay for the background
-		mapView.add(mapViewHideBackgroundOverlay, level: .aboveRoads)
+		mapView.addOverlay(mapViewHideBackgroundOverlay, level: .aboveRoads)
 		
 		setMapCameraInitialState()
         
@@ -454,16 +454,17 @@ class MapViewController: UIViewController {
     // Sets the viewable area of our map and repositions the floor selector
     func setViewableArea(frame: CGRect) {
 		// Set the layout margins to center map in visible area
-		let mapInsets = UIEdgeInsetsMake(abs(frame.minY - mapView.frame.minY),
-										 0,
-										 abs(frame.maxY - mapView.frame.maxY),
-										 self.view.frame.width - floorSelectorVC.view.frame.origin.x
+		let mapInsets = UIEdgeInsets(
+			top: abs(frame.minY - mapView.frame.minY),
+			left: 0,
+			bottom: abs(frame.maxY - mapView.frame.maxY),
+			right: self.view.frame.width - floorSelectorVC.view.frame.origin.x
 		)
 		
 		mapView.layoutMargins = mapInsets
 		
 		// Update the floor selector with new position
-		let mapFrame = UIEdgeInsetsInsetRect(mapView.frame, mapInsets)
+		let mapFrame = mapView.frame.inset(by: mapInsets)
 		
 		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
 		var floorSelectorY = mapFrame.origin.y + mapFrame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y

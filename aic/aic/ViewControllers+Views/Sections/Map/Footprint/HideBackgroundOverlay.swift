@@ -18,10 +18,10 @@ class HideBackgroundOverlay: MKPolygon {
 
     /// - returns: a HideBackgroundOverlay object that covers the world.
     class func hideBackgroundOverlay() -> HideBackgroundOverlay {
-        var corners =  [MKMapPointMake(MKMapRectGetMaxX(MKMapRectWorld), MKMapRectGetMaxY(MKMapRectWorld)),
-                        MKMapPointMake(MKMapRectGetMinX(MKMapRectWorld), MKMapRectGetMaxY(MKMapRectWorld)),
-                        MKMapPointMake(MKMapRectGetMinX(MKMapRectWorld), MKMapRectGetMinY(MKMapRectWorld)),
-                        MKMapPointMake(MKMapRectGetMaxX(MKMapRectWorld), MKMapRectGetMinY(MKMapRectWorld))]
+        var corners =  [MKMapPoint(x: MKMapRect.world.maxX, y: MKMapRect.world.maxY),
+                        MKMapPoint(x: MKMapRect.world.minX, y: MKMapRect.world.maxY),
+                        MKMapPoint(x: MKMapRect.world.minX, y: MKMapRect.world.minY),
+                        MKMapPoint(x: MKMapRect.world.maxX, y: MKMapRect.world.minY)]
 
         return HideBackgroundOverlay(points: &corners, count: corners.count)
     }

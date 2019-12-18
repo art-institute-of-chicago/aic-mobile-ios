@@ -147,7 +147,7 @@ class LanguageSelectionViewController : UIViewController {
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.lineSpacing = 6
 		let textAttrString = NSMutableAttributedString(string: "Language Settings Text".localized(using: "LanguageSettings"))
-		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, textAttrString.length))
+		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: textAttrString.length))
 		
 		subtitleLabel.attributedText = textAttrString
 		subtitleLabel.font = .aicPageTextFont

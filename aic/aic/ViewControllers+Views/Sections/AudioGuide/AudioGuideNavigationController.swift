@@ -228,7 +228,7 @@ extension AudioGuideNavigationController : UICollectionViewDataSource {
         }
         
         cell.button.tag = (indexPath as NSIndexPath).row
-        cell.button.addTarget(self, action: #selector(AudioGuideNavigationController.buttonPressed(_:)), for: UIControlEvents.touchUpInside)
+        cell.button.addTarget(self, action: #selector(AudioGuideNavigationController.buttonPressed(_:)), for: .touchUpInside)
         
         // Configure the cell
         return cell

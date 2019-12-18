@@ -43,13 +43,13 @@ class MapItemsCollectionContainerCell : UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		selectionStyle = UITableViewCellSelectionStyle.none
+		selectionStyle = .none
 		layoutMargins = UIEdgeInsets.zero
 		
 		self.backgroundColor = .aicDarkGrayColor
 		
 		self.innerCollectionView.backgroundColor = .aicDarkGrayColor
-		self.innerCollectionView.contentInset = UIEdgeInsetsMake(0, 16, 0, 16)
+		self.innerCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 		self.innerCollectionView.dataSource = self
 		self.innerCollectionView.delegate = self
 		self.innerCollectionView.register(UINib.init(nibName: "MapItemCell", bundle: Bundle.main), forCellWithReuseIdentifier: MapItemCell.reuseIdentifier)

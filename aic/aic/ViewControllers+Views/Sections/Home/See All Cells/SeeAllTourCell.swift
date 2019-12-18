@@ -74,7 +74,7 @@ class SeeAllTourCell : UICollectionViewCell {
 			accessValue += ", "
 			accessValue += shortDescriptionTextView.text!
 			self.accessibilityValue = accessValue
-			self.accessibilityTraits = UIAccessibilityTraitButton
+			self.accessibilityTraits = .button
 		}
 	}
 }

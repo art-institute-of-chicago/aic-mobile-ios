@@ -35,9 +35,9 @@ class SearchContentViewController : UIViewController {
 		// Add subviews
 		self.view.addSubview(cardBackgroundView)
 		
-		tableVC.willMove(toParentViewController: self)
+		tableVC.willMove(toParent: self)
 		self.view.addSubview(tableVC.view)
-		tableVC.didMove(toParentViewController: self)
+		tableVC.didMove(toParent: self)
 		
 		createViewConstraints()
 	}

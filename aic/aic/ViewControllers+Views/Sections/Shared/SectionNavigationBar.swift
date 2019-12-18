@@ -18,11 +18,11 @@ class SectionNavigationBar : UIView {
 	let descriptionLabel:UILabelPadding = UILabelPadding()
 	let searchButton: UIButton = UIButton()
 	
-	private let margins = UIEdgeInsetsMake(40, 30, 30, 30)
+	private let margins = UIEdgeInsets(top: 40, left: 30, bottom: 30, right: 30)
 	
 	private let backButtonBottomMargin: CGFloat = 1
 	private let backButtonLeftMargin: CGFloat = 3
-	private let backButtonContentInsets: UIEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+	private let backButtonContentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 	private let iconBottomMargin: CGFloat = 10
 	private let titleHeight: CGFloat = 40
 	private var titleTopMargin: CGFloat = 95
@@ -95,7 +95,7 @@ class SectionNavigationBar : UIView {
 		}
 		
 		searchButton.setImage(#imageLiteral(resourceName: "iconSearch"), for: .normal)
-		searchButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+		searchButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
 		searchButton.backgroundColor = UIColor(white: 0.0, alpha: searchButtonBackgroundAlpha)
 		searchButton.layer.cornerRadius = 18
 		

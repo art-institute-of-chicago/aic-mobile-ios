@@ -80,7 +80,7 @@ class ResultsTableViewController : UITableViewController {
 		self.view.backgroundColor = .aicDarkGrayColor
 		
 		self.tableView.separatorStyle = .none
-		self.tableView.rowHeight = UITableViewAutomaticDimension // Necessary for AutoLayout of cells
+		self.tableView.rowHeight = UITableView.automaticDimension // Necessary for AutoLayout of cells
 		self.tableView.bounces = true
 		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 120, right: 0)
 		self.tableView.register(UINib(nibName: "SuggestedSearchCell", bundle: Bundle.main), forCellReuseIdentifier: SuggestedSearchCell.reuseIdentifier)

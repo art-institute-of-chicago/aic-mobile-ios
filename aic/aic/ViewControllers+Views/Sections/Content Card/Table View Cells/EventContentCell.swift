@@ -26,7 +26,7 @@ class EventContentCell : UITableViewCell {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		selectionStyle = UITableViewCellSelectionStyle.none
+		selectionStyle = .none
 		
 		self.backgroundColor = .aicDarkGrayColor
 		
@@ -38,7 +38,7 @@ class EventContentCell : UITableViewCell {
 		hoursMinutesLabel.font = .aicInfoOverlayFont
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 		descriptionTextView.setDefaultsForAICAttributedTextView()
-		descriptionTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white, NSAttributedStringKey.underlineStyle.rawValue : NSUnderlineStyle.styleSingle.rawValue]
+		descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.white, .underlineStyle: NSUnderlineStyle.single]
 		locationAndDateLabel.numberOfLines = 2
 	}
 	

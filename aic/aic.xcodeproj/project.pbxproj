@@ -1192,7 +1192,7 @@
 					E40D41C81C6CEBB700A57AF4 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 6CA8WK4597;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1878,7 +1878,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1916,7 +1916,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1928,7 +1928,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1946,7 +1946,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1961,7 +1961,7 @@
 			baseConfigurationReference = B060230330EFD5CC731DD275 /* Pods-aicUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1977,7 +1977,7 @@
 			baseConfigurationReference = 7B93124E7DF4A8F3843C35B8 /* Pods-aicUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2071,7 +2071,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = AppStore;
@@ -2082,7 +2082,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2097,7 +2097,7 @@
 			baseConfigurationReference = 2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

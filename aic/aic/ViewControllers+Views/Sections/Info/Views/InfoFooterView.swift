@@ -30,12 +30,12 @@ class InfoFooterView: UIView {
 		let versionPlusPotionLink = "Version \(version) Designed by Potion"
 		let potionCreditsAttrString = NSMutableAttributedString(string: versionPlusPotionLink)
 		let potionUrl = URL(string: Common.Info.potionURL)!
-		potionCreditsAttrString.addAttributes([NSAttributedStringKey.link : potionUrl], range: NSMakeRange(0, potionCreditsAttrString.string.count))
+		potionCreditsAttrString.addAttributes([.link : potionUrl], range: NSRange(location: 0, length: potionCreditsAttrString.string.count))
 		
 		potionCreditsTextView.attributedText = potionCreditsAttrString
 		potionCreditsTextView.font = .aicPotionCreditsFont
 		potionCreditsTextView.setDefaultsForAICAttributedTextView()
-		potionCreditsTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.white]
+		potionCreditsTextView.linkTextAttributes = [.foregroundColor : UIColor.white]
 		potionCreditsTextView.delegate = self
 
 		addSubview(bloombergCreditsImageView)
@@ -44,8 +44,8 @@ class InfoFooterView: UIView {
 		// Accessibility
 		bloombergCreditsImageView.isAccessibilityElement = true
 		bloombergCreditsImageView.accessibilityLabel = "Sponsored by Bloomberg Philantropies"
-		bloombergCreditsImageView.accessibilityTraits = UIAccessibilityTraitImage
-		potionCreditsTextView.accessibilityTraits = UIAccessibilityTraitLink
+		bloombergCreditsImageView.accessibilityTraits = .image
+		potionCreditsTextView.accessibilityTraits = .link
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

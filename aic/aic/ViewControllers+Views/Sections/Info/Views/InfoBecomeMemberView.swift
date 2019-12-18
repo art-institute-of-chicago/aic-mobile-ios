@@ -69,11 +69,11 @@ class InfoBecomeMemberView: BaseView {
 		
 		let joinAttrText = NSMutableAttributedString(string: "Member Join Text".localized(using: "Info"))
 		let joinURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.membershipUrl]!)!
-		joinAttrText.addAttributes([NSAttributedStringKey.link : joinURL], range: NSMakeRange(0, joinAttrText.string.count))
+		joinAttrText.addAttributes([.link : joinURL], range: NSRange(location: 0, length: joinAttrText.string.count))
 		
 		joinTextView.setDefaultsForAICAttributedTextView()
 		joinTextView.attributedText = joinAttrText
-		joinTextView.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.aicInfoColor]
+		joinTextView.linkTextAttributes = [.foregroundColor : UIColor.aicInfoColor]
 		joinTextView.textAlignment = NSTextAlignment.center
 		joinTextView.font = .aicPageTextFont
 		joinTextView.delegate = self
@@ -106,7 +106,7 @@ class InfoBecomeMemberView: BaseView {
 		joinTextView.delegate = self
 		
 		// Accessibility
-		joinTextView.accessibilityTraits = UIAccessibilityTraitLink
+		joinTextView.accessibilityTraits = .link
     }
 	
     required init?(coder aDecoder: NSCoder) {

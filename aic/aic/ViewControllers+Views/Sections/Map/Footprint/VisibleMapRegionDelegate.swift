@@ -108,13 +108,13 @@ class VisibleMapRegionDelegate: NSObject {
     */
     func floorplanDoesNotFillScreen(_ mapView: MKMapView, floorplanBoundingMapRect: MKMapRect) -> Bool {
 
-        if (MKMapRectContainsRect(floorplanBoundingMapRect, mapView.visibleMapRect)) {
+        if (floorplanBoundingMapRect.contains(mapView.visibleMapRect)) {
             // Your view is already entirely inside the floorplan.
             return false
         }
 
         // The specific part of the floorplan that is currently visible.
-        let visiblePartOfFloorplan = MKMapRectIntersection(floorplanBoundingMapRect, mapView.visibleMapRect)
+        let visiblePartOfFloorplan = floorplanBoundingMapRect.intersection(mapView.visibleMapRect)
 
         // The floorplan does not fill your screen in either direction.
         return (
@@ -224,7 +224,7 @@ class VisibleMapRegionDelegate: NSObject {
             floorplan. Maybe you have scrolled too far?
         */
 
-        let visibleMapRectMid = MKMapPoint(x: MKMapRectGetMidX(mapView.visibleMapRect), y: MKMapRectGetMidY(mapView.visibleMapRect))
+        let visibleMapRectMid = MKMapPoint(x: mapView.visibleMapRect.midX, y: mapView.visibleMapRect.midY)
 
         let visibleMapRectOriginProposed = MKMapRectRotatedNearestPoint(floorplanBoundingPDFBoxRect, point: visibleMapRectMid)
 
@@ -233,8 +233,8 @@ class VisibleMapRegionDelegate: NSObject {
 
         // Okay, now we know the "proposed" scroll adjustment...
 
-        let visibleMapRectMidPixels = mapView.convert(MKCoordinateForMapPoint(visibleMapRectMid), toPointTo: mapView)
-        let visibleMapRectProposedPixels = mapView.convert(MKCoordinateForMapPoint(visibleMapRectOriginProposed), toPointTo: mapView)
+        let visibleMapRectMidPixels = mapView.convert(visibleMapRectMid.coordinate, toPointTo: mapView)
+        let visibleMapRectProposedPixels = mapView.convert(visibleMapRectOriginProposed.coordinate, toPointTo: mapView)
 
         let scrollDistancePixels = CGPoint.hypotenuse(visibleMapRectProposedPixels, b: visibleMapRectMidPixels)
 
@@ -256,10 +256,10 @@ class VisibleMapRegionDelegate: NSObject {
             }
             if (scrollNeeded) {
                 // Scroll back toward the floorplan.
-                var cameraCenter = MKMapPointForCoordinate(mapView.camera.centerCoordinate)
+                var cameraCenter = MKMapPoint(mapView.camera.centerCoordinate)
                 cameraCenter.x += dxOffset
                 cameraCenter.y += dyOffset
-                newCamera.centerCoordinate = MKCoordinateForMapPoint(cameraCenter)
+                newCamera.centerCoordinate = cameraCenter.coordinate
             }
             mapView.setCamera(newCamera, animated: true)
         }

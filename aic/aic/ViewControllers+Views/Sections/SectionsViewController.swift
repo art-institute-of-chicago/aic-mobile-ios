@@ -78,17 +78,17 @@ class SectionsViewController : UIViewController {
 		sectionTabBarController.viewControllers = sectionViewControllers
         
         // Add Views
-		sectionTabBarController.willMove(toParentViewController: self)
+		sectionTabBarController.willMove(toParent: self)
         view.addSubview(sectionTabBarController.view)
-		sectionTabBarController.didMove(toParentViewController: self)
+		sectionTabBarController.didMove(toParent: self)
 		
-        audioPlayerCardVC.willMove(toParentViewController: sectionTabBarController)
+        audioPlayerCardVC.willMove(toParent: sectionTabBarController)
         sectionTabBarController.view.insertSubview(audioPlayerCardVC.view, belowSubview: sectionTabBarController.tabBar)
-        audioPlayerCardVC.didMove(toParentViewController: sectionTabBarController)
+        audioPlayerCardVC.didMove(toParent: sectionTabBarController)
 		
-		searchCardVC.willMove(toParentViewController: self.sectionTabBarController)
+		searchCardVC.willMove(toParent: self.sectionTabBarController)
 		sectionTabBarController.view.insertSubview(searchCardVC.view, belowSubview: audioPlayerCardVC.view)
-		searchCardVC.didMove(toParentViewController: self.sectionTabBarController)
+		searchCardVC.didMove(toParent: self.sectionTabBarController)
 		
 		// Set delegates
 		homeVC.sectionDelegate = self
@@ -204,7 +204,7 @@ class SectionsViewController : UIViewController {
 		// disable parallax effect
 		self.homeVC.sectionNavigationBar.disableParallaxEffect()
 		
-		UIView.animate(withDuration: 0.5, delay: 0.3, options: UIViewAnimationOptions.curveEaseOut,
+		UIView.animate(withDuration: 0.5, delay: 0.3, options: .curveEaseOut,
                                    animations:  {
 									self.view.alpha = 1.0
 									self.homeVC.view.alpha = 1.0
@@ -578,9 +578,9 @@ extension SectionsViewController : HomeNavigationControllerDelegate {
 		self.contentCardVC = contentCardVC
 		contentCardVC.cardDelegate = self
 		
-		contentCardVC.willMove(toParentViewController: sectionTabBarController)
+		contentCardVC.willMove(toParent: sectionTabBarController)
 		sectionTabBarController.view.insertSubview(contentCardVC.view, aboveSubview: searchCardVC.view)
-		contentCardVC.didMove(toParentViewController: sectionTabBarController)
+		contentCardVC.didMove(toParent: sectionTabBarController)
 		
 		contentCardVC.showFullscreen()
 	}

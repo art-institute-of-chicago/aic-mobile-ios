@@ -92,8 +92,8 @@ class SeeAllViewController : UIViewController {
 		collectionView.register(UINib(nibName: "SeeAllTourCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllTourCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllEventCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllEventCell.reuseIdentifier)
 		collectionView.register(UINib(nibName: "SeeAllExhibitionCell", bundle: Bundle.main), forCellWithReuseIdentifier: SeeAllExhibitionCell.reuseIdentifier)
-		collectionView.register(SeeAllHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier)
-		collectionView.register(SeeAllIntroView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier)
+		collectionView.register(SeeAllHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier)
+		collectionView.register(SeeAllIntroView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier)
 		collectionView.delegate = self
 		collectionView.dataSource = self
 		
@@ -237,32 +237,32 @@ extension SeeAllViewController : UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		
-		if kind == UICollectionElementKindSectionHeader {
+		if kind == UICollectionView.elementKindSectionHeader {
 			if content == .events {
-				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
+				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
 				sectionHeader.titleLabel.text = Common.Info.monthDayString(date: eventDates[indexPath.section])
 				return sectionHeader
 			}
 			else if content == .tours {
 				if indexPath.section == 0 {
-					let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier, for: indexPath) as! SeeAllIntroView
+					let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier, for: indexPath) as! SeeAllIntroView
 					sectionHeader.setText(text: seeAllToursIntroText)
 					return sectionHeader
 				}
 				
-				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
+				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
 				sectionHeader.titleLabel.text = ""
 				return sectionHeader
 			}
 			else if content == .toursByCategory {
 				if indexPath.section == 0 {
-					let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier, for: indexPath) as! SeeAllIntroView
+					let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier, for: indexPath) as! SeeAllIntroView
 					sectionHeader.setText(text: seeAllToursIntroText)
 					return sectionHeader
 				}
 				
 				let toursSectionIndex = indexPath.section-1 // first section is the intro text
-				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
+				let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllHeaderView.reuseIdentifier, for: indexPath) as! SeeAllHeaderView
 				sectionHeader.titleLabel.text = tourCategories[toursSectionIndex].title[Common.currentLanguage]
 				return sectionHeader
 			}

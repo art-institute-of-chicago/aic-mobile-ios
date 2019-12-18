@@ -247,7 +247,7 @@ extension CardNavigationController : UIGestureRecognizerDelegate {
         let newY: CGFloat = view.frame.origin.y + translation.y
         
         // If we've ended, snap to top or bottom
-        if recognizer.state == UIGestureRecognizerState.ended {
+        if recognizer.state == .ended {
             // Calculate whee we are between top and bottom
             let pctInScreenArea: CGFloat = CGFloat(map(val: Double(newY), oldRange1: Double(positionForState[openState]!), oldRange2: Double(positionForState[closedState]!), newRange1: 0.0, newRange2: 1.0))
             

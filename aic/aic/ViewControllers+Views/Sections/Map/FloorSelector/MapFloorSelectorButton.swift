@@ -32,9 +32,9 @@ class MapFloorSelectorButton: UIButton {
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         super.init(frame: frame)
         
-        setTitle(floorLabel, for: UIControlState())
-        setTitleColor(.black, for: UIControlState())
-        setTitleColor(.blue, for: UIControlState.highlighted)
+        setTitle(floorLabel, for: [])
+        setTitleColor(.black, for: [])
+        setTitleColor(.blue, for: .highlighted)
 		
 		titleLabel!.font = .aicPageTextFont
         
@@ -50,8 +50,8 @@ class MapFloorSelectorButton: UIButton {
     private func updateColors() {
         let colorScheme = isUserLocationFloor ? userLocationColorScheme : defaultColorScheme
         
-        setTitleColor(colorScheme.labelColor, for: UIControlState())
-        setTitleColor(colorScheme.labelColor, for: UIControlState.highlighted)
+        setTitleColor(colorScheme.labelColor, for: [])
+        setTitleColor(colorScheme.labelColor, for: .highlighted)
         
         backgroundColor = isSelectedFloor ? colorScheme.selectedColor : colorScheme.deselectedColor
     }

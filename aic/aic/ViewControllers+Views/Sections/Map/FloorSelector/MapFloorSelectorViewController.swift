@@ -128,7 +128,7 @@ class MapFloorSelectorViewController: UIViewController {
     }
     
     private func updateLocationImageForCurrentMode() {
-        floorSelectorView.locationButton.setImage(UIImage(named: locationMode.rawValue), for: UIControlState())
+        floorSelectorView.locationButton.setImage(UIImage(named: locationMode.rawValue), for: [])
     }
 }
 

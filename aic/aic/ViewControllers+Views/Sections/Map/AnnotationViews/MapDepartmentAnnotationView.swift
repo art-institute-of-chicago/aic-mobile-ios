@@ -9,7 +9,7 @@ class MapDepartmentAnnotationView: MapAnnotationView {
     static let reuseIdentifier: String = "mapDepartment"
 	
 	let imageSize: CGSize = CGSize(width: 46.0, height: 46.0)
-    let insets:UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10)
+    let insets:UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
     let labelMargin: CGFloat = 10
     
     let holderView = UIView()

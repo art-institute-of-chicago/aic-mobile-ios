@@ -27,7 +27,7 @@ class SectionNavigationController : UINavigationController {
 		// Hide title and inset (center) images if not showing titles
 		if Common.Layout.showTabBarTitles == false {
 			self.tabBarItem.title = ""
-			self.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
+			self.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
 		}
 		
 		// Set the navigation item content
@@ -67,7 +67,7 @@ class SectionNavigationController : UINavigationController {
 		
 		// Accessibility
 		sectionNavigationBar.titleLabel.becomeFirstResponder()
-		UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, sectionNavigationBar)
+		UIAccessibility.post(notification: .screenChanged, argument: sectionNavigationBar)
 	}
 	
 	override func popToRootViewController(animated: Bool) -> [UIViewController]? {

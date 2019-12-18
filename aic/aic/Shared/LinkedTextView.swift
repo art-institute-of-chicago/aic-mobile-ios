@@ -22,7 +22,7 @@ class LinkedTextView : UITextView {
 	}
 	
 	private func setup() {
-		if UIAccessibilityIsVoiceOverRunning() {
+		if UIAccessibility.isVoiceOverRunning {
 			return
 		}
 		linkTapGestureRecognizer.cancelsTouchesInView = false
@@ -54,7 +54,7 @@ class LinkedTextView : UITextView {
 		let range = textView.textRange(from: textPosition1!, to: textPosition2!)
 		let startOffset = textView.offset(from: textView.beginningOfDocument, to: range!.start)
 		let endOffset = textView.offset(from: textView.beginningOfDocument, to: range!.end)
-		let offsetRange = NSMakeRange(startOffset, endOffset - startOffset)
+		let offsetRange = NSRange(location: startOffset, length: endOffset - startOffset)
 		if offsetRange.location == NSNotFound || offsetRange.length == 0 {
 			return
 		}
@@ -65,20 +65,20 @@ class LinkedTextView : UITextView {
 		
 		let attributedSubstring = textView.attributedText.attributedSubstring(from: offsetRange)
 		var url: URL? = nil
-		if let link: String = attributedSubstring.attribute(NSAttributedStringKey.link, at: 0, effectiveRange: nil) as? String {
+		if let link: String = attributedSubstring.attribute(.link, at: 0, effectiveRange: nil) as? String {
 			url = URL(string: link)
 		}
-		else if let link: URL = attributedSubstring.attribute(NSAttributedStringKey.link, at: 0, effectiveRange: nil) as? URL {
+		else if let link: URL = attributedSubstring.attribute(.link, at: 0, effectiveRange: nil) as? URL {
 			url = link
 		}
 		
-		if url != nil {
+		if let url = url {
 			if let delegate = self.delegate {
-				if delegate.textView?(self, shouldInteractWith: url!, in: offsetRange, interaction: .invokeDefaultAction) == false {
+				if delegate.textView?(self, shouldInteractWith: url, in: offsetRange, interaction: .invokeDefaultAction) == false {
 					return
 				}
 			}
-			UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
 		}
 	}
 }

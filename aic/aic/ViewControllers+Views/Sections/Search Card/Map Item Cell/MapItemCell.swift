@@ -38,7 +38,7 @@ class MapItemCell : UICollectionViewCell {
 		// Accessibility
 		self.isAccessibilityElement = true
 		self.accessibilityLabel = "Search on the map"
-		self.accessibilityTraits = UIAccessibilityTraitButton
+		self.accessibilityTraits = .button
 	}
 	
 	func setItemIcon(image: UIImage, highlightImage: UIImage? = nil) {

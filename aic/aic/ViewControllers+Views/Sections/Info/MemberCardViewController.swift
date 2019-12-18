@@ -36,7 +36,7 @@ class MemberCardViewController : UIViewController {
 		self.view.backgroundColor = .white
 		
 		loadingIndicatorView.isHidden = true
-		loadingIndicatorView.activityIndicatorViewStyle = .whiteLarge
+		loadingIndicatorView.style = .whiteLarge
 		loadingIndicatorView.color = .darkGray
 		
 		loginView.loginButton.addTarget(self, action: #selector(loginButtonPressed(button:)), for: .touchUpInside)
@@ -180,8 +180,8 @@ extension MemberCardViewController : MemberDataManagerDelegate {
 	}
 	
 	func memberCardDataLoadingFailed() {
-		let alert = UIAlertController(title: "Member Not Found Alert".localized(using: "MemberCard"), message: "", preferredStyle: UIAlertControllerStyle.alert)
-		let action = UIAlertAction(title: "Member Not Found Alert Ok Button".localized(using: "MemberCard"), style: UIAlertActionStyle.default, handler: { (action) in
+		let alert = UIAlertController(title: "Member Not Found Alert".localized(using: "MemberCard"), message: "", preferredStyle: .alert)
+		let action = UIAlertAction(title: "Member Not Found Alert Ok Button".localized(using: "MemberCard"), style: .default, handler: { (action) in
 			self.loadMemberFromUserDefaults()
 		})
 		

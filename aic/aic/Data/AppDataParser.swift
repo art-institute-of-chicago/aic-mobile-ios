@@ -761,11 +761,11 @@ class AppDataParser {
 					while x < 1600 {
 						let p1 = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: x, y: y))
 						let p2 = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(CGPoint(x: x+colSize, y: y+rowSize))
-						let gridMapRect = MKMapRectMake(fmin(p1.x,p2.x), fmin(p1.y,p2.y), fabs(p1.x-p2.x), fabs(p1.y-p2.y))
+						let gridMapRect = MKMapRect(x: fmin(p1.x,p2.x), y: fmin(p1.y,p2.y), width: fabs(p1.x-p2.x), height: fabs(p1.y-p2.y))
 						
 						for objectAnnotation in floorObjectAnnotations[floorNumber]! {
-							let mapPoint = MKMapPointForCoordinate(objectAnnotation.clLocation.coordinate)
-							if MKMapRectContainsPoint(gridMapRect, mapPoint) {
+							let mapPoint = MKMapPoint(objectAnnotation.clLocation.coordinate)
+							if gridMapRect.contains(mapPoint) {
 								floorFarObjectAnnotations[floorNumber]!.append(objectAnnotation)
 								break
 							}

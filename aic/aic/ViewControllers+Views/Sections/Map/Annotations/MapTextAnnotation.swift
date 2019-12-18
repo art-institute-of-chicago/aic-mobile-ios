@@ -18,7 +18,7 @@ class MapTextAnnotation: MapAnnotation {
     var labelText: String
     
     convenience init(coordinateAsCGPoint: CGPoint, text: String, type: AnnotationType) {
-        let mkCoord = MKCoordinateForMapPoint(Common.Map.coordinateConverter.MKMapPointFromPDFPoint(coordinateAsCGPoint))
+        let mkCoord = Common.Map.coordinateConverter.MKMapPointFromPDFPoint(coordinateAsCGPoint).coordinate
         
         self.init(coordinate: mkCoord, text: text, type:type)
     }

@@ -23,7 +23,7 @@ class RestaurantPageViewController : UIPageViewController {
 	init(restaurants: [AICRestaurantModel]) {
 		self.restaurants = restaurants
 		totalPages = self.restaurants.count
-		super.init(transitionStyle: UIPageViewControllerTransitionStyle.scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal, options: nil)
+		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
 	}
 	
 	required init?(coder: NSCoder) {
