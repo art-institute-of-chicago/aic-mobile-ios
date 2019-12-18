@@ -9,59 +9,59 @@
 import UIKit
 import Localize_Swift
 
-protocol HomeNavigationControllerDelegate : class {
+protocol HomeNavigationControllerDelegate: class {
 	func showMemberCard()
 	func showTourCard(tour: AICTourModel)
 	func showExhibitionCard(exhibition: AICExhibitionModel)
 	func showEventCard(event: AICEventModel)
 }
 
-class HomeNavigationController : SectionNavigationController {
+class HomeNavigationController: SectionNavigationController {
 	let homeVC: HomeViewController
-	
-	weak var sectionDelegate: HomeNavigationControllerDelegate? = nil
-	
+
+	weak var sectionDelegate: HomeNavigationControllerDelegate?
+
 	override init(section: AICSectionModel) {
 		homeVC = HomeViewController(section: section)
 		super.init(section: section)
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		self.delegate = self
 		homeVC.delegate = self
-		
+
 		self.pushViewController(homeVC, animated: false)
 	}
-	
+
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
+
 		// Accessibility
 		tabBarController!.tabBar.isAccessibilityElement = true
 		sectionNavigationBar.titleLabel.becomeFirstResponder()
 		self.perform(#selector(accessibilityReEnableTabBar), with: nil, afterDelay: 2.0)
 	}
-	
+
 	@objc private func accessibilityReEnableTabBar() {
 		tabBarController!.tabBar.isAccessibilityElement = false
 	}
-	
+
 	func showHomeTooltip() {
 		//See if we need to prompt first
 		let defaults = UserDefaults.standard
 		let showMapTooltipsMessageValue = defaults.bool(forKey: Common.UserDefaults.showTooltipsDefaultsKey)
-		
+
 		if showMapTooltipsMessageValue {
 			homeVC.animateToursScrolling()
 		}
 	}
-	
+
 	func showSeeAllVC(contentType: SeeAllViewController.ContentType) {
 		let seeAllVC = SeeAllViewController(contentType: contentType)
 		seeAllVC.delegate = self
@@ -69,86 +69,86 @@ class HomeNavigationController : SectionNavigationController {
 	}
 }
 
-extension HomeNavigationController : UINavigationControllerDelegate {
+extension HomeNavigationController: UINavigationControllerDelegate {
 	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
 		if viewController == homeVC {
 			self.sectionNavigationBar.sectionViewControllerWillAppearWithScrollView(scrollView: homeVC.scrollView)
 			self.sectionNavigationBar.setBackButtonHidden(true)
-		}
-		else {
+		} else {
 			homeVC.scrollDelegate = nil
 		}
 	}
-	
+
 	func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
 		// set SectionNavigationBar as scrollDelegateon homeVC only after it appears for the first time
 		if viewController == homeVC && homeVC.scrollDelegate == nil {
 			homeVC.scrollDelegate = sectionNavigationBar
 		}
-		
+
 		// Accessibility
 		self.accessibilityElements = [
 			sectionNavigationBar,
 			viewController.view,
-			tabBarController!.tabBar
-		]
+			tabBarController?.tabBar
+			]
+			.compactMap { $0 }
 		sectionNavigationBar.titleLabel.becomeFirstResponder()
 	}
 }
 
-extension HomeNavigationController : HomeViewControllerDelegate {
+extension HomeNavigationController: HomeViewControllerDelegate {
 	func homeDidSelectAccessMemberCard() {
 		self.sectionDelegate?.showMemberCard()
 	}
-	
+
 	func homeDidSelectSeeAllTours() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
-		
+
 		var content: SeeAllViewController.ContentType = .tours
 		if AppDataManager.sharedInstance.shouldUseCategoriesForTours() {
 			content = .toursByCategory
 		}
-		
+
 		showSeeAllVC(contentType: content)
 	}
-	
+
 	func homeDidSelectSeeAllExhibitions() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
-		
+
 		showSeeAllVC(contentType: .exhibitions)
 	}
-	
+
 	func homeDidSelectSeeAllEvents() {
 		self.sectionNavigationBar.collapse()
 		self.sectionNavigationBar.setBackButtonHidden(false)
-		
+
 		showSeeAllVC(contentType: .events)
 	}
-	
+
 	func homeDidSelectTour(tour: AICTourModel) {
 		self.sectionDelegate?.showTourCard(tour: tour)
 	}
-	
+
 	func homeDidSelectExhibition(exhibition: AICExhibitionModel) {
 		self.sectionDelegate?.showExhibitionCard(exhibition: exhibition)
 	}
-	
+
 	func homeDidSelectEvent(event: AICEventModel) {
 		self.sectionDelegate?.showEventCard(event: event)
 	}
 }
 
-extension HomeNavigationController : SeeAllViewControllerDelegate {
+extension HomeNavigationController: SeeAllViewControllerDelegate {
 	func seeAllDidSelectTour(tour: AICTourModel) {
 		self.sectionDelegate?.showTourCard(tour: tour)
 	}
-	
+
 	func seeAllDidSelectExhibition(exhibition: AICExhibitionModel) {
 		self.sectionDelegate?.showExhibitionCard(exhibition: exhibition)
 	}
-	
+
 	func seeAllDidSelectEvent(event: AICEventModel) {
 		self.sectionDelegate?.showEventCard(event: event)
 	}

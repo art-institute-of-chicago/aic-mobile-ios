@@ -9,12 +9,12 @@
 import UIKit
 import MapKit
 
-class MapExhibitionAnnotation : MapAnnotation {
+class MapExhibitionAnnotation: MapAnnotation {
 	var floor: Int
 	var clLocation: CLLocation
 	var imageUrl: URL?
 	var exhibitionModel: AICExhibitionModel
-	
+
 	init(exhibition: AICExhibitionModel) {
 		self.floor = exhibition.location!.floor
 		self.clLocation = CLLocation(latitude: exhibition.location!.coordinate.latitude, longitude: exhibition.location!.coordinate.longitude)

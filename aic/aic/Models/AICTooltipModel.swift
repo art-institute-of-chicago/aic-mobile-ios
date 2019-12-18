@@ -1,7 +1,7 @@
 /*
- Abstract:
- Represents a tooltip
- */
+Abstract:
+Represents a tooltip
+*/
 
 import UIKit
 
@@ -12,8 +12,8 @@ enum TooltipType {
 
 struct AICTooltipModel {
 	let type: TooltipType
-    let title: String
-    var text: String
+	let title: String
+	var text: String
 	var arrowPosition: CGPoint
 	var image: UIImage?
 }

@@ -9,9 +9,9 @@
 import UIKit
 import Localize_Swift
 
-class TourContentCell : UITableViewCell {
+class TourContentCell: UITableViewCell {
 	static let reuseIdentifier = "tourContentCell"
-	
+
 	@IBOutlet var tourImageView: AICImageView!
 	@IBOutlet var descriptionLabel: UILabel!
 	@IBOutlet var startTourButton: AICButton!
@@ -20,14 +20,14 @@ class TourContentCell : UITableViewCell {
 	@IBOutlet weak var stopsNumberLabel: UILabel!
 	@IBOutlet var clockImageView: UIImageView!
 	@IBOutlet var durationLabel: UILabel!
-	
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
+
 		selectionStyle = .none
-		
+
 		self.backgroundColor = .aicDarkGrayColor
-		
+
 		tourImageView.contentMode = .scaleAspectFill
 		tourImageView.clipsToBounds = true
 		startTourButton.titleLabel?.font = .aicButtonFont
@@ -35,27 +35,29 @@ class TourContentCell : UITableViewCell {
 		stopsNumberLabel.font = .aicInfoOverlayFont
 		durationLabel.font = .aicInfoOverlayFont
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
-		
+
 		// Accessibility
-		self.accessibilityElements = [stopsNumberLabel,
-									  durationLabel,
-									  startTourButton,
-									  descriptionLabel
-		]
+		self.accessibilityElements = [
+			stopsNumberLabel,
+			durationLabel,
+			startTourButton,
+			descriptionLabel
+			]
+			.compactMap { $0 }
 	}
-	
+
 	var tourModel: AICTourModel? = nil {
 		didSet {
 			guard let tourModel = self.tourModel else {
 				return
 			}
-			
+
 			languageSelectorView.isHidden = true
 			if tourModel.availableLanguages.count > 1 {
 				languageSelectorView.isHidden = false
 				languageSelectorView.setLanguages(languages: tourModel.availableLanguages, defaultLanguage: tourModel.language)
 			}
-			
+
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription, font: .aicTextFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
@@ -63,8 +65,7 @@ class TourContentCell : UITableViewCell {
 			if (tourModel.durationInMinutes ?? "").isEmpty {
 				clockImageView.isHidden = true
 				durationLabel.isHidden = true
-			}
-			else if let duration: String = self.tourModel!.durationInMinutes {
+			} else if let duration: String = self.tourModel!.durationInMinutes {
 				durationLabel.text = "\(duration)"
 			}
 		}

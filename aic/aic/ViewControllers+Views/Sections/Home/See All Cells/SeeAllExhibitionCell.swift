@@ -12,16 +12,16 @@ import UIKit
 ///
 /// UICollectionViewCell for list of all Exhibitions
 
-class SeeAllExhibitionCell : UICollectionViewCell {
+class SeeAllExhibitionCell: UICollectionViewCell {
 	static let reuseIdentifier = "seeAllExhibitionCell"
-	
+
 	@IBOutlet var exhibitionImageView: AICImageView!
 	@IBOutlet var exhibitionTitleLabel: UILabel!
 	@IBOutlet var throughDateLabel: UILabel!
-	
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
+
 		exhibitionImageView.contentMode = .scaleAspectFill
 		exhibitionImageView.clipsToBounds = true
 		exhibitionTitleLabel.font = .aicSeeAllExhibitionTitleFont
@@ -31,18 +31,18 @@ class SeeAllExhibitionCell : UICollectionViewCell {
 		throughDateLabel.textColor = .aicDarkGrayColor
 		throughDateLabel.numberOfLines = 1
 	}
-	
+
 	var exhibitionModel: AICExhibitionModel? = nil {
 		didSet {
 			guard let exhibitionModel = self.exhibitionModel else {
 				return
 			}
-			
+
 			// set up UI
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
-            throughDateLabel.attributedText = getAttributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 18)
-			
+			throughDateLabel.attributedText = getAttributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 18)
+
 			// Accessibility
 			self.isAccessibilityElement = true
 			self.accessibilityLabel = "Exhibition"

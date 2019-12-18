@@ -9,9 +9,9 @@
 import UIKit
 import Atributika
 
-class EventContentCell : UITableViewCell {
+class EventContentCell: UITableViewCell {
 	static let reuseIdentifier = "eventContentCell"
-	
+
 	@IBOutlet var eventImageView: AICImageView!
 	@IBOutlet weak var buyTicketsButton: AICButton!
 	@IBOutlet weak var descriptionTextView: UITextView!
@@ -19,17 +19,17 @@ class EventContentCell : UITableViewCell {
 	@IBOutlet var monthDayLabel: UILabel!
 	@IBOutlet var hoursMinutesLabel: UILabel!
 	@IBOutlet weak var locationAndDateLabel: UILabelPadding!
-	
+
 	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
 	let descriptionVerticalSpacingMin: CGFloat = 32
-	
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
+
 		selectionStyle = .none
-		
+
 		self.backgroundColor = .aicDarkGrayColor
-		
+
 		eventImageView.contentMode = .scaleAspectFill
 		eventImageView.clipsToBounds = true
 		buyTicketsButton.titleLabel?.font = .aicButtonFont
@@ -41,24 +41,25 @@ class EventContentCell : UITableViewCell {
 		descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.white, .underlineStyle: NSUnderlineStyle.single]
 		locationAndDateLabel.numberOfLines = 2
 	}
-	
+
 	var eventModel: AICEventModel? = nil {
 		didSet {
 			guard let eventModel = self.eventModel else {
 				return
 			}
-			
+
 			var accessibilityItems: [Any] = [
 				monthDayLabel,
 				hoursMinutesLabel
-			]
-			
-			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (image, error, cache, url) in
-				if image != nil {
-					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: image!, viewSize: self.eventImageView.frame.size)
+				]
+				.compactMap { $0 }
+
+			eventImageView.kf.setImage(with: eventModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (result) in
+				if let result = try? result.get() {
+					self.eventImageView.image = AppDataManager.sharedInstance.getCroppedImageForEvent(image: result.image, viewSize: self.eventImageView.frame.size)
 				}
 			}
-			
+
 			let monthDayString = Common.Info.monthDayString(date: eventModel.startDate)
 			let hoursMinutesString = Common.Info.hoursMinutesString(date: eventModel.startDate)
 			var locationAndDateString = monthDayString
@@ -66,53 +67,56 @@ class EventContentCell : UITableViewCell {
 			locationAndDateString += hoursMinutesString
 			locationAndDateString += "\n"
 			locationAndDateString += eventModel.locationText
-			
+
 			monthDayLabel.text = monthDayString
 			hoursMinutesLabel.text = hoursMinutesString
 			descriptionTextView.textColor = .white
 			locationAndDateLabel.attributedText = getAttributedStringWithLineHeight(text: locationAndDateString, font: .aicTextItalicFont, lineHeight: 22)
-            
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 0.0
-            paragraphStyle.minimumLineHeight = 22
-            paragraphStyle.maximumLineHeight = 22
-			
+
+			let paragraphStyle = NSMutableParagraphStyle()
+			paragraphStyle.lineSpacing = 0.0
+			paragraphStyle.minimumLineHeight = 22
+			paragraphStyle.maximumLineHeight = 22
+
 			let emStyle = Style("em").font(.aicTextItalicFont)
 			let iStyle = Style("i").font(.aicTextItalicFont)
 			let strongStyle = Style("strong").font(.aicTextBoldFont)
 			let bStyle = Style("b").font(.aicTextBoldFont)
 			let allStyle = Style.font(.aicTextFont).baselineOffset(22.0 - Float(UIFont.aicTitleFont.pointSize)).paragraphStyle(paragraphStyle)
-			
+
 			let eventDescription = eventModel.longDescription
 				.replacingOccurrences(of: "</p>", with: "</p>\n")
 				.replacingOccurrences(of: "<li>", with: "\n<li>•\t")
-			
+
 			let descriptionAttributedString = eventDescription
 				.style(tags: emStyle, iStyle, strongStyle, bStyle)
 				.styleAll(allStyle)
 				.attributedString
-			
+
 			descriptionTextView.attributedText = descriptionAttributedString
 			descriptionTextView.textColor = .white
-			
-			
+
 			if eventModel.eventUrl == nil {
 				buyTicketsButton.isEnabled = false
 				buyTicketsButton.isHidden = true
 				descriptionToImageVerticalSpacing.constant = descriptionVerticalSpacingMin
-			}
-			else {
+			} else if let buyTicketsButton = buyTicketsButton {
 				buyTicketsButton.setTitle(eventModel.buttonText, for: .normal)
-				
+
 				accessibilityItems.append(buyTicketsButton)
 			}
-			
+
 			self.setNeedsLayout()
 			self.layoutIfNeeded()
-			
+
 			// Accessibility
-			accessibilityItems.append(descriptionTextView)
-			accessibilityItems.append(locationAndDateLabel)
+			accessibilityItems.append(
+				contentsOf: [
+					descriptionTextView,
+					locationAndDateLabel
+					]
+					.compactMap { $0 }
+			)
 			self.accessibilityElements = accessibilityItems
 		}
 	}

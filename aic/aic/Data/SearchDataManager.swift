@@ -9,37 +9,37 @@
 import UIKit
 import Alamofire
 
-protocol SearchDataManagerDelegate : class {
+protocol SearchDataManagerDelegate: class {
 	func searchDataDidFinishLoading(autocompleteStrings: [String])
 	func searchDataDidFinishLoading(artworks: [AICSearchedArtworkModel], tours: [AICTourModel], exhibitions: [AICExhibitionModel])
 	func searchDataFailure(filter: Common.Search.Filter)
 }
 
-class SearchDataManager : NSObject {
+class SearchDataManager: NSObject {
 	static let sharedInstance = SearchDataManager()
-	
-	weak var delegate: SearchDataManagerDelegate? = nil
-	
+
+	weak var delegate: SearchDataManagerDelegate?
+
 	private let dataParser = AppDataParser()
-	
+
 	private var loadFailure: Bool = false
-	
-	private var autocompleteRequest: DataRequest? = nil
-	private var toursRequest: DataRequest? = nil
-	private var artworksRequest: DataRequest? = nil
-	private var exhibitionsRequest: DataRequest? = nil
-	
+
+	private var autocompleteRequest: DataRequest?
+	private var toursRequest: DataRequest?
+	private var artworksRequest: DataRequest?
+	private var exhibitionsRequest: DataRequest?
+
 	@objc func loadAutocompleteStrings(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.autocompleteEndpoint]!
 		url += "?q=" + searchText + "&resources=artworks,tours,exhibitions,artists"
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
 		let request = URLRequest(url: URL(string: url)!)
-		
+
 		if let previousRequest = autocompleteRequest {
 			previousRequest.cancel()
 		}
-		
+
 		autocompleteRequest = Alamofire.request(request as URLRequestConvertible)
 			.validate()
 			.responseData { response in
@@ -52,13 +52,13 @@ class SearchDataManager : NSObject {
 				}
 		}
 	}
-	
+
 	@objc func loadAllContent(searchText: String) {
 		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
 		url += AppDataManager.sharedInstance.app.dataSettings[.multiSearchEndpoint]!
 		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-		var urlRequest = URLRequest(url:  URL(string: url)!)
-		
+		var urlRequest = URLRequest(url: URL(string: url)!)
+
 		let artworksQuery: [String: Any] = [
 			"resources": "artworks",
 			"from": 0,
@@ -79,7 +79,7 @@ class SearchDataManager : NSObject {
 				]
 			]
 		]
-		
+
 		let toursQuery: [String: Any] = [
 			"resources": "tours",
 			"from": 0,
@@ -89,7 +89,7 @@ class SearchDataManager : NSObject {
 			],
 			"q": searchText
 		]
-		
+
 		let exhibitionsQuery: [String: Any] = [
 			"resources": "exhibitions",
 			"from": 0,
@@ -126,30 +126,30 @@ class SearchDataManager : NSObject {
 				]
 			]
 		]
-		
-		let parameters: [[String : Any]] = [
+
+		let parameters: [[String: Any]] = [
 			artworksQuery,
 			toursQuery,
 			exhibitionsQuery
 		]
-		
+
 		if let previousRequest = artworksRequest {
 			previousRequest.cancel()
 		}
-		
+
 		urlRequest.httpMethod = "POST"
 		urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters, options: [])
-		
+
 		artworksRequest = Alamofire.request(urlRequest)
 			.validate()
 			.responseData { response in
 				switch response.result {
 				case .success(let value):
-					
+
 					// get results as dictionary of [contentType : Any]
 					let results = self.dataParser.parse(searchContent: value)
-					
+
 					// type cast results into the correspondent AIC data model
 					var artworks: [AICSearchedArtworkModel] = []
 					if let items = results[.artworks] {
@@ -175,9 +175,9 @@ class SearchDataManager : NSObject {
 							}
 						}
 					}
-					
+
 					self.delegate?.searchDataDidFinishLoading(artworks: artworks, tours: tours, exhibitions: exhibitions)
-					
+
 				case .failure(let error):
 					self.delegate?.searchDataFailure(filter: .artworks)
 					print(error)

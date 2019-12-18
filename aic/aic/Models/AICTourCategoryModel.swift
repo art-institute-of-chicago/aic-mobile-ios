@@ -8,11 +8,11 @@
 
 import Foundation
 
-class AICTourCategoryModel : NSObject {
+class AICTourCategoryModel: NSObject {
 	let id: String
-	let title: [Common.Language : String]
-	
-	init(id: String, title: [Common.Language : String]) {
+	let title: [Common.Language: String]
+
+	init(id: String, title: [Common.Language: String]) {
 		self.id = id
 		self.title = title
 	}

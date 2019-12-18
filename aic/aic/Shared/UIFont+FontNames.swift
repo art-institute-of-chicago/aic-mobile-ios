@@ -12,7 +12,7 @@ extension UIFont {
 	static let Serif_Regular = "Lora-Regular"
 	static let Serif_Italic = "Lora-Italic"
 	static let Serif_Bold = "Lora-Bold"
-	
+
 	static let SansSerif_Medium = "SourceSansPro-Semibold"
 	static let SansSerif_Book = "SourceSansPro-Regular"
 	static let SansSerif_BookItalic = "SourceSansPro-It"

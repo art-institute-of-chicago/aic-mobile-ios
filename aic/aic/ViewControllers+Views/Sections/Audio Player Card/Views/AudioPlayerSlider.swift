@@ -8,10 +8,10 @@
 
 import UIKit
 
-class AudioPlayerSlider : UISlider {
+class AudioPlayerSlider: UISlider {
 	init() {
 		super.init(frame: CGRect.zero)
-		
+
 		self.setThumbImage(#imageLiteral(resourceName: "audioSliderThumbImage"), for: .normal)
 		self.tintColor = .aicHomeColor
 		self.isUserInteractionEnabled = true
@@ -20,11 +20,11 @@ class AudioPlayerSlider : UISlider {
 		self.maximumValue = 1
 		self.value = 0
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	// Custom thumbImage size based on the "thumbImage" asset (32x32)
 	override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
 		let x = CGFloat(map(val: Double(value), oldRange1: 0.0, oldRange2: 1.0, newRange1: -8.0, newRange2: Double(bounds.width - 24)))

@@ -9,16 +9,16 @@
 import UIKit
 import Localize_Swift
 
-protocol TourTableViewControllerDelegate : class {
+protocol TourTableViewControllerDelegate: class {
 	func tourContentCardDidPressStartTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?)
 }
 
-class TourTableViewController : UITableViewController {
+class TourTableViewController: UITableViewController {
 	var tourModel: AICTourModel
 	var language: Common.Language = .english
-	
-	weak var tourTableDelegate: TourTableViewControllerDelegate? = nil
-	
+
+	weak var tourTableDelegate: TourTableViewControllerDelegate?
+
 	init(tour: AICTourModel) {
 		tourModel = tour
 		if tourModel.availableLanguages.contains(Common.currentLanguage) {
@@ -27,38 +27,38 @@ class TourTableViewController : UITableViewController {
 		}
 		super.init(nibName: nil, bundle: nil)
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		self.view.backgroundColor = .clear
-		
+
 		self.tableView.translatesAutoresizingMaskIntoConstraints = false
-		
+
 		self.tableView.backgroundColor = .aicDarkGrayColor
 		self.tableView.separatorStyle = .none
 		self.tableView.rowHeight = UITableView.automaticDimension // Necessary for AutoLayout of cells
 		self.tableView.estimatedRowHeight = 200
-        self.tableView.showsVerticalScrollIndicator = false
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+		self.tableView.showsVerticalScrollIndicator = false
+		self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
 		self.tableView.register(UINib(nibName: "TourContentCell", bundle: Bundle.main), forCellReuseIdentifier: TourContentCell.reuseIdentifier)
 		self.tableView.register(UINib(nibName: "ContentButtonCell", bundle: Bundle.main), forCellReuseIdentifier: ContentButtonCell.reuseIdentifier)
 		self.tableView.register(CardTitleView.self, forHeaderFooterViewReuseIdentifier: CardTitleView.reuseIdentifier)
-		
+
 		// Language
 		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
 	}
-	
+
 	@objc private func updateLanguage() {
 		self.tableView.reloadData()
 	}
-	
+
 	// MARK: Button Events
-	
+
 	@objc func tourStartButtonPressed(button: UIButton) {
 		self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: nil)
 	}
@@ -69,12 +69,12 @@ extension TourTableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
-	
+
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		// tour intro + first stop (overview) + list of stops
 		return 1 + 1 + tourModel.stops.count
 	}
-	
+
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: TourContentCell.reuseIdentifier, for: indexPath) as! TourContentCell
@@ -83,21 +83,19 @@ extension TourTableViewController {
 			cell.startTourButton.setTitle("Start Tour".localized(using: "ContentCard"), for: .normal)
 			cell.startTourButton.addTarget(self, action: #selector(tourStartButtonPressed(button:)), for: .touchUpInside)
 			return cell
-		}
-		else if indexPath.row == 1 {
+		} else if indexPath.row == 1 {
 			// tour overview cell
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 			let overviewLocation = tourModel.stops.first!.object.gallery.title
 			cell.setContent(imageUrl: tourModel.imageUrl, cropRect: nil, title: tourModel.title, subtitle: overviewLocation)
 			cell.dividerLineBottom.isHidden = true
 			return cell
-		}
-		else {
+		} else {
 			// tour stop cell
 			let object = tourModel.stops[indexPath.row - 2].object
 			let title = "\(indexPath.row - 1).\t\(object.title)"
 			let subtitle = "\t\(object.gallery.title)"
-			
+
 			let cell = tableView.dequeueReusableCell(withIdentifier: ContentButtonCell.reuseIdentifier, for: indexPath) as! ContentButtonCell
 			cell.setContent(imageUrl: object.thumbnailUrl, cropRect: object.imageCropRect, title: title, subtitle: subtitle)
 			cell.dividerLineBottom.isHidden = true
@@ -113,7 +111,7 @@ extension TourTableViewController {
 		titleView.titleLabel.text = tourModel.title
 		return titleView
 	}
-	
+
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 80
 	}
@@ -121,10 +119,10 @@ extension TourTableViewController {
 
 // MARK: Scroll Delegate
 extension TourTableViewController {
-    /// Avoid bouncing at the top of the TableView
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+	/// Avoid bouncing at the top of the TableView
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		scrollView.bounces = (scrollView.contentOffset.y > 20)
-    }
+	}
 }
 
 // MARK: Interaction
@@ -134,7 +132,7 @@ extension TourTableViewController {
 		if indexPath.row == 1 {
 			self.tourTableDelegate?.tourContentCardDidPressStartTour(tour: tourModel, language: language, stopIndex: nil)
 		}
-		// tour stop
+			// tour stop
 		else if indexPath.row > 1 {
 			let stopIndex: Int = indexPath.row - 2
 			if stopIndex < tourModel.stops.count {
@@ -145,11 +143,10 @@ extension TourTableViewController {
 }
 
 // MARK: LanguageSelectorViewDelegate
-extension TourTableViewController : LanguageSelectorViewDelegate {
+extension TourTableViewController: LanguageSelectorViewDelegate {
 	func languageSelectorDidSelect(language: Common.Language) {
 		self.language = language
 		tourModel.language = language
 		self.tableView.reloadData()
 	}
 }
-

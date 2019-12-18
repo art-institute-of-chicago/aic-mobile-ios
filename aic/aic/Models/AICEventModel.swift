@@ -13,13 +13,13 @@ struct AICEventModel {
 	let title: String
 	let shortDescription: String
 	let longDescription: String
-	
+
 	let imageUrl: URL
-	
+
 	let locationText: String
 	let startDate: Date
 	let endDate: Date
-	
+
 	let eventUrl: URL?
 	let buttonText: String
 }

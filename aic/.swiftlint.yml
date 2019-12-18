@@ -1,0 +1,8 @@
+indentation: tabs
+disabled_rules:
+  - vertical_parameter_alignment
+  - line_length
+  - cyclomatic_complexity
+  - function_body_length
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
