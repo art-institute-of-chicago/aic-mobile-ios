@@ -941,10 +941,12 @@ class AppDataParser {
 		}
 
 		// optional location
+		var galleryId: Int?
 		var location: CoordinateWithFloor?
 		do {
-			let galleryId = try getInt(fromJSON: exhibitionJSON, forKey: "gallery_id")
-			let gallery = try getGallery(forGalleryId: galleryId)
+			let id = try getInt(fromJSON: exhibitionJSON, forKey: "gallery_id")
+			let gallery = try getGallery(forGalleryId: id)
+			galleryId = id
 			location = gallery.location
 		} catch {}
 
@@ -965,13 +967,15 @@ class AppDataParser {
 		}
 
 		// Return news item
-		return AICExhibitionModel(id: id,
-								  title: title.stringByDecodingHTMLEntities,
-								  shortDescription: description.stringByDecodingHTMLEntities,
-								  imageUrl: imageURL,
-								  startDate: startDate,
-								  endDate: endDate,
-								  location: location
+		return AICExhibitionModel(
+			id: id,
+			title: title.stringByDecodingHTMLEntities,
+			shortDescription: description.stringByDecodingHTMLEntities,
+			imageUrl: imageURL,
+			startDate: startDate,
+			endDate: endDate,
+			galleryId: galleryId,
+			location: location
 		)
 	}
 
