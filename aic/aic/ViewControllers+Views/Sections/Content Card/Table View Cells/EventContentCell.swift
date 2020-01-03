@@ -38,7 +38,7 @@ class EventContentCell: UITableViewCell {
 		hoursMinutesLabel.font = .aicInfoOverlayFont
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 		descriptionTextView.setDefaultsForAICAttributedTextView()
-		descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.white, .underlineStyle: NSUnderlineStyle.single]
+		descriptionTextView.linkTextAttributes = [.foregroundColor: UIColor.white, .underlineStyle: NSUnderlineStyle.single.rawValue]
 		locationAndDateLabel.numberOfLines = 2
 	}
 

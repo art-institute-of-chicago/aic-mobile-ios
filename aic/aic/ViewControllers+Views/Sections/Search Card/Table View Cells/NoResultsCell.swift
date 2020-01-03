@@ -47,7 +47,7 @@ class NoResultsCell: UITableViewCell {
 		let visitOurWebsiteAttrString = NSMutableAttributedString(string: visitWebsiteText)
 		let websiteURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.websiteUrl]!)!
 		visitOurWebsiteAttrString.addAttributes([.link: websiteURL.absoluteString], range: NSRange(location: 0, length: visitOurWebsiteAttrString.string.count))
-		visitOurWebsiteAttrString.addAttributes([.underlineStyle: NSUnderlineStyle.single], range: linkRange)
+		visitOurWebsiteAttrString.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue], range: linkRange)
 
 		visitWebsiteTextView.attributedText = visitOurWebsiteAttrString
 		visitWebsiteTextView.textColor = .aicCardDarkLinkColor
