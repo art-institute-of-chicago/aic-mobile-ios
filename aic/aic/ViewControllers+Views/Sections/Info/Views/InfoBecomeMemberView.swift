@@ -7,19 +7,18 @@ import UIKit
 
 class InfoBecomeMemberView: BaseView {
 	let titleLabel = UILabel()
-	let titleDividerLine = UIView()
 	let joinPromptLabel = UILabel()
 	let joinTextView = LinkedTextView()
 	let accessPromptLabel = UILabel()
 	let accessButton = AICButton(isSmall: false)
 	let bottomDividerLine = UIView()
 
-	let titleLabelHeight: CGFloat = 80
-	let joinPromptMarginTop: CGFloat = 16
-	let joinTextMarginTop: CGFloat = 5
-	let accessPromptMarginTop: CGFloat = 28
-	let accessButtonMarginTop: CGFloat = 20
-	let accessButtonMarginBottom: CGFloat = 20
+	private let titleLabelMarginTop: CGFloat = 20
+	private let joinPromptMarginTop: CGFloat = 16
+	private let joinTextMarginTop: CGFloat = 5
+	private let accessPromptMarginTop: CGFloat = 28
+	private let accessButtonMarginTop: CGFloat = 20
+	private let accessButtonMarginBottom: CGFloat = 20
 
 	var savedMember: AICMemberInfoModel? {
 		didSet {
@@ -55,11 +54,10 @@ class InfoBecomeMemberView: BaseView {
 			//Welcome back existing members
 			titleLabel.text = Common.Info.becomeMemberExistingMemberTitle
 		}
+
 		titleLabel.font = .aicTitleFont
 		titleLabel.textColor = .aicDarkGrayColor
 		titleLabel.textAlignment = NSTextAlignment.center
-
-		titleDividerLine.backgroundColor = .aicDividerLineColor
 
 		joinPromptLabel.numberOfLines = 0
 		joinPromptLabel.text = "Member Join Prompt".localized(using: "Info")
@@ -90,9 +88,8 @@ class InfoBecomeMemberView: BaseView {
 
 		// Add Subviews
 		addSubview(titleLabel)
-		addSubview(titleDividerLine)
 
-		//Only show join prompts if no member has been saved
+		// Only show join prompts if no member has been saved
 		if savedMember == nil {
 			addSubview(joinPromptLabel)
 			addSubview(joinTextView)
@@ -115,17 +112,11 @@ class InfoBecomeMemberView: BaseView {
 
 	override func updateConstraints() {
 		if didSetupConstraints == false {
-			titleLabel.autoSetDimension(.height, toSize: 80)
-			titleLabel.autoPinEdge(.top, to: .top, of: self)
+			titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: titleLabelMarginTop)
 			titleLabel.autoPinEdge(.leading, to: .leading, of: self)
 			titleLabel.autoPinEdge(.trailing, to: .trailing, of: self)
 
-			titleDividerLine.autoPinEdge(.top, to: .bottom, of: titleLabel)
-			titleDividerLine.autoSetDimension(.height, toSize: 1)
-			titleDividerLine.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
-			titleDividerLine.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
-
-			joinPromptLabel.autoPinEdge(.top, to: .bottom, of: titleDividerLine, withOffset: joinPromptMarginTop)
+			joinPromptLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: joinPromptMarginTop)
 			joinPromptLabel.autoPinEdge(.leading, to: .leading, of: self)
 			joinPromptLabel.autoPinEdge(.trailing, to: .trailing, of: self)
 
