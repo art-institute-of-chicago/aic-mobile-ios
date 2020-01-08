@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exhibitionContentCell" rowHeight="516" id="TOO-4p-WNi" customClass="ExhibitionContentCell" customModule="aic" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="530"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exhibitionContentCell" rowHeight="578" id="TOO-4p-WNi" customClass="ExhibitionContentCell" customModule="aic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="592"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TOO-4p-WNi" id="mLP-V2-pYH">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="529.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="592"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zhx-kn-QDT" customClass="AICImageView" customModule="aic" customModuleProvider="target">
@@ -49,37 +46,46 @@
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DlE-mQ-422" customClass="UILabelPadding" customModule="aic" customModuleProvider="target">
-                        <rect key="frame" x="16" y="453" width="343" height="16.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Through Month day, year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08c-cl-LXS">
-                        <rect key="frame" x="16" y="494.5" width="343" height="19.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="ajj-Mb-KWS">
+                        <rect key="frame" x="16" y="453" width="343" height="139"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DlE-mQ-422" customClass="UILabelPadding" customModule="aic" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Gallery Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brR-Tg-NaN">
+                                <rect key="frame" x="0.0" y="75" width="343" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Through Month day, year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08c-cl-LXS">
+                                <rect key="frame" x="0.0" y="119.5" width="343" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="08c-cl-LXS" secondAttribute="trailing" constant="16" id="1Ky-UD-RUn"/>
                     <constraint firstAttribute="trailing" secondItem="Zhx-kn-QDT" secondAttribute="trailing" id="1mF-mK-vgw"/>
+                    <constraint firstItem="ajj-Mb-KWS" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="93" id="3ZT-pw-Zxt"/>
+                    <constraint firstAttribute="bottom" secondItem="ajj-Mb-KWS" secondAttribute="bottom" id="55T-ns-CpZ"/>
                     <constraint firstItem="B1T-B2-Jzi" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="16" id="BGB-rF-4Tp"/>
                     <constraint firstItem="pPS-6o-axa" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" constant="-78" id="Dt4-bW-jQN"/>
-                    <constraint firstItem="08c-cl-LXS" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" constant="16" id="JxY-Kq-GeD"/>
+                    <constraint firstAttribute="trailing" secondItem="ajj-Mb-KWS" secondAttribute="trailing" constant="16" id="KaC-ed-akB"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" id="LMI-rI-roE"/>
-                    <constraint firstAttribute="bottom" secondItem="DlE-mQ-422" secondAttribute="bottom" constant="60" id="LmU-b6-03T"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" id="VyZ-4h-xac"/>
-                    <constraint firstItem="DlE-mQ-422" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" constant="16" id="fU0-bV-xsi"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="top" secondItem="mLP-V2-pYH" secondAttribute="top" id="fd9-We-uYR"/>
-                    <constraint firstItem="DlE-mQ-422" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="93" id="kPo-gB-miH"/>
                     <constraint firstItem="pPS-6o-axa" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="16" id="noq-C4-Ad8"/>
                     <constraint firstItem="B1T-B2-Jzi" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" constant="78" id="oCy-td-9t8"/>
-                    <constraint firstItem="08c-cl-LXS" firstAttribute="top" secondItem="DlE-mQ-422" secondAttribute="bottom" constant="25" id="u33-zn-kjO"/>
-                    <constraint firstAttribute="trailing" secondItem="DlE-mQ-422" secondAttribute="trailing" constant="16" id="x1Z-bX-x9J"/>
+                    <constraint firstItem="ajj-Mb-KWS" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" constant="16" id="zr9-ND-Jsh"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -87,13 +93,13 @@
                 <outlet property="buyTicketsButton" destination="B1T-B2-Jzi" id="arm-p6-ITN"/>
                 <outlet property="buyTicketsButtonHorizontalOffset" destination="oCy-td-9t8" id="frN-Md-Nnz"/>
                 <outlet property="descriptionLabel" destination="DlE-mQ-422" id="7qc-pM-tV9"/>
-                <outlet property="descriptionToImageVerticalSpacing" destination="kPo-gB-miH" id="Zcy-oB-RsJ"/>
                 <outlet property="exhibitionImageView" destination="Zhx-kn-QDT" id="DYR-hF-yKX"/>
+                <outlet property="galleryTitleLabel" destination="brR-Tg-NaN" id="Crk-Bx-kw6"/>
                 <outlet property="showOnMapButton" destination="pPS-6o-axa" id="LkO-0j-NfG"/>
                 <outlet property="showOnMapButtonHorizontalOffset" destination="Dt4-bW-jQN" id="tF9-bH-Ywo"/>
                 <outlet property="throughDateLabel" destination="08c-cl-LXS" id="LDe-n8-mgS"/>
             </connections>
-            <point key="canvasLocation" x="2.5" y="154"/>
+            <point key="canvasLocation" x="2.3999999999999999" y="181.70914542728636"/>
         </tableViewCell>
     </objects>
 </document>

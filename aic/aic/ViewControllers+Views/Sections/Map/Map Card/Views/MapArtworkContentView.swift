@@ -98,9 +98,18 @@ class MapArtworkContentView: UIView {
 		titleLabel.text = exhibition.title
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: exhibition.imageUrl)
-		locationLabel.text = Common.Map.stringForFloorNumber[exhibition.location!.floor]
 		audioButton.isHidden = true
 		audioButton.isEnabled = false
+
+		if let galleryId = exhibition.galleryId,
+			let gallery = AppDataManager.sharedInstance.getGallery(with: galleryId) {
+
+			locationLabel.text = gallery.title
+		} else if let floor = exhibition.location?.floor {
+			locationLabel.text = Common.Map.stringForFloorNumber[floor]
+		} else {
+			locationLabel.text = nil
+		}
 
 		setupAccessibility()
 	}

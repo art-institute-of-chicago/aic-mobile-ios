@@ -17,12 +17,11 @@ class ExhibitionContentCell: UITableViewCell {
 	@IBOutlet var showOnMapButton: AICButton!
 	@IBOutlet var buyTicketsButton: AICButton!
 	@IBOutlet var descriptionLabel: UILabelPadding!
+	@IBOutlet var galleryTitleLabel: UILabel!
 	@IBOutlet var throughDateLabel: UILabel!
 
 	@IBOutlet weak var showOnMapButtonHorizontalOffset: NSLayoutConstraint!
 	@IBOutlet weak var buyTicketsButtonHorizontalOffset: NSLayoutConstraint!
-	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
-	let descriptionVerticalSpacingMin: CGFloat = 32
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -38,6 +37,7 @@ class ExhibitionContentCell: UITableViewCell {
 		showOnMapButton.titleLabel?.font = .aicButtonFont
 		buyTicketsButton.titleLabel?.font = .aicButtonFont
 		descriptionLabel.font = .aicTextFont
+		galleryTitleLabel.font = .aicTextFont
 		throughDateLabel.font = .aicTextItalicFont
 	}
 
@@ -80,6 +80,13 @@ class ExhibitionContentCell: UITableViewCell {
 
 			descriptionLabel.attributedText =  eventDescriptionAttributedString
 			descriptionLabel.textColor = .white
+			if let galleryId = exhibitionModel.galleryId,
+				let title = AppDataManager.sharedInstance.getGallery(with: galleryId)?.title {
+				galleryTitleLabel.text = title
+				galleryTitleLabel.isHidden = false
+			} else {
+				galleryTitleLabel.isHidden = true
+			}
 			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
 
 			if exhibitionModel.location == nil {

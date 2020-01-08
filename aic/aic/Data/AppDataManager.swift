@@ -598,6 +598,12 @@ class AppDataManager {
 		})
 	}
 
+	func getGallery(with galleryId: Int) -> AICGalleryModel? {
+		return app.galleries
+			.filter { $0.galleryId == galleryId }
+			.first
+	}
+
 	func getGalleries(forFloorNumber floorNumber: Int) -> [AICGalleryModel] {
 		return app.galleries.filter({ $0.location.floor == floorNumber })
 	}
