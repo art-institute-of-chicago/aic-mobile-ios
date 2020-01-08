@@ -13,6 +13,8 @@ import Alamofire
 import Kingfisher
 
 protocol AudioPlayerNavigationControllerDelegate: class {
+	func audioPlayerDidStartPlaying(audio: AICAudioFileModel)
+	func audioPlayerDidPause(audio: AICAudioFileModel)
 	func audioPlayerDidFinishPlaying(audio: AICAudioFileModel)
 }
 
@@ -210,9 +212,17 @@ class AudioPlayerNavigationController: CardNavigationController {
 		var audio = tourStop.audio
 		audio.language = tour.language
 
-		if load(audioFile: audio, coverImageURL: tourStop.object.imageUrl as URL) {
-			miniAudioPlayerView.reset()
-			audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio, tour: tour)
+		if currentAudioFile?.nid == audio.nid {
+			if miniAudioPlayerView.playPauseButton.isSelected {
+				_ = pause()
+			} else {
+				_ = play()
+			}
+		} else {
+			if load(audioFile: audio, coverImageURL: tourStop.object.imageUrl as URL) {
+				miniAudioPlayerView.reset()
+				audioInfoVC.setArtworkContent(artwork: tourStop.object, audio: audio, tour: tour)
+			}
 		}
 
 		// Log analytics
@@ -470,6 +480,9 @@ class AudioPlayerNavigationController: CardNavigationController {
 			// Play
 			avPlayer.play()
 			synchronizePlayPauseButtons(isPlaying: true)
+			if let currentAudioFile = currentAudioFile {
+				sectionDelegate?.audioPlayerDidStartPlaying(audio: currentAudioFile)
+			}
 
 			// Enable proximity sensing, needed when user is holding phone to their ear to listen to audio
 			UIDevice.current.isProximityMonitoringEnabled = true
@@ -487,6 +500,10 @@ class AudioPlayerNavigationController: CardNavigationController {
 			if var info = MPNowPlayingInfoCenter.default().nowPlayingInfo {
 				info[MPNowPlayingInfoPropertyPlaybackRate] = NSInteger(0.0)
 				MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+			}
+
+			if let currentAudioFile = self.currentAudioFile {
+				sectionDelegate?.audioPlayerDidPause(audio: currentAudioFile)
 			}
 
 			// Enable proximity sensing, needed when user is holding phone to their ear to listen to audio

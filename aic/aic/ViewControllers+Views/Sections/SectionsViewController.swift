@@ -783,9 +783,22 @@ extension SectionsViewController: MapItemsCollectionContainerDelegate {
 // MARK: Audio Player Delegate
 
 extension SectionsViewController: AudioPlayerNavigationControllerDelegate {
+	func audioPlayerDidStartPlaying(audio: AICAudioFileModel) {
+		guard mapVC.currentMode == .tour else { return }
+
+		mapVC.audioPlaybackDidStart(audio: audio)
+	}
+
+	func audioPlayerDidPause(audio: AICAudioFileModel) {
+		guard mapVC.currentMode == .tour else { return }
+
+		mapVC.audioPlaybackDidPause(audio: audio)
+	}
+
 	func audioPlayerDidFinishPlaying(audio: AICAudioFileModel) {
-		if mapVC.currentMode == .tour {
-			mapVC.advanceToNextTourStopAfterAudioPlayback(audio: audio)
-		}
+		guard mapVC.currentMode == .tour else { return }
+
+		mapVC.advanceToNextTourStopAfterAudioPlayback(audio: audio)
+		mapVC.audioPlaybackDidFinish(audio: audio)
 	}
 }

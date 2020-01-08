@@ -23,6 +23,15 @@ class TourStopPageViewController: UIPageViewController {
 
 	weak var tourStopPageDelegate: TourStopPageViewControllerDelegate?
 
+	var currentlyPlayingAudioTourIndex = -1 {
+		didSet {
+			guard let contentView = viewControllers?.first?.view?.subviews.first as? MapArtworkContentView
+				else { return }
+
+			contentView.audioButton.isSelected = currentlyPlayingAudioTourIndex == contentView.audioButton.tag
+		}
+	}
+
 	init(tour: AICTourModel) {
 		tourModel = tour
 		totalPages = tourModel.stops.count + 1 // add overview
@@ -74,6 +83,7 @@ class TourStopPageViewController: UIPageViewController {
 
 					let artworkContentView = MapArtworkContentView(tourStop: stop, stopNumber: pageIndex, language: tourModel.language)
 					artworkContentView.audioButton.tag = pageIndex
+					artworkContentView.audioButton.isSelected = pageIndex == currentlyPlayingAudioTourIndex
 					artworkContentView.imageButton.tag = pageIndex
 					artworkContentView.audioButton.addTarget(self, action: #selector(audioButtonPressed(button:)), for: .touchUpInside)
 					artworkContentView.imageButton.addTarget(self, action: #selector(imageButtonPressed(button:)), for: .touchUpInside)
