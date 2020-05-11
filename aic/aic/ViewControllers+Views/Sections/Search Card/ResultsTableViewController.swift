@@ -341,7 +341,7 @@ extension ResultsTableViewController {
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		if filter == .empty {
 			if section <= 1 {
-				let titles = ["Search".localized(using: "Search"), "On the Map".localized(using: "Search")]
+				let titles = ["search_title".localized(using: "Base"), "search_on_the_map_header".localized(using: "Base")]
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
 				titleView.titleLabel.text = titles[section]
 				return titleView
@@ -351,27 +351,27 @@ extension ResultsTableViewController {
 			if section == 2 && artworkItems.count > 0 {
 				// artworks header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
-				titleView.contentTitleLabel.text = "Artworks".localized(using: "Search")
-				titleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+				titleView.contentTitleLabel.text = "search_artworks_header".localized(using: "Search")
+				titleView.seeAllButton.setTitle("welcome_see_all_action".localized(using: "Base"), for: .normal)
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllArtworksButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			} else if section == 3 && tourItems.count > 0 {
 				// tours header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
-				titleView.contentTitleLabel.text = "Tours".localized(using: "Search")
-				titleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+				titleView.contentTitleLabel.text = "welcome_tours_header".localized(using: "Base")
+				titleView.seeAllButton.setTitle("welcome_see_all_action".localized(using: "Base"), for: .normal)
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllToursButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			} else if section == 4 && exhibitionItems.count > 0 {
 				// exhibitions header
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsContentTitleView.reuseIdentifier) as! ResultsContentTitleView
-				titleView.contentTitleLabel.text = "Exhibitions".localized(using: "Search")
-				titleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+				titleView.contentTitleLabel.text = "search_exhibitions_header".localized(using: "Search")
+				titleView.seeAllButton.setTitle("welcome_see_all_action".localized(using: "Base"), for: .normal)
 				titleView.seeAllButton.addTarget(self, action: #selector(seeAllExhibitionsButtonPressed(button:)), for: .touchUpInside)
 				return titleView
 			} else if section == 5 {
 				let titleView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ResultsSectionTitleView.reuseIdentifier) as! ResultsSectionTitleView
-				titleView.titleLabel.text = "On the Map".localized(using: "Search")
+				titleView.titleLabel.text = "search_on_the_map_header".localized(using: "Base")
 				return titleView
 			}
 		}

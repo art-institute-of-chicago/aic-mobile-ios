@@ -79,9 +79,9 @@ extension ArtworkTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ArtworkContentCell.reuseIdentifier, for: indexPath) as! ArtworkContentCell
 			cell.artworkModel = artworkModel
-			cell.playAudioButton.setTitle("Play Audio".localized(using: "ContentCard"), for: .normal)
+			cell.playAudioButton.setTitle("content_play_audio_action".localized(using: "Base"), for: .normal)
 			cell.playAudioButton.addTarget(self, action: #selector(artworkPlayButtonPressed(button:)), for: .touchUpInside)
-			cell.showOnMapButton.setTitle("Show On Map".localized(using: "ContentCard"), for: .normal)
+			cell.showOnMapButton.setTitle("content_show_on_map_action".localized(using: "Base"), for: .normal)
 			cell.showOnMapButton.addTarget(self, action: #selector(artworkShowOnMapButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}

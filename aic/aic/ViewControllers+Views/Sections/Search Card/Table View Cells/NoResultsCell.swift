@@ -39,10 +39,10 @@ class NoResultsCell: UITableViewCell {
 	}
 
 	func updateLanguage() {
-		noResultsLabel.text = "Not Found Text".localized(using: "Search")
+		noResultsLabel.text = "search_no_results_header".localized(using: "Search")
 
-		let visitWebsiteLink = "Not Found Website Link".localized(using: "Search")
-		let visitWebsiteText = "Not Found Website Text".localized(using: "Search") + " " + visitWebsiteLink
+		let visitWebsiteLink = "search_no_results_visit_website_action".localized(using: "Search")
+		let visitWebsiteText = "search_no_results_message".localized(using: "Search") + " " + visitWebsiteLink
 		let linkRange: NSRange = (visitWebsiteText as NSString).range(of: visitWebsiteLink)
 		let visitOurWebsiteAttrString = NSMutableAttributedString(string: visitWebsiteText)
 		let websiteURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.websiteUrl]!)!

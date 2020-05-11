@@ -74,7 +74,7 @@ class SearchNavigationController: CardNavigationController {
 		searchBar.isTranslucent = false
 		searchBar.setBackgroundImage(UIImage(), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
 		searchBar.setImage(#imageLiteral(resourceName: "searchClear"), for: .clear, state: .normal)
-		searchBar.placeholder = "Search Prompt".localized(using: "Search")
+		searchBar.placeholder = "search_prompt".localized(using: "Base")
 		searchBar.keyboardAppearance = .dark
 		searchBar.delegate = self
 
@@ -199,12 +199,12 @@ class SearchNavigationController: CardNavigationController {
 	// MARK: Language
 
 	@objc func updateLanguage() {
-		searchBar.placeholder = "Search Prompt".localized(using: "Search")
+		searchBar.placeholder = "search_prompt".localized(using: "Base")
 		resultsVC.tableView.reloadData()
-		filterMenuView.suggestedButton.setTitle("Suggested".localized(using: "Search"), for: .normal)
-		filterMenuView.artworksButton.setTitle("Artworks".localized(using: "Search"), for: .normal)
-		filterMenuView.toursButton.setTitle("Tours".localized(using: "Search"), for: .normal)
-		filterMenuView.exhibitionsButton.setTitle("Exhibitions".localized(using: "Search"), for: .normal)
+		filterMenuView.suggestedButton.setTitle("search_suggested".localized(using: "Base"), for: .normal)
+		filterMenuView.artworksButton.setTitle("search_artworks_header".localized(using: "Search"), for: .normal)
+		filterMenuView.toursButton.setTitle("welcome_tours_header".localized(using: "Base"), for: .normal)
+		filterMenuView.exhibitionsButton.setTitle("search_exhibitions_header".localized(using: "Search"), for: .normal)
 		filterMenuView.updateConstraints()
 	}
 

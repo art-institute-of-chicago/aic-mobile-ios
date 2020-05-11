@@ -34,13 +34,13 @@ class HomeViewController: SectionViewController {
 	let scrollView: UIScrollView = UIScrollView()
 	let contentView: ClickThroughView = ClickThroughView()
 	let homeIntroView: HomeIntroView = HomeIntroView()
-	let toursTitleView: HomeContentTitleView = HomeContentTitleView(title: "Tours")
+	let toursTitleView: HomeContentTitleView = HomeContentTitleView(title: "welcome_tours_header".localized(using: "Base"))
 	let toursCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.tourCellSize)
 	let exhibitionsDividerLine: UIView = createDividerLine()
-	let exhibitionsTitleView: HomeContentTitleView = HomeContentTitleView(title: "On View")
+	let exhibitionsTitleView: HomeContentTitleView = HomeContentTitleView(title: "welcome_on_view_header".localized(using: "Base"))
 	let exhibitionsCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.exhibitionCellSize)
 	let eventsDividerLine: UIView = createDividerLine()
-	let eventsTitleView: HomeContentTitleView = HomeContentTitleView(title: "Events")
+	let eventsTitleView: HomeContentTitleView = HomeContentTitleView(title: "welcome_events_header".localized(using: "Base"))
 	let eventsCollectionView: UICollectionView = createCollectionView(cellSize: HomeViewController.eventCellSize)
 
 	var tourItems: [AICTourModel] = []
@@ -226,16 +226,16 @@ class HomeViewController: SectionViewController {
 		let homeMemberPromptText: String = AppDataManager.sharedInstance.app.generalInfo.homeMemberPrompt
 		homeIntroView.promptTextView.text = homeMemberPromptText
 
-		homeIntroView.accessMemberCardButton.setTitle("Member Card Button Title".localized(using: "Home"), for: .normal)
+		homeIntroView.accessMemberCardButton.setTitle("welcome_member_card_action".localized(using: "Base"), for: .normal)
 
-		toursTitleView.contentTitleLabel.text = "Tours".localized(using: "Sections")
-		toursTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+		toursTitleView.contentTitleLabel.text = "welcome_tours_header".localized(using: "Base")
+		toursTitleView.seeAllButton.setTitle("welcome_see_all_action".localized(using: "Base"), for: .normal)
 
-		exhibitionsTitleView.contentTitleLabel.text = "On View".localized(using: "Sections")
-		exhibitionsTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+		exhibitionsTitleView.contentTitleLabel.text = "welcome_on_view_header".localized(using: "Base")
+		exhibitionsTitleView.seeAllButton.setTitle("welcome_see_all_action".localized(using: "Base"), for: .normal)
 
-		eventsTitleView.contentTitleLabel.text = "Events".localized(using: "Sections")
-		eventsTitleView.seeAllButton.setTitle("See All".localized(using: "Sections"), for: .normal)
+		eventsTitleView.contentTitleLabel.text = "welcome_events_header".localized(using: "Base")
+		eventsTitleView.seeAllButton.setTitle("welcome_see_all_action".localized(using: "Base"), for: .normal)
 
 		toursCollectionView.reloadData()
 		exhibitionsCollectionView.reloadData()

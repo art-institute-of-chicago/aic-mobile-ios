@@ -16,7 +16,7 @@ class MuseumInfoViewController: UIViewController {
 	init() {
 		super.init(nibName: nil, bundle: nil)
 
-		self.navigationItem.title = "Museum Information"
+		self.navigationItem.title = "info_museum_info_action:Info"
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -63,7 +63,7 @@ class MuseumInfoViewController: UIViewController {
 	}
 
 	@objc func updateLanguage() {
-		pageView.titleLabel.text = "Museum Information".localized(using: "Sections")
+		pageView.titleLabel.text = "info_museum_info_action".localized(using: "Info")
 
 		var text: String = AppDataManager.sharedInstance.app.generalInfo.museumHours
 		text += "\n\n" + Common.Info.museumInformationAddress

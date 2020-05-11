@@ -57,7 +57,7 @@ struct Common {
 									  color: .aicHomeColor,
 									  background: #imageLiteral(resourceName: "backgroundHome"),
 									  icon: #imageLiteral(resourceName: "iconHome"),
-									  title: "Welcome",
+									  title: "welcome_title:Base",
 									  tabBarTitle: "Home",
 									  tabBarIcon: #imageLiteral(resourceName: "navHome")
 		),
@@ -273,24 +273,24 @@ struct Common {
 
 		// Large
 		static let useHeadphones = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageListenIn"),
-												   title: "Message Headphones Title",
-												   message: "Message Headphones Text",
-												   actionButtonTitle: "Message Headphones Action Button Title",
+												   title: "headphone_message_title".localized(using: "MediaUI"),
+												   message: "headphone_message_body".localized(using: "MediaUI"),
+												   actionButtonTitle: "global_accept_action".localized(using: "Base"),
 												   cancelButtonTitle: nil
 		)
 
 		static let leavingTour = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageTours"),
-												 title: "Message Leaving Tour Title",
-												 message: "Message Leaving Tour Text",
-												 actionButtonTitle: "Message Leaving Tour Action Button Title",
-												 cancelButtonTitle: "Message Leaving Tour Cancel Button Title"
+												 title: "tour_leave_tour_title".localized(using: "Base"),
+												 message: "",
+												 actionButtonTitle: "tour_leave_tour_leave_action".localized(using: "Base"),
+												 cancelButtonTitle: "tour_leave_tour_cancel_action".localized(using: "Base")
 		)
 
 		static let enableLocation = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageMap"),
-													title: "Message Location Title",
-													message: "Message Location Text",
-													actionButtonTitle: "Message Location Action Button Title",
-													cancelButtonTitle: "Message Location Cancel Button Title"
+													title: "location_settings_header".localized(using: "MediaUI"),
+													message: "location_settings_body".localized(using: "MediaUI"),
+													actionButtonTitle: "global_accept_action".localized(using: "Base"),
+													cancelButtonTitle: "global_cancel_action".localized(using: "Base")
 		)
 	}
 
@@ -361,27 +361,27 @@ struct Common {
 	// MARK: Tooltips
 	struct Tooltips {
 		static var mapPinchTooltip = AICTooltipModel(type: .popup,
-													 title: "Map Tooltip Pinch Title",
-													 text: "Map Tooltip Pinch Text",
-													 arrowPosition: CGPoint.zero,
+													 title: "map_tutorial_explore_title".localized(using: "Map"),
+													 text: "map_tutorial_explore_text".localized(using: "Map"),
+													 arrowPosition: .zero,
 													 image: #imageLiteral(resourceName: "tooltipPinch")
 		)
 		static var mapFloorTooltip = AICTooltipModel(type: .arrow,
 													 title: "",
-													 text: "Map Tooltip Floor",
-													 arrowPosition: CGPoint.zero,
+													 text: "map_tutorial_floor_picker_prompt".localized(using: "Map"),
+													 arrowPosition: .zero,
 													 image: nil
 		)
-		static var mapOrienationTooltip = AICTooltipModel(type: .arrow,
-														  title: "",
-														  text: "Map Tooltip Orientation",
-														  arrowPosition: CGPoint.zero,
-														  image: nil
+		static var mapOrientationTooltip = AICTooltipModel(type: .arrow,
+														   title: "",
+														   text: "map_tutorial_orient_map".localized(using: "Map"),
+														   arrowPosition: .zero,
+														   image: nil
 		)
 		static var mapArtworkTooltip = AICTooltipModel(type: .popup,
-													   title: "Map Tooltip Artwork Title",
-													   text: "Map Tooltip Artwork Text",
-													   arrowPosition: CGPoint.zero,
+													   title: "map_tutorial_audio_pins_title".localized(using: "Map"),
+													   text: "map_tutorial_audio_pins_text".localized(using: "Map"),
+													   arrowPosition: .zero,
 													   image: #imageLiteral(resourceName: "tooltipArtwork")
 		)
 	}
@@ -396,10 +396,10 @@ struct Common {
 
 		static var stringForFloorNumber: [Int: String] {
 			return [
-				0: "Lower Level".localized(using: "Map"),
-				1: "First Level".localized(using: "Map"),
-				2: "Second Level".localized(using: "Map"),
-				3: "Third Level".localized(using: "Map")]
+				0: "map_lower_level".localized(using: "Map"),
+				1: "map_first_level".localized(using: "Map"),
+				2: "map_second_level".localized(using: "Map"),
+				3: "map_third_level".localized(using: "Map")]
 		}
 
 		// File directories
@@ -472,13 +472,9 @@ struct Common {
 		// Date formats
 		static func throughDateString(endDate: Date) -> String {
 			let dateFormatter = DateFormatter()
-			//			dateFormatter.dateFormat = "MMMM d, yyyy"
-			//DateFormatter.localizedString(from: endDate, dateStyle: .medium, timeStyle: .medium)
 			dateFormatter.locale = Locale(identifier: Common.currentLanguage.rawValue)
 			dateFormatter.setLocalizedDateFormatFromTemplate("MMMM d, yyyy")
-			let endDateFormatted = dateFormatter.string(from: endDate)
-			let throughString = "Through Date".localized(using: "Global")
-			return throughString + " " + endDateFormatted
+			return "content_through_date".localizedFormat(arguments: dateFormatter.string(from: endDate), using: "Base")
 		}
 
 		static func monthDayString(date: Date) -> String {

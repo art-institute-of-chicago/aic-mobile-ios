@@ -135,21 +135,24 @@ class InfoViewController: SectionViewController {
 	}
 
 	@objc func updateLanguage() {
-		becomeMemberView.titleLabel.text = "Member Title".localized(using: "Info")
-		becomeMemberView.joinPromptLabel.text = "Member Join Prompt".localized(using: "Info")
-		becomeMemberView.joinTextView.text = "Member Join Text".localized(using: "Info")
-		becomeMemberView.accessPromptLabel.text = "Member Access Prompt".localized(using: "Info")
-		becomeMemberView.accessButton.setTitle("Member Access Button".localized(using: "Info"), for: .normal)
+		buyTicketsView.updateLanguage()
 
-		museumInfoButton.setTitle("Museum Information".localized(using: "Sections"), for: .normal)
+		becomeMemberView.titleLabel.text = "info_member_header".localized(using: "Info")
+		becomeMemberView.joinPromptLabel.text = "info_member_prompt".localized(using: "Info")
+		becomeMemberView.joinTextView.text = "info_member_join_action".localized(using: "Info")
+		becomeMemberView.accessPromptLabel.text = "info_member_log_in_header".localized(using: "Info")
+		becomeMemberView.accessButton.setTitle("member_card_access_action".localized(using: "AccessCard"), for: .normal)
 
-		languageButton.setTitle("Language Settings".localized(using: "Sections"), for: .normal)
+		museumInfoButton.setTitle("info_museum_info_action".localized(using: "Info"), for: .normal)
 
-		locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
+		languageButton.setTitle("info_language_settings_action".localized(using: "Info"), for: .normal)
 
-		let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject?
-		let version = nsObject as! String
-		footerView.potionCreditsTextView.text = "Version".localized(using: "Info") + " \(version) " + "Designed by".localized(using: "Info") + " Potion"
+		locationButton.setTitle("location_settings_title".localized(using: "LocationUI"), for: .normal)
+
+		if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+			footerView.potionCreditsTextView.text = "info_version".localizedFormat(arguments: version, using: "Info")
+				+ " " + "info_designed_by".localized(using: "Info")
+		}
 	}
 
 	@objc func infoButtonPressed(button: UIButton) {

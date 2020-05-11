@@ -18,7 +18,7 @@ class LanguageViewController: UIViewController {
 	init() {
 		super.init(nibName: nil, bundle: nil)
 
-		self.navigationItem.title = "Language Settings"
+		self.navigationItem.title = "info_language_settings_action:Info"
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -87,8 +87,8 @@ class LanguageViewController: UIViewController {
 	}
 
 	@objc func updateLanguage() {
-		pageView.titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
-		pageView.textView.text = "Language Settings Text".localized(using: "LanguageSettings")
+		pageView.titleLabel.text = "language_settings_header".localized(using: "LocalizationUI")
+		pageView.textView.text = "language_settings_body".localized(using: "LocalizationUI")
 
 		englishButton.setColorMode(colorMode: AICButton.whiteOrangeMode)
 		spanishButton.setColorMode(colorMode: AICButton.whiteOrangeMode)

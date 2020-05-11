@@ -194,8 +194,8 @@ class AudioInfoViewController: UIViewController {
 
 	// Language
 	private func updateLanguage(language: Common.Language) {
-		creditsView.titleLabel.text = "Credits".localized(using: "AudioPlayer")
-		transcriptView.titleLabel.text = "Transcript".localized(using: "AudioPlayer")
+		creditsView.titleLabel.text = "audio_info_credits_header".localized(using: "Base")
+		transcriptView.titleLabel.text = "audio_info_transcript_header".localized(using: "Base")
 	}
 
 	private func setImage(imageURL: URL) {

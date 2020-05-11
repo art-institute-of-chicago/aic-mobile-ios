@@ -118,10 +118,10 @@ class MapNavigationController: SectionNavigationController {
 			case .allInformation:
 				break
 			case .artwork, .searchedArtwork:
-				contentCard.setTitleText(text: "Artwork".localized(using: "Map"))
+				contentCard.setTitleText(text: "map_card_artwork_title".localized(using: "Search"))
 				break
 			case .exhibition:
-				contentCard.setTitleText(text: "Exhibition".localized(using: "Map"))
+				contentCard.setTitleText(text: "map_card_exhibition_title".localized(using: "Search"))
 				break
 			case .dining:
 				break
@@ -407,7 +407,7 @@ class MapNavigationController: SectionNavigationController {
 		artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 		artworkVC.view.addSubview(artworkContentView)
 		mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
-		mapContentCardVC!.setTitleText(text: "Artwork".localized(using: "Map"))
+		mapContentCardVC!.setTitleText(text: "map_card_artwork_title".localized(using: "Search"))
 		mapContentCardVC!.cardDelegate = self
 
 		// Add card to view
@@ -445,7 +445,7 @@ class MapNavigationController: SectionNavigationController {
 		artworkContentView.imageButton.addTarget(self, action: #selector(mapArtworkImageButtonPressed(button:)), for: .touchUpInside)
 		artworkVC.view.addSubview(artworkContentView)
 		mapContentCardVC = MapContentCardNavigationController(contentVC: artworkVC)
-		mapContentCardVC!.setTitleText(text: "Artwork".localized(using: "Map"))
+		mapContentCardVC!.setTitleText(text: "map_card_artwork_title".localized(using: "Search"))
 		mapContentCardVC!.cardDelegate = self
 
 		// Add card to view
@@ -479,7 +479,7 @@ class MapNavigationController: SectionNavigationController {
 		}
 		let exhibitionView = MapArtworkContentView(exhibition: exhibitionModel!)
 		mapContentCardVC = MapContentCardNavigationController(contentView: exhibitionView)
-		mapContentCardVC!.setTitleText(text: "Exhibition".localized(using: "Map"))
+		mapContentCardVC!.setTitleText(text: "map_card_exhibition_title".localized(using: "Search"))
 		mapContentCardVC!.cardDelegate = self
 
 		// Add card to view
@@ -801,8 +801,8 @@ extension MapNavigationController: TooltipViewControllerDelegate {
 	func tooltipsDismissedTooltip(index: Int) {
 		if index == 0 {
 			// Orientation Tooltip
-			Common.Tooltips.mapOrienationTooltip.arrowPosition = mapVC.floorSelectorVC.getOrientationButtonPosition()
-			Common.Tooltips.mapOrienationTooltip.text = "Map Tooltip Orientation".localized(using: "Tooltips")
+			Common.Tooltips.mapOrientationTooltip.arrowPosition = mapVC.floorSelectorVC.getOrientationButtonPosition()
+			Common.Tooltips.mapOrientationTooltip.text = "map_tutorial_orient_map".localized(using: "Map")
 
 			// Floor Tooltip
 			var floorNumber = mapVC.currentFloor
@@ -810,15 +810,12 @@ extension MapNavigationController: TooltipViewControllerDelegate {
 				floorNumber = userFloor
 			}
 			Common.Tooltips.mapFloorTooltip.arrowPosition = mapVC.floorSelectorVC.getFloorButtonPosition(floorNumber: floorNumber)
-			var floorText = "Map Tooltip Floor".localized(using: "Tooltips")
-			floorText += Common.Map.stringForFloorNumber[floorNumber]!
-			floorText += (Common.currentLanguage == .chinese) ? "。\n" : ".\n"
-			floorText += "Map Tooltip Floor Second Line".localized(using: "Tooltips")
-			Common.Tooltips.mapFloorTooltip.text = floorText
+			Common.Tooltips.mapFloorTooltip.text = "map_tutorial_floor_picker_prompt"
+				.localizedFormat(arguments: Common.Map.stringForFloorNumber[floorNumber] ?? "", using: "Map")
 
 			mapVC.setCurrentFloor(forFloorNum: floorNumber)
 
-			mapTooltipVC!.showArrowTooltips(tooltips: [Common.Tooltips.mapOrienationTooltip, Common.Tooltips.mapFloorTooltip], tooltipIndex: 1)
+			mapTooltipVC!.showArrowTooltips(tooltips: [Common.Tooltips.mapOrientationTooltip, Common.Tooltips.mapFloorTooltip], tooltipIndex: 1)
 		} else {
 			hideMapTooltips()
 		}

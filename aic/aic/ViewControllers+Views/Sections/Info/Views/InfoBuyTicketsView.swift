@@ -21,15 +21,15 @@ class InfoBuyTicketsView: BaseView {
 		super.init(frame: CGRect.zero)
 
 		purchasePromptLabel.numberOfLines = 0
-		purchasePromptLabel.text = "Purchase Tickets Prompt".localized(using: "Info")
 		purchasePromptLabel.font = .aicPageTextFont
 		purchasePromptLabel.textColor = .aicDarkGrayColor
 		purchasePromptLabel.textAlignment = .center
 
 		buyButton.setColorMode(colorMode: AICButton.orangeMode)
-		buyButton.setTitle("Buy Tickets Button".localized(using: "Info"), for: .normal)
 
 		bottomDividerLine.backgroundColor = .aicDividerLineColor
+
+		updateLanguage()
 
 		// Add Subviews
 		addSubview(purchasePromptLabel)
@@ -61,5 +61,10 @@ class InfoBuyTicketsView: BaseView {
 		}
 
 		super.updateConstraints()
+	}
+
+	func updateLanguage() {
+		purchasePromptLabel.text = "info_purchase_tickets_prompt".localized(using: "Info")
+		buyButton.setTitle("info_buy_tickets_action".localized(using: "Info"), for: .normal)
 	}
 }

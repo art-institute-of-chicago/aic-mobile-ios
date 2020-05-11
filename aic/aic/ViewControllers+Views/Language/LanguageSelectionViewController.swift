@@ -140,11 +140,11 @@ class LanguageSelectionViewController: UIViewController {
 	}
 
 	func updateLanguage() {
-		titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
+		titleLabel.text = "language_settings_header".localized(using: "LocalizationUI")
 
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.lineSpacing = 6
-		let textAttrString = NSMutableAttributedString(string: "Language Settings Text".localized(using: "LanguageSettings"))
+		let textAttrString = NSMutableAttributedString(string: "language_settings_body".localized(using: "LocalizationUI"))
 		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: textAttrString.length))
 
 		subtitleLabel.attributedText = textAttrString

@@ -80,7 +80,7 @@ extension TourTableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: TourContentCell.reuseIdentifier, for: indexPath) as! TourContentCell
 			cell.tourModel = tourModel
 			cell.languageSelectorView.delegate = self
-			cell.startTourButton.setTitle("Start Tour".localized(using: "ContentCard"), for: .normal)
+			cell.startTourButton.setTitle("tour_start_tour_action".localized(using: "Base"), for: .normal)
 			cell.startTourButton.addTarget(self, action: #selector(tourStartButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		} else if indexPath.row == 1 {

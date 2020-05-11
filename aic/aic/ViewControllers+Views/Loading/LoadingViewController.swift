@@ -129,7 +129,7 @@ class LoadingViewController: UIViewController {
 
 		// Welcome Label
 		welcomeLabel.font = .aicLoadingWelcomeFont
-		welcomeLabel.text = "Welcome".localized(using: "Sections")
+		welcomeLabel.text = "welcome_title".localized(using: "Base")
 		welcomeLabel.numberOfLines = 1
 		welcomeLabel.textColor = .white
 		welcomeLabel.textAlignment = .center

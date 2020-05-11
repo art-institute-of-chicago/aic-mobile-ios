@@ -81,9 +81,9 @@ extension ExhibitionTableViewController {
 		if indexPath.row == 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: ExhibitionContentCell.reuseIdentifier, for: indexPath) as! ExhibitionContentCell
 			cell.exhibitionModel = exhibitionModel
-			cell.buyTicketsButton.setTitle("Buy Tickets".localized(using: "ContentCard"), for: .normal)
+			cell.buyTicketsButton.setTitle("event_buy_tickets_action".localized(using: "Base"), for: .normal)
 			cell.buyTicketsButton.addTarget(self, action: #selector(exhibitionBuyTicketsButtonPressed(button:)), for: .touchUpInside)
-			cell.showOnMapButton.setTitle("Show On Map".localized(using: "ContentCard"), for: .normal)
+			cell.showOnMapButton.setTitle("content_show_on_map_action".localized(using: "Base"), for: .normal)
 			cell.showOnMapButton.addTarget(self, action: #selector(exhibitionShowOnMapButtonPressed(button:)), for: .touchUpInside)
 			return cell
 		}
