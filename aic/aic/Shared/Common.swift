@@ -287,8 +287,8 @@ struct Common {
 		)
 
 		static let enableLocation = AICMessageModel(iconImage: #imageLiteral(resourceName: "messageMap"),
-													title: "location_settings_header".localized(using: "MediaUI"),
-													message: "location_settings_body".localized(using: "MediaUI"),
+													title: "location_settings_header".localized(using: "LocationUI"),
+													message: "location_settings_body".localized(using: "LocationUI"),
 													actionButtonTitle: "global_accept_action".localized(using: "Base"),
 													cancelButtonTitle: "global_cancel_action".localized(using: "Base")
 		)
