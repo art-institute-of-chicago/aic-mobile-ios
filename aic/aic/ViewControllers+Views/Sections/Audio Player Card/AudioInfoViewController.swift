@@ -84,7 +84,6 @@ class AudioInfoViewController: UIViewController {
 		audioPlayerView.autoPinEdge(.leading, to: .leading, of: self.view)
 		audioPlayerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 
-		languageSelector.autoSetDimensions(to: LanguageSelectorView.selectorSize)
 		languageSelector.autoPinEdge(.bottom, to: .top, of: audioPlayerView, withOffset: -16)
 		languageSelector.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 
