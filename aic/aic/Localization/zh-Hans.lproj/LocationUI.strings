@@ -19,4 +19,4 @@
 /* This doesn't exist on iOS */
 "locations_settings_location_off" = "位置服務關閉";
 
-"location_settings_location_never_asked" = "@string/location_title";
+"location_settings_location_never_asked" = "@string/location_settings_title";

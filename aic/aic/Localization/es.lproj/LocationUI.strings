@@ -19,4 +19,4 @@
 /* This doesn't exist on iOS */
 "locations_settings_location_off" = "Servicio de ubicación desactivado";
 
-"location_settings_location_never_asked" = "@string/location_title";
+"location_settings_location_never_asked" = "@string/location_settings_title";
