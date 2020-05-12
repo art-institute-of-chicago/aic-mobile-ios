@@ -1476,11 +1476,11 @@ class AppDataParser {
 
 	private func getLanguageFor(translationJSON: JSON) throws -> Common.Language {
 		do {
-			let language = try getString(fromJSON: translationJSON, forKey: "language")
-			if language.hasPrefix("es") {
-				return .spanish
-			} else if language.hasPrefix("zh") {
-				return .chinese
+			let languageString = try getString(fromJSON: translationJSON, forKey: "language")
+			for language in Common.Language.allCases {
+				if languageString.hasPrefix(language.prefix) {
+					return language
+				}
 			}
 		} catch {
 			if Common.Testing.printDataErrors {

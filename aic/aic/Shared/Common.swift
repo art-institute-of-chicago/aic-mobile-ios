@@ -129,27 +129,46 @@ struct Common {
 	}
 
 	// MARK: Language
-	enum Language: String {
+	enum Language: String, CaseIterable {
 		case english = "en"
 		case spanish = "es"
 		case chinese = "zh-Hans"
+		case korean = "ko"
+		case french = "fr"
+
+		var prefix: String {
+			switch self {
+			case .english:
+				return "en"
+			case .spanish:
+				return "es"
+			case .chinese:
+				return "zh"
+			case .korean:
+				return "ko"
+			case .french:
+				return "fr"
+			}
+		}
 	}
 
 	static var currentLanguage: Language {
 		let current = Localize.currentLanguage()
-		if current.hasPrefix("es") {
-			return .spanish
-		} else if current.hasPrefix("zh") {
-			return .chinese
+		for language in Language.allCases {
+			guard current.hasPrefix(language.prefix) else { continue }
+			return language
 		}
 		return .english
 	}
 
 	static var stringForLanguage: [Language: String] {
 		return [
-			Language.english: "English",
-			Language.spanish: "Spanish",
-			Language.chinese: "Chinese"]
+			.english: "English",
+			.spanish: "Spanish",
+			.chinese: "Chinese",
+			.korean: "Korean",
+			.french: "French"
+		]
 	}
 
 	// MARK: Layout

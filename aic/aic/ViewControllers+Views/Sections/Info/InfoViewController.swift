@@ -147,7 +147,7 @@ class InfoViewController: SectionViewController {
 
 		languageButton.setTitle("info_language_settings_action".localized(using: "Info"), for: .normal)
 
-		locationButton.setTitle("location_settings_title".localized(using: "LocationUI"), for: .normal)
+		locationButton.setTitle("info_location_settings_action".localized(using: "Info"), for: .normal)
 
 		if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
 			footerView.potionCreditsTextView.text = "info_version".localizedFormat(arguments: version, using: "Info")
