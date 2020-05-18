@@ -145,35 +145,6 @@ func getBlurEffectView(frame: CGRect) -> UIVisualEffectView {
 	return blurEffectView
 }
 
-/// Great function to get the splash screen dynamically based on device size
-// from http://stackoverflow.com/a/29792747
-func splashImage(forOrientation orientation: UIInterfaceOrientation, screenSize: CGSize) -> String? {
-	var viewSize        = screenSize
-	var viewOrientation = "Portrait"
-
-	if orientation.isLandscape {
-		viewSize        = CGSize(width: screenSize.height, height: screenSize.width)
-		viewOrientation = "Landscape"
-	}
-
-	if let imagesDict = Bundle.main.infoDictionary {
-		if let imagesArray = imagesDict["UILaunchImages"] as? [[String: String]] {
-			for dict in imagesArray {
-				if let sizeString = dict["UILaunchImageSize"], let imageOrientation = dict["UILaunchImageOrientation"] {
-					let imageSize = NSCoder.cgSize(for: sizeString)
-					if imageSize.equalTo(viewSize) && viewOrientation == imageOrientation {
-						if let imageName = dict["UILaunchImageName"] {
-							return imageName
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return nil
-}
-
 /// Add Parallex effect to UIView
 func addParallexEffect(toView view: UIView, left: CGFloat, right: CGFloat, top: CGFloat, bottom: CGFloat) {
 	let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)

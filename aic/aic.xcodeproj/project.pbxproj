@@ -89,7 +89,6 @@
 		29824BD2200D8779003B6DB5 /* ArtworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29824BD1200D8779003B6DB5 /* ArtworkTableViewController.swift */; };
 		2984611C203A045C001E5378 /* MapArtworkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2984611B203A045C001E5378 /* MapArtworkContentView.swift */; };
 		2984611E203A046C001E5378 /* MapTextContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2984611D203A046C001E5378 /* MapTextContentView.swift */; };
-		29846120203C6D5C001E5378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2984611F203C6D5C001E5378 /* Assets.xcassets */; };
 		29846122203E3B0E001E5378 /* NoResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29846121203E3B0E001E5378 /* NoResultsCell.swift */; };
 		29846124203E3B19001E5378 /* NoResultsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29846123203E3B19001E5378 /* NoResultsCell.xib */; };
 		2986A5881FBCBD5B00029E74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A5871FBCBD5B00029E74 /* HomeViewController.swift */; };
@@ -136,6 +135,8 @@
 		29F261FF200FFACF0000BF05 /* ArtworkContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */; };
 		29F26201200FFADF0000BF05 /* ArtworkContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */; };
 		29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */; };
+		304BEA09246E147A006E025A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 304BEA08246E147A006E025A /* LaunchScreen.storyboard */; };
+		304BEA0B246E1573006E025A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304BEA0A246E1573006E025A /* Assets.xcassets */; };
 		306E6E472469CA4D00B17CA8 /* Search.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E0B2469CA4C00B17CA8 /* Search.strings */; };
 		306E6E482469CA4D00B17CA8 /* Audio.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E0D2469CA4C00B17CA8 /* Audio.strings */; };
 		306E6E492469CA4D00B17CA8 /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E0F2469CA4C00B17CA8 /* Localization.strings */; };
@@ -306,7 +307,6 @@
 		29824BD1200D8779003B6DB5 /* ArtworkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkTableViewController.swift; sourceTree = "<group>"; };
 		2984611B203A045C001E5378 /* MapArtworkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapArtworkContentView.swift; sourceTree = "<group>"; };
 		2984611D203A046C001E5378 /* MapTextContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTextContentView.swift; sourceTree = "<group>"; };
-		2984611F203C6D5C001E5378 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29846121203E3B0E001E5378 /* NoResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsCell.swift; sourceTree = "<group>"; };
 		29846123203E3B19001E5378 /* NoResultsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultsCell.xib; sourceTree = "<group>"; };
 		2986A5871FBCBD5B00029E74 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -354,6 +354,8 @@
 		29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtworkContentCell.xib; sourceTree = "<group>"; };
 		29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllHeaderView.swift; sourceTree = "<group>"; };
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
+		304BEA08246E147A006E025A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		304BEA0A246E1573006E025A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		306E6E0C2469CA4C00B17CA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Search.strings"; sourceTree = "<group>"; };
 		306E6E0E2469CA4C00B17CA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Audio.strings"; sourceTree = "<group>"; };
 		306E6E102469CA4C00B17CA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localization.strings"; sourceTree = "<group>"; };
@@ -905,7 +907,8 @@
 				E415AB9A1C7297E60093B719 /* Shared */,
 				E415ABBF1C7298420093B719 /* ViewControllers+Views */,
 				293D00731FA7C7EF00BF2C26 /* Assets */,
-				2984611F203C6D5C001E5378 /* Assets.xcassets */,
+				304BEA0A246E1573006E025A /* Assets.xcassets */,
+				304BEA08246E147A006E025A /* LaunchScreen.storyboard */,
 				E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */,
 				29EC03BB20691A8200EF2ADB /* GoogleService-Info.plist */,
 				32A2A70F1E8079610025186F /* Config.plist */,
@@ -1248,10 +1251,10 @@
 			files = (
 				29D6921C1FE0E92E00B61286 /* SeeAllExhibitionCell.xib in Resources */,
 				306E6E502469CA4D00B17CA8 /* LocationUI.strings in Resources */,
-				29846120203C6D5C001E5378 /* Assets.xcassets in Resources */,
 				29846124203E3B19001E5378 /* NoResultsCell.xib in Resources */,
 				306E6E4A2469CA4D00B17CA8 /* Map.strings in Resources */,
 				306E6E4B2469CA4D00B17CA8 /* LocalizationUI.strings in Resources */,
+				304BEA09246E147A006E025A /* LaunchScreen.storyboard in Resources */,
 				29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */,
 				2931277F1FDF0EB5008BFAB1 /* ContentButtonCell.xib in Resources */,
 				2912219B1FDB43040096BB75 /* SuggestedSearchCell.xib in Resources */,
@@ -1259,6 +1262,7 @@
 				32A2A7101E8079610025186F /* Config.plist in Resources */,
 				294C0B23201A52CB00F2ABB1 /* EventContentCell.xib in Resources */,
 				2926F2172080075F00DE9D4A /* fonts in Resources */,
+				304BEA0B246E1573006E025A /* Assets.xcassets in Resources */,
 				306E6E4E2469CA4D00B17CA8 /* Info.strings in Resources */,
 				306E6E472469CA4D00B17CA8 /* Search.strings in Resources */,
 				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
@@ -1818,7 +1822,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1854,7 +1857,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2006,7 +2008,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

@@ -14,30 +14,34 @@ protocol LoadingViewControllerDelegate: class {
 class LoadingViewController: UIViewController {
 	weak var delegate: LoadingViewControllerDelegate?
 
-	let loadingImage = UIImageView()
-	let progressBackgroundView = UIView()
-	let progressHighlightView = UIView()
-	let progressView = UIView()
-	let welcomeLabel = UILabel()
+	private let backgroundGradientImageView = UIImageView(image: #imageLiteral(resourceName: "backgroundGradient"))
+	private let launchViewController: UIViewController = {
+		let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+		return storyboard.instantiateInitialViewController() ?? UIViewController()
+	}()
+	private let progressBackgroundView = UIView()
+	private let progressHighlightView = UIView()
+	private let progressView = UIView()
+	private let welcomeLabel = UILabel()
 
-	let videoView: UIView = UIView()
-	var avPlayer: AVQueuePlayer!
+	private let videoView: UIView = UIView()
+	private var avPlayer: AVQueuePlayer!
 
-	let playerItemFull: AVPlayerItem
-	let playerItemA: AVPlayerItem
-	let playerItemB: AVPlayerItem
+	private let playerItemFull: AVPlayerItem
+	private let playerItemA: AVPlayerItem
+	private let playerItemB: AVPlayerItem
 
-	var layerFrame: CGRect = UIScreen.main.bounds
+	private var layerFrame: CGRect = UIScreen.main.bounds
 
-	let progressMarginTop = UIScreen.main.bounds.height * CGFloat(0.42)
-	let progressSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(0.45), height: 1)
-	let buildingToVideoTopMargin: CGFloat = 368.0
+	private let progressMarginTop = UIScreen.main.bounds.height * CGFloat(0.42)
+	private let progressSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(0.45), height: 1)
+	private let buildingToVideoTopMargin: CGFloat = 368.0
 
-	var progressHighlightWidth: NSLayoutConstraint?
+	private var progressHighlightWidth: NSLayoutConstraint?
 
-	var pctComplete: Float = 0.0
+	private var pctComplete: Float = 0.0
 
-	let showFullVideo: Bool
+	private let showFullVideo: Bool
 
 	init(showFullVideo: Bool) {
 		self.showFullVideo = showFullVideo
@@ -102,12 +106,8 @@ class LoadingViewController: UIViewController {
 
 		self.view.backgroundColor = .aicHomeColor
 
-		// Splash Image
-		if let image = splashImage(forOrientation: UIApplication.shared.statusBarOrientation, screenSize: UIScreen.main.bounds.size) {
-			loadingImage.image = UIImage(named: image)
-		}
-
 		videoView.frame = UIScreen.main.bounds
+		addChild(launchViewController)
 
 		NotificationCenter.default.addObserver(self, selector: #selector(videoFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer)
 
@@ -144,19 +144,21 @@ class LoadingViewController: UIViewController {
 		// Add Subviews
 		progressView.addSubview(progressBackgroundView)
 		progressView.addSubview(progressHighlightView)
-		loadingImage.addSubview(progressView)
-		loadingImage.addSubview(welcomeLabel)
-		self.view.addSubview(videoView)
-		self.view.addSubview(loadingImage)
+		launchViewController.view.addSubview(progressView)
+		launchViewController.view.addSubview(welcomeLabel)
+		view.addSubview(backgroundGradientImageView)
+		view.addSubview(videoView)
+		view.addSubview(launchViewController.view)
 
 		createViewConstraints()
 	}
 
 	func createViewConstraints() {
-		loadingImage.autoPinEdgesToSuperviewEdges()
+		backgroundGradientImageView.autoPinEdgesToSuperviewEdges()
+		launchViewController.view.autoPinEdgesToSuperviewEdges()
 
-		progressView.autoPinEdge(.top, to: .top, of: loadingImage, withOffset: self.view.bounds.height * 0.5 - 60)
-		progressView.autoAlignAxis(.vertical, toSameAxisOf: loadingImage)
+		progressView.autoPinEdge(.top, to: .top, of: view, withOffset: self.view.bounds.height * 0.5 - 60)
+		progressView.autoAlignAxis(.vertical, toSameAxisOf: view)
 		progressView.autoSetDimensions(to: progressSize)
 
 		progressBackgroundView.autoPinEdge(.top, to: .top, of: progressView)
@@ -169,8 +171,8 @@ class LoadingViewController: UIViewController {
 		progressHighlightView.autoSetDimension(.height, toSize: progressSize.height)
 
 		welcomeLabel.autoPinEdge(.bottom, to: .top, of: progressView, withOffset: -5)
-		welcomeLabel.autoPinEdge(.leading, to: .leading, of: loadingImage)
-		welcomeLabel.autoPinEdge(.trailing, to: .trailing, of: loadingImage)
+		welcomeLabel.autoPinEdge(.leading, to: .leading, of: view)
+		welcomeLabel.autoPinEdge(.trailing, to: .trailing, of: view)
 	}
 
 	func showProgressBar() {
@@ -191,12 +193,12 @@ class LoadingViewController: UIViewController {
 	}
 
 	func playIntroVideo() {
-		if loadingImage.superview != nil {
+		if launchViewController.view.superview != nil {
 			UIView.animate(withDuration: 0.3, animations: {
-				self.loadingImage.alpha = 0.0
+				self.launchViewController.view.alpha = 0.0
 			}) { (completed) in
 				if completed == true {
-					self.loadingImage.removeFromSuperview()
+					self.launchViewController.view.removeFromSuperview()
 				}
 			}
 		}
