@@ -33,6 +33,10 @@ class InfoPageView: UIView {
 		textView.textColor = .aicDarkGrayColor
 		textView.font = .aicPageTextFont
 		textView.textAlignment = .center
+		textView.linkTextAttributes = [
+			.font: UIFont.aicPageTextFont,
+			.foregroundColor: UIColor.aicInfoColor
+		]
 
 		self.addSubview(titleLabel)
 		self.addSubview(dividerLine)

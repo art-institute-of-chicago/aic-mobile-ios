@@ -26,6 +26,10 @@ class HomeIntroView: UIView {
 		promptTextView.textColor = .aicDarkGrayColor
 		promptTextView.textAlignment = .center
 		promptTextView.dataDetectorTypes = .link
+		promptTextView.linkTextAttributes = [
+			.font: UIFont.aicPageTextFont,
+			.foregroundColor: UIColor.aicHomeMemberPromptLinkColor
+		]
 
 		accessMemberCardButton.backgroundColor = .clear
 		accessMemberCardButton.titleLabel!.font = .aicPageTextFont
