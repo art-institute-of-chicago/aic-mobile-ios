@@ -6,17 +6,17 @@
 
 /********** Search **********/
 
-"search_no_results_header" = "Sorry, we couldn’t find that.";
+"search_no_results_header" = "죄송합니다. 찾을 수 없습니다.";
 
 /* This is broken up on iOS */
-"search_no_results_message" = "For help, visit the nearest museum representative or";
+"search_no_results_message" = "도움이 필요하다면, 가장 가까운 박물관 담당자를 방문하거나";
 
-"search_no_results_visit_website_action" = "visit our website";
+"search_no_results_visit_website_action" = "웹사이트를 방문해 주십시오.";
 
-"search_artworks_header" = "Artworks";
+"search_artworks_header" = "작품";
 
-"search_exhibitions_header" = "Exhibitions";
+"search_exhibitions_header" = "전시";
 
-"map_card_exhibition_title" = "Exhibition";
+"map_card_exhibition_title" = "전시";
 
-"map_card_artwork_title" = "Artwork";
+"map_card_artwork_title" = "작품";

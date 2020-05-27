@@ -6,30 +6,30 @@
 
 /********** AccessCard **********/
 
-"member_card_become_member_header" = "Become a Member";
+"member_card_become_member_header" = "Devenir membre";
 
-"sign_in_action" = "Sign In";
+"sign_in_action" = "Se connecter";
 
-"sign_in_zip_code_header" = "Zip Code";
+"sign_in_zip_code_header" = "Code postal";
 
-"sign_in_member_id_header" = "Member ID";
+"sign_in_member_id_header" = "Identité du membre";
 
-"member_card_change_information_action" = "Change Information";
+"member_card_change_information_action" = "Changer les informations";
 
-"member_card_switch_cardholder_action" = "Switch Cardholder";
+"member_card_switch_cardholder_action" = "Changer de détenteur de carte";
 
-"member_card_title" = "Member Card";
+"member_card_title" = "Carte de membre";
 
-"member_card_access_action" = "Access Member Card";
+"member_card_access_action" = "Carte d’accès";
 
-"member_card_expires" = "Expires: %@";
+"member_card_expires" = "Expire : %@";
 
 /* Currently not used in iOS */
-"member_card_member_id" = "ID: %@";
+"member_card_member_id" = "Identification : %@";
 
-"sign_in_zip_code_placeholder" = "Enter your home zip code…";
+"sign_in_zip_code_placeholder" = "Entrez le code postal de votre pays d’origine...";
 
-"sign_in_member_id_placeholder" = "Enter your Member ID…";
+"sign_in_member_id_placeholder" = "Entrez votre numéro de membre...";
 
 /* Android seems to be getting an error from the backend rather than using static text */
-"sign_in_failure_title" = "Could not find Member Information";
+"sign_in_failure_title" = "Impossible de trouver des informations sur les membres";

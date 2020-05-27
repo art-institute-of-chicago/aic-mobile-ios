@@ -6,8 +6,8 @@
 
 /********** LocalizationUI **********/
 
-"language_settings_title" = "Language Settings";
+"language_settings_title" = "언어 설정";
 
-"language_settings_body" = "Some content may not be available in your selected language.";
+"language_settings_body" = "일부 내용은 선택하신 언어로 지원되지 않을 수 있습니다.";
 
-"language_settings_header" = "Please Choose Your Preferred Language";
+"language_settings_header" = "선호하는 언어를 선택하세요";

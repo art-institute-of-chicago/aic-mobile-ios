@@ -6,29 +6,29 @@
 
 /********** Info **********/
 
-"info_purchase_tickets_prompt" = "Purchase tickets for admission, exhibition, and events.";
+"info_purchase_tickets_prompt" = "Acheter des billets pour l’entrée, l’exposition et les événements.";
 
 /* This doesn't exist on iOS */
-"info_purchase_tickets_rental_prompt" = "Visit our website to buy tickets and register.";
+"info_purchase_tickets_rental_prompt" = "Visiter notre site web pour acheter des billets et vous inscrire.";
 
-"info_member_header" = "Become a Member";
+"info_member_header" = "Devenir membre";
 
-"info_member_prompt" = "Enjoy free, year long admission.";
+"info_member_prompt" = "Profiter d’une entrée gratuite toute l’année.";
 
-"info_member_join_action" = "Join Now";
+"info_member_join_action" = "S’inscrire maintenant";
 
-"info_member_card_action" = "Access Member Card";
+"info_member_card_action" = "Carte d’accès";
 
 "info_museum_info_action" = "Informations sur le musée";
 
 "info_language_settings_action" = "Paramètres de langue";
 
-"info_location_settings_action" = "Les paramètres de localisation";
+"info_location_settings_action" = "Paramètres de localisation";
 
 /* This doesn't exist on iOS (baked into Bloomberg logo image) */
-"info_supported_by_header" = "Supported By";
+"info_supported_by_header" = "Soutenu par";
 
-"info_buy_tickets_action" = "Buy Tickets";
+"info_buy_tickets_action" = "Acheter des billets";
 
 "info_dial_prompt" = "Select an app to dial that number";
 
@@ -37,6 +37,6 @@
 "info_version" = "Version %1$@";
 
 /* This is only used on iOS */
-"info_designed_by" = "Designed by Potion";
+"info_designed_by" = "Conçu par Potion";
 
-"info_member_log_in_header" = "Already a Member?";
+"info_member_log_in_header" = "Déjà membre ?";

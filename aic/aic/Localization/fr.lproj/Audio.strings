@@ -6,7 +6,7 @@
 
 /********** Audio **********/
 
-"number_pad_go_action" = "Go";
+"number_pad_go_action" = "Lancer";
 
 /* Currently not used in iOS */
-"number_pad_delete_description" = "Delete";
+"number_pad_delete_description" = "Supprimer";

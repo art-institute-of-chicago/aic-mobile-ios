@@ -6,22 +6,22 @@
 
 /********** MediaUI **********/
 
-"headphone_message_title" = "Listen In.";
+"headphone_message_title" = "Écouter.";
 
-"headphone_message_body" = "Use your headphones to listen.\n\nDon’t have headphones?\nHold the phone close to your ear.";
+"headphone_message_body" = "Utilisez les écouteurs pour écouter. \n\nVous n’avez pas d’écouteurs ?\n\n Tenez le téléphone près de votre oreille.";
 
-"audio_info_related_tours" = "Related Tours";
+"audio_info_related_tours" = "Visites connexes";
 
-"audio_player_cancel_audio_content_description" = "Close";
-
-/* Not used on Android */
-"audio_player_loading" = "Loading";
+"audio_player_cancel_audio_content_description" = "Fermer";
 
 /* Not used on Android */
-"audio_player_load_failure_title" = "Failed to load this item.";
+"audio_player_loading" = "Chargement";
 
 /* Not used on Android */
-"audio_player_load_failure_body" = "We were unable to load the object at this time. Please check your connection and try again.";
+"audio_player_load_failure_title" = "N’a pas réussi à charger cet élément.";
 
 /* Not used on Android */
-"audio_player_load_failure_try_again_action" = "Try Again";
+"audio_player_load_failure_body" = "Nous n’avons pas pu charger l’objet à ce moment-là. Veuillez vérifier votre connexion et réessayer.";
+
+/* Not used on Android */
+"audio_player_load_failure_try_again_action" = "Réessayer";

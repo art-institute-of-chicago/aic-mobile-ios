@@ -8,7 +8,7 @@
 
 "headphone_message_title" = "收听";
 
-"headphone_message_body" = "使用你的耳机收听。没有配备耳机？请将听筒靠近耳朵。";
+"headphone_message_body" = "使用你的耳机收听。\n\n没有配备耳机？\n\n请将听筒靠近耳朵。";
 
 "audio_info_related_tours" = "相关游览";
 

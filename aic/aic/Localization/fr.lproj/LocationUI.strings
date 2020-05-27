@@ -6,17 +6,17 @@
 
 /********** LocationUI **********/
 
-"location_settings_title" = "Location Settings";
+"location_settings_title" = "Paramètres de localisation";
 
-"location_settings_header" = "Where Are You?";
+"location_settings_header" = "Où êtes-vous ?";
 
-"location_settings_body" = "We’d like to use your location to help you navigate the museum.";
+"location_settings_body" = "Nous aimerions utiliser votre localisation pour vous aider à naviguer dans le musée.";
 
-"locations_settings_location_disabled" = "Location Disabled";
+"locations_settings_location_disabled" = "Localisation désactivée";
 
-"locations_settings_location_enabled" = "Location Enabled";
+"locations_settings_location_enabled" = "Localisation activée";
 
 /* This doesn't exist on iOS */
-"locations_settings_location_off" = "Location Service Off";
+"locations_settings_location_off" = "Service de localisation désactivé";
 
 "location_settings_location_never_asked" = "@string/location_settings_title";

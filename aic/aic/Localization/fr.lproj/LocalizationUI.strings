@@ -6,8 +6,8 @@
 
 /********** LocalizationUI **********/
 
-"language_settings_title" = "Language Settings";
+"language_settings_title" = "Paramètres de langue";
 
-"language_settings_body" = "Some content may not be available in your selected language.";
+"language_settings_body" = "Certains contenus peuvent ne pas être disponibles dans la langue que vous avez choisie.";
 
-"language_settings_header" = "Please Choose Your Preferred Language";
+"language_settings_header" = "Veuillez choisir votre langue préférée";

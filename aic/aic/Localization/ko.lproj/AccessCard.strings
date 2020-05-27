@@ -6,30 +6,30 @@
 
 /********** AccessCard **********/
 
-"member_card_become_member_header" = "Become a Member";
+"member_card_become_member_header" = "회원가입";
 
-"sign_in_action" = "Sign In";
+"sign_in_action" = "로그인";
 
-"sign_in_zip_code_header" = "Zip Code";
+"sign_in_zip_code_header" = "우편번호";
 
-"sign_in_member_id_header" = "Member ID";
+"sign_in_member_id_header" = "회원 아이디";
 
-"member_card_change_information_action" = "Change Information";
+"member_card_change_information_action" = "정보변경";
 
-"member_card_switch_cardholder_action" = "Switch Cardholder";
+"member_card_switch_cardholder_action" = "카드소유자 변경";
 
-"member_card_title" = "Member Card";
+"member_card_title" = "회원 카드";
 
-"member_card_access_action" = "Access Member Card";
+"member_card_access_action" = "회원 카드 액세스";
 
-"member_card_expires" = "Expires: %@";
+"member_card_expires" = "만기일: %@";
 
 /* Currently not used in iOS */
-"member_card_member_id" = "ID: %@";
+"member_card_member_id" = "회원 아이디: %@";
 
-"sign_in_zip_code_placeholder" = "Enter your home zip code…";
+"sign_in_zip_code_placeholder" = "자택 우편번호 입력";
 
-"sign_in_member_id_placeholder" = "Enter your Member ID…";
+"sign_in_member_id_placeholder" = "회원 아이디 입력";
 
 /* Android seems to be getting an error from the backend rather than using static text */
-"sign_in_failure_title" = "Could not find Member Information";
+"sign_in_failure_title" = "회원 정보를 찾을 수 없습니다";

@@ -6,17 +6,17 @@
 
 /********** Search **********/
 
-"search_no_results_header" = "Sorry, we couldn’t find that.";
+"search_no_results_header" = "Désolé, nous n’avons pas pu trouver cela.";
 
 /* This is broken up on iOS */
-"search_no_results_message" = "For help, visit the nearest museum representative or";
+"search_no_results_message" = "Pour obtenir de l’aide, rendez-vous chez le représentant du musée le plus proche ou";
 
-"search_no_results_visit_website_action" = "visit our website";
+"search_no_results_visit_website_action" = "Visitez notre site web";
 
-"search_artworks_header" = "Artworks";
+"search_artworks_header" = "Œuvres d’art";
 
-"search_exhibitions_header" = "Exhibitions";
+"search_exhibitions_header" = "Expositions";
 
-"map_card_exhibition_title" = "Exhibition";
+"map_card_exhibition_title" = "Exposition";
 
-"map_card_artwork_title" = "Artwork";
+"map_card_artwork_title" = "Œuvre d’art";

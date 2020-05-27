@@ -6,37 +6,37 @@
 
 /********** Info **********/
 
-"info_purchase_tickets_prompt" = "Purchase tickets for admission, exhibition, and events.";
+"info_purchase_tickets_prompt" = "입장, 전시회 및 행사 티켓을 구매하십시오.";
 
 /* This doesn't exist on iOS */
-"info_purchase_tickets_rental_prompt" = "Visit our website to buy tickets and register.";
+"info_purchase_tickets_rental_prompt" = "티켓 구매 및 등록을 위해서는 웹사이트를 방문하십시오.";
 
-"info_member_header" = "Become a Member";
+"info_member_header" = "회원가입";
 
-"info_member_prompt" = "Enjoy free, year long admission.";
+"info_member_prompt" = "1년간의 무료 입장을 즐기세요.";
 
-"info_member_join_action" = "Join Now";
+"info_member_join_action" = "바로 가입";
 
-"info_member_card_action" = "Access Member Card";
+"info_member_card_action" = "회원 카드 액세스";
 
-"info_museum_info_action" = "박물관정보";
+"info_museum_info_action" = "박물관 정보";
 
-"info_language_settings_action" = "언어설정";
+"info_language_settings_action" = "언어 설정";
 
-"info_location_settings_action" = "위치설정";
+"info_location_settings_action" = "위치 설정";
 
 /* This doesn't exist on iOS (baked into Bloomberg logo image) */
-"info_supported_by_header" = "Supported By";
+"info_supported_by_header" = "지원";
 
-"info_buy_tickets_action" = "Buy Tickets";
+"info_buy_tickets_action" = "티켓 구매";
 
 "info_dial_prompt" = "Select an app to dial that number";
 
 "info_map_prompt" = "Select an app to view map";
 
-"info_version" = "Version %1$@";
+"info_version" = "버전 %1$@";
 
 /* This is only used on iOS */
-"info_designed_by" = "Designed by Potion";
+"info_designed_by" = "디자인";
 
-"info_member_log_in_header" = "Already a Member?";
+"info_member_log_in_header" = "이미 회원이십니까?";
