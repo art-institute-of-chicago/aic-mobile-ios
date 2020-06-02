@@ -20,9 +20,9 @@ class TooltipViewController: UIViewController {
 		didSet {
 			previousButton.isHidden = currentPage == 0
 			if currentPage == tooltips.count-1 {
-				nextButton.setTitle("Dismiss".localized(using: "Tooltips").uppercased(), for: .normal)
+				nextButton.setTitle("map_dismiss_action".localized(using: "Map").uppercased(), for: .normal)
 			} else {
-				nextButton.setTitle("Next".localized(using: "Tooltips").uppercased(), for: .normal)
+				nextButton.setTitle("map_next_action".localized(using: "Map").uppercased(), for: .normal)
 			}
 		}
 	}
@@ -49,14 +49,14 @@ class TooltipViewController: UIViewController {
 
 		nextButton.backgroundColor = .clear
 		nextButton.setTitleColor(.white, for: .normal)
-		nextButton.setTitle("Next".localized(using: "Tooltips").uppercased(), for: .normal)
+		nextButton.setTitle("map_next_action".localized(using: "Map").uppercased(), for: .normal)
 		nextButton.titleLabel?.font = .aicTooltipDismissFont
 		nextButton.titleLabel?.textAlignment = .right
 		nextButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)
 
 		previousButton.backgroundColor = .clear
 		previousButton.setTitleColor(.white, for: .normal)
-		previousButton.setTitle("Previous".localized(using: "Tooltips").uppercased(), for: .normal)
+		previousButton.setTitle("map_back_action".localized(using: "Map").uppercased(), for: .normal)
 		previousButton.titleLabel?.font = .aicTooltipDismissFont
 		previousButton.titleLabel?.textAlignment = .left
 		previousButton.addTarget(self, action: #selector(buttonPressed(button:)), for: .touchUpInside)

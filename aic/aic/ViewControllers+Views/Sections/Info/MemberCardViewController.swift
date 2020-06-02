@@ -17,7 +17,7 @@ class MemberCardViewController: UIViewController {
 	init() {
 		super.init(nibName: nil, bundle: nil)
 
-		self.navigationItem.title = "Member Card"
+		self.navigationItem.title = "member_card_title:AccessCard"
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -86,13 +86,25 @@ class MemberCardViewController: UIViewController {
 	// MARK: Language
 
 	@objc private func updateLanguage() {
-		loginView.memberIDTitleLabel.text = "Member ID Field Title".localized(using: "MemberCard")
-		loginView.memberIDTextField.placeholder = "Member ID Field Placeholder".localized(using: "MemberCard")
-		loginView.memberZipCodeTitleLabel.text = "Member ZipCode Field Title".localized(using: "MemberCard")
-		loginView.memberZipCodeTextField.placeholder = "Member ZipCode Field Placeholder".localized(using: "MemberCard")
-		loginView.loginButton.setTitle("Sign In".localized(using: "MemberCard"), for: .normal)
-		cardView.changeInfoButton.setTitle("Change Info".localized(using: "MemberCard"), for: .normal)
-		cardView.switchCardholderButton.setTitle("Switch Cardholder".localized(using: "MemberCard"), for: .normal)
+		loginView.memberIDTitleLabel.text = "sign_in_member_id_header".localized(using: "AccessCard")
+		loginView.memberIDTextField.attributedPlaceholder = NSAttributedString(
+			string: "sign_in_member_id_placeholder".localized(using: "AccessCard"),
+			attributes: [
+				.font: loginView.memberIDTextField.font ?? .aicMemberCardLoginFieldFont,
+				.foregroundColor: UIColor.gray
+			]
+		)
+		loginView.memberZipCodeTitleLabel.text = "sign_in_zip_code_header".localized(using: "AccessCard")
+		loginView.memberZipCodeTextField.attributedPlaceholder = NSAttributedString(
+			string: "sign_in_zip_code_placeholder".localized(using: "AccessCard"),
+			attributes: [
+				.font: loginView.memberZipCodeTextField.font ?? .aicMemberCardLoginFieldFont,
+				.foregroundColor: UIColor.gray
+			]
+		)
+		loginView.loginButton.setTitle("sign_in_action".localized(using: "AccessCard"), for: .normal)
+		cardView.changeInfoButton.setTitle("member_card_change_information_action".localized(using: "AccessCard"), for: .normal)
+		cardView.switchCardholderButton.setTitle("member_card_switch_cardholder_action".localized(using: "AccessCard"), for: .normal)
 	}
 
 	// MARK: Show Views
@@ -180,8 +192,8 @@ extension MemberCardViewController: MemberDataManagerDelegate {
 	}
 
 	func memberCardDataLoadingFailed() {
-		let alert = UIAlertController(title: "Member Not Found Alert".localized(using: "MemberCard"), message: "", preferredStyle: .alert)
-		let action = UIAlertAction(title: "Member Not Found Alert Ok Button".localized(using: "MemberCard"), style: .default, handler: { (_) in
+		let alert = UIAlertController(title: "sign_in_failure_title".localized(using: "AccessCard"), message: nil, preferredStyle: .alert)
+		let action = UIAlertAction(title: "global_accept_action".localized(using: "Base"), style: .default, handler: { (_) in
 			self.loadMemberFromUserDefaults()
 		})
 

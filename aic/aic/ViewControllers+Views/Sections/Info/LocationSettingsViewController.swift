@@ -17,7 +17,7 @@ class LocationSettingsViewController: UIViewController {
 	init() {
 		super.init(nibName: nil, bundle: nil)
 
-		self.navigationItem.title = "Location Settings"
+		self.navigationItem.title = "location_settings_title:LocationUI"
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -34,7 +34,7 @@ class LocationSettingsViewController: UIViewController {
 		self.view.backgroundColor = .white
 
 		locationButton.setColorMode(colorMode: AICButton.orangeMode)
-		locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
+		locationButton.setTitle("location_settings_title".localized(using: "LocationUI"), for: .normal)
 		locationButton.addTarget(self, action: #selector(locationButtonPressed(button:)), for: .touchUpInside)
 
 		self.view.addSubview(pageView)
@@ -73,23 +73,23 @@ class LocationSettingsViewController: UIViewController {
 	}
 
 	@objc func updateLanguage() {
-		pageView.titleLabel.text = "Location Settings Title".localized(using: "LocationSettings")
-		pageView.textView.text = "Location Settings Text".localized(using: "LocationSettings")
+		pageView.titleLabel.text = "location_settings_header".localized(using: "LocationUI")
+		pageView.textView.text = "location_settings_body".localized(using: "LocationUI")
 
 		if CLLocationManager.locationServicesEnabled() {
 			switch CLLocationManager.authorizationStatus() {
 			case .restricted, .denied:
-				locationButton.setTitle("Location Disabled".localized(using: "LocationSettings"), for: .normal)
+				locationButton.setTitle("locations_settings_location_disabled".localized(using: "LocationUI"), for: .normal)
 			case .authorizedAlways, .authorizedWhenInUse:
-				locationButton.setTitle("Location Enabled".localized(using: "LocationSettings"), for: .normal)
+				locationButton.setTitle("locations_settings_location_enabled".localized(using: "LocationUI"), for: .normal)
 			case .notDetermined:
 				Common.Map.locationManager.delegate = self
-				locationButton.setTitle("Location Settings".localized(using: "Sections"), for: .normal)
+				locationButton.setTitle("location_settings_title".localized(using: "LocationUI"), for: .normal)
 			@unknown default:
 				break
 			}
 		} else {
-			locationButton.setTitle("Location Disabled".localized(using: "LocationSettings"), for: .normal)
+			locationButton.setTitle("locations_settings_location_disabled".localized(using: "LocationUI"), for: .normal)
 		}
 	}
 

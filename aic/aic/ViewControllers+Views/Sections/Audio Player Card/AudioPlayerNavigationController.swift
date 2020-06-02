@@ -372,17 +372,17 @@ class AudioPlayerNavigationController: CardNavigationController {
 	}
 
 	private func showLoadError(forAudioFile audioFile: AICAudioFileModel, coverImageURL: URL) {
-		// Preset a UIAlertView that allows the user to try to load the file.
-		let alertView = UIAlertController(title: "Load Failure Title".localized(using: "AudioPlayer"), message: "Load Failure Message".localized(using: "AudioPlayer"), preferredStyle: .alert)
+		// Present a UIAlertView that allows the user to try to load the file.
+		let alertView = UIAlertController(title: "audio_player_load_failure_title".localized(using: "MediaUI"), message: "audio_player_load_failure_body".localized(using: "MediaUI"), preferredStyle: .alert)
 
 		// Retry Action
-		alertView.addAction(UIAlertAction(title: "Load Failure Reload Button Title".localized(using: "AudioPlayer"), style: .default, handler: { (_) -> Void in
+		alertView.addAction(UIAlertAction(title: "audio_player_load_failure_retry_action".localized(using: "MediaUI"), style: .default, handler: { (_) -> Void in
 			self.currentAudioFile = nil
 			_ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
 		}))
 
 		// Cancel Action
-		alertView.addAction(UIAlertAction(title: "Load Failure Cancel Button Title".localized(using: "AudioPlayer"), style: .cancel, handler: { (_) -> Void in
+		alertView.addAction(UIAlertAction(title: "global_cancel_action".localized(using: "Base"), style: .cancel, handler: { (_) -> Void in
 			self.hide()
 		}))
 
@@ -394,7 +394,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 
 	// Set the loading status as the track title
 	private func showLoadingMessage() {
-		let localizedLoadingMessage = "Loading Message".localized(using: "AudioPlayer")
+		let localizedLoadingMessage = "audio_player_loading".localized(using: "MediaUI")
 		miniAudioPlayerView.showLoadingMessage(message: localizedLoadingMessage)
 		audioInfoVC.showLoadingMessage(message: localizedLoadingMessage)
 	}

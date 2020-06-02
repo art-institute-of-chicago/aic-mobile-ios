@@ -92,7 +92,10 @@ class MemberCardView: UIView {
 
 		membershipInfoLabel.text = "ID: " + memberCard.cardId + "\n" + memberCard.memberLevel
 		if memberCard.isLifeMembership == false {
-			membershipInfoLabel.text = "ID: " + memberCard.cardId + "\n" + memberCard.memberLevel + "\n" + "Expires".localized(using: "MemberCard") + ": " + expirationDateString
+			membershipInfoLabel.text =
+				"member_card_member_id".localizedFormat(arguments: memberCard.cardId, using: "AccessCard")
+				+ "\n"
+				+ "member_card_expires".localizedFormat(arguments: expirationDateString, using: "AccessCard")
 		}
 
 		// Barcode

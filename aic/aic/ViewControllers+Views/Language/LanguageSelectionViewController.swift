@@ -15,15 +15,18 @@ protocol LanguageSelectionViewControllerDelegate: class {
 
 class LanguageSelectionViewController: UIViewController {
 
-	let blurBGView: UIView = getBlurEffectView(frame: UIScreen.main.bounds)
+	private let blurBGView: UIView = getBlurEffectView(frame: UIScreen.main.bounds)
 
-	let contentView = UIView()
-	let titleLabel = UILabel()
-	let dividerLine = UIView()
-	let subtitleLabel = UILabel()
-	let englishButton: AICButton = AICButton(isSmall: true)
-	let spanishButton: AICButton = AICButton(isSmall: true)
-	let chineseButton: AICButton = AICButton(isSmall: true)
+	private let scrollView = UIScrollView()
+	private let titleLabel = UILabel()
+	private let dividerLine = UIView()
+	private let subtitleLabel = UILabel()
+	private let languageStackView = UIStackView()
+	private let languageButtons: [AICButton] = {
+		Common.Language.allCases.map { (_) in
+			AICButton(isSmall: true)
+		}
+	}()
 
 	let fadeInOutAnimationDuration = 0.4
 	let contentViewFadeInOutAnimationDuration = 0.4
@@ -45,7 +48,7 @@ class LanguageSelectionViewController: UIViewController {
 
 		self.view.backgroundColor = .clear
 
-		contentView.backgroundColor = .clear
+		scrollView.backgroundColor = .clear
 
 		titleLabel.font = .aicPageTitleFont
 		titleLabel.numberOfLines = 0
@@ -54,97 +57,98 @@ class LanguageSelectionViewController: UIViewController {
 
 		dividerLine.backgroundColor = .aicDividerLineTransparentColor
 
-		englishButton.setColorMode(colorMode: AICButton.transparentMode)
-		englishButton.setTitle("English", for: .normal)
-		englishButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
+		languageStackView.axis = .vertical
+		languageStackView.spacing = 16.0
+		languageStackView.alignment = .center
 
-		spanishButton.setColorMode(colorMode: AICButton.transparentMode)
-		spanishButton.setTitle("Español", for: .normal)
-		spanishButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
+		zip(languageButtons, Common.Language.allCases).forEach { (button, language) in
+			switch language {
+			case .english:
+				button.setTitle("English", for: .normal)
+			case .spanish:
+				button.setTitle("Español", for: .normal)
+			case .chinese:
+				button.setTitle("中文", for: .normal)
+			case .korean:
+				button.setTitle("한국어", for: .normal)
+			case .french:
+				button.setTitle("Française", for: .normal)
+			}
 
-		chineseButton.setColorMode(colorMode: AICButton.transparentMode)
-		chineseButton.setTitle("中文", for: .normal)
-		chineseButton.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
+			button.setColorMode(colorMode: AICButton.transparentMode)
+			button.addTarget(self, action: #selector(languageButtonPressed(button:)), for: .touchUpInside)
+			languageStackView.addArrangedSubview(button)
+		}
 
 		// Add subviews
-		self.view.addSubview(blurBGView)
-		self.view.addSubview(contentView)
-		contentView.addSubview(titleLabel)
-		contentView.addSubview(dividerLine)
-		contentView.addSubview(subtitleLabel)
-		contentView.addSubview(englishButton)
-		contentView.addSubview(spanishButton)
-		contentView.addSubview(chineseButton)
+		view.addSubview(blurBGView)
+		view.addSubview(scrollView)
+		scrollView.addSubview(titleLabel)
+		scrollView.addSubview(dividerLine)
+		scrollView.addSubview(subtitleLabel)
+		scrollView.addSubview(languageStackView)
 
 		createViewConstraints()
 	}
 
 	func createViewConstraints() {
-		contentView.autoPinEdgesToSuperviewEdges()
+		scrollView.autoPinEdgesToSuperviewEdges()
 
-		titleLabel.autoAlignAxis(.vertical, toSameAxisOf: contentView)
-		titleLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
-		titleLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
-		titleLabel.autoPinEdge(.top, to: .top, of: contentView, withOffset: 90 + Common.Layout.safeAreaTopMargin)
+		titleLabel.autoAlignAxis(.vertical, toSameAxisOf: scrollView)
+		titleLabel.autoPinEdge(.leading, to: .leading, of: scrollView, withOffset: 16)
+		titleLabel.autoPinEdge(.trailing, to: .trailing, of: scrollView, withOffset: -16)
+		titleLabel.autoPinEdge(.top, to: .top, of: scrollView, withOffset: 90 + Common.Layout.safeAreaTopMargin)
 
 		dividerLine.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 30)
-		dividerLine.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
-		dividerLine.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
+		dividerLine.autoPinEdge(.leading, to: .leading, of: scrollView, withOffset: 16)
+		dividerLine.autoPinEdge(.trailing, to: .trailing, of: scrollView, withOffset: -16)
 		dividerLine.autoSetDimension(.height, toSize: 1)
 
 		subtitleLabel.autoPinEdge(.top, to: .bottom, of: dividerLine, withOffset: 30)
-		subtitleLabel.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 40)
-		subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -40)
-		subtitleLabel.autoAlignAxis(.vertical, toSameAxisOf: contentView)
+		subtitleLabel.autoPinEdge(.leading, to: .leading, of: scrollView, withOffset: 40)
+		subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: scrollView, withOffset: -40)
+		subtitleLabel.autoAlignAxis(.vertical, toSameAxisOf: scrollView)
 
-		englishButton.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 64)
-		englishButton.autoAlignAxis(.vertical, toSameAxisOf: contentView)
-
-		spanishButton.autoPinEdge(.top, to: .bottom, of: englishButton, withOffset: 16)
-		spanishButton.autoAlignAxis(.vertical, toSameAxisOf: contentView)
-
-		chineseButton.autoPinEdge(.top, to: .bottom, of: spanishButton, withOffset: 16)
-		chineseButton.autoAlignAxis(.vertical, toSameAxisOf: contentView)
+		languageStackView.autoPinEdge(.top, to: .bottom, of: subtitleLabel, withOffset: 64)
+		languageStackView.autoAlignAxis(.vertical, toSameAxisOf: scrollView)
+		languageStackView.autoPinEdge(.bottom, to: .bottom, of: scrollView, withOffset: -64)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		// Device language
-		let deviceLanguage = NSLocale.preferredLanguages.first!
-		if deviceLanguage.hasPrefix("es") {
-			Localize.setCurrentLanguage(Common.Language.spanish.rawValue)
-			spanishButton.setColorMode(colorMode: AICButton.greenBlueMode)
-		} else if deviceLanguage.hasPrefix("zh") {
-			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
-			chineseButton.setColorMode(colorMode: AICButton.greenBlueMode)
-		} else {
-			Localize.setCurrentLanguage(Common.Language.english.rawValue)
-			englishButton.setColorMode(colorMode: AICButton.greenBlueMode)
+		if let deviceLanguage = NSLocale.preferredLanguages.first {
+			zip(languageButtons, Common.Language.allCases).forEach { (button, language) in
+				guard deviceLanguage.hasPrefix(language.prefix) else { return }
+
+				Localize.setCurrentLanguage(language.rawValue)
+				button.setColorMode(colorMode: AICButton.greenBlueMode)
+			}
 		}
 
 		updateLanguage()
 
 		// Fade in
 		view.alpha = 0.0
-		contentView.alpha = 0.0
+		scrollView.alpha = 0.0
 		UIView.animate(withDuration: fadeInOutAnimationDuration, animations: {
 			self.view.alpha = 1.0
 		}) { (completed) in
 			if completed == true {
 				UIView.animate(withDuration: self.contentViewFadeInOutAnimationDuration, animations: {
-					self.contentView.alpha = 1.0
+					self.scrollView.alpha = 1.0
 				})
 			}
 		}
 	}
 
 	func updateLanguage() {
-		titleLabel.text = "Language Settings Title".localized(using: "LanguageSettings")
+		titleLabel.text = "language_settings_header".localized(using: "LocalizationUI")
 
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.lineSpacing = 6
-		let textAttrString = NSMutableAttributedString(string: "Language Settings Text".localized(using: "LanguageSettings"))
+		let textAttrString = NSMutableAttributedString(string: "language_settings_body".localized(using: "LocalizationUI"))
 		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: textAttrString.length))
 
 		subtitleLabel.attributedText = textAttrString
@@ -155,26 +159,17 @@ class LanguageSelectionViewController: UIViewController {
 	}
 
 	@objc func languageButtonPressed(button: UIButton) {
-		englishButton.setColorMode(colorMode: AICButton.transparentMode)
-		spanishButton.setColorMode(colorMode: AICButton.transparentMode)
-		chineseButton.setColorMode(colorMode: AICButton.transparentMode)
+		zip(languageButtons, Common.Language.allCases).forEach { (languageButton, language) in
+			languageButton.isEnabled = false
 
-		englishButton.isEnabled = false
-		spanishButton.isEnabled = false
-		chineseButton.isEnabled = false
-
-		if button == englishButton {
-			englishButton.setColorMode(colorMode: AICButton.greenBlueMode)
-			Localize.setCurrentLanguage(Common.Language.english.rawValue)
-			selectedLanguage = .english
-		} else if button == spanishButton {
-			spanishButton.setColorMode(colorMode: AICButton.greenBlueMode)
-			Localize.setCurrentLanguage(Common.Language.spanish.rawValue)
-			selectedLanguage = .spanish
-		} else if button == chineseButton {
-			chineseButton.setColorMode(colorMode: AICButton.greenBlueMode)
-			Localize.setCurrentLanguage(Common.Language.chinese.rawValue)
-			selectedLanguage = .chinese
+			// If this is the pressed button
+			if button == languageButton {
+				languageButton.setColorMode(colorMode: AICButton.greenBlueMode)
+				Localize.setCurrentLanguage(language.rawValue)
+				selectedLanguage = language
+			} else {
+				languageButton.setColorMode(colorMode: AICButton.transparentMode)
+			}
 		}
 
 		updateLanguage()
@@ -188,7 +183,7 @@ class LanguageSelectionViewController: UIViewController {
 	@objc func hideLanguageSelection() {
 		//staticBlurImageView.removeFromSuperview()
 		UIView.animate(withDuration: contentViewFadeInOutAnimationDuration, animations: {
-			self.contentView.alpha = 0.0
+			self.scrollView.alpha = 0.0
 		}) { (firstCompleted) in
 			if firstCompleted == true {
 				UIView.animate(withDuration: self.fadeInOutAnimationDuration, animations: {

@@ -36,7 +36,7 @@ class InfoBecomeMemberView: BaseView {
 					accessPromptLabel.removeFromSuperview()
 				}
 			} else if joinPromptLabel.superview == nil && joinTextView.superview == nil && accessPromptLabel.superview == nil {
-				titleLabel.text = "Member Title".localized(using: "Info")
+				titleLabel.text = "info_member_header".localized(using: "Info")
 				addSubview(joinPromptLabel)
 				addSubview(joinTextView)
 				addSubview(accessPromptLabel)
@@ -49,7 +49,7 @@ class InfoBecomeMemberView: BaseView {
 
 		if savedMember == nil {
 			//Prompt user to become a member
-			titleLabel.text = "Member Title".localized(using: "Info")
+			titleLabel.text = "info_member_header".localized(using: "Info")
 		} else {
 			//Welcome back existing members
 			titleLabel.text = Common.Info.becomeMemberExistingMemberTitle
@@ -60,12 +60,12 @@ class InfoBecomeMemberView: BaseView {
 		titleLabel.textAlignment = NSTextAlignment.center
 
 		joinPromptLabel.numberOfLines = 0
-		joinPromptLabel.text = "Member Join Prompt".localized(using: "Info")
+		joinPromptLabel.text = "info_member_prompt".localized(using: "Info")
 		joinPromptLabel.font = .aicPageTextFont
 		joinPromptLabel.textColor = .aicDarkGrayColor
 		joinPromptLabel.textAlignment = .center
 
-		let joinAttrText = NSMutableAttributedString(string: "Member Join Text".localized(using: "Info"))
+		let joinAttrText = NSMutableAttributedString(string: "info_member_join_action".localized(using: "Info"))
 		let joinURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.membershipUrl]!)!
 		joinAttrText.addAttributes([.link: joinURL], range: NSRange(location: 0, length: joinAttrText.string.count))
 
@@ -76,13 +76,13 @@ class InfoBecomeMemberView: BaseView {
 		joinTextView.font = .aicPageTextFont
 		joinTextView.delegate = self
 
-		accessPromptLabel.text = "Member Access Prompt".localized(using: "Info")
+		accessPromptLabel.text = "info_member_log_in_header".localized(using: "Info")
 		accessPromptLabel.font = .aicPageTextFont
 		accessPromptLabel.textColor = .aicDarkGrayColor
 		accessPromptLabel.textAlignment = NSTextAlignment.center
 
 		accessButton.setColorMode(colorMode: AICButton.orangeMode)
-		accessButton.setTitle("Member Access Button".localized(using: "Info"), for: .normal)
+		accessButton.setTitle("member_card_access_action".localized(using: "AccessCard"), for: .normal)
 
 		bottomDividerLine.backgroundColor = .aicDividerLineColor
 

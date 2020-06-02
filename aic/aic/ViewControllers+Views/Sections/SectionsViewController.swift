@@ -518,10 +518,10 @@ class SectionsViewController: UIViewController {
 	// MARK: Language
 
 	@objc func updateLanguage() {
-		sectionTabBarController.tabBar.items![0].title = "Home".localized(using: "TabMenu")
-		sectionTabBarController.tabBar.items![1].title = "Audio".localized(using: "TabMenu")
-		sectionTabBarController.tabBar.items![2].title = "Map".localized(using: "TabMenu")
-		sectionTabBarController.tabBar.items![3].title = "Info".localized(using: "TabMenu")
+		sectionTabBarController.tabBar.items![0].title = "tab_home".localized(using: "Base")
+		sectionTabBarController.tabBar.items![1].title = "tab_audio".localized(using: "Base")
+		sectionTabBarController.tabBar.items![2].title = "tab_map".localized(using: "Base")
+		sectionTabBarController.tabBar.items![3].title = "tab_info".localized(using: "Base")
 	}
 }
 

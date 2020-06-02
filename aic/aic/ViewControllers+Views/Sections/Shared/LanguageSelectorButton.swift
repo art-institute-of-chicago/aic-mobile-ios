@@ -18,13 +18,7 @@ class LanguageSelectorButton: UIButton {
 
 	var language: Common.Language = .english {
 		didSet {
-			if language == .english {
-				setTitle("English".localized(using: "Global"), for: .normal)
-			} else if language == .spanish {
-				setTitle("Spanish".localized(using: "Global"), for: .normal)
-			} else if language == .chinese {
-				setTitle("Chinese".localized(using: "Global"), for: .normal)
-			}
+			updateLanguage()
 		}
 	}
 
@@ -85,6 +79,22 @@ class LanguageSelectorButton: UIButton {
 					self.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
 				}
 			}
+		}
+	}
+
+	// MARK: Localization
+	func updateLanguage() {
+		switch language {
+		case .english:
+			setTitle("localization_english".localized(using: "Localization"), for: .normal)
+		case .spanish:
+			setTitle("localization_spanish".localized(using: "Localization"), for: .normal)
+		case .chinese:
+			setTitle("localization_chinese".localized(using: "Localization"), for: .normal)
+		case .korean:
+			setTitle("localization_korean".localized(using: "Localization"), for: .normal)
+		case .french:
+			setTitle("localization_french".localized(using: "Localization"), for: .normal)
 		}
 	}
 }

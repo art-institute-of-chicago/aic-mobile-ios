@@ -19,7 +19,7 @@ class MapTourStartContentView: UIView {
 
 		audioButton.setColorMode(colorMode: AICButton.blueMode)
 		audioButton.setIconImage(image: #imageLiteral(resourceName: "buttonPlayIcon"))
-		audioButton.setTitle("Play Tour Intro".localized(using: "ContentCard"), for: .normal)
+		audioButton.setTitle("tour_play_tour_introduction_action".localized(using: "Base"), for: .normal)
 
 		self.addSubview(audioButton)
 
@@ -39,6 +39,6 @@ class MapTourStartContentView: UIView {
 	}
 
 	@objc private func updateLanguage() {
-		audioButton.setTitle("Play Tour Intro".localized(using: "ContentCard"), for: .normal)
+		audioButton.setTitle("tour_play_tour_introduction_action".localized(using: "Base"), for: .normal)
 	}
 }

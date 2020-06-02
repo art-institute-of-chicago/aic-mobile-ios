@@ -16,7 +16,7 @@ class MuseumInfoViewController: UIViewController {
 	init() {
 		super.init(nibName: nil, bundle: nil)
 
-		self.navigationItem.title = "Museum Information"
+		self.navigationItem.title = "info_museum_info_action:Info"
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -33,7 +33,7 @@ class MuseumInfoViewController: UIViewController {
 		self.view.backgroundColor = .white
 
 		pageView.textView.delegate = self
-		pageView.textView.dataDetectorTypes = [.address, .phoneNumber]
+		pageView.textView.dataDetectorTypes = [.link, .address, .phoneNumber]
 
 		self.view.addSubview(pageView)
 
@@ -63,7 +63,7 @@ class MuseumInfoViewController: UIViewController {
 	}
 
 	@objc func updateLanguage() {
-		pageView.titleLabel.text = "Museum Information".localized(using: "Sections")
+		pageView.titleLabel.text = "info_museum_info_action".localized(using: "Info")
 
 		var text: String = AppDataManager.sharedInstance.app.generalInfo.museumHours
 		text += "\n\n" + Common.Info.museumInformationAddress
@@ -80,18 +80,21 @@ extension MuseumInfoViewController: UIGestureRecognizerDelegate {
 
 extension MuseumInfoViewController: UITextViewDelegate {
 	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-		if URL.absoluteString.range(of: "tel:") != nil {
+		switch URL.scheme ?? "" {
+		case "tel":
 			// Log analytics
 			AICAnalytics.sendMiscLinkTappedEvent(link: AICAnalytics.MiscLink.InfoPhone)
 
 			return true
-		} else {
+		case "x-apple-data-detectors":
 			// Log analytics
 			AICAnalytics.sendMiscLinkTappedEvent(link: AICAnalytics.MiscLink.InfoAddress)
 
 			openMuseumAddressURL()
+			return false
+		default:
+			return true
 		}
-		return false
 	}
 
 	private func openMuseumAddressURL() {

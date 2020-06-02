@@ -151,7 +151,7 @@ class AudioInfoSectionView: UIView {
 		toursAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
 
 		if linksCount > 0 {
-			titleLabel.text = "Related Tours".localized(using: "AudioPlayer")
+			titleLabel.text = "audio_info_related_tours".localized(using: "MediaUI")
 
 			bodyTextView.attributedText = toursAttributedString
 			bodyTextView.linkTextAttributes = [.foregroundColor: UIColor.aicHomeLightColor]

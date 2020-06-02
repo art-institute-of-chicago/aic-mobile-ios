@@ -25,12 +25,12 @@ class SeeAllViewController: UIViewController {
 		case exhibitions
 		case events
 	}
-	let content: ContentType
+	private let content: ContentType
 
-	let titles = [ContentType.tours: "Tours",
-				  ContentType.toursByCategory: "Tours",
-				  ContentType.exhibitions: "On View",
-				  ContentType.events: "Events"]
+	private let titles = [ContentType.tours: "welcome_tours_header:Base",
+						  ContentType.toursByCategory: "welcome_tours_header:Base",
+						  ContentType.exhibitions: "welcome_on_view_header:Base",
+						  ContentType.events: "welcome_events_header:Base"]
 
 	private var tourItems: [AICTourModel] = []
 	private var tourCategories: [AICTourCategoryModel] = []

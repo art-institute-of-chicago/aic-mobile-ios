@@ -84,7 +84,6 @@ class AudioInfoViewController: UIViewController {
 		audioPlayerView.autoPinEdge(.leading, to: .leading, of: self.view)
 		audioPlayerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 
-		languageSelector.autoSetDimensions(to: LanguageSelectorView.selectorSize)
 		languageSelector.autoPinEdge(.bottom, to: .top, of: audioPlayerView, withOffset: -16)
 		languageSelector.autoPinEdge(.trailing, to: .trailing, of: self.view, withOffset: -16)
 
@@ -194,8 +193,8 @@ class AudioInfoViewController: UIViewController {
 
 	// Language
 	private func updateLanguage(language: Common.Language) {
-		creditsView.titleLabel.text = "Credits".localized(using: "AudioPlayer")
-		transcriptView.titleLabel.text = "Transcript".localized(using: "AudioPlayer")
+		creditsView.titleLabel.text = "audio_info_credits_header".localized(using: "Base")
+		transcriptView.titleLabel.text = "audio_info_transcript_header".localized(using: "Base")
 	}
 
 	private func setImage(imageURL: URL) {

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundGradient" translatesAutoresizingMaskIntoConstraints="NO" id="OeT-c5-5ED">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="launchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="epE-IP-xBm">
+                                <rect key="frame" x="142.5" y="114.5" width="129" height="129.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="epE-IP-xBm" secondAttribute="height" multiplier="1:1" id="RqS-gN-SC1"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="launchSupportedBy" translatesAutoresizingMaskIntoConstraints="NO" id="Bng-DW-AZ9">
+                                <rect key="frame" x="32" y="784.5" width="122.5" height="57.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Bng-DW-AZ9" secondAttribute="height" multiplier="219:103" id="uOD-4g-62M"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="launchSplash" translatesAutoresizingMaskIntoConstraints="NO" id="BLV-hy-0mg">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="OeT-c5-5ED" secondAttribute="trailing" id="4tS-0g-mES"/>
+                            <constraint firstItem="OeT-c5-5ED" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="5GZ-l4-GT6"/>
+                            <constraint firstAttribute="bottom" secondItem="OeT-c5-5ED" secondAttribute="bottom" id="C9P-VR-hbk"/>
+                            <constraint firstItem="BLV-hy-0mg" firstAttribute="trailing" secondItem="Bcu-3y-fUS" secondAttribute="trailing" id="Ero-9Y-8BG"/>
+                            <constraint firstItem="epE-IP-xBm" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1:5" id="QAz-cr-dlL"/>
+                            <constraint firstAttribute="top" secondItem="BLV-hy-0mg" secondAttribute="top" id="SAo-0W-Ayq"/>
+                            <constraint firstItem="Bng-DW-AZ9" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.296" id="cor-h9-lUo"/>
+                            <constraint firstItem="epE-IP-xBm" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.312" id="d5s-d1-jO6"/>
+                            <constraint firstItem="OeT-c5-5ED" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="dpd-l6-zWt"/>
+                            <constraint firstItem="BLV-hy-0mg" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="lg5-SG-sum"/>
+                            <constraint firstItem="BLV-hy-0mg" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="one-oV-adc"/>
+                            <constraint firstItem="Bng-DW-AZ9" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="32" id="pCN-fk-Bzy"/>
+                            <constraint firstItem="epE-IP-xBm" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="vDP-WI-qry"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="Bng-DW-AZ9" secondAttribute="bottom" constant="20" id="xOs-3T-Ygb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="backgroundGradient" width="1" height="1334"/>
+        <image name="launchLogo" width="200" height="200"/>
+        <image name="launchSplash" width="750" height="1334"/>
+        <image name="launchSupportedBy" width="219" height="103"/>
+    </resources>
+</document>

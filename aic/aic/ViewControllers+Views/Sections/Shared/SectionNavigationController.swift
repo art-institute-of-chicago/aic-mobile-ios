@@ -102,14 +102,24 @@ class SectionNavigationController: UINavigationController {
 
 	@objc func updateLanguage() {
 		let isRootVC: Bool = self.viewControllers.count <= 1
-		var titleText = self.topViewController?.navigationItem.title?.localized(using: "Sections")
+
+		var titleText = ""
+
+		// In an effort to make minimal changes to the codebase when transitioning to the Twine-based string files
+		// the view controller can convey its localization key and title by separating them with a colon
+		// e.g. "welcome_title:Base"
+		if let titleComponents = topViewController?.navigationItem.title?.components(separatedBy: ":"),
+			let localizationKey = titleComponents.first,
+			let localizationTable = titleComponents.last {
+			titleText = localizationKey.localized(using: localizationTable)
+		}
 		var subtitleText = ""
 
 		// Set text from CMS for rootViewControllers of audio, map and info sections
 		if isRootVC {
 			if sectionModel.nid == Section.home.rawValue {
 				if let firstName = UserDefaults.standard.object(forKey: Common.UserDefaults.memberFirstNameUserDefaultsKey) as? String {
-					titleText = "Welcome".localized(using: "Sections") + ", " + firstName
+					titleText = "welcome_title_logged_in".localizedFormat(arguments: firstName, using: "Base")
 				}
 			} else {
 				let generalInfo = AppDataManager.sharedInstance.app.generalInfo

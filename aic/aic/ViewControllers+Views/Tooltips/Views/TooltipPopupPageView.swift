@@ -21,7 +21,7 @@ class TooltipPopupPageView: UIView {
 
 		self.backgroundColor = .clear
 
-		titleLabel.text = tooltip.title.localized(using: "Tooltips")
+		titleLabel.text = tooltip.title
 		titleLabel.font = .aicTitleFont
 		titleLabel.textColor = .white
 		titleLabel.textAlignment = .center
@@ -35,13 +35,13 @@ class TooltipPopupPageView: UIView {
 			imageView.image = image
 		}
 
-		textLabel.text = tooltip.text.localized(using: "Tooltips")
+		textLabel.text = tooltip.text
 		textLabel.font = .aicPageTextFont
 		textLabel.textColor = .white
 		textLabel.textAlignment = .center
 		textLabel.numberOfLines = 2
 
-		dismissLabel.text = "Dismiss".localized(using: "Tooltips").uppercased()
+		dismissLabel.text = "map_dismiss_action".localized(using: "Map").uppercased()
 		dismissLabel.font = .aicTooltipDismissFont
 		dismissLabel.textColor = .white
 		dismissLabel.textAlignment = .right

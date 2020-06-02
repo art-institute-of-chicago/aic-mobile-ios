@@ -150,21 +150,21 @@ class MessageViewController: UIViewController {
 	}
 
 	@objc func updateLanguage() {
-		titleLabel.text = messageModel.title.localized(using: "Messages")
+		titleLabel.text = messageModel.title
 
 		let paragraphStyle = NSMutableParagraphStyle()
 		paragraphStyle.lineSpacing = 6
-		let textAttrString = NSMutableAttributedString(string: messageModel.message.localized(using: "Messages"))
+		let textAttrString = NSMutableAttributedString(string: messageModel.message)
 		textAttrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: textAttrString.length))
 		messageLabel.attributedText = textAttrString
 		messageLabel.textAlignment = .center
 
 		actionButton.setColorMode(colorMode: AICButton.greenBlueMode)
-		actionButton.setTitle(messageModel.actionButtonTitle.localized(using: "Messages"), for: .normal)
+		actionButton.setTitle(messageModel.actionButtonTitle, for: .normal)
 
 		if cancelButton != nil {
 			cancelButton!.setColorMode(colorMode: AICButton.transparentMode)
-			cancelButton?.setTitle(messageModel.cancelButtonTitle?.localized(using: "Messages"), for: .normal)
+			cancelButton?.setTitle(messageModel.cancelButtonTitle, for: .normal)
 		}
 	}
 
