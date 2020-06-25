@@ -148,11 +148,13 @@ class AppDataManager {
 	private func loadAppData() {
 		if let appData = self.appData {
 			// We have good app data, continue on
-			self.updateDownloadProgress()
-			self.downloadMapFloorsPdfs(appData: appData)
+			updateDownloadProgress()
+			downloadMapFloorsPdfs(appData: appData)
+
+			fetchMemberCard()
 		} else {
 			// If we couldn't load any app data from url or disk let the user know
-			self.notifyLoadFailure(withMessage: "Failed to load application data.")
+			notifyLoadFailure(withMessage: "Failed to load application data.")
 		}
 	}
 
@@ -349,6 +351,17 @@ class AppDataManager {
 					print(error)
 				}
 				self.updateDownloadProgress()
+		}
+	}
+
+	// MARK: Fetch Member Card if Needed
+
+	private func fetchMemberCard() {
+		if let member = MemberDataManager.sharedInstance.getSavedMember() {
+			MemberDataManager.sharedInstance.delegate = self
+			MemberDataManager.sharedInstance.validateMember(memberID: member.memberID, zipCode: member.memberZip)
+		} else {
+			updateDownloadProgress()
 		}
 	}
 
@@ -608,6 +621,47 @@ class AppDataManager {
 		return app.galleries.filter({ $0.location.floor == floorNumber })
 	}
 
+	func getMessagesToDisplayOnLaunch() -> [AICMessageModel] {
+		let seenMessageNids =
+			Set(UserDefaults.standard.stringArray(forKey: Common.UserDefaults.messagesViewedNidsUserDefaultsKey) ?? [])
+
+		return app.messages.filter { (message) in
+			switch message.messageType {
+			case .launch(isPersistent: let isPersistent):
+				guard !isPersistent else { return true }
+				guard let nid = message.nid else { return false }
+				return !seenMessageNids.contains(nid)
+			case .memberExpiration(isPersistent: let isPersistent, threshold: let threshold):
+				guard let expirationDate = MemberDataManager.sharedInstance.currentMemberCard?.expirationDate,
+					expirationDate.timeIntervalSinceNow < TimeInterval(threshold)
+					else { return false }
+				guard !isPersistent else { return true }
+				guard let nid = message.nid else { return false }
+				return !seenMessageNids.contains(nid)
+			default:
+				return false
+			}
+		}
+	}
+
+	func getTourExitMessages(for nid: String) -> [AICMessageModel] {
+		return app.messages.filter { (message) in
+			switch message.messageType {
+			case .tourExit(tourNid: let tourNid):
+				return tourNid == nid
+			default:
+				return false
+			}
+		}
+	}
+
+	func markMessagesAsSeen(messages: [AICMessageModel]) {
+		var seenMessageNids =
+			Set(UserDefaults.standard.stringArray(forKey: Common.UserDefaults.messagesViewedNidsUserDefaultsKey) ?? [])
+		seenMessageNids = seenMessageNids.union(messages.compactMap { $0.nid })
+		UserDefaults.standard.set(Array(seenMessageNids), forKey: Common.UserDefaults.messagesViewedNidsUserDefaultsKey)
+	}
+
 	// MARK: Cached App Data Methods
 
 	private func lastModifiedStringsMatch(atURL url: URLConvertible, userDefaultsLastModifiedKey key: String, completion: @escaping (Bool) -> Void) {
@@ -663,5 +717,16 @@ class AppDataManager {
 	private func localFileURL(forFileName fileName: String) -> URL? {
 		guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
 		return directory.appendingPathComponent(fileName)
+	}
+}
+
+// MARK: MemberDataManagerDelegate Adoption
+extension AppDataManager: MemberDataManagerDelegate {
+	func memberCardDidLoadForMember(memberCard: AICMemberCardModel) {
+		updateDownloadProgress()
+	}
+
+	func memberCardDataLoadingFailed() {
+		updateDownloadProgress()
 	}
 }

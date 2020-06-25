@@ -63,16 +63,31 @@ func getOffsetRect(forText text: String, forFont font: UIFont) -> CGRect {
 	return textString.boundingRect(with: CGSize(width: 2000, height: 2000), options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil)
 }
 
+private extension UIColor {
+	func toHexString() -> String {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        let rgb: Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+
+        return String(format: "#%06x", rgb)
+    }
+}
+
 /**
 Render HTML text, very slow :/
 */
-func getAttributedString(forHTMLText text: String, font: UIFont) -> NSAttributedString {
+func getAttributedString(forHTMLText text: String, font: UIFont, textColor: UIColor) -> NSAttributedString {
 	// Convert line breaks to HTML breaks
 	var textWithHTMLReturns = text.replacingOccurrences(of: "\r\n", with: "<br />")
 	textWithHTMLReturns = textWithHTMLReturns.replacingOccurrences(of: "\r", with: "<br />")
 
 	// Create HTML text
-	let htmlText = NSString(format: "<span style=\"font-family: \(font.fontName); font-size: \(font.pointSize)\">%@</span>" as NSString, textWithHTMLReturns) as String
+	let htmlText = NSString(format: "<span style=\"font-family: \(font.fontName); font-size: \(font.pointSize); color: \(textColor.toHexString())\">%@</span>" as NSString, textWithHTMLReturns) as String
 
 	// Create an HTML Attributed string
 	guard let data = htmlText.data(using: .utf8) else {

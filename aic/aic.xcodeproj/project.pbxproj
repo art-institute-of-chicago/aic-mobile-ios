@@ -137,6 +137,8 @@
 		29F3A9361FE5D2A1000BCABE /* SeeAllHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */; };
 		304BEA09246E147A006E025A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 304BEA08246E147A006E025A /* LaunchScreen.storyboard */; };
 		304BEA0B246E1573006E025A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304BEA0A246E1573006E025A /* Assets.xcassets */; };
+		304BEA112477054A006E025A /* PagedMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BEA102477054A006E025A /* PagedMessageViewController.swift */; };
+		304BEA1424770C51006E025A /* PagedMessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BEA1324770C51006E025A /* PagedMessageCollectionViewCell.swift */; };
 		306E6E472469CA4D00B17CA8 /* Search.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E0B2469CA4C00B17CA8 /* Search.strings */; };
 		306E6E482469CA4D00B17CA8 /* Audio.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E0D2469CA4C00B17CA8 /* Audio.strings */; };
 		306E6E492469CA4D00B17CA8 /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E0F2469CA4C00B17CA8 /* Localization.strings */; };
@@ -356,6 +358,8 @@
 		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		304BEA08246E147A006E025A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		304BEA0A246E1573006E025A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		304BEA102477054A006E025A /* PagedMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedMessageViewController.swift; sourceTree = "<group>"; };
+		304BEA1324770C51006E025A /* PagedMessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedMessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		306E6E0C2469CA4C00B17CA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Search.strings"; sourceTree = "<group>"; };
 		306E6E0E2469CA4C00B17CA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Audio.strings"; sourceTree = "<group>"; };
 		306E6E102469CA4C00B17CA8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localization.strings"; sourceTree = "<group>"; };
@@ -835,6 +839,14 @@
 			path = "Home Cells";
 			sourceTree = "<group>";
 		};
+		304BEA12247707F8006E025A /* Message Cells */ = {
+			isa = PBXGroup;
+			children = (
+				304BEA1324770C51006E025A /* PagedMessageCollectionViewCell.swift */,
+			);
+			path = "Message Cells";
+			sourceTree = "<group>";
+		};
 		306E6E0A2469CA4C00B17CA8 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -1063,7 +1075,9 @@
 		E433BAD11CFDD65B0086F2ED /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				304BEA12247707F8006E025A /* Message Cells */,
 				2968F67820125B5700638153 /* MessageViewController.swift */,
+				304BEA102477054A006E025A /* PagedMessageViewController.swift */,
 			);
 			name = Messages;
 			path = "aic/ViewControllers+Views/Messages";
@@ -1465,6 +1479,7 @@
 				E497FA621D00ABAD007FA272 /* AICMessageSmallModel.swift in Sources */,
 				294C0B5C201A76F700F2ABB1 /* Utilities.swift in Sources */,
 				E4923FC11C9E00B500AB255C /* UIView+AIC.swift in Sources */,
+				304BEA1424770C51006E025A /* PagedMessageCollectionViewCell.swift in Sources */,
 				2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */,
 				293127831FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift in Sources */,
 				29C7D0C9202532930015984B /* AudioPlayerNavigationController.swift in Sources */,
@@ -1481,6 +1496,7 @@
 				2975A055203F61150014017C /* MapExhibitionAnnotation.swift in Sources */,
 				29824BD0200D870C003B6DB5 /* EventTableViewController.swift in Sources */,
 				291221941FDB2BAD0096BB75 /* ResultsTableViewController.swift in Sources */,
+				304BEA112477054A006E025A /* PagedMessageViewController.swift in Sources */,
 				294C0B58201A76F700F2ABB1 /* MapFloorSelectorButton.swift in Sources */,
 				E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */,
 				E425B3CE1C97649300A19F6F /* AICObjectModel.swift in Sources */,

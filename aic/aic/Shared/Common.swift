@@ -32,7 +32,7 @@ struct Common {
 
 	// MARK: Data
 	struct DataConstants {
-		static let totalDataFeeds = 4
+		static let totalDataFeeds = 5
 
 		static var appDataJSON = "http://localhost:8888/appData.json"
 
@@ -109,6 +109,8 @@ struct Common {
 		static let onDiskAppDataLastModifiedStringKey = "AICAppDataLastModified"
 
 		static let lastVersionNumberKey = "AICLastVersionNumber"
+
+		static let messagesViewedNidsUserDefaultsKey = "AICMessagesViewedNids"
 	}
 
 	// MARK: URL Scheme/Deep Links

@@ -120,6 +120,21 @@ class SectionsViewController: UIViewController {
 		updateLanguage()
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		// Show any relevant launch messages
+		let messages = AppDataManager.sharedInstance.getMessagesToDisplayOnLaunch()
+		if messages.count > 0 {
+			let viewController = PagedMessageViewController(messages: messages)
+			viewController.definesPresentationContext = true
+			viewController.providesPresentationContextTransitionStyle = true
+			viewController.modalPresentationStyle = .overFullScreen
+			viewController.modalTransitionStyle = .crossDissolve
+			present(viewController, animated: true, completion: nil)
+		}
+	}
+
 	// MARK: Accessibility
 
 	private func updateAccessibilityOnCardOpened(cardVC: CardNavigationController) {
@@ -625,13 +640,28 @@ extension SectionsViewController: MessageViewControllerDelegate {
 		} else if messageVC == leaveTourMessageVC {
 			hideLeaveTourMessage()
 
+			let tourNid: Int?
+
 			// Log analytics
 			if let tour = mapVC.tourModel {
 				AICAnalytics.sendTourLeftEvent(tour: tour)
+				tourNid = tour.nid
+			} else {
+				tourNid = nil
 			}
 
 			showRequestedMapContentIfNeeded()
 			resetRequestedMapContent()
+
+			if let messages = tourNid.map({ AppDataManager.sharedInstance.getTourExitMessages(for: "\($0)") }),
+				messages.count > 0 {
+				let viewController = PagedMessageViewController(messages: messages)
+				viewController.definesPresentationContext = true
+				viewController.providesPresentationContextTransitionStyle = true
+				viewController.modalPresentationStyle = .overFullScreen
+				viewController.modalTransitionStyle = .crossDissolve
+				present(viewController, animated: true, completion: nil)
+			}
 		}
 	}
 
