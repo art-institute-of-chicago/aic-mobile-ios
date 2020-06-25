@@ -25,11 +25,13 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 		didSet {
 			guard let message = self.message else { return }
 
-			titleLabel.text = message.title
+			titleLabel.text = message.translations?[Common.currentLanguage]?.title ?? message.title
 
 			let attributedMessage = NSMutableAttributedString(
 				attributedString: getAttributedString(
-					forHTMLText: replaceMemberDetails(in: message.message),
+					forHTMLText: replaceMemberDetails(
+						in: message.translations?[Common.currentLanguage]?.message ?? message.message
+					),
 					font: messageTextView.font ?? .aicPageTextFont,
 					textColor: .white
 				)
@@ -42,7 +44,9 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 			}
 			messageTextView.attributedText = attributedMessage
 
-			if let actionTitle = message.actionButtonTitle, !actionTitle.isEmpty {
+			if let actionTitle =
+					message.translations?[Common.currentLanguage]?.actionButtonTitle ?? message.actionButtonTitle,
+				!actionTitle.isEmpty {
 				actionButton.setTitle(actionTitle, for: .normal)
 				actionButton.isHidden = false
 			} else {

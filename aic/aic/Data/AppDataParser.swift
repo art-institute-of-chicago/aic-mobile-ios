@@ -1303,6 +1303,21 @@ class AppDataParser {
 			throw ParseError.objectParseFailure
 		}
 
+		var translations = [Common.Language: AICMessageTranslationModel]()
+		translations[.english] = try parseTranslation(messageJSON: messageJSON)
+
+		for translationJSON in messageJSON["translations"].array ?? [] {
+			do {
+				let language = try getLanguageFor(translationJSON: translationJSON)
+				let translation = try parseTranslation(messageJSON: translationJSON)
+				translations[language] = translation
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse Message translation:\n\(translationJSON)\n")
+				}
+			}
+		}
+
 		let title = try getString(fromJSON: messageJSON, forKey: "title")
 		let message = try getString(fromJSON: messageJSON, forKey: "message")
 		let action = try getURL(fromJSON: messageJSON, forKey: "action", optional: true)
@@ -1314,7 +1329,16 @@ class AppDataParser {
 			title: title,
 			message: message,
 			actionButtonTitle: actionTitle,
-			action: action
+			action: action,
+			translations: translations
+		)
+	}
+
+	private func parseTranslation(messageJSON: JSON) throws -> AICMessageTranslationModel {
+		return AICMessageTranslationModel(
+			title: try getString(fromJSON: messageJSON, forKey: "title"),
+			message: try getString(fromJSON: messageJSON, forKey: "message"),
+			actionButtonTitle: try getString(fromJSON: messageJSON, forKey: "action_title", optional: true)
 		)
 	}
 

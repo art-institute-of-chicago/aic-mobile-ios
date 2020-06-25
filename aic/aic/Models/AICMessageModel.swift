@@ -24,6 +24,7 @@ struct AICMessageModel {
 	let actionButtonTitle: String?
 	let action: URL?
 	let cancelButtonTitle: String?
+	let translations: [Common.Language: AICMessageTranslationModel]?
 
 	// MARK: - Initializers -
 	init(nid: String? = nil,
@@ -33,7 +34,8 @@ struct AICMessageModel {
 		 message: String,
 		 actionButtonTitle: String? = nil,
 		 action: URL? = nil,
-		 cancelButtonTitle: String? = nil) {
+		 cancelButtonTitle: String? = nil,
+		 translations: [Common.Language: AICMessageTranslationModel]? = nil) {
 		self.nid = nid
 		self.iconImage = iconImage
 		self.messageType = messageType
@@ -42,5 +44,12 @@ struct AICMessageModel {
 		self.actionButtonTitle = actionButtonTitle
 		self.action = action
 		self.cancelButtonTitle = cancelButtonTitle
+		self.translations = translations
 	}
+}
+
+struct AICMessageTranslationModel {
+	let title: String
+	let message: String
+	let actionButtonTitle: String?
 }
