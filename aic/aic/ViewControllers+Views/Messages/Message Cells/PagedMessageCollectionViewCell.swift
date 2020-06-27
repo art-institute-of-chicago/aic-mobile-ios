@@ -67,6 +67,7 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 	}
 
 	// MARK: - UI Properties -
+	private let scrollView = UIScrollView()
 	private let titleLabel = UILabel()
 	private let dividerLine = UIView()
 	private let messageTextView = UITextView()
@@ -123,10 +124,11 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 		closeButton.setColorMode(colorMode: AICButton.transparentMode)
 		closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 
-		contentView.addSubview(titleLabel)
-		contentView.addSubview(dividerLine)
-		contentView.addSubview(messageTextView)
-		contentView.addSubview(buttonStackView)
+		contentView.addSubview(scrollView)
+		scrollView.addSubview(titleLabel)
+		scrollView.addSubview(dividerLine)
+		scrollView.addSubview(messageTextView)
+		scrollView.addSubview(buttonStackView)
 		buttonStackView.addArrangedSubview(actionButton)
 		buttonStackView.addArrangedSubview(nextButton)
 		buttonStackView.addArrangedSubview(previousButton)
@@ -136,7 +138,10 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func createViewConstraints() {
-		titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 153)
+		scrollView.autoPinEdgesToSuperviewEdges()
+
+		titleLabel.autoMatch(.width, to: .width, of: scrollView, withOffset: -32)
+		titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: contentView, withMultiplier: 0.4)
 		titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
 		titleLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 
@@ -149,7 +154,8 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 		messageTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
 		messageTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 
-		buttonStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 153)
+		buttonStackView.autoPinEdge(.top, to: .bottom, of: messageTextView, withOffset: 80)
+		buttonStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 30)
 		buttonStackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
 		buttonStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 	}
