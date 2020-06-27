@@ -112,15 +112,15 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 		actionButton.setColorMode(colorMode: AICButton.greenBlueMode)
 		actionButton.addTarget(self, action: #selector(showAction), for: .touchUpInside)
 
-		nextButton.setTitle("Next Message", for: .normal)
+		nextButton.setTitle("messages_next_action".localized(using: "Base"), for: .normal)
 		nextButton.setColorMode(colorMode: AICButton.greenBlueMode)
 		nextButton.addTarget(self, action: #selector(nextPage), for: .touchUpInside)
 
-		previousButton.setTitle("Previous Message", for: .normal)
+		previousButton.setTitle("messages_previous_action".localized(using: "Base"), for: .normal)
 		previousButton.setColorMode(colorMode: AICButton.greenBlueMode)
 		previousButton.addTarget(self, action: #selector(previousPage), for: .touchUpInside)
 
-		closeButton.setTitle("OK", for: .normal)
+		closeButton.setTitle("global_accept_action".localized(using: "Base"), for: .normal)
 		closeButton.setColorMode(colorMode: AICButton.transparentMode)
 		closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 

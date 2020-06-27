@@ -77,7 +77,7 @@
 
 "global_cancel_action" = "No Ahora";
 
-"global_accept_action" = "Ok";
+"global_accept_action" = "OK";
 
 "global_error_title" = "Error";
 
@@ -88,3 +88,7 @@
 "global_loading_error_no_connectivity" = "No internet connection.";
 
 "global_loading_error_time_out" = "Network time out. Please try again.";
+
+"messages_next_action" = "Mensaje siguiente";
+
+"messages_previous_action" = "Mensaje anterior";

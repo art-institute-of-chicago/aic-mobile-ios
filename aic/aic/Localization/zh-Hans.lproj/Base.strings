@@ -88,3 +88,7 @@
 "global_loading_error_no_connectivity" = "No internet connection.";
 
 "global_loading_error_time_out" = "Network time out. Please try again.";
+
+"messages_next_action" = "下一條訊息";
+
+"messages_previous_action" = "上一條訊息";

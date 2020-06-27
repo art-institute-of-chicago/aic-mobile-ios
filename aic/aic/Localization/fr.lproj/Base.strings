@@ -77,7 +77,7 @@
 
 "global_cancel_action" = "Pas maintenant";
 
-"global_accept_action" = "Ok";
+"global_accept_action" = "OK";
 
 "global_error_title" = "Erreur";
 
@@ -88,3 +88,7 @@
 "global_loading_error_no_connectivity" = "Pas de connexion internet.";
 
 "global_loading_error_time_out" = "Temporisation réseau. Veuillez réessayer.";
+
+"messages_next_action" = "Message suivant";
+
+"messages_previous_action" = "Message précédent";
