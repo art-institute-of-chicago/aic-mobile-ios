@@ -645,10 +645,15 @@ class AppDataManager {
 	}
 
 	func getTourExitMessages(for nid: String) -> [AICMessageModel] {
+		let seenMessageNids =
+			Set(UserDefaults.standard.stringArray(forKey: Common.UserDefaults.messagesViewedNidsUserDefaultsKey) ?? [])
+
 		return app.messages.filter { (message) in
 			switch message.messageType {
-			case .tourExit(tourNid: let tourNid):
-				return tourNid == nid
+			case .tourExit(isPersistent: let isPersistent, tourNid: let tourNid):
+				guard tourNid == nid, let messageNid = message.nid else { return false }
+				guard !isPersistent else { return true }
+				return !seenMessageNids.contains(messageNid)
 			default:
 				return false
 			}

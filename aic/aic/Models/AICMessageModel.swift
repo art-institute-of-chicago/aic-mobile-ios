@@ -10,7 +10,7 @@ struct AICMessageModel {
 	enum MessageType {
 		case launch(isPersistent: Bool)
 		case memberExpiration(isPersistent: Bool, threshold: Int)
-		case tourExit(tourNid: String)
+		case tourExit(isPersistent: Bool, tourNid: String)
 	}
 
 	// MARK: - Structs -

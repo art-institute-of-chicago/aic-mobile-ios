@@ -1293,7 +1293,10 @@ class AppDataParser {
 		case "launch":
 			messageType = .launch(isPersistent: try getBool(fromJSON: messageJSON, forKey: "persistent"))
 		case "tour_exit":
-			messageType = .tourExit(tourNid: try getString(fromJSON: messageJSON, forKey: "tour_exit"))
+			messageType = .tourExit(
+				isPersistent: try getBool(fromJSON: messageJSON, forKey: "persistent"),
+				tourNid: try getString(fromJSON: messageJSON, forKey: "tour_exit")
+			)
 		case "member_expiration":
 			messageType = .memberExpiration(
 				isPersistent: try getBool(fromJSON: messageJSON, forKey: "persistent"),
