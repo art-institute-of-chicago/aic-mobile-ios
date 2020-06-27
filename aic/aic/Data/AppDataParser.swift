@@ -1007,7 +1007,7 @@ class AppDataParser {
 	}
 
 	func parse(eventJson: JSON) throws -> AICEventModel {
-		let eventId = try getInt(fromJSON: eventJson, forKey: "id")
+		let eventId = try getString(fromJSON: eventJson, forKey: "id")
 		let title = try getString(fromJSON: eventJson, forKey: "title")
 		let longDescription = try getString(fromJSON: eventJson, forKey: "description")
 		let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description", optional: true)
@@ -1033,16 +1033,17 @@ class AppDataParser {
 		}
 
 		// Return news item
-		return AICEventModel(eventId: eventId,
-							 title: title.stringByDecodingHTMLEntities,
-							 shortDescription: shortDescription.stringByDecodingHTMLEntities,
-							 longDescription: longDescription.stringByDecodingHTMLEntities,
-							 imageUrl: imageUrl,
-							 locationText: locationText,
-							 startDate: startDate,
-							 endDate: endDate,
-							 eventUrl: eventUrl,
-							 buttonText: buttonText
+		return AICEventModel(
+			eventId: eventId,
+			title: title.stringByDecodingHTMLEntities,
+			shortDescription: shortDescription.stringByDecodingHTMLEntities,
+			longDescription: longDescription.stringByDecodingHTMLEntities,
+			imageUrl: imageUrl,
+			locationText: locationText,
+			startDate: startDate,
+			endDate: endDate,
+			eventUrl: eventUrl,
+			buttonText: buttonText
 		)
 	}
 
