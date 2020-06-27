@@ -186,10 +186,12 @@ final class PagedMessageCollectionViewCell: UICollectionViewCell {
 	}
 
 	@objc private func showAction() {
-		guard let action = message?.action else { return }
-		let actionString = replaceMemberDetails(in: action.absoluteString)
+		guard let actionString = message?.action,
+			!actionString.isEmpty,
+			let actionUrl = URL(string: replaceMemberDetails(in: actionString))
+			else { return }
 
-		delegate?.pagedMessageCollectionViewCell(self, didSelectAction: URL(string: actionString) ?? action)
+		delegate?.pagedMessageCollectionViewCell(self, didSelectAction: actionUrl)
 	}
 
 	@objc private func close() {

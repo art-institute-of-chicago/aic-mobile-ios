@@ -22,7 +22,7 @@ struct AICMessageModel {
 	let title: String
 	let message: String
 	let actionButtonTitle: String?
-	let action: URL?
+	let action: String?
 	let cancelButtonTitle: String?
 	let translations: [Common.Language: AICMessageTranslationModel]?
 
@@ -33,7 +33,7 @@ struct AICMessageModel {
 		 title: String,
 		 message: String,
 		 actionButtonTitle: String? = nil,
-		 action: URL? = nil,
+		 action: String? = nil,
 		 cancelButtonTitle: String? = nil,
 		 translations: [Common.Language: AICMessageTranslationModel]? = nil) {
 		self.nid = nid

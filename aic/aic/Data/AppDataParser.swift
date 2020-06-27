@@ -1323,7 +1323,7 @@ class AppDataParser {
 
 		let title = try getString(fromJSON: messageJSON, forKey: "title")
 		let message = try getString(fromJSON: messageJSON, forKey: "message")
-		let action = try getURL(fromJSON: messageJSON, forKey: "action", optional: true)
+		let action = try getString(fromJSON: messageJSON, forKey: "action", optional: true)
 		let actionTitle = try getString(fromJSON: messageJSON, forKey: "action_title", optional: true)
 
 		return AICMessageModel(
