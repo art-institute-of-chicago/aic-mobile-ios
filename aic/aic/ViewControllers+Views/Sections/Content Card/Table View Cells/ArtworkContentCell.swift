@@ -15,6 +15,7 @@ class ArtworkContentCell: UITableViewCell {
 	@IBOutlet var showOnMapButton: AICButton!
 	@IBOutlet weak var playAudioButton: AICButton!
 	@IBOutlet weak var artistDisplayLabel: UILabelPadding!
+	@IBOutlet weak var galleryTitleLabel: UILabel!
 	@IBOutlet weak var descriptionLabel: UILabel!
 
 	@IBOutlet var artworkImageHeight: NSLayoutConstraint!
@@ -72,6 +73,10 @@ class ArtworkContentCell: UITableViewCell {
 			artistDisplayLabel.textColor = .white
 			artistDisplayLabel.font = .aicTextFont
 
+			galleryTitleLabel.text = artworkModel.gallery.title
+			galleryTitleLabel.textColor = .white
+			galleryTitleLabel.font = .aicTextItalicFont
+
 			descriptionLabel.text = ""
 			descriptionLabel.font = .aicTextFont
 
@@ -89,6 +94,7 @@ class ArtworkContentCell: UITableViewCell {
 			accessibilityItems.append(
 				contentsOf: [
 					artistDisplayLabel,
+					galleryTitleLabel,
 					descriptionLabel
 					]
 					.compactMap { $0 }
