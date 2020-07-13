@@ -88,3 +88,7 @@
 "global_loading_error_no_connectivity" = "인터넷에 연결되어 있지 않습니다.";
 
 "global_loading_error_time_out" = "네트워크 연결 시간 초과. 다시 시도해 보세요.";
+
+"messages_next_action" = "다음 메시지";
+
+"messages_previous_action" = "이전 메시지";

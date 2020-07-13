@@ -24,6 +24,8 @@ extension UIFont {
 
 	static let aicPageTextFont: UIFont = UIFont(name: SansSerif_Book, size: 16.0)!.upperCaseNumbers()
 
+	static let aicPageLinkFont: UIFont = UIFont(name: SansSerif_Bold, size: 16.0)!.upperCaseNumbers()
+
 	static let aicButtonFont: UIFont = UIFont(name: SansSerif_Medium, size: 13.0)!.upperCaseNumbers()
 
 	static let aicNumberPadFont: UIFont = UIFont(name: SansSerif_Book, size: 30.0)!.upperCaseNumbers()

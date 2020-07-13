@@ -9,7 +9,7 @@
 import CoreLocation
 
 struct AICEventModel {
-	let eventId: Int
+	let eventId: String
 	let title: String
 	let shortDescription: String
 	let longDescription: String

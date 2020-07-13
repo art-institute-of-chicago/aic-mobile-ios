@@ -15,4 +15,5 @@ struct AICAppDataModel {
 	var dataSettings: [Common.DataSetting: String]	= [:]
 	var searchStrings: [String]			= []
 	var searchArtworks: [AICObjectModel] = []
+	var messages: [AICMessageModel] = []
 }

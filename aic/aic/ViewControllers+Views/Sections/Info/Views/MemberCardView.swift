@@ -95,6 +95,8 @@ class MemberCardView: UIView {
 			membershipInfoLabel.text =
 				"member_card_member_id".localizedFormat(arguments: memberCard.cardId, using: "AccessCard")
 				+ "\n"
+				+ memberCard.memberLevel
+				+ "\n"
 				+ "member_card_expires".localizedFormat(arguments: expirationDateString, using: "AccessCard")
 		}
 

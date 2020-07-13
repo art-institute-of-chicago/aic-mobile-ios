@@ -216,8 +216,6 @@ class MemberDataManager {
 		defaults.set(memberCard.memberZip, forKey: Common.UserDefaults.memberInfoZipUserDefaultsKey)
 		defaults.set(firstName, forKey: Common.UserDefaults.memberFirstNameUserDefaultsKey)
 		defaults.set(currentMemberNameIndex, forKey: Common.UserDefaults.memberInfoSelectedMemberDefaultsKey)
-
-		defaults.synchronize()
 	}
 
 	func getSavedMember() -> AICMemberInfoModel? {

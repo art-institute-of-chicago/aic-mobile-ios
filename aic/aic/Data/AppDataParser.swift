@@ -58,18 +58,21 @@ class AppDataParser {
 		self.searchArtworks 	= parse(searchArtworks: appDataJson["search"])
 		let map 				= parse(mapFloorsJSON: appDataJson["map_floors"],
 										mapAnnotationsJSON: appDataJson["map_annontations"])
+		let messages            = parse(messagesJSON: appDataJson["messages"])
 
-		let appData = AICAppDataModel(generalInfo: generalInfo,
-									  galleries: self.galleries,
-									  objects: self.objects,
-									  audioFiles: self.audioFiles,
-									  tours: tours,
-									  tourCategories: self.tourCategories,
-									  map: map,
-									  restaurants: self.restaurants,
-									  dataSettings: dataSettings,
-									  searchStrings: searchStrings,
-									  searchArtworks: self.searchArtworks
+		let appData = AICAppDataModel(
+			generalInfo: generalInfo,
+			galleries: self.galleries,
+			objects: self.objects,
+			audioFiles: self.audioFiles,
+			tours: tours,
+			tourCategories: self.tourCategories,
+			map: map,
+			restaurants: self.restaurants,
+			dataSettings: dataSettings,
+			searchStrings: searchStrings,
+			searchArtworks: self.searchArtworks,
+			messages: messages
 		)
 
 		// clean up data used for parsing only
@@ -1004,7 +1007,7 @@ class AppDataParser {
 	}
 
 	func parse(eventJson: JSON) throws -> AICEventModel {
-		let eventId = try getInt(fromJSON: eventJson, forKey: "id")
+		let eventId = try getString(fromJSON: eventJson, forKey: "id")
 		let title = try getString(fromJSON: eventJson, forKey: "title")
 		let longDescription = try getString(fromJSON: eventJson, forKey: "description")
 		let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description", optional: true)
@@ -1030,16 +1033,17 @@ class AppDataParser {
 		}
 
 		// Return news item
-		return AICEventModel(eventId: eventId,
-							 title: title.stringByDecodingHTMLEntities,
-							 shortDescription: shortDescription.stringByDecodingHTMLEntities,
-							 longDescription: longDescription.stringByDecodingHTMLEntities,
-							 imageUrl: imageUrl,
-							 locationText: locationText,
-							 startDate: startDate,
-							 endDate: endDate,
-							 eventUrl: eventUrl,
-							 buttonText: buttonText
+		return AICEventModel(
+			eventId: eventId,
+			title: title.stringByDecodingHTMLEntities,
+			shortDescription: shortDescription.stringByDecodingHTMLEntities,
+			longDescription: longDescription.stringByDecodingHTMLEntities,
+			imageUrl: imageUrl,
+			locationText: locationText,
+			startDate: startDate,
+			endDate: endDate,
+			eventUrl: eventUrl,
+			buttonText: buttonText
 		)
 	}
 
@@ -1260,6 +1264,86 @@ class AppDataParser {
 		}
 
 		return searchedExhibitions
+	}
+
+	// MARK: Messages
+
+	private func parse(messagesJSON: JSON) -> [AICMessageModel] {
+		var messages: [AICMessageModel] = []
+
+		for (messageNid, messageJSON) in messagesJSON {
+			do {
+				try handleParseError {
+					let message = try parse(messageJSON: messageJSON, messageNid: messageNid)
+					messages.append(message)
+				}
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse Message:\n\(messageJSON)\n")
+				}
+			}
+		}
+
+		return messages
+	}
+
+	private func parse(messageJSON: JSON, messageNid: String) throws -> AICMessageModel {
+		let messageTypeString = try getString(fromJSON: messageJSON, forKey: "message_type")
+		let messageType: AICMessageModel.MessageType
+		switch messageTypeString {
+		case "launch":
+			messageType = .launch(isPersistent: try getBool(fromJSON: messageJSON, forKey: "persistent"))
+		case "tour_exit":
+			messageType = .tourExit(
+				isPersistent: try getBool(fromJSON: messageJSON, forKey: "persistent"),
+				tourNid: try getString(fromJSON: messageJSON, forKey: "tour_exit")
+			)
+		case "member_expiration":
+			messageType = .memberExpiration(
+				isPersistent: try getBool(fromJSON: messageJSON, forKey: "persistent"),
+				threshold: try getInt(fromJSON: messageJSON, forKey: "expiration_threshold")
+			)
+		default:
+			throw ParseError.objectParseFailure
+		}
+
+		var translations = [Common.Language: AICMessageTranslationModel]()
+		translations[.english] = try parseTranslation(messageJSON: messageJSON)
+
+		for translationJSON in messageJSON["translations"].array ?? [] {
+			do {
+				let language = try getLanguageFor(translationJSON: translationJSON)
+				let translation = try parseTranslation(messageJSON: translationJSON)
+				translations[language] = translation
+			} catch {
+				if Common.Testing.printDataErrors {
+					print("Could not parse Message translation:\n\(translationJSON)\n")
+				}
+			}
+		}
+
+		let title = try getString(fromJSON: messageJSON, forKey: "title")
+		let message = try getString(fromJSON: messageJSON, forKey: "message")
+		let action = try getString(fromJSON: messageJSON, forKey: "action", optional: true)
+		let actionTitle = try getString(fromJSON: messageJSON, forKey: "action_title", optional: true)
+
+		return AICMessageModel(
+			nid: messageNid,
+			messageType: messageType,
+			title: title,
+			message: message,
+			actionButtonTitle: actionTitle,
+			action: action,
+			translations: translations
+		)
+	}
+
+	private func parseTranslation(messageJSON: JSON) throws -> AICMessageTranslationModel {
+		return AICMessageTranslationModel(
+			title: try getString(fromJSON: messageJSON, forKey: "title"),
+			message: try getString(fromJSON: messageJSON, forKey: "message"),
+			actionButtonTitle: try getString(fromJSON: messageJSON, forKey: "action_title", optional: true)
+		)
 	}
 
 	// MARK: Error-Throwing data parsing functions
