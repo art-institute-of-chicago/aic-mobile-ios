@@ -123,7 +123,11 @@ class HomeViewController: SectionViewController {
 
 		self.view.layoutIfNeeded()
 		self.scrollView.contentSize.width = self.view.frame.width
-		self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height + Common.Layout.miniAudioPlayerHeight
+        if (eventItems.count > 0) {
+            self.scrollView.contentSize.height = eventsCollectionView.frame.origin.y + eventsCollectionView.frame.height + Common.Layout.miniAudioPlayerHeight
+        } else {
+            self.scrollView.contentSize.height = exhibitionsCollectionView.frame.origin.y + exhibitionsCollectionView.frame.height + Common.Layout.miniAudioPlayerHeight
+        }
 
 		updateLanguage()
 
@@ -187,23 +191,29 @@ class HomeViewController: SectionViewController {
 		exhibitionsCollectionView.autoPinEdge(.leading, to: .leading, of: self.view)
 		exhibitionsCollectionView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		exhibitionsCollectionView.autoSetDimension(.height, toSize: HomeViewController.exhibitionCellSize.height)
+        
+        eventItems = AppDataManager.sharedInstance.getEventsForHome()
+        
+		if (eventItems.count > 0) {
+            eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView, withOffset: 30)
+            eventsDividerLine.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
+            eventsDividerLine.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
+            eventsDividerLine.autoSetDimension(.height, toSize: 1)
 
-		eventsDividerLine.autoPinEdge(.top, to: .bottom, of: exhibitionsCollectionView, withOffset: 30)
-		eventsDividerLine.autoPinEdge(.leading, to: .leading, of: contentView, withOffset: 16)
-		eventsDividerLine.autoPinEdge(.trailing, to: .trailing, of: contentView, withOffset: -16)
-		eventsDividerLine.autoSetDimension(.height, toSize: 1)
+            eventsTitleView.autoPinEdge(.top, to: .bottom, of: eventsDividerLine)
+            eventsTitleView.autoPinEdge(.leading, to: .leading, of: contentView)
+            eventsTitleView.autoPinEdge(.trailing, to: .trailing, of: contentView)
+            eventsTitleView.autoSetDimension(.height, toSize: 65)
 
-		eventsTitleView.autoPinEdge(.top, to: .bottom, of: eventsDividerLine)
-		eventsTitleView.autoPinEdge(.leading, to: .leading, of: contentView)
-		eventsTitleView.autoPinEdge(.trailing, to: .trailing, of: contentView)
-		eventsTitleView.autoSetDimension(.height, toSize: 65)
+            eventsCollectionView.autoPinEdge(.top, to: .bottom, of: eventsTitleView)
+            eventsCollectionView.autoPinEdge(.leading, to: .leading, of: contentView)
+            eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: contentView)
+            eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.eventCellSize.height)
 
-		eventsCollectionView.autoPinEdge(.top, to: .bottom, of: eventsTitleView)
-		eventsCollectionView.autoPinEdge(.leading, to: .leading, of: contentView)
-		eventsCollectionView.autoPinEdge(.trailing, to: .trailing, of: contentView)
-		eventsCollectionView.autoSetDimension(.height, toSize: HomeViewController.eventCellSize.height)
-
-		contentView.autoPinEdge(.bottom, to: .bottom, of: eventsCollectionView, withOffset: Common.Layout.miniAudioPlayerHeight)
+            contentView.autoPinEdge(.bottom, to: .bottom, of: eventsCollectionView, withOffset: Common.Layout.miniAudioPlayerHeight)
+        } else {
+            contentView.autoPinEdge(.bottom, to: .bottom, of: exhibitionsCollectionView, withOffset: Common.Layout.miniAudioPlayerHeight)
+        }
 	}
 
 	// MARK: Animation
