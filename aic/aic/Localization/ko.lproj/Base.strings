@@ -18,9 +18,9 @@
 
 "welcome_member_card_action" = "회원 카드 액세스";
 
-"welcome_tours_header" = "오디오 작품 설명 투어";
+"welcome_tours_header" = "오디오 가이드 투어";
 
-"welcome_on_view_header" = "현재 전시중";
+"welcome_on_view_header" = "전시 중";
 
 "welcome_see_all_action" = "모두 보기";
 
@@ -54,7 +54,7 @@
 
 "tour_start_tour_action" = "작품 투어 시작";
 
-"content_through_date" = "까지	 %@";
+"content_through_date" = "%@ 까지";
 
 /* Currently not used in iOS */
 "event_buy_tickets_action" = "티켓구매";
