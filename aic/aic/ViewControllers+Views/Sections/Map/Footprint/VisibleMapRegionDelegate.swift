@@ -148,7 +148,7 @@ class VisibleMapRegionDelegate: NSObject {
 			let newAltitudeUsable: CLLocationDistance = newAltitude
 
 			/**
-			NOTE: Supposedly MapKit's internal zoom level counter is by
+			NOTE: Supposedly MapKit's zoom level counter is by
 			powers of two, so a 0.5x buffer here is safe and should
 			prevent pulsing when we're near the maximum zoom level.
 

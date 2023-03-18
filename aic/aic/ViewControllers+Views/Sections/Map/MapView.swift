@@ -67,7 +67,7 @@ class MapView: MKMapView {
 		}
 
 		showsBuildings = false
-		showsPointsOfInterest = false
+    pointOfInterestFilter = .some(MKPointOfInterestFilter(including: []))
 		showsUserLocation = true
 
 		tintColor = .white
@@ -202,6 +202,6 @@ class MapView: MKMapView {
 			}
 		}
 
-		//		print("CAMERA ALTITUDE: \(camera.altitude) currentAltitude: \(currentAltitude) previousAltitude: \(previousAltitude)")
+		//		debugPrint("CAMERA ALTITUDE: \(camera.altitude) currentAltitude: \(currentAltitude) previousAltitude: \(previousAltitude)")
 	}
 }

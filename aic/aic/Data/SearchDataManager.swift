@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-protocol SearchDataManagerDelegate: class {
+protocol SearchDataManagerDelegate: AnyObject {
 	func searchDataDidFinishLoading(autocompleteStrings: [String])
 	func searchDataDidFinishLoading(artworks: [AICSearchedArtworkModel], tours: [AICTourModel], exhibitions: [AICExhibitionModel])
 	func searchDataFailure(filter: Common.Search.Filter)
@@ -40,7 +40,7 @@ class SearchDataManager: NSObject {
 			previousRequest.cancel()
 		}
 
-		autocompleteRequest = Alamofire.request(request as URLRequestConvertible)
+		autocompleteRequest = AF.request(request as URLRequestConvertible)
 			.validate()
 			.responseData { response in
 				switch response.result {
@@ -48,7 +48,7 @@ class SearchDataManager: NSObject {
 					let autocompleteStrings = self.dataParser.parse(autocompleteData: value)
 					self.delegate?.searchDataDidFinishLoading(autocompleteStrings: autocompleteStrings)
 				case .failure(let error):
-					print(error)
+					debugPrint(error)
 				}
 		}
 	}
@@ -141,7 +141,7 @@ class SearchDataManager: NSObject {
 		urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters, options: [])
 
-		artworksRequest = Alamofire.request(urlRequest)
+		artworksRequest = AF.request(urlRequest)
 			.validate()
 			.responseData { response in
 				switch response.result {
@@ -180,7 +180,7 @@ class SearchDataManager: NSObject {
 
 				case .failure(let error):
 					self.delegate?.searchDataFailure(filter: .artworks)
-					print(error)
+					debugPrint(error)
 				}
 		}
 	}

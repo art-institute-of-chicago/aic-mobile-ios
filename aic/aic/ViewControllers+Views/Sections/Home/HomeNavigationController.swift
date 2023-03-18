@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-protocol HomeNavigationControllerDelegate: class {
+protocol HomeNavigationControllerDelegate: AnyObject {
 	func showMemberCard()
 	func showTourCard(tour: AICTourModel)
 	func showExhibitionCard(exhibition: AICExhibitionModel)

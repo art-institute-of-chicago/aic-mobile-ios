@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-protocol TourTableViewControllerDelegate: class {
+protocol TourTableViewControllerDelegate: AnyObject {
 	func tourContentCardDidPressStartTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?)
 }
 

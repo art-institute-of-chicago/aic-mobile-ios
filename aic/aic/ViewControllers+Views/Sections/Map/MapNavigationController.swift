@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import Localize_Swift
 
-protocol MapNavigationControllerDelegate: class {
+protocol MapNavigationControllerDelegate: AnyObject {
 	func mapDidSelectPlayAudioForArtwork(artwork: AICObjectModel, isFromSearchIcon: Bool)
 	func mapDidSelectPlayAudioForTour(tour: AICTourModel, language: Common.Language)
 	func mapDidSelectPlayAudioForTourStop(tourStop: AICTourStopModel, tour: AICTourModel, language: Common.Language)

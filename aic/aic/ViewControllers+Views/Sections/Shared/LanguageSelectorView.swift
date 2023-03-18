@@ -9,7 +9,7 @@
 import Localize_Swift
 import UIKit
 
-protocol LanguageSelectorViewDelegate: class {
+protocol LanguageSelectorViewDelegate: AnyObject {
 	func languageSelectorDidSelect(language: Common.Language)
 }
 

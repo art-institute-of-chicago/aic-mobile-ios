@@ -63,11 +63,11 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	@objc internal func wasPressed(_ button: UIButton) {
+	@objc func wasPressed(_ button: UIButton) {
 		setButtonPressedState()
 	}
 
-	@objc internal func wasReleased(_ button: UIButton) {
+	@objc func wasReleased(_ button: UIButton) {
 		setButtonNormalState()
 	}
 }

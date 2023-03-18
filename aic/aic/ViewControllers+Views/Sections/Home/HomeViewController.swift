@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-protocol HomeViewControllerDelegate: class {
+protocol HomeViewControllerDelegate: AnyObject {
 	func homeDidSelectAccessMemberCard()
 	func homeDidSelectSeeAllTours()
 	func homeDidSelectSeeAllExhibitions()
@@ -318,6 +318,7 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
+
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if collectionView == toursCollectionView {
 			self.delegate?.homeDidSelectTour(tour: tourItems[indexPath.row])
@@ -327,4 +328,5 @@ extension HomeViewController: UICollectionViewDelegate {
 			self.delegate?.homeDidSelectEvent(event: eventItems[indexPath.row])
 		}
 	}
+
 }

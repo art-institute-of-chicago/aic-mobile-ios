@@ -105,7 +105,7 @@ class AppDataParser {
 					translations[language] = translation
 				} catch {
 					if Common.Testing.printDataErrors {
-						print("Could not parse General Info translation:\n\(translationJSON)\n")
+						debugPrint("Could not parse General Info translation:\n\(translationJSON)\n")
 					}
 				}
 			}
@@ -113,7 +113,7 @@ class AppDataParser {
 			return AICGeneralInfoModel(nid: nid, translations: translations)
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC General Info Data:\n\(generalInfoJSON)\n")
+				debugPrint("Could not parse AIC General Info Data:\n\(generalInfoJSON)\n")
 			}
 		}
 
@@ -168,7 +168,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Gallery Data:\n\(galleryJSON)\n")
+					debugPrint("Could not parse AIC Gallery Data:\n\(galleryJSON)\n")
 				}
 			}
 		}
@@ -216,7 +216,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Object Data:\n\(objectData)\n")
+					debugPrint("Could not parse AIC Object Data:\n\(objectData)\n")
 				}
 			}
 		}
@@ -284,7 +284,7 @@ class AppDataParser {
 					audioCommentaries.append(audioCommentary)
 				} catch {
 					if Common.Testing.printDataErrors {
-						print("Could not parse AIC AUdio Commentary Data:\n\(audioCommentaryJSON)\n")
+						debugPrint("Could not parse AIC AUdio Commentary Data:\n\(audioCommentaryJSON)\n")
 					}
 				}
 			}
@@ -335,7 +335,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Audio File Data:\n\(audioFileData)\n")
+					debugPrint("Could not parse Audio File Data:\n\(audioFileData)\n")
 				}
 			}
 		}
@@ -369,7 +369,7 @@ class AppDataParser {
 				translations[language] = translation
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Audio translation:\n\(translationJSON)\n")
+					debugPrint("Could not parse Audio translation:\n\(translationJSON)\n")
 				}
 			}
 		}
@@ -415,7 +415,7 @@ class AppDataParser {
 				categories.append(category)
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Tour Category:\n\(categoryJSON)\n")
+					debugPrint("Could not parse AIC Tour Category:\n\(categoryJSON)\n")
 				}
 			}
 		}
@@ -434,7 +434,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Tour Data:\n\(tourJSON)\n")
+					debugPrint("Could not parse Tour Data:\n\(tourJSON)\n")
 				}
 			}
 		}
@@ -507,7 +507,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse stop data:\n\(stopData) in Tour \(nid)\n")
+					debugPrint("Could not parse stop data:\n\(stopData) in Tour \(nid)\n")
 				}
 			}
 
@@ -542,7 +542,7 @@ class AppDataParser {
 				translations[language] = translation
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse General Info translation:\n\(translationJSON)\n")
+					debugPrint("Could not parse General Info translation:\n\(translationJSON)\n")
 				}
 			}
 		}
@@ -703,7 +703,7 @@ class AppDataParser {
 					}
 				} catch {
 					if Common.Testing.printDataErrors {
-						print("Could not parse AIC Map Annotations for node: \(annotationJSON)\n")
+						debugPrint("Could not parse AIC Map Annotations for node: \(annotationJSON)\n")
 					}
 				}
 			}
@@ -754,7 +754,7 @@ class AppDataParser {
 							   floors: floors)
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Map\n")
+				debugPrint("Could not parse AIC Map\n")
 			}
 		}
 
@@ -847,7 +847,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Exhibition in CMS:\n\(exhibitionJSON)\n")
+					debugPrint("Could not parse Exhibition in CMS:\n\(exhibitionJSON)\n")
 				}
 			}
 		}
@@ -874,7 +874,7 @@ class AppDataParser {
 			dataSettings[.ticketsUrl] = try getString(fromJSON: dataSettingsJSON, forKey: Common.DataSetting.ticketsUrl.rawValue)
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse Data Settings:\n\(dataSettingsJSON)\n")
+				debugPrint("Could not parse Data Settings:\n\(dataSettingsJSON)\n")
 			}
 		}
 		return dataSettings
@@ -896,7 +896,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Exhibition:\n\(exhibitionJSON)\n")
+					debugPrint("Could not parse AIC Exhibition:\n\(exhibitionJSON)\n")
 				}
 			}
 		}
@@ -998,7 +998,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Event:\n\(json)\n")
+					debugPrint("Could not parse AIC Event:\n\(json)\n")
 				}
 			}
 		}
@@ -1060,7 +1060,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Search String:\n\(stringJSON)\n")
+					debugPrint("Could not parse AIC Search String:\n\(stringJSON)\n")
 				}
 			}
 		}
@@ -1081,7 +1081,7 @@ class AppDataParser {
 			})
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Search Artworks\n")
+				debugPrint("Could not parse AIC Search Artworks\n")
 			}
 		}
 
@@ -1106,7 +1106,7 @@ class AppDataParser {
 			})
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Search Autocomplete\n")
+				debugPrint("Could not parse AIC Search Autocomplete\n")
 			}
 		}
 		return autocompleteStrings
@@ -1132,7 +1132,7 @@ class AppDataParser {
 			})
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Search Autocomplete\n")
+				debugPrint("Could not parse AIC Search Autocomplete\n")
 			}
 		}
 
@@ -1217,7 +1217,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse AIC Searched Artworks:\n\(searchedArtworksJSON)\n")
+					debugPrint("Could not parse AIC Searched Artworks:\n\(searchedArtworksJSON)\n")
 				}
 			}
 		}
@@ -1240,7 +1240,7 @@ class AppDataParser {
 			})
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse AIC Searched Tours:\n\(searchedToursJSON)\n")
+				debugPrint("Could not parse AIC Searched Tours:\n\(searchedToursJSON)\n")
 			}
 		}
 		return searchedTours
@@ -1258,7 +1258,7 @@ class AppDataParser {
 				})
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Searched Exhibition:\n\(exhibitionJSON)\n")
+					debugPrint("Could not parse Searched Exhibition:\n\(exhibitionJSON)\n")
 				}
 			}
 		}
@@ -1279,7 +1279,7 @@ class AppDataParser {
 				}
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Message:\n\(messageJSON)\n")
+					debugPrint("Could not parse Message:\n\(messageJSON)\n")
 				}
 			}
 		}
@@ -1317,7 +1317,7 @@ class AppDataParser {
 				translations[language] = translation
 			} catch {
 				if Common.Testing.printDataErrors {
-					print("Could not parse Message translation:\n\(translationJSON)\n")
+					debugPrint("Could not parse Message translation:\n\(translationJSON)\n")
 				}
 			}
 		}
@@ -1568,7 +1568,7 @@ class AppDataParser {
 			}
 		} catch {
 			if Common.Testing.printDataErrors {
-				print("Could not parse Translation language:\n\(translationJSON)\n")
+				debugPrint("Could not parse Translation language:\n\(translationJSON)\n")
 			}
 		}
 		return .english
@@ -1608,7 +1608,7 @@ class AppDataParser {
 		}
 
 		if errorMessage != nil && Common.Testing.printDataErrors {
-			print(errorMessage!)
+			debugPrint(errorMessage!)
 		}
 
 		throw ParseError.objectParseFailure

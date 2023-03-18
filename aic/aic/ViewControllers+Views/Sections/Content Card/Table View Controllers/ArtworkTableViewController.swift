@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-protocol ArtworkTableViewControllerDelegate: class {
+protocol ArtworkTableViewControllerDelegate: AnyObject {
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel)
 	func artworkContentCardDidPressShowOnMap(artwork: AICSearchedArtworkModel)
 }

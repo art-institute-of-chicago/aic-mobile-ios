@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PureLayout
 
 class InfoButton: UIButton {
 	let dividerLine: UIView = UIView()
@@ -18,13 +17,12 @@ class InfoButton: UIButton {
 
 		setTitleColor(.aicDarkGrayColor, for: .normal)
 		setTitleColor(.aicInfoColor, for: .highlighted)
-		titleLabel!.font = .aicTitleFont
-		titleLabel!.textAlignment = .left
+		titleLabel?.font = .aicTitleFont
+		titleLabel?.textAlignment = .left
 		contentHorizontalAlignment = .left
 		contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
 		arrowIcon.image = #imageLiteral(resourceName: "rightArrow").colorized(.aicDarkGrayColor)
-
 		dividerLine.backgroundColor = .aicDividerLineColor
 
 		self.addSubview(dividerLine)
@@ -32,14 +30,18 @@ class InfoButton: UIButton {
 
 		autoSetDimensions(to: CGSize(width: UIScreen.main.bounds.width, height: 80))
 
-		dividerLine.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
-		dividerLine.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
-		dividerLine.autoSetDimension(.height, toSize: 1.0)
-		dividerLine.autoPinEdge(.top, to: .bottom, of: self)
+    dividerLine.translatesAutoresizingMaskIntoConstraints = false
+    arrowIcon.translatesAutoresizingMaskIntoConstraints = false
 
-		arrowIcon.autoAlignAxis(.horizontal, toSameAxisOf: self)
-		arrowIcon.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16)
-		arrowIcon.autoSetDimensions(to: arrowIcon.image!.size)
+    dividerLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
+    dividerLine.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
+    dividerLine.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+    dividerLine.topAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+    arrowIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    arrowIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
+    arrowIcon.heightAnchor.constraint(equalToConstant: arrowIcon.image!.size.height).isActive = true
+    arrowIcon.widthAnchor.constraint(equalToConstant: arrowIcon.image!.size.width).isActive = true
 	}
 
 	required init?(coder aDecoder: NSCoder) {

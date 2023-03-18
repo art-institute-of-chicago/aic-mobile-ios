@@ -18,7 +18,7 @@ class MapDepartmentAnnotationView: MapAnnotationView {
 	override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
 		guard let departmentAnnotation = annotation as? MapDepartmentAnnotation else {
 			super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-			print("Attempted to init MapDepartmentAnnotationView without a MapDepartmentAnnotation")
+			debugPrint("Attempted to init MapDepartmentAnnotationView without a MapDepartmentAnnotation")
 			return
 		}
 

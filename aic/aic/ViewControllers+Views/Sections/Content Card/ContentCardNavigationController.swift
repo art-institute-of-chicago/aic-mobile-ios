@@ -49,7 +49,7 @@ class ContentCardNavigationController: CardNavigationController {
 
 // Pan Gesture
 extension ContentCardNavigationController {
-	override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		if gestureRecognizer == cardPanGesture {
 			if tableVC.tableView.contentOffset.y <= 0 {
 				return true

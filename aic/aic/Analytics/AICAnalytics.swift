@@ -4,36 +4,37 @@ Abstracted analytics centralized commands
 currently using Google Analytics
 */
 
-import Firebase
+import FirebaseAnalytics
+import FirebaseCore
 
 class AICAnalytics {
 
 	fileprivate enum Event: String {
-		case appOpen				= "app_open"
+		case appOpen = "app_open"
 		case languageFirstSelection	= "language_first_selection"
-		case audioPlayed			= "audio_played"
-		case audioStopped			= "audio_stopped"
-		case audioError             = "audio_error"
-		case tourStarted			= "tour_started"
-		case tourLeft				= "tour_left"
-		case eventViewed			= "event_viewed"
-		case eventRegisterLink		= "event_register_link"
-		case exhibitionViewed		= "exhibition_viewed"
-		case exhibitionBuyLink		= "exhibition_buy_link"
-		case exhibitionMap			= "exhibition_map"
-		case search					= "search"
-		case searchNoResults		= "search_no_results"
-		case searchAbandoned		= "search_abandoned"
-		case searchTappedArtwork	= "search_tapped_artwork"
-		case searchTappedTour		= "search_tapped_tour"
+		case audioPlayed = "audio_played"
+		case audioStopped = "audio_stopped"
+		case audioError = "audio_error"
+		case tourStarted = "tour_started"
+		case tourLeft = "tour_left"
+		case eventViewed = "event_viewed"
+		case eventRegisterLink = "event_register_link"
+		case exhibitionViewed = "exhibition_viewed"
+		case exhibitionBuyLink = "exhibition_buy_link"
+		case exhibitionMap = "exhibition_map"
+		case search = "search"
+		case searchNoResults = "search_no_results"
+		case searchAbandoned = "search_abandoned"
+		case searchTappedArtwork = "search_tapped_artwork"
+		case searchTappedTour = "search_tapped_tour"
 		case searchTappedExhibition	= "search_tapped_exhibition"
-		case searchFacilities		= "search_facilities"
-		case searchArtworkMap       = "search_artwork_map"
-		case searchIconMap          = "search_icon_map"
-		case locationDetected		= "location_detected"
+		case searchFacilities = "search_facilities"
+		case searchArtworkMap = "search_artwork_map"
+		case searchIconMap = "search_icon_map"
+		case locationDetected = "location_detected"
 		case locationHeadingEnabled	= "location_heading_enabled"
-		case memberCardShown		= "member_card_shown"
-		case miscLinkTapped			= "misc_link_tapped"
+		case memberCardShown = "member_card_shown"
+		case miscLinkTapped = "misc_link_tapped"
 	}
 
 	enum PlaybackSource: String {
@@ -76,9 +77,9 @@ class AICAnalytics {
 	}
 
 	fileprivate enum UserProperty: String {
-		case membership				= "Membership"
-		case appLanguage			= "Language"
-		case deviceLanguage			= "DeviceLanguage"
+		case membership = "Membership"
+		case appLanguage = "Language"
+		case deviceLanguage = "DeviceLanguage"
 	}
 
 	static fileprivate let parameterMaxLength = 95
@@ -356,4 +357,12 @@ class AICAnalytics {
 		]
 		trackEvent(.searchIconMap, parameters: parameters)
 	}
+}
+
+extension Analytics {
+    static func setScreenName(_ screenName:String, screenClass: String) {
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: screenName,
+                                       AnalyticsParameterScreenClass:screenClass])
+    }
 }

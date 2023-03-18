@@ -7,12 +7,12 @@ async network loading with indicator
 import UIKit
 import Alamofire
 
-protocol AICImageViewDelegate: class {
+protocol AICImageViewDelegate: AnyObject {
 	func aicImageViewDidFinishLoadingImageAsynchronously()
 }
 
 class AICImageView: UIImageView {
-	static var manager: Alamofire.SessionManager?
+	static var manager: Alamofire.Session?
 	weak var delegate: AICImageViewDelegate?
 
 	private var imageRequest: Alamofire.Request?
@@ -26,7 +26,7 @@ class AICImageView: UIImageView {
 			let configuration = URLSessionConfiguration.default
 			configuration.httpMaximumConnectionsPerHost =  5
 			configuration.timeoutIntervalForRequest = 30
-			AICImageView.manager = Alamofire.SessionManager(configuration: configuration)
+			AICImageView.manager = Alamofire.Session(configuration: configuration)
 		}
 	}
 
@@ -38,7 +38,7 @@ class AICImageView: UIImageView {
 			let configuration = URLSessionConfiguration.default
 			configuration.httpMaximumConnectionsPerHost =  5
 			configuration.timeoutIntervalForRequest = 30
-			AICImageView.manager = Alamofire.SessionManager(configuration: configuration)
+			AICImageView.manager = Alamofire.Session(configuration: configuration)
 		}
 	}
 

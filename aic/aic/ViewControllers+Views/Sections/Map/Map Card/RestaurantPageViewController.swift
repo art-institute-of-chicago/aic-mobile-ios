@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RestaurantPageViewControllerDelegate: class {
+protocol RestaurantPageViewControllerDelegate: AnyObject {
 	func restaurantPageDidChangeTo(restaurant: AICRestaurantModel)
 }
 

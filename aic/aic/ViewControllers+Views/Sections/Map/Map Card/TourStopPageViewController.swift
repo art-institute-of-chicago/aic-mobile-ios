@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TourStopPageViewControllerDelegate: class {
+protocol TourStopPageViewControllerDelegate: AnyObject {
 	func tourStopPageDidChangeTo(tour: AICTourModel)
 	func tourStopPageDidChangeTo(tourStop: AICTourStopModel)
 	func tourStopPageDidPressPlayAudio(tour: AICTourModel, language: Common.Language)

@@ -8,8 +8,9 @@
 
 import UIKit
 import Localize_Swift
+import PureLayout
 
-protocol InfoViewControllerDelegate: class {
+protocol InfoViewControllerDelegate: AnyObject {
 	func accessMemberCardButtonPressed()
 	func museumInfoButtonPressed()
 	func languageButtonPressed()
@@ -45,12 +46,7 @@ class InfoViewController: SectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		automaticallyAdjustsScrollViewInsets = false
-
-		if #available(iOS 11.0, *) {
-			scrollView.contentInsetAdjustmentBehavior = .never
-		}
-
+    scrollView.contentInsetAdjustmentBehavior = .never
 		scrollView.backgroundColor = .aicInfoColor
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
@@ -127,7 +123,8 @@ class InfoViewController: SectionViewController {
 		footerView.autoPinEdge(.leading, to: .leading, of: self.view)
 		footerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
 		footerView.autoSetDimension(.height, toSize: 250)
-
+    footerView.setNeedsUpdateConstraints()
+    
 		whiteBackgroundView.autoPinEdge(.top, to: .top, of: self.view)
 		whiteBackgroundView.autoPinEdge(.leading, to: .leading, of: self.view)
 		whiteBackgroundView.autoPinEdge(.trailing, to: .trailing, of: self.view)

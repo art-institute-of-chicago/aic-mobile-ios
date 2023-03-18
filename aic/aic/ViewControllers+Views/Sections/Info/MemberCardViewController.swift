@@ -36,7 +36,7 @@ class MemberCardViewController: UIViewController {
 		self.view.backgroundColor = .white
 
 		loadingIndicatorView.isHidden = true
-		loadingIndicatorView.style = .whiteLarge
+		loadingIndicatorView.style = .large
 		loadingIndicatorView.color = .darkGray
 
 		loginView.loginButton.addTarget(self, action: #selector(loginButtonPressed(button:)), for: .touchUpInside)

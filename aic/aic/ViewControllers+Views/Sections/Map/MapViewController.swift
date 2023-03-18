@@ -8,7 +8,7 @@ import UIKit
 import MapKit
 import Localize_Swift
 
-protocol MapViewControllerDelegate: class {
+protocol MapViewControllerDelegate: AnyObject {
 	func mapWasPressed()
 	func mapDidPressArtworkPlayButton(artwork: AICObjectModel)
 	func mapDidSelectTourStop(stopId: Int)
@@ -520,11 +520,11 @@ class MapViewController: UIViewController {
 	// Clears out all of the locations + tour objects
 	// currently set for floors
 
-	@objc internal func updateMapWithTimer() {
+	@objc func updateMapWithTimer() {
 		updateAnnotations()
 	}
 
-	internal func updateAnnotations() {
+	func updateAnnotations() {
 		if isSwitchingModes {
 			return
 		}
@@ -573,7 +573,7 @@ class MapViewController: UIViewController {
 		}
 	}
 
-	internal func updateAllInformationAnnotations() {
+	func updateAllInformationAnnotations() {
 		var annotations: [MKAnnotation] = []
 
 		// Set the annotations for this zoom level
@@ -1000,7 +1000,8 @@ extension MapViewController: MapFloorSelectorViewControllerDelegate {
 	}
 
 	func floorSelectorLocationButtonTapped() {
-		if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
+    let locationManager = CLLocationManager()
+		if locationManager.authorizationStatus == CLAuthorizationStatus.denied {
 			// Show message to enable location
 			//            locationDisabledMessage = MessageSmallView(model: Common.Messages.locationDisabled)
 			//            locationDisabledMessage!.delegate = self
@@ -1065,7 +1066,7 @@ extension MapViewController: UIGestureRecognizerDelegate {
 extension MapViewController: CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		guard let location = locations.first else {
-			print("No usable location found")
+			debugPrint("No usable location found")
 			return
 		}
 

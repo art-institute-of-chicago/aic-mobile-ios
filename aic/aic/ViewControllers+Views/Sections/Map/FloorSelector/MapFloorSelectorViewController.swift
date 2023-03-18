@@ -6,7 +6,7 @@ Controller for the map floor selector
 import UIKit
 
 // MARK: Protocol
-protocol MapFloorSelectorViewControllerDelegate: class {
+protocol MapFloorSelectorViewControllerDelegate: AnyObject {
 	func floorSelectorDidSelectFloor(_ floor: Int)
 	func floorSelectorLocationButtonTapped()
 }

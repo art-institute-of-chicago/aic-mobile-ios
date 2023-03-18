@@ -49,11 +49,11 @@ class SectionNavigationController: UINavigationController {
 		self.sectionNavigationBar.backButton.addTarget(self, action: #selector(backButtonPressed(button:)), for: .touchUpInside)
 		self.view.addSubview(sectionNavigationBar)
 
-		// Subscribe to tab bar height changes
-		//NotificationCenter.default.addObserver(self, selector: #selector(SectionViewController.tabBarHeightDidChange), name: NSNotification.Name(rawValue: Common.Notifications.tabBarHeightDidChangeNotification), object: nil)
-
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self,
+                                           selector: #selector(updateLanguage),
+                                           name: NSNotification.Name(LCLLanguageChangeNotification),
+                                           object: nil)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

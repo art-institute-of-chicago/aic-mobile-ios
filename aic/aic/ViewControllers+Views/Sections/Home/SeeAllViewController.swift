@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-protocol SeeAllViewControllerDelegate: class {
+protocol SeeAllViewControllerDelegate: AnyObject {
 	func seeAllDidSelectTour(tour: AICTourModel)
 	func seeAllDidSelectExhibition(exhibition: AICExhibitionModel)
 	func seeAllDidSelectEvent(event: AICEventModel)
@@ -28,9 +28,9 @@ class SeeAllViewController: UIViewController {
 	private let content: ContentType
 
 	private let titles = [ContentType.tours: "welcome_tours_header:Base",
-						  ContentType.toursByCategory: "welcome_tours_header:Base",
-						  ContentType.exhibitions: "welcome_on_view_header:Base",
-						  ContentType.events: "welcome_events_header:Base"]
+                        ContentType.toursByCategory: "welcome_tours_header:Base",
+                        ContentType.exhibitions: "welcome_on_view_header:Base",
+                        ContentType.events: "welcome_events_header:Base"]
 
 	private var tourItems: [AICTourModel] = []
 	private var tourCategories: [AICTourCategoryModel] = []
@@ -79,7 +79,6 @@ class SeeAllViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.automaticallyAdjustsScrollViewInsets = false
 		self.view.backgroundColor = .white
 
 		let swipeRightGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(recognizer:)))
@@ -94,7 +93,7 @@ class SeeAllViewController: UIViewController {
 		collectionView.register(SeeAllIntroView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SeeAllIntroView.reuseIdentifier)
 		collectionView.delegate = self
 		collectionView.dataSource = self
-
+    collectionView.contentInsetAdjustmentBehavior = .never
 		self.view.addSubview(collectionView)
 
 		// Language

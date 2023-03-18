@@ -7,32 +7,24 @@ import UIKit
 import MapKit
 import Localize_Swift
 
-protocol SectionsViewControllerDelegate: class {
+protocol SectionsViewControllerDelegate: AnyObject {
 	func sectionsViewControllerDidFinishAnimatingIn()
 }
 
-class SectionsViewController: UIViewController {
-	weak var delegate: SectionsViewControllerDelegate?
+class SectionsViewController: UITabBarController {
+	weak var sectionTabBarDelegate: SectionsViewControllerDelegate?
 
-	// AudioPlayer Card
-	let audioPlayerCardVC: AudioPlayerNavigationController = AudioPlayerNavigationController()
+	private let audioPlayerCardVC: AudioPlayerNavigationController = AudioPlayerNavigationController()
+  private var contentCardVC: ContentCardNavigationController?
+  private let searchCardVC: SearchNavigationController = SearchNavigationController()
 
-	// Content Card
-	var contentCardVC: ContentCardNavigationController?
-
-	// Search Card
-	let searchCardVC: SearchNavigationController = SearchNavigationController()
-
-	// TabBar
-	var sectionTabBarController: UITabBarController = UITabBarController()
-
-	// Sections
+	// TabBar controllers
 	var homeVC: HomeNavigationController = HomeNavigationController(section: Common.Sections[.home]!)
 	var audioGuideVC: AudioGuideNavigationController = AudioGuideNavigationController(section: Common.Sections[.audioGuide]!)
 	var mapVC: MapNavigationController = MapNavigationController(section: Common.Sections[.map]!)
 	var infoVC: InfoNavigationController = InfoNavigationController(section: Common.Sections[.info]!)
 
-	var sectionViewControllers: [SectionNavigationController] = []
+  private var sectionViewControllers = [SectionNavigationController]()
 
 	var currentViewController: SectionNavigationController
 	var previousViewController: SectionNavigationController?
@@ -62,52 +54,20 @@ class SectionsViewController: UIViewController {
 	}
 
 	override func viewDidLoad() {
-		// Set the view controllers for the tab bar
-		sectionViewControllers = [
-			homeVC,
-			audioGuideVC,
-			mapVC,
-			infoVC
-		]
-
-		// Setup and add the tabbar
-		sectionTabBarController.view.frame = UIScreen.main.bounds
-		sectionTabBarController.tabBar.tintColor = .aicHomeColor
-		sectionTabBarController.tabBar.backgroundColor = .aicTabbarColor
-		sectionTabBarController.tabBar.barStyle = UIBarStyle.black
-		sectionTabBarController.viewControllers = sectionViewControllers
-
-		// Add Views
-		sectionTabBarController.willMove(toParent: self)
-		view.addSubview(sectionTabBarController.view)
-		sectionTabBarController.didMove(toParent: self)
-
-		audioPlayerCardVC.willMove(toParent: sectionTabBarController)
-		sectionTabBarController.view.insertSubview(audioPlayerCardVC.view, belowSubview: sectionTabBarController.tabBar)
-		audioPlayerCardVC.didMove(toParent: sectionTabBarController)
-
-		searchCardVC.willMove(toParent: self.sectionTabBarController)
-		sectionTabBarController.view.insertSubview(searchCardVC.view, belowSubview: audioPlayerCardVC.view)
-		searchCardVC.didMove(toParent: self.sectionTabBarController)
-
-		// Set delegates
-		homeVC.sectionDelegate = self
-		mapVC.sectionDelegate = self
-		audioGuideVC.sectionDelegate = self
-		sectionTabBarController.delegate = self
-		searchCardVC.cardDelegate = self
-		searchCardVC.sectionsVC = self
-		searchCardVC.resultsVC.sectionsVC = self
-		audioPlayerCardVC.cardDelegate = self
-		audioPlayerCardVC.sectionDelegate = self
+    setup()
 
 		// Search Buttons
 		for sectionVC in sectionViewControllers {
-			sectionVC.sectionNavigationBar.searchButton.addTarget(self, action: #selector(searchButtonPressed(button:)), for: .touchUpInside)
+			sectionVC.sectionNavigationBar.searchButton.addTarget(self,
+                                                            action: #selector(searchButtonPressed(button:)),
+                                                            for: .touchUpInside)
 		}
 
 		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+		NotificationCenter.default.addObserver(self,
+                                           selector: #selector(updateLanguage),
+                                           name: NSNotification.Name(LCLLanguageChangeNotification),
+                                           object: nil)
 
 		// Accessibility
 		searchCardVC.view.accessibilityElementsHidden = true
@@ -192,17 +152,17 @@ class SectionsViewController: UIViewController {
 			}
 
 			// Update colors for this VC
-			sectionTabBarController.tabBar.tintColor = sectionVC.color
+			tabBar.tintColor = sectionVC.color
 			audioPlayerCardVC.setProgressBarColor(color: sectionVC.color)
 
-			if currentViewController == homeVC && sectionTabBarController.selectedIndex != 0 {
-				sectionTabBarController.selectedIndex = 0
-			} else if currentViewController == audioGuideVC && sectionTabBarController.selectedIndex != 1 {
-				sectionTabBarController.selectedIndex = 1
-			} else if currentViewController == mapVC && sectionTabBarController.selectedIndex != 2 {
-				sectionTabBarController.selectedIndex = 2
-			} else if currentViewController == infoVC && sectionTabBarController.selectedIndex != 3 {
-				sectionTabBarController.selectedIndex = 3
+			if currentViewController == homeVC && selectedIndex != 0 {
+				selectedIndex = 0
+			} else if currentViewController == audioGuideVC && selectedIndex != 1 {
+				selectedIndex = 1
+			} else if currentViewController == mapVC && selectedIndex != 2 {
+				selectedIndex = 2
+			} else if currentViewController == infoVC && selectedIndex != 3 {
+				selectedIndex = 3
 			}
 		}
 
@@ -228,9 +188,7 @@ class SectionsViewController: UIViewController {
 				// show home tooltip, if needed
 				self.homeVC.showHomeTooltip()
 
-				self.delegate?.sectionsViewControllerDidFinishAnimatingIn()
-
-				// Accessibility
+				self.sectionTabBarDelegate?.sectionsViewControllerDidFinishAnimatingIn()
 				self.homeVC.sectionNavigationBar.titleLabel.becomeFirstResponder()
 			}
 		})
@@ -533,10 +491,10 @@ class SectionsViewController: UIViewController {
 	// MARK: Language
 
 	@objc func updateLanguage() {
-		sectionTabBarController.tabBar.items![0].title = "tab_home".localized(using: "Base")
-		sectionTabBarController.tabBar.items![1].title = "tab_audio".localized(using: "Base")
-		sectionTabBarController.tabBar.items![2].title = "tab_map".localized(using: "Base")
-		sectionTabBarController.tabBar.items![3].title = "tab_info".localized(using: "Base")
+		tabBar.items![0].title = "tab_home".localized(using: "Base")
+		tabBar.items![1].title = "tab_audio".localized(using: "Base")
+		tabBar.items![2].title = "tab_map".localized(using: "Base")
+		tabBar.items![3].title = "tab_info".localized(using: "Base")
 	}
 }
 
@@ -556,7 +514,7 @@ extension SectionsViewController: HomeNavigationControllerDelegate {
 	func showMemberCard() {
 		setSelectedSection(sectionVC: infoVC)
 		infoVC.shouldShowMemberCard = true
-		sectionTabBarController.selectedIndex = 3
+		selectedIndex = 3
 	}
 
 	func showTourCard(tour: AICTourModel) {
@@ -589,10 +547,7 @@ extension SectionsViewController: HomeNavigationControllerDelegate {
 		self.contentCardVC = contentCardVC
 		contentCardVC.cardDelegate = self
 
-		contentCardVC.willMove(toParent: sectionTabBarController)
-		sectionTabBarController.view.insertSubview(contentCardVC.view, aboveSubview: searchCardVC.view)
-		contentCardVC.didMove(toParent: sectionTabBarController)
-
+		view.insertSubview(contentCardVC.view, aboveSubview: searchCardVC.view)
 		contentCardVC.showFullscreen()
 	}
 }
@@ -674,19 +629,19 @@ extension SectionsViewController: MessageViewControllerDelegate {
 	}
 }
 
-// MARK: Card Delegate
-
+// MARK: CardNavigationControllerDelegate
 extension SectionsViewController: CardNavigationControllerDelegate {
+
 	// When the Audio Player goes fullscreen hide the TabBar
 	func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint) {
 		if cardVC == audioPlayerCardVC {
 			let screenHeight = UIScreen.main.bounds.height
 
-			var percentageY: CGFloat = position.y / (screenHeight - self.sectionTabBarController.tabBar.frame.height - Common.Layout.miniAudioPlayerHeight)
+			var percentageY: CGFloat = position.y / (screenHeight - tabBar.frame.height - Common.Layout.miniAudioPlayerHeight)
 			percentageY = clamp(val: percentageY, minVal: 0.0, maxVal: 1.0)
 
 			// Set the sectionVC tab bar to hide as we show audioPlayerVC
-			self.sectionTabBarController.tabBar.frame.origin.y = screenHeight - (sectionTabBarController.tabBar.bounds.height * percentageY)
+			tabBar.frame.origin.y = screenHeight - (tabBar.bounds.height * percentageY)
 		}
 	}
 
@@ -746,8 +701,6 @@ extension SectionsViewController: CardNavigationControllerDelegate {
 		// make sure there's no other card fullscreen, befiore you re-enable the search button
 		if audioPlayerCardVC.currentState != .fullscreen {
 			setSearchButtonEnabled(true)
-
-			// Accessibility
 			updateAccessibilityOnCardClosed()
 		}
 		if cardVC.isKind(of: ContentCardNavigationController.self) {
@@ -756,8 +709,7 @@ extension SectionsViewController: CardNavigationControllerDelegate {
 	}
 }
 
-// MARK: Tour Content Card Delegate
-
+// MARK: TourTableViewControllerDelegate
 extension SectionsViewController: TourTableViewControllerDelegate {
 	// Pressed "Start Tour" or tour stop in content card
 	func tourContentCardDidPressStartTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
@@ -765,8 +717,7 @@ extension SectionsViewController: TourTableViewControllerDelegate {
 	}
 }
 
-// MARK: Artwork Content Card Delegate
-
+// MARK: ArtworkTableViewControllerDelegate
 extension SectionsViewController: ArtworkTableViewControllerDelegate {
 	// Pressed "Play Audio" in content card
 	func artworkContentCardDidPressPlayAudio(artwork: AICObjectModel) {
@@ -778,16 +729,14 @@ extension SectionsViewController: ArtworkTableViewControllerDelegate {
 	}
 }
 
-// MARK: Exhibition Content Card Delegate
-
+// MARK: ExhibitionTableViewControllerDelegate
 extension SectionsViewController: ExhibitionTableViewControllerDelegate {
 	func exhibitionContentCardDidPressShowOnMap(exhibition: AICExhibitionModel) {
 		showExhibitionOnMap(exhibition: exhibition)
 	}
 }
 
-// MARK: Search Map Items Collection Delegate
-
+// MARK: MapItemsCollectionContainerDelegate
 extension SectionsViewController: MapItemsCollectionContainerDelegate {
 	func mapItemDiningSelected() {
 		showDiningOnMap()
@@ -810,9 +759,9 @@ extension SectionsViewController: MapItemsCollectionContainerDelegate {
 	}
 }
 
-// MARK: Audio Player Delegate
-
+// MARK: AudioPlayerNavigationControllerDelegate
 extension SectionsViewController: AudioPlayerNavigationControllerDelegate {
+
 	func audioPlayerDidStartPlaying(audio: AICAudioFileModel) {
 		guard mapVC.currentMode == .tour else { return }
 
@@ -831,4 +780,44 @@ extension SectionsViewController: AudioPlayerNavigationControllerDelegate {
 		mapVC.advanceToNextTourStopAfterAudioPlayback(audio: audio)
 		mapVC.audioPlaybackDidFinish(audio: audio)
 	}
+
+}
+
+// MARK: Private - Setups
+private extension SectionsViewController {
+
+  func setup() {
+    setupTabbarAppearance()
+    setupViewControllers()
+    setupDelegates()
+    addAudioPlayerAndSearchBottomCardViewControllers()
+  }
+
+  func setupViewControllers() {
+    sectionViewControllers = [homeVC, audioGuideVC, mapVC, infoVC]
+    viewControllers = sectionViewControllers
+  }
+
+  func setupTabbarAppearance() {
+    tabBar.tintColor = .aicHomeColor
+    tabBar.backgroundColor = .aicTabbarColor
+    tabBar.barStyle = .black
+  }
+
+  func setupDelegates() {
+    delegate = self
+    homeVC.sectionDelegate = self
+    mapVC.sectionDelegate = self
+    audioGuideVC.sectionDelegate = self
+    searchCardVC.cardDelegate = self
+    searchCardVC.sectionsVC = self
+    searchCardVC.resultsVC.sectionsVC = self
+    audioPlayerCardVC.cardDelegate = self
+    audioPlayerCardVC.sectionDelegate = self
+  }
+
+  func addAudioPlayerAndSearchBottomCardViewControllers() {
+    view.insertSubview(audioPlayerCardVC.view, belowSubview: self.tabBar)
+    view.insertSubview(searchCardVC.view, belowSubview: audioPlayerCardVC.view)
+  }
 }

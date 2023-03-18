@@ -7,14 +7,15 @@
 //
 
 import UIKit
-import PureLayout
 
 class InfoFooterView: UIView {
 	let bloombergCreditsImageView = UIImageView()
 	let potionCreditsTextView = UITextView()
 
 	let bloomberCreditsTopMargin: CGFloat = 62
+  let bloomberCreditsLeadingMargin: CGFloat = 16
 	let potionCreditsTopMargin: CGFloat = 38
+  let potionCreditsLeadingMargin: CGFloat = 16
 	let bottomMargin: CGFloat = 48
 
 	init() {
@@ -54,10 +55,10 @@ class InfoFooterView: UIView {
 
 	override func updateConstraints() {
 		bloombergCreditsImageView.autoPinEdge(.top, to: .top, of: self, withOffset: bloomberCreditsTopMargin)
-		bloombergCreditsImageView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		bloombergCreditsImageView.autoPinEdge(.leading, to: .leading, of: self, withOffset: bloomberCreditsLeadingMargin)
 
 		potionCreditsTextView.autoPinEdge(.top, to: .bottom, of: bloombergCreditsImageView, withOffset: potionCreditsTopMargin)
-		potionCreditsTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16)
+		potionCreditsTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: potionCreditsLeadingMargin)
 		potionCreditsTextView.autoPinEdge(.trailing, to: .trailing, of: self)
 
 		super.updateConstraints()

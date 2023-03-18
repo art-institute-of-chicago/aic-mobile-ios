@@ -6,6 +6,6 @@ Base view
 import UIKit
 
 class BaseView: UIView {
-	internal var didSetupConstraints = false
+	var didSetupConstraints = false
 
 }

@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		05A2B2FB21024A780059C123 /* UILabelPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A2B2FA21024A780059C123 /* UILabelPadding.swift */; };
 		0E2D15591DA8134200D06A4A /* AICMemberCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2D15581DA8134200D06A4A /* AICMemberCardModel.swift */; };
-		1370EED7178BE85DDE6304C6 /* Pods_aicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */; };
 		28F7980E1E7B40E600D22E0E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F7980D1E7B40E600D22E0E /* Common.swift */; };
 		2902198E1FCE2ABA006CFA9E /* HomeEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */; };
 		290219901FCE2AC8006CFA9E /* HomeEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */; };
@@ -151,7 +150,20 @@
 		306E6E502469CA4D00B17CA8 /* LocationUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E1D2469CA4C00B17CA8 /* LocationUI.strings */; };
 		3099149B23A8385E00E32ACE /* InfoBuyTicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */; };
 		32A2A7101E8079610025186F /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32A2A70F1E8079610025186F /* Config.plist */; };
-		E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B0D3199A7D98737E36C68 /* Pods_aic.framework */; };
+		E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */; };
+		E28F3AFA29B96E6A00C03BFD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */; };
+		E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */; };
+		E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */; };
+		E28F3B0029B96E6A00C03BFD /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFF29B96E6A00C03BFD /* FirebaseCrashlytics */; };
+		E28F3B0329BAC14A00C03BFD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0229BAC14A00C03BFD /* Kingfisher */; };
+		E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0529BAC16C00C03BFD /* SWXMLHash */; };
+		E28F3B0929BAC1DA00C03BFD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0829BAC1DA00C03BFD /* Alamofire */; };
+		E28F3B0C29BAC1F900C03BFD /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */; };
+		E28F3B0F29BAC27200C03BFD /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0E29BAC27200C03BFD /* PureLayout */; };
+		E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1129BAC28E00C03BFD /* Atributika */; };
+		E28F3B1529BAC33300C03BFD /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1429BAC33300C03BFD /* Localize_Swift */; };
+		E2C72F0829C3EFA30021F1EC /* UIViewController+ChildTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */; };
+		E2C72F0A29C3FBB20021F1EC /* ContentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C72F0929C3FBB20021F1EC /* ContentState.swift */; };
 		E407F9E21C9A561E00E285B4 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */; };
 		E40D41E41C6CEBB700A57AF4 /* aicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D41E31C6CEBB700A57AF4 /* aicTests.swift */; };
 		E40D41EF1C6CEBB700A57AF4 /* aicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40D41EE1C6CEBB700A57AF4 /* aicUITests.swift */; };
@@ -164,7 +176,6 @@
 		E42178321CC68A7300815B41 /* InfoBecomeMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */; };
 		E421783C1CC6E1F300815B41 /* String+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E421783B1CC6E1F300815B41 /* String+AIC.swift */; };
 		E4223CE51CC7FE6600503D43 /* MemberDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */; };
-		E4223CE81CC8013300503D43 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4223CE71CC8013300503D43 /* Alamofire.framework */; };
 		E425B3CE1C97649300A19F6F /* AICObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E425B3CD1C97649300A19F6F /* AICObjectModel.swift */; };
 		E42677E31CC558060046BB27 /* AICButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42677E21CC558060046BB27 /* AICButton.swift */; };
 		E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E433BACD1CFDD64A0086F2ED /* AppDelegate.swift */; };
@@ -173,12 +184,10 @@
 		E43F36741D2B0E3600DA4DA6 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */; };
 		E43F368B1D2B2F9900DA4DA6 /* AICAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F368A1D2B2F9900DA4DA6 /* AICAnalytics.swift */; };
 		E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */; };
-		E44084A71CC96C8E00AABC92 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */; };
 		E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */; };
 		E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */; };
 		E458502F1CAC8C1A00131A66 /* AICExhibitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */; };
 		E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */; };
-		E47A970F1CEFBB1F0041D0A6 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47A970D1CEFBB1E0041D0A6 /* Fabric.framework */; };
 		E47A97151CEFBC150041D0A6 /* AppDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97131CEFBC150041D0A6 /* AppDataManager.swift */; };
 		E47A97161CEFBC150041D0A6 /* AppDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97141CEFBC150041D0A6 /* AppDataParser.swift */; };
 		E47A971A1CF262760041D0A6 /* AICTooltipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97191CF262760041D0A6 /* AICTooltipModel.swift */; };
@@ -187,14 +196,12 @@
 		E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */; };
 		E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */; };
 		E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */; };
-		E4923FC11C9E00B500AB255C /* UIView+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4923FC01C9E00B500AB255C /* UIView+AIC.swift */; };
 		E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */; };
 		E497FA621D00ABAD007FA272 /* AICMessageSmallModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */; };
 		E4BBB6771CA1A1FB00B8A37C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */; };
 		E4D159311CB9A61F00536B4D /* UIFont+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */; };
 		E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D159341CBAE3E900536B4D /* AICTourModel.swift */; };
 		E4D159391CBAE8C100536B4D /* AICCoordinateWithFloor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D159381CBAE8C100536B4D /* AICCoordinateWithFloor.swift */; };
-		E4D790D81C8E792F0033EE0A /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D790D71C8E792F0033EE0A /* SWXMLHash.framework */; };
 		E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */; };
 		E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */; };
 		E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F518FA1D2586B0004BFB44 /* AICImageView.swift */; };
@@ -203,7 +210,6 @@
 		E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */; };
 		E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */; };
 		E4FFC6EC1D00B7FD0082818D /* AICMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */; };
-		F23801B72DA3B2C5C5B13960 /* Pods_aicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A42DED784747728FEECA5D /* Pods_aicTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,9 +233,6 @@
 		05A2B2FA21024A780059C123 /* UILabelPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelPadding.swift; sourceTree = "<group>"; };
 		0E2D15581DA8134200D06A4A /* AICMemberCardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberCardModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0E3350C21DA6C7A500CE3612 /* aic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aic.entitlements; sourceTree = "<group>"; };
-		1E88FB8CA5CC2BB16C8482A6 /* Pods-aicRental.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicRental.release.xcconfig"; path = "Pods/Target Support Files/Pods-aicRental/Pods-aicRental.release.xcconfig"; sourceTree = "<group>"; };
-		223EFA1418FE36F1D127D26D /* Pods-aicTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicTests/Pods-aicTests.appstore.xcconfig"; sourceTree = "<group>"; };
-		27EC410D74F8C78F01DA4A38 /* Pods_aicRental.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicRental.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F7980D1E7B40E600D22E0E /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		2902198D1FCE2ABA006CFA9E /* HomeEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeEventCell.xib; sourceTree = "<group>"; };
 		2902198F1FCE2AC8006CFA9E /* HomeEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCell.swift; sourceTree = "<group>"; };
@@ -355,7 +358,6 @@
 		29F261FE200FFACF0000BF05 /* ArtworkContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkContentCell.swift; sourceTree = "<group>"; };
 		29F26200200FFADF0000BF05 /* ArtworkContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtworkContentCell.xib; sourceTree = "<group>"; };
 		29F3A9351FE5D2A1000BCABE /* SeeAllHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllHeaderView.swift; sourceTree = "<group>"; };
-		2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.appstore.xcconfig"; sourceTree = "<group>"; };
 		304BEA08246E147A006E025A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		304BEA0A246E1573006E025A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		304BEA102477054A006E025A /* PagedMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedMessageViewController.swift; sourceTree = "<group>"; };
@@ -412,19 +414,10 @@
 		306E6E462469CA4C00B17CA8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LocationUI.strings; sourceTree = "<group>"; };
 		3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBuyTicketsView.swift; sourceTree = "<group>"; };
 		32A2A70F1E8079610025186F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
-		34A42DED784747728FEECA5D /* Pods_aicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		544B0D3199A7D98737E36C68 /* Pods_aic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7B93124E7DF4A8F3843C35B8 /* Pods-aicUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.release.xcconfig"; sourceTree = "<group>"; };
-		A7AC81C65E02904929DDCC16 /* Pods-aic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aic.release.xcconfig"; path = "Pods/Target Support Files/Pods-aic/Pods-aic.release.xcconfig"; sourceTree = "<group>"; };
-		AB7404862BD34C730D2AE332 /* Pods-aic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aic/Pods-aic.debug.xcconfig"; sourceTree = "<group>"; };
-		AB87B855811500A9F18D5D9B /* Pods-aicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aicTests/Pods-aicTests.debug.xcconfig"; sourceTree = "<group>"; };
-		ABCF711D67DBE3AE557BDACC /* Pods-aicRental.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicRental.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aicRental/Pods-aicRental.appstore.xcconfig"; sourceTree = "<group>"; };
-		B060230330EFD5CC731DD275 /* Pods-aicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aicUITests/Pods-aicUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		C04250290B0C7900464F2D80 /* Pods-aicTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-aicTests/Pods-aicTests.release.xcconfig"; sourceTree = "<group>"; };
-		D07597879002299E573D5330 /* Pods-aicRental.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aicRental.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aicRental/Pods-aicRental.debug.xcconfig"; sourceTree = "<group>"; };
-		D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_aicUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
+		E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ChildTransition.swift"; sourceTree = "<group>"; };
+		E2C72F0929C3FBB20021F1EC /* ContentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentState.swift; sourceTree = "<group>"; };
 		E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
-		E407F9E51C9B225B00E285B4 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
 		E40D41C91C6CEBB700A57AF4 /* aic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40D41DF1C6CEBB700A57AF4 /* aicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40D41E31C6CEBB700A57AF4 /* aicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = aicTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -442,7 +435,6 @@
 		E42178311CC68A7300815B41 /* InfoBecomeMemberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBecomeMemberView.swift; sourceTree = "<group>"; };
 		E421783B1CC6E1F300815B41 /* String+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AIC.swift"; sourceTree = "<group>"; };
 		E4223CE41CC7FE6600503D43 /* MemberDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberDataManager.swift; sourceTree = "<group>"; };
-		E4223CE71CC8013300503D43 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		E425B3CD1C97649300A19F6F /* AICObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICObjectModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E42677E21CC558060046BB27 /* AICButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICButton.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E433BACD1CFDD64A0086F2ED /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -451,7 +443,6 @@
 		E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E43F368A1D2B2F9900DA4DA6 /* AICAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AICAnalytics.swift; path = Analytics/AICAnalytics.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICSectionModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E456F9BA1D2DB54A00DEA3C9 /* aic-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "aic-bridging-header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -466,14 +457,12 @@
 		E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+AIC.swift"; sourceTree = "<group>"; };
 		E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
-		E4923FC01C9E00B500AB255C /* UIView+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AIC.swift"; sourceTree = "<group>"; };
 		E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAppDataModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E497FA611D00ABAD007FA272 /* AICMessageSmallModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageSmallModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+AIC.swift"; sourceTree = "<group>"; };
 		E4D159341CBAE3E900536B4D /* AICTourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTourModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4D159381CBAE8C100536B4D /* AICCoordinateWithFloor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICCoordinateWithFloor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E4D790D71C8E792F0033EE0A /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/iOS/SWXMLHash.framework; sourceTree = "<group>"; };
 		E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AIC.swift"; sourceTree = "<group>"; };
 		E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAudioFileModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F518FA1D2586B0004BFB44 /* AICImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICImageView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -482,7 +471,6 @@
 		E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapFloorModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
 		E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		EA1BA6C00D1BB7B67F144190 /* Pods-aic.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aic.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-aic/Pods-aic.appstore.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -490,15 +478,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E28F3B0929BAC1DA00C03BFD /* Alamofire in Frameworks */,
 				E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */,
 				E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */,
+				E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */,
+				E28F3B0F29BAC27200C03BFD /* PureLayout in Frameworks */,
 				E43F36741D2B0E3600DA4DA6 /* AddressBook.framework in Frameworks */,
-				E4D790D81C8E792F0033EE0A /* SWXMLHash.framework in Frameworks */,
+				E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */,
+				E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */,
 				E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */,
-				E4223CE81CC8013300503D43 /* Alamofire.framework in Frameworks */,
-				E44084A71CC96C8E00AABC92 /* SwiftyJSON.framework in Frameworks */,
-				E47A970F1CEFBB1F0041D0A6 /* Fabric.framework in Frameworks */,
-				E058B8B27010A08F5B2BD853 /* Pods_aic.framework in Frameworks */,
+				E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */,
+				E28F3B0C29BAC1F900C03BFD /* SwiftyJSON in Frameworks */,
+				E28F3B0329BAC14A00C03BFD /* Kingfisher in Frameworks */,
+				E28F3B1529BAC33300C03BFD /* Localize_Swift in Frameworks */,
+				E28F3B0029B96E6A00C03BFD /* FirebaseCrashlytics in Frameworks */,
+				E28F3AFA29B96E6A00C03BFD /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,7 +500,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F23801B72DA3B2C5C5B13960 /* Pods_aicTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,7 +507,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1370EED7178BE85DDE6304C6 /* Pods_aicUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -864,23 +856,20 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
-		B819E172870013E1F6D5EC3E /* Pods */ = {
+		E218869529C0037300803FF9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AB7404862BD34C730D2AE332 /* Pods-aic.debug.xcconfig */,
-				A7AC81C65E02904929DDCC16 /* Pods-aic.release.xcconfig */,
-				EA1BA6C00D1BB7B67F144190 /* Pods-aic.appstore.xcconfig */,
-				D07597879002299E573D5330 /* Pods-aicRental.debug.xcconfig */,
-				1E88FB8CA5CC2BB16C8482A6 /* Pods-aicRental.release.xcconfig */,
-				ABCF711D67DBE3AE557BDACC /* Pods-aicRental.appstore.xcconfig */,
-				AB87B855811500A9F18D5D9B /* Pods-aicTests.debug.xcconfig */,
-				C04250290B0C7900464F2D80 /* Pods-aicTests.release.xcconfig */,
-				223EFA1418FE36F1D127D26D /* Pods-aicTests.appstore.xcconfig */,
-				B060230330EFD5CC731DD275 /* Pods-aicUITests.debug.xcconfig */,
-				7B93124E7DF4A8F3843C35B8 /* Pods-aicUITests.release.xcconfig */,
-				2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */,
+				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
+				E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */,
+				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
+				29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */,
+				E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */,
+				290B6CCA208510DE0022F6AE /* UIFont+FontNames.swift */,
+				E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */,
+				E421782F1CC57BE200815B41 /* UITextView+AIC.swift */,
+				E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */,
 			);
-			name = Pods;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E40D41C01C6CEBB700A57AF4 = {
@@ -893,7 +882,6 @@
 				E40D41E21C6CEBB700A57AF4 /* aicTests */,
 				E40D41ED1C6CEBB700A57AF4 /* aicUITests */,
 				E40D41CA1C6CEBB700A57AF4 /* Products */,
-				B819E172870013E1F6D5EC3E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -950,6 +938,7 @@
 		E415AB9A1C7297E60093B719 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E218869529C0037300803FF9 /* Extensions */,
 				28F7980D1E7B40E600D22E0E /* Common.swift */,
 				E4F519C61C87B2F200226188 /* Helpers.swift */,
 				E4BBB6761CA1A1FB00B8A37C /* BaseView.swift */,
@@ -957,14 +946,6 @@
 				E4F518FA1D2586B0004BFB44 /* AICImageView.swift */,
 				29DAF05E1FB3974F002ED862 /* LinkedTextView.swift */,
 				05A2B2FA21024A780059C123 /* UILabelPadding.swift */,
-				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
-				E4D159301CB9A61F00536B4D /* UIFont+AIC.swift */,
-				290B6CCA208510DE0022F6AE /* UIFont+FontNames.swift */,
-				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
-				29BB93121FAA6A400034AEB4 /* UIDevice+Model.swift */,
-				E4923FC01C9E00B500AB255C /* UIView+AIC.swift */,
-				E421782F1CC57BE200815B41 /* UITextView+AIC.swift */,
-				E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1007,6 +988,7 @@
 				E415ABC61C7298420093B719 /* Sections */,
 				2975A051203F2DE90014017C /* Tooltips */,
 				E433BACE1CFDD64A0086F2ED /* RootViewController.swift */,
+				E2C72F0929C3FBB20021F1EC /* ContentState.swift */,
 			);
 			path = "ViewControllers+Views";
 			sourceTree = "<group>";
@@ -1107,15 +1089,7 @@
 				E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */,
 				E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */,
 				E47A970D1CEFBB1E0041D0A6 /* Fabric.framework */,
-				E44084A61CC96C8E00AABC92 /* SwiftyJSON.framework */,
-				E4223CE71CC8013300503D43 /* Alamofire.framework */,
-				E407F9E51C9B225B00E285B4 /* SnapKit.framework */,
-				E4D790D71C8E792F0033EE0A /* SWXMLHash.framework */,
 				E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */,
-				544B0D3199A7D98737E36C68 /* Pods_aic.framework */,
-				27EC410D74F8C78F01DA4A38 /* Pods_aicRental.framework */,
-				34A42DED784747728FEECA5D /* Pods_aicTests.framework */,
-				D20A3AD2F51D72F4885D678F /* Pods_aicUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1141,17 +1115,28 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E40D41F31C6CEBB700A57AF4 /* Build configuration list for PBXNativeTarget "aic" */;
 			buildPhases = (
-				0F03D992B8AA88C3AD4F780F /* [CP] Check Pods Manifest.lock */,
 				E40D41C51C6CEBB700A57AF4 /* Sources */,
 				E40D41C61C6CEBB700A57AF4 /* Frameworks */,
 				E40D41C71C6CEBB700A57AF4 /* Resources */,
-				70F646A8A467859D6A97D54B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = aic;
+			packageProductDependencies = (
+				E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */,
+				E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */,
+				E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */,
+				E28F3AFF29B96E6A00C03BFD /* FirebaseCrashlytics */,
+				E28F3B0229BAC14A00C03BFD /* Kingfisher */,
+				E28F3B0529BAC16C00C03BFD /* SWXMLHash */,
+				E28F3B0829BAC1DA00C03BFD /* Alamofire */,
+				E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */,
+				E28F3B0E29BAC27200C03BFD /* PureLayout */,
+				E28F3B1129BAC28E00C03BFD /* Atributika */,
+				E28F3B1429BAC33300C03BFD /* Localize_Swift */,
+			);
 			productName = aic;
 			productReference = E40D41C91C6CEBB700A57AF4 /* aic.app */;
 			productType = "com.apple.product-type.application";
@@ -1160,7 +1145,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E40D41F61C6CEBB700A57AF4 /* Build configuration list for PBXNativeTarget "aicTests" */;
 			buildPhases = (
-				4A44D489B9F5452DB3FFF811 /* [CP] Check Pods Manifest.lock */,
 				E40D41DB1C6CEBB700A57AF4 /* Sources */,
 				E40D41DC1C6CEBB700A57AF4 /* Frameworks */,
 				E40D41DD1C6CEBB700A57AF4 /* Resources */,
@@ -1179,7 +1163,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E40D41F91C6CEBB700A57AF4 /* Build configuration list for PBXNativeTarget "aicUITests" */;
 			buildPhases = (
-				D14437E377A505ECF6DAD190 /* [CP] Check Pods Manifest.lock */,
 				E40D41E61C6CEBB700A57AF4 /* Sources */,
 				E40D41E71C6CEBB700A57AF4 /* Frameworks */,
 				E40D41E81C6CEBB700A57AF4 /* Resources */,
@@ -1201,14 +1184,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = "Art Institute of Chicago";
 				TargetAttributes = {
 					E40D41C81C6CEBB700A57AF4 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 6CA8WK4597;
 						LastSwiftMigration = 1130;
-						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1247,6 +1228,16 @@
 				fr,
 			);
 			mainGroup = E40D41C01C6CEBB700A57AF4;
+			packageReferences = (
+				E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E28F3B0129BAC14A00C03BFD /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E28F3B0429BAC16C00C03BFD /* XCRemoteSwiftPackageReference "SWXMLHash" */,
+				E28F3B0729BAC1DA00C03BFD /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */,
+				E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */,
+				E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+			);
 			productRefGroup = E40D41CA1C6CEBB700A57AF4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1315,97 +1306,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0F03D992B8AA88C3AD4F780F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-aic-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4A44D489B9F5452DB3FFF811 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-aicTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		70F646A8A467859D6A97D54B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-aic/Pods-aic-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Atributika/Atributika.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Atributika.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-aic/Pods-aic-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D14437E377A505ECF6DAD190 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-aicUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		E40D41C51C6CEBB700A57AF4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1433,6 +1333,7 @@
 				294C0B57201A76F700F2ABB1 /* MapImageAnnotation.swift in Sources */,
 				29AC501A2059C4210085EE5B /* AICTourCategoryModel.swift in Sources */,
 				29C91B111FC4E5D8008C3E9E /* HomeTourCell.swift in Sources */,
+				E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */,
 				E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */,
 				295AC09B1FE02BF7009A0FAF /* AICEventModel.swift in Sources */,
 				E411DE7F1CCD37A800E22047 /* AICGalleryModel.swift in Sources */,
@@ -1448,6 +1349,7 @@
 				E4D790E21C90AD200033EE0A /* UIColor+AIC.swift in Sources */,
 				29846122203E3B0E001E5378 /* NoResultsCell.swift in Sources */,
 				29B9B58B1FCFC5660095FE52 /* HomeContentTitleView.swift in Sources */,
+				E2C72F0A29C3FBB20021F1EC /* ContentState.swift in Sources */,
 				2984611C203A045C001E5378 /* MapArtworkContentView.swift in Sources */,
 				29BF45DA20333F8900919FE8 /* MemberCardView.swift in Sources */,
 				291221971FDB35650096BB75 /* SuggestedSearchCell.swift in Sources */,
@@ -1478,7 +1380,6 @@
 				294C0B5A201A76F700F2ABB1 /* MapFloorSelectorViewController.swift in Sources */,
 				E497FA621D00ABAD007FA272 /* AICMessageSmallModel.swift in Sources */,
 				294C0B5C201A76F700F2ABB1 /* Utilities.swift in Sources */,
-				E4923FC11C9E00B500AB255C /* UIView+AIC.swift in Sources */,
 				304BEA1424770C51006E025A /* PagedMessageCollectionViewCell.swift in Sources */,
 				2931277A1FDEF2C5008BFAB1 /* MapItemCell.swift in Sources */,
 				293127831FDF3AD1008BFAB1 /* AICSearchedArtworkModel.swift in Sources */,
@@ -1507,6 +1408,7 @@
 				E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */,
 				E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */,
 				290B6CCB208510DE0022F6AE /* UIFont+FontNames.swift in Sources */,
+				E2C72F0829C3EFA30021F1EC /* UIViewController+ChildTransition.swift in Sources */,
 				294C0B4E201A76F700F2ABB1 /* MapLocationAnnotationView.swift in Sources */,
 				295AC0931FDF8FBA009A0FAF /* MuseumInfoViewController.swift in Sources */,
 				29824BD2200D8779003B6DB5 /* ArtworkTableViewController.swift in Sources */,
@@ -1720,6 +1622,310 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E2A7545129D0F20A00C39463 /* Debug Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = "Debug Beta";
+		};
+		E2A7545229D0F20A00C39463 /* Debug Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = .beta;
+				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6CA8WK4597;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_UNROLL_LOOPS = NO;
+				INFOPLIST_FILE = aic/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.4.2;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.AICOfficialMobileApp${BUNDLE_ID_SUFFIX}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Debug Beta";
+		};
+		E2A7545329D0F20A00C39463 /* Debug Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 6CA8WK4597;
+				INFOPLIST_FILE = aicTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aic.app/aic";
+			};
+			name = "Debug Beta";
+		};
+		E2A7545429D0F20A00C39463 /* Debug Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = aicUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = aic;
+				USES_XCTRUNNER = YES;
+			};
+			name = "Debug Beta";
+		};
+		E2A7545529D0F21000C39463 /* Release Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release Beta";
+		};
+		E2A7545629D0F21000C39463 /* Release Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = .beta;
+				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6CA8WK4597;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_UNROLL_LOOPS = NO;
+				INFOPLIST_FILE = aic/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.4.2;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				OTHER_SWIFT_FLAGS = "-DRELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.AICOfficialMobileApp${BUNDLE_ID_SUFFIX}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Release Beta";
+		};
+		E2A7545729D0F21000C39463 /* Release Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 6CA8WK4597;
+				INFOPLIST_FILE = aicTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aic.app/aic";
+			};
+			name = "Release Beta";
+		};
+		E2A7545829D0F21000C39463 /* Release Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = aicUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = aic;
+				USES_XCTRUNNER = YES;
+			};
+			name = "Release Beta";
+		};
 		E40D41F11C6CEBB700A57AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1743,6 +1949,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1750,6 +1957,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1769,9 +1977,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1802,6 +2011,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1809,6 +2019,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1822,11 +2033,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1834,14 +2047,14 @@
 		};
 		E40D41F41C6CEBB700A57AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB7404862BD34C730D2AE332 /* Pods-aic.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0.5;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1850,33 +2063,44 @@
 				);
 				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = aic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.4.2;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.AICOfficialMobileApp${BUNDLE_ID_SUFFIX}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		E40D41F51C6CEBB700A57AF4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A7AC81C65E02904929DDCC16 /* Pods-aic.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0.5;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1885,67 +2109,100 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = aic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.4.2;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.AICOfficialMobileApp${BUNDLE_ID_SUFFIX}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		E40D41F71C6CEBB700A57AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB87B855811500A9F18D5D9B /* Pods-aicTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aic.app/aic";
 			};
 			name = Debug;
 		};
 		E40D41F81C6CEBB700A57AF4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C04250290B0C7900464F2D80 /* Pods-aicTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aic.app/aic";
 			};
 			name = Release;
 		};
 		E40D41FA1C6CEBB700A57AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B060230330EFD5CC731DD275 /* Pods-aicUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = aic;
 				USES_XCTRUNNER = YES;
 			};
@@ -1953,14 +2210,21 @@
 		};
 		E40D41FB1C6CEBB700A57AF4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B93124E7DF4A8F3843C35B8 /* Pods-aicUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = aic;
 				USES_XCTRUNNER = YES;
 			};
@@ -1989,6 +2253,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1996,6 +2261,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2009,8 +2275,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2020,14 +2287,14 @@
 		};
 		E415AB851C72948E0093B719 /* AppStore */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA1BA6C00D1BB7B67F144190 /* Pods-aic.appstore.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0.5;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2035,48 +2302,73 @@
 				);
 				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = aic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 2.4.2;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "-DAPP_STORE";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.artic.AICOfficialMobileApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.AICOfficialMobileApp${BUNDLE_ID_SUFFIX}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = AppStore;
 		};
 		E415AB861C72948E0093B719 /* AppStore */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 223EFA1418FE36F1D127D26D /* Pods-aicTests.appstore.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aic.app/aic";
 			};
 			name = AppStore;
 		};
 		E415AB871C72948E0093B719 /* AppStore */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A7B05E6B794A5F31C41638B /* Pods-aicUITests.appstore.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = aic;
 				USES_XCTRUNNER = YES;
 			};
@@ -2089,7 +2381,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41F11C6CEBB700A57AF4 /* Debug */,
+				E2A7545129D0F20A00C39463 /* Debug Beta */,
 				E40D41F21C6CEBB700A57AF4 /* Release */,
+				E2A7545529D0F21000C39463 /* Release Beta */,
 				E415AB841C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2099,7 +2393,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41F41C6CEBB700A57AF4 /* Debug */,
+				E2A7545229D0F20A00C39463 /* Debug Beta */,
 				E40D41F51C6CEBB700A57AF4 /* Release */,
+				E2A7545629D0F21000C39463 /* Release Beta */,
 				E415AB851C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2109,7 +2405,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41F71C6CEBB700A57AF4 /* Debug */,
+				E2A7545329D0F20A00C39463 /* Debug Beta */,
 				E40D41F81C6CEBB700A57AF4 /* Release */,
+				E2A7545729D0F21000C39463 /* Release Beta */,
 				E415AB861C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2119,13 +2417,140 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41FA1C6CEBB700A57AF4 /* Debug */,
+				E2A7545429D0F20A00C39463 /* Debug Beta */,
 				E40D41FB1C6CEBB700A57AF4 /* Release */,
+				E2A7545829D0F21000C39463 /* Release Beta */,
 				E415AB871C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		E28F3B0129BAC14A00C03BFD /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		E28F3B0429BAC16C00C03BFD /* XCRemoteSwiftPackageReference "SWXMLHash" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/drmohundro/SWXMLHash.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		E28F3B0729BAC1DA00C03BFD /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/psharanda/Atributika.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		E28F3AFF29B96E6A00C03BFD /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		E28F3B0229BAC14A00C03BFD /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3B0129BAC14A00C03BFD /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		E28F3B0529BAC16C00C03BFD /* SWXMLHash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3B0429BAC16C00C03BFD /* XCRemoteSwiftPackageReference "SWXMLHash" */;
+			productName = SWXMLHash;
+		};
+		E28F3B0829BAC1DA00C03BFD /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3B0729BAC1DA00C03BFD /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		E28F3B0E29BAC27200C03BFD /* PureLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */;
+			productName = PureLayout;
+		};
+		E28F3B1129BAC28E00C03BFD /* Atributika */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */;
+			productName = Atributika;
+		};
+		E28F3B1429BAC33300C03BFD /* Localize_Swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */;
+			productName = Localize_Swift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E40D41C11C6CEBB700A57AF4 /* Project object */;
 }
