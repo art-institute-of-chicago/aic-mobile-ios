@@ -90,12 +90,7 @@ class HomeViewController: SectionViewController {
 		eventsCollectionView.dataSource = self
 		eventsTitleView.seeAllButton.addTarget(self, action: #selector(seeAllEventsButtonPressed(button:)), for: .touchUpInside)
 
-		if #available(iOS 11.0, *) {
-			scrollView.contentInsetAdjustmentBehavior = .never
-		} else {
-			automaticallyAdjustsScrollViewInsets = false
-		}
-
+    scrollView.contentInsetAdjustmentBehavior = .never
 		contentView.addSubview(homeIntroView)
 		contentView.addSubview(toursTitleView)
 		contentView.addSubview(toursCollectionView)

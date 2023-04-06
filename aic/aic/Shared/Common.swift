@@ -417,11 +417,10 @@ struct Common {
 
   // MARK: Map
   struct Map {
-    // Location Manager
     static let locationManager = CLLocationManager()
 
-    static let totalFloors = 4
     static let startFloor = 1
+    static let totalFloors = 4
 
     static var stringForFloorNumber: [Int: String] {
       return [0: "map_lower_level".localized(using: "Map"),
@@ -451,20 +450,18 @@ struct Common {
     )
 
     static let anchorPair = GeoAnchorPair(fromAnchor: anchor1, toAnchor: anchor2)
-
     static let coordinateConverter = CoordinateConverter(anchors: Common.Map.anchorPair)
+    static let defaultLocation = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
 
-    static let defaultLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
-
-    enum ZoomLevelAltitude: Double {
+    enum ZoomLevelAltitude: Double, CaseIterable {
       case zoomFarLimit = 1200
-      case zoomLimit = 340.0
-      case zoomDefault = 300.0
-      case zoomMedium = 150.0
-      case zoomDetail = 50.0
-      case zoomMax = 25.0
+      case zoomLimit = 340
+      case zoomDefault = 300
+      case zoomMedium = 150
+      case zoomDetail = 50
+      case zoomMax = 25
 
-      static let allValues = [zoomFarLimit, zoomLimit, zoomDefault, zoomMedium, zoomDetail, zoomMax]
+      static let allValues = Self.allCases
     }
 
     enum AnnotationZPosition: CGFloat {
@@ -484,7 +481,6 @@ struct Common {
 
   // MARK: Info
   struct Info {
-
     // Text and URL constants
     static let becomeMemberExistingMemberTitle = "Welcome Back"
 

@@ -13,24 +13,24 @@ protocol MapFloorSelectorViewControllerDelegate: AnyObject {
 
 class MapFloorSelectorViewController: UIViewController {
 	enum LocationMode: String {
-		case Disabled = "orientDisabled"
-		case Offsite = "orientOffsite"
-		case Enabled = "orientInactive"
-		case EnabledWithHeading = "orientActive"
+		case disabled = "orientDisabled"
+		case offsite = "orientOffsite"
+		case enabled = "orientInactive"
+		case enabledWithHeading = "orientActive"
 	}
 
 	weak var delegate: MapFloorSelectorViewControllerDelegate?
+  private lazy var floorSelectorView: MapFloorSelectorView = {
+    return MapFloorSelectorView(totalFloors: Common.Map.totalFloors)
+  }()
 
-	private var floorSelectorView: MapFloorSelectorView! = nil
-
-	var locationMode: LocationMode = .Disabled {
+	var locationMode: LocationMode = .disabled {
 		didSet {
 			updateLocationImageForCurrentMode()
 		}
 	}
 
 	override func loadView() {
-		floorSelectorView = MapFloorSelectorView(totalFloors: Common.Map.totalFloors)
 		self.view = floorSelectorView
 	}
 
@@ -49,11 +49,6 @@ class MapFloorSelectorViewController: UIViewController {
 
 		// Set the default floor
 		setSelectedFloor(forFloorNum: Common.Map.startFloor)
-	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
 
 	// MARK: Floor selector buttons
@@ -110,21 +105,21 @@ class MapFloorSelectorViewController: UIViewController {
 
 	// MARK: Location Button
 	func userLocationIsEnabled() -> Bool {
-		return (locationMode != .Disabled && locationMode != .Offsite)
+		return (locationMode != .disabled && locationMode != .offsite)
 	}
 
 	func userHeadingIsEnabled() -> Bool {
-		return locationMode == .EnabledWithHeading
+		return locationMode == .enabledWithHeading
 	}
 
 	func disableUserHeading() {
-		if locationMode == .EnabledWithHeading {
-			locationMode = .Enabled
+		if locationMode == .enabledWithHeading {
+			locationMode = .enabled
 		}
 	}
 
 	func enableUserHeading() {
-		locationMode = .EnabledWithHeading
+		locationMode = .enabledWithHeading
 	}
 
 	private func updateLocationImageForCurrentMode() {

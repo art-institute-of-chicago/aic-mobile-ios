@@ -38,7 +38,7 @@ class SectionsViewController: UITabBarController {
 	private var requestedArtwork: AICObjectModel?
 	private var requestedSearchedArtwork: AICSearchedArtworkModel?
 	private var requestedExhibition: AICExhibitionModel?
-	private var requestedMapMode: MapViewController.Mode?
+	private var requestedMapMode: MapPointOfInterestType?
 
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		currentViewController = homeVC

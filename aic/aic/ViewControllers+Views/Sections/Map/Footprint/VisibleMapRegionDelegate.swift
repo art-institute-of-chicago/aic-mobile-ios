@@ -68,9 +68,9 @@ class VisibleMapRegionDelegate: NSObject {
 		var didClampZoom = false
 
 		// Has the zoom level stabilized?
-		if lastAltitude != camera.altitude {
+		if lastAltitude != camera.centerCoordinateDistance {
 			// Not yet! Someone is changing the zoom!
-			lastAltitude = camera.altitude
+			lastAltitude = camera.centerCoordinateDistance
 
 			// Auto-zoom the camera to fit the floorplan.
 			didClampZoom = clampZoomToFloorplan(mapView, floorplanBoundingMapRect: boundingMapRectIncludingRotations, floorplanCenter: floorplanCenter)
@@ -142,7 +142,7 @@ class VisibleMapRegionDelegate: NSObject {
 			// You have zoomed out too far?
 
 			let zoomFactor: Double = sqrt(maxZoomedOutArea / mapViewVisibleMapRectArea)
-			let currentAltitude: CLLocationDistance = mapView.camera.altitude
+			let currentAltitude: CLLocationDistance = mapView.camera.centerCoordinateDistance
 			let newAltitude: CLLocationDistance = currentAltitude * zoomFactor
 
 			let newAltitudeUsable: CLLocationDistance = newAltitude
@@ -184,7 +184,7 @@ class VisibleMapRegionDelegate: NSObject {
 
 				let newCamera: MKMapCamera = mapView.camera.copy() as! MKMapCamera
 
-				newCamera.altitude = newAltitude
+				newCamera.centerCoordinateDistance = newAltitude
 
 				/**
 				Since we've zoomed out enough to see the entire floorplan

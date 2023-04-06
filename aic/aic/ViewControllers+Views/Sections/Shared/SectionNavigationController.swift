@@ -12,7 +12,6 @@ import Localize_Swift
 class SectionNavigationController: UINavigationController {
 	let color: UIColor
 	let sectionModel: AICSectionModel
-
 	let sectionNavigationBar: SectionNavigationBar
 
 	init(section: AICSectionModel) {
@@ -39,30 +38,17 @@ class SectionNavigationController: UINavigationController {
 	}
 
 	deinit {
-		NotificationCenter.default.removeObserver(self)
+    removeNotificationsObserver()
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		// Add Section Navigation Bar and add Back Button target
-		self.sectionNavigationBar.backButton.addTarget(self, action: #selector(backButtonPressed(button:)), for: .touchUpInside)
-		self.view.addSubview(sectionNavigationBar)
-
-		// Language
-		NotificationCenter.default.addObserver(self,
-                                           selector: #selector(updateLanguage),
-                                           name: NSNotification.Name(LCLLanguageChangeNotification),
-                                           object: nil)
+    setup()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
-		// Hide Navigation Bar
-		self.navigationBar.isTranslucent = false
-		self.setNavigationBarHidden(true, animated: false)
-
+    hideNavigationBar()
 		updateLanguage()
 
 		// Accessibility
@@ -71,37 +57,26 @@ class SectionNavigationController: UINavigationController {
 	}
 
 	override func popToRootViewController(animated: Bool) -> [UIViewController]? {
-		let vcs = super.popToRootViewController(animated: animated)
+		let rootViewController = super.popToRootViewController(animated: animated)
 
 		sectionNavigationBar.setBackButtonHidden(true)
 		updateLanguage()
-
-		return vcs
+		return rootViewController
 	}
 
 	override func popViewController(animated: Bool) -> UIViewController? {
-		let vc: UIViewController? = super.popViewController(animated: animated)
-
-		let isRootVC: Bool = self.viewControllers.count <= 1
-		let backButtonHidden = isRootVC
-		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
+		let popViewController = super.popViewController(animated: animated)
 		updateLanguage()
-
-		return vc
+		return popViewController
 	}
 
 	override func pushViewController(_ viewController: UIViewController, animated: Bool) {
 		super.pushViewController(viewController, animated: animated)
-
-		let isRootVC: Bool = self.viewControllers.count <= 1
-		let backButtonHidden = isRootVC
-		sectionNavigationBar.setBackButtonHidden(backButtonHidden)
-
 		updateLanguage()
 	}
 
 	@objc func updateLanguage() {
-		let isRootVC: Bool = self.viewControllers.count <= 1
+		let isRootVC = self.viewControllers.count <= 1
 
 		var titleText = ""
 
@@ -137,12 +112,41 @@ class SectionNavigationController: UINavigationController {
 		}
 
 		sectionNavigationBar.titleLabel.text = titleText
-		sectionNavigationBar.descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: subtitleText, font: .aicSectionDescriptionFont, lineHeight: 22)
-		sectionNavigationBar.descriptionLabel.textAlignment = NSTextAlignment.center
-
+    sectionNavigationBar.descriptionLabel.textAlignment = .center
+		sectionNavigationBar.descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: subtitleText,
+                                                                                             font: .aicSectionDescriptionFont,
+                                                                                             lineHeight: 22)
 	}
 
 	@objc private func backButtonPressed(button: UIButton) {
 		_ = self.popToRootViewController(animated: true)
 	}
+}
+
+// MARK: - Private - Setup
+private extension SectionNavigationController {
+
+  func setup() {
+    // Add Section Navigation Bar and add Back Button target
+    self.sectionNavigationBar.backButton.addTarget(self, action: #selector(backButtonPressed(button:)), for: .touchUpInside)
+    self.view.addSubview(sectionNavigationBar)
+
+    addLanguageChangeNotification()
+  }
+
+  func addLanguageChangeNotification() {
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(updateLanguage),
+                                           name: NSNotification.Name(LCLLanguageChangeNotification),
+                                           object: nil)
+  }
+
+  func removeNotificationsObserver() {
+    NotificationCenter.default.removeObserver(self)
+  }
+
+  func hideNavigationBar() {
+    navigationBar.isTranslucent = false
+    setNavigationBarHidden(true, animated: false)
+  }
 }
