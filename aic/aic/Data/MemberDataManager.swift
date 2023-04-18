@@ -5,8 +5,9 @@ Validates and Retrieves member card information
 
 import Alamofire
 import SWXMLHash
+import Foundation
 
-protocol MemberDataManagerDelegate: class {
+protocol MemberDataManagerDelegate: AnyObject {
 	func memberCardDidLoadForMember(memberCard: AICMemberCardModel)
 	func memberCardDataLoadingFailed()
 }
@@ -27,7 +28,7 @@ class MemberDataManager {
 		//		url += "/" + memberID + "?zip=" + zipCode
 		//		let request = URLRequest(url: URL(string: url)!)
 		//
-		//		Alamofire.request(request as URLRequestConvertible)
+		//		AF.request(request as URLRequestConvertible)
 		//			.validate()
 		//			.responseData { response in
 		//				switch response.result {
@@ -40,13 +41,13 @@ class MemberDataManager {
 		//					}
 		//					catch {
 		//						if Common.Testing.printDataErrors {
-		//							print("Could not parse AIC Member Card Data:\n\(value)\n")
+		//							debugPrint("Could not parse AIC Member Card Data:\n\(value)\n")
 		//						}
 		//						self.delegate?.memberCardDataLoadingFailed()
 		//					}
 		//				case .failure(let error):
 		//					self.delegate?.memberCardDataLoadingFailed()
-		//					print(error)
+		//					debugPrint(error)
 		//				}
 		//		}
 
@@ -72,11 +73,11 @@ class MemberDataManager {
 		request.httpMethod = HTTPMethod.post.rawValue
 		request.httpBody = SOAPRequest.data(using: String.Encoding.utf8)
 
-		Alamofire.request(request as URLRequestConvertible)
+		AF.request(request as URLRequestConvertible)
 			.responseData { response in
 				switch response.result {
 				case .success:
-					let xml = SWXMLHash.config({ config in
+					let xml = XMLHash.config({ config in
 						config.shouldProcessNamespaces = true
 					}).parse(response.data!)
 

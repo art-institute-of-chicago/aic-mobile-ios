@@ -6,7 +6,7 @@ Section View controller for Number Pad section
 import UIKit
 import Localize_Swift
 
-protocol AudioGuideNavigationControllerDelegate: class {
+protocol AudioGuideNavigationControllerDelegate: AnyObject {
 	func audioGuideDidSelectObjectAudio(object: AICObjectModel, audioGuideID: Int)
 	func audioGuideDidSelectTourAudio(tour: AICTourModel, audioGuideID: Int)
 }
@@ -46,17 +46,17 @@ class AudioGuideNavigationController: SectionNavigationController {
 		super.viewDidLoad()
 
 		self.view.backgroundColor = sectionModel.color
-		self.automaticallyAdjustsScrollViewInsets = false
 
 		sectionNavigationBar.headerView.backgroundColor = .clear
 
 		// Setup Collection view
+    collectionView.contentInsetAdjustmentBehavior = .never
 		collectionView.delaysContentTouches = false
 		collectionView.register(AudioGuideCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
 		collectionView.dataSource = self
 		collectionView.delegate = self
+    collectionView.contentInsetAdjustmentBehavior = .never
 
-		rootVC.automaticallyAdjustsScrollViewInsets = false
 		rootVC.view.backgroundColor = .clear
 		rootVC.navigationItem.title = sectionModel.title
 		rootVC.view.addSubview(collectionView)
@@ -124,11 +124,11 @@ class AudioGuideNavigationController: SectionNavigationController {
 		var collectionViewTopOffset: CGFloat = -25
 		if UIDevice().type == .iPhoneX ||
 			UIDevice().type == .iPhoneXS ||
-			UIDevice().type == .iPhoneXS_Max ||
+			UIDevice().type == .iPhoneXSMax ||
 			UIDevice().type == .iPhoneXR ||
 			UIDevice().type == .iPhone11 ||
-			UIDevice().type == .iPhone11_Pro ||
-			UIDevice().type == .iPhone11_Pro_Max {
+			UIDevice().type == .iPhone11Pro ||
+			UIDevice().type == .iPhone11ProMax {
 			collectionViewTopOffset = 15
 		} else if UIScreen.main.bounds.height < 600 {
 			// Adjust size for iPhone 5 screen size
@@ -254,7 +254,7 @@ extension AudioGuideNavigationController: UICollectionViewDelegate {
 
 // MARK: Gesture handlers
 extension AudioGuideNavigationController {
-	@objc internal func buttonPressed(_ button: UIButton) {
+	@objc func buttonPressed(_ button: UIButton) {
 		let strVal = buttonValueMap[button.tag]!
 		switch strVal {
 		case "GO":

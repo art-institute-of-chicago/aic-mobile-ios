@@ -8,7 +8,7 @@ import Alamofire
 import MapKit
 import Kingfisher
 
-protocol MapObjectAnnotationViewDelegate: class {
+protocol MapObjectAnnotationViewDelegate: AnyObject {
 	func mapObjectAnnotationViewPlayPressed(_ object: MapObjectAnnotationView)
 }
 
@@ -311,7 +311,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 		}
 	}
 
-	internal func setContentForCurrentMode(withAnimation animated: Bool) {
+	func setContentForCurrentMode(withAnimation animated: Bool) {
 		self.isSelected = false
 
 		// Add/Remove views
@@ -384,7 +384,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 
 // MARK: Gesture Recognizers
 extension MapObjectAnnotationView {
-	@objc internal func playButtonWasTapped(_ gesture: UIGestureRecognizer) {
+	@objc func playButtonWasTapped(_ gesture: UIGestureRecognizer) {
 		if mode == .imageInfo || mode == .smallImageInfo {
 			if self.isSelected {
 				delegate?.mapObjectAnnotationViewPlayPressed(self)

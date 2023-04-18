@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MapItemsCollectionContainerDelegate: class {
+protocol MapItemsCollectionContainerDelegate: AnyObject {
 	func mapItemDiningSelected()
 	func mapItemMemberLoungeSelected()
 	func mapItemGiftShopSelected()

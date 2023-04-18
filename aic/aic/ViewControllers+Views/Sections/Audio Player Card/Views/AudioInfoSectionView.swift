@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AudioInfoSectionViewDelegate: class {
+protocol AudioInfoSectionViewDelegate: AnyObject {
 	func audioInfoSectionDidUpdateHeight(audioInfoSectionView: AudioInfoSectionView)
 }
 
@@ -198,7 +198,7 @@ class AudioInfoSectionView: UIView {
 
 	// MARK: Collapse Button
 
-	@objc internal func collapseButtonPressed(button: UIButton) {
+	@objc func collapseButtonPressed(button: UIButton) {
 		if button.isSelected {
 			UIView.animate(withDuration: collapseAnimationDuration, animations: {
 				self.bodyTextView.alpha = 0

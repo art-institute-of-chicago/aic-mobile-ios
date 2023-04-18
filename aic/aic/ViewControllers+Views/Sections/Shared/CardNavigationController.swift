@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol CardNavigationControllerDelegate: class {
+@objc protocol CardNavigationControllerDelegate: AnyObject {
 	@objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)
 	@objc optional func cardWillShowFullscreen(cardVC: CardNavigationController)
 	@objc optional func cardDidShowMinimized(cardVC: CardNavigationController)
@@ -228,7 +228,7 @@ class CardNavigationController: UINavigationController {
 // MARK: Gesture Handlers
 
 extension CardNavigationController: UIGestureRecognizerDelegate {
-	@objc internal func handlePanGesture(recognizer: UIPanGestureRecognizer) {
+	@objc func handlePanGesture(recognizer: UIPanGestureRecognizer) {
 		guard let view = recognizer.view else {
 			return
 		}
@@ -284,7 +284,7 @@ extension CardNavigationController: UIGestureRecognizerDelegate {
 		recognizer.setTranslation(CGPoint.zero, in: view)
 	}
 
-	@objc internal func downArrowButtonPressed(button: UIButton) {
+	@objc func downArrowButtonPressed(button: UIButton) {
 		if currentState == openState {
 			if closedState == .minimized {
 				showMinimized()
@@ -296,14 +296,14 @@ extension CardNavigationController: UIGestureRecognizerDelegate {
 		}
 	}
 
-	internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 		if touch.view is UISlider {
 			return false
 		}
 		return true
 	}
 
-	internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		return true
 	}
 }

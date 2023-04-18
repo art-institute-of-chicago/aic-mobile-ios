@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-protocol HomeViewControllerDelegate: class {
+protocol HomeViewControllerDelegate: AnyObject {
 	func homeDidSelectAccessMemberCard()
 	func homeDidSelectSeeAllTours()
 	func homeDidSelectSeeAllExhibitions()
@@ -90,12 +90,7 @@ class HomeViewController: SectionViewController {
 		eventsCollectionView.dataSource = self
 		eventsTitleView.seeAllButton.addTarget(self, action: #selector(seeAllEventsButtonPressed(button:)), for: .touchUpInside)
 
-		if #available(iOS 11.0, *) {
-			scrollView.contentInsetAdjustmentBehavior = .never
-		} else {
-			automaticallyAdjustsScrollViewInsets = false
-		}
-
+    scrollView.contentInsetAdjustmentBehavior = .never
 		contentView.addSubview(homeIntroView)
 		contentView.addSubview(toursTitleView)
 		contentView.addSubview(toursCollectionView)
@@ -318,6 +313,7 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
+
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if collectionView == toursCollectionView {
 			self.delegate?.homeDidSelectTour(tour: tourItems[indexPath.row])
@@ -327,4 +323,5 @@ extension HomeViewController: UICollectionViewDelegate {
 			self.delegate?.homeDidSelectEvent(event: eventItems[indexPath.row])
 		}
 	}
+
 }

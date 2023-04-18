@@ -5,7 +5,7 @@ Base view controller for all Section Views (NumberPad, What's On, Tours, Nearby 
 
 import UIKit
 
-protocol SectionViewControllerScrollDelegate: class {
+protocol SectionViewControllerScrollDelegate: AnyObject {
 	func sectionViewControllerWillAppearWithScrollView(scrollView: UIScrollView)
 	func sectionViewControllerDidScroll(scrollView: UIScrollView)
 }
@@ -32,7 +32,7 @@ class SectionViewController: UIViewController {
 		super.viewWillAppear(animated)
 	}
 
-	internal func reset() {
+	func reset() {
 		// Override this to reset view when going back
 	}
 }

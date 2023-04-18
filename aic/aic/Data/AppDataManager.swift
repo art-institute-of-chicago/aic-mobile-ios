@@ -6,7 +6,7 @@ Manager class that handles loading and manipulating the apps data sources
 import UIKit
 import Alamofire
 
-@objc protocol AppDataManagerDelegate: class {
+@objc protocol AppDataManagerDelegate: AnyObject {
 	func downloadProgress(withPctCompleted: Float)
 	@objc optional func didFinishLoadingData()
 	func downloadFailure(withMessage: String)
@@ -60,32 +60,32 @@ class AppDataManager {
 					return
 				}
 
-				if let Testing = config["Testing"] as! [String: Any]? {
+				if let testing = config["Testing"] as! [String: Any]? {
 
-					if let printDataErrors = Testing["printDataErrors"] {
+					if let printDataErrors = testing["printDataErrors"] {
 						Common.Testing.printDataErrors = printDataErrors as! Bool
 					}
 
 				}
 
-				if let DataConstants = config["DataConstants"] as! [String: Any]? {
+				if let dataConstants = config["DataConstants"] as! [String: Any]? {
 
-					if let appDataJSON = DataConstants["appDataJSON"] {
+					if let appDataJSON = dataConstants["appDataJSON"] {
 						Common.DataConstants.appDataJSON = appDataJSON as! String
 					}
 
-					if let memberCardSOAPRequestURL = DataConstants["memberCardSOAPRequestURL"] as? String {
+					if let memberCardSOAPRequestURL = dataConstants["memberCardSOAPRequestURL"] as? String {
 						Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
 					}
 
-					if let ignoreOverrideImageCrop = DataConstants["ignoreOverrideImageCrop"] {
+					if let ignoreOverrideImageCrop = dataConstants["ignoreOverrideImageCrop"] {
 						Common.DataConstants.ignoreOverrideImageCrop = ignoreOverrideImageCrop as! Bool
 					}
 
 				}
 
 			} catch {
-				print(error)
+				debugPrint(error)
 			}
 		}
 
@@ -95,7 +95,8 @@ class AppDataManager {
 		appData = nil
 		mapFloorURLs = [:]
 		numberMapFloorsLoaded = 0
-		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON, userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey) { (stringsMatch) in
+		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON,
+                             userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey) { stringsMatch in
 			if !stringsMatch || downloadDataEvenIfCached {
 				//Try to download new app data
 				//If there is an issue with the server or reachability
@@ -118,7 +119,7 @@ class AppDataManager {
 
 	private func downloadAppData() {
 		// App Data
-		Alamofire.request(Common.DataConstants.appDataJSON)
+		AF.request(Common.DataConstants.appDataJSON)
 			.validate()
 			.responseData { response in
 				if self.loadFailure == false {
@@ -195,15 +196,15 @@ class AppDataManager {
 				}
 
 				// Download new pdf file
-				let destination: DownloadRequest.DownloadFileDestination = { _, _ in (floorDestinationURL, [.removePreviousFile, .createIntermediateDirectories]) }
+				let destination: DownloadRequest.Destination = { _, _ in (floorDestinationURL, [.removePreviousFile, .createIntermediateDirectories]) }
 
-				Alamofire.download(floorSourceURL, to: destination).response { response in
+				AF.download(floorSourceURL, to: destination).response { response in
 					self.numberMapFloorsLoaded += 1
 
-					if response.destinationURL != nil {
-						self.addMapFloorURL(response.destinationURL!, floorNumber: floorNumber)
+					if let floorURL = response.fileURL {
+						self.addMapFloorURL(floorURL, floorNumber: floorNumber)
 					} else {
-						// If we coulfn't load this floor pdf let the user know
+						// If we could not load this floor pdf let the user know
 						self.notifyLoadFailure(withMessage: "Failed to load application data.")
 						return
 					}
@@ -277,7 +278,7 @@ class AppDataManager {
 			]
 		]
 
-		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+		AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
 			.validate()
 			.responseData { response in
 				switch response.result {
@@ -285,7 +286,7 @@ class AppDataManager {
 					self.exhibitions = self.dataParser.parse(exhibitionsData: value)
 
 				case .failure(let error):
-					print(error)
+					debugPrint(error)
 				}
 
 				self.updateDownloadProgress()
@@ -341,14 +342,14 @@ class AppDataManager {
 			]
 		]
 
-		Alamofire.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+		AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
 			.validate()
 			.responseData { response in
 				switch response.result {
 				case .success(let value):
 					self.events = self.dataParser.parse(eventsData: value)
 				case .failure(let error):
-					print(error)
+					debugPrint(error)
 				}
 				self.updateDownloadProgress()
 		}
@@ -671,7 +672,7 @@ class AppDataManager {
 
 	private func lastModifiedStringsMatch(atURL url: URLConvertible, userDefaultsLastModifiedKey key: String, completion: @escaping (Bool) -> Void) {
 		//Make a request to check the appData Last-Modified header
-		Alamofire.request(url, method: .head, parameters: Parameters(), encoding: URLEncoding.default, headers: HTTPHeaders())
+		AF.request(url, method: .head, parameters: Parameters(), encoding: URLEncoding.default, headers: HTTPHeaders())
 			.validate()
 			.responseData { (response) in
 				// If we can't read the headers, something is wrong, try downloading and failover from there

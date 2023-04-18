@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ResultsTableViewControllerDelegate: class {
+protocol ResultsTableViewControllerDelegate: AnyObject {
 	func resultsTableDidSelect(promotedText: String)
 	func resultsTableDidSelect(autocompleteText: String)
 	func resultsTableDidSelect(artwork: AICSearchedArtworkModel)

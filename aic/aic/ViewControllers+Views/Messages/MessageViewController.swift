@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-@objc protocol MessageViewControllerDelegate: class {
+@objc protocol MessageViewControllerDelegate: AnyObject {
 	func messageViewActionSelected(messageVC: MessageViewController)
 	@objc optional func messageViewCancelSelected(messageVC: MessageViewController)
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FilterMenuDelegate: class {
+protocol FilterMenuDelegate: AnyObject {
 	func filterMenuSelected(filter: Common.Search.Filter)
 }
 

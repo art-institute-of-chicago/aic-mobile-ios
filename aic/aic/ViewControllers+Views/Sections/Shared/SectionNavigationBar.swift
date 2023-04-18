@@ -23,15 +23,15 @@ class SectionNavigationBar: UIView {
 	private let backButtonBottomMargin: CGFloat = 1
 	private let backButtonLeftMargin: CGFloat = 3
 	private let backButtonContentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-	private let iconBottomMargin: CGFloat = 10
+	private let iconBottomMargin: CGFloat = 5
 	private let titleHeight: CGFloat = 40
-	private var titleTopMargin: CGFloat = 95
+	private var titleTopMargin: CGFloat = 100
 	private var titleBottomMargin: CGFloat = 5
 	private var titleMinimumScale: CGFloat = 0.7
 	private let descriptionTopMargin: CGFloat = 65
 	private let searchButtonBackgroundAlpha: CGFloat = 0.4
 
-	internal let titleString: String
+	let titleString: String
 
 	private var isAnimating: Bool = false
 

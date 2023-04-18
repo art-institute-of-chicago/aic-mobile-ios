@@ -28,27 +28,11 @@ extension String {
 		return self.rangeOfCharacter(from: characterSet) == nil
 	}
 
-	// Returns true if the string represents a proper numeric value.
-	// This method uses the device's current locale setting to determine
-	// which decimal separator it will accept.
-	func isNumeric() -> Bool {
-		let scanner = Scanner(string: self)
-
-		// A newly-created scanner has no locale by default.
-		// We'll set our scanner's locale to the user's locale
-		// so that it recognizes the decimal separator that
-		// the user expects (for example, in North America,
-		// "." is the decimal separator, while in many parts
-		// of Europe, "," is used).
-		scanner.locale = Locale.current
-
-		return scanner.scanDecimal(nil) && scanner.isAtEnd
-	}
-
 	// Returns string truncated if it's longer than a certain character count
 	func truncate(length: Int, trailing: String = "…") -> String {
 		return (self.count > length) ? self.prefix(length) + trailing : self
 	}
+
 }
 
 // HTML Parsing from
@@ -333,14 +317,15 @@ extension String {
 	/// the location and length offsets for each replacement. This allows
 	/// for the correct adjust any attributes that may be associated with
 	/// with substrings within the `String`
-	func decodeHTMLEntities() -> (decodedString: String, replacementOffsets: [(index: String.Index, offset: String.IndexDistance)]) {
+	func decodeHTMLEntities() -> (decodedString: String,
+                                replacementOffsets: [(index: String.Index, offset: Int)]) {
 
 		// ===== Utility functions =====
 
 		// Record the index offsets of each replacement
 		// This allows anyone to correctly adjust any attributes that may be
 		// associated with substrings within the string
-		var replacementOffsets: [(index: String.Index, offset: String.IndexDistance)] = []
+		var replacementOffsets: [(index: String.Index, offset: Int)] = []
 
 		// Convert the number in the string to the corresponding
 		// Unicode character, e.g.

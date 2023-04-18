@@ -9,7 +9,7 @@
 import UIKit
 import Localize_Swift
 
-protocol ExhibitionTableViewControllerDelegate: class {
+protocol ExhibitionTableViewControllerDelegate: AnyObject {
 	func exhibitionContentCardDidPressShowOnMap(exhibition: AICExhibitionModel)
 }
 

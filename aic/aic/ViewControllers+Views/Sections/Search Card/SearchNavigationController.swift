@@ -602,7 +602,7 @@ extension SearchNavigationController: UINavigationControllerDelegate {
 // MARK: Pan Gesture
 
 extension SearchNavigationController {
-	override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		if gestureRecognizer == cardPanGesture {
 			if currentTableView != resultsVC.tableView && currentTableView.contentOffset.y <= 0 {
 				return true

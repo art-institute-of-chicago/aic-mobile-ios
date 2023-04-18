@@ -7,10 +7,7 @@ DIR_REPO="$( cd "$(dirname $0)" ; pwd -P )"
 DIR_APP="$DIR_REPO/aic"
 DIR_AIC="$DIR_APP/aic"
 
-# Install dependencies
 cd "$DIR_APP";
-
-pod update;
 
 # Create dummy plists
 if [ ! -f "$DIR_AIC/Config.plist" ]; then

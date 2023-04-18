@@ -8,60 +8,41 @@ import UIKit
 import MapKit
 import Localize_Swift
 
-protocol MapViewControllerDelegate: class {
+protocol MapViewControllerDelegate: AnyObject {
 	func mapWasPressed()
 	func mapDidPressArtworkPlayButton(artwork: AICObjectModel)
 	func mapDidSelectTourStop(stopId: Int)
 	func mapDidSelectRestaurant(restaurant: AICRestaurantModel)
 }
 
-class MapViewController: UIViewController {
+final class MapViewController: UIViewController {
+  weak var delegate: MapViewControllerDelegate?
 
-	enum Mode {
-		case allInformation
-		case artwork
-		case searchedArtwork
-		case exhibition
-		case dining
-		case memberLounge
-		case giftshop
-		case restrooms
-		case tour
-	}
-
-	var mode: Mode = .allInformation {
+	private(set) var displayPointOfInterest: MapPointOfInterestType = .allInformation {
 		didSet {
 			updateMapForModeChange()
 		}
 	}
 
-	weak var delegate: MapViewControllerDelegate?
-
-	let mapModel = AppDataManager.sharedInstance.app.map
-
-	// Layout
+	private let mapModel = AppDataManager.sharedInstance.app.map
 
 	// Map View
-	let mapView: MapView = MapView(frame: UIScreen.main.bounds)
-	let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
-	var zoomLimitValue: Double = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+  private let mapView = MapView(frame: UIScreen.main.bounds)
+  private let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
+  private var zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
 
 	// Floor Selector
-	let floorSelectorVC = MapFloorSelectorViewController()
-	let floorSelectorMargin = CGPoint(x: 20, y: 20)
+  private let floorSelectorMargin = CGPoint(x: 20, y: 20)
+  private var floorSelectorViewController = MapFloorSelectorViewController()
 
-	private (set) var previousFloor: Int = Common.Map.startFloor
-	private (set) var currentFloor: Int = Common.Map.startFloor
-	private (set) var currentUserFloor: Int?
-	private (set) var previousUserFloor: Int?
-
-	var isSwitchingModes = false
+	private(set) var previousFloor = Common.Map.startFloor
+	private(set) var currentFloor = Common.Map.startFloor
+	private(set) var currentUserFloor: Int?
+	private(set) var previousUserFloor: Int?
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
-
-		// Navigation Item
-		self.navigationItem.title = Common.Sections[.map]!.title
+    setupNavigationItemTitle()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -69,61 +50,19 @@ class MapViewController: UIViewController {
 	}
 
 	override func viewDidLoad() {
-		// Add Subviews
-		view.addSubview(mapView)
-		view.addSubview(floorSelectorVC.view)
-
-		// Set the overlay for the background
-		mapView.addOverlay(mapViewHideBackgroundOverlay, level: .aboveRoads)
-
-		setMapCameraInitialState()
-
-		// Set Delegates
-		mapView.delegate = self
-		floorSelectorVC.delegate = self
-
-		// Add Gestures to map for continuous updates
-		let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPinched(_:)))
-		pinchGesture.delegate = self
-
-		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPanned(_:)))
-		panGesture.delegate = self
-
-		mapView.addGestureRecognizer(pinchGesture)
-		mapView.addGestureRecognizer(panGesture)
-
-		// Init map
-		updateMapForModeChange()
-		setCurrentFloor(forFloorNum: Common.Map.startFloor)
-
-		Timer.scheduledTimer(timeInterval: 1.0/20.0,
-							 target: self,
-							 selector: #selector(MapViewController.updateMapWithTimer),
-							 userInfo: nil,
-							 repeats: true)
+    super.viewDidLoad()
+    setup()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
-		// Log analytics
-		AICAnalytics.trackScreenView("Map", screenClass: "MapViewController")
-	}
-
-	// MARK: Map Initial State
-
-	/// Set Camera initial state for first animation when you open the map
-	func setMapCameraInitialState() {
-		mapView.camera.heading = 0 //mapView.defaultHeading
-		mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
-		mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
-		mapView.camera.pitch = mapView.perspectivePitch
+    logAnalytics()
 	}
 
 	// MARK: Mode Functions
 
 	private func updateMapForModeChange() {
-		if mode == .giftshop || mode == .restrooms || mode == .memberLounge {
+		if displayPointOfInterest == .giftshop || displayPointOfInterest == .restrooms || displayPointOfInterest == .memberLounge {
 			zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomFarLimit.rawValue
 		} else {
 			zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
@@ -154,20 +93,24 @@ class MapViewController: UIViewController {
 	// Used when viewing the map by itself in the map (nearby) section
 	func showAllInformation() {
 		// Switch modes
-		mode = .allInformation
+		displayPointOfInterest = .allInformation
 
-		if mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
+		if mapView.camera.centerCoordinateDistance > Common.Map.ZoomLevelAltitude.zoomDefault.rawValue {
 			mapView.showFullMap(useDefaultHeading: true)
 		}
 			// Zooming in a bit to avoid the situation where you are in between artworks level and department level
-		else if mapView.camera.altitude < Common.Map.ZoomLevelAltitude.zoomDetail.rawValue+15.0 &&
-			mapView.camera.altitude > Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-15.0 {
-			mapView.zoomIn(onCenterCoordinate: mapView.camera.centerCoordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue - 10.0, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+		else if mapView.camera.centerCoordinateDistance < Common.Map.ZoomLevelAltitude.zoomDetail.rawValue+15.0 &&
+			mapView.camera.centerCoordinateDistance > Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-15.0 {
+			mapView.zoomIn(onCenterCoordinate: mapView.camera.centerCoordinate,
+                     centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue - 10.0,
+                     withAnimation: true,
+                     heading: mapView.camera.heading,
+                     pitch: mapView.perspectivePitch)
 		}
 	}
 
 	func showArtwork(artwork: AICObjectModel) {
-		mode = .artwork
+		displayPointOfInterest = .artwork
 
 		// Add location annotation the floor model
 		let floor = mapModel.floors[artwork.location.floor]
@@ -190,7 +133,7 @@ class MapViewController: UIViewController {
 	}
 
 	func showSearchedArtwork(searchedArtwork: AICSearchedArtworkModel) {
-		mode = .searchedArtwork
+		displayPointOfInterest = .searchedArtwork
 
 		// Add location annotation the floor model
 		let floor = mapModel.floors[searchedArtwork.location.floor]
@@ -216,7 +159,7 @@ class MapViewController: UIViewController {
 	}
 
 	func showExhibition(exhibition: AICExhibitionModel) {
-		mode = .exhibition
+		displayPointOfInterest = .exhibition
 
 		// Add location annotation the floor model
 		let floor = mapModel.floors[exhibition.location!.floor]
@@ -234,11 +177,11 @@ class MapViewController: UIViewController {
 	}
 
 	func showDining() {
-		mode = .dining
+		displayPointOfInterest = .dining
 
 		updateDiningAnnotations()
 
-		floorSelectorVC.disableUserHeading()
+		floorSelectorViewController.disableUserHeading()
 
 		mapView.addAnnotations(mapModel.floors[currentFloor].diningAnnotations)
 
@@ -254,7 +197,7 @@ class MapViewController: UIViewController {
 	}
 
 	func showMemberLounge() {
-		mode = .memberLounge
+		displayPointOfInterest = .memberLounge
 
 		// if no member lounges are on the current floor, find a floor with member lounge
 		if mapModel.floors[currentFloor].memberLoungeAnnotations.count == 0 {
@@ -274,7 +217,7 @@ class MapViewController: UIViewController {
 	}
 
 	func showGiftShop() {
-		mode = .giftshop
+		displayPointOfInterest = .giftshop
 
 		// if no giftshops are on the current floor, find a floor with giftshops
 		if mapModel.floors[currentFloor].giftShopAnnotations.count == 0 {
@@ -294,7 +237,7 @@ class MapViewController: UIViewController {
 	}
 
 	func showRestrooms() {
-		mode = .restrooms
+		displayPointOfInterest = .restrooms
 
 		updateRestroomAnnotations()
 
@@ -302,7 +245,7 @@ class MapViewController: UIViewController {
 	}
 
 	func showAnnotationsGroup(annotations: [MKAnnotation]) {
-		floorSelectorVC.disableUserHeading()
+		floorSelectorViewController.disableUserHeading()
 
 		// Zoom in on the gift shop annotations
 		setViewableArea(frame: CGRect(origin: CGPoint(x: 20, y: 0), size: CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedPositionY)))
@@ -312,10 +255,10 @@ class MapViewController: UIViewController {
 		// so reset our pitch + heading to preferred defaults
 		mapView.camera.heading = mapView.defaultHeading
 		mapView.camera.pitch = mapView.perspectivePitch
-		if mapView.camera.altitude <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue {
-			mapView.camera.altitude = Common.Map.ZoomLevelAltitude.zoomMedium.rawValue
-		} else if mapView.camera.altitude > zoomLimitValue {
-			mapView.camera.altitude = zoomLimitValue
+		if mapView.camera.centerCoordinateDistance <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue {
+			mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomMedium.rawValue
+		} else if mapView.camera.centerCoordinateDistance > zoomLimitValue {
+			mapView.camera.centerCoordinateDistance = zoomLimitValue
 		}
 		mapView.camera.heading = mapView.defaultHeading
 	}
@@ -323,7 +266,7 @@ class MapViewController: UIViewController {
 	// Shows all the objects on a tour, with active/inactive
 	// states depending on which floor is selected.
 	func showTour(forTour tourModel: AICTourModel) {
-		mode = .tour
+		displayPointOfInterest = .tour
 
 		// Find the stops for this floor and set them on the model
 		var objectAnnotations: [MapObjectAnnotation] = []
@@ -385,7 +328,7 @@ class MapViewController: UIViewController {
 					}
 
 					// Turn off user heading since we want to jump to a specific place
-					floorSelectorVC.disableUserHeading()
+					floorSelectorViewController.disableUserHeading()
 
 					// Go to that floor
 					if location.floor != currentFloor {
@@ -393,7 +336,11 @@ class MapViewController: UIViewController {
 					}
 
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate,
+                         centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue,
+                         withAnimation: true,
+                         heading: mapView.camera.heading,
+                         pitch: mapView.perspectivePitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: false)
@@ -408,7 +355,7 @@ class MapViewController: UIViewController {
 			for annotation in floor.diningAnnotations {
 				if annotation.nid == identifier {
 					// Turn off user heading since we want to jump to a specific place
-					floorSelectorVC.disableUserHeading()
+					floorSelectorViewController.disableUserHeading()
 
 					// Go to that floor
 					if location.floor != currentFloor {
@@ -416,7 +363,11 @@ class MapViewController: UIViewController {
 					}
 
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate,
+                         centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50,
+                         withAnimation: true,
+                         heading: mapView.camera.heading,
+                         pitch: mapView.perspectivePitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -431,13 +382,17 @@ class MapViewController: UIViewController {
 			if let artworkAnnotation = annotation as? MapObjectAnnotation {
 				if artworkAnnotation.nid == identifier {
 					// Turn off user heading since we want to jump to a specific place
-					floorSelectorVC.disableUserHeading()
+					floorSelectorViewController.disableUserHeading()
 
 					// Go to that floor
 					setCurrentFloor(forFloorNum: location.floor, andResetMap: false)
 
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue, withAnimation: true, heading: mapView.camera.heading, pitch: mapView.perspectivePitch)
+					mapView.zoomIn(onCenterCoordinate: location.coordinate,
+                         centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue,
+                         withAnimation: true,
+                         heading: mapView.camera.heading,
+                         pitch: mapView.perspectivePitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -454,7 +409,7 @@ class MapViewController: UIViewController {
 			top: abs(frame.minY - mapView.frame.minY),
 			left: 0,
 			bottom: abs(frame.maxY - mapView.frame.maxY),
-			right: self.view.frame.width - floorSelectorVC.view.frame.origin.x
+			right: self.view.frame.width - floorSelectorViewController.view.frame.origin.x
 		)
 
 		mapView.layoutMargins = mapInsets
@@ -462,12 +417,13 @@ class MapViewController: UIViewController {
 		// Update the floor selector with new position
 		let mapFrame = mapView.frame.inset(by: mapInsets)
 
-		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorVC.view.frame.size.width - floorSelectorMargin.x
-		var floorSelectorY = mapFrame.origin.y + mapFrame.height - floorSelectorVC.view.frame.height - floorSelectorMargin.y
-		let maxFloorSelectorY = UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.miniAudioPlayerHeight - floorSelectorVC.view.frame.height - floorSelectorMargin.y
+		let floorSelectorX = UIScreen.main.bounds.width - floorSelectorViewController.view.frame.size.width - floorSelectorMargin.x
+		var floorSelectorY = mapFrame.origin.y + mapFrame.height - floorSelectorViewController.view.frame.height - floorSelectorMargin.y
+		let maxFloorSelectorY = UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.miniAudioPlayerHeight - floorSelectorViewController.view.frame.height - floorSelectorMargin.y
 		floorSelectorY = min(floorSelectorY, maxFloorSelectorY)
 
-		floorSelectorVC.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
+		floorSelectorViewController.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
+    debugPrint("floorSelectorVC: \(CGPoint(x: floorSelectorX, y: floorSelectorY))")
 
 		mapView.calculateStartingHeight()
 	}
@@ -479,13 +435,13 @@ class MapViewController: UIViewController {
 		previousFloor = currentFloor
 		currentFloor = floorNum
 
-		floorSelectorVC.setSelectedFloor(forFloorNum: currentFloor)
+		floorSelectorViewController.setSelectedFloor(forFloorNum: currentFloor)
 
 		// Set the overlay
 		mapView.floorplanOverlay = mapModel.floors[floorNum].overlay
 
 		// Add annotations
-		switch mode {
+		switch displayPointOfInterest {
 		case .allInformation:
 			updateAllInformationAnnotations()
 			break
@@ -510,7 +466,7 @@ class MapViewController: UIViewController {
 		}
 
 		// Snap back to full view
-		if andResetMap == true {
+		if andResetMap {
 			deselectAllAnnotations()
 			mapView.showFullMap()
 		}
@@ -520,34 +476,27 @@ class MapViewController: UIViewController {
 	// Clears out all of the locations + tour objects
 	// currently set for floors
 
-	@objc internal func updateMapWithTimer() {
+	@objc func updateMapWithTimer() {
 		updateAnnotations()
 	}
 
-	internal func updateAnnotations() {
-		if isSwitchingModes {
-			return
-		}
+	func updateAnnotations() {
+		mapView.calculateCurrentAltitudeAndZoomLevel()
 
-		mapView.calculateCurrentAltitude()
-
-		switch mode {
+		switch displayPointOfInterest {
 		case .allInformation:
 			updateAllInformationAnnotations()
 			updateAllInformationAnnotationViews()
 			updateUserLocationAnnotationView()
-			break
 
 		case .tour:
 			updateTourAnnotations()
 			updateTourAnnotationViews()
 			updateUserLocationAnnotationView()
-			break
 
 		case .artwork, .searchedArtwork:
 			updateArtworkAnnotationView()
 			updateUserLocationAnnotationView()
-			break
 
 		case .exhibition:
 			updateExhibitionAnnotationView()
@@ -564,19 +513,17 @@ class MapViewController: UIViewController {
 		case .giftshop:
 			updateGiftShopAnnotations()
 			updateUserLocationAnnotationView()
-			break
 
 		case .restrooms:
 			updateRestroomAnnotations()
 			updateUserLocationAnnotationView()
-			break
 		}
 	}
 
-	internal func updateAllInformationAnnotations() {
+	func updateAllInformationAnnotations() {
 		var annotations: [MKAnnotation] = []
 
-		// Set the annotations for this zoom level
+		// Set the annotations for a zoom level
 		switch mapView.currentZoomLevel {
 		case .zoomLimit, .zoomFarLimit:
 			annotations.append(contentsOf: mapModel.landmarkAnnotations as [MKAnnotation])
@@ -614,7 +561,6 @@ class MapViewController: UIViewController {
 
 		let allAnnotations = mapView.getAnnotations(filteredBy: annotations)
 		mapView.removeAnnotationsWithAnimation(annotations: allAnnotations)
-
 		mapView.addAnnotations(annotations)
 	}
 
@@ -786,7 +732,7 @@ class MapViewController: UIViewController {
 	}
 }
 
-// MARK: Map View Delegate Methods
+// MARK: MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
 	/**
 	This renders the map with a background overlay
@@ -806,13 +752,13 @@ extension MapViewController: MKMapViewDelegate {
 			// No border
 			renderer.lineWidth = 0.0
 			renderer.strokeColor = UIColor.white.withAlphaComponent(0.0)
-
 			renderer.fillColor = .aicMapColor
-
 			return renderer
 		}
 
-		NSException(name: NSExceptionName(rawValue: "InvalidMKOverlay"), reason: "Did you add an overlay but forget to provide a matching renderer here? The class was type \(type(of: overlay))", userInfo: ["wasClass": type(of: overlay)]).raise()
+		NSException(name: NSExceptionName(rawValue: "InvalidMKOverlay"),
+                reason: "Did you add an overlay but forget to provide a matching renderer here? The class was type \(type(of: overlay))",
+                userInfo: ["wasClass": type(of: overlay)]).raise()
 		return MKOverlayRenderer()
 	}
 
@@ -879,7 +825,7 @@ extension MapViewController: MKMapViewDelegate {
 			//			}
 
 			let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: MapObjectAnnotationView.reuseIdentifier)
-			if mode == .tour {
+			if displayPointOfInterest == .tour {
 				view.setMode(mode: .image, inTour: true)
 				view.setTourStopNumber(number: objectAnnotation.tourStopOrder)
 			}
@@ -928,14 +874,18 @@ extension MapViewController: MKMapViewDelegate {
 
 			mapView.setCenter(annotation.coordinate, animated: true)
 
-			if mode == .tour {
+			if displayPointOfInterest == .tour {
 				if let stopId = annotation.nid {
 					delegate?.mapDidSelectTourStop(stopId: stopId)
 				}
 			}
+
 		} else if let view = view as? MapDepartmentAnnotationView {
 			mapView.deselectAnnotation(view.annotation, animated: false)
-			self.mapView.zoomIn(onCenterCoordinate: view.annotation!.coordinate, altitude: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-10.0, heading: self.mapView.camera.heading)
+			self.mapView.zoomIn(onCenterCoordinate: view.annotation!.coordinate,
+                          centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-10.0,
+                          heading: self.mapView.camera.heading)
+
 		} else if let view = view as? MapAmenityAnnotationView {
 			// Restaurants
 			let annotation = view.annotation as! MapAmenityAnnotation
@@ -950,7 +900,7 @@ extension MapViewController: MKMapViewDelegate {
 
 				mapView.setCenter(annotation.coordinate, animated: true)
 
-				if mode == .dining {
+				if displayPointOfInterest == .dining {
 					if let restaurantId = annotation.nid {
 						if let restaurant = AppDataManager.sharedInstance.getRestaurant(forID: restaurantId) {
 							delegate?.mapDidSelectRestaurant(restaurant: restaurant)
@@ -961,29 +911,17 @@ extension MapViewController: MKMapViewDelegate {
 		}
 	}
 
-	func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-		if mode == .allInformation && view.isKind(of: MapObjectAnnotationView.self) {
-			//            if self.mapView.currentZoomLevel != .zoomMax && self.mapView.currentZoomLevel != .zoomDetail {
-			//                self.mapView.removeAnnotationsWithAnimation(annotations: [view.annotation!])
-			//            }
-		}
-	}
-
 	/**
 	When the map region changes update view properties
 	*/
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-		self.mapView.calculateCurrentAltitude()
+    debugPrint("MapViewController.regionDidChangeAnimated")
+    self.mapView.calculateCurrentAltitudeAndZoomLevel()
 
-		// Keep map in view
-		if !floorSelectorVC.userHeadingIsEnabled() {
-			self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
-		}
-
-		if isSwitchingModes {
-			isSwitchingModes = false
-			updateAnnotations()
-		}
+    // Keep map in view
+    if !floorSelectorViewController.userHeadingIsEnabled() {
+      self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
+    }
 	}
 
 	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
@@ -1000,22 +938,23 @@ extension MapViewController: MapFloorSelectorViewControllerDelegate {
 	}
 
 	func floorSelectorLocationButtonTapped() {
-		if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.denied {
+    let locationManager = CLLocationManager()
+		if locationManager.authorizationStatus == .denied {
 			// Show message to enable location
 			//            locationDisabledMessage = MessageSmallView(model: Common.Messages.locationDisabled)
 			//            locationDisabledMessage!.delegate = self
 			//            self.view.window?.addSubview(locationDisabledMessage!)
-		} else if floorSelectorVC.locationMode == .Offsite {
+		} else if floorSelectorViewController.locationMode == .offsite {
 			// Show offsite message
 			//            locationOffsiteMessage = MessageSmallView(model: Common.Messages.locationOffsite)
 			//            locationOffsiteMessage?.delegate = self
 			//            self.view.window?.addSubview(locationOffsiteMessage!)
 		} else {
 			// Toggle heading
-			if floorSelectorVC.userHeadingIsEnabled() {
-				floorSelectorVC.disableUserHeading()
+			if floorSelectorViewController.userHeadingIsEnabled() {
+				floorSelectorViewController.disableUserHeading()
 			} else {
-				floorSelectorVC.enableUserHeading()
+				floorSelectorViewController.enableUserHeading()
 
 				// Log Analytics
 				AICAnalytics.sendLocationEnableHeadingEvent()
@@ -1024,48 +963,46 @@ extension MapViewController: MapFloorSelectorViewControllerDelegate {
 	}
 }
 
-// MARK: Object Annotation View Delegate Methods
+// MARK: - MapObjectAnnotationViewDelegate
 extension MapViewController: MapObjectAnnotationViewDelegate {
-	func mapObjectAnnotationViewPlayPressed(_ annotationView: MapObjectAnnotationView) {
-		if let annotation = annotationView.annotation as? MapObjectAnnotation {
-			if let objectId = annotation.nid {
-				if let object = AppDataManager.sharedInstance.getObject(forID: objectId) {
-					delegate?.mapDidPressArtworkPlayButton(artwork: object)
-				}
-			}
-		}
-	}
+
+  func mapObjectAnnotationViewPlayPressed(_ annotationView: MapObjectAnnotationView) {
+    guard let annotation = annotationView.annotation as? MapObjectAnnotation,
+          let objectId = annotation.nid,
+          let object = AppDataManager.sharedInstance.getObject(forID: objectId) else { return }
+
+    delegate?.mapDidPressArtworkPlayButton(artwork: object)
+  }
+
 }
 
-// MARK: Gesture recognizer delegate
+// MARK: - UIGestureRecognizerDelegate
 extension MapViewController: UIGestureRecognizerDelegate {
 	// Make sure our pinch gesture works with the map's built in zooming
-	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-		return true
+	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		true
 	}
 
 	@objc func mapViewWasPinched(_ gesture: UIPinchGestureRecognizer) {
-		floorSelectorVC.disableUserHeading()
-		if !floorSelectorVC.userHeadingIsEnabled() {
-			mapView.keepMapInView(zoomLimit: zoomLimitValue)
-		}
+    debugPrint("MapViewController.mapViewWasPinched")
+		floorSelectorViewController.disableUserHeading()
 		self.delegate?.mapWasPressed()
 	}
 
 	@objc func mapViewWasPanned(_ gesture: UIPanGestureRecognizer) {
-		floorSelectorVC.disableUserHeading()
-		if !floorSelectorVC.userHeadingIsEnabled() {
-			mapView.keepMapInView(zoomLimit: zoomLimitValue)
-		}
+    debugPrint("MapViewController.mapViewWasPanned")
+		floorSelectorViewController.disableUserHeading()
 		self.delegate?.mapWasPressed()
 	}
 }
 
 // MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
+
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		guard let location = locations.first else {
-			print("No usable location found")
+			debugPrint("No usable location found")
 			return
 		}
 
@@ -1074,8 +1011,9 @@ extension MapViewController: CLLocationManagerDelegate {
 		let distanceFromCenterOfMuseum = location.distance(from: museumCenterCoordinate)
 
 		if distanceFromCenterOfMuseum < Common.Location.minDistanceFromMuseumForLocation {
-			if floorSelectorVC.userHeadingIsEnabled() {
-				mapView.zoomIn(onCenterCoordinate: location.coordinate, altitude: mapView.camera.altitude)
+			if floorSelectorViewController.userHeadingIsEnabled() {
+				mapView.zoomIn(onCenterCoordinate: location.coordinate,
+                       centerCoordinateDistance: mapView.camera.centerCoordinateDistance)
 			}
 
 			// Update our floor if it is found
@@ -1085,7 +1023,7 @@ extension MapViewController: CLLocationManagerDelegate {
 				if let floor = location.floor {
 					// Automatically show the floor the user walks into, if in tour mode or exploring all information
 					if floor.level != previousUserFloor {
-						if mode == .tour || mode == .allInformation {
+						if displayPointOfInterest == .tour || displayPointOfInterest == .allInformation {
 							setCurrentFloor(forFloorNum: floor.level)
 						}
 					}
@@ -1095,7 +1033,7 @@ extension MapViewController: CLLocationManagerDelegate {
 			}
 
 			if let userFloor = currentUserFloor {
-				floorSelectorVC.setUserLocation(forFloorNum: userFloor)
+				floorSelectorViewController.setUserLocation(forFloorNum: userFloor)
 
 				if currentFloor == userFloor {
 					mapView.tintColor = .white
@@ -1104,8 +1042,8 @@ extension MapViewController: CLLocationManagerDelegate {
 				}
 			}
 
-			if !floorSelectorVC.userLocationIsEnabled() {
-				floorSelectorVC.locationMode = .Enabled
+			if !floorSelectorViewController.userLocationIsEnabled() {
+				floorSelectorViewController.locationMode = .enabled
 			}
 
 			// Log analytics
@@ -1120,7 +1058,7 @@ extension MapViewController: CLLocationManagerDelegate {
 			AICAnalytics.updateUserLocationProperty(isOnSite: true)
 
 		} else {
-			floorSelectorVC.locationMode = .Offsite
+			floorSelectorViewController.locationMode = .offsite
 
 			// Log analytics
 			// Log onsite location state, only if it hasn't been logged already or if the user moved location out/in the museum
@@ -1136,7 +1074,7 @@ extension MapViewController: CLLocationManagerDelegate {
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-		if floorSelectorVC.userHeadingIsEnabled() {
+		if floorSelectorViewController.userHeadingIsEnabled() {
 			// A negative heading value represents an error
 			if newHeading.trueHeading >= 0 {
 				// Linear interpolation for smoothing
@@ -1167,7 +1105,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		if status == CLAuthorizationStatus.denied {
-			floorSelectorVC.locationMode = .Disabled
+			floorSelectorViewController.locationMode = .disabled
 		}
 
 		// Analytics
@@ -1183,4 +1121,91 @@ extension MapViewController: CLLocationManagerDelegate {
 			Common.Location.previousAuthorizationStatus = status
 		}
 	}
+}
+
+// MARK: - Map floor selector accessors
+extension MapViewController {
+
+  func floorSelectorOrientationButtonPosition() -> CGPoint {
+    floorSelectorViewController.getOrientationButtonPosition()
+  }
+
+  func floorSelectorFloorButtonPosition(at floor: Int) -> CGPoint {
+    floorSelectorViewController.getFloorButtonPosition(floorNumber: floor)
+  }
+
+}
+
+// MARK: - Private - Setups
+private extension MapViewController {
+
+  func addMapGesturesForContinuousUpdates() {
+    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPinched(_:)))
+    pinchGesture.delegate = self
+
+    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPanned(_:)))
+    panGesture.delegate = self
+
+    mapView.addGestureRecognizer(pinchGesture)
+    mapView.addGestureRecognizer(panGesture)
+  }
+
+}
+
+// MARK: - Private - Setups
+private extension MapViewController {
+
+  func setup() {
+    setupSubviews()
+    setupDelegates()
+    setMapBackgroundOverlay()
+    setMapCamerainItialStateforFirstAnimation()
+    updateMapForModeChange()
+    setupDefaultFloorSelection()
+    setupMapUpdateTimer()
+    addMapGesturesForContinuousUpdates()
+  }
+
+  func setupSubviews() {
+    view.addSubview(mapView)
+    view.addSubview(floorSelectorViewController.view)
+  }
+
+  func setupDelegates() {
+    mapView.delegate = self
+    floorSelectorViewController.delegate = self
+  }
+
+  func setupDefaultFloorSelection() {
+    setCurrentFloor(forFloorNum: Common.Map.startFloor)
+  }
+
+  func setupMapUpdateTimer() {
+    Timer.scheduledTimer(timeInterval: 1.0/20.0,
+                         target: self,
+                         selector: #selector(MapViewController.updateMapWithTimer),
+                         userInfo: nil,
+                         repeats: true)
+  }
+
+  func setMapBackgroundOverlay() {
+    mapView.addOverlay(mapViewHideBackgroundOverlay, level: .aboveRoads)
+  }
+
+  /// Set Camera initial state for first animation when you open the map
+  func setMapCamerainItialStateforFirstAnimation() {
+    mapView.camera.heading = 0
+    mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+    mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
+    mapView.camera.pitch = mapView.perspectivePitch
+  }
+
+  func setupNavigationItemTitle() {
+    navigationItem.title = Common.Sections[.map]?.title
+  }
+
+  func logAnalytics() {
+    AICAnalytics.trackScreenView("Map", screenClass: "MapViewController")
+  }
+
 }

@@ -13,6 +13,7 @@ import Localize_Swift
 class LocationSettingsViewController: UIViewController {
 	let pageView: InfoPageView = InfoPageView()
 	let locationButton: AICButton = AICButton(isSmall: false)
+  private let locationManager = CLLocationManager()
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -77,7 +78,7 @@ class LocationSettingsViewController: UIViewController {
 		pageView.textView.text = "location_settings_body".localized(using: "LocationUI")
 
 		if CLLocationManager.locationServicesEnabled() {
-			switch CLLocationManager.authorizationStatus() {
+			switch locationManager.authorizationStatus {
 			case .restricted, .denied:
 				locationButton.setTitle("locations_settings_location_disabled".localized(using: "LocationUI"), for: .normal)
 			case .authorizedAlways, .authorizedWhenInUse:
@@ -94,7 +95,7 @@ class LocationSettingsViewController: UIViewController {
 	}
 
 	@objc func locationButtonPressed(button: UIButton) {
-		if CLLocationManager.authorizationStatus() == .notDetermined {
+		if locationManager.authorizationStatus == .notDetermined {
 			Common.Map.locationManager.requestWhenInUseAuthorization()
 			Common.Map.locationManager.startUpdatingLocation()
 			Common.Map.locationManager.startUpdatingHeading()

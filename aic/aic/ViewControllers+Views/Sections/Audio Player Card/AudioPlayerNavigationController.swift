@@ -12,7 +12,7 @@ import MediaPlayer
 import Alamofire
 import Kingfisher
 
-protocol AudioPlayerNavigationControllerDelegate: class {
+protocol AudioPlayerNavigationControllerDelegate: AnyObject {
 	func audioPlayerDidStartPlaying(audio: AICAudioFileModel)
 	func audioPlayerDidPause(audio: AICAudioFileModel)
 	func audioPlayerDidFinishPlaying(audio: AICAudioFileModel)
@@ -342,7 +342,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 					break
 
 				default:
-					print("Unknown error")
+					debugPrint("Unknown error")
 				}
 			})
 		}
@@ -406,7 +406,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 
 	// MARK: Audio Playback
 
-	@objc internal func configureAVAudioSession() {
+	@objc func configureAVAudioSession() {
 		do {
 			// Determine playback category based on bluetooth connection to avoid HFP playback through A2DP headphones
 			let bluetoothConnected = AVAudioSession
@@ -423,7 +423,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 			try AVAudioSession.sharedInstance().setCategory(playbackCategory, options: .allowBluetooth)
 			try AVAudioSession.sharedInstance().setActive(true)
 		} catch {
-			print("Could not initialize audio session")
+			debugPrint("Could not initialize audio session")
 		}
 	}
 
@@ -460,7 +460,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 		}
 	}
 
-	@objc internal func play() -> MPRemoteCommandHandlerStatus {
+	@objc func play() -> MPRemoteCommandHandlerStatus {
 		if let currentItem = avPlayer.currentItem {
 			// If we are at the end, start from the beginning
 			let currentTime = floor(CMTimeGetSeconds(currentItem.currentTime()))
@@ -474,7 +474,8 @@ class AudioPlayerNavigationController: CardNavigationController {
 			}
 
 			if currentTime >= duration {
-				currentItem.seek(to: CMTime(seconds: 0.0, preferredTimescale: avPlayer.currentItem!.duration.timescale))
+        let timeToWhichToSeek = CMTime(seconds: 0.0, preferredTimescale: avPlayer.currentItem!.duration.timescale)
+        currentItem.seek(to: timeToWhichToSeek, completionHandler: nil)
 			}
 
 			// Play
@@ -492,7 +493,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 		return .commandFailed
 	}
 
-	@objc internal func pause() -> MPRemoteCommandHandlerStatus {
+	@objc func pause() -> MPRemoteCommandHandlerStatus {
 		if avPlayer.currentItem != nil {
 			avPlayer.pause()
 			synchronizePlayPauseButtons(isPlaying: false)
@@ -513,14 +514,15 @@ class AudioPlayerNavigationController: CardNavigationController {
 		return .commandFailed
 	}
 
-	internal func seekToTime(_ timeInSeconds: Double) {
+	func seekToTime(_ timeInSeconds: Double) {
 		if let currentItem = avPlayer.currentItem {
-			currentItem.seek(to: CMTime(seconds: timeInSeconds, preferredTimescale: currentItem.duration.timescale))
+      let timeToWhichToSeek = CMTime(seconds: timeInSeconds, preferredTimescale: currentItem.duration.timescale)
+      currentItem.seek(to: timeToWhichToSeek, completionHandler: nil)
 			updateAudioPlayerProgress()
 		}
 	}
 
-	@objc internal func skipForward() -> MPRemoteCommandHandlerStatus {
+	@objc func skipForward() -> MPRemoteCommandHandlerStatus {
 		if let currentItem = avPlayer.currentItem {
 			let duration = CMTimeGetSeconds(currentItem.duration)
 			let currentTime = CMTimeGetSeconds(avPlayer.currentTime())
@@ -536,7 +538,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 		return .commandFailed
 	}
 
-	@objc internal func skipBackward() -> MPRemoteCommandHandlerStatus {
+	@objc func skipBackward() -> MPRemoteCommandHandlerStatus {
 		if avPlayer.currentItem != nil {
 			let currentTime = CMTimeGetSeconds(avPlayer.currentTime())
 			var skipTime = currentTime - Double(remoteSkipTime)
@@ -632,7 +634,7 @@ class AudioPlayerNavigationController: CardNavigationController {
 
 // Pan Gesture
 extension AudioPlayerNavigationController {
-	override internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		if gestureRecognizer == cardPanGesture {
 			if audioInfoVC.scrollView.contentOffset.y <= 0 {
 				return true
@@ -654,16 +656,16 @@ extension AudioPlayerNavigationController {
 				switch (event?.subtype)! {
 
 				// Play/Pause buttons
-				case UIEventSubtype.remoteControlPlay:
+        case UIEvent.EventSubtype.remoteControlPlay:
 					_ = play()
 					break
 
-				case UIEventSubtype.remoteControlPause:
+        case UIEvent.EventSubtype.remoteControlPause:
 					_ = pause()
 					break
 
 				// Headphone remote control toggle
-				case UIEventSubtype.remoteControlTogglePlayPause:
+        case UIEvent.EventSubtype.remoteControlTogglePlayPause:
 					if avPlayer.rate != 0 && avPlayer.error == nil {
 						_ = pause()
 					} else {
@@ -679,7 +681,7 @@ extension AudioPlayerNavigationController {
 
 	// Update the progress for the mini and regular audio players
 	// every frame
-	@objc internal func updateAudioPlayerProgress() {
+	@objc func updateAudioPlayerProgress() {
 
 		if avPlayer.currentItem != nil && avPlayer.currentItem?.status == .readyToPlay {
 			let progress = CMTimeGetSeconds(avPlayer.currentTime())
@@ -705,7 +707,7 @@ extension AudioPlayerNavigationController {
 		}
 	}
 
-	@objc internal func audioPlayerDidFinishPlaying(_ notification: Notification) {
+	@objc func audioPlayerDidFinishPlaying(_ notification: Notification) {
 		synchronizePlayPauseButtons(isPlaying: false)
 
 		// Log analytics
@@ -750,12 +752,12 @@ extension AudioPlayerNavigationController {
 
 	// Audio player Slider Events
 
-	@objc internal func audioPlayerSliderStartedSliding(slider: UISlider) {
+	@objc func audioPlayerSliderStartedSliding(slider: UISlider) {
 		// Stop the progress from updating, otherwise the two funcs fight
 		isUpdatingObjectViewProgressSlider = true
 	}
 
-	@objc internal func audioPlayerSliderValueChanged(slider: UISlider) {
+	@objc func audioPlayerSliderValueChanged(slider: UISlider) {
 		if let currentItem = avPlayer.currentItem {
 			let newTime = CMTimeGetSeconds(currentItem.asset.duration) * Double(audioInfoVC.audioPlayerView.slider.value)
 			seekToTime(newTime)
@@ -763,12 +765,12 @@ extension AudioPlayerNavigationController {
 		}
 	}
 
-	@objc internal func audioPlayerSliderFinishedSliding(slider: UISlider) {
+	@objc func audioPlayerSliderFinishedSliding(slider: UISlider) {
 		isUpdatingObjectViewProgressSlider = false
 		updateAudioPlayerProgress()
 	}
 
-	@objc internal func miniAudioPlayerCloseButtonPressed(button: UIButton) {
+	@objc func miniAudioPlayerCloseButtonPressed(button: UIButton) {
 
 		// Log Analytics
 		if let audio = currentAudioFile {
@@ -784,11 +786,11 @@ extension AudioPlayerNavigationController {
 		// TODO: remove track from MPNowPlayingInfoCenter and RemoteControl
 	}
 
-	@objc internal func miniAudioPlayerTapped() {
+	@objc func miniAudioPlayerTapped() {
 		showFullscreen()
 	}
 
-	@objc internal func playPauseButtonPressed(button: UIButton) {
+	@objc func playPauseButtonPressed(button: UIButton) {
 		// Play
 		if button.isSelected == false {
 			if avPlayer.currentItem?.duration == avPlayer.currentTime() {

@@ -130,7 +130,7 @@ class FloorplanOverlayRenderer: MKOverlayRenderer {
 	Use [C] to verify the location of (0.0, 0.0) on your PDF. If this does
 	not match:
 	+ check your PDF reader and make sure it is showing you values of the
-	underlying PDF coordinate system, and not its own internal display
+	underlying PDF coordinate system, and not its own display
 	coordinate system. A proper PDF coordinate system should have +x be
 	rightward and +y be upward.
 

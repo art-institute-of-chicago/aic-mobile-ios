@@ -6,7 +6,7 @@ Plays intro video and shows loading view
 import UIKit
 import AVFoundation
 
-protocol LoadingViewControllerDelegate: class {
+protocol LoadingViewControllerDelegate: AnyObject {
 	func loadingDidFinishPlayingIntroVideoA()
 	func loadingDidFinish()
 }
@@ -19,6 +19,7 @@ class LoadingViewController: UIViewController {
 		let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
 		return storyboard.instantiateInitialViewController() ?? UIViewController()
 	}()
+
 	private let progressBackgroundView = UIView()
 	private let progressHighlightView = UIView()
 	private let progressView = UIView()
@@ -109,7 +110,10 @@ class LoadingViewController: UIViewController {
 		videoView.frame = UIScreen.main.bounds
 		addChild(launchViewController)
 
-		NotificationCenter.default.addObserver(self, selector: #selector(videoFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer)
+		NotificationCenter.default.addObserver(self,
+                                           selector: #selector(videoFinishedPlaying),
+                                           name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+                                           object: avPlayer)
 
 		// Create the player
 		if showFullVideo {
@@ -151,6 +155,7 @@ class LoadingViewController: UIViewController {
 		view.addSubview(launchViewController.view)
 
 		createViewConstraints()
+    showProgressBar()
 	}
 
 	func createViewConstraints() {
@@ -175,20 +180,19 @@ class LoadingViewController: UIViewController {
 		welcomeLabel.autoPinEdge(.trailing, to: .trailing, of: view)
 	}
 
-	func showProgressBar() {
+	private func showProgressBar() {
 		progressView.isHidden = false
 		welcomeLabel.isHidden = false
 		welcomeLabel.alpha = 0.0
-		UIView.animate(withDuration: 0.3, animations: {
-			self.welcomeLabel.alpha = 1.0
-		})
+
+		UIView.animate(withDuration: 0.3) { [weak self] in
+			self?.welcomeLabel.alpha = 1.0
+		}
 	}
 
 	func updateProgress(forPercentComplete pct: Float) {
 		pctComplete = pct
-
 		progressHighlightWidth?.constant = (progressSize.width * CGFloat(pct))
-
 		self.view.layoutIfNeeded()
 	}
 

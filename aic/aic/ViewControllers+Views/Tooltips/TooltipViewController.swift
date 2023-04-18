@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TooltipViewControllerDelegate: class {
+protocol TooltipViewControllerDelegate: AnyObject {
 	func tooltipsDismissedTooltip(index: Int)
 }
 

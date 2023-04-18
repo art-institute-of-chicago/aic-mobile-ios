@@ -25,7 +25,7 @@ import MapKit
 	var transformerFromPDFToMk = CGAffineTransform()
 
 	/**
-	Reference to the internal page data of the selected page of the PDF you
+	Reference to the page data of the selected page of the PDF you
 	are drawing. It is very likely that the PDF of your floorplan is a
 	single page.
 	*/
