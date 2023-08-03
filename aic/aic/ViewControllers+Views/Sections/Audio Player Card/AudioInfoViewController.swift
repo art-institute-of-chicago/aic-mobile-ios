@@ -141,7 +141,7 @@ class AudioInfoViewController: UIViewController {
 		}
 		updateLanguage(language: audio.language)
 
-		transcriptView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: audio.transcript, font: .aicTextFont, lineHeight: 22)
+		transcriptView.bodyTextView.attributedText = attributedStringWithLineHeight(text: audio.transcript, font: .aicTextFont, lineHeight: 22)
 		transcriptView.bodyTextView.textColor = .white
 		transcriptView.show(collapseEnabled: true)
 
@@ -153,7 +153,7 @@ class AudioInfoViewController: UIViewController {
 		}
 
 		if creditsString.isEmpty == false {
-			creditsView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: creditsString, font: .aicTextFont, lineHeight: 22)
+			creditsView.bodyTextView.attributedText = attributedStringWithLineHeight(text: creditsString, font: .aicTextFont, lineHeight: 22)
 			creditsView.bodyTextView.textColor = .white
 			creditsView.show(collapseEnabled: true)
 		} else {
@@ -220,7 +220,7 @@ class AudioInfoViewController: UIViewController {
 	}
 
 	private func setDescription(description: String) {
-		descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: description, font: .aicTextFont, lineHeight: 22)
+		descriptionLabel.attributedText = attributedStringWithLineHeight(text: description, font: .aicTextFont, lineHeight: 22)
 	}
 
 	func reset() {

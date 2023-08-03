@@ -112,10 +112,10 @@ class SectionNavigationController: UINavigationController {
 		}
 
 		sectionNavigationBar.titleLabel.text = titleText
-    sectionNavigationBar.descriptionLabel.textAlignment = .center
-		sectionNavigationBar.descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: subtitleText,
-                                                                                             font: .aicSectionDescriptionFont,
-                                                                                             lineHeight: 22)
+        sectionNavigationBar.descriptionLabel.attributedText = attributedStringWithLineHeight(text: subtitleText,
+                                                                                              font: .aicSectionDescriptionFont,
+                                                                                              lineHeight: 22,
+                                                                                              alignment: .center)
 	}
 
 	@objc private func backButtonPressed(button: UIButton) {

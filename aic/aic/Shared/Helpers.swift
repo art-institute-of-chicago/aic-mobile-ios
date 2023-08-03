@@ -103,22 +103,27 @@ func getAttributedString(forHTMLText text: String, font: UIFont, textColor: UICo
 }
 
 // Create an attributed string with line-height set
-func getAttributedStringWithLineHeight(text: String, font: UIFont, lineHeight: CGFloat) -> NSAttributedString {
-	let attrString = NSMutableAttributedString(string: text)
+func attributedStringWithLineHeight(
+    text: String,
+    font: UIFont,
+    lineHeight: CGFloat,
+    alignment: NSTextAlignment = .natural
+) -> NSAttributedString {
+    let attrString = NSMutableAttributedString(string: text)
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 0.0
+    paragraphStyle.minimumLineHeight = lineHeight
+    paragraphStyle.maximumLineHeight = lineHeight
+    paragraphStyle.alignment = alignment
 
-	let paragraphStyle = NSMutableParagraphStyle()
-	paragraphStyle.lineSpacing = 0.0
-	paragraphStyle.minimumLineHeight = lineHeight
-	paragraphStyle.maximumLineHeight = lineHeight
+    let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
 
-	let baselineOffset = lineHeight - UIFont.aicTitleFont.pointSize
+    let range = NSRange(location: 0, length: attrString.length)
+    attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+    attrString.addAttribute(.baselineOffset, value: baselineOffset, range: range)
+    attrString.addAttribute(.font, value: font, range: range)
 
-	let range = NSRange(location: 0, length: attrString.length)
-	attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
-	attrString.addAttribute(.baselineOffset, value: baselineOffset, range: range)
-	attrString.addAttribute(.font, value: font, range: range)
-
-	return attrString
+    return attrString
 }
 
 func getAttributedStringWithHTMLEnabled(text: String, font: UIFont, lineHeight: CGFloat) -> NSAttributedString {
@@ -144,7 +149,7 @@ func getAttributedStringWithHTMLEnabled(text: String, font: UIFont, lineHeight: 
 
 		return attributedString
 	} catch {
-		return getAttributedStringWithLineHeight(text: text, font: font, lineHeight: lineHeight)
+		return attributedStringWithLineHeight(text: text, font: font, lineHeight: lineHeight)
 	}
 }
 

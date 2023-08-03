@@ -59,7 +59,7 @@ class TourContentCell: UITableViewCell {
 			}
 
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
-			descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: tourModel.longDescription, font: .aicTextFont, lineHeight: 22)
+			descriptionLabel.attributedText = attributedStringWithLineHeight(text: tourModel.longDescription, font: .aicTextFont, lineHeight: 22)
 			descriptionLabel.textColor = .white
 			stopsNumberLabel.text = "tour_stop_count".localizedFormat(arguments: "\(tourModel.stops.count)", using: "Base")
 			if (tourModel.durationInMinutes ?? "").isEmpty {
