@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,21 +23,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HBm-68-tgR" customClass="AICImageView" customModule="aic" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="240"/>
+                        <rect key="frame" x="0.0" y="20" width="343" height="240"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="HBm-68-tgR" secondAttribute="height" multiplier="343:240" id="oIF-EX-ZoA"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exhibition Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IV8-FP-nHm">
-                        <rect key="frame" x="0.0" y="254" width="327" height="25.5"/>
+                        <rect key="frame" x="0.0" y="274" width="327" height="25"/>
                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Through Month Day, Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvh-W1-y8T">
-                        <rect key="frame" x="0.0" y="291.5" width="343" height="20"/>
+                        <rect key="frame" x="0.0" y="311" width="343" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="vHX-0H-J1H"/>
+                            <constraint firstAttribute="height" constant="30" id="vHX-0H-J1H"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Amiri-Italic" family="Amiri Italic" pointSize="16"/>
                         <nil key="textColor"/>
@@ -48,6 +45,7 @@
                     </label>
                 </subviews>
             </view>
+            <viewLayoutGuide key="safeArea" id="fhx-mH-hvg"/>
             <constraints>
                 <constraint firstItem="IV8-FP-nHm" firstAttribute="top" secondItem="HBm-68-tgR" secondAttribute="bottom" constant="14" id="0mg-zP-UX5"/>
                 <constraint firstItem="fhx-mH-hvg" firstAttribute="trailing" secondItem="HBm-68-tgR" secondAttribute="trailing" id="24l-yo-hc8"/>
@@ -60,14 +58,13 @@
                 <constraint firstItem="Gvh-W1-y8T" firstAttribute="top" secondItem="IV8-FP-nHm" secondAttribute="bottom" constant="12" id="tt6-oq-FoL"/>
                 <constraint firstItem="fhx-mH-hvg" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Gvh-W1-y8T" secondAttribute="bottom" constant="30" id="zD2-fL-Pvw"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fhx-mH-hvg"/>
             <size key="customSize" width="343" height="412"/>
             <connections>
                 <outlet property="exhibitionImageView" destination="HBm-68-tgR" id="uRm-uc-y1G"/>
                 <outlet property="exhibitionTitleLabel" destination="IV8-FP-nHm" id="pTp-GC-Bwc"/>
                 <outlet property="throughDateLabel" destination="Gvh-W1-y8T" id="nEP-jO-4wn"/>
             </connections>
-            <point key="canvasLocation" x="-39.5" y="-19.5"/>
+            <point key="canvasLocation" x="-63.200000000000003" y="-17.541229385307346"/>
         </collectionViewCell>
     </objects>
 </document>

@@ -41,7 +41,8 @@ class SeeAllExhibitionCell: UICollectionViewCell {
 			// set up UI
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
-			throughDateLabel.attributedText = attributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 18)
+			throughDateLabel.attributedText = attributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate),
+                                                                             font: .aicTextItalicFont, lineHeight: 18)
 
 			// Accessibility
 			self.isAccessibilityElement = true
