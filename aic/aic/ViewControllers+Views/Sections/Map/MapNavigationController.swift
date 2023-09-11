@@ -61,7 +61,7 @@ class MapNavigationController: SectionNavigationController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-    setup()
+        setup()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

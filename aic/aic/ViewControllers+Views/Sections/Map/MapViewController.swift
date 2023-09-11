@@ -27,13 +27,13 @@ final class MapViewController: UIViewController {
 	private let mapModel = AppDataManager.sharedInstance.app.map
 
 	// Map View
-  private let mapView = MapView(frame: UIScreen.main.bounds)
-  private let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
-  private var zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+    private let mapView = MapView(frame: UIScreen.main.bounds)
+    private let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
+    private var zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
 
-	// Floor Selector
-  private let floorSelectorMargin = CGPoint(x: 20, y: 20)
-  private var floorSelectorViewController = MapFloorSelectorViewController()
+    // Floor Selector
+    private let floorSelectorMargin = CGPoint(x: 20, y: 20)
+    private var floorSelectorViewController = MapFloorSelectorViewController()
 
 	private(set) var previousFloor = Common.Map.startFloor
 	private(set) var currentFloor = Common.Map.startFloor
@@ -42,22 +42,22 @@ final class MapViewController: UIViewController {
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
-    setupNavigationItemTitle()
+        setupNavigationItemTitle()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	override func viewDidLoad() {
-    super.viewDidLoad()
-    setup()
-	}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
+    }
 
-  override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-    logAnalytics()
-	}
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        logAnalytics()
+    }
 
 	// MARK: Mode Functions
 
@@ -336,11 +336,11 @@ final class MapViewController: UIViewController {
 					}
 
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate,
-                         centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue,
-                         withAnimation: true,
-                         heading: mapView.camera.heading,
-                         pitch: mapView.perspectivePitch)
+                    mapView.zoomIn(onCenterCoordinate: location.coordinate,
+                                   centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue,
+                                   withAnimation: true,
+                                   heading: mapView.camera.heading,
+                                   pitch: mapView.perspectivePitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: false)
@@ -409,7 +409,7 @@ final class MapViewController: UIViewController {
 			top: abs(frame.minY - mapView.frame.minY),
 			left: 0,
 			bottom: abs(frame.maxY - mapView.frame.maxY),
-			right: self.view.frame.width - floorSelectorViewController.view.frame.origin.x
+            right: 0
 		)
 
 		mapView.layoutMargins = mapInsets
@@ -423,8 +423,6 @@ final class MapViewController: UIViewController {
 		floorSelectorY = min(floorSelectorY, maxFloorSelectorY)
 
 		floorSelectorViewController.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
-    debugPrint("floorSelectorVC: \(CGPoint(x: floorSelectorX, y: floorSelectorY))")
-
 		mapView.calculateStartingHeight()
 	}
 
@@ -787,7 +785,6 @@ extension MapViewController: MKMapViewDelegate {
 			}
 
 			return view
-
 		}
 
 		// Amenity annotation
@@ -803,34 +800,35 @@ extension MapViewController: MKMapViewDelegate {
 
 		// Text annotations
 		if let textAnnotation = annotation as? MapTextAnnotation {
-
-			var view: MapTextAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: textAnnotation.type.rawValue) as? MapTextAnnotationView
+            var view: MapTextAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: textAnnotation.type.rawValue) as? MapTextAnnotationView
 			if view == nil {
 				view = MapTextAnnotationView(annotation: textAnnotation, reuseIdentifier: textAnnotation.type.rawValue)
 			}
 
 			// Update the view
-			view.setAnnotation(forMapTextAnnotation: textAnnotation)
-
+			view?.setAnnotation(forMapTextAnnotation: textAnnotation)
 			return view
 		}
 
 		// Object annotations
 		if let objectAnnotation = annotation as? MapObjectAnnotation {
-			// TODO: Commenting this out as a temporary fix to bug where some tour stops disappear at times
-			//			if let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView {
-			//				view.delegate = self
-			//				view.setAnnotation(forObjectAnnotation: objectAnnotation)
-			//				return view
-			//			}
+            var objectAnnotationView: MapObjectAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView
 
-			let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: MapObjectAnnotationView.reuseIdentifier)
+            if objectAnnotationView == nil  {
+                objectAnnotationView = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: MapObjectAnnotationView.reuseIdentifier)
+                objectAnnotationView?.delegate = self
+
+            } else {
+                objectAnnotationView?.delegate = self
+                objectAnnotationView?.setAnnotation(forObjectAnnotation: objectAnnotation)
+            }
+
 			if displayPointOfInterest == .tour {
-				view.setMode(mode: .image, inTour: true)
-				view.setTourStopNumber(number: objectAnnotation.tourStopOrder)
+                objectAnnotationView?.setMode(mode: .image, inTour: true)
+                objectAnnotationView?.setTourStopNumber(number: objectAnnotation.tourStopOrder)
 			}
-			view.delegate = self
-			return view
+
+			return objectAnnotationView
 		}
 
 		// Exhibition annotations
@@ -872,7 +870,7 @@ extension MapViewController: MKMapViewDelegate {
 				setCurrentFloor(forFloorNum: annotation.floor, andResetMap: false)
 			}
 
-			mapView.setCenter(annotation.coordinate, animated: true)
+            mapView.setCenter(annotation.coordinate, animated: true)
 
 			if displayPointOfInterest == .tour {
 				if let stopId = annotation.nid {
@@ -883,8 +881,8 @@ extension MapViewController: MKMapViewDelegate {
 		} else if let view = view as? MapDepartmentAnnotationView {
 			mapView.deselectAnnotation(view.annotation, animated: false)
 			self.mapView.zoomIn(onCenterCoordinate: view.annotation!.coordinate,
-                          centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-10.0,
-                          heading: self.mapView.camera.heading)
+                                centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-10.0,
+                                heading: self.mapView.camera.heading)
 
 		} else if let view = view as? MapAmenityAnnotationView {
 			// Restaurants
@@ -911,24 +909,24 @@ extension MapViewController: MKMapViewDelegate {
 		}
 	}
 
-	/**
-	When the map region changes update view properties
-	*/
-	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-    debugPrint("MapViewController.regionDidChangeAnimated")
-    self.mapView.calculateCurrentAltitudeAndZoomLevel()
+    /**
+     When the map region changes update view properties
+     */
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        self.mapView.calculateCurrentAltitudeAndZoomLevel()
 
-    // Keep map in view
-    if !floorSelectorViewController.userHeadingIsEnabled() {
-      self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
+        // Keep map in view
+        if !floorSelectorViewController.userHeadingIsEnabled() {
+            self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
+        }
     }
-	}
 
-	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
-	}
+    func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
+    }
 
-	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-	}
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+    }
+
 }
 
 // MARK: Floor Selector Delegate Methods
@@ -985,13 +983,11 @@ extension MapViewController: UIGestureRecognizerDelegate {
 	}
 
 	@objc func mapViewWasPinched(_ gesture: UIPinchGestureRecognizer) {
-    debugPrint("MapViewController.mapViewWasPinched")
 		floorSelectorViewController.disableUserHeading()
 		self.delegate?.mapWasPressed()
 	}
 
 	@objc func mapViewWasPanned(_ gesture: UIPanGestureRecognizer) {
-    debugPrint("MapViewController.mapViewWasPanned")
 		floorSelectorViewController.disableUserHeading()
 		self.delegate?.mapWasPressed()
 	}
@@ -1013,7 +1009,7 @@ extension MapViewController: CLLocationManagerDelegate {
 		if distanceFromCenterOfMuseum < Common.Location.minDistanceFromMuseumForLocation {
 			if floorSelectorViewController.userHeadingIsEnabled() {
 				mapView.zoomIn(onCenterCoordinate: location.coordinate,
-                       centerCoordinateDistance: mapView.camera.centerCoordinateDistance)
+                               centerCoordinateDistance: mapView.camera.centerCoordinateDistance)
 			}
 
 			// Update our floor if it is found
@@ -1126,86 +1122,86 @@ extension MapViewController: CLLocationManagerDelegate {
 // MARK: - Map floor selector accessors
 extension MapViewController {
 
-  func floorSelectorOrientationButtonPosition() -> CGPoint {
-    floorSelectorViewController.getOrientationButtonPosition()
-  }
+    func floorSelectorOrientationButtonPosition() -> CGPoint {
+        floorSelectorViewController.getOrientationButtonPosition()
+    }
 
-  func floorSelectorFloorButtonPosition(at floor: Int) -> CGPoint {
-    floorSelectorViewController.getFloorButtonPosition(floorNumber: floor)
-  }
-
-}
-
-// MARK: - Private - Setups
-private extension MapViewController {
-
-  func addMapGesturesForContinuousUpdates() {
-    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPinched(_:)))
-    pinchGesture.delegate = self
-
-    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPanned(_:)))
-    panGesture.delegate = self
-
-    mapView.addGestureRecognizer(pinchGesture)
-    mapView.addGestureRecognizer(panGesture)
-  }
+    func floorSelectorFloorButtonPosition(at floor: Int) -> CGPoint {
+        floorSelectorViewController.getFloorButtonPosition(floorNumber: floor)
+    }
 
 }
 
 // MARK: - Private - Setups
 private extension MapViewController {
 
-  func setup() {
-    setupSubviews()
-    setupDelegates()
-    setMapBackgroundOverlay()
-    setMapCamerainItialStateforFirstAnimation()
-    updateMapForModeChange()
-    setupDefaultFloorSelection()
-    setupMapUpdateTimer()
-    addMapGesturesForContinuousUpdates()
-  }
+    func addMapGesturesForContinuousUpdates() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPinched(_:)))
+        pinchGesture.delegate = self
 
-  func setupSubviews() {
-    view.addSubview(mapView)
-    view.addSubview(floorSelectorViewController.view)
-  }
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPanned(_:)))
+        panGesture.delegate = self
 
-  func setupDelegates() {
-    mapView.delegate = self
-    floorSelectorViewController.delegate = self
-  }
+        mapView.addGestureRecognizer(pinchGesture)
+        mapView.addGestureRecognizer(panGesture)
+    }
 
-  func setupDefaultFloorSelection() {
-    setCurrentFloor(forFloorNum: Common.Map.startFloor)
-  }
+}
 
-  func setupMapUpdateTimer() {
-    Timer.scheduledTimer(timeInterval: 1.0/20.0,
-                         target: self,
-                         selector: #selector(MapViewController.updateMapWithTimer),
-                         userInfo: nil,
-                         repeats: true)
-  }
+// MARK: - Private - Setups
+private extension MapViewController {
 
-  func setMapBackgroundOverlay() {
-    mapView.addOverlay(mapViewHideBackgroundOverlay, level: .aboveRoads)
-  }
+    func setup() {
+        setupSubviews()
+        setupDelegates()
+        setMapBackgroundOverlay()
+        setMapCamerainItialStateforFirstAnimation()
+        updateMapForModeChange()
+        setupDefaultFloorSelection()
+        setupMapUpdateTimer()
+        addMapGesturesForContinuousUpdates()
+    }
 
-  /// Set Camera initial state for first animation when you open the map
-  func setMapCamerainItialStateforFirstAnimation() {
-    mapView.camera.heading = 0
-    mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
-    mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
-    mapView.camera.pitch = mapView.perspectivePitch
-  }
+    func setupSubviews() {
+        view.addSubview(mapView)
+        view.addSubview(floorSelectorViewController.view)
+    }
 
-  func setupNavigationItemTitle() {
-    navigationItem.title = Common.Sections[.map]?.title
-  }
+    func setupDelegates() {
+        mapView.delegate = self
+        floorSelectorViewController.delegate = self
+    }
 
-  func logAnalytics() {
-    AICAnalytics.trackScreenView("Map", screenClass: "MapViewController")
-  }
+    func setupDefaultFloorSelection() {
+        setCurrentFloor(forFloorNum: Common.Map.startFloor)
+    }
+
+    func setupMapUpdateTimer() {
+        Timer.scheduledTimer(timeInterval: 1.0/20.0,
+                             target: self,
+                             selector: #selector(MapViewController.updateMapWithTimer),
+                             userInfo: nil,
+                             repeats: true)
+    }
+
+    func setMapBackgroundOverlay() {
+        mapView.addOverlay(mapViewHideBackgroundOverlay, level: .aboveRoads)
+    }
+
+    /// Set Camera initial state for first animation when you open the map
+    func setMapCamerainItialStateforFirstAnimation() {
+        mapView.camera.heading = 0
+        mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+        mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
+        mapView.camera.pitch = mapView.perspectivePitch
+    }
+
+    func setupNavigationItemTitle() {
+        navigationItem.title = Common.Sections[.map]?.title
+    }
+
+    func logAnalytics() {
+        AICAnalytics.trackScreenView("Map", screenClass: "MapViewController")
+    }
 
 }

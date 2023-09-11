@@ -67,6 +67,5 @@ class MapTextAnnotationView: MapAnnotationView {
 		addSubview(label)
 
 		label.frame.origin = CGPoint(x: -label.bounds.width/2, y: -label.bounds.height/2)
-		//self.frame.size = label.frame.size
 	}
 }

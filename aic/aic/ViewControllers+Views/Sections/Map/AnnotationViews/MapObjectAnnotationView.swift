@@ -75,13 +75,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 		// Configure
 		backgroundColor = .clear
 		layer.zPosition = Common.Map.AnnotationZPosition.objectsDeselected.rawValue + CGFloat(objectAnnotation.floor)
-
-		//        self.layer.masksToBounds = false
-		//        self.layer.shadowOffset = CGSizeMake(0, 0)
-		//        self.layer.shadowRadius = 5
-		//        self.layer.shadowOpacity = 0.5
-		self.layer.drawsAsynchronously = true
-		//self.layer.shouldRasterize = true
+		layer.drawsAsynchronously = true
 
 		backgroundView.frame = CGRect(x: 0, y: 0, width: thumbHolderShrunkWidth, height: thumbHolderHeight)
 		backgroundView.layer.cornerRadius = thumbHolderShrunkWidth/2
