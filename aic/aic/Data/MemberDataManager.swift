@@ -64,7 +64,7 @@ class MemberDataManager {
 		SOAPRequest +=      "</soapenv:Body>\n"
 		SOAPRequest +=      "</soapenv:Envelope>"
 
-		var request = URLRequest(url: URL(string: Common.DataConstants.memberCardSOAPRequestURL)!)
+		var request = URLRequest(url: URL(string: Common.Constants.memberCardSOAPRequestURL)!)
 		request.addValue("urn:xmethods-delayed-quotes#member_soap_retrieve", forHTTPHeaderField: "SOAPAction")
 		request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
 		request.addValue("\(SOAPRequest.count)", forHTTPHeaderField: "Content-Length")

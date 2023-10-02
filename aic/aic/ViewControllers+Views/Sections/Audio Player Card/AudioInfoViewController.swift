@@ -200,22 +200,6 @@ class AudioInfoViewController: UIViewController {
 	private func setImage(imageURL: URL) {
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: imageURL)
-		//		imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
-		//            // calculate image dimension to adjust height of imageview
-		//            if let _ = image {
-		//                let imageAspectRatio = image!.size.width / image!.size.height
-		//                let viewAspectRatio = self.imageView.frame.width / self.imageViewHeight!.constant
-		//
-		//                if imageAspectRatio > viewAspectRatio {
-		//                    self.imageViewHeight!.constant = self.imageView.frame.width * (image!.size.height / image!.size.width)
-		//                }
-		//                else {
-		//                    self.imageViewHeight!.constant = self.imageMaxHeight
-		//                }
-		//
-		//				self.updateLayout()
-		//            }
-		//        }
 		updateLayout()
 	}
 

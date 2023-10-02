@@ -10,6 +10,8 @@ https://stackoverflow.com/questions/19572377/how-to-show-map-scale-during-zoom-o
 import MapKit
 
 class MapView: MKMapView {
+    private var allowSelectionChanges = true
+
 	var floorplanOverlay: FloorplanOverlay? = nil {
 		didSet {
 			if let previousOverlay = oldValue {
@@ -41,7 +43,12 @@ class MapView: MKMapView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 
-		self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        self.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: UIScreen.main.bounds.width,
+            height: UIScreen.main.bounds.height
+        )
         setup()
 	}
 
@@ -53,6 +60,35 @@ class MapView: MKMapView {
 		super.layoutSubviews()
 		calculateStartingHeight()
 	}
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return allowSelectionChanges
+    }
+
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let pointInside = super.point(inside: point, with: event)
+
+        if pointInside {
+            // Go through all annotations in the visible map rect
+            for annotation in annotations(in: visibleMapRect) where annotation is MKAnnotation {
+                // get the view of each annotation
+                if let view: MKAnnotationView = view(for: annotation as! MKAnnotation) {
+                    if let tappedView = view.viewWithTag(MapObjectAnnotationView.playButtonTag) {
+                        let pointInTappedViewCoordinateSpace = tappedView.convert(point, from: coordinateSpace)
+
+                        if CGRectContainsPoint(tappedView.bounds, pointInTappedViewCoordinateSpace) {
+                            allowSelectionChanges = false
+                            return pointInside
+                        }
+                    }
+                }
+            }
+
+            allowSelectionChanges = true
+        }
+
+        return pointInside
+    }
 
 	func getAnnotations(filteredBy annotationsToFilterOut: [MKAnnotation]) -> [MKAnnotation] {
 		return annotations.filter({
@@ -176,8 +212,6 @@ class MapView: MKMapView {
 				}
 			}
 		}
-
-//    debugPrint("CAMERA ALTITUDE: \(camera.centerCoordinateDistance) currentAltitude: \(currentAltitude) previousAltitude: \(previousAltitude)")
 	}
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PureLayout
 
 @objc protocol CardNavigationControllerDelegate: AnyObject {
 	@objc optional func cardDidUpdatePosition(cardVC: CardNavigationController, position: CGPoint)

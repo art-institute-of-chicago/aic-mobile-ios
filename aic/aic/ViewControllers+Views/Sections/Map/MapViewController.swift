@@ -815,13 +815,13 @@ extension MapViewController: MKMapViewDelegate {
             var objectAnnotationView: MapObjectAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView
 
             if objectAnnotationView == nil  {
-                objectAnnotationView = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: MapObjectAnnotationView.reuseIdentifier)
-                objectAnnotationView?.delegate = self
-
-            } else {
-                objectAnnotationView?.delegate = self
-                objectAnnotationView?.setAnnotation(forObjectAnnotation: objectAnnotation)
+                objectAnnotationView = MapObjectAnnotationView(
+                    annotation: objectAnnotation,
+                    reuseIdentifier: MapObjectAnnotationView.reuseIdentifier
+                )
             }
+
+            objectAnnotationView?.delegate = self
 
 			if displayPointOfInterest == .tour {
                 objectAnnotationView?.setMode(mode: .image, inTour: true)
@@ -861,7 +861,6 @@ extension MapViewController: MKMapViewDelegate {
 	*/
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 		if let view = view as? MapObjectAnnotationView {
-
 			// Switch to the floor for this object
 			let annotation = view.annotation as! MapObjectAnnotation
 
@@ -964,7 +963,7 @@ extension MapViewController: MapFloorSelectorViewControllerDelegate {
 // MARK: - MapObjectAnnotationViewDelegate
 extension MapViewController: MapObjectAnnotationViewDelegate {
 
-  func mapObjectAnnotationViewPlayPressed(_ annotationView: MapObjectAnnotationView) {
+  func mapObjectAnnotationViewDidPressPlay(_ annotationView: MapObjectAnnotationView) {
     guard let annotation = annotationView.annotation as? MapObjectAnnotation,
           let objectId = annotation.nid,
           let object = AppDataManager.sharedInstance.getObject(forID: objectId) else { return }

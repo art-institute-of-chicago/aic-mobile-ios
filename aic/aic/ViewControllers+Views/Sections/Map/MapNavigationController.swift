@@ -682,11 +682,18 @@ extension MapNavigationController: MapViewControllerDelegate {
 			if let tour = tourModel {
 				if let stopIndex = tour.getIndex(forStopObject: artwork) {
 					let tourStop = tour.stops[stopIndex]
-					self.sectionDelegate?.mapDidSelectPlayAudioForTourStop(tourStop: tourStop, tour: tourModel!, language: tour.language)
+                    sectionDelegate?.mapDidSelectPlayAudioForTourStop(
+                        tourStop: tourStop,
+                        tour: tourModel!,
+                        language: tour.language
+                    )
 				}
 			}
 		} else {
-			self.sectionDelegate?.mapDidSelectPlayAudioForArtwork(artwork: artwork, isFromSearchIcon: currentMode == .artwork)
+            sectionDelegate?.mapDidSelectPlayAudioForArtwork(
+                artwork: artwork,
+                isFromSearchIcon: currentMode == .artwork
+            )
 		}
 	}
 

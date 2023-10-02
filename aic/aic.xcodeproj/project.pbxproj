@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -150,6 +150,7 @@
 		3099149B23A8385E00E32ACE /* InfoBuyTicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */; };
 		E20B1C0829D525A90095E59C /* MapPointOfInterestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */; };
 		E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */; };
+		E276C4012AC5909B007A5917 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E276C4002AC5909B007A5917 /* PureLayout */; };
 		E28F3AFA29B96E6A00C03BFD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */; };
 		E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */; };
 		E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */; };
@@ -158,7 +159,6 @@
 		E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0529BAC16C00C03BFD /* SWXMLHash */; };
 		E28F3B0929BAC1DA00C03BFD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0829BAC1DA00C03BFD /* Alamofire */; };
 		E28F3B0C29BAC1F900C03BFD /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */; };
-		E28F3B0F29BAC27200C03BFD /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0E29BAC27200C03BFD /* PureLayout */; };
 		E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1129BAC28E00C03BFD /* Atributika */; };
 		E28F3B1529BAC33300C03BFD /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1429BAC33300C03BFD /* Localize_Swift */; };
 		E2C72F0829C3EFA30021F1EC /* UIViewController+ChildTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */; };
@@ -484,9 +484,9 @@
 				E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */,
 				E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */,
 				E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */,
-				E28F3B0F29BAC27200C03BFD /* PureLayout in Frameworks */,
 				E43F36741D2B0E3600DA4DA6 /* AddressBook.framework in Frameworks */,
 				E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */,
+				E276C4012AC5909B007A5917 /* PureLayout in Frameworks */,
 				E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */,
 				E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */,
 				E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */,
@@ -1136,9 +1136,9 @@
 				E28F3B0529BAC16C00C03BFD /* SWXMLHash */,
 				E28F3B0829BAC1DA00C03BFD /* Alamofire */,
 				E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */,
-				E28F3B0E29BAC27200C03BFD /* PureLayout */,
 				E28F3B1129BAC28E00C03BFD /* Atributika */,
 				E28F3B1429BAC33300C03BFD /* Localize_Swift */,
+				E276C4002AC5909B007A5917 /* PureLayout */,
 			);
 			productName = aic;
 			productReference = E40D41C91C6CEBB700A57AF4 /* aic.app */;
@@ -1238,9 +1238,9 @@
 				E28F3B0429BAC16C00C03BFD /* XCRemoteSwiftPackageReference "SWXMLHash" */,
 				E28F3B0729BAC1DA00C03BFD /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */,
 				E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */,
 				E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+				E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */,
 			);
 			productRefGroup = E40D41CA1C6CEBB700A57AF4 /* Products */;
 			projectDirPath = "";
@@ -1756,7 +1756,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
@@ -1805,7 +1805,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2001,7 +2001,7 @@
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2129,6 +2129,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.9;
+			};
+		};
 		E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -2142,7 +2150,7 @@
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.9.1;
 			};
 		};
 		E28F3B0429BAC16C00C03BFD /* XCRemoteSwiftPackageReference "SWXMLHash" */ = {
@@ -2150,7 +2158,7 @@
 			repositoryURL = "https://github.com/drmohundro/SWXMLHash.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.0.2;
 			};
 		};
 		E28F3B0729BAC1DA00C03BFD /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -2158,7 +2166,7 @@
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.8.0;
 			};
 		};
 		E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -2166,15 +2174,7 @@
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 5.0.1;
 			};
 		};
 		E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */ = {
@@ -2182,7 +2182,7 @@
 			repositoryURL = "https://github.com/psharanda/Atributika.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 4.10.1;
 			};
 		};
 		E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
@@ -2190,12 +2190,17 @@
 			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 3.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E276C4002AC5909B007A5917 /* PureLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */;
+			productName = PureLayout;
+		};
 		E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -2235,11 +2240,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
-		};
-		E28F3B0E29BAC27200C03BFD /* PureLayout */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */;
-			productName = PureLayout;
 		};
 		E28F3B1129BAC28E00C03BFD /* Atributika */ = {
 			isa = XCSwiftPackageProductDependency;

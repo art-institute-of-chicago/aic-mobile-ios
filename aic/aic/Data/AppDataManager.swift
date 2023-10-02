@@ -71,15 +71,15 @@ class AppDataManager {
 				if let dataConstants = config["DataConstants"] as! [String: Any]? {
 
 					if let appDataJSON = dataConstants["appDataJSON"] {
-						Common.DataConstants.appDataJSON = appDataJSON as! String
+						Common.Constants.appDataJSON = appDataJSON as! String
 					}
 
 					if let memberCardSOAPRequestURL = dataConstants["memberCardSOAPRequestURL"] as? String {
-						Common.DataConstants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
+						Common.Constants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
 					}
 
 					if let ignoreOverrideImageCrop = dataConstants["ignoreOverrideImageCrop"] {
-						Common.DataConstants.ignoreOverrideImageCrop = ignoreOverrideImageCrop as! Bool
+						Common.Constants.ignoreOverrideImageCrop = ignoreOverrideImageCrop as! Bool
 					}
 
 				}
@@ -95,7 +95,7 @@ class AppDataManager {
 		appData = nil
 		mapFloorURLs = [:]
 		numberMapFloorsLoaded = 0
-		lastModifiedStringsMatch(atURL: Common.DataConstants.appDataJSON,
+		lastModifiedStringsMatch(atURL: Common.Constants.appDataJSON,
                              userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey) { stringsMatch in
 			if !stringsMatch || downloadDataEvenIfCached {
 				//Try to download new app data
@@ -106,7 +106,7 @@ class AppDataManager {
 			} else {
 				//If the appData json that is on disk is the same as
 				//the server provided json then just use our local data
-				self.appData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename)
+				self.appData = self.loadFromDisk(fileName: Common.Constants.localAppDataFilename)
 
 				//We have good cached app data, continue on
 				self.loadAppData()
@@ -119,7 +119,7 @@ class AppDataManager {
 
 	private func downloadAppData() {
 		// App Data
-		AF.request(Common.DataConstants.appDataJSON)
+		AF.request(Common.Constants.appDataJSON)
 			.validate()
 			.responseData { response in
 				if self.loadFailure == false {
@@ -134,11 +134,11 @@ class AppDataManager {
 							self.writeDataToDisk(data: value,
 												 lastModifiedString: lastModifiedString,
 												 lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey,
-												 fileName: Common.DataConstants.localAppDataFilename)
+												 fileName: Common.Constants.localAppDataFilename)
 						}
 					case .failure:
 						// Load cached app data from disk
-						self.appData = self.loadFromDisk(fileName: Common.DataConstants.localAppDataFilename)
+						self.appData = self.loadFromDisk(fileName: Common.Constants.localAppDataFilename)
 					}
 
 					self.loadAppData()
@@ -371,10 +371,10 @@ class AppDataManager {
 	private func updateDownloadProgress() {
 		DispatchQueue.main.async {
 			self.dataFilesRetrieved = self.dataFilesRetrieved + 1
-			self.pctComplete = Float(self.dataFilesRetrieved) / Float(Common.DataConstants.totalDataFeeds)
+			self.pctComplete = Float(self.dataFilesRetrieved) / Float(Common.Constants.totalDataFeeds)
 			self.delegate?.downloadProgress(withPctCompleted: self.pctComplete)
 
-			if self.dataFilesRetrieved == Common.DataConstants.totalDataFeeds {
+			if self.dataFilesRetrieved == Common.Constants.totalDataFeeds {
 				// We're finished
 				self.delegate?.didFinishLoadingData?()
 			}
