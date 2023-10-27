@@ -45,31 +45,14 @@ class ArtworkContentCell: UITableViewCell {
 				return
 			}
 
-			var accessibilityItems: [Any] = [
-				showOnMapButton
-				]
-				.compactMap { $0 }
-
-			// Image
 			artworkImageView.kf.indicatorType = .activity
-			artworkImageView.kf.setImage(with: artworkModel.imageUrl, placeholder: nil, options: nil, progressBlock: nil) { (_) in
-				// calculate image dimension to adjust height of imageview
-				//				if let _ = image {
-				//					let imageAspectRatio = image!.size.width / image!.size.height
-				//					let viewAspectRatio = self.artworkImageView.frame.width / self.artworkImageHeight.constant
-				//
-				//					if imageAspectRatio > viewAspectRatio {
-				//						UIView.animate(withDuration: 0.3, animations: {
-				//							self.artworkImageHeight.constant =  self.artworkImageView.frame.width * (image!.size.height / image!.size.width)
-				//							self.setNeedsLayout()
-				//							self.layoutIfNeeded()
-				//							self.layoutSubviews()
-				//						})
-				//					}
-				//				}
-			}
+            artworkImageView.kf.setImage(with: artworkModel.imageUrl) { _ in }
 
-			artistDisplayLabel.attributedText = attributedStringWithLineHeight(text: artworkModel.artistDisplay, font: .aicTextFont, lineHeight: 22)
+            artistDisplayLabel.attributedText = attributedStringWithLineHeight(
+                text: artworkModel.artistDisplay,
+                font: .aicTextFont,
+                lineHeight: 22
+            )
 			artistDisplayLabel.textColor = .white
 			artistDisplayLabel.font = .aicTextFont
 
@@ -79,6 +62,8 @@ class ArtworkContentCell: UITableViewCell {
 
 			descriptionLabel.text = ""
 			descriptionLabel.font = .aicTextFont
+
+            var accessibilityItems: [Any] = [showOnMapButton].compactMap { $0 }
 
 			if let _ = artworkModel.audioObject, let playAudioButton = playAudioButton {
 				accessibilityItems.append(playAudioButton)
@@ -91,14 +76,13 @@ class ArtworkContentCell: UITableViewCell {
 			}
 
 			// Accessibility
-			accessibilityItems.append(
-				contentsOf: [
-					artistDisplayLabel,
-					galleryTitleLabel,
-					descriptionLabel
-					]
-					.compactMap { $0 }
-			)
+            let accessibilityContents = [
+                artistDisplayLabel,
+                galleryTitleLabel,
+                descriptionLabel
+            ].compactMap { $0 }
+            
+			accessibilityItems.append(contentsOf: accessibilityContents)
 			self.accessibilityElements = accessibilityItems
 		}
 	}

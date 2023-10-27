@@ -1756,7 +1756,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
@@ -1805,7 +1805,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2001,7 +2001,7 @@
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (

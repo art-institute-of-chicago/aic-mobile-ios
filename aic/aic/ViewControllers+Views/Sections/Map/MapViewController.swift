@@ -764,97 +764,125 @@ extension MapViewController: MKMapViewDelegate {
 	This function sets the view when an annotation is added to the map.
 	It tries to re-use existing views where available
 	*/
-	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		// Department Annotations
-		if let departmentAnnotation = annotation as? MapDepartmentAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapDepartmentAnnotationView.reuseIdentifier) as? MapDepartmentAnnotationView else {
-				let view = MapDepartmentAnnotationView(annotation: departmentAnnotation, reuseIdentifier: MapDepartmentAnnotationView.reuseIdentifier)
-				return view
-			}
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // Department Annotations
+        if let departmentAnnotation = annotation as? MapDepartmentAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: MapDepartmentAnnotationView.reuseIdentifier
+            ) as? MapDepartmentAnnotationView else {
+                let view = MapDepartmentAnnotationView(
+                    annotation: departmentAnnotation,
+                    reuseIdentifier: MapDepartmentAnnotationView.reuseIdentifier
+                )
+                return view
+            }
 
-			view.setAnnotation(forDepartmentAnnotation: departmentAnnotation)
-			return view
-		}
+            view.setAnnotation(forDepartmentAnnotation: departmentAnnotation)
+            return view
+        }
 
-		// Image Annotations
-		if let imageAnnotation = annotation as? MapImageAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.identifier) else {
-				let view = MKAnnotationView(annotation: imageAnnotation, reuseIdentifier: imageAnnotation.identifier)
-				view.image = imageAnnotation.image
-				return view
-			}
+        // Image Annotations
+        if let imageAnnotation = annotation as? MapImageAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.identifier) else {
+                let view = MKAnnotationView(
+                    annotation: imageAnnotation,
+                    reuseIdentifier: imageAnnotation.identifier
+                )
+                view.image = imageAnnotation.image
+                return view
+            }
 
-			return view
-		}
+            return view
+        }
 
-		// Amenity annotation
-		if let amenityAnnotation = annotation as? MapAmenityAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: amenityAnnotation.type.rawValue) as? MapAmenityAnnotationView else {
-				let view = MapAmenityAnnotationView(annotation: amenityAnnotation, reuseIdentifier: amenityAnnotation.type.rawValue)
-				return view
-			}
+        // Amenity annotation
+        if let amenityAnnotation = annotation as? MapAmenityAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: amenityAnnotation.type.rawValue
+            ) as? MapAmenityAnnotationView else {
+                let view = MapAmenityAnnotationView(
+                    annotation: amenityAnnotation,
+                    reuseIdentifier: amenityAnnotation.type.rawValue
+                )
+                return view
+            }
 
-			view.annotation = amenityAnnotation
-			return view
-		}
+            view.annotation = amenityAnnotation
+            return view
+        }
 
-		// Text annotations
-		if let textAnnotation = annotation as? MapTextAnnotation {
-            var view: MapTextAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: textAnnotation.type.rawValue) as? MapTextAnnotationView
-			if view == nil {
-				view = MapTextAnnotationView(annotation: textAnnotation, reuseIdentifier: textAnnotation.type.rawValue)
-			}
-
-			// Update the view
-			view?.setAnnotation(forMapTextAnnotation: textAnnotation)
-			return view
-		}
-
-		// Object annotations
-		if let objectAnnotation = annotation as? MapObjectAnnotation {
-            var objectAnnotationView: MapObjectAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView
-
-            if objectAnnotationView == nil  {
-                objectAnnotationView = MapObjectAnnotationView(
-                    annotation: objectAnnotation,
-                    reuseIdentifier: MapObjectAnnotationView.reuseIdentifier
+        // Text annotations
+        if let textAnnotation = annotation as? MapTextAnnotation {
+            var view: MapTextAnnotationView? = mapView.dequeueReusableAnnotationView(
+                withIdentifier: textAnnotation.type.rawValue
+            ) as? MapTextAnnotationView
+            if view == nil {
+                view = MapTextAnnotationView(
+                    annotation: textAnnotation,
+                    reuseIdentifier: textAnnotation.type.rawValue
                 )
             }
 
-            objectAnnotationView?.delegate = self
+            // Update the view
+            view?.setAnnotation(forMapTextAnnotation: textAnnotation)
+            return view
+        }
 
-			if displayPointOfInterest == .tour {
-                objectAnnotationView?.setMode(mode: .image, inTour: true)
-                objectAnnotationView?.setTourStopNumber(number: objectAnnotation.tourStopOrder)
-			}
+        // Object annotations
+        if let objectAnnotation = annotation as? MapObjectAnnotation {
+            // TODO: Commenting this out as a temporary fix to bug where some tour stops disappear at times
+            //            if let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView {
+            //                view.delegate = self
+            //                view.setAnnotation(forObjectAnnotation: objectAnnotation)
+            //                return view
+            //            }
 
-			return objectAnnotationView
-		}
+            let view = MapObjectAnnotationView(
+                annotation: objectAnnotation,
+                reuseIdentifier: MapObjectAnnotationView.reuseIdentifier
+            )
+            if displayPointOfInterest == .tour {
+                view.setMode(mode: .image, inTour: true)
+                view.setTourStopNumber(number: objectAnnotation.tourStopOrder)
+            }
+            view.delegate = self
+            return view
+        }
 
-		// Exhibition annotations
-		if let exhibitionAnnotation = annotation as? MapExhibitionAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapExhibitionAnnotationView.reuseIdentifier) as? MapExhibitionAnnotationView else {
-				let view = MapExhibitionAnnotationView(annotation: exhibitionAnnotation, reuseIdentifier: MapExhibitionAnnotationView.reuseIdentifier)
-				view.exhibitionModel = exhibitionAnnotation.exhibitionModel
-				return view
-			}
-			view.exhibitionModel = exhibitionAnnotation.exhibitionModel
-			return view
-		}
+        // Exhibition annotations
+        if let exhibitionAnnotation = annotation as? MapExhibitionAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: MapExhibitionAnnotationView.reuseIdentifier
+            ) as? MapExhibitionAnnotationView else {
+                let view = MapExhibitionAnnotationView(
+                    annotation: exhibitionAnnotation,
+                    reuseIdentifier: MapExhibitionAnnotationView.reuseIdentifier
+                )
+                view.exhibitionModel = exhibitionAnnotation.exhibitionModel
+                return view
+            }
+            view.exhibitionModel = exhibitionAnnotation.exhibitionModel
+            return view
+        }
 
-		// Location (News Item) annotations
-		if let locationAnnotation = annotation as? MapLocationAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapLocationAnnotationView.reuseIdentifier) as? MapLocationAnnotationView else {
-				let view = MapLocationAnnotationView(annotation: annotation, reuseIdentifier: MapLocationAnnotationView.reuseIdentifier)
-				return view
-			}
+        // Location (News Item) annotations
+        if let locationAnnotation = annotation as? MapLocationAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: MapLocationAnnotationView.reuseIdentifier
+            ) as? MapLocationAnnotationView else {
+                let view = MapLocationAnnotationView(
+                    annotation: annotation,
+                    reuseIdentifier: MapLocationAnnotationView.reuseIdentifier
+                )
+                return view
+            }
 
-			view.annotation = locationAnnotation
-			return view
-		}
+            view.annotation = locationAnnotation
+            return view
+        }
 
-		return nil
-	}
+        return nil
+    }
 
 	/**
 	Annotation selected, set it's mode to .Selected
