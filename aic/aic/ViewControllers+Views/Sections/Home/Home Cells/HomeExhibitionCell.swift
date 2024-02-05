@@ -39,7 +39,7 @@ class HomeExhibitionCell: UICollectionViewCell {
 			// set up UI
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
-			throughDateTextView.attributedText = getAttributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 22)
+			throughDateTextView.attributedText = attributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 22)
 
 			// Accessibility
 			self.accessibilityElements = [

@@ -34,20 +34,26 @@ class SeeAllExhibitionCell: UICollectionViewCell {
 
 	var exhibitionModel: AICExhibitionModel? = nil {
 		didSet {
-			guard let exhibitionModel = self.exhibitionModel else {
-				return
-			}
+			guard let exhibitionModel else { return }
 
-			// set up UI
-			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
-			exhibitionTitleLabel.text = exhibitionModel.title
-			throughDateLabel.attributedText = getAttributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 18)
-
-			// Accessibility
-			self.isAccessibilityElement = true
-			self.accessibilityLabel = "Exhibition"
-			self.accessibilityValue = exhibitionTitleLabel.text! + ", " + throughDateLabel.text!
-			self.accessibilityTraits = .button
+            setupContent(exhibitionModel)
+            setupAccessibility()
 		}
 	}
+
+    private func setupContent(_ model: AICExhibitionModel) {
+        exhibitionImageView.kf.setImage(with: model.imageUrl)
+        exhibitionTitleLabel.text = model.title
+        throughDateLabel.attributedText = attributedStringWithLineHeight(
+            text: Common.Info.throughDateString(endDate: model.endDate),
+            font: .aicTextItalicFont,
+            lineHeight: 18
+        )
+    }
+    private func setupAccessibility() {
+        self.isAccessibilityElement = true
+        self.accessibilityLabel = "Exhibition"
+        self.accessibilityValue = exhibitionTitleLabel.text! + ", " + throughDateLabel.text!
+        self.accessibilityTraits = .button
+    }
 }

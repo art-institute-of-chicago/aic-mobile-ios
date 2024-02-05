@@ -53,7 +53,7 @@ class HomeTourCell: UICollectionViewCell {
 			// set up UI
 			tourImageView.kf.setImage(with: tourModel.imageUrl)
 			tourTitleLabel.text = self.tourModel!.title
-			shortDescriptionTextView.attributedText = getAttributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 22)
+			shortDescriptionTextView.attributedText = attributedStringWithLineHeight(text: self.tourModel!.shortDescription, font: .aicTextFont, lineHeight: 22)
 			stopsNumberLabel.text = "tour_stop_count"
 				.localizedFormat(arguments: "\(self.tourModel?.stops.count ?? 0)", using: "Base")
 

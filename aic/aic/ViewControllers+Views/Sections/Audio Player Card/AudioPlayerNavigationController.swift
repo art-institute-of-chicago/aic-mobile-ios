@@ -299,40 +299,50 @@ class AudioPlayerNavigationController: CardNavigationController {
 			// Make sure we're on the main thread for UI Updates (alert, timer, etc.)
 			DispatchQueue.main.async(execute: {
 				switch status {
-				case .failed, .cancelled:
-					self.showLoadError(forAudioFile: audioFile, coverImageURL: coverImageURL)
-					break
-
-				case .loaded:
-					// Create Audio Player
-					let playerItem = AVPlayerItem(asset: asset)
-					NotificationCenter.default.addObserver(self, selector: #selector(AudioPlayerNavigationController.audioPlayerDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
-
-					// Set the item as our player's current item
-					self.avPlayer.replaceCurrentItem(with: playerItem)
-
-					// Show the audio file
-					self.showAudioControls()
-
-					// Create NSTimer to check for audio update progress and update as needed
-					if self.audioProgressTimer == nil {
-						self.audioPlayerProgressTimer = Timer.scheduledTimer(timeInterval: 0.25,
-																			 target: self,
-																			 selector: #selector(AudioPlayerNavigationController.updateAudioPlayerProgress),
-																			 userInfo: nil,
-																			 repeats: true
+                case .failed,
+                        .cancelled:
+                    self.showLoadError(forAudioFile: audioFile, coverImageURL: coverImageURL)
+                    break
+                    
+                case .loaded:
+                    // Create Audio Player
+                    let playerItem = AVPlayerItem(asset: asset)
+                    NotificationCenter.default.addObserver(self, selector: #selector(AudioPlayerNavigationController.audioPlayerDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+                    
+                    // Set the item as our player's current item
+                    self.avPlayer.replaceCurrentItem(with: playerItem)
+                    
+                    // Show the audio file
+                    self.showAudioControls()
+                    
+                    // Create NSTimer to check for audio update progress and update as needed
+                    if self.audioProgressTimer == nil {
+                        self.audioPlayerProgressTimer = Timer.scheduledTimer(
+                            timeInterval: 0.25,
+                            target: self,
+                            selector: #selector(AudioPlayerNavigationController.updateAudioPlayerProgress),
+                            userInfo: nil,
+                            repeats: true
 						)
 					}
 
-					// Retrieve cover image
-					KingfisherManager.shared.retrieveImage(with: ImageResource(downloadURL: coverImageURL, cacheKey: coverImageURL.absoluteString), options: KingfisherManager.shared.defaultOptions, progressBlock: nil, completionHandler: { (result) in
+                    // Retrieve cover image
+                    let imageResource = KF.ImageResource(
+                        downloadURL: coverImageURL,
+                        cacheKey: coverImageURL.absoluteString
+                    )
+                    KingfisherManager.shared.retrieveImage(
+                        with: imageResource,
+                        options: KingfisherManager.shared.defaultOptions,
+                        progressBlock: nil
+                    ) { [weak self] result in
 						guard let result = try? result.get() else {
-							self.audioInfoVC.imageView.image = nil
+							self?.audioInfoVC.imageView.image = nil
 							return
 						}
 
-						self.setMediaInformation(image: result.image)
-					})
+						self?.setMediaInformation(image: result.image)
+					}
 
 					// Auto-play on load
 					if self.autoPlay == true {
@@ -376,10 +386,12 @@ class AudioPlayerNavigationController: CardNavigationController {
 		let alertView = UIAlertController(title: "audio_player_load_failure_title".localized(using: "MediaUI"), message: "audio_player_load_failure_body".localized(using: "MediaUI"), preferredStyle: .alert)
 
 		// Retry Action
-		alertView.addAction(UIAlertAction(title: "audio_player_load_failure_retry_action".localized(using: "MediaUI"), style: .default, handler: { (_) -> Void in
-			self.currentAudioFile = nil
-			_ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
-		}))
+        let localizedTitle = "audio_player_load_failure_try_again_action".localized(using: "MediaUI")
+        let retryAction = UIAlertAction(title: localizedTitle, style: .default) { _ in
+            self.currentAudioFile = nil
+            _ = self.load(audioFile: audioFile, coverImageURL: coverImageURL)
+        }
+        alertView.addAction(retryAction)
 
 		// Cancel Action
 		alertView.addAction(UIAlertAction(title: "global_cancel_action".localized(using: "Base"), style: .cancel, handler: { (_) -> Void in
@@ -561,20 +573,16 @@ class AudioPlayerNavigationController: CardNavigationController {
 
 	override func showFullscreen() {
 		super.showFullscreen()
-		self.view.backgroundColor = .aicDarkGrayColor
-		self.downArrowButton.alpha = 1.0
-		self.miniAudioPlayerView.alpha = 0.0
+		view.backgroundColor = .aicDarkGrayColor
+		downArrowButton.alpha = 1.0
+		miniAudioPlayerView.alpha = 0.0
 
 		// Accessibility
 		audioInfoVC.willMove(toParent: self)
-		self.view.addSubview(audioInfoVC.view)
+		view.addSubview(audioInfoVC.view)
 		audioInfoVC.didMove(toParent: self)
-		self.view.accessibilityElementsHidden = false
-		self.view.accessibilityElements = [
-			downArrowButton,
-			audioInfoVC.view
-			]
-			.compactMap { $0 }
+		view.accessibilityElementsHidden = false
+		view.accessibilityElements = [downArrowButton, audioInfoVC.view].compactMap { $0 }
 	}
 
 	override func showMiniPlayer() {
@@ -584,11 +592,9 @@ class AudioPlayerNavigationController: CardNavigationController {
 		}
 
 		// Accessibility
-		self.view.addSubview(miniAudioPlayerView)
-		self.view.accessibilityElementsHidden = false
-		self.view.accessibilityElements = [
-			miniAudioPlayerView
-		]
+		view.addSubview(miniAudioPlayerView)
+		view.accessibilityElementsHidden = false
+		view.accessibilityElements = [miniAudioPlayerView]
 	}
 
 	override func cardDidShowFullscreen() {

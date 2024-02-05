@@ -8,7 +8,6 @@
 
 import UIKit
 import Localize_Swift
-import PureLayout
 
 protocol InfoViewControllerDelegate: AnyObject {
 	func accessMemberCardButtonPressed()
@@ -46,7 +45,7 @@ class InfoViewController: SectionViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-    scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.contentInsetAdjustmentBehavior = .never
 		scrollView.backgroundColor = .aicInfoColor
 		scrollView.showsVerticalScrollIndicator = false
 		scrollView.delegate = self
@@ -75,60 +74,77 @@ class InfoViewController: SectionViewController {
 		scrollView.addSubview(footerView)
 
 		createViewConstraints()
-
-		// Language
-		NotificationCenter.default.addObserver(self, selector: #selector(updateLanguage), name: NSNotification.Name(LCLLanguageChangeNotification), object: nil)
+        registerLanguageUpdateObserver()
+        logAnalytics()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-		self.view.layoutIfNeeded()
-		self.scrollView.contentSize.width = self.view.frame.width
-		self.scrollView.contentSize.height = footerView.frame.origin.y + footerView.frame.height
+        self.view.layoutIfNeeded()
+        self.scrollView.contentSize.width = self.view.frame.width
+        self.scrollView.contentSize.height = footerView.frame.origin.y + footerView.frame.height
 
-		updateLanguage()
+        updateLanguage()
+    }
 
-		// Log analytics
-		AICAnalytics.trackScreenView("Information", screenClass: "InfoViewController")
+    private func logAnalytics() {
+        AICAnalytics.trackScreenView("Information", screenClass: "InfoViewController")
 	}
 
-	func createViewConstraints() {
-		scrollView.autoPinEdge(.top, to: .top, of: self.view)
-		scrollView.autoPinEdge(.leading, to: .leading, of: self.view)
-		scrollView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		scrollView.autoPinEdge(.bottom, to: .bottom, of: self.view, withOffset: -Common.Layout.tabBarHeight)
+    private func registerLanguageUpdateObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateLanguage),
+            name: NSNotification.Name(LCLLanguageChangeNotification),
+            object: nil
+        )
+    }
 
-		buyTicketsView.autoPinEdge(.top, to: .top, of: scrollView, withOffset: Common.Layout.navigationBarHeight)
-		buyTicketsView.autoPinEdge(.leading, to: .leading, of: self.view)
-		buyTicketsView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+	private func createViewConstraints() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-		becomeMemberView.autoPinEdge(.top, to: .bottom, of: buyTicketsView)
-		becomeMemberView.autoPinEdge(.leading, to: .leading, of: self.view)
-		becomeMemberView.autoPinEdge(.trailing, to: .trailing, of: self.view)
+        scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -Common.Layout.tabBarHeight).isActive = true
 
-		museumInfoButton.autoPinEdge(.top, to: .bottom, of: becomeMemberView)
-		museumInfoButton.autoPinEdge(.leading, to: .leading, of: self.view)
-		museumInfoButton.autoPinEdge(.trailing, to: .trailing, of: self.view)
+        buyTicketsView.translatesAutoresizingMaskIntoConstraints = false
+        buyTicketsView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: Common.Layout.navigationBarHeight).isActive = true
+        buyTicketsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        buyTicketsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
 
-		languageButton.autoPinEdge(.top, to: .bottom, of: museumInfoButton)
-		languageButton.autoPinEdge(.leading, to: .leading, of: self.view)
-		languageButton.autoPinEdge(.trailing, to: .trailing, of: self.view)
+        becomeMemberView.translatesAutoresizingMaskIntoConstraints = false
+        becomeMemberView.topAnchor.constraint(equalTo: buyTicketsView.bottomAnchor).isActive = true
+        becomeMemberView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        becomeMemberView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
 
-		locationButton.autoPinEdge(.top, to: .bottom, of: languageButton)
-		locationButton.autoPinEdge(.leading, to: .leading, of: self.view)
-		locationButton.autoPinEdge(.trailing, to: .trailing, of: self.view)
+        museumInfoButton.translatesAutoresizingMaskIntoConstraints = false
+        museumInfoButton.topAnchor.constraint(equalTo: becomeMemberView.bottomAnchor).isActive = true
+        museumInfoButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        museumInfoButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
 
-		footerView.autoPinEdge(.top, to: .bottom, of: locationButton, withOffset: footerTopMargin)
-		footerView.autoPinEdge(.leading, to: .leading, of: self.view)
-		footerView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		footerView.autoSetDimension(.height, toSize: 250)
-    footerView.setNeedsUpdateConstraints()
-    
-		whiteBackgroundView.autoPinEdge(.top, to: .top, of: self.view)
-		whiteBackgroundView.autoPinEdge(.leading, to: .leading, of: self.view)
-		whiteBackgroundView.autoPinEdge(.trailing, to: .trailing, of: self.view)
-		whiteBackgroundView.autoPinEdge(.bottom, to: .top, of: footerView)
+        languageButton.translatesAutoresizingMaskIntoConstraints = false
+        languageButton.topAnchor.constraint(equalTo: museumInfoButton.bottomAnchor).isActive = true
+        languageButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        languageButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+
+        locationButton.translatesAutoresizingMaskIntoConstraints = false
+        locationButton.topAnchor.constraint(equalTo: languageButton.bottomAnchor).isActive = true
+        locationButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        locationButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.topAnchor.constraint(equalTo: locationButton.bottomAnchor).isActive = true
+        footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        footerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        footerView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+
+        whiteBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        whiteBackgroundView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        whiteBackgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        whiteBackgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        whiteBackgroundView.bottomAnchor.constraint(equalTo: footerView.bottomAnchor).isActive = true
 	}
 
 	@objc func updateLanguage() {

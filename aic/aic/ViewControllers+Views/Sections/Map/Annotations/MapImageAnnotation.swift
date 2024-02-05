@@ -9,7 +9,6 @@ import Kingfisher
 
 class MapImageAnnotation: MapAnnotation {
 	var identifier: String
-
 	var image: UIImage?
 
 	init(coordinate: CLLocationCoordinate2D, imageUrl: URL) {

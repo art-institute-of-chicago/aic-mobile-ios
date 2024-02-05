@@ -10,6 +10,8 @@ https://stackoverflow.com/questions/19572377/how-to-show-map-scale-during-zoom-o
 import MapKit
 
 class MapView: MKMapView {
+    private var allowSelectionChanges = true
+
 	var floorplanOverlay: FloorplanOverlay? = nil {
 		didSet {
 			if let previousOverlay = oldValue {
@@ -41,8 +43,13 @@ class MapView: MKMapView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 
-		self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-    setup()
+        self.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: UIScreen.main.bounds.width,
+            height: UIScreen.main.bounds.height
+        )
+        setup()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -53,6 +60,35 @@ class MapView: MKMapView {
 		super.layoutSubviews()
 		calculateStartingHeight()
 	}
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return allowSelectionChanges
+    }
+
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let pointInside = super.point(inside: point, with: event)
+
+        if pointInside {
+            // Go through all annotations in the visible map rect
+            for annotation in annotations(in: visibleMapRect) where annotation is MKAnnotation {
+                // get the view of each annotation
+                if let view: MKAnnotationView = view(for: annotation as! MKAnnotation) {
+                    if let tappedView = view.viewWithTag(MapObjectAnnotationView.playButtonTag) {
+                        let pointInTappedViewCoordinateSpace = tappedView.convert(point, from: coordinateSpace)
+
+                        if CGRectContainsPoint(tappedView.bounds, pointInTappedViewCoordinateSpace) {
+                            allowSelectionChanges = false
+                            return pointInside
+                        }
+                    }
+                }
+            }
+
+            allowSelectionChanges = true
+        }
+
+        return pointInside
+    }
 
 	func getAnnotations(filteredBy annotationsToFilterOut: [MKAnnotation]) -> [MKAnnotation] {
 		return annotations.filter({
@@ -76,64 +112,64 @@ class MapView: MKMapView {
 		}
 	}
 
-	func showFullMap(useDefaultHeading: Bool = false,
-                   centerCoordinateDistance: Double = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue) {
-		if let overlay = floorplanOverlay {
-			let heading = useDefaultHeading ? defaultHeading : camera.heading
+    func showFullMap(useDefaultHeading: Bool = false,
+                     centerCoordinateDistance: Double = Common.Map.ZoomLevelAltitude.zoomDefault.rawValue) {
+        if let overlay = floorplanOverlay {
+            let heading = useDefaultHeading ? defaultHeading : camera.heading
 
-			let buildingRect = overlay.boundingMapRect
-			let userMapPoint = MKMapPoint(userLocation.coordinate)
-			var centerPoint = buildingRect.getCenter().coordinate // Common.Map.defaultLocation
+            let buildingRect = overlay.boundingMapRect
+            let userMapPoint = MKMapPoint(userLocation.coordinate)
+            var centerPoint = buildingRect.getCenter().coordinate // Common.Map.defaultLocation
 
-			let distanceFromBuildingCenter = userMapPoint.distance(to: buildingRect.getCenter())
-			if  distanceFromBuildingCenter < Common.Location.minDistanceFromMuseumForLocation {
-				centerPoint = userLocation.coordinate
-			}
+            let distanceFromBuildingCenter = userMapPoint.distance(to: buildingRect.getCenter())
+            if  distanceFromBuildingCenter < Common.Location.minDistanceFromMuseumForLocation {
+                centerPoint = userLocation.coordinate
+            }
 
-			zoomIn(onCenterCoordinate: centerPoint,
-             centerCoordinateDistance: centerCoordinateDistance,
-             withAnimation: true,
-             heading: heading)
-      debugPrint("MapView.showFullMap lat: \(centerPoint.latitude) long: \(centerPoint.longitude)")
-		}
-	}
+            zoomIn(onCenterCoordinate: centerPoint,
+                   centerCoordinateDistance: centerCoordinateDistance,
+                   withAnimation: true,
+                   heading: heading)
+            debugPrint("MapView.showFullMap lat: \(centerPoint.latitude) long: \(centerPoint.longitude)")
+        }
+    }
 
-  func zoomIn(onCenterCoordinate centerCoordinate: CLLocationCoordinate2D) {
-    zoomIn(onCenterCoordinate: centerCoordinate,
-           centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue,
-           heading: camera.heading)
-  }
+    func zoomIn(onCenterCoordinate centerCoordinate: CLLocationCoordinate2D) {
+        zoomIn(onCenterCoordinate: centerCoordinate,
+               centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue,
+               heading: camera.heading)
+    }
 
-	func zoomIn(onCenterCoordinate centerCoordinate: CLLocationCoordinate2D,
-              centerCoordinateDistance: Double,
-              withAnimation animated: Bool = true,
-              heading: Double? = nil,
-              pitch: CGFloat? = nil) {
-		let newCamera = MKMapCamera()
-		newCamera.centerCoordinate = centerCoordinate
-		newCamera.centerCoordinateDistance = centerCoordinateDistance
-    newCamera.heading = self.camera.heading
-    newCamera.pitch = self.camera.pitch
+    func zoomIn(onCenterCoordinate centerCoordinate: CLLocationCoordinate2D,
+                centerCoordinateDistance: Double,
+                withAnimation animated: Bool = true,
+                heading: Double? = nil,
+                pitch: CGFloat? = nil) {
+        let newCamera = MKMapCamera()
+        newCamera.centerCoordinate = centerCoordinate
+        newCamera.centerCoordinateDistance = centerCoordinateDistance
+        newCamera.heading = self.camera.heading
+        newCamera.pitch = self.camera.pitch
 
-		if let heading {
-			newCamera.heading = heading
-		}
+        if let heading {
+            newCamera.heading = heading
+        }
 
-		if let pitch {
-			newCamera.pitch = pitch
-		} else {
-			newCamera.pitch = perspectivePitch
-		}
+        if let pitch {
+            newCamera.pitch = pitch
+        } else {
+            newCamera.pitch = perspectivePitch
+        }
 
-		setCamera(newCamera, animated: animated)
-    debugPrint("MapView.\(newCamera.debugDescription)")
-	}
+        setCamera(newCamera, animated: animated)
+        debugPrint("MapView.\(newCamera.debugDescription)")
+    }
 
 	func keepMapInView(zoomLimit: Double) {
 		// Check altitude
 		if currentAltitude > zoomLimit {
 			showFullMap(centerCoordinateDistance: zoomLimit)
-      debugPrint("MapView.keepMapInView zoomLimit: \(zoomLimit)")
+            debugPrint("MapView.keepMapInView zoomLimit: \(zoomLimit)")
 		} else {
 			// Make sure our floorplan is on-screen
 			if let floorplanOverlay = floorplanOverlay {
@@ -142,10 +178,10 @@ class MapView: MKMapView {
 				let distanceFromBuildingCenter = cameraCenter.distance(to: buildingRect.getCenter())
 
 				if distanceFromBuildingCenter > Common.Location.minDistanceFromMuseumForLocation {
-					zoomIn(onCenterCoordinate: floorplanOverlay.coordinate,
-                 centerCoordinateDistance: camera.centerCoordinateDistance,
-                 heading: nil,
-                 pitch: camera.pitch)
+                    zoomIn(onCenterCoordinate: floorplanOverlay.coordinate,
+                           centerCoordinateDistance: camera.centerCoordinateDistance,
+                           heading: nil,
+                           pitch: camera.pitch)
 				}
 			}
 		}
@@ -176,27 +212,25 @@ class MapView: MKMapView {
 				}
 			}
 		}
-
-//    debugPrint("CAMERA ALTITUDE: \(camera.centerCoordinateDistance) currentAltitude: \(currentAltitude) previousAltitude: \(previousAltitude)")
 	}
 }
 
 // MARK: - Private - Setups
 private extension MapView {
-
-  func setup() {
-    mapType = .mutedStandard
-    userTrackingMode = .none
-    pointOfInterestFilter = .excludingAll
-
-    isZoomEnabled = true
-    isPitchEnabled = true
-    showsCompass = false
-    showsScale = false
-    showsTraffic = false
-    showsBuildings = false
-    showsUserLocation = true
-    tintColor = .white
-  }
-
+    
+    func setup() {
+        mapType = .mutedStandard
+        userTrackingMode = .none
+        pointOfInterestFilter = .excludingAll
+        
+        isZoomEnabled = true
+        isPitchEnabled = true
+        showsCompass = false
+        showsScale = false
+        showsTraffic = false
+        showsBuildings = false
+        showsUserLocation = true
+        tintColor = .white
+    }
+    
 }

@@ -79,10 +79,10 @@ extension RootViewController: AppDataManagerDelegate {
 	}
 
 	func downloadFailure(withMessage message: String) {
-		let message =  message + "\n\n\(Common.DataConstants.dataLoadFailureMessage)"
+		let message =  message + "\n\n\(Common.Constants.dataLoadFailureMessage)"
 
-		let alert = UIAlertController(title: Common.DataConstants.dataLoadFailureTitle, message: message, preferredStyle: .alert)
-		let action = UIAlertAction(title: Common.DataConstants.dataLoadFailureButtonTitle, style: .default, handler: { (_) in
+		let alert = UIAlertController(title: Common.Constants.dataLoadFailureTitle, message: message, preferredStyle: .alert)
+		let action = UIAlertAction(title: Common.Constants.dataLoadFailureButtonTitle, style: .default, handler: { (_) in
 			// Try to load the data again
 			AppDataManager.sharedInstance.load(forceAppDataDownload: true)
 		})

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -150,6 +150,8 @@
 		3099149B23A8385E00E32ACE /* InfoBuyTicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */; };
 		E20B1C0829D525A90095E59C /* MapPointOfInterestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */; };
 		E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */; };
+		E274012C2B70DF8B00CA4C71 /* LAContext+BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */; };
+		E276C4012AC5909B007A5917 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E276C4002AC5909B007A5917 /* PureLayout */; };
 		E28F3AFA29B96E6A00C03BFD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */; };
 		E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */; };
 		E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */; };
@@ -158,7 +160,6 @@
 		E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0529BAC16C00C03BFD /* SWXMLHash */; };
 		E28F3B0929BAC1DA00C03BFD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0829BAC1DA00C03BFD /* Alamofire */; };
 		E28F3B0C29BAC1F900C03BFD /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */; };
-		E28F3B0F29BAC27200C03BFD /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0E29BAC27200C03BFD /* PureLayout */; };
 		E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1129BAC28E00C03BFD /* Atributika */; };
 		E28F3B1529BAC33300C03BFD /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1429BAC33300C03BFD /* Localize_Swift */; };
 		E2C72F0829C3EFA30021F1EC /* UIViewController+ChildTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */; };
@@ -415,6 +416,7 @@
 		3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBuyTicketsView.swift; sourceTree = "<group>"; };
 		E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointOfInterestType.swift; sourceTree = "<group>"; };
 		E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
+		E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LAContext+BiometryType.swift"; sourceTree = "<group>"; };
 		E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ChildTransition.swift"; sourceTree = "<group>"; };
 		E2C72F0929C3FBB20021F1EC /* ContentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentState.swift; sourceTree = "<group>"; };
 		E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
@@ -484,9 +486,9 @@
 				E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */,
 				E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */,
 				E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */,
-				E28F3B0F29BAC27200C03BFD /* PureLayout in Frameworks */,
 				E43F36741D2B0E3600DA4DA6 /* AddressBook.framework in Frameworks */,
 				E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */,
+				E276C4012AC5909B007A5917 /* PureLayout in Frameworks */,
 				E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */,
 				E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */,
 				E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */,
@@ -864,6 +866,7 @@
 		E218869529C0037300803FF9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
 				E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */,
 				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
@@ -1136,9 +1139,9 @@
 				E28F3B0529BAC16C00C03BFD /* SWXMLHash */,
 				E28F3B0829BAC1DA00C03BFD /* Alamofire */,
 				E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */,
-				E28F3B0E29BAC27200C03BFD /* PureLayout */,
 				E28F3B1129BAC28E00C03BFD /* Atributika */,
 				E28F3B1429BAC33300C03BFD /* Localize_Swift */,
+				E276C4002AC5909B007A5917 /* PureLayout */,
 			);
 			productName = aic;
 			productReference = E40D41C91C6CEBB700A57AF4 /* aic.app */;
@@ -1238,9 +1241,9 @@
 				E28F3B0429BAC16C00C03BFD /* XCRemoteSwiftPackageReference "SWXMLHash" */,
 				E28F3B0729BAC1DA00C03BFD /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */,
 				E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */,
 				E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+				E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */,
 			);
 			productRefGroup = E40D41CA1C6CEBB700A57AF4 /* Products */;
 			projectDirPath = "";
@@ -1318,6 +1321,7 @@
 				05A2B2FB21024A780059C123 /* UILabelPadding.swift in Sources */,
 				294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */,
 				2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */,
+				E274012C2B70DF8B00CA4C71 /* LAContext+BiometryType.swift in Sources */,
 				294C0B50201A76F700F2ABB1 /* MapDepartmentAnnotationView.swift in Sources */,
 				295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */,
 				294C0B4C201A76F700F2ABB1 /* MapAmenityAnnotationView.swift in Sources */,
@@ -1627,310 +1631,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		E2A7545129D0F20A00C39463 /* Debug Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "";
-			};
-			name = "Debug Beta";
-		};
-		E2A7545229D0F20A00C39463 /* Debug Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
-				BUNDLE_ID_SUFFIX = .beta;
-				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 6CA8WK4597;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				GCC_UNROLL_LOOPS = NO;
-				INFOPLIST_FILE = aic/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
-				);
-				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.AICOfficialMobileApp${BUNDLE_ID_SUFFIX}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Debug Beta";
-		};
-		E2A7545329D0F20A00C39463 /* Debug Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 6CA8WK4597;
-				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aic.app/aic";
-			};
-			name = "Debug Beta";
-		};
-		E2A7545429D0F20A00C39463 /* Debug Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_TARGET_NAME = aic;
-				USES_XCTRUNNER = YES;
-			};
-			name = "Debug Beta";
-		};
-		E2A7545529D0F21000C39463 /* Release Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				USER_HEADER_SEARCH_PATHS = "";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release Beta";
-		};
-		E2A7545629D0F21000C39463 /* Release Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
-				BUNDLE_ID_SUFFIX = .beta;
-				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6CA8WK4597;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_UNROLL_LOOPS = NO;
-				INFOPLIST_FILE = aic/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
-				);
-				OTHER_SWIFT_FLAGS = "-DRELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.artic.AICOfficialMobileApp${BUNDLE_ID_SUFFIX}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = "aic-bridging-header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Release Beta";
-		};
-		E2A7545729D0F21000C39463 /* Release Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = 6CA8WK4597;
-				INFOPLIST_FILE = aicTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/aic.app/aic";
-			};
-			name = "Release Beta";
-		};
-		E2A7545829D0F21000C39463 /* Release Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = aicUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.potiondesign.aicUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_TARGET_NAME = aic;
-				USES_XCTRUNNER = YES;
-			};
-			name = "Release Beta";
-		};
 		E40D41F11C6CEBB700A57AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2058,10 +1758,12 @@
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2086,6 +1788,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Art Institute of Chicago Official Mobile App";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2104,9 +1807,11 @@
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2132,6 +1837,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Art Institute of Chicago Official Mobile App";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2299,8 +2005,9 @@
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2325,6 +2032,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "iPhone Distribution: Art Institute Chicago (6CA8WK4597)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Art Institute of Chicago Official Mobile App";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2386,9 +2094,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41F11C6CEBB700A57AF4 /* Debug */,
-				E2A7545129D0F20A00C39463 /* Debug Beta */,
 				E40D41F21C6CEBB700A57AF4 /* Release */,
-				E2A7545529D0F21000C39463 /* Release Beta */,
 				E415AB841C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2398,9 +2104,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41F41C6CEBB700A57AF4 /* Debug */,
-				E2A7545229D0F20A00C39463 /* Debug Beta */,
 				E40D41F51C6CEBB700A57AF4 /* Release */,
-				E2A7545629D0F21000C39463 /* Release Beta */,
 				E415AB851C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2410,9 +2114,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41F71C6CEBB700A57AF4 /* Debug */,
-				E2A7545329D0F20A00C39463 /* Debug Beta */,
 				E40D41F81C6CEBB700A57AF4 /* Release */,
-				E2A7545729D0F21000C39463 /* Release Beta */,
 				E415AB861C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2422,9 +2124,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40D41FA1C6CEBB700A57AF4 /* Debug */,
-				E2A7545429D0F20A00C39463 /* Debug Beta */,
 				E40D41FB1C6CEBB700A57AF4 /* Release */,
-				E2A7545829D0F21000C39463 /* Release Beta */,
 				E415AB871C72948E0093B719 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2433,6 +2133,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.9;
+			};
+		};
 		E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -2446,7 +2154,7 @@
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.9.1;
 			};
 		};
 		E28F3B0429BAC16C00C03BFD /* XCRemoteSwiftPackageReference "SWXMLHash" */ = {
@@ -2454,7 +2162,7 @@
 			repositoryURL = "https://github.com/drmohundro/SWXMLHash.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.0.2;
 			};
 		};
 		E28F3B0729BAC1DA00C03BFD /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -2462,7 +2170,7 @@
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.8.0;
 			};
 		};
 		E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -2470,15 +2178,7 @@
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 5.0.1;
 			};
 		};
 		E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */ = {
@@ -2486,7 +2186,7 @@
 			repositoryURL = "https://github.com/psharanda/Atributika.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 4.10.1;
 			};
 		};
 		E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
@@ -2494,12 +2194,17 @@
 			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 3.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E276C4002AC5909B007A5917 /* PureLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */;
+			productName = PureLayout;
+		};
 		E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -2539,11 +2244,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E28F3B0A29BAC1F900C03BFD /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
-		};
-		E28F3B0E29BAC27200C03BFD /* PureLayout */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E28F3B0D29BAC27200C03BFD /* XCRemoteSwiftPackageReference "PureLayout" */;
-			productName = PureLayout;
 		};
 		E28F3B1129BAC28E00C03BFD /* Atributika */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -71,7 +71,7 @@ class EventContentCell: UITableViewCell {
 			monthDayLabel.text = monthDayString
 			hoursMinutesLabel.text = hoursMinutesString
 			descriptionTextView.textColor = .white
-			locationAndDateLabel.attributedText = getAttributedStringWithLineHeight(text: locationAndDateString, font: .aicTextItalicFont, lineHeight: 22)
+			locationAndDateLabel.attributedText = attributedStringWithLineHeight(text: locationAndDateString, font: .aicTextItalicFont, lineHeight: 22)
 
 			let paragraphStyle = NSMutableParagraphStyle()
 			paragraphStyle.lineSpacing = 0.0

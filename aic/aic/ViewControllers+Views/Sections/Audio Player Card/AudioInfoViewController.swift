@@ -141,7 +141,7 @@ class AudioInfoViewController: UIViewController {
 		}
 		updateLanguage(language: audio.language)
 
-		transcriptView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: audio.transcript, font: .aicTextFont, lineHeight: 22)
+		transcriptView.bodyTextView.attributedText = attributedStringWithLineHeight(text: audio.transcript, font: .aicTextFont, lineHeight: 22)
 		transcriptView.bodyTextView.textColor = .white
 		transcriptView.show(collapseEnabled: true)
 
@@ -153,7 +153,7 @@ class AudioInfoViewController: UIViewController {
 		}
 
 		if creditsString.isEmpty == false {
-			creditsView.bodyTextView.attributedText = getAttributedStringWithLineHeight(text: creditsString, font: .aicTextFont, lineHeight: 22)
+			creditsView.bodyTextView.attributedText = attributedStringWithLineHeight(text: creditsString, font: .aicTextFont, lineHeight: 22)
 			creditsView.bodyTextView.textColor = .white
 			creditsView.show(collapseEnabled: true)
 		} else {
@@ -200,27 +200,11 @@ class AudioInfoViewController: UIViewController {
 	private func setImage(imageURL: URL) {
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(with: imageURL)
-		//		imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, imageURL in
-		//            // calculate image dimension to adjust height of imageview
-		//            if let _ = image {
-		//                let imageAspectRatio = image!.size.width / image!.size.height
-		//                let viewAspectRatio = self.imageView.frame.width / self.imageViewHeight!.constant
-		//
-		//                if imageAspectRatio > viewAspectRatio {
-		//                    self.imageViewHeight!.constant = self.imageView.frame.width * (image!.size.height / image!.size.width)
-		//                }
-		//                else {
-		//                    self.imageViewHeight!.constant = self.imageMaxHeight
-		//                }
-		//
-		//				self.updateLayout()
-		//            }
-		//        }
 		updateLayout()
 	}
 
 	private func setDescription(description: String) {
-		descriptionLabel.attributedText = getAttributedStringWithLineHeight(text: description, font: .aicTextFont, lineHeight: 22)
+		descriptionLabel.attributedText = attributedStringWithLineHeight(text: description, font: .aicTextFont, lineHeight: 22)
 	}
 
 	func reset() {

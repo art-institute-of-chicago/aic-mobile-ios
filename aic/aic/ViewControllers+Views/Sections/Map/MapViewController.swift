@@ -27,13 +27,13 @@ final class MapViewController: UIViewController {
 	private let mapModel = AppDataManager.sharedInstance.app.map
 
 	// Map View
-  private let mapView = MapView(frame: UIScreen.main.bounds)
-  private let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
-  private var zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+    private let mapView = MapView(frame: UIScreen.main.bounds)
+    private let mapViewHideBackgroundOverlay = HideBackgroundOverlay.hideBackgroundOverlay()
+    private var zoomLimitValue = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
 
-	// Floor Selector
-  private let floorSelectorMargin = CGPoint(x: 20, y: 20)
-  private var floorSelectorViewController = MapFloorSelectorViewController()
+    // Floor Selector
+    private let floorSelectorMargin = CGPoint(x: 20, y: 20)
+    private var floorSelectorViewController = MapFloorSelectorViewController()
 
 	private(set) var previousFloor = Common.Map.startFloor
 	private(set) var currentFloor = Common.Map.startFloor
@@ -42,22 +42,22 @@ final class MapViewController: UIViewController {
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
-    setupNavigationItemTitle()
+        setupNavigationItemTitle()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	override func viewDidLoad() {
-    super.viewDidLoad()
-    setup()
-	}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
+    }
 
-  override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-    logAnalytics()
-	}
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        logAnalytics()
+    }
 
 	// MARK: Mode Functions
 
@@ -336,11 +336,11 @@ final class MapViewController: UIViewController {
 					}
 
 					// Zoom in on the item
-					mapView.zoomIn(onCenterCoordinate: location.coordinate,
-                         centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue,
-                         withAnimation: true,
-                         heading: mapView.camera.heading,
-                         pitch: mapView.perspectivePitch)
+                    mapView.zoomIn(onCenterCoordinate: location.coordinate,
+                                   centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue,
+                                   withAnimation: true,
+                                   heading: mapView.camera.heading,
+                                   pitch: mapView.perspectivePitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: false)
@@ -409,7 +409,7 @@ final class MapViewController: UIViewController {
 			top: abs(frame.minY - mapView.frame.minY),
 			left: 0,
 			bottom: abs(frame.maxY - mapView.frame.maxY),
-			right: self.view.frame.width - floorSelectorViewController.view.frame.origin.x
+            right: 0
 		)
 
 		mapView.layoutMargins = mapInsets
@@ -423,8 +423,6 @@ final class MapViewController: UIViewController {
 		floorSelectorY = min(floorSelectorY, maxFloorSelectorY)
 
 		floorSelectorViewController.view.frame.origin = CGPoint(x: floorSelectorX, y: floorSelectorY)
-    debugPrint("floorSelectorVC: \(CGPoint(x: floorSelectorX, y: floorSelectorY))")
-
 		mapView.calculateStartingHeight()
 	}
 
@@ -766,104 +764,131 @@ extension MapViewController: MKMapViewDelegate {
 	This function sets the view when an annotation is added to the map.
 	It tries to re-use existing views where available
 	*/
-	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		// Department Annotations
-		if let departmentAnnotation = annotation as? MapDepartmentAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapDepartmentAnnotationView.reuseIdentifier) as? MapDepartmentAnnotationView else {
-				let view = MapDepartmentAnnotationView(annotation: departmentAnnotation, reuseIdentifier: MapDepartmentAnnotationView.reuseIdentifier)
-				return view
-			}
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // Department Annotations
+        if let departmentAnnotation = annotation as? MapDepartmentAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: MapDepartmentAnnotationView.reuseIdentifier
+            ) as? MapDepartmentAnnotationView else {
+                let view = MapDepartmentAnnotationView(
+                    annotation: departmentAnnotation,
+                    reuseIdentifier: MapDepartmentAnnotationView.reuseIdentifier
+                )
+                return view
+            }
 
-			view.setAnnotation(forDepartmentAnnotation: departmentAnnotation)
-			return view
-		}
+            view.setAnnotation(forDepartmentAnnotation: departmentAnnotation)
+            return view
+        }
 
-		// Image Annotations
-		if let imageAnnotation = annotation as? MapImageAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.identifier) else {
-				let view = MKAnnotationView(annotation: imageAnnotation, reuseIdentifier: imageAnnotation.identifier)
-				view.image = imageAnnotation.image
-				return view
-			}
+        // Image Annotations
+        if let imageAnnotation = annotation as? MapImageAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: imageAnnotation.identifier) else {
+                let view = MKAnnotationView(
+                    annotation: imageAnnotation,
+                    reuseIdentifier: imageAnnotation.identifier
+                )
+                view.image = imageAnnotation.image
+                return view
+            }
 
-			return view
+            return view
+        }
 
-		}
+        // Amenity annotation
+        if let amenityAnnotation = annotation as? MapAmenityAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: amenityAnnotation.type.rawValue
+            ) as? MapAmenityAnnotationView else {
+                let view = MapAmenityAnnotationView(
+                    annotation: amenityAnnotation,
+                    reuseIdentifier: amenityAnnotation.type.rawValue
+                )
+                return view
+            }
 
-		// Amenity annotation
-		if let amenityAnnotation = annotation as? MapAmenityAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: amenityAnnotation.type.rawValue) as? MapAmenityAnnotationView else {
-				let view = MapAmenityAnnotationView(annotation: amenityAnnotation, reuseIdentifier: amenityAnnotation.type.rawValue)
-				return view
-			}
+            view.annotation = amenityAnnotation
+            return view
+        }
 
-			view.annotation = amenityAnnotation
-			return view
-		}
+        // Text annotations
+        if let textAnnotation = annotation as? MapTextAnnotation {
+            var view: MapTextAnnotationView? = mapView.dequeueReusableAnnotationView(
+                withIdentifier: textAnnotation.type.rawValue
+            ) as? MapTextAnnotationView
+            if view == nil {
+                view = MapTextAnnotationView(
+                    annotation: textAnnotation,
+                    reuseIdentifier: textAnnotation.type.rawValue
+                )
+            }
 
-		// Text annotations
-		if let textAnnotation = annotation as? MapTextAnnotation {
+            // Update the view
+            view?.setAnnotation(forMapTextAnnotation: textAnnotation)
+            return view
+        }
 
-			var view: MapTextAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: textAnnotation.type.rawValue) as? MapTextAnnotationView
-			if view == nil {
-				view = MapTextAnnotationView(annotation: textAnnotation, reuseIdentifier: textAnnotation.type.rawValue)
-			}
+        // Object annotations
+        if let objectAnnotation = annotation as? MapObjectAnnotation {
+            // TODO: Commenting this out as a temporary fix to bug where some tour stops disappear at times
+            //            if let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView {
+            //                view.delegate = self
+            //                view.setAnnotation(forObjectAnnotation: objectAnnotation)
+            //                return view
+            //            }
 
-			// Update the view
-			view.setAnnotation(forMapTextAnnotation: textAnnotation)
+            let view = MapObjectAnnotationView(
+                annotation: objectAnnotation,
+                reuseIdentifier: MapObjectAnnotationView.reuseIdentifier
+            )
+            if displayPointOfInterest == .tour {
+                view.setMode(mode: .image, inTour: true)
+                view.setTourStopNumber(number: objectAnnotation.tourStopOrder)
+            }
+            view.delegate = self
+            return view
+        }
 
-			return view
-		}
+        // Exhibition annotations
+        if let exhibitionAnnotation = annotation as? MapExhibitionAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: MapExhibitionAnnotationView.reuseIdentifier
+            ) as? MapExhibitionAnnotationView else {
+                let view = MapExhibitionAnnotationView(
+                    annotation: exhibitionAnnotation,
+                    reuseIdentifier: MapExhibitionAnnotationView.reuseIdentifier
+                )
+                view.exhibitionModel = exhibitionAnnotation.exhibitionModel
+                return view
+            }
+            view.exhibitionModel = exhibitionAnnotation.exhibitionModel
+            return view
+        }
 
-		// Object annotations
-		if let objectAnnotation = annotation as? MapObjectAnnotation {
-			// TODO: Commenting this out as a temporary fix to bug where some tour stops disappear at times
-			//			if let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapObjectAnnotationView.reuseIdentifier) as? MapObjectAnnotationView {
-			//				view.delegate = self
-			//				view.setAnnotation(forObjectAnnotation: objectAnnotation)
-			//				return view
-			//			}
+        // Location (News Item) annotations
+        if let locationAnnotation = annotation as? MapLocationAnnotation {
+            guard let view = mapView.dequeueReusableAnnotationView(
+                withIdentifier: MapLocationAnnotationView.reuseIdentifier
+            ) as? MapLocationAnnotationView else {
+                let view = MapLocationAnnotationView(
+                    annotation: annotation,
+                    reuseIdentifier: MapLocationAnnotationView.reuseIdentifier
+                )
+                return view
+            }
 
-			let view = MapObjectAnnotationView(annotation: objectAnnotation, reuseIdentifier: MapObjectAnnotationView.reuseIdentifier)
-			if displayPointOfInterest == .tour {
-				view.setMode(mode: .image, inTour: true)
-				view.setTourStopNumber(number: objectAnnotation.tourStopOrder)
-			}
-			view.delegate = self
-			return view
-		}
+            view.annotation = locationAnnotation
+            return view
+        }
 
-		// Exhibition annotations
-		if let exhibitionAnnotation = annotation as? MapExhibitionAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapExhibitionAnnotationView.reuseIdentifier) as? MapExhibitionAnnotationView else {
-				let view = MapExhibitionAnnotationView(annotation: exhibitionAnnotation, reuseIdentifier: MapExhibitionAnnotationView.reuseIdentifier)
-				view.exhibitionModel = exhibitionAnnotation.exhibitionModel
-				return view
-			}
-			view.exhibitionModel = exhibitionAnnotation.exhibitionModel
-			return view
-		}
-
-		// Location (News Item) annotations
-		if let locationAnnotation = annotation as? MapLocationAnnotation {
-			guard let view = mapView.dequeueReusableAnnotationView(withIdentifier: MapLocationAnnotationView.reuseIdentifier) as? MapLocationAnnotationView else {
-				let view = MapLocationAnnotationView(annotation: annotation, reuseIdentifier: MapLocationAnnotationView.reuseIdentifier)
-				return view
-			}
-
-			view.annotation = locationAnnotation
-			return view
-		}
-
-		return nil
-	}
+        return nil
+    }
 
 	/**
 	Annotation selected, set it's mode to .Selected
 	*/
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 		if let view = view as? MapObjectAnnotationView {
-
 			// Switch to the floor for this object
 			let annotation = view.annotation as! MapObjectAnnotation
 
@@ -872,7 +897,7 @@ extension MapViewController: MKMapViewDelegate {
 				setCurrentFloor(forFloorNum: annotation.floor, andResetMap: false)
 			}
 
-			mapView.setCenter(annotation.coordinate, animated: true)
+            mapView.setCenter(annotation.coordinate, animated: true)
 
 			if displayPointOfInterest == .tour {
 				if let stopId = annotation.nid {
@@ -883,8 +908,8 @@ extension MapViewController: MKMapViewDelegate {
 		} else if let view = view as? MapDepartmentAnnotationView {
 			mapView.deselectAnnotation(view.annotation, animated: false)
 			self.mapView.zoomIn(onCenterCoordinate: view.annotation!.coordinate,
-                          centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-10.0,
-                          heading: self.mapView.camera.heading)
+                                centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue-10.0,
+                                heading: self.mapView.camera.heading)
 
 		} else if let view = view as? MapAmenityAnnotationView {
 			// Restaurants
@@ -911,24 +936,24 @@ extension MapViewController: MKMapViewDelegate {
 		}
 	}
 
-	/**
-	When the map region changes update view properties
-	*/
-	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-    debugPrint("MapViewController.regionDidChangeAnimated")
-    self.mapView.calculateCurrentAltitudeAndZoomLevel()
+    /**
+     When the map region changes update view properties
+     */
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        self.mapView.calculateCurrentAltitudeAndZoomLevel()
 
-    // Keep map in view
-    if !floorSelectorViewController.userHeadingIsEnabled() {
-      self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
+        // Keep map in view
+        if !floorSelectorViewController.userHeadingIsEnabled() {
+            self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
+        }
     }
-	}
 
-	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
-	}
+    func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
+    }
 
-	func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-	}
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+    }
+
 }
 
 // MARK: Floor Selector Delegate Methods
@@ -966,7 +991,7 @@ extension MapViewController: MapFloorSelectorViewControllerDelegate {
 // MARK: - MapObjectAnnotationViewDelegate
 extension MapViewController: MapObjectAnnotationViewDelegate {
 
-  func mapObjectAnnotationViewPlayPressed(_ annotationView: MapObjectAnnotationView) {
+  func mapObjectAnnotationViewDidPressPlay(_ annotationView: MapObjectAnnotationView) {
     guard let annotation = annotationView.annotation as? MapObjectAnnotation,
           let objectId = annotation.nid,
           let object = AppDataManager.sharedInstance.getObject(forID: objectId) else { return }
@@ -985,13 +1010,11 @@ extension MapViewController: UIGestureRecognizerDelegate {
 	}
 
 	@objc func mapViewWasPinched(_ gesture: UIPinchGestureRecognizer) {
-    debugPrint("MapViewController.mapViewWasPinched")
 		floorSelectorViewController.disableUserHeading()
 		self.delegate?.mapWasPressed()
 	}
 
 	@objc func mapViewWasPanned(_ gesture: UIPanGestureRecognizer) {
-    debugPrint("MapViewController.mapViewWasPanned")
 		floorSelectorViewController.disableUserHeading()
 		self.delegate?.mapWasPressed()
 	}
@@ -1013,7 +1036,7 @@ extension MapViewController: CLLocationManagerDelegate {
 		if distanceFromCenterOfMuseum < Common.Location.minDistanceFromMuseumForLocation {
 			if floorSelectorViewController.userHeadingIsEnabled() {
 				mapView.zoomIn(onCenterCoordinate: location.coordinate,
-                       centerCoordinateDistance: mapView.camera.centerCoordinateDistance)
+                               centerCoordinateDistance: mapView.camera.centerCoordinateDistance)
 			}
 
 			// Update our floor if it is found
@@ -1126,86 +1149,86 @@ extension MapViewController: CLLocationManagerDelegate {
 // MARK: - Map floor selector accessors
 extension MapViewController {
 
-  func floorSelectorOrientationButtonPosition() -> CGPoint {
-    floorSelectorViewController.getOrientationButtonPosition()
-  }
+    func floorSelectorOrientationButtonPosition() -> CGPoint {
+        floorSelectorViewController.getOrientationButtonPosition()
+    }
 
-  func floorSelectorFloorButtonPosition(at floor: Int) -> CGPoint {
-    floorSelectorViewController.getFloorButtonPosition(floorNumber: floor)
-  }
-
-}
-
-// MARK: - Private - Setups
-private extension MapViewController {
-
-  func addMapGesturesForContinuousUpdates() {
-    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPinched(_:)))
-    pinchGesture.delegate = self
-
-    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPanned(_:)))
-    panGesture.delegate = self
-
-    mapView.addGestureRecognizer(pinchGesture)
-    mapView.addGestureRecognizer(panGesture)
-  }
+    func floorSelectorFloorButtonPosition(at floor: Int) -> CGPoint {
+        floorSelectorViewController.getFloorButtonPosition(floorNumber: floor)
+    }
 
 }
 
 // MARK: - Private - Setups
 private extension MapViewController {
 
-  func setup() {
-    setupSubviews()
-    setupDelegates()
-    setMapBackgroundOverlay()
-    setMapCamerainItialStateforFirstAnimation()
-    updateMapForModeChange()
-    setupDefaultFloorSelection()
-    setupMapUpdateTimer()
-    addMapGesturesForContinuousUpdates()
-  }
+    func addMapGesturesForContinuousUpdates() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPinched(_:)))
+        pinchGesture.delegate = self
 
-  func setupSubviews() {
-    view.addSubview(mapView)
-    view.addSubview(floorSelectorViewController.view)
-  }
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.mapViewWasPanned(_:)))
+        panGesture.delegate = self
 
-  func setupDelegates() {
-    mapView.delegate = self
-    floorSelectorViewController.delegate = self
-  }
+        mapView.addGestureRecognizer(pinchGesture)
+        mapView.addGestureRecognizer(panGesture)
+    }
 
-  func setupDefaultFloorSelection() {
-    setCurrentFloor(forFloorNum: Common.Map.startFloor)
-  }
+}
 
-  func setupMapUpdateTimer() {
-    Timer.scheduledTimer(timeInterval: 1.0/20.0,
-                         target: self,
-                         selector: #selector(MapViewController.updateMapWithTimer),
-                         userInfo: nil,
-                         repeats: true)
-  }
+// MARK: - Private - Setups
+private extension MapViewController {
 
-  func setMapBackgroundOverlay() {
-    mapView.addOverlay(mapViewHideBackgroundOverlay, level: .aboveRoads)
-  }
+    func setup() {
+        setupSubviews()
+        setupDelegates()
+        setMapBackgroundOverlay()
+        setMapCamerainItialStateforFirstAnimation()
+        updateMapForModeChange()
+        setupDefaultFloorSelection()
+        setupMapUpdateTimer()
+        addMapGesturesForContinuousUpdates()
+    }
 
-  /// Set Camera initial state for first animation when you open the map
-  func setMapCamerainItialStateforFirstAnimation() {
-    mapView.camera.heading = 0
-    mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
-    mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
-    mapView.camera.pitch = mapView.perspectivePitch
-  }
+    func setupSubviews() {
+        view.addSubview(mapView)
+        view.addSubview(floorSelectorViewController.view)
+    }
 
-  func setupNavigationItemTitle() {
-    navigationItem.title = Common.Sections[.map]?.title
-  }
+    func setupDelegates() {
+        mapView.delegate = self
+        floorSelectorViewController.delegate = self
+    }
 
-  func logAnalytics() {
-    AICAnalytics.trackScreenView("Map", screenClass: "MapViewController")
-  }
+    func setupDefaultFloorSelection() {
+        setCurrentFloor(forFloorNum: Common.Map.startFloor)
+    }
+
+    func setupMapUpdateTimer() {
+        Timer.scheduledTimer(timeInterval: 1.0/20.0,
+                             target: self,
+                             selector: #selector(MapViewController.updateMapWithTimer),
+                             userInfo: nil,
+                             repeats: true)
+    }
+
+    func setMapBackgroundOverlay() {
+        mapView.addOverlay(mapViewHideBackgroundOverlay, level: .aboveRoads)
+    }
+
+    /// Set Camera initial state for first animation when you open the map
+    func setMapCamerainItialStateforFirstAnimation() {
+        mapView.camera.heading = 0
+        mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
+        mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
+        mapView.camera.pitch = mapView.perspectivePitch
+    }
+
+    func setupNavigationItemTitle() {
+        navigationItem.title = Common.Sections[.map]?.title
+    }
+
+    func logAnalytics() {
+        AICAnalytics.trackScreenView("Map", screenClass: "MapViewController")
+    }
 
 }
