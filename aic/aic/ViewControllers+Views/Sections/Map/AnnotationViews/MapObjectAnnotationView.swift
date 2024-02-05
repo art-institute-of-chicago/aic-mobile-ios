@@ -141,7 +141,7 @@ class MapObjectAnnotationView: MapAnnotationView {
 
 						self.backgroundView.backgroundColor = .white
 						self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-						self.bounds = self.backgroundView.frame.union(self.tailView.frame) // ????
+						self.bounds = self.backgroundView.frame.union(self.tailView.frame)
 
 						self.updateCenterOffsetForTransformedSize()
 

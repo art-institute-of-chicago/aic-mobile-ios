@@ -5,6 +5,7 @@
 
 import UIKit
 import CoreLocation
+import LocalAuthentication
 import Localize_Swift
 
 struct Common {
@@ -27,29 +28,8 @@ struct Common {
         static let localAppDataFilename = "app.data"
 
         static let hasPhoneFaceID: Bool = {
-            UIDevice().type == .iPhoneX ||
-            UIDevice().type == .iPhoneXS ||
-            UIDevice().type == .iPhoneXSMax ||
-            UIDevice().type == .iPhoneXR ||
-            UIDevice().type == .iPhone11 ||
-            UIDevice().type == .iPhone11Pro ||
-            UIDevice().type == .iPhone11ProMax ||
-            UIDevice().type == .iPhone12Mini ||
-            UIDevice().type == .iPhone12 ||
-            UIDevice().type == .iPhone12Pro ||
-            UIDevice().type == .iPhone12ProMax ||
-            UIDevice().type == .iPhone13Pro ||
-            UIDevice().type == .iPhone13ProMax ||
-            UIDevice().type == .iPhone13Mini ||
-            UIDevice().type == .iPhone13 ||
-            UIDevice().type == .iPhone14 ||
-            UIDevice().type == .iPhone14Plus ||
-            UIDevice().type == .iPhone14Pro ||
-            UIDevice().type == .iPhone14ProMax ||
-            UIDevice().type == .iPhone15 ||
-            UIDevice().type == .iPhone15Plus ||
-            UIDevice().type == .iPhone15Pro ||
-            UIDevice().type == .iPhone15ProMax
+            let biometricType = LAContext().biometricType
+            return biometricType == .faceID
         }()
     }
 

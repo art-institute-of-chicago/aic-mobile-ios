@@ -150,6 +150,7 @@
 		3099149B23A8385E00E32ACE /* InfoBuyTicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */; };
 		E20B1C0829D525A90095E59C /* MapPointOfInterestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */; };
 		E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */; };
+		E274012C2B70DF8B00CA4C71 /* LAContext+BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */; };
 		E276C4012AC5909B007A5917 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E276C4002AC5909B007A5917 /* PureLayout */; };
 		E28F3AFA29B96E6A00C03BFD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */; };
 		E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */; };
@@ -415,6 +416,7 @@
 		3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBuyTicketsView.swift; sourceTree = "<group>"; };
 		E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointOfInterestType.swift; sourceTree = "<group>"; };
 		E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
+		E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LAContext+BiometryType.swift"; sourceTree = "<group>"; };
 		E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ChildTransition.swift"; sourceTree = "<group>"; };
 		E2C72F0929C3FBB20021F1EC /* ContentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentState.swift; sourceTree = "<group>"; };
 		E407F9E11C9A561E00E285B4 /* AudioPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
@@ -864,6 +866,7 @@
 		E218869529C0037300803FF9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
 				E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */,
 				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
@@ -1318,6 +1321,7 @@
 				05A2B2FB21024A780059C123 /* UILabelPadding.swift in Sources */,
 				294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */,
 				2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */,
+				E274012C2B70DF8B00CA4C71 /* LAContext+BiometryType.swift in Sources */,
 				294C0B50201A76F700F2ABB1 /* MapDepartmentAnnotationView.swift in Sources */,
 				295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */,
 				294C0B4C201A76F700F2ABB1 /* MapAmenityAnnotationView.swift in Sources */,
