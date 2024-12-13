@@ -198,17 +198,13 @@
 		E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E433BACD1CFDD64A0086F2ED /* AppDelegate.swift */; };
 		E433BAD01CFDD64A0086F2ED /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E433BACE1CFDD64A0086F2ED /* RootViewController.swift */; };
 		E439FD011CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */; };
-		E43F36741D2B0E3600DA4DA6 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */; };
 		E43F368E1D2C31A400DA4DA6 /* AICSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */; };
-		E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */; };
-		E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */; };
 		E458502F1CAC8C1A00131A66 /* AICExhibitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */; };
 		E47A970B1CEFA15D0041D0A6 /* AICMemberInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */; };
 		E47A97151CEFBC150041D0A6 /* AppDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97131CEFBC150041D0A6 /* AppDataManager.swift */; };
 		E47A971A1CF262760041D0A6 /* AICTooltipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A97191CF262760041D0A6 /* AICTooltipModel.swift */; };
 		E47A972F1CF3EE140041D0A6 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47A972E1CF3EE140041D0A6 /* LoadingViewController.swift */; };
 		E47A97381CF607990041D0A6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E47A97371CF607990041D0A6 /* Settings.bundle */; };
-		E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */; };
 		E4875B431CE8DBC1000F0E6E /* UIImage+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */; };
 		E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */; };
 		E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */; };
@@ -472,17 +468,13 @@
 		E433BACD1CFDD64A0086F2ED /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E433BACE1CFDD64A0086F2ED /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootViewController.swift; path = "../ViewControllers+Views/RootViewController.swift"; sourceTree = "<group>"; };
 		E439FD001CA8A6350004BC59 /* AudioGuideCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AudioGuideCollectionViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E43F368D1D2C31A400DA4DA6 /* AICSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICSectionModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICExhibitionModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberInfoModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A97131CEFBC150041D0A6 /* AppDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDataManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A97191CF262760041D0A6 /* AICTooltipModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTooltipModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A972E1CF3EE140041D0A6 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		E47A97371CF607990041D0A6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E4875B421CE8DBC1000F0E6E /* UIImage+AIC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+AIC.swift"; sourceTree = "<group>"; };
 		E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICAppDataModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -507,14 +499,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E28F3B0929BAC1DA00C03BFD /* Alamofire in Frameworks */,
-				E456F9A71D2DAAC100DEA3C9 /* SystemConfiguration.framework in Frameworks */,
-				E456F9A51D2DAAAF00DEA3C9 /* CoreData.framework in Frameworks */,
 				E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */,
-				E43F36741D2B0E3600DA4DA6 /* AddressBook.framework in Frameworks */,
 				E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */,
 				E276C4012AC5909B007A5917 /* PureLayout in Frameworks */,
 				E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */,
-				E47FAA1D1C7D290A00B5CD02 /* MapKit.framework in Frameworks */,
 				E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */,
 				E28F3B0C29BAC1F900C03BFD /* SwiftyJSON in Frameworks */,
 				E28F3B0329BAC14A00C03BFD /* Kingfisher in Frameworks */,
@@ -956,7 +944,6 @@
 			isa = PBXGroup;
 			children = (
 				E47A97371CF607990041D0A6 /* Settings.bundle */,
-				E4F519C81C88B60B00226188 /* Frameworks */,
 				E40D41CB1C6CEBB700A57AF4 /* aic */,
 				E40D41E21C6CEBB700A57AF4 /* aicTests */,
 				E40D41ED1C6CEBB700A57AF4 /* aicUITests */,
@@ -1154,17 +1141,6 @@
 			);
 			name = Loading;
 			path = "../ViewControllers+Views/Loading";
-			sourceTree = "<group>";
-		};
-		E4F519C81C88B60B00226188 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */,
-				E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */,
-				E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */,
-				E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E4F82F681CA45EF000E4224B /* Shared */ = {
