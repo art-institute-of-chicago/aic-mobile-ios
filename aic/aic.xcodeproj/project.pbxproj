@@ -1261,7 +1261,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = "Art Institute of Chicago";
 				TargetAttributes = {
 					E40D41C81C6CEBB700A57AF4 = {
