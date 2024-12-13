@@ -980,6 +980,11 @@ extension MapViewController: MapFloorSelectorViewControllerDelegate {
 				floorSelectorViewController.disableUserHeading()
 			} else {
 				floorSelectorViewController.enableUserHeading()
+                
+                // Attempt to re-center on the device's last known location.
+                if let lastKnownCoordinate = Common.Map.locationManager.location?.coordinate {
+                    mapView.zoomIn(onCenterCoordinate: lastKnownCoordinate)
+                }
 
 				// Log Analytics
 				AICAnalytics.sendLocationEnableHeadingEvent()
