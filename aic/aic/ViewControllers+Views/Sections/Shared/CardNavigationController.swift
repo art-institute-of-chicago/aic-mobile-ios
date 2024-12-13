@@ -44,7 +44,7 @@ class CardNavigationController: UINavigationController {
 	let downArrowButton: UIButton = UIButton()
 	let closeButton: UIButton = UIButton()
 
-	private (set) var contentTopMargin: CGFloat = 30
+	private(set) var contentTopMargin: CGFloat = 30
 
 	private let positionForState: [State: CGFloat] = [
 		.hidden: UIScreen.main.bounds.height - Common.Layout.tabBarHeight,

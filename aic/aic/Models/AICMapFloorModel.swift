@@ -38,10 +38,10 @@ class AICMapFloorModel {
 
 	var tourStopAnnotations: [MapObjectAnnotation] = []
 
-	private (set) var restroomAnnotations: [MapAmenityAnnotation] = []
-	private (set) var memberLoungeAnnotations: [MapAmenityAnnotation] = []
-	private (set) var giftShopAnnotations: [MapAmenityAnnotation] = []
-	private (set) var diningAnnotations: [MapAmenityAnnotation] = []
+	private(set) var restroomAnnotations: [MapAmenityAnnotation] = []
+	private(set) var memberLoungeAnnotations: [MapAmenityAnnotation] = []
+	private(set) var giftShopAnnotations: [MapAmenityAnnotation] = []
+	private(set) var diningAnnotations: [MapAmenityAnnotation] = []
 
 	let floorNumber: Int
 
