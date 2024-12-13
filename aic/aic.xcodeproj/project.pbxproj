@@ -479,7 +479,6 @@
 		E456F9BA1D2DB54A00DEA3C9 /* aic-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "aic-bridging-header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E458502E1CAC8C1A00131A66 /* AICExhibitionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICExhibitionModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A970A1CEFA15D0041D0A6 /* AICMemberInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMemberInfoModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		E47A970D1CEFBB1E0041D0A6 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		E47A97131CEFBC150041D0A6 /* AppDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDataManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A97191CF262760041D0A6 /* AICTooltipModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICTooltipModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E47A972E1CF3EE140041D0A6 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -1165,7 +1164,6 @@
 				E456F9A61D2DAAC100DEA3C9 /* SystemConfiguration.framework */,
 				E456F9A31D2DAA8E00DEA3C9 /* CoreData.framework */,
 				E43F36731D2B0E3600DA4DA6 /* AddressBook.framework */,
-				E47A970D1CEFBB1E0041D0A6 /* Fabric.framework */,
 				E47FAA1C1C7D290A00B5CD02 /* MapKit.framework */,
 			);
 			name = Frameworks;
