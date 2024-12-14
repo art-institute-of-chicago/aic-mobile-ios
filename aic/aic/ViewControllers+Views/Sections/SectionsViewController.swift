@@ -607,6 +607,9 @@ extension SectionsViewController: MessageViewControllerDelegate {
 
 			showRequestedMapContentIfNeeded()
 			resetRequestedMapContent()
+            
+            // Stop the audio using the existing mini-player logic
+            audioPlayerCardVC.miniAudioPlayerCloseButtonPressed(button: UIButton())
 
 			if let messages = tourNid.map({ AppDataManager.sharedInstance.getTourExitMessages(for: "\($0)") }),
 				messages.count > 0 {
