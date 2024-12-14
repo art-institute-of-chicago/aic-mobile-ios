@@ -783,7 +783,8 @@ extension AudioPlayerNavigationController {
 		_ = pause()
 		hide()
 		currentAudioFile = nil
-		// TODO: remove track from MPNowPlayingInfoCenter and RemoteControl
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
 	}
 
 	@objc func miniAudioPlayerTapped() {
