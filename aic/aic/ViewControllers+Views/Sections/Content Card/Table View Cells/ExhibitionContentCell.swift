@@ -20,9 +20,6 @@ class ExhibitionContentCell: UITableViewCell {
 	@IBOutlet var galleryTitleLabel: UILabel!
 	@IBOutlet var throughDateLabel: UILabel!
 
-	@IBOutlet weak var showOnMapButtonHorizontalOffset: NSLayoutConstraint!
-	@IBOutlet weak var buyTicketsButtonHorizontalOffset: NSLayoutConstraint!
-
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
@@ -32,8 +29,6 @@ class ExhibitionContentCell: UITableViewCell {
 
 		exhibitionImageView.contentMode = .scaleAspectFill
 		exhibitionImageView.clipsToBounds = true
-		showOnMapButton.setIconImage(image: #imageLiteral(resourceName: "buttonMapIcon"))
-		buyTicketsButton.setIconImage(image: #imageLiteral(resourceName: "buttonTicketIcon"))
 		showOnMapButton.titleLabel?.font = .aicButtonFont
 		buyTicketsButton.titleLabel?.font = .aicButtonFont
 		descriptionLabel.font = .aicTextFont
@@ -92,7 +87,6 @@ class ExhibitionContentCell: UITableViewCell {
 			if exhibitionModel.location == nil {
 				showOnMapButton.isHidden = true
 				showOnMapButton.isEnabled = false
-				buyTicketsButtonHorizontalOffset.constant = 0
 			} else if let showOnMapButton = showOnMapButton {
 				accessibilityItems.append(showOnMapButton)
 			}

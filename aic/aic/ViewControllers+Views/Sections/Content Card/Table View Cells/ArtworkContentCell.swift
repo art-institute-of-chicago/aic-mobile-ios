@@ -19,7 +19,6 @@ class ArtworkContentCell: UITableViewCell {
 	@IBOutlet weak var descriptionLabel: UILabel!
 
 	@IBOutlet var artworkImageHeight: NSLayoutConstraint!
-	@IBOutlet weak var showOnMapButtonHorizontalOffset: NSLayoutConstraint!
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -31,8 +30,6 @@ class ArtworkContentCell: UITableViewCell {
 		artworkImageView.backgroundColor = .clear
 		artworkImageView.contentMode = .scaleAspectFit
 		artworkImageView.clipsToBounds = true
-		showOnMapButton.setIconImage(image: #imageLiteral(resourceName: "buttonMapIcon"))
-		playAudioButton.setIconImage(image: #imageLiteral(resourceName: "buttonPlayIcon"))
 		showOnMapButton.titleLabel?.font = .aicButtonFont
 		playAudioButton.titleLabel?.font = .aicButtonFont
 		artistDisplayLabel.font = .aicTextFont
@@ -70,7 +67,6 @@ class ArtworkContentCell: UITableViewCell {
 			} else {
 				playAudioButton.isHidden = true
 				playAudioButton.isEnabled = false
-				showOnMapButtonHorizontalOffset.constant = 0
 				self.setNeedsLayout()
 				self.layoutIfNeeded()
 			}
