@@ -176,14 +176,15 @@ class MemberDataManager {
 					} catch {}
 
 					if primaryConstituentID != nil && (memberNames.count > 0) && memberLevel != nil && expirationDate != nil {
-						return AICMemberCardModel(cardId: primaryConstituentID!,
-												  memberNames: memberNames,
-												  memberLevel: memberLevel!,
-												  memberZip: zipCode,
-												  expirationDate: expirationDate!,
-												  isReciprocalMember: isReciprocal,
-												  isLifeMembership: isLifeMembership
-						)
+                        return AICMemberCardModel(
+                            cardId: primaryConstituentID!,
+                            memberNames: memberNames,
+                            memberLevel: memberLevel!,
+                            memberZip: zipCode,
+                            expirationDate: expirationDate!,
+                            isReciprocalMember: isReciprocal,
+                            isLifeMembership: isLifeMembership
+                        )
 					}
 				}
 				delegate?.memberCardDataLoadingFailed()

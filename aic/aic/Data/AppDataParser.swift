@@ -1826,8 +1826,11 @@ final class AppDataParser {
 	}
 
     private func logNonFatalError(_ parseError: ParseError) {
-        let report = DataParserCrashlyticsReport(error: parseError)
-        crashlyticsManager.record(report)
+        crashlyticsManager.record(
+            DataParserCrashlyticsReport(
+                error: parseError
+            )
+        )
 
         if Common.Testing.printDataErrors {
             debugPrint(parseError.localizedDescription)

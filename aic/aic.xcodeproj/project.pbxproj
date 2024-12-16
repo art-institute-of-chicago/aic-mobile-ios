@@ -151,6 +151,7 @@
 		E20B1C0829D525A90095E59C /* MapPointOfInterestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */; };
 		E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */; };
 		E21D01B12BFD0C6100E75C53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */; };
+		E21D02A42C4AF90C00BF87F7 /* MemberCardLoadedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21D02A32C4AF90C00BF87F7 /* MemberCardLoadedEvent.swift */; };
 		E2447C732BFC0B0C0016A590 /* ParseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2447C722BFC0B0C0016A590 /* ParseError.swift */; };
 		E2447C752BFC1B5F0016A590 /* AppDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2447C742BFC1B5F0016A590 /* AppDataParser.swift */; };
 		E260C3B02B751728004911C4 /* Bundle+ApplicationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260C3AF2B751728004911C4 /* Bundle+ApplicationInfo.swift */; };
@@ -168,6 +169,7 @@
 		E28F3B0C29BAC1F900C03BFD /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0B29BAC1F900C03BFD /* SwiftyJSON */; };
 		E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1129BAC28E00C03BFD /* Atributika */; };
 		E28F3B1529BAC33300C03BFD /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B1429BAC33300C03BFD /* Localize_Swift */; };
+		E28F828E2C41879600E9AA62 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E28F828D2C41879600E9AA62 /* Config.plist */; };
 		E2C348672C2345E0007392BB /* CrashlyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C3485B2C2345E0007392BB /* CrashlyticsManager.swift */; };
 		E2C348682C2345E0007392BB /* CrashlyticsProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C3485C2C2345E0007392BB /* CrashlyticsProperty.swift */; };
 		E2C348692C2345E0007392BB /* CrashlyticsReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C3485D2C2345E0007392BB /* CrashlyticsReport.swift */; };
@@ -223,7 +225,6 @@
 		E4F7AF971CFB673900524F87 /* AICMapFloorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */; };
 		E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */; };
 		E4FFC6EC1D00B7FD0082818D /* AICMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */; };
-		F732DB2E29EBA3CE00C67CFE /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = F732DB2D29EBA3CE00C67CFE /* Config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -429,12 +430,14 @@
 		E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointOfInterestType.swift; sourceTree = "<group>"; };
 		E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
 		E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "aic/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E21D02A32C4AF90C00BF87F7 /* MemberCardLoadedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardLoadedEvent.swift; sourceTree = "<group>"; };
 		E2447C722BFC0B0C0016A590 /* ParseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseError.swift; sourceTree = "<group>"; };
 		E2447C742BFC1B5F0016A590 /* AppDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDataParser.swift; sourceTree = "<group>"; };
 		E260C3AF2B751728004911C4 /* Bundle+ApplicationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+ApplicationInfo.swift"; sourceTree = "<group>"; };
 		E260C3B22B751D16004911C4 /* PlistFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistFile.swift; sourceTree = "<group>"; };
 		E260C3B42B762B74004911C4 /* ConfigurationResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationResources.swift; sourceTree = "<group>"; };
 		E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LAContext+BiometryType.swift"; sourceTree = "<group>"; };
+		E28F828D2C41879600E9AA62 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		E2C3485B2C2345E0007392BB /* CrashlyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashlyticsManager.swift; sourceTree = "<group>"; };
 		E2C3485C2C2345E0007392BB /* CrashlyticsProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashlyticsProperty.swift; sourceTree = "<group>"; };
 		E2C3485D2C2345E0007392BB /* CrashlyticsReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashlyticsReport.swift; sourceTree = "<group>"; };
@@ -498,7 +501,6 @@
 		E4F7AF961CFB673900524F87 /* AICMapFloorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMapFloorModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E4F82F6B1CA45F3400E4224B /* SectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
 		E4FFC6EB1D00B7FD0082818D /* AICMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AICMessageModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		F732DB2D29EBA3CE00C67CFE /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Config.plist; path = ../../../../../Desktop/Config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -598,8 +600,6 @@
 		293D00731FA7C7EF00BF2C26 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */,
-				F732DB2D29EBA3CE00C67CFE /* Config.plist */,
 				2926F2162080075E00DE9D4A /* fonts */,
 				293D00AB1FA7CA6600BF2C26 /* video */,
 			);
@@ -905,6 +905,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		E21D02A22C4AF8FE00BF87F7 /* EventData */ = {
+			isa = PBXGroup;
+			children = (
+				E21D02A32C4AF90C00BF87F7 /* MemberCardLoadedEvent.swift */,
+			);
+			path = EventData;
+			sourceTree = "<group>";
+		};
 		E260C3B12B751D01004911C4 /* DataLoader */ = {
 			isa = PBXGroup;
 			children = (
@@ -939,6 +947,7 @@
 			children = (
 				E2C348642C2345E0007392BB /* AICAnalytics.swift */,
 				E2C348652C2345E0007392BB /* FirebaseCrashlyticsService.swift */,
+				E21D02A22C4AF8FE00BF87F7 /* EventData */,
 				E2C348602C2345E0007392BB /* Crashlytics */,
 				E2C348632C2345E0007392BB /* Property */,
 			);
@@ -983,6 +992,8 @@
 				304BEA0A246E1573006E025A /* Assets.xcassets */,
 				304BEA08246E147A006E025A /* LaunchScreen.storyboard */,
 				E4923F9C1C9B6C3700AB255C /* MainStoryboard.storyboard */,
+				E28F828D2C41879600E9AA62 /* Config.plist */,
+				E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */,
 				E415AB8F1C7297E60093B719 /* Info.plist */,
 			);
 			path = aic;
@@ -1325,6 +1336,7 @@
 				306E6E502469CA4D00B17CA8 /* LocationUI.strings in Resources */,
 				29846124203E3B19001E5378 /* NoResultsCell.xib in Resources */,
 				306E6E4A2469CA4D00B17CA8 /* Map.strings in Resources */,
+				E28F828E2C41879600E9AA62 /* Config.plist in Resources */,
 				306E6E4B2469CA4D00B17CA8 /* LocalizationUI.strings in Resources */,
 				304BEA09246E147A006E025A /* LaunchScreen.storyboard in Resources */,
 				29A27A081FCC769B007CEE1D /* HomeTourCell.xib in Resources */,
@@ -1333,7 +1345,6 @@
 				2902198E1FCE2ABA006CFA9E /* HomeEventCell.xib in Resources */,
 				294C0B23201A52CB00F2ABB1 /* EventContentCell.xib in Resources */,
 				2926F2172080075F00DE9D4A /* fonts in Resources */,
-				F732DB2E29EBA3CE00C67CFE /* Config.plist in Resources */,
 				304BEA0B246E1573006E025A /* Assets.xcassets in Resources */,
 				306E6E4E2469CA4D00B17CA8 /* Info.strings in Resources */,
 				306E6E472469CA4D00B17CA8 /* Search.strings in Resources */,
@@ -1416,6 +1427,7 @@
 				2968F67C2012612E00638153 /* LanguageSelectionViewController.swift in Sources */,
 				E4D159311CB9A61F00536B4D /* UIFont+AIC.swift in Sources */,
 				291EC72C1FE1E48600A43186 /* ResultsFilterMenuView.swift in Sources */,
+				E21D02A42C4AF90C00BF87F7 /* MemberCardLoadedEvent.swift in Sources */,
 				294C0B5E201A76F700F2ABB1 /* FloorplanOverlay.swift in Sources */,
 				294C0B52201A76F700F2ABB1 /* MapAmenityAnnotation.swift in Sources */,
 				E42178301CC57BE200815B41 /* UITextView+AIC.swift in Sources */,
@@ -1858,7 +1870,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
@@ -1876,7 +1888,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5.0;
+				MARKETING_VERSION = 2.5.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1906,7 +1918,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Art Institute Chicago (6CA8WK4597)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Art Institute Chicago (6CA8WK4597)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1924,7 +1936,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5.0;
+				MARKETING_VERSION = 2.5.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -2101,7 +2113,7 @@
 				CODE_SIGN_ENTITLEMENTS = aic/aic.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Art Institute Chicago (6CA8WK4597)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 6CA8WK4597;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6CA8WK4597;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2118,7 +2130,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5.0;
+				MARKETING_VERSION = 2.5.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",

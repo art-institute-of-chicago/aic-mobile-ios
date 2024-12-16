@@ -33,6 +33,7 @@ final class AICAnalytics {
 		case locationDetected = "location_detected"
 		case locationHeadingEnabled	= "location_heading_enabled"
 		case memberCardShown = "member_card_shown"
+        case memberCardLoaded  = "member_card_loaded"
 		case miscLinkTapped = "misc_link_tapped"
 	}
 
@@ -93,7 +94,13 @@ final class AICAnalytics {
 
 	static func trackScreenView(_ screenName: String, screenClass: String) {
 		if screenName != currentScreen {
-			Analytics.setScreenName(screenName, screenClass: screenClass)
+            Analytics.logEvent(
+                AnalyticsEventScreenView,
+                parameters: [
+                    AnalyticsParameterScreenName: screenName,
+                    AnalyticsParameterScreenClass: screenClass
+                ]
+            )
 
 			previousScreen = currentScreen
 			currentScreen = screenName
@@ -281,6 +288,22 @@ final class AICAnalytics {
 		trackEvent(.memberCardShown)
 	}
 
+    static func sendMemberCardLoadedEvent(
+        cardId: String,
+        memberNames: [String],
+        memberLevel: String,
+        expirationDate: Date
+    ) {
+        let memberCard = MemberCardLoadedEvent(
+            cardId: cardId,
+            memberNames: memberNames,
+            memberLevel: memberLevel,
+            expirationDate: expirationDate
+        )
+
+        trackEvent(.memberCardLoaded, parameters: memberCard.parameters)
+    }
+
 	// MARK: Misc Links
 
 	static func sendMiscLinkTappedEvent(link: MiscLink) {
@@ -375,16 +398,4 @@ final class AICAnalytics {
 		]
 		trackEvent(.searchIconMap, parameters: parameters)
 	}
-}
-
-extension Analytics {
-    static func setScreenName(_ screenName:String, screenClass: String) {
-        Analytics.logEvent(
-            AnalyticsEventScreenView,
-            parameters: [
-                AnalyticsParameterScreenName: screenName,
-                AnalyticsParameterScreenClass:screenClass
-            ]
-        )
-    }
 }

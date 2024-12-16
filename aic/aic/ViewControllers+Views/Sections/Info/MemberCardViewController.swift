@@ -10,13 +10,19 @@ import UIKit
 import Localize_Swift
 
 class MemberCardViewController: UIViewController {
-	let loginView: MemberLoginView = MemberLoginView()
-	let loadingIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-	let cardView: MemberCardView = MemberCardView()
+    private lazy var loadingIndicatorView = {
+        let loadingView = UIActivityIndicatorView()
+        loadingView.isHidden = true
+        loadingView.style = .large
+        loadingView.color = .darkGray
+        return loadingView
+    }()
+
+    private let loginView = MemberLoginView()
+    private let cardView = MemberCardView()
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
-
 		self.navigationItem.title = "member_card_title:AccessCard"
 	}
 
@@ -34,10 +40,6 @@ class MemberCardViewController: UIViewController {
 		MemberDataManager.sharedInstance.delegate = self
 
 		self.view.backgroundColor = .white
-
-		loadingIndicatorView.isHidden = true
-		loadingIndicatorView.style = .large
-		loadingIndicatorView.color = .darkGray
 
 		loginView.loginButton.addTarget(self, action: #selector(loginButtonPressed(button:)), for: .touchUpInside)
 		cardView.changeInfoButton.addTarget(self, action: #selector(changeInfoButtonPressed(button:)), for: .touchUpInside)
@@ -59,13 +61,9 @@ class MemberCardViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
 		updateLanguage()
-
 		loadMemberFromUserDefaults()
-
-		// Log analytics
-		AICAnalytics.trackScreenView("Member Card", screenClass: "MemberCardViewController")
+        logAnalyticsScreenViewEvent()
 	}
 
 	private func createViewConstraints() {
@@ -132,15 +130,6 @@ class MemberCardViewController: UIViewController {
         logAnalyticsMemberCardShownEvent()
 	}
 
-    private func logAnalyticsMemberCardShownEvent() {
-        AICAnalytics.sendMemberCardShownEvent(
-            property: AnalyticsProperty(
-                key: AnalyticsPropertyType.membership.key,
-                value: "Member"
-            )
-        )
-    }
-
 	// MARK: Load Member
 
 	private func loadMemberFromUserDefaults() {
@@ -192,10 +181,14 @@ class MemberCardViewController: UIViewController {
 }
 
 // MARK: MemberDataManagerDelegate
-
 extension MemberCardViewController: MemberDataManagerDelegate {
 	func memberCardDidLoadForMember(memberCard: AICMemberCardModel) {
-		cardView.setContent(memberCard: memberCard, memberNameIndex: MemberDataManager.sharedInstance.currentMemberNameIndex)
+        logMemberCardLoadedEvent(memberCard)
+
+        cardView.setContent(
+            memberCard: memberCard,
+            memberNameIndex: MemberDataManager.sharedInstance.currentMemberNameIndex
+        )
 		showCard()
 	}
 
@@ -208,4 +201,32 @@ extension MemberCardViewController: MemberDataManagerDelegate {
 		alert.addAction(action)
 		present(alert, animated: true)
 	}
+}
+
+// MARK: Analytics
+private extension MemberCardViewController {
+    func logMemberCardLoadedEvent(_ memberCard: AICMemberCardModel) {
+        AICAnalytics.sendMemberCardLoadedEvent(
+            cardId: memberCard.cardId,
+            memberNames: memberCard.memberNames,
+            memberLevel: memberCard.memberLevel,
+            expirationDate: memberCard.expirationDate
+        )
+    }
+
+    func logAnalyticsScreenViewEvent() {
+        AICAnalytics.trackScreenView(
+            "Member Card",
+            screenClass: "MemberCardViewController"
+        )
+    }
+
+    func logAnalyticsMemberCardShownEvent() {
+        AICAnalytics.sendMemberCardShownEvent(
+            property: AnalyticsProperty(
+                key: AnalyticsPropertyType.membership.key,
+                value: "Member"
+            )
+        )
+    }
 }
