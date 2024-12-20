@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,30 +22,39 @@
                             <constraint firstAttribute="width" secondItem="Zhx-kn-QDT" secondAttribute="height" multiplier="25:24" id="5T5-T0-EtO"/>
                         </constraints>
                     </imageView>
-                    <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPS-6o-axa" customClass="AICButton" customModule="aic" customModuleProvider="target">
-                        <rect key="frame" x="39.5" y="376" width="140" height="50"/>
-                        <color key="backgroundColor" red="0.2156862745" green="0.63529411759999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="5cY-Y3-1dm"/>
-                            <constraint firstAttribute="width" constant="140" id="cbl-bp-8wu"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <state key="normal" title="Show On Map">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
-                    <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1T-B2-Jzi" customClass="AICButton" customModule="aic" customModuleProvider="target">
-                        <rect key="frame" x="195.5" y="376" width="140" height="50"/>
-                        <color key="backgroundColor" red="0.2156862745" green="0.63529411759999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="XuC-VA-ea4"/>
-                            <constraint firstAttribute="width" constant="140" id="yJB-H8-DjY"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <state key="normal" title="Buy Tickets">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="RFd-Xg-xgk">
+                        <rect key="frame" x="39.5" y="376" width="296" height="50"/>
+                        <subviews>
+                            <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPS-6o-axa" customClass="AICButton" customModule="aic" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
+                                <color key="backgroundColor" red="0.2156862745" green="0.63529411759999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="5cY-Y3-1dm"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="cbl-bp-8wu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="20" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="-10" maxY="0.0"/>
+                                <state key="normal" title="Show On Map" image="buttonMapIcon">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1T-B2-Jzi" customClass="AICButton" customModule="aic" customModuleProvider="target">
+                                <rect key="frame" x="156" y="0.0" width="140" height="50"/>
+                                <color key="backgroundColor" red="0.2156862745" green="0.63529411759999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="XuC-VA-ea4"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="a36-KZ-1QS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="20" maxY="0.0"/>
+                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="-10" maxY="0.0"/>
+                                <state key="normal" title="Buy Tickets" image="buttonTicketIcon">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                    </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="ajj-Mb-KWS">
                         <rect key="frame" x="16" y="453" width="343" height="139"/>
                         <subviews>
@@ -77,29 +86,31 @@
                     <constraint firstAttribute="trailing" secondItem="Zhx-kn-QDT" secondAttribute="trailing" id="1mF-mK-vgw"/>
                     <constraint firstItem="ajj-Mb-KWS" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="93" id="3ZT-pw-Zxt"/>
                     <constraint firstAttribute="bottom" secondItem="ajj-Mb-KWS" secondAttribute="bottom" id="55T-ns-CpZ"/>
-                    <constraint firstItem="B1T-B2-Jzi" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="16" id="BGB-rF-4Tp"/>
-                    <constraint firstItem="pPS-6o-axa" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" constant="-78" id="Dt4-bW-jQN"/>
+                    <constraint firstItem="RFd-Xg-xgk" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="16" id="Bje-Ow-lC9"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RFd-Xg-xgk" secondAttribute="trailing" constant="16" id="J3m-Lb-oqe"/>
                     <constraint firstAttribute="trailing" secondItem="ajj-Mb-KWS" secondAttribute="trailing" constant="16" id="KaC-ed-akB"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" id="LMI-rI-roE"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" id="VyZ-4h-xac"/>
+                    <constraint firstItem="RFd-Xg-xgk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mLP-V2-pYH" secondAttribute="leading" constant="16" id="cjG-l0-4p4"/>
                     <constraint firstItem="Zhx-kn-QDT" firstAttribute="top" secondItem="mLP-V2-pYH" secondAttribute="top" id="fd9-We-uYR"/>
-                    <constraint firstItem="pPS-6o-axa" firstAttribute="top" secondItem="Zhx-kn-QDT" secondAttribute="bottom" constant="16" id="noq-C4-Ad8"/>
-                    <constraint firstItem="B1T-B2-Jzi" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" constant="78" id="oCy-td-9t8"/>
+                    <constraint firstItem="RFd-Xg-xgk" firstAttribute="centerX" secondItem="mLP-V2-pYH" secondAttribute="centerX" id="hrZ-zc-1dU"/>
                     <constraint firstItem="ajj-Mb-KWS" firstAttribute="leading" secondItem="mLP-V2-pYH" secondAttribute="leading" constant="16" id="zr9-ND-Jsh"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="buyTicketsButton" destination="B1T-B2-Jzi" id="arm-p6-ITN"/>
-                <outlet property="buyTicketsButtonHorizontalOffset" destination="oCy-td-9t8" id="frN-Md-Nnz"/>
                 <outlet property="descriptionLabel" destination="DlE-mQ-422" id="7qc-pM-tV9"/>
                 <outlet property="exhibitionImageView" destination="Zhx-kn-QDT" id="DYR-hF-yKX"/>
                 <outlet property="galleryTitleLabel" destination="brR-Tg-NaN" id="Crk-Bx-kw6"/>
                 <outlet property="showOnMapButton" destination="pPS-6o-axa" id="LkO-0j-NfG"/>
-                <outlet property="showOnMapButtonHorizontalOffset" destination="Dt4-bW-jQN" id="tF9-bH-Ywo"/>
                 <outlet property="throughDateLabel" destination="08c-cl-LXS" id="LDe-n8-mgS"/>
             </connections>
             <point key="canvasLocation" x="2.3999999999999999" y="181.70914542728636"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="buttonMapIcon" width="25" height="25"/>
+        <image name="buttonTicketIcon" width="25" height="25"/>
+    </resources>
 </document>
