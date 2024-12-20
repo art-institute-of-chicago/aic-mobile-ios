@@ -15,7 +15,7 @@ protocol MemberDataManagerDelegate: AnyObject {
 class MemberDataManager {
 	static let sharedInstance = MemberDataManager()
 
-	private (set) var currentMemberCard: AICMemberCardModel?
+	private(set) var currentMemberCard: AICMemberCardModel?
 	var currentMemberNameIndex: Int = 0
 	weak var delegate: MemberDataManagerDelegate?
 //	private let dataParser = AppDataParser()

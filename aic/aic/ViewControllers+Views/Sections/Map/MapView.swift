@@ -34,8 +34,8 @@ class MapView: MKMapView {
 	let topDownPitch: CGFloat = 0.0
 	let perspectivePitch: CGFloat = 60.0
 
-	private (set) var previousAltitude: Double = 0.0
-	private (set) var currentAltitude: Double = 0.0
+	private(set) var previousAltitude: Double = 0.0
+	private(set) var currentAltitude: Double = 0.0
 
 	private(set) var previousZoomLevel: Common.Map.ZoomLevelAltitude = .zoomLimit
 	private(set) var currentZoomLevel: Common.Map.ZoomLevelAltitude = .zoomLimit
