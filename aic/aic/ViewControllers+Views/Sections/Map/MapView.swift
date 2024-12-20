@@ -168,7 +168,7 @@ class MapView: MKMapView {
 	func keepMapInView(zoomLimit: Double) {
 		// Check altitude
 		if currentAltitude > zoomLimit {
-			showFullMap(centerCoordinateDistance: zoomLimit)
+            showFullMap(centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue + 5)
             debugPrint("MapView.keepMapInView zoomLimit: \(zoomLimit)")
 		} else {
 			// Make sure our floorplan is on-screen

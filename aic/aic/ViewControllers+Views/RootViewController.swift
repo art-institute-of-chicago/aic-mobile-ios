@@ -36,7 +36,7 @@ final class RootViewController: UIViewController {
   }()
 
   private lazy var sectionTabBarController: SectionsViewController = {
-    let viewController = SectionsViewController()
+    let viewController = SectionsViewController(nibName: nil, bundle: nil)
     viewController.sectionTabBarDelegate = self
     return viewController
   }()
