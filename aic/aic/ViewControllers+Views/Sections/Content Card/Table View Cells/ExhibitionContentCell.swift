@@ -82,7 +82,12 @@ class ExhibitionContentCell: UITableViewCell {
 			} else {
 				galleryTitleLabel.isHidden = true
 			}
-			throughDateLabel.text = Common.Info.throughDateString(endDate: exhibitionModel.endDate)
+            
+            if let endDate = exhibitionModel.endDate {
+                throughDateLabel.text = Common.Info.throughDateString(endDate: endDate)
+            } else {
+                throughDateLabel.text = ""
+            }
 
 			if exhibitionModel.location == nil {
 				showOnMapButton.isHidden = true

@@ -249,9 +249,9 @@ final class AppDataManager {
 				"gallery_id",
 				"web_url",
 				"aic_start_at",
-				"aic_end_at"
+				"aic_end_at",
+                "position"
 			],
-			"sort": ["aic_start_at", "aic_end_at"],
 			"query": [
 				"bool": [
 					"must": [
@@ -261,15 +261,8 @@ final class AppDataManager {
 							]
 						],
 						[
-							"range": [
-								"aic_end_at": ["gte": "now"]
-							]
-						]
-					],
-					"must_not": [
-						[
 							"term": [
-								"status": "Closed"
+								"is_featured": true
 							]
 						]
 					]
@@ -282,7 +275,7 @@ final class AppDataManager {
 			.responseData { response in
 				switch response.result {
 				case .success(let value):
-					self.exhibitions = self.dataParser.parse(exhibitionsData: value)
+                        self.exhibitions = self.dataParser.parse(exhibitionsData: value).sorted(by: { $0.position < $1.position })
 
 				case .failure(let error):
 					debugPrint(error)

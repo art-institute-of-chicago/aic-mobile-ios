@@ -11,9 +11,10 @@ class AICExhibitionModel: NSObject {
 	let shortDescription: String
 	var imageUrl: URL?
 	let startDate: Date
-	let endDate: Date
+	let endDate: Date?
 	let galleryId: Int?
 	let location: CoordinateWithFloor? // TODO: making this optional, it's not always available in the data
+    let position: Int
 
     init(
         id: Int,
@@ -21,9 +22,10 @@ class AICExhibitionModel: NSObject {
         shortDescription: String,
         imageUrl: URL?,
         startDate: Date,
-        endDate: Date,
+        endDate: Date?,
         galleryId: Int?,
-        location: CoordinateWithFloor?
+        location: CoordinateWithFloor?,
+        position: Int
     ) {
 		self.id = id
 		self.title = title
@@ -33,6 +35,8 @@ class AICExhibitionModel: NSObject {
 		self.endDate = endDate
 		self.galleryId = galleryId
 		self.location = location
+        self.position = position
+        
 		super.init()
 	}
 }
