@@ -103,15 +103,16 @@ class MemberCardView: UIView {
 		// Barcode
 		let data = String(memberCard.cardId).data(using: String.Encoding.ascii)
 		let filter = CIFilter(name: "CIPDF417BarcodeGenerator")
-		filter!.setValue(data, forKey: "inputMessage")
-		let barcodeCIImage = filter!.outputImage!
-		let barcodeImage = UIImage(ciImage: barcodeCIImage.transformed(by: CGAffineTransform(scaleX: 4.5, y: 4.5)))
-
-		barcodeImageView.image = barcodeImage
-
-		switchCardholderButton.isHidden = memberCard.memberNames.count < 2
-		switchCardholderButton.isEnabled = !switchCardholderButton.isHidden
-
-		barcodeReciprocalBadgeImageView.isHidden = !memberCard.isReciprocalMember
+        filter?.setValue(data, forKey: "inputMessage")
+        if let barcodeCIImage = filter?.outputImage {
+            let barcodeImage = UIImage(ciImage: barcodeCIImage.transformed(by: CGAffineTransform(scaleX: 4.5, y: 4.5)))
+            
+            barcodeImageView.image = barcodeImage
+            
+            switchCardholderButton.isHidden = memberCard.memberNames.count < 2
+            switchCardholderButton.isEnabled = !switchCardholderButton.isHidden
+            
+            barcodeReciprocalBadgeImageView.isHidden = !memberCard.isReciprocalMember
+        }
 	}
 }
