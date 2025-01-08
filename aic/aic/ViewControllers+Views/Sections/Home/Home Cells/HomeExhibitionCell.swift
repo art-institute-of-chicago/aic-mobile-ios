@@ -43,7 +43,7 @@ class HomeExhibitionCell: UICollectionViewCell {
             if let endDate = exhibitionModel.endDate {
                 throughDateTextView.attributedText = attributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: endDate), font: .aicTextItalicFont, lineHeight: 22)
             } else {
-                throughDateTextView.attributedText = "".attributedString
+                throughDateTextView.attributedText = "Ongoing".attributedString
             }
 
 			// Accessibility

@@ -86,7 +86,7 @@ class ExhibitionContentCell: UITableViewCell {
             if let endDate = exhibitionModel.endDate {
                 throughDateLabel.text = Common.Info.throughDateString(endDate: endDate)
             } else {
-                throughDateLabel.text = ""
+                throughDateLabel.text = "Ongoing"
             }
 
 			if exhibitionModel.location == nil {

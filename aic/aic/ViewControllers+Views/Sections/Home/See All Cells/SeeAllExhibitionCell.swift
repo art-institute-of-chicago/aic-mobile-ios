@@ -52,7 +52,7 @@ class SeeAllExhibitionCell: UICollectionViewCell {
                 lineHeight: 18
             )
         } else {
-            throughDateLabel.attributedText = "".attributedString
+            throughDateLabel.attributedText = "Ongoing".attributedString
         }
     }
     private func setupAccessibility() {
