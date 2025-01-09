@@ -160,7 +160,6 @@
 		E274012C2B70DF8B00CA4C71 /* LAContext+BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */; };
 		E276C4012AC5909B007A5917 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E276C4002AC5909B007A5917 /* PureLayout */; };
 		E28F3AFA29B96E6A00C03BFD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */; };
-		E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */; };
 		E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */; };
 		E28F3B0029B96E6A00C03BFD /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFF29B96E6A00C03BFD /* FirebaseCrashlytics */; };
 		E28F3B0329BAC14A00C03BFD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3B0229BAC14A00C03BFD /* Kingfisher */; };
@@ -500,7 +499,6 @@
 			files = (
 				E28F3B0929BAC1DA00C03BFD /* Alamofire in Frameworks */,
 				E28F3B0629BAC16C00C03BFD /* SWXMLHash in Frameworks */,
-				E28F3AFC29B96E6A00C03BFD /* FirebaseAnalyticsSwift in Frameworks */,
 				E276C4012AC5909B007A5917 /* PureLayout in Frameworks */,
 				E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */,
 				E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */,
@@ -1176,7 +1174,6 @@
 			name = aic;
 			packageProductDependencies = (
 				E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */,
-				E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */,
 				E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */,
 				E28F3AFF29B96E6A00C03BFD /* FirebaseCrashlytics */,
 				E28F3B0229BAC14A00C03BFD /* Kingfisher */,
@@ -2225,7 +2222,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 10.26.0;
+				minimumVersion = 11.0.0;
 			};
 		};
 		E28F3B0129BAC14A00C03BFD /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -2288,11 +2285,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
-		};
-		E28F3AFB29B96E6A00C03BFD /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E28F3AF829B96E6A00C03BFD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
 		};
 		E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
