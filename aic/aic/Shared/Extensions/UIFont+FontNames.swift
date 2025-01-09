@@ -13,8 +13,8 @@ extension UIFont {
     static let Serif_Italic = "Amiri-Italic"
     static let Serif_Bold = "Amiri-Bold"
     
-    static let SansSerif_Medium = "IdealSans-Medium"
-    static let SansSerif_Book = "IdealSans-Book"
-    static let SansSerif_BookItalic = "IdealSans-BookItalic"
-	static let SansSerif_Bold = "IdealSans-Semibold"
+    static let SansSerif_Medium = "SourceSansPro-Regular"
+    static let SansSerif_Book = "SourceSansPro-Light"
+    static let SansSerif_BookItalic = "SourceSansPro-LightItalic"
+	static let SansSerif_Bold = "SourceSansPro-Semibold"
 }
