@@ -20,6 +20,7 @@ class AudioGuideCollectionViewCell: UICollectionViewCell {
 		button.frame.size = frame.size
 		button.setTitleColor(.white, for: [])
 		button.titleLabel?.font = .aicNumberPadFont
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
 		setButtonNormalState()
 

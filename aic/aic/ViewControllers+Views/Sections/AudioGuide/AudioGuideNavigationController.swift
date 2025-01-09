@@ -218,6 +218,8 @@ extension AudioGuideNavigationController: UICollectionViewDataSource {
 			cell.button.accessibilityLabel = "Delete"
 		case "GO":
 			cell.button.setTitle("number_pad_go_action".localized(using: "Audio"), for: .normal)
+                cell.button.titleLabel?.adjustsFontSizeToFitWidth = true
+                cell.button.titleLabel?.minimumScaleFactor = 0.5
 		default:
 			cell.button.setTitle(titleLabel, for: .normal)
 		}
