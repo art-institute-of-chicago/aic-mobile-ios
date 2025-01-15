@@ -9,51 +9,54 @@
 import UIKit
 
 class HomeIntroView: UIView {
-	let promptTextView: UITextView = UITextView()
-	let accessMemberCardButton: UIButton = UIButton()
-
-	let topMargin: CGFloat = 32.0
-	let accessMemberCardTopMargin: CGFloat = 18.0
-	let bottomMargin: CGFloat = 32.0
-
-	init() {
-		super.init(frame: CGRect.zero)
-
-		backgroundColor = .aicIntroTextBackgroundColor
-
-		promptTextView.setDefaultsForAICAttributedTextView()
-		promptTextView.font = .aicPageTextFont
-		promptTextView.textColor = .aicDarkGrayColor
-		promptTextView.textAlignment = .center
-		promptTextView.dataDetectorTypes = .link
-		promptTextView.linkTextAttributes = [
-			.font: UIFont.aicPageTextFont,
-			.foregroundColor: UIColor.aicHomeMemberPromptLinkColor
-		]
-
-		accessMemberCardButton.backgroundColor = .clear
-		accessMemberCardButton.titleLabel!.font = .aicPageTextFont
-		accessMemberCardButton.setTitleColor(.aicHomeMemberPromptLinkColor, for: .normal)
-
-		// Add subviews
-		self.addSubview(promptTextView)
-		self.addSubview(accessMemberCardButton)
-
-		createConstraints()
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
-	private func createConstraints() {
-		promptTextView.autoPinEdge(.top, to: .top, of: self, withOffset: topMargin)
-		promptTextView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16.0)
-		promptTextView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16.0)
-
-		accessMemberCardButton.autoPinEdge(.top, to: .bottom, of: promptTextView, withOffset: accessMemberCardTopMargin)
-		accessMemberCardButton.autoAlignAxis(.vertical, toSameAxisOf: self)
-
-		self.autoPinEdge(.bottom, to: .bottom, of: accessMemberCardButton, withOffset: bottomMargin)
-	}
+    let promptTextView: UITextView = UITextView()
+    let accessMemberCardButton: UIButton = UIButton()
+    
+    var stackView = UIStackView()
+    
+    init() {
+        super.init(frame: CGRect.zero)
+        
+        backgroundColor = .aicIntroTextBackgroundColor
+        
+        promptTextView.setDefaultsForAICAttributedTextView()
+        promptTextView.font = .aicPageTextFont
+        promptTextView.textColor = .aicDarkGrayColor
+        promptTextView.textAlignment = .center
+        promptTextView.dataDetectorTypes = .link
+        promptTextView.linkTextAttributes = [
+            .font: UIFont.aicPageTextFont,
+            .foregroundColor: UIColor.aicHomeMemberPromptLinkColor
+        ]
+        
+        accessMemberCardButton.backgroundColor = .clear
+        accessMemberCardButton.titleLabel!.font = .aicPageTextFont
+        accessMemberCardButton.setTitleColor(.aicHomeMemberPromptLinkColor, for: .normal)
+        
+        self.stackView = UIStackView(arrangedSubviews: [promptTextView, accessMemberCardButton])
+        self.stackView.spacing = 16
+        self.stackView.axis = .vertical
+        
+        // Add subviews
+        self.addSubview(stackView)
+        
+        createConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updatePromptText(with updatedText: String) {
+        let processedText = updatedText.trimmingCharacters(in: .whitespacesAndNewlines)
+        promptTextView.text = processedText
+        promptTextView.isHidden = processedText.isEmpty
+    }
+    
+    private func createConstraints() {
+        stackView.autoPinEdge(.top, to: .top, of: self, withOffset: 32)
+        stackView.autoPinEdge(.leading, to: .leading, of: self, withOffset: 16.0)
+        stackView.autoPinEdge(.trailing, to: .trailing, of: self, withOffset: -16.0)
+        stackView.autoPinEdge(.bottom, to: .bottom, of: self, withOffset: -32)
+    }
 }
