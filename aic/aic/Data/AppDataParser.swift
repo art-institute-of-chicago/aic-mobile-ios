@@ -1072,6 +1072,7 @@ final class AppDataParser {
             let id = try getInt(fromJSON: exhibitionJSON, forKey: "id")
             let title = try getString(fromJSON: exhibitionJSON, forKey: "title")
             let description = try getString(fromJSON: exhibitionJSON, forKey: "short_description", optional: true)
+            let position = try getInt(fromJSON: exhibitionJSON, forKey: "position")
 
             // Image
             var imageURL: URL?
@@ -1091,7 +1092,7 @@ final class AppDataParser {
 
             // Get date exibition ends
             let startDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_start_at")
-            let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_end_at")
+            let endDateString = try getString(fromJSON: exhibitionJSON, forKey: "aic_end_at", optional: true)
 
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
@@ -1104,11 +1105,19 @@ final class AppDataParser {
                     data: exhibitionJSON.description
                 )
             }
-            guard let endDate = dateFormatter.date(from: endDateString) else {
-                throw ParseError.invalidExhibition(
-                    message: ParseError.invalidDateFormat(dateString: endDateString).errorDescription!,
-                    data: exhibitionJSON.description
-                )
+            
+            let endDate: Date?
+            if endDateString != "" {
+                guard let formattedDate = dateFormatter.date(from: endDateString) else {
+                    throw ParseError.invalidExhibition(
+                        message: ParseError.invalidDateFormat(dateString: endDateString).errorDescription!,
+                        data: exhibitionJSON.description
+                    )
+                }
+                
+                endDate = formattedDate
+            } else {
+                endDate = nil
             }
 
             // Return news item
@@ -1120,7 +1129,8 @@ final class AppDataParser {
                 startDate: startDate,
                 endDate: endDate,
                 galleryId: galleryId,
-                location: location
+                location: location,
+                position: position
             )
         } catch ParseError.missingKey(let key) {
             throw ParseError.invalidExhibition(

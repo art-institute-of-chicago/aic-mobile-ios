@@ -44,11 +44,16 @@ class SeeAllExhibitionCell: UICollectionViewCell {
     private func setupContent(_ model: AICExhibitionModel) {
         exhibitionImageView.kf.setImage(with: model.imageUrl)
         exhibitionTitleLabel.text = model.title
-        throughDateLabel.attributedText = attributedStringWithLineHeight(
-            text: Common.Info.throughDateString(endDate: model.endDate),
-            font: .aicTextItalicFont,
-            lineHeight: 18
-        )
+        
+        if let endDate = model.endDate {
+            throughDateLabel.attributedText = attributedStringWithLineHeight(
+                text: Common.Info.throughDateString(endDate: endDate),
+                font: .aicTextItalicFont,
+                lineHeight: 18
+            )
+        } else {
+            throughDateLabel.attributedText = "Ongoing".attributedString
+        }
     }
     private func setupAccessibility() {
         self.isAccessibilityElement = true

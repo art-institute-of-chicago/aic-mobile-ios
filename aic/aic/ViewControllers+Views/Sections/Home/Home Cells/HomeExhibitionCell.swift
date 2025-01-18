@@ -39,7 +39,12 @@ class HomeExhibitionCell: UICollectionViewCell {
 			// set up UI
 			exhibitionImageView.kf.setImage(with: exhibitionModel.imageUrl)
 			exhibitionTitleLabel.text = exhibitionModel.title
-			throughDateTextView.attributedText = attributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: exhibitionModel.endDate), font: .aicTextItalicFont, lineHeight: 22)
+            
+            if let endDate = exhibitionModel.endDate {
+                throughDateTextView.attributedText = attributedStringWithLineHeight(text: Common.Info.throughDateString(endDate: endDate), font: .aicTextItalicFont, lineHeight: 22)
+            } else {
+                throughDateTextView.attributedText = "Ongoing".attributedString
+            }
 
 			// Accessibility
 			self.accessibilityElements = [
