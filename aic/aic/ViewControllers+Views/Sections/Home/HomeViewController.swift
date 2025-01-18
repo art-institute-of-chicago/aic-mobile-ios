@@ -228,9 +228,8 @@ class HomeViewController: SectionViewController {
 	// MARK: Language
 
 	@objc private func updateLanguage() {
-		let homeMemberPromptText: String = AppDataManager.sharedInstance.app.generalInfo.homeMemberPrompt
-		homeIntroView.promptTextView.text = homeMemberPromptText
-
+        let homeMemberPromptText = AppDataManager.sharedInstance.app.generalInfo.homeMemberPrompt
+        homeIntroView.updatePromptText(with: homeMemberPromptText)
 		homeIntroView.accessMemberCardButton.setTitle("welcome_member_card_action".localized(using: "Base"), for: .normal)
 
 		toursTitleView.contentTitleLabel.text = "welcome_tours_header".localized(using: "Base")
