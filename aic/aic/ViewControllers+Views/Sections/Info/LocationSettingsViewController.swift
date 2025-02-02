@@ -77,18 +77,6 @@ class LocationSettingsViewController: UIViewController {
 		pageView.titleLabel.text = "location_settings_header".localized(using: "LocationUI")
 		pageView.textView.text = "location_settings_body".localized(using: "LocationUI")
         
-        // Location Debug Information
-        if let location = Common.Map.locationManager.location {
-            pageView.textView.text += """
-            \n
-            \n
-            Location Debug Information:
-            \(location.coordinate.latitude), \(location.coordinate.longitude)
-            Accuracy: \(Int(location.horizontalAccuracy)) meters
-            Last updated: \(DateFormatter.localizedString(from: location.timestamp, dateStyle: .short, timeStyle: .short))
-            """
-        }
-
 		if CLLocationManager.locationServicesEnabled() {
 			switch locationManager.authorizationStatus {
 			case .restricted, .denied:
