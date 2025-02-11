@@ -85,7 +85,7 @@ class EventContentCell: UITableViewCell {
 			let allStyle = Style.font(.aicTextFont).baselineOffset(22.0 - Float(UIFont.aicTitleFont.pointSize)).paragraphStyle(paragraphStyle)
 
 			let eventDescription = eventModel.longDescription
-				.replacingOccurrences(of: "</p>", with: "</p>\n")
+				.replacingOccurrences(of: "</p>", with: "</p>\n\n")
 				.replacingOccurrences(of: "<li>", with: "\n<li>•\t")
 
 			let descriptionAttributedString = eventDescription
