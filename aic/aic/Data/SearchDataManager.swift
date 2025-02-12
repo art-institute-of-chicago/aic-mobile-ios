@@ -112,7 +112,8 @@ final class SearchDataManager: NSObject {
 				"gallery_id",
 				"web_url",
 				"aic_start_at",
-				"aic_end_at"
+				"aic_end_at",
+                "position"
 			],
 			"q": searchText,
 			"query": [
