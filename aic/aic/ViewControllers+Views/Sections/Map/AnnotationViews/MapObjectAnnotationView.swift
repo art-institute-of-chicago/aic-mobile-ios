@@ -428,7 +428,7 @@ private extension MapObjectAnnotationView {
 private extension MapObjectAnnotationView {
 
     @objc func playButtonTapped() {
-        let isImageInfoMode = (mode == .imageInfo || mode == .smallImageInfo)
+        let isImageInfoMode = (mode == .imageInfo || mode == .smallImageInfo || mode == .dot)
         guard self.isSelected && isImageInfoMode else { return }
 
         delegate?.mapObjectAnnotationViewDidPressPlay(self)
