@@ -1855,7 +1855,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.6;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1898,7 +1898,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.6;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -2088,7 +2088,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.6;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
