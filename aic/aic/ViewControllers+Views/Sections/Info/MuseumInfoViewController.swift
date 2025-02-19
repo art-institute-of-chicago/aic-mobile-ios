@@ -66,6 +66,11 @@ class MuseumInfoViewController: UIViewController {
 		pageView.titleLabel.text = "info_museum_info_action".localized(using: "Info")
 
 		var text: String = AppDataManager.sharedInstance.app.generalInfo.museumHours
+        // If the API response is empty, fallback to a local translation.
+        if text.isEmpty {
+            text = "info_museum_hours".localized(using: "Info")
+        }
+        
 		text += "\n\n" + Common.Info.museumInformationAddress
 		text += "\n\n" + Common.Info.museumInformationPhoneNumber
 		pageView.textView.text = text
