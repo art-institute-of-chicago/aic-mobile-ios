@@ -26,11 +26,6 @@ struct Common {
 
         // Used to cache JSON data locally until remote file changes
         static let localAppDataFilename = "app.data"
-
-        static let hasPhoneFaceID: Bool = {
-            let biometricType = LAContext().biometricType
-            return biometricType == .faceID
-        }()
     }
 
     // MARK: Sections
@@ -513,7 +508,7 @@ extension Common {
             return 64
         }
 
-        static var tabBarHeight: CGFloat { Constants.hasPhoneFaceID ? 83 : 49 }
+        static var tabBarHeight: CGFloat = 49
         static var miniAudioPlayerHeight: CGFloat { 42 }
         static var tabBarHeightWithMiniAudioPlayerHeight: CGFloat { tabBarHeight + miniAudioPlayerHeight }
         static var cardFullscreenPositionY: CGFloat { safeAreaTopMargin }
