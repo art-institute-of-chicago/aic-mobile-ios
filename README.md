@@ -148,12 +148,6 @@ Once you have downloaded the repo, one way or another, open your terminal and ch
 cd /path/to/aic-mobile-ios
 ```
 
-Then, run the `install.sh` script. This script will fetch and build all of the required libraries for the app, create stub config files, and automatically launch Xcode when finished.
-
-```bash
-./install.sh
-```
-
 You should now be up-and-running in Xcode! The next steps will be to get started with some test data so you can run the app in the Simulator.
 
 
@@ -192,8 +186,6 @@ This section is meant to get you started with modifying the app for your own mus
 1. `GoogleService-Info.plist`
 
 For readability, we assume that all config paths are relative to the `/aic/aic` subdirectory, unless otherwise noted. For instance, when we talk about `Info.plist`, we mean `/aic/aic/Info.plist` specifically.
-
-You might note that `Config.plist` and `GoogleService-Info.plist` are not included with the repository. Running `install.sh` as part of the [installation process](#installation) will create these files for you. Any changes you make to these files will be ignored by Git.
 
 We'll briefly go through these files and discuss the changes you may need to make.
 
@@ -274,8 +266,6 @@ BUNDLE_ID
 PROJECT_ID
 GOOGLE_APP_ID
 ```
-
-Note that this file does not exist initially, and it is not tracked by git. Like `Config.plist`, it will be created when you run `install.sh`.
 
 See the [Analytics](#analytics) section for more info.
 
@@ -569,9 +559,9 @@ The application relies on a few external libs, all of which are built using [Coc
 
 ## Analytics
 
-The app uses Google Analytics, installed using CocoaPods.
+The app uses Google Analytics, installed using CocoaPods. 
 
-After running `install.sh`, you will need to configure [GoogleService-Info.plist](#googleservice-infoplist) to enable analytics.
+You will need to configure [GoogleService-Info.plist](#googleservice-infoplist) to enable analytics.
 
 See [AICAnalytics.swift](aic/aic/Analytics/AICAnalytics.swift) for details regarding which events are tracked.
 
@@ -596,10 +586,6 @@ git clone https://github.com/your-github-account/aic-mobile-ios.git
 
 # Enter the folder that was created by the clone
 cd aic-mobile-ios
-
-# Run the install script
-chmod a+rx install.sh
-./install.sh
 
 # Start a feature branch
 git flow start feature yourinitials-good-description-issuenumberifapplicable
