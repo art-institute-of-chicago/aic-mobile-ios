@@ -1,55 +1,64 @@
-#OS X Files
-*.DS_STORE
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Compiled Static libraries
-*.lai
-*.la
-
-# Xcode Noise
-*~.nib
-*.pbxuser
-*.perspective
-*.perspectivev3
-*.mode1v3
-*.mode2v3
-*.xcworkspace
-*.xcuserdata
+## User settings
 xcuserdata/
-build/
 
-#VS2012 Noise
-*.suo
-*.ncb
-*.sdf
-*.opensdf
-Debug/
-Release/
-ipch/
+## Obj-C/Swift specific
+*.hmap
 
-DerivedData
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
 
-aic/Carthage/**
-aic/Pods/**
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
 
-# Configuration
-aic/aic/Config.plist
-aic/aic/GoogleService-Info.plist
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+# Package.resolved
+# *.xcodeproj
+#
+# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
+# hence it is not needed unless you have added a package configuration file to your project
+# .swiftpm
 
-# Local temporary files
-tmp/
+.build/
 
-#Member Card assets
-aic/aic/Assets.xcassets/InfoView/
+# CocoaPods
+#
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+#
+# Pods/
+#
+# Add this line if you want to avoid checking in source code from the Xcode workspace
+# *.xcworkspace
 
-aic/fastlane/report.xml
-aic/fastlane/README.md
+# Carthage
+#
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
 
+Carthage/Build/
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+.DS_Store

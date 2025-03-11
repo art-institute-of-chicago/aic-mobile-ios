@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -157,7 +157,6 @@
 		E260C3B02B751728004911C4 /* Bundle+ApplicationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260C3AF2B751728004911C4 /* Bundle+ApplicationInfo.swift */; };
 		E260C3B32B751D16004911C4 /* PlistFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260C3B22B751D16004911C4 /* PlistFile.swift */; };
 		E260C3B52B762B74004911C4 /* ConfigurationResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E260C3B42B762B74004911C4 /* ConfigurationResources.swift */; };
-		E274012C2B70DF8B00CA4C71 /* LAContext+BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */; };
 		E276C4012AC5909B007A5917 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E276C4002AC5909B007A5917 /* PureLayout */; };
 		E28F3AFA29B96E6A00C03BFD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AF929B96E6A00C03BFD /* FirebaseAnalytics */; };
 		E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E28F3AFD29B96E6A00C03BFD /* FirebaseAuth */; };
@@ -431,7 +430,6 @@
 		E260C3AF2B751728004911C4 /* Bundle+ApplicationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+ApplicationInfo.swift"; sourceTree = "<group>"; };
 		E260C3B22B751D16004911C4 /* PlistFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistFile.swift; sourceTree = "<group>"; };
 		E260C3B42B762B74004911C4 /* ConfigurationResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationResources.swift; sourceTree = "<group>"; };
-		E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LAContext+BiometryType.swift"; sourceTree = "<group>"; };
 		E28F828D2C41879600E9AA62 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		E2C3485B2C2345E0007392BB /* CrashlyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashlyticsManager.swift; sourceTree = "<group>"; };
 		E2C3485C2C2345E0007392BB /* CrashlyticsProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashlyticsProperty.swift; sourceTree = "<group>"; };
@@ -874,7 +872,6 @@
 		E218869529C0037300803FF9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E274012B2B70DF8B00CA4C71 /* LAContext+BiometryType.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
 				E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */,
 				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
@@ -1263,7 +1260,6 @@
 				};
 			};
 			buildConfigurationList = E40D41C41C6CEBB700A57AF4 /* Build configuration list for PBXProject "aic" */;
-			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1285,6 +1281,7 @@
 				E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */,
 				E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = E40D41CA1C6CEBB700A57AF4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1388,7 +1385,6 @@
 				05A2B2FB21024A780059C123 /* UILabelPadding.swift in Sources */,
 				294C0B60201A76F700F2ABB1 /* CoordinateConverter.swift in Sources */,
 				2915B0F0202BD73400DEBB03 /* AICAudioCommentaryModel.swift in Sources */,
-				E274012C2B70DF8B00CA4C71 /* LAContext+BiometryType.swift in Sources */,
 				E2C3486B2C2345E0007392BB /* DataParserCrashlyticsReport.swift in Sources */,
 				294C0B50201A76F700F2ABB1 /* MapDepartmentAnnotationView.swift in Sources */,
 				295AC0991FDF923B009A0FAF /* InfoPageView.swift in Sources */,
