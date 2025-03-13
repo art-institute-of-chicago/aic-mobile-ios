@@ -310,6 +310,18 @@ extension String {
 	var stringByDecodingHTMLEntities: String {
 		return decodeHTMLEntities().decodedString
 	}
+    
+    
+    /// Create a version of the string with all HTML tags removed.
+    /// - Returns: The text of the string, without any of the HTML tags (or their content).
+    func removeHTMLTags() -> String? {
+        guard let data = self.data(using: String.Encoding.utf8) else { return nil }
+    
+        let convertedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+        
+        return convertedString?.string
+    }
 
 	/// Returns a tuple containing the string made by relpacing in the
 	/// `String` all HTML character entity references with the corresponding

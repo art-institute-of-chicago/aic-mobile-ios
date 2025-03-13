@@ -1206,7 +1206,7 @@ final class AppDataParser {
             // Return news item
             return AICEventModel(
                 eventId: eventId,
-                title: title.stringByDecodingHTMLEntities,
+                title: title.removeHTMLTags() ?? title,
                 shortDescription: shortDescription.stringByDecodingHTMLEntities,
                 longDescription: longDescription.stringByDecodingHTMLEntities,
                 imageUrl: imageUrl,
