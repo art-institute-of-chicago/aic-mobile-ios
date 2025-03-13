@@ -1173,7 +1173,7 @@ final class AppDataParser {
 	func parse(eventJson: JSON) throws -> AICEventModel {
         do {
             let eventId = try getString(fromJSON: eventJson, forKey: "id")
-            let title = try getString(fromJSON: eventJson, forKey: "title")
+            let title = try getString(fromJSON: eventJson, forKey: "title_display")
             let longDescription = try getString(fromJSON: eventJson, forKey: "description")
             let shortDescription = try getString(fromJSON: eventJson, forKey: "short_description", optional: true)
             let imageUrl: URL = try getURL(fromJSON: eventJson, forKey: "image_url")!
