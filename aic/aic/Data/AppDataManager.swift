@@ -300,6 +300,7 @@ final class AppDataManager {
 			"fields": [
 				"id",
 				"title",
+                "title_display",
 				"description",
 				"short_description",
 				"image_url",
