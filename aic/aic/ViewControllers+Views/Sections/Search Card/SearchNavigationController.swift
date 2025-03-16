@@ -15,8 +15,8 @@ class SearchNavigationController: CardNavigationController {
 	let searchButton: UIButton = UIButton()
 	let dividerLine: UIView = UIView()
 	let filterMenuView: ResultsFilterMenuView = ResultsFilterMenuView()
-	let resultsVC: ResultsTableViewController = ResultsTableViewController()
-	var currentTableView: UITableView
+    let resultsVC = ResultsTableViewController()
+	var currentTableView: UITableView?
 
 	private let slideAnimator: SearchSlideAnimator = SearchSlideAnimator()
 
@@ -43,7 +43,10 @@ class SearchNavigationController: CardNavigationController {
 	var trackUserSelectedContent: Bool = false
 
 	init() {
-		currentTableView = resultsVC.tableView
+        if let tableView = resultsVC.tableView {
+            currentTableView = tableView
+        }
+        
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -163,9 +166,9 @@ class SearchNavigationController: CardNavigationController {
 	override func setCardPosition(_ positionY: CGFloat) {
 		super.setCardPosition(positionY)
 		if positionY > Common.Layout.cardFullscreenPositionY + 50 {
-			currentTableView.panGestureRecognizer.isEnabled = false
+            currentTableView?.panGestureRecognizer.isEnabled = false
 		} else {
-			currentTableView.panGestureRecognizer.isEnabled = true
+            currentTableView?.panGestureRecognizer.isEnabled = true
 		}
 	}
 
@@ -604,7 +607,7 @@ extension SearchNavigationController: UINavigationControllerDelegate {
 extension SearchNavigationController {
 	override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		if gestureRecognizer == cardPanGesture {
-			if currentTableView != resultsVC.tableView && currentTableView.contentOffset.y <= 0 {
+            if currentTableView != resultsVC.tableView && currentTableView?.contentOffset.y ?? 0 <= 0 {
 				return true
 			}
 		}
