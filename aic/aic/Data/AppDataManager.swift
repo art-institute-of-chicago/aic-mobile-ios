@@ -16,7 +16,7 @@ final class AppDataManager {
 	static let sharedInstance = AppDataManager()
 
 	weak var delegate: AppDataManagerDelegate?
-	private(set) var app: AICAppDataModel! = nil
+    private(set) var app = AICAppDataModel(generalInfo: .init(translations: [:]), map: .init(floors: []))
 	private(set) var exhibitions = [AICExhibitionModel]()
 	private(set) var events = [AICEventModel]()
 
