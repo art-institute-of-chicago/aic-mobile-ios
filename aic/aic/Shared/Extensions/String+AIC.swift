@@ -315,6 +315,7 @@ extension String {
     /// Create a version of the string with all HTML tags removed.
     /// - Returns: The text of the string, without any of the HTML tags (or their content).
     func removeHTMLTags() -> String? {
+        guard self.isEmpty == false else { return nil }
         guard let data = self.data(using: String.Encoding.utf8) else { return nil }
     
         let convertedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html,
