@@ -11,8 +11,6 @@ import Foundation
 struct GeneralCrashlyticsReport: CrashlyticsReport {
     var error: any Error
     var log: String
-    
-    
 }
 
 enum GeneralError: Error {
