@@ -82,7 +82,11 @@ class MemberCardView: UIView {
 	}
 
 	func setContent(memberCard: AICMemberCardModel, memberNameIndex: Int) {
-		memberNameLabel.text = memberCard.memberNames[memberNameIndex]
+        guard let memberNames = memberCard.memberNames[safeIndex: memberNameIndex] else {
+            return
+        }
+        
+		memberNameLabel.text = memberNames
 
 		// Expiration Date
 		let dateFormatter = DateFormatter()

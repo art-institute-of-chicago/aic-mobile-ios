@@ -148,6 +148,7 @@
 		306E6E4F2469CA4D00B17CA8 /* Base.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E1B2469CA4C00B17CA8 /* Base.strings */; };
 		306E6E502469CA4D00B17CA8 /* LocationUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = 306E6E1D2469CA4C00B17CA8 /* LocationUI.strings */; };
 		3099149B23A8385E00E32ACE /* InfoBuyTicketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */; };
+		8DB858F32D8B6E11009E9B1B /* Array+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */; };
 		E20B1C0829D525A90095E59C /* MapPointOfInterestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */; };
 		E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */; };
 		E21D01B12BFD0C6100E75C53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */; };
@@ -421,6 +422,7 @@
 		306E6E452469CA4C00B17CA8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Base.strings; sourceTree = "<group>"; };
 		306E6E462469CA4C00B17CA8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LocationUI.strings; sourceTree = "<group>"; };
 		3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBuyTicketsView.swift; sourceTree = "<group>"; };
+		8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AIC.swift"; sourceTree = "<group>"; };
 		E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointOfInterestType.swift; sourceTree = "<group>"; };
 		E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
 		E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "aic/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -872,6 +874,7 @@
 		E218869529C0037300803FF9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */,
 				E421783B1CC6E1F300815B41 /* String+AIC.swift */,
 				E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */,
 				E4D790E11C90AD200033EE0A /* UIColor+AIC.swift */,
@@ -1543,6 +1546,7 @@
 				E2C348672C2345E0007392BB /* CrashlyticsManager.swift in Sources */,
 				2975A057203F61250014017C /* MapExhibitionAnnotationView.swift in Sources */,
 				E4D159351CBAE3E900536B4D /* AICTourModel.swift in Sources */,
+				8DB858F32D8B6E11009E9B1B /* Array+AIC.swift in Sources */,
 				29824BCB200D867C003B6DB5 /* ContentCardNavigationController.swift in Sources */,
 				29F12BC2204F4C37009C1A47 /* MapTourStartContentView.swift in Sources */,
 				2994891F1FA3849C00943197 /* AICGeneralInfoModel.swift in Sources */,
