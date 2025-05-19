@@ -167,7 +167,8 @@ class MemberCardViewController: UIViewController {
 	@objc private func switchCardholderButtonPressed(button: UIButton) {
 		if let memberCard = MemberDataManager.sharedInstance.currentMemberCard {
 			MemberDataManager.sharedInstance.currentMemberNameIndex = MemberDataManager.sharedInstance.currentMemberNameIndex < memberCard.memberNames.count - 1 ? MemberDataManager.sharedInstance.currentMemberNameIndex + 1 : 0
-			cardView.memberNameLabel.text = memberCard.memberNames[MemberDataManager.sharedInstance.currentMemberNameIndex]
+            
+            cardView.memberNameLabel.text = memberCard.memberNames[MemberDataManager.sharedInstance.currentMemberNameIndex]
 
 			MemberDataManager.sharedInstance.saveCurrentMember()
 		}

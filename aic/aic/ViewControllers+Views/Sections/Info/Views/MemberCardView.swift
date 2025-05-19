@@ -17,6 +17,15 @@ class MemberCardView: UIView {
 	let switchCardholderButton: AICButton = AICButton(isSmall: false)
 
 	private let barcodeWidth: CGFloat = min(UIScreen.main.bounds.width - 10, 365)
+    
+    private let crashlyticsManager = CrashlyticsManager(
+        service: FirebaseCrashlyticsService(),
+        properties: [
+            AnalyticsProperty.make(by: .appLanguage),
+            AnalyticsProperty.make(by: .deviceLanguage),
+            AnalyticsProperty.make(by: .membership)
+        ]
+    )
 
 	init() {
 		super.init(frame: CGRect.zero)
@@ -82,7 +91,14 @@ class MemberCardView: UIView {
 	}
 
 	func setContent(memberCard: AICMemberCardModel, memberNameIndex: Int) {
-		memberNameLabel.text = memberCard.memberNames[memberNameIndex]
+        guard let memberNames = memberCard.memberNames[safeIndex: memberNameIndex] else {
+            let report = GeneralCrashlyticsReport(error: GeneralError.general, log: "Unable to get member index \(memberNameIndex) from \(memberCard.memberNames.count) total indexes")
+            crashlyticsManager.record(report)
+            
+            return
+        }
+        
+		memberNameLabel.text = memberNames
 
 		// Expiration Date
 		let dateFormatter = DateFormatter()

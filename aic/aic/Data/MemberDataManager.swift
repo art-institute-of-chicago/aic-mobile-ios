@@ -132,7 +132,7 @@ class MemberDataManager {
 					var isReciprocal = false
 					var isLifeMembership = false
 
-					switch memberLevel! {
+					switch memberLevel {
 					case "Life Membership":
 						memberLevel = "Life Member"
 						isLifeMembership = true
@@ -207,8 +207,9 @@ class MemberDataManager {
 
 		var firstName: String = ""
 		if currentMemberNameIndex < memberCard.memberNames.count {
-			let fullName: String = memberCard.memberNames[currentMemberNameIndex]
-			firstName = String(describing: fullName.split(separator: " ").first!)
+            if let fullName: String = memberCard.memberNames[safeIndex: currentMemberNameIndex] {
+                firstName = String(fullName.split(separator: " ").first ?? "")
+            }
 		}
 
 		// Store
