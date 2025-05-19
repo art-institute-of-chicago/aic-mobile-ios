@@ -238,7 +238,7 @@ extension Common {
             case zoomFarLimit = 1200
             case zoomLimit = 340
             case zoomDefault = 300
-            case zoomMedium = 150
+            case zoomMedium = 175
             case zoomDetail = 50
             case zoomMax = 25
 
