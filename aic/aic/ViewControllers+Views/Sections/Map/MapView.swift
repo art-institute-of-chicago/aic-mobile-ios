@@ -200,6 +200,8 @@ class MapView: MKMapView {
 		// Altitude
 		previousAltitude = currentAltitude
 		currentAltitude = camera.centerCoordinateDistance
+        
+        guard abs(currentAltitude - previousAltitude) > 5 else { return }
 
 		// Zoom Level
 		previousZoomLevel = currentZoomLevel
