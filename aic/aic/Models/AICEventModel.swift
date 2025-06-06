@@ -22,4 +22,9 @@ struct AICEventModel {
 
 	let eventUrl: URL?
 	let buttonText: String
+    let buttonCaption: String?
+    let isTicketed: Bool
+    let isSalesButtonHidden: Bool
+    let onSaleDate: Date?
+    let offSaleDate: Date?
 }

@@ -14,13 +14,13 @@ class EventContentCell: UITableViewCell {
 
 	@IBOutlet var eventImageView: AICImageView!
 	@IBOutlet weak var buyTicketsButton: AICButton!
-	@IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var buttonCaptionTextView: UITextView!
+    @IBOutlet weak var descriptionTextView: UITextView!
 	@IBOutlet weak var transparentOverlayView: UIView!
 	@IBOutlet var monthDayLabel: UILabel!
 	@IBOutlet var hoursMinutesLabel: UILabel!
 	@IBOutlet weak var locationAndDateLabel: UILabelPadding!
 
-	@IBOutlet weak var descriptionToImageVerticalSpacing: NSLayoutConstraint!
 	let descriptionVerticalSpacingMin: CGFloat = 32
 
 	override func awakeFromNib() {
@@ -34,7 +34,8 @@ class EventContentCell: UITableViewCell {
 		eventImageView.clipsToBounds = true
 		buyTicketsButton.titleLabel?.font = .aicButtonFont
 		buyTicketsButton.setIconImage(image: #imageLiteral(resourceName: "buttonTicketIcon"))
-		monthDayLabel.font = .aicInfoOverlayFont
+        buttonCaptionTextView.setDefaultsForAICAttributedTextView()
+        monthDayLabel.font = .aicInfoOverlayFont
 		hoursMinutesLabel.font = .aicInfoOverlayFont
 		transparentOverlayView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
 		descriptionTextView.setDefaultsForAICAttributedTextView()
@@ -96,15 +97,30 @@ class EventContentCell: UITableViewCell {
 			descriptionTextView.attributedText = descriptionAttributedString
 			descriptionTextView.textColor = .white
 
-			if eventModel.eventUrl == nil {
-				buyTicketsButton.isEnabled = false
-				buyTicketsButton.isHidden = true
-				descriptionToImageVerticalSpacing.constant = descriptionVerticalSpacingMin
-			} else if let buyTicketsButton = buyTicketsButton {
-				buyTicketsButton.setTitle(eventModel.buttonText, for: .normal)
-
-				accessibilityItems.append(buyTicketsButton)
-			}
+            // Register/Purchase display logic
+            let validDate = eventModel.onSaleDate == nil || (eventModel.onSaleDate ?? .distantPast < .now && eventModel.offSaleDate ?? .distantFuture > .now)
+            if eventModel.isTicketed && eventModel.isSalesButtonHidden == false && validDate {
+                // Show the button
+                if let buyTicketsButton = buyTicketsButton {
+                    buyTicketsButton.setTitle(eventModel.buttonText, for: .normal)
+                    accessibilityItems.append(buyTicketsButton)
+                }
+            } else {
+                // Hide the button
+                buyTicketsButton.isEnabled = false
+                buyTicketsButton.isHidden = true
+            }
+            
+            // Register caption logic
+            if let caption = eventModel.buttonCaption, caption.isEmpty == false {
+                let captionAttr = caption.style(tags: emStyle, iStyle, strongStyle, bStyle).styleAll(allStyle).attributedString
+                buttonCaptionTextView.attributedText = captionAttr
+                buttonCaptionTextView.isHidden = false
+                buttonCaptionTextView.textColor = .white
+                buttonCaptionTextView.textAlignment = .center
+            } else {
+                buttonCaptionTextView.isHidden = true
+            }
 
 			self.setNeedsLayout()
 			self.layoutIfNeeded()

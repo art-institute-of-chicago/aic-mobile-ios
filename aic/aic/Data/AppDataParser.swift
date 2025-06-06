@@ -1181,6 +1181,12 @@ final class AppDataParser {
             let eventUrl = try getURL(fromJSON: eventJson, forKey: "button_url", optional: true)
             let buttonText = try getString(fromJSON: eventJson, forKey: "button_text", optional: true)
             let locationText = try getString(fromJSON: eventJson, forKey: "location", optional: true)
+            let buttonCaption = try getString(fromJSON: eventJson, forKey: "button_caption", optional: true)
+            let isTicketed = try getBool(fromJSON: eventJson, forKey: "is_ticketed", optional: true)
+            let isSalesButtonHidden = try getBool(fromJSON: eventJson, forKey: "is_sales_button_hidden", optional: true)
+            
+            let onSaleDateString = try getString(fromJSON: eventJson, forKey: "on_sale_at", optional: true)
+            let offSaleDateString = try getString(fromJSON: eventJson, forKey: "off_sale_at", optional: true)
 
             // Get date exibition ends
             let startDateString = try getString(fromJSON: eventJson, forKey: "start_at")
@@ -1203,6 +1209,9 @@ final class AppDataParser {
                     data: eventJson.description
                 )
             }
+            
+            let onSaleDate = dateFormatter.date(from: onSaleDateString)
+            let offSaleDate = dateFormatter.date(from: offSaleDateString)
 
             // Return news item
             return AICEventModel(
@@ -1215,7 +1224,12 @@ final class AppDataParser {
                 startDate: startDate,
                 endDate: endDate,
                 eventUrl: eventUrl,
-                buttonText: buttonText
+                buttonText: buttonText,
+                buttonCaption: buttonCaption,
+                isTicketed: isTicketed,
+                isSalesButtonHidden: isSalesButtonHidden,
+                onSaleDate: onSaleDate,
+                offSaleDate: offSaleDate
             )
         } catch ParseError.missingKey(let key) {
             throw ParseError.invalidEvent(
