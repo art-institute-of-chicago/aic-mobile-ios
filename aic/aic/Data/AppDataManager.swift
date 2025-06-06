@@ -308,8 +308,13 @@ final class AppDataManager {
 				"start_at",
 				"end_at",
 				"button_text",
+                "button_caption",
+                "is_ticketed",
 				"button_url",
-				"is_private"
+				"is_private",
+                "is_sales_button_hidden",
+                "on_sale_at",
+                "off_sale_at"
 			],
 			"sort": ["start_at", "end_at"],
 			"query": [
