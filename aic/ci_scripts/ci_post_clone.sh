@@ -11,6 +11,13 @@ set -e
 
 echo "Starting ci_post_clone.sh script..."
 
+# If this is a Pull Request build, no need to setup the real assets.
+if [[ -n $CI_PULL_REQUEST_NUMBER ]];
+then
+    echo "This build started from a pull request."
+    exit 0
+fi
+
 # Define repository URL and branch
 PRIVATE_REPO_URL="${CONFIG_REPO_URL}"
 CLONE_BRANCH="develop"
