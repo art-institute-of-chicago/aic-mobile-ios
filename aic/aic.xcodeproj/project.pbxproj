@@ -425,6 +425,7 @@
 		3099149A23A8385E00E32ACE /* InfoBuyTicketsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBuyTicketsView.swift; sourceTree = "<group>"; };
 		8D919A742DD9363800FED627 /* GeneralCrashlyticsReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCrashlyticsReport.swift; sourceTree = "<group>"; };
 		8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AIC.swift"; sourceTree = "<group>"; };
+		8DF14D322E6FD10300E22443 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointOfInterestType.swift; sourceTree = "<group>"; };
 		E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
 		E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "aic/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -873,6 +874,14 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		8DF14D312E6FD0CB00E22443 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				8DF14D322E6FD10300E22443 /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		E218869529C0037300803FF9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -944,6 +953,7 @@
 		E40D41C01C6CEBB700A57AF4 = {
 			isa = PBXGroup;
 			children = (
+				8DF14D312E6FD0CB00E22443 /* ci_scripts */,
 				E47A97371CF607990041D0A6 /* Settings.bundle */,
 				E40D41CB1C6CEBB700A57AF4 /* aic */,
 				E40D41E21C6CEBB700A57AF4 /* aicTests */,
@@ -1859,7 +1869,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.6.2;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1902,7 +1912,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.6.2;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -2092,7 +2102,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.6.2;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
