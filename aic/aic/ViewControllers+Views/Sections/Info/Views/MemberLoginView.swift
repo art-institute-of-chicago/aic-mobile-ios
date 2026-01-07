@@ -46,7 +46,8 @@ class MemberLoginView: UIView {
 		memberZipCodeTextField.font = .aicMemberCardLoginFieldFont
 		memberZipCodeTextField.leftViewMode = .always
 		memberZipCodeTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 40))
-		memberZipCodeTextField.keyboardType = .numbersAndPunctuation
+		memberZipCodeTextField.keyboardType = .numberPad
+        memberZipCodeTextField.textContentType = .postalCode
 
 		loginButton.setColorMode(colorMode: AICButton.orangeMode)
 		loginButton.setTitle("Sign In", for: .normal)
