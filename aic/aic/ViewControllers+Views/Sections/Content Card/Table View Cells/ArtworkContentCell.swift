@@ -17,8 +17,7 @@ class ArtworkContentCell: UITableViewCell {
 	@IBOutlet weak var artistDisplayLabel: UILabelPadding!
 	@IBOutlet weak var galleryTitleLabel: UILabel!
 	@IBOutlet weak var descriptionLabel: UILabel!
-
-	@IBOutlet var artworkImageHeight: NSLayoutConstraint!
+    @IBOutlet var artworkImageHeight: NSLayoutConstraint!
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -53,7 +52,7 @@ class ArtworkContentCell: UITableViewCell {
 			artistDisplayLabel.textColor = .white
 			artistDisplayLabel.font = .aicTextFont
 
-			galleryTitleLabel.text = artworkModel.gallery.title
+            galleryTitleLabel.text = artworkModel.gallery?.title ?? "Currently off view"
 			galleryTitleLabel.textColor = .white
 			galleryTitleLabel.font = .aicTextItalicFont
 
@@ -70,6 +69,8 @@ class ArtworkContentCell: UITableViewCell {
 				self.setNeedsLayout()
 				self.layoutIfNeeded()
 			}
+            
+            showOnMapButton.isHidden = artworkModel.isOnView == false
 
 			// Accessibility
             let accessibilityContents = [
