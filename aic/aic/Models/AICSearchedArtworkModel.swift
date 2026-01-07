@@ -16,5 +16,6 @@ struct AICSearchedArtworkModel {
 	let imageUrl: URL
 	let artistDisplay: String
 	let location: CoordinateWithFloor
-	let gallery: AICGalleryModel
+	let gallery: AICGalleryModel?
+    let isOnView: Bool
 }

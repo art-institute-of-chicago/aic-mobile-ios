@@ -55,7 +55,7 @@ class MapArtworkContentView: UIView {
 			imageView.kf.indicatorType = .activity
 			imageView.kf.setImage(with: searchedArtwork.thumbnailUrl)
 
-			locationLabel.text = searchedArtwork.gallery.title
+            locationLabel.text = searchedArtwork.gallery?.title
 			audioButton.isHidden = true
 			audioButton.isEnabled = false
 		}

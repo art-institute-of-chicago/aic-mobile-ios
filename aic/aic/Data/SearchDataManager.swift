@@ -80,14 +80,15 @@ final class SearchDataManager: NSObject {
 				"artist_display",
 				"image_id",
 				"gallery_id",
-				"latlon"
+				"latlon",
+                "is_boosted"
 			],
 			"q": searchText,
-			"query": [
-				"term": [
-					"is_on_view": "true"
-				]
-			]
+//			"query": [
+//				"term": [
+//					"is_on_view": "true"
+//				]
+//			]
 		]
 
 		let toursQuery: [String: Any] = [
