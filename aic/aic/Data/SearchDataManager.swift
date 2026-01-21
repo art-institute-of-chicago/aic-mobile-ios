@@ -63,33 +63,50 @@ final class SearchDataManager: NSObject {
 		}
 	}
 
-	@objc func loadAllContent(searchText: String) {
-		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
-		url += AppDataManager.sharedInstance.app.dataSettings[.multiSearchEndpoint]!
-		url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-		var urlRequest = URLRequest(url: URL(string: url)!)
-
-		let artworksQuery: [String: Any] = [
-			"resources": "artworks",
-			"from": 0,
-			"size": 99,
-			"fields": [
-				"id",
-				"is_on_view",
-				"title",
-				"artist_display",
-				"image_id",
-				"gallery_id",
-				"latlon",
+    @objc func loadAllContent(searchText: String) {
+        var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
+        url += AppDataManager.sharedInstance.app.dataSettings[.multiSearchEndpoint]!
+        url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        var urlRequest = URLRequest(url: URL(string: url)!)
+        
+        let artworksQuery: [String: Any] = [
+            "resources": "artworks",
+            "from": 0,
+            "size": 99,
+            "fields": [
+                "id",
+                "is_on_view",
+                "title",
+                "artist_display",
+                "image_id",
+                "gallery_id",
+                "latlon",
                 "is_boosted"
-			],
-			"q": searchText,
-//			"query": [
-//				"term": [
-//					"is_on_view": "true"
-//				]
-//			]
-		]
+            ],
+            "q": searchText,
+            "query": [
+                "bool": [
+                    "should": [
+                        [
+                            "bool": [
+                                "must": [
+                                    ["match": ["is_on_view": "true"]]
+                                ]
+                            ]
+                        ],
+                        
+                        [
+                            "bool": [
+                                "must": [
+                                    ["match": ["is_on_view": "false"]],
+                                    ["match": ["is_boosted": "true" ]]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
 
 		let toursQuery: [String: Any] = [
 			"resources": "tours",
