@@ -1353,6 +1353,7 @@ final class AppDataParser {
             do {
                 let artworkId = try getInt(fromJSON: resultJSON, forKey: "id")
                 let isOnView = try getBool(fromJSON: resultJSON, forKey: "is_on_view")
+                let isBoosted = try getBool(fromJSON: resultJSON, forKey: "is_boosted")
 
                 // If this artwork is also in the mobile CMS,
                 // we get the data correspondent data from the AICObjectModel
@@ -1369,12 +1370,13 @@ final class AppDataParser {
                         imageUrl: object.imageUrl,
                         artistDisplay: artistDisplay,
                         location: object.location,
-                        gallery: object.gallery
+                        gallery: object.gallery,
+                        isOnView: isOnView
                     )
                     searchedArtworks.append(searchedArtwork)
                 }
                 // Otherwise we parse from the data api
-                else if isOnView {
+                else if isOnView || (!isOnView && isBoosted) {
                     let title: String = try getString(fromJSON: resultJSON, forKey: "title")
                     let artistDisplay: String = try getString(fromJSON: resultJSON, forKey: "artist_display")
 
@@ -1397,18 +1399,21 @@ final class AppDataParser {
                         imageUrl = URL(string: "https://aic-mobile-tours.artic.edu/sites/default/files/object-images/AIC_ImagePlaceholder_25.png")!
                     }
 
-                    let galleryId = try getInt(fromJSON: resultJSON, forKey: "gallery_id")
-                    let gallery = try getGallery(forGalleryId: galleryId)
+                    var gallery: AICGalleryModel?
+                    do {
+                        let galleryId = try getInt(fromJSON: resultJSON, forKey: "gallery_id")
+                        gallery = try getGallery(forGalleryId: galleryId)
+                    } catch {
+                        // Off-view items will not have a gallery ID
+                    }
 
-                    var location: CoordinateWithFloor?
+                    var location: CoordinateWithFloor
                     do {
                         let coreLocation = try getCLLocation2d(fromJSON: resultJSON, forKey: "latlon")
-                        let floorNumber = gallery.location.floor
+                        let floorNumber = gallery?.location.floor ?? -1
                         location = CoordinateWithFloor(coordinate: coreLocation, floor: floorNumber)
-                    } catch {}
-
-                    if location == nil {
-                        location = gallery.location
+                    } catch {
+                        location = gallery?.location ?? CoordinateWithFloor(coordinate: .init(latitude: 0, longitude: 0), floor: -1)
                     }
 
                     let searchedArtwork = AICSearchedArtworkModel(
@@ -1418,8 +1423,9 @@ final class AppDataParser {
                         thumbnailUrl: thumbnailUrl!,
                         imageUrl: imageUrl!,
                         artistDisplay: artistDisplay.stringByDecodingHTMLEntities,
-                        location: location!,
-                        gallery: gallery
+                        location: location,
+                        gallery: gallery,
+                        isOnView: isOnView
                     )
                     searchedArtworks.append(searchedArtwork)
                 }
