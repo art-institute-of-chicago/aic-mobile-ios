@@ -160,7 +160,7 @@ class MapArtworkContentView: UIView {
 		imageButton.isAccessibilityElement = false
 		locationLabel.isAccessibilityElement = false
 		titleLabel.accessibilityLabel = "Tour Stop"
-		titleLabel.accessibilityValue = titleLabel.text! + ", " + locationLabel.text!
+		titleLabel.accessibilityValue = (titleLabel.text ?? "") + ", " + (locationLabel.text ?? "")
 		audioButton.accessibilityLabel = "Play Audio Track"
 	}
 
