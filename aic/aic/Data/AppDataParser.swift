@@ -1404,7 +1404,7 @@ final class AppDataParser {
                         let galleryId = try getInt(fromJSON: resultJSON, forKey: "gallery_id")
                         gallery = try getGallery(forGalleryId: galleryId)
                     } catch {
-                        // Off-view items with not have a gallery ID
+                        // Off-view items will not have a gallery ID
                     }
 
                     var location: CoordinateWithFloor
