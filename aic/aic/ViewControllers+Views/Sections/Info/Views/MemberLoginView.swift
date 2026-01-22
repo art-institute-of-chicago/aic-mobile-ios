@@ -60,11 +60,32 @@ class MemberLoginView: UIView {
 		self.addSubview(loginButton)
 
 		createConstraints()
+        
+        let toolbar = UIToolbar()
+        let keyboardSwitch = UIBarButtonItem(title: accessoryButtonTitle, style: .plain, target: self, action: #selector(switchKeyboard))
+        toolbar.items = [keyboardSwitch]
+        toolbar.sizeToFit()
+        memberZipCodeTextField.inputAccessoryView = toolbar
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+    
+    @objc private func switchKeyboard() {
+        if memberZipCodeTextField.keyboardType == .numberPad {
+            memberZipCodeTextField.keyboardType = .numbersAndPunctuation
+        } else {
+            memberZipCodeTextField.keyboardType = .numberPad
+        }
+        
+        (memberZipCodeTextField.inputAccessoryView as? UIToolbar)?.items?.first?.title = accessoryButtonTitle
+        memberZipCodeTextField.reloadInputViews()
+    }
+    
+    private var accessoryButtonTitle: String {
+        (memberZipCodeTextField.keyboardType == .numberPad) ? "Show full keyboard" : "Show number pad"
+    }
 
 	private func createConstraints() {
 		memberIDTitleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: 23)
