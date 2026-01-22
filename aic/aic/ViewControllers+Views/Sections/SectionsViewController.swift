@@ -560,7 +560,10 @@ extension SectionsViewController: AudioGuideNavigationControllerDelegate {
 	}
 
 	func audioGuideDidSelectTourAudio(tour: AICTourModel, audioGuideID: Int) {
-		playAudioGuideTour(tour: tour)
+        showTourOnMap(tour: tour, language: Common.currentLanguage, stopIndex: nil)
+        
+        audioPlayerCardVC.playTourOverviewAudio(tour: tour, source: .AudioGuide)
+        audioPlayerCardVC.showMiniPlayer()
 	}
 }
 
