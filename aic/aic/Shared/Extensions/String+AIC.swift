@@ -405,6 +405,43 @@ extension String {
 
 		// Return results
 		return (decodedString: result, replacementOffsets: replacementOffsets)
-
 	}
+    
+    func uppercaseH2Tags() -> String {
+        // Pattern to match h2 tags and capture their content
+        let pattern = #"<h2[^>]*>(.*?)</h2>"#
+        
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive, .dotMatchesLineSeparators]) else {
+            return self
+        }
+        
+        var result = self
+        let matches = regex.matches(in: self, range: NSRange(self.startIndex..., in: self))
+        
+        // Process matches in reverse order to maintain correct string indices
+        for match in matches.reversed() {
+            // Get the full match range (entire <h2>...</h2>)
+            let fullRange = match.range
+            
+            // Get the content range (just the text between tags)
+            let contentRange = match.range(at: 1)
+            
+            // Extract the content
+            if let contentSwiftRange = Range(contentRange, in: self) {
+                let content = String(self[contentSwiftRange])
+                let uppercasedContent = content.uppercased()
+                
+                // Extract the full match to reconstruct with uppercased content
+                if let fullSwiftRange = Range(fullRange, in: result) {
+                    let fullMatch = String(result[fullSwiftRange])
+                    
+                    // Replace the old content with uppercased content
+                    let replacement = fullMatch.replacingOccurrences(of: content, with: uppercasedContent)
+                    result.replaceSubrange(fullSwiftRange, with: replacement)
+                }
+            }
+        }
+        
+        return result
+    }
 }
