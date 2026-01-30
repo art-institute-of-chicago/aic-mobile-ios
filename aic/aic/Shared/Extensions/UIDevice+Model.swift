@@ -130,7 +130,7 @@ public extension UIDevice {
             "iPhone17,1" : .iPhone16Pro,
             "iPhone17,2" : .iPhone16ProMax,
             "iPhone17,5" : .iPhone16e,
-            "iPhone18.4" : .iPhoneAir,
+            "iPhone18,4" : .iPhoneAir,
             "iPhone18,3" : .iPhone17,
             "iPhone18,1" : .iPhone17Pro,
             "iPhone18,2" : .iPhone17ProMax
