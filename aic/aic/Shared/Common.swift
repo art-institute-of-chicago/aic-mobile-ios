@@ -500,7 +500,16 @@ extension Common {
                         UIDevice().type == .iPhone15 ||
                         UIDevice().type == .iPhone15Plus ||
                         UIDevice().type == .iPhone15Pro ||
-                        UIDevice().type == .iPhone15ProMax
+                        UIDevice().type == .iPhone15ProMax ||
+                        UIDevice().type == .iPhone16 ||
+                        UIDevice().type == .iPhone16Plus ||
+                        UIDevice().type == .iPhone16Pro ||
+                        UIDevice().type == .iPhone16ProMax ||
+                        UIDevice().type == .iPhone16e ||
+                        UIDevice().type == .iPhoneAir ||
+                        UIDevice().type == .iPhone17 ||
+                        UIDevice().type == .iPhone17Pro ||
+                        UIDevice().type == .iPhone17ProMax
             {
                 return 94
             }
