@@ -49,6 +49,15 @@ public enum Model: String {
     case iPhone15Plus = "iPhone 15 Plus"
     case iPhone15Pro = "iPhone 15 Pro"
     case iPhone15ProMax = "iPhone 15 Pro Max"
+    case iPhone16 = "iPhone 16"
+    case iPhone16Plus = "iPhone 16 Plus"
+    case iPhone16Pro = "iPhone 16 Pro"
+    case iPhone16ProMax = "iPhone 16 Pro Max"
+    case iPhone16e = "iPhone 16e"
+    case iPhoneAir = "iPhone Air"
+    case iPhone17 = "iPhone 17"
+    case iPhone17Pro = "iPhone 17 Pro"
+    case iPhone17ProMax = "iPhone 17 Pro Max"
     case unrecognized = "?unrecognized?"
 }
 
@@ -115,7 +124,16 @@ public extension UIDevice {
             "iPhone15,4" : .iPhone15,
             "iPhone15,5" : .iPhone15Plus,
             "iPhone16,1" : .iPhone15Pro,
-            "iPhone16,2" : .iPhone15ProMax
+            "iPhone16,2" : .iPhone15ProMax,
+            "iPhone17,3" : .iPhone16,
+            "iPhone17,4" : .iPhone16Plus,
+            "iPhone17,1" : .iPhone16Pro,
+            "iPhone17,2" : .iPhone16ProMax,
+            "iPhone17,5" : .iPhone16e,
+            "iPhone18,4" : .iPhoneAir,
+            "iPhone18,3" : .iPhone17,
+            "iPhone18,1" : .iPhone17Pro,
+            "iPhone18,2" : .iPhone17ProMax
         ]
 
         if let model = modelMap[modelCode] {
