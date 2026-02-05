@@ -115,7 +115,8 @@ class EventContentCell: UITableViewCell {
             
             // Register caption logic
             if let caption = eventModel.buttonCaption, caption.isEmpty == false {
-                let captionAttr = caption.style(tags: emStyle, iStyle, strongStyle, bStyle).styleAll(allStyle).attributedString
+                let formattedCaption = caption.replacingOccurrences(of: "</p>", with: "</p>\n\n")
+                let captionAttr = formattedCaption.style(tags: emStyle, iStyle, strongStyle, bStyle).styleAll(allStyle).attributedString
                 buttonCaptionTextView.attributedText = captionAttr
                 buttonCaptionTextView.isHidden = false
                 buttonCaptionTextView.textColor = .white

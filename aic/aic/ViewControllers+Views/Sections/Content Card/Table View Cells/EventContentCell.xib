@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -72,8 +72,8 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RmZ-mp-wWK" userLabel="Button Caption">
-                                <rect key="frame" x="0.0" y="122" width="343" height="50"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RmZ-mp-wWK" userLabel="Button Caption">
+                                <rect key="frame" x="0.0" y="74" width="343" height="242"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Button Caption Here">
@@ -86,14 +86,14 @@
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7vP-ys-6Vo">
-                                <rect key="frame" x="0.0" y="244" width="343" height="35.5"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7vP-ys-6Vo">
+                                <rect key="frame" x="0.0" y="340" width="343" height="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eT9-Qh-kAN" customClass="UILabelPadding" customModule="aic" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="351.5" width="343" height="38.5"/>
+                                <rect key="frame" x="0.0" y="390" width="343" height="0.0"/>
                                 <string key="text">Date
 Location</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -109,6 +109,7 @@ Location</string>
                             <constraint firstItem="i29-cB-gnI" firstAttribute="centerX" secondItem="UFk-ZQ-Lah" secondAttribute="centerX" id="YqS-mt-cOk"/>
                             <constraint firstAttribute="trailing" secondItem="RmZ-mp-wWK" secondAttribute="trailing" id="fOP-J8-3FB"/>
                             <constraint firstAttribute="trailing" secondItem="7vP-ys-6Vo" secondAttribute="trailing" id="ieV-QL-VdF"/>
+                            <constraint firstItem="RmZ-mp-wWK" firstAttribute="top" secondItem="i29-cB-gnI" secondAttribute="bottom" constant="24" id="jw7-4H-f51"/>
                             <constraint firstItem="7vP-ys-6Vo" firstAttribute="leading" secondItem="UFk-ZQ-Lah" secondAttribute="leading" id="mhi-Ed-dhe"/>
                         </constraints>
                     </stackView>
