@@ -48,6 +48,10 @@ class AICButton: UIButton {
 		normal: ColorSet(borderColor: .white, backgroundColor: UIColor(white: 1, alpha: 0), textColor: .white),
 		highlighted: ColorSet(borderColor: .white, backgroundColor: UIColor(white: 216.0 / 255.0, alpha: 0.5), textColor: .white)
 	)
+    
+    enum Size {
+        case small, medium, dynamic
+    }
 
 	private let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 	private let mediumSize: CGSize = CGSize(width: 190, height: 50)
@@ -66,6 +70,21 @@ class AICButton: UIButton {
 			}
 		}
 	}
+    
+    init(withSize size: Size) {
+        super.init(frame: .zero)
+        
+        switch size {
+            case .small:
+                self.autoSetDimensions(to: CGSize(width: smallSize.width - (borderWidth), height: smallSize.height - (borderWidth)))
+            case .medium:
+                self.autoSetDimensions(to: CGSize(width: mediumSize.width - (borderWidth), height: mediumSize.height - (borderWidth)))
+            case .dynamic:
+                break
+        }
+        
+        setup()
+    }
 
 	init(isSmall: Bool) {
 		super.init(frame: CGRect.zero)
@@ -74,7 +93,7 @@ class AICButton: UIButton {
 		self.autoSetDimensions(to: CGSize(width: frameSize.width - (borderWidth), height: frameSize.height - (borderWidth)))
 		setup()
 	}
-
+    
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
