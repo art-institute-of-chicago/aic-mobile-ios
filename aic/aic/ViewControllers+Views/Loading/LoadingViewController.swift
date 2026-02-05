@@ -195,20 +195,26 @@ class LoadingViewController: UIViewController {
 		progressHighlightWidth?.constant = (progressSize.width * CGFloat(pct))
 		self.view.layoutIfNeeded()
 	}
-
-	func playIntroVideo() {
-		if launchViewController.view.superview != nil {
-			UIView.animate(withDuration: 0.3, animations: {
-				self.launchViewController.view.alpha = 0.0
-			}) { (completed) in
-				if completed == true {
-					self.launchViewController.view.removeFromSuperview()
-				}
-			}
-		}
-
-		avPlayer.play()
-	}
+    
+    func playIntroVideo() {
+        if UserDefaults.standard.bool(forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey) {
+            // Only play on first launch
+            if launchViewController.view.superview != nil {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.launchViewController.view.alpha = 0.0
+                }) { (completed) in
+                    if completed == true {
+                        self.launchViewController.view.removeFromSuperview()
+                    }
+                }
+            }
+            
+            avPlayer.play()
+        } else {
+            avPlayer.removeAllItems()
+            videoFinishedPlaying()
+        }
+    }
 
 	@objc func loadIntroVideoB() {
 		avPlayer.advanceToNextItem()
