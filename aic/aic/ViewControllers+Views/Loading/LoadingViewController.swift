@@ -28,7 +28,6 @@ class LoadingViewController: UIViewController {
 	private let videoView: UIView = UIView()
 	private var avPlayer: AVQueuePlayer!
 
-	private let playerItemFull: AVPlayerItem
 	private let playerItemA: AVPlayerItem
 	private let playerItemB: AVPlayerItem
 
@@ -67,12 +66,10 @@ class LoadingViewController: UIViewController {
 
 		let videoFilename = "RegularSplash_AIC_" + resolutionString
 
-		let loadingVideoURL_Full = Bundle.main.url(forResource: videoFilename, withExtension: "mp4", subdirectory: "/video")
 		let loadingVideoURL_A = Bundle.main.url(forResource: videoFilename + "_1", withExtension: "mp4", subdirectory: "/video")
 		let loadingVideoURL_B = Bundle.main.url(forResource: videoFilename + "_2", withExtension: "mp4", subdirectory: "/video")
 
 		// Create player item with the video, add callback for finished
-		playerItemFull = AVPlayerItem(url: loadingVideoURL_Full!)
 		playerItemA = AVPlayerItem(url: loadingVideoURL_A!)
 		playerItemB = AVPlayerItem(url: loadingVideoURL_B!)
 
@@ -116,11 +113,7 @@ class LoadingViewController: UIViewController {
                                            object: avPlayer)
 
 		// Create the player
-		if showFullVideo {
-			avPlayer = AVQueuePlayer(items: [playerItemFull])
-		} else {
-			avPlayer = AVQueuePlayer(items: [playerItemA, playerItemB])
-		}
+        avPlayer = AVQueuePlayer(items: [playerItemA, playerItemB])
 
 		// No Looping
 		avPlayer.actionAtItemEnd = .none
