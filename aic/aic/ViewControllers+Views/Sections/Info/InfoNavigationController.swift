@@ -25,10 +25,15 @@ class InfoNavigationController: SectionNavigationController {
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
 		self.delegate = self
 		infoVC.delegate = self
 
@@ -56,6 +61,21 @@ class InfoNavigationController: SectionNavigationController {
 		sectionNavigationBar.titleLabel.becomeFirstResponder()
 		self.perform(#selector(accessibilityReEnableTabBar), with: nil, afterDelay: 2.0)
 	}
+    
+    @objc private func appWillEnterForeground() {
+        if shouldShowMemberCard {
+            shouldShowMemberCard = false
+
+            if self.viewControllers.count > 1 {
+                if self.viewControllers.last!.isKind(of: MemberCardViewController.self) == true {
+                    self.sectionNavigationBar.setBackButtonHidden(false)
+                    return
+                }
+            }
+
+            showMemberCard()
+        }
+    }
 
 	@objc private func accessibilityReEnableTabBar() {
 		tabBarController!.tabBar.isAccessibilityElement = false

@@ -192,8 +192,6 @@ class SectionsViewController: UITabBarController {
 				self.homeVC.sectionNavigationBar.titleLabel.becomeFirstResponder()
 			}
 		})
-		Common.DeepLinks.loadedEnoughToLink = true
-		(UIApplication.shared.delegate as? AppDelegate)?.triggerDeepLinkIfPresent()
 	}
 
 	// MARK: Show On Map
@@ -512,6 +510,11 @@ extension SectionsViewController: UITabBarControllerDelegate {
 
 extension SectionsViewController: HomeNavigationControllerDelegate {
 	func showMemberCard() {
+        if currentViewController == infoVC {
+            // Force screen to reload, to handle case where the app was already on the Info tab
+            setSelectedSection(sectionVC: homeVC)
+        }
+        
 		setSelectedSection(sectionVC: infoVC)
 		infoVC.shouldShowMemberCard = true
 		selectedIndex = 3
