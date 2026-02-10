@@ -113,12 +113,12 @@ extension RootViewController: LoadingViewControllerDelegate {
 extension RootViewController: LanguageSelectionViewControllerDelegate {
 
 	func languageSelected(language: Common.Language) {
-		// Record that we've got through the intro
-		defaults.set(false, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
-		defaults.synchronize()
-
         languageViewController.remove()
 		loadingViewController.playIntroVideo()
+        
+        // Record that we've got through the intro
+        defaults.set(false, forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
+        defaults.synchronize()
 	}
 
 }
