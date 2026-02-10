@@ -10,7 +10,7 @@ import UIKit
 import Localize_Swift
 
 class MapTourStartContentView: UIView {
-	let audioButton: AICButton = AICButton(isSmall: false)
+    let audioButton: AICButton = AICButton(withSize: AICButton.Size.dynamic)
 
 	private let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: Common.Layout.cardMinimizedContentHeight - Common.Layout.miniAudioPlayerHeight)
 
@@ -20,6 +20,7 @@ class MapTourStartContentView: UIView {
 		audioButton.setColorMode(colorMode: AICButton.blueMode)
 		audioButton.setIconImage(image: #imageLiteral(resourceName: "buttonPlayIcon"))
 		audioButton.setTitle("tour_play_tour_introduction_action".localized(using: "Base"), for: .normal)
+        audioButton.contentEdgeInsets = .init(top: 10, left: 20, bottom: 10, right: 10)
 
 		self.addSubview(audioButton)
 
