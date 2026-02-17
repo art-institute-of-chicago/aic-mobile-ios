@@ -66,8 +66,8 @@ class LoadingViewController: UIViewController {
 
 		let videoFilename = "RegularSplash_AIC_" + resolutionString
 
-		let loadingVideoURL_A = Bundle.main.url(forResource: videoFilename + "_1", withExtension: "mp4", subdirectory: "/video")
-		let loadingVideoURL_B = Bundle.main.url(forResource: videoFilename + "_2", withExtension: "mp4", subdirectory: "/video")
+		let loadingVideoURL_A = Bundle.main.url(forResource: videoFilename + "_1", withExtension: "mov", subdirectory: "/video")
+		let loadingVideoURL_B = Bundle.main.url(forResource: videoFilename + "_2", withExtension: "mov", subdirectory: "/video")
 
 		// Create player item with the video, add callback for finished
 		playerItemA = AVPlayerItem(url: loadingVideoURL_A!)
