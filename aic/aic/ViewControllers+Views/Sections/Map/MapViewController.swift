@@ -938,25 +938,6 @@ extension MapViewController: MKMapViewDelegate {
 			}
 		}
 	}
-
-    /**
-     When the map region changes update view properties
-     */
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        self.mapView.calculateCurrentAltitudeAndZoomLevel()
-
-        // Keep map in view
-        if !floorSelectorViewController.userHeadingIsEnabled() {
-            self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
-        }
-    }
-
-    func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
-    }
-
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-    }
-
 }
 
 // MARK: Floor Selector Delegate Methods

@@ -172,28 +172,6 @@ class MapView: MKMapView {
         debugPrint("MapView.\(newCamera.debugDescription)")
     }
 
-	func keepMapInView(zoomLimit: Double) {
-		// Check altitude
-		if currentAltitude > zoomLimit {
-            showFullMap(centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue + 5)
-            debugPrint("MapView.keepMapInView zoomLimit: \(zoomLimit)")
-		} else {
-			// Make sure our floorplan is on-screen
-			if let floorplanOverlay = floorplanOverlay {
-				let buildingRect = floorplanOverlay.boundingMapRect
-				let cameraCenter = MKMapPoint(camera.centerCoordinate)
-				let distanceFromBuildingCenter = cameraCenter.distance(to: buildingRect.getCenter())
-
-				if distanceFromBuildingCenter > Common.Location.minDistanceFromMuseumForLocation {
-                    zoomIn(onCenterCoordinate: floorplanOverlay.coordinate,
-                           centerCoordinateDistance: camera.centerCoordinateDistance,
-                           heading: nil,
-                           pitch: camera.pitch)
-				}
-			}
-		}
-	}
-
 	// Find the altitude based on our start value and the current map visible to bounds ratio
 	func calculateStartingHeight() {
 		// Set the starting height for checking altitude while zooming
