@@ -162,7 +162,7 @@ class MapView: MKMapView {
         if let pitch {
             newCamera.pitch = pitch
         } else {
-            newCamera.pitch = perspectivePitch
+            newCamera.pitch = topDownPitch
         }
 
         setCamera(newCamera, animated: animated)
@@ -230,7 +230,7 @@ private extension MapView {
         pointOfInterestFilter = .excludingAll
         
         isZoomEnabled = true
-        isPitchEnabled = true
+        isPitchEnabled = false
         showsCompass = false
         showsScale = false
         showsTraffic = false

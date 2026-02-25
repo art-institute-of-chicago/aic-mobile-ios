@@ -105,7 +105,7 @@ final class MapViewController: UIViewController {
                      centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue - 10.0,
                      withAnimation: true,
                      heading: mapView.camera.heading,
-                     pitch: mapView.perspectivePitch)
+                     pitch: mapView.topDownPitch)
 		}
 	}
 
@@ -254,7 +254,7 @@ final class MapViewController: UIViewController {
 		// Show all annotations messes with the pitch + heading,
 		// so reset our pitch + heading to preferred defaults
 		mapView.camera.heading = mapView.defaultHeading
-		mapView.camera.pitch = mapView.perspectivePitch
+		mapView.camera.pitch = mapView.topDownPitch
 		if mapView.camera.centerCoordinateDistance <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue {
 			mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomMedium.rawValue
 		} else if mapView.camera.centerCoordinateDistance > zoomLimitValue {
@@ -340,7 +340,7 @@ final class MapViewController: UIViewController {
                                    centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue,
                                    withAnimation: true,
                                    heading: mapView.camera.heading,
-                                   pitch: mapView.perspectivePitch)
+                                   pitch: mapView.topDownPitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: false)
@@ -367,7 +367,7 @@ final class MapViewController: UIViewController {
                          centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50,
                          withAnimation: true,
                          heading: mapView.camera.heading,
-                         pitch: mapView.perspectivePitch)
+                         pitch: mapView.topDownPitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -392,7 +392,7 @@ final class MapViewController: UIViewController {
                          centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue,
                          withAnimation: true,
                          heading: mapView.camera.heading,
-                         pitch: mapView.perspectivePitch)
+                         pitch: mapView.topDownPitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -1225,7 +1225,7 @@ private extension MapViewController {
         mapView.camera.heading = 0
         mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
         mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
-        mapView.camera.pitch = mapView.perspectivePitch
+        mapView.camera.pitch = mapView.topDownPitch
     }
 
     func setupNavigationItemTitle() {
