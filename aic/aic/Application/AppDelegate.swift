@@ -19,7 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        #if !DEBUG
         setupAnalytics()
+        #endif
+        
 		// Set initial state for location tracking
         let locationManager = CLLocationManager()
 		Common.Location.hasLoggedOnsite = false

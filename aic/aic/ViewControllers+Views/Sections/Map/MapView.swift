@@ -49,7 +49,11 @@ class MapView: MKMapView {
             width: UIScreen.main.bounds.width,
             height: UIScreen.main.bounds.height
         )
+        
         setup()
+        
+        // Set maximum zoom amount (in meters)
+        self.cameraZoomRange = .init(maxCenterCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomLimit.rawValue)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
