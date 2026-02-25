@@ -536,6 +536,7 @@ final class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
 			//			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
+                annotations.append(contentsOf: mapModel.floors[currentFloor].galleryAnnotations as [MKAnnotation])
 			break
 
 		case .zoomMedium:
@@ -544,6 +545,7 @@ final class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].objectAnnotations as [MKAnnotation])
+                annotations.append(contentsOf: mapModel.floors[currentFloor].galleryAnnotations as [MKAnnotation])
 			//			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
 			break
 
@@ -554,6 +556,7 @@ final class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].objectAnnotations as [MKAnnotation])
 			break
 		}
+
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
 
