@@ -52,8 +52,11 @@ class MapView: MKMapView {
         
         setup()
         
-        // Set maximum zoom amount (in meters)
-        self.cameraZoomRange = .init(maxCenterCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomLimit.rawValue)
+        // Set maximum zoom amount
+        self.cameraZoomRange = CameraZoomRange(maxCenterCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomLimit.rawValue)
+        
+        // Set maximum panning bounds
+        self.cameraBoundary = CameraBoundary(coordinateRegion: MKCoordinateRegion(center: Common.Map.defaultLocation, latitudinalMeters: 500, longitudinalMeters: 500))
 	}
 
 	required init?(coder aDecoder: NSCoder) {
