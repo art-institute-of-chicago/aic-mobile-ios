@@ -105,7 +105,7 @@ final class MapViewController: UIViewController {
                      centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue - 10.0,
                      withAnimation: true,
                      heading: mapView.camera.heading,
-                     pitch: mapView.perspectivePitch)
+                     pitch: mapView.topDownPitch)
 		}
 	}
 
@@ -254,7 +254,7 @@ final class MapViewController: UIViewController {
 		// Show all annotations messes with the pitch + heading,
 		// so reset our pitch + heading to preferred defaults
 		mapView.camera.heading = mapView.defaultHeading
-		mapView.camera.pitch = mapView.perspectivePitch
+		mapView.camera.pitch = mapView.topDownPitch
 		if mapView.camera.centerCoordinateDistance <= Common.Map.ZoomLevelAltitude.zoomDetail.rawValue {
 			mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomMedium.rawValue
 		} else if mapView.camera.centerCoordinateDistance > zoomLimitValue {
@@ -340,7 +340,7 @@ final class MapViewController: UIViewController {
                                    centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDetail.rawValue,
                                    withAnimation: true,
                                    heading: mapView.camera.heading,
-                                   pitch: mapView.perspectivePitch)
+                                   pitch: mapView.topDownPitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: false)
@@ -367,7 +367,7 @@ final class MapViewController: UIViewController {
                          centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomMedium.rawValue - 50,
                          withAnimation: true,
                          heading: mapView.camera.heading,
-                         pitch: mapView.perspectivePitch)
+                         pitch: mapView.topDownPitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -392,7 +392,7 @@ final class MapViewController: UIViewController {
                          centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue,
                          withAnimation: true,
                          heading: mapView.camera.heading,
-                         pitch: mapView.perspectivePitch)
+                         pitch: mapView.topDownPitch)
 
 					// Select the annotation (which eventually updates it's view)
 					mapView.selectAnnotation(annotation, animated: true)
@@ -536,6 +536,7 @@ final class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
 			//			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
+                annotations.append(contentsOf: mapModel.floors[currentFloor].galleryAnnotations as [MKAnnotation])
 			break
 
 		case .zoomMedium:
@@ -544,6 +545,7 @@ final class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].amenityAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].departmentAnnotations as [MKAnnotation])
 			annotations.append(contentsOf: mapModel.floors[currentFloor].objectAnnotations as [MKAnnotation])
+                annotations.append(contentsOf: mapModel.floors[currentFloor].galleryAnnotations as [MKAnnotation])
 			//			annotations.append(contentsOf: mapModel.floors[currentFloor].farObjectAnnotations as [MKAnnotation])
 			break
 
@@ -554,6 +556,7 @@ final class MapViewController: UIViewController {
 			annotations.append(contentsOf: mapModel.floors[currentFloor].objectAnnotations as [MKAnnotation])
 			break
 		}
+
 		annotations.append(contentsOf: mapModel.imageAnnotations as [MKAnnotation])
 		annotations.append(mapView.userLocation)
 
@@ -935,25 +938,6 @@ extension MapViewController: MKMapViewDelegate {
 			}
 		}
 	}
-
-    /**
-     When the map region changes update view properties
-     */
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        self.mapView.calculateCurrentAltitudeAndZoomLevel()
-
-        // Keep map in view
-        if !floorSelectorViewController.userHeadingIsEnabled() {
-            self.mapView.keepMapInView(zoomLimit: zoomLimitValue)
-        }
-    }
-
-    func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
-    }
-
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-    }
-
 }
 
 // MARK: Floor Selector Delegate Methods
@@ -1225,7 +1209,7 @@ private extension MapViewController {
         mapView.camera.heading = 0
         mapView.camera.centerCoordinateDistance = Common.Map.ZoomLevelAltitude.zoomLimit.rawValue
         mapView.camera.centerCoordinate = mapModel.floors.first!.overlay.coordinate
-        mapView.camera.pitch = mapView.perspectivePitch
+        mapView.camera.pitch = mapView.topDownPitch
     }
 
     func setupNavigationItemTitle() {

@@ -49,7 +49,14 @@ class MapView: MKMapView {
             width: UIScreen.main.bounds.width,
             height: UIScreen.main.bounds.height
         )
+        
         setup()
+        
+        // Set maximum zoom amount
+        self.cameraZoomRange = CameraZoomRange(maxCenterCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomLimit.rawValue)
+        
+        // Set maximum panning bounds
+        self.cameraBoundary = CameraBoundary(coordinateRegion: MKCoordinateRegion(center: Common.Map.defaultLocation, latitudinalMeters: 500, longitudinalMeters: 500))
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -158,34 +165,12 @@ class MapView: MKMapView {
         if let pitch {
             newCamera.pitch = pitch
         } else {
-            newCamera.pitch = perspectivePitch
+            newCamera.pitch = topDownPitch
         }
 
         setCamera(newCamera, animated: animated)
         debugPrint("MapView.\(newCamera.debugDescription)")
     }
-
-	func keepMapInView(zoomLimit: Double) {
-		// Check altitude
-		if currentAltitude > zoomLimit {
-            showFullMap(centerCoordinateDistance: Common.Map.ZoomLevelAltitude.zoomDefault.rawValue + 5)
-            debugPrint("MapView.keepMapInView zoomLimit: \(zoomLimit)")
-		} else {
-			// Make sure our floorplan is on-screen
-			if let floorplanOverlay = floorplanOverlay {
-				let buildingRect = floorplanOverlay.boundingMapRect
-				let cameraCenter = MKMapPoint(camera.centerCoordinate)
-				let distanceFromBuildingCenter = cameraCenter.distance(to: buildingRect.getCenter())
-
-				if distanceFromBuildingCenter > Common.Location.minDistanceFromMuseumForLocation {
-                    zoomIn(onCenterCoordinate: floorplanOverlay.coordinate,
-                           centerCoordinateDistance: camera.centerCoordinateDistance,
-                           heading: nil,
-                           pitch: camera.pitch)
-				}
-			}
-		}
-	}
 
 	// Find the altitude based on our start value and the current map visible to bounds ratio
 	func calculateStartingHeight() {
@@ -226,7 +211,7 @@ private extension MapView {
         pointOfInterestFilter = .excludingAll
         
         isZoomEnabled = true
-        isPitchEnabled = true
+        isPitchEnabled = false
         showsCompass = false
         showsScale = false
         showsTraffic = false

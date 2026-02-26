@@ -235,8 +235,8 @@ extension Common {
         static let defaultLocation = CLLocationCoordinate2D(latitude: 41.8796, longitude: -87.623533)
 
         enum ZoomLevelAltitude: Double, CaseIterable {
-            case zoomFarLimit = 1200
-            case zoomLimit = 340
+            case zoomFarLimit = 1501
+            case zoomLimit = 1500
             case zoomDefault = 300
             case zoomMedium = 175
             case zoomDetail = 50
