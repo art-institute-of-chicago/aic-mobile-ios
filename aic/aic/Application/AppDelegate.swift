@@ -15,7 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var statusBarHeight: CGFloat = 0
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        #if !DEBUG
         setupAnalytics()
+        #endif
+        
 		// Set initial state for location tracking
         let locationManager = CLLocationManager()
 		Common.Location.hasLoggedOnsite = false
