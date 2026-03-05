@@ -33,3 +33,5 @@
 
 /* Android seems to be getting an error from the backend rather than using static text */
 "sign_in_failure_title" = "Could not find Member Information";
+
+"info_quick_action_prompt" = "You can quickly get back to this screen by long-pressing the app icon on the home screen.";

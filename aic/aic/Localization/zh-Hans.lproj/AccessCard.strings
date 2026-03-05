@@ -33,3 +33,5 @@
 
 /* Android seems to be getting an error from the backend rather than using static text */
 "sign_in_failure_title" = "无法找到会员信息";
+
+"info_quick_action_prompt" = "您可以通过长按主屏幕上的应用图标快速返回此屏幕。";

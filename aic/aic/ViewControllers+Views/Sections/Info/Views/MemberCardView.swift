@@ -15,6 +15,7 @@ class MemberCardView: UIView {
 	let barcodeReciprocalBadgeImageView: UIImageView = UIImageView()
 	let changeInfoButton: AICButton = AICButton(isSmall: false)
 	let switchCardholderButton: AICButton = AICButton(isSmall: false)
+    let quickActionPromptLabel = UILabel()
 
 	private let barcodeWidth: CGFloat = min(UIScreen.main.bounds.width - 10, 365)
     
@@ -50,6 +51,11 @@ class MemberCardView: UIView {
 
 		switchCardholderButton.setColorMode(colorMode: AICButton.orangeMode)
 		switchCardholderButton.setTitle("Switch Cardholder", for: .normal)
+        
+        quickActionPromptLabel.text = "info_quick_action_prompt".localized(using: "AccessCard")
+        quickActionPromptLabel.font = .aicTextItalicFont
+        quickActionPromptLabel.textColor = .black
+        quickActionPromptLabel.numberOfLines = 0
 
 		// Add subviews
 		self.addSubview(memberNameLabel)
@@ -58,6 +64,7 @@ class MemberCardView: UIView {
 		self.addSubview(barcodeReciprocalBadgeImageView)
 		self.addSubview(changeInfoButton)
 		self.addSubview(switchCardholderButton)
+        self.addSubview(quickActionPromptLabel)
 
 		createConstraints()
 	}
@@ -88,6 +95,10 @@ class MemberCardView: UIView {
 
 		switchCardholderButton.autoPinEdge(.top, to: .bottom, of: changeInfoButton, withOffset: 22)
 		switchCardholderButton.autoAlignAxis(.vertical, toSameAxisOf: self)
+        
+        quickActionPromptLabel.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 48)
+        quickActionPromptLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 24)
+        quickActionPromptLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 24)
 	}
 
 	func setContent(memberCard: AICMemberCardModel, memberNameIndex: Int) {
@@ -130,5 +141,8 @@ class MemberCardView: UIView {
             
             barcodeReciprocalBadgeImageView.isHidden = !memberCard.isReciprocalMember
         }
+        
+        // Quick Action Prompt Text
+        quickActionPromptLabel.text = "info_quick_action_prompt".localized(using: "AccessCard")
 	}
 }
