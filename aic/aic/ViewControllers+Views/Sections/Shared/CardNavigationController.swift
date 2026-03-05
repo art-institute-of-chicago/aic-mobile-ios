@@ -46,12 +46,18 @@ class CardNavigationController: UINavigationController {
 
 	private(set) var contentTopMargin: CGFloat = 30
 
-	private let positionForState: [State: CGFloat] = [
-		.hidden: UIScreen.main.bounds.height - Common.Layout.tabBarHeight,
-		.minimized: Common.Layout.cardMinimizedPositionY,
-        .mini_player: UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.safeAreaBottomMargin - Common.Layout.miniAudioPlayerHeight,
-		.fullscreen: Common.Layout.cardFullscreenPositionY
-	]
+    private func topPosition(for state: State) -> CGFloat {
+        switch state {
+            case .hidden:
+                return UIScreen.main.bounds.height - Common.Layout.tabBarHeight
+            case .minimized:
+                return Common.Layout.cardMinimizedPositionY
+            case .mini_player:
+                return UIScreen.main.bounds.height - Common.Layout.tabBarHeight - Common.Layout.safeAreaBottomMargin - Common.Layout.miniAudioPlayerHeight
+            case .fullscreen:
+                return Common.Layout.cardFullscreenPositionY
+        }
+    }
 
 	override var canBecomeFirstResponder: Bool {
 		return true
@@ -60,7 +66,7 @@ class CardNavigationController: UINavigationController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.view.frame.origin = CGPoint(x: 0.0, y: positionForState[.hidden]!)
+		self.view.frame.origin = CGPoint(x: 0.0, y: topPosition(for: .hidden))
 		self.view.backgroundColor = .aicDarkGrayColor
 
 		// Hide Navigation Bar
@@ -122,7 +128,7 @@ class CardNavigationController: UINavigationController {
 	// MARK: Position
 
 	func setCardPosition(_ positionY: CGFloat) {
-		let yPosition = clamp(val: positionY, minVal: positionForState[openState]!, maxVal: positionForState[.hidden]!)
+		let yPosition = clamp(val: positionY, minVal: topPosition(for:openState), maxVal: topPosition(for: .hidden))
 		self.view.frame.origin = CGPoint(x: 0, y: yPosition)
 
 		self.cardDelegate?.cardDidUpdatePosition?(cardVC: self, position: self.view.frame.origin)
@@ -135,7 +141,8 @@ class CardNavigationController: UINavigationController {
 		self.cardDelegate?.cardWillShowFullscreen?(cardVC: self)
 		setCloseButtonEnabled(enabled: false)
 		UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
-			self.setCardPosition(self.positionForState[.fullscreen]!)
+            let position = self.topPosition(for: .fullscreen)
+			self.setCardPosition(position)
 			self.view.layer.cornerRadius = 10
 		}, completion: { (_) in
 			self.currentState = .fullscreen
@@ -147,7 +154,7 @@ class CardNavigationController: UINavigationController {
 		cardWillShowMinimized()
 		setCloseButtonEnabled(enabled: true)
 		UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
-			self.setCardPosition(self.positionForState[.minimized]!)
+            self.setCardPosition(self.topPosition(for:.minimized))
 			self.view.layer.cornerRadius = 10
 		}, completion: { (_) in
 			self.currentState = .minimized
@@ -161,7 +168,7 @@ class CardNavigationController: UINavigationController {
 		self.cardDelegate?.cardWillShowMiniplayer?(cardVC: self)
 		setCloseButtonEnabled(enabled: false)
 		UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
-			self.setCardPosition(self.positionForState[.mini_player]!)
+            self.setCardPosition(self.topPosition(for: .mini_player))
 			self.view.layer.cornerRadius = 0
 		}, completion: { (_) in
 			self.currentState = .mini_player
@@ -174,7 +181,7 @@ class CardNavigationController: UINavigationController {
 		cardWillHide()
 		self.cardDelegate?.cardWillHide?(cardVC: self)
 		UIView.animate(withDuration: 0.4, delay: 0.0, options: [.curveEaseOut], animations: {
-			self.setCardPosition(self.positionForState[.hidden]!)
+            self.setCardPosition(self.topPosition(for: .hidden))
 			self.view.layer.cornerRadius = 0
 		}, completion: { (completed) in
 			if completed == true {
@@ -248,7 +255,15 @@ extension CardNavigationController: UIGestureRecognizerDelegate {
 		// If we've ended, snap to top or bottom
 		if recognizer.state == .ended {
 			// Calculate whee we are between top and bottom
-			let pctInScreenArea: CGFloat = CGFloat(map(val: Double(newY), oldRange1: Double(positionForState[openState]!), oldRange2: Double(positionForState[closedState]!), newRange1: 0.0, newRange2: 1.0))
+            let pctInScreenArea: CGFloat = CGFloat(
+                map(
+                    val: Double(newY),
+                    oldRange1: Double(topPosition(for: openState)),
+                    oldRange2: Double(topPosition(for: closedState)),
+                    newRange1: 0.0,
+                    newRange2: 1.0
+                )
+            )
 
 			var snapToState: State = .fullscreen
 
