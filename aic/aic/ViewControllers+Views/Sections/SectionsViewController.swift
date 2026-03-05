@@ -192,6 +192,9 @@ class SectionsViewController: UITabBarController {
 				self.homeVC.sectionNavigationBar.titleLabel.becomeFirstResponder()
 			}
 		})
+        
+        Common.DeepLinks.loadedEnoughToLink = true
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.triggerDeepLinkIfPresent()
 	}
 
 	// MARK: Show On Map

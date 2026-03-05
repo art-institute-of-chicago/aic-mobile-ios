@@ -76,7 +76,8 @@ class LinkedTextView: UITextView {
 					return
 				}
 			}
-			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.launchTour(with: url)
 		}
 	}
 }

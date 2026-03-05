@@ -12,6 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var savedShortCutItem: UIApplicationShortcutItem!
     
+    private var deepLinkString: String?
+    
     func sceneWillEnterForeground(_ scene: UIScene) {
         guard let rootVC = window?.rootViewController as? RootViewController else { return }
         rootVC.resumeLoadingIfNotComplete()
@@ -47,46 +49,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return true
     }
     
+    func triggerDeepLinkIfPresent() {
+        guard let deepLinkString, let tourNID = Int(deepLinkString) else { return }
+        guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else { return }
+        
+        let rootVC = window?.rootViewController as? RootViewController
+        rootVC?.startTour(tour: tour)
+    }
     
-//    // URL Deep Linking
-//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-//        if url.host == nil {
-//            return true
-//        }
-//
-//        let urlString = url.absoluteString
-//        let queryArray = urlString.components(separatedBy: "/")
-//        let query = queryArray[2]
-//
-//        if Common.DeepLinks.loadedEnoughToLink {
-//            // Check if it is a tour
-//
-//            if query.range(of: "tour") != nil {
-//                let data = urlString.components(separatedBy: "/")
-//                if (data.count) >= 3 {
-//                    guard let tourNID = Int(data[3]) else {
-//                        return true
-//                    }
-//
-//                    guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else { return true }
-//
-//                    let rootVC = window?.rootViewController as! RootViewController
-//                    rootVC.startTour(tour: tour)
-//                }
-//            }
-//        } else {
-//            let data = urlString.components(separatedBy: "/")
-//            deepLinkString = data[2]
-//        }
-//
-//        return true
-//    }
-//
-//  func triggerDeepLinkIfPresent() {
-//    guard let deepLinkString, let tourNID = Int(deepLinkString) else { return }
-//    guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else { return }
-//
-//    let rootVC = window?.rootViewController as? RootViewController
-//    rootVC?.startTour(tour: tour)
-//  }
+    
+    // URL Deep Linking for Tours
+    func launchTour(with url: URL) {
+        if url.host == nil {
+            return
+        }
+        
+        let urlString = url.absoluteString
+        let queryArray = urlString.components(separatedBy: "/")
+        let query = queryArray[2]
+        
+        if Common.DeepLinks.loadedEnoughToLink {
+            // Check if it is a tour
+            
+            if query.range(of: "tour") != nil {
+                let data = urlString.components(separatedBy: "/")
+                if (data.count) >= 3 {
+                    guard let tourNID = Int(data[3]) else {
+                        return
+                    }
+                    
+                    guard let tour = AppDataManager.sharedInstance.getTour(forID: tourNID) else { return }
+                    
+                    let rootVC = window?.rootViewController as! RootViewController
+                    rootVC.startTour(tour: tour)
+                }
+            }
+        } else {
+            let data = urlString.components(separatedBy: "/")
+            deepLinkString = data[2]
+        }
+    }
 }
