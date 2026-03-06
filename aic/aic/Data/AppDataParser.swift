@@ -1394,10 +1394,12 @@ final class AppDataParser {
                     } catch {
                         location = gallery?.location ?? CoordinateWithFloor(coordinate: .init(latitude: 0, longitude: 0), floor: -1)
                     }
+                    
+                    let object = AppDataManager.sharedInstance.getObject(forObjectID: artworkId)
 
                     let searchedArtwork = AICSearchedArtworkModel(
                         artworkId: artworkId,
-                        audioObject: nil,
+                        audioObject: object,
                         title: title.stringByDecodingHTMLEntities,
                         thumbnailUrl: thumbnailUrl!,
                         imageUrl: imageUrl!,
