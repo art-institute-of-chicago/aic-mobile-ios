@@ -1355,28 +1355,7 @@ final class AppDataParser {
                 let isOnView = try getBool(fromJSON: resultJSON, forKey: "is_on_view")
                 let isBoosted = try getBool(fromJSON: resultJSON, forKey: "is_boosted")
 
-                // If this artwork is also in the mobile CMS,
-                // we get the data correspondent data from the AICObjectModel
-                if let object = AppDataManager.sharedInstance.getObject(forObjectID: artworkId) {
-                    var artistDisplay = ""
-                    if let tombstone = object.tombstone {
-                        artistDisplay = tombstone
-                    }
-                    let searchedArtwork = AICSearchedArtworkModel(
-                        artworkId: artworkId,
-                        audioObject: object,
-                        title: object.title,
-                        thumbnailUrl: object.thumbnailUrl,
-                        imageUrl: object.imageUrl,
-                        artistDisplay: artistDisplay,
-                        location: object.location,
-                        gallery: object.gallery,
-                        isOnView: isOnView
-                    )
-                    searchedArtworks.append(searchedArtwork)
-                }
-                // Otherwise we parse from the data api
-                else if isOnView || (!isOnView && isBoosted) {
+                if isOnView || isBoosted {
                     let title: String = try getString(fromJSON: resultJSON, forKey: "title")
                     let artistDisplay: String = try getString(fromJSON: resultJSON, forKey: "artist_display")
 
