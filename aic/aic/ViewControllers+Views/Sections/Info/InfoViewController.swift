@@ -86,6 +86,8 @@ class InfoViewController: SectionViewController {
         self.scrollView.contentSize.height = footerView.frame.origin.y + footerView.frame.height
 
         updateLanguage()
+        
+        becomeMemberView.updateUI()
     }
 
     private func logAnalytics() {

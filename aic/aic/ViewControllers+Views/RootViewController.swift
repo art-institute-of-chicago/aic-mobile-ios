@@ -6,62 +6,60 @@ Main View controller
 import UIKit
 
 final class RootViewController: UIViewController {
-  private let defaults = UserDefaults.standard
-  private var state: ContentState = .loadingInProgress {
-    didSet {
-      switch self.state {
-      case .loadingInProgress:
-        startLoadingData()
-
-      case .languageSelection:
-        showLanguageViewController()
-
-      case .homeTransition:
-        showMainViewController()
-      }
+    private let defaults = UserDefaults.standard
+    private var state: ContentState = .loadingInProgress {
+        didSet {
+            switch self.state {
+                case .loadingInProgress:
+                    startLoadingData()
+                    
+                case .languageSelection:
+                    showLanguageViewController()
+                    
+                case .homeTransition:
+                    showMainViewController()
+            }
+        }
     }
-  }
-
-  private lazy var loadingViewController: LoadingViewController = {
-    let shouldShowLanguageSelection = defaults.bool(forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
-    let viewController = LoadingViewController(showFullVideo: !shouldShowLanguageSelection)
-    viewController.delegate = self
-    return viewController
-  }()
-
-  private lazy var languageViewController: LanguageSelectionViewController = {
-    let viewController = LanguageSelectionViewController()
-    viewController.delegate = self
-    return viewController
-  }()
-
-  private lazy var sectionTabBarController: SectionsViewController = {
-    let viewController = SectionsViewController(nibName: nil, bundle: nil)
-    viewController.sectionTabBarDelegate = self
-    return viewController
-  }()
-
-	override var prefersStatusBarHidden: Bool { !Common.Layout.showStatusBar }
-	override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    
+    private lazy var loadingViewController: LoadingViewController = {
+        let shouldShowLanguageSelection = defaults.bool(forKey: Common.UserDefaults.showLanguageSelectionUserDefaultsKey)
+        let viewController = LoadingViewController(showFullVideo: !shouldShowLanguageSelection)
+        viewController.delegate = self
+        return viewController
+    }()
+    
+    private lazy var languageViewController: LanguageSelectionViewController = {
+        let viewController = LanguageSelectionViewController()
+        viewController.delegate = self
+        return viewController
+    }()
+    
+    private(set) var sectionTabBarController: SectionsViewController = SectionsViewController(nibName: nil, bundle: nil)
+    
+    override var prefersStatusBarHidden: Bool { !Common.Layout.showStatusBar }
+    override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        sectionTabBarController.sectionTabBarDelegate = self
         setup()
-	}
-
-	// If loading got stopped (backgrounding the app?)
-	func resumeLoadingIfNotComplete() {
-		if state != .homeTransition {
-			startLoadingData()
-		}
-	}
-
-	// Show a tour, called from deep link handling in app delegate
-	func startTour(tour: AICTourModel) {
-		// If we haven't loaded yet we should save the tour here
-    sectionTabBarController.showTourOnMapFromLink(tour: tour, language: Common.currentLanguage)
-	}
-
+    }
+    
+    // If loading got stopped (backgrounding the app?)
+    func resumeLoadingIfNotComplete() {
+        if state != .homeTransition {
+            startLoadingData()
+        }
+    }
+    
+    // Show a tour, called from deep link handling in app delegate
+    func startTour(tour: AICTourModel) {
+        // If we haven't loaded yet we should save the tour here
+        sectionTabBarController.showTourOnMapFromLink(tour: tour, language: Common.currentLanguage)
+    }
+    
 }
 
 // MARK: AppDataManagerDelegate

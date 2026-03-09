@@ -76,7 +76,12 @@ class LinkedTextView: UITextView {
 					return
 				}
 			}
-			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            
+            if url.scheme == Common.DeepLinks.domain {
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.launchTour(with: url)
+            } else {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
 		}
 	}
 }

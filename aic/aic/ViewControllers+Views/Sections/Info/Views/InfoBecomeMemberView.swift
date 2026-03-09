@@ -66,9 +66,6 @@ class InfoBecomeMemberView: BaseView {
 		joinPromptLabel.textAlignment = .center
 
 		let joinAttrText = NSMutableAttributedString(string: "info_member_join_action".localized(using: "Info"))
-		let joinURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.membershipUrl]!)!
-		joinAttrText.addAttributes([.link: joinURL], range: NSRange(location: 0, length: joinAttrText.string.count))
-
 		joinTextView.setDefaultsForAICAttributedTextView()
 		joinTextView.attributedText = joinAttrText
 		joinTextView.linkTextAttributes = [.foregroundColor: UIColor.aicInfoColor]
@@ -109,7 +106,7 @@ class InfoBecomeMemberView: BaseView {
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-
+    
 	override func updateConstraints() {
 		if didSetupConstraints == false {
 			titleLabel.autoPinEdge(.top, to: .top, of: self, withOffset: titleLabelMarginTop)
@@ -143,6 +140,18 @@ class InfoBecomeMemberView: BaseView {
 
 		super.updateConstraints()
 	}
+    
+    func updateUI() {
+        let joinAttrText = NSMutableAttributedString(string: "info_member_join_action".localized(using: "Info"))
+        
+        if let joinURL = URL(string: AppDataManager.sharedInstance.app.dataSettings[.membershipUrl] ?? "") {
+            joinAttrText.addAttributes([.link: joinURL], range: NSRange(location: 0, length: joinAttrText.string.count))
+        }
+        
+        joinTextView.attributedText = joinAttrText
+        joinTextView.textAlignment = NSTextAlignment.center
+        joinTextView.font = .aicPageTextFont
+    }
 }
 
 // Observe links for passing analytics
