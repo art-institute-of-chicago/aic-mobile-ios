@@ -71,6 +71,7 @@ struct AudioScreen: View {
                             CircleButton(text: "0") { code.append($0) }
                             
                             CircleButton(text: goString) { _ in handleCode() }
+                                .disabled(code.isEmpty)
                         }
                     }
                     
@@ -96,16 +97,18 @@ extension AudioScreen {
     }
     
     private func handleCode() {
-        if let tour = AppDataManager.sharedInstance.getTour(forSelectorNumber: Int(code) ?? 0) {
-            selectedTourAction(tour, Int(code)!)
-        } else if let object = AppDataManager.sharedInstance.getObject(forSelectorNumber: Int(code) ?? 0) {
-            selectedObjectAction(object, Int(code)!)
+        guard let codeValue = Int(code) else { return }
+        
+        if let tour = AppDataManager.sharedInstance.getTour(forSelectorNumber: codeValue) {
+            selectedTourAction(tour, codeValue)
+        } else if let object = AppDataManager.sharedInstance.getObject(forSelectorNumber: codeValue) {
+            selectedObjectAction(object, codeValue)
         } else {
             withAnimation(.easeInOut(duration: 0.7)) {
                 attempts += 1
             }
             
-            AICAnalytics.sendErrorAudioGuideBadNumberEvent(number: Int(code) ?? 0)
+            AICAnalytics.sendErrorAudioGuideBadNumberEvent(number: codeValue)
         }
     }
     
