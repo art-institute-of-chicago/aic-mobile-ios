@@ -104,6 +104,8 @@ extension AudioScreen {
             withAnimation(.easeInOut(duration: 0.7)) {
                 attempts += 1
             }
+            
+            AICAnalytics.sendErrorAudioGuideBadNumberEvent(number: Int(code) ?? 0)
         }
     }
     
