@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct InfoScreen: View {
-    @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject var language: LanguageManager
     
+    @Environment(\.colorScheme) private var colorScheme
     @State private var scrollContentOffset: CGFloat = 0
     
     var body: some View {
@@ -19,13 +20,13 @@ struct InfoScreen: View {
                 Image(.iconInfo)
                     .opacity(titleOpacity)
                 
-                Text("Information")
+                Text(AppDataManager.sharedInstance.app.generalInfo.infoTitle)
                     .aicOldFontStyle(.bigTitle)
                     .foregroundStyle(.white)
                     .opacity(titleOpacity)
                     .scaleEffect(titleOpacity)
                 
-                Text("Access your member card, see museum hours, or update your app settings.")
+                Text(AppDataManager.sharedInstance.app.generalInfo.infoSubtitle)
                     .aicOldFontStyle(.subtitle)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
@@ -127,18 +128,24 @@ struct InfoScreen: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarBackground(Color.infoBackground, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
-        .navigationTitle(scrollContentOffset > -150 ? "" : "Information")
+        .navigationTitle(scrollContentOffset > -150 ? "" : AppDataManager.sharedInstance.app.generalInfo.infoTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Destination.self) { destination in
             switch destination {
                 case .locationSettings:
                     LocationSettingsView()
+                        .environment(\.locale, language.currentLocale)
                 case .museumInfo:
                     MuseumInfoView()
+                        .environment(\.locale, language.currentLocale)
+                case .languageSettings:
+                    LanguageSettingsView(languageManager: LanguageManager.sharedInstance)
+                        .environment(\.locale, language.currentLocale)
                 default:
                     Text("PLACEHOLDER SCREEN")
             }
         }
+        .environment(\.locale, language.currentLocale)
     }
 }
 
@@ -182,6 +189,6 @@ extension InfoScreen {
 
 #Preview {
     NavigationStack {
-        InfoScreen()
+        InfoScreen(language: LanguageManager.sharedInstance)
     }
 }

@@ -28,7 +28,7 @@ class AudioGuideNavigationController: SectionNavigationController {
 		super.viewDidLoad()
 
         // SwiftUI View
-        let audio = AudioScreen() { [self] tour, code in
+        let audio = AudioScreen(languageManager: LanguageManager.sharedInstance){ [self] tour, code in
             sectionDelegate?.audioGuideDidSelectTourAudio(tour: tour, audioGuideID: code)
         } selectedObjectAction: { [self] object, code in
             sectionDelegate?.audioGuideDidSelectObjectAudio(object: object, audioGuideID: code)

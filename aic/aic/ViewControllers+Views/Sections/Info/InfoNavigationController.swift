@@ -12,12 +12,14 @@ import UIKit
 
 class InfoNavigationController: SectionNavigationController {
 	var shouldShowMemberCard: Bool = false
-
+    
+    var languageObserver = LanguageManager.sharedInstance
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
         
         let infoScreen = NavigationStack {
-            InfoScreen()
+            InfoScreen(language: languageObserver)
                 .toolbar {
                     Button {
                         // TODO: Connect search
@@ -27,7 +29,6 @@ class InfoNavigationController: SectionNavigationController {
                     }
                     .foregroundStyle(.white)
                 }
-                .environment(\.locale, Locale(identifier: Localize.currentLanguage()))
         }
         
         let rootVC = UIHostingController(rootView: infoScreen)

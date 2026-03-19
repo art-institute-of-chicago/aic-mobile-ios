@@ -10,6 +10,7 @@ import SwiftUI
 import Localize_Swift
 
 struct AudioScreen: View {
+    @ObservedObject var languageManager: LanguageManager
     let selectedTourAction: (AICTourModel, Int) -> Void
     let selectedObjectAction: (AICObjectModel, Int) -> Void
     
@@ -90,7 +91,7 @@ struct AudioScreen: View {
 extension AudioScreen {
     private var goString: String {
         var resource = LocalizedStringResource("Go", table: "Audio")
-        resource.locale = Locale(identifier: Localize.currentLanguage())
+        resource.locale = languageManager.currentLocale
         let translatedString = String(localized: resource)
         
         return translatedString
@@ -126,6 +127,7 @@ extension AudioScreen {
                     .overlay (
                         Text(text)
                             .aicOldFontStyle(.audioButton)
+                            .minimumScaleFactor(0.5)
                     )
             }
         }
@@ -133,7 +135,5 @@ extension AudioScreen {
 }
 
 #Preview {
-    Localize.setCurrentLanguage("es")
-    
-    return AudioScreen { _, _ in } selectedObjectAction: { _, _ in }
+    return AudioScreen(languageManager: LanguageManager.sharedInstance) { _, _ in } selectedObjectAction: { _, _ in }
 }

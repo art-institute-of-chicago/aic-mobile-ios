@@ -430,7 +430,7 @@ extension Common {
     enum Language: String, CaseIterable {
         case english = "en"
         case spanish = "es"
-        case chinese = "zh-Hans"
+        case chinese = "zh"
         case korean = "ko"
         case french = "fr"
 
@@ -446,6 +446,36 @@ extension Common {
                 return "ko"
             case .french:
                 return "fr"
+            }
+        }
+        
+        var appleLanguageCode: String {
+            switch self {
+                case .english:
+                    "en"
+                case .spanish:
+                    "es"
+                case .chinese:
+                    "zh-Hans"
+                case .korean:
+                    "ko"
+                case .french:
+                    "fr"
+            }
+        }
+        
+        var display: String {
+            switch self {
+                case .english:
+                    "English"
+                case .spanish:
+                    "Español"
+                case .chinese:
+                    "中文"
+                case .korean:
+                    "한국어"
+                case .french:
+                    "Française"
             }
         }
     }
