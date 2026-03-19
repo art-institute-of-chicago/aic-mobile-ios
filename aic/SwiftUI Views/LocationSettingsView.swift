@@ -12,6 +12,7 @@ import SwiftUI
 struct LocationSettingsView: View {
     @Environment(\.openURL) private var openURL
     
+    // TODO: Refactor this out to a separate class
     private let locationManager = CLLocationManager()
     
     var body: some View {
@@ -26,7 +27,9 @@ struct LocationSettingsView: View {
                 .padding(.bottom)
             
             Button(buttonTitle) {
-                if let url = URL(string: UIApplication.openSettingsURLString) {
+                if locationManager.authorizationStatus == .notDetermined {
+                    locationManager.requestWhenInUseAuthorization()
+                } else if let url = URL(string: UIApplication.openSettingsURLString) {
                     openURL(url)
                 }
             }
