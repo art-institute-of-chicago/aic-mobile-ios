@@ -16,8 +16,6 @@ class InfoNavigationController: SectionNavigationController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
         
-        Localize.setCurrentLanguage("en")
-        
         let infoScreen = NavigationStack {
             InfoScreen()
                 .toolbar {

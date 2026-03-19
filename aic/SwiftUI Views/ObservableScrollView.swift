@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-/// The displays the given `content` inside a `ScrollView`, and provides an observable `contentOffset` property.
+/// Displays the given `content` inside a `ScrollView`, and provides an observable `contentOffset` property.
 struct ObservableScrollView<Content: View>: View {
     let content: Content
     @Binding var contentOffset: CGFloat
