@@ -133,6 +133,8 @@ struct InfoScreen: View {
             switch destination {
                 case .locationSettings:
                     LocationSettingsView()
+                case .museumInfo:
+                    MuseumInfoView()
                 default:
                     Text("PLACEHOLDER SCREEN")
             }
