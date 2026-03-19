@@ -167,7 +167,7 @@ extension InfoScreen {
     }
     
     private func handleBuyTickets() {
-        if let url = URL(string: AppDataManager.sharedInstance.app.dataSettings[.ticketsUrl]!) {
+        if let url = URL(string: AppDataManager.sharedInstance.app.dataSettings[.ticketsUrl] ?? "") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
