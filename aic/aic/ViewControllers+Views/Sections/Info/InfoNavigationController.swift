@@ -12,6 +12,7 @@ import UIKit
 
 class InfoNavigationController: SectionNavigationController {
     let infoCoordinator = InfoNavigationCoordinator()
+    
     var languageObserver = LanguageManager.sharedInstance
 
     override func viewDidLoad() {

@@ -16,6 +16,7 @@ class LanguageManager: ObservableObject {
     static var sharedInstance = LanguageManager()
     
     private init() {
+        print("init")
         self.currentLanguage = Localize.currentLanguage()
         self.currentLocale = Locale(identifier: Localize.currentLanguage())
     }

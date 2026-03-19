@@ -49,6 +49,7 @@ struct LanguageSettingsView: View {
     }
 }
 
-#Preview {
+}
+}Preview {
     LanguageSettingsView(languageManager: LanguageManager.sharedInstance)
 }
