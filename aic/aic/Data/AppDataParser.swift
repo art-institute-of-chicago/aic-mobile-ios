@@ -1388,9 +1388,12 @@ final class AppDataParser {
 
                     var location: CoordinateWithFloor
                     do {
-                        let coreLocation = try getCLLocation2d(fromJSON: resultJSON, forKey: "latlon")
+                        let latitude = try getFloat(fromJSON: resultJSON, forKey: "latitude")
+                        let longitude = try getFloat(fromJSON: resultJSON, forKey: "longitude")
+                        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                         let floorNumber = gallery?.location.floor ?? -1
-                        location = CoordinateWithFloor(coordinate: coreLocation, floor: floorNumber)
+                        
+                        location = CoordinateWithFloor(coordinate: coordinate, floor: floorNumber)
                     } catch {
                         location = gallery?.location ?? CoordinateWithFloor(coordinate: .init(latitude: 0, longitude: 0), floor: -1)
                     }
