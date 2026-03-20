@@ -90,8 +90,6 @@ class ResultsTableViewController: UITableViewController {
 		self.tableView.register(ResultsSectionTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsSectionTitleView.reuseIdentifier)
 		self.tableView.register(ResultsContentTitleView.self, forHeaderFooterViewReuseIdentifier: ResultsContentTitleView.reuseIdentifier)
 
-		promotedSearchStringItems = AppDataManager.sharedInstance.app.searchStrings
-
 		self.filter = .empty
 
 		resetContentLoaded()
@@ -102,6 +100,12 @@ class ResultsTableViewController: UITableViewController {
 			]
 			.compactMap { $0 }
 	}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        promotedSearchStringItems = AppDataManager.sharedInstance.app.searchStrings
+    }
 
 	// MARK: Content Loaded
 
