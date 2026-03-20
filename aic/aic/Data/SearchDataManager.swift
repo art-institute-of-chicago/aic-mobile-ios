@@ -98,7 +98,6 @@ final class SearchDataManager: NSObject {
                         [
                             "bool": [
                                 "must": [
-                                    ["match": ["is_on_view": "false"]],
                                     ["match": ["is_boosted": "true" ]]
                                 ]
                             ]

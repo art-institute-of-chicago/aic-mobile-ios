@@ -1352,8 +1352,8 @@ final class AppDataParser {
         dataJSON.arrayValue.forEach { resultJSON in
             do {
                 let artworkId = try getInt(fromJSON: resultJSON, forKey: "id")
-                let isOnView = try getBool(fromJSON: resultJSON, forKey: "is_on_view")
-                let isBoosted = try getBool(fromJSON: resultJSON, forKey: "is_boosted")
+                let isOnView = try getBool(fromJSON: resultJSON, forKey: "is_on_view", optional: true)
+                let isBoosted = try getBool(fromJSON: resultJSON, forKey: "is_boosted", optional: true)
 
                 if isOnView || isBoosted {
                     let title: String = try getString(fromJSON: resultJSON, forKey: "title")
