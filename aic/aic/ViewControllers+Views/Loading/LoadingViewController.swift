@@ -184,8 +184,8 @@ class LoadingViewController: UIViewController {
 	}
 
 	func updateProgress(forPercentComplete pct: Float) {
-		pctComplete = pct
-		progressHighlightWidth?.constant = (progressSize.width * CGFloat(pct))
+		pctComplete = min(1, pct)
+		progressHighlightWidth?.constant = (progressSize.width * CGFloat(pctComplete))
 		self.view.layoutIfNeeded()
 	}
     
