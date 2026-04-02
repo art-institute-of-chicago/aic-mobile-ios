@@ -138,7 +138,7 @@ final class AppDataManager {
             for (index, url) in floorURLs.enumerated() {
                 // Skip download if a file already exists at the location.
                 // TODO: How can we tell if the PDF is out of date?
-                let fileURL = URL.cachesDirectory.appending(path: "aicFloor\(index)").appending(path: url.lastPathComponent)
+                let fileURL = URL.applicationSupportDirectory.appending(path: "aicFloor\(index)").appending(path: url.lastPathComponent)
                 guard FileManager.default.fileExists(atPath: fileURL.relativePath) == false else {
                     mapFloorURLs[index] = url
                     continue
@@ -152,8 +152,8 @@ final class AppDataManager {
     }
 
     private func fetchPDF(from url: URL, floorNumber: Int) async throws {
-        let cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .allDomainsMask).first!
-        let floorFolderURL = cachesFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
+        let folderURL = URL.applicationSupportDirectory
+        let floorFolderURL = folderURL.appendingPathComponent("aicFloor\(floorNumber)/")
         let floorDestinationURL = floorFolderURL.appendingPathComponent(url.lastPathComponent)
         
         try! FileManager.default.createDirectory(at: floorFolderURL, withIntermediateDirectories: true)
