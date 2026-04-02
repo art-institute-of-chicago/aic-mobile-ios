@@ -20,15 +20,10 @@ final class AppDataManager {
     private(set) var app = AICAppDataModel(generalInfo: .init(translations: [:]), map: .init(floors: []))
 	private(set) var exhibitions = [AICExhibitionModel]()
 	private(set) var events = [AICEventModel]()
-
-	private var dataFilesRetrieved = 0
-	var pctComplete = Float(0)
+    private(set) var mapFloorURLs = [Int: URL]() // local path to map floor pdf files
+    private(set) var isLoaded = false
 
 	private var appData: Data?
-	private var numberMapFloorsLoaded = 0
-	var mapFloorURLs = [Int: URL]() // local path to map floor pdf files
-
-	private(set) var isLoaded = false
 	private var loadFailure = false
     private let dataParser: AppDataParser
     private let configuration: ConfigurationResources
@@ -54,52 +49,42 @@ final class AppDataManager {
     }
 
 	func load(forceAppDataDownload: Bool = false) {
-        var downloadDataEvenIfCached = forceAppDataDownload
-        validateAppVersionNumber(&downloadDataEvenIfCached)
         setupCommonConfigurations()
 
-		loadFailure = false
-		dataFilesRetrieved = 0
-		pctComplete = 0.0
-		appData = nil
-		mapFloorURLs = [:]
-		numberMapFloorsLoaded = 0
-        lastModifiedStringsMatch(
-            atURL: Common.Constants.appDataJSON,
-            userDefaultsLastModifiedKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey
-        ) { [weak self] stringsMatch in
-            guard let self else { return }
+        Task {
+            // Determine if the appData response has been updated
+            let appDataIsCurrent = try! await lastModifiedStringsMatch()
+            
+            // Download appData (CMS bundle)
+            if appDataIsCurrent == false || forceAppDataDownload {
+                await self.downloadAppData()
+            }
+            
+            // Get Events from API
+            await self.downloadEvents()
+            
+            // Get Exhibitions from API
+            await self.downloadExhibitions()
+            
+            // Download PDFs
+            // TODO: Pass in URLs from appData
+            try! await self.downloadThePDFs(urls: [])
+            
+            // Parse CMS data. This needs to happen after floor PDFs have been downloaded/verified
+            if let appData {
+                app = dataParser.parse(appData: appData)
+            }
 
-			if !stringsMatch || downloadDataEvenIfCached {
-				//Try to download new app data
-				//If there is an issue with the server or reachability
-				//then fall back to the older local data, unless no local data
-				//exists, then fail.
-				downloadAppData()
-			} else {
-				//If the appData json that is on disk is the same as
-				//the server provided json then just use our local data
-				appData = loadFromDisk(fileName: Common.Constants.localAppDataFilename)
-
-				//We have good cached app data, continue on
-				loadAppData()
-			}
-		}
-	}
-
-    private func validateAppVersionNumber(_ downloadDataEvenIfCached: inout Bool) {
-        let currentVersion = Bundle.versionNumber
-        // Force AppData download if the last software version is older
-        if !downloadDataEvenIfCached {
-            if let lastVersion = UserDefaults.standard.object(forKey: Common.UserDefaults.lastVersionNumberKey) as? String {
-                if currentVersion.compare(lastVersion, options: .numeric) == .orderedDescending {
-                    downloadDataEvenIfCached = true
-                }
-            } else {
-                downloadDataEvenIfCached = true
+            // Get Member Card Info
+            fetchMemberCard()
+            
+            // Continue on to Home screen
+            // This is not implemented anywhere :(
+            //                self.delegate?.didFinishLoadingData?()
+            await MainActor.run {
+                self.delegate?.downloadProgress(withPctCompleted: 1.0)
             }
         }
-        UserDefaults.standard.set(currentVersion, forKey: Common.UserDefaults.lastVersionNumberKey)
     }
 
     private func setupCommonConfigurations() {
@@ -115,133 +100,87 @@ final class AppDataManager {
         }
     }
 
-	// MARK: Download App Data
-
-	private func downloadAppData() {
-		AF.request(Common.Constants.appDataJSON)
-			.validate()
-			.responseData { response in
-				if self.loadFailure == false {
-					switch response.result {
-					case .success(let value):
-
-						self.appData = value
-
-						//Save the data to disk in case the server is down at some point in the future [JB]
-						let headersDictionary = response.response?.allHeaderFields
-						if let lastModifiedString = headersDictionary?["Last-Modified"] as? String {
-                            self.writeDataToDisk(
-                                data: value,
-                                lastModifiedString: lastModifiedString,
-                                lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey,
-                                fileName: Common.Constants.localAppDataFilename
-                            )
-						}
-					case .failure:
-						// Load cached app data from disk
-						self.appData = self.loadFromDisk(fileName: Common.Constants.localAppDataFilename)
-					}
-
-					self.loadAppData()
-				}
-		}
+    
+	// MARK: - Downloading data for app startup
+    private func downloadAppData() async {
+        do {
+            let (data, response) = try await URLSession.shared.data(from: URL(string: Common.Constants.appDataJSON)!)
+            
+            self.appData = data
+            
+            //Save the data to disk in case the server is down at some point in the future [JB]
+            let headersDictionary = (response as? HTTPURLResponse)?.allHeaderFields
+            if let lastModifiedString = headersDictionary?["Last-Modified"] as? String {
+                self.writeDataToDisk(
+                    data: data,
+                    lastModifiedString: lastModifiedString,
+                    lastModifiedUserDefaultsKey: Common.UserDefaults.onDiskAppDataLastModifiedStringKey,
+                    fileName: Common.Constants.localAppDataFilename
+                )
+            }
+        } catch {
+            // Load cached app data from disk
+            self.appData = self.loadFromDisk(fileName: Common.Constants.localAppDataFilename)
+        }
 	}
 
-	private func loadAppData() {
-		if let appData = self.appData {
-			// We have good app data, continue on
-			updateDownloadProgress()
-			downloadMapFloorsPDFs(appData: appData)
+    private func downloadThePDFs(urls: [URL]) async throws {
+        // TEST: Override to help test the new CMS /appData-v3 endpoint
+        let floorURLs = [
+            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/20180323_map_floor0_0.pdf")!,
+            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/G3_App_Map_Adjustments_20251216%20%281%29.pdf")!,
+            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/G1_Caillebotte_Regenstein%20Map_AIC%20App_XD_20250608_0.pdf")!,
+            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/20180323_map_floor3.pdf")!
+        ]
+        
+        await withThrowingTaskGroup(of: Void.self) { group in
+            // Add a task for each URL
+            for (index, url) in floorURLs.enumerated() {
+                // Skip download if a file already exists at the location.
+                // TODO: How can we tell if the PDF is out of date?
+                let fileURL = URL.cachesDirectory.appending(path: "aicFloor\(index)").appending(path: url.lastPathComponent)
+                guard FileManager.default.fileExists(atPath: fileURL.relativePath) == false else {
+                    mapFloorURLs[index] = url
+                    continue
+                }
+                
+                group.addTask {
+                    try await self.fetchPDF(from: url, floorNumber: index)
+                }
+            }
+        }
+    }
 
-			fetchMemberCard()
-		} else {
-			// If we couldn't load any app data from url or disk let the user know
-			notifyLoadFailure(withMessage: "Failed to load application data.")
-		}
-	}
+    private func fetchPDF(from url: URL, floorNumber: Int) async throws {
+        let cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .allDomainsMask).first!
+        let floorFolderURL = cachesFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
+        let floorDestinationURL = floorFolderURL.appendingPathComponent(url.lastPathComponent)
+        
+        try! FileManager.default.createDirectory(at: floorFolderURL, withIntermediateDirectories: true)
+        
+        do {
+            let (fileURL, _) = try await URLSession.shared.download(from: url)
+            
+            try await MainActor.run {
+                _ = try FileManager.default.replaceItemAt(floorDestinationURL, withItemAt: fileURL)
+                print("PDF moved to \(floorDestinationURL)")
+                mapFloorURLs[floorNumber] = floorDestinationURL
+            }
+        } catch {
+            print("Error downloading PDF files: \(error)")
+            self.notifyLoadFailure(withMessage: "Failed to load application data.")
+        }
+    }
 
-	// MARK: Download Map Floors PDFs
-
-	private func downloadMapFloorsPDFs(appData: Data) {
-		// URLs to download Floor Pdfs
-		let floorsURLs = dataParser.parseMapFloorsURLs(fromAppData: appData)
-
-		guard floorsURLs.count == Common.Map.totalFloors else {
-			// If we couldn't parse all floor pdfs urls let the user know
-			self.notifyLoadFailure(withMessage: "Failed to load application data.")
-			return
-		}
-
-		for floorNumber in 0..<Common.Map.totalFloors {
-			let floorSourceURL = floorsURLs[floorNumber]
-
-			// Create destination URL for this floor
-			let cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .allDomainsMask).first!
-			let floorFolderURL = cachesFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
-			let floorDestinationURL = floorFolderURL.appendingPathComponent(floorSourceURL.lastPathComponent)
-
-			// If a pdf file already exists with the same name, load from caches folder
-			if FileManager.default.fileExists(atPath: floorDestinationURL.path) {
-				self.numberMapFloorsLoaded += 1
-				self.addMapFloorURL(floorDestinationURL, floorNumber: floorNumber)
-			}
-				// If the file is new, download pdf from CMS
-			else {
-				// Clean up floder of previous pdf files for this floor
-				var isDirectory: ObjCBool = true
-				if FileManager.default.fileExists(atPath: floorFolderURL.path, isDirectory: &isDirectory) {
-					do {
-						try FileManager.default.removeItem(atPath: floorFolderURL.path)
-					} catch {
-					}
-				}
-
-				// Download new pdf file
-				let destination: DownloadRequest.Destination = { _, _ in (floorDestinationURL, [.removePreviousFile, .createIntermediateDirectories]) }
-
-				AF.download(floorSourceURL, to: destination).response { response in
-					self.numberMapFloorsLoaded += 1
-
-					if let floorURL = response.fileURL {
-						self.addMapFloorURL(floorURL, floorNumber: floorNumber)
-					} else {
-						// If we could not load this floor pdf let the user know
-						self.notifyLoadFailure(withMessage: "Failed to load application data.")
-						return
-					}
-				}
-			}
-		}
-	}
-
-	private func addMapFloorURL(_ url: URL, floorNumber: Int) {
-		self.mapFloorURLs[floorNumber] = url
-
-		// If we loaded all floors and we succesfully downloaded all of them
-		if self.numberMapFloorsLoaded == Common.Map.totalFloors {
-			if self.mapFloorURLs.count == Common.Map.totalFloors, let appData = self.appData {
-
-				self.app = self.dataParser.parse(appData: appData)
-				self.updateDownloadProgress()
-				self.downloadExhibitions()
-			} else {
-				// If we couldn't load some floor pdfs let the user know
-				self.notifyLoadFailure(withMessage: "Failed to load application data.")
-				return
-			}
-		}
-	}
-
-	// MARK: Download Exhibitions
-
-	private func downloadExhibitions() {
-		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
+	private func downloadExhibitions() async {
+        // FIXME: Get decoding in place
+//		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
+        var url = "https://api.artic.edu" + "/api/v1/exhibitions"
+        
 		if url.range(of: "/search") == nil {
 			url.append("/search")
 		}
 		url.append("?limit=99")
-		let urlRequest = URLRequest(url: URL(string: url)!)
-		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
 			"fields": [
 				"id",
@@ -271,43 +210,25 @@ final class AppDataManager {
 				]
 			]
 		]
+        
+        var myRequest = try! URLRequest(url: url, method: .post)
+        myRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        myRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
+        let (data, _) = try! await URLSession.shared.data(for: myRequest)
 
-		AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-			.validate()
-			.responseData { response in
-				switch response.result {
-				case .success(let value):
-                        self.exhibitions = self.dataParser.parse(exhibitionsData: value).sorted(by: { $0.position < $1.position })
-                        
-                        Task {
-                            let denmark = await Demark()
-                            
-                            for exhibition in self.exhibitions {
-                                if let markdown = try? await denmark.convertToMarkdown(exhibition.shortDescription.cleanedHTML, options: self.markdownOptions) {
-                                    exhibition.shortDescription = markdown
-                                }
-                            }
-                        }
-
-				case .failure(let error):
-					debugPrint(error)
-				}
-
-				self.updateDownloadProgress()
-				self.downloadEvents()
-		}
+        // TODO: Switch to Codable
+        self.exhibitions = self.dataParser.parse(exhibitionsData: data).sorted(by: { $0.position < $1.position })
 	}
 
-	// MARK: Download Events
-
-	private func downloadEvents() {
-		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
+	func downloadEvents() async {
+        // FIXME: Get decoding in place
+//		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
+        var url = "https://api.artic.edu" + "/api/v1/event-occurrences"
+        
 		if url.range(of: "/search") == nil {
 			url.append("/search")
 		}
 		url.append("?limit=100")
-		let urlRequest = URLRequest(url: URL(string: url)!)
-		let urlString = urlRequest.url?.absoluteString
 		let parameters: [String: Any] = [
 			"fields": [
 				"id",
@@ -351,64 +272,20 @@ final class AppDataManager {
 				]
 			]
 		]
+        
+        
+        var myRequest = try! URLRequest(url: url, method: .post)
+        myRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        myRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
+        let (data, _) = try! await URLSession.shared.data(for: myRequest)
 
-        AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .validate()
-            .responseData { response in
-                switch response.result {
-                    case .success(let value):
-                        self.events = self.dataParser.parse(eventsData: value)
-                        
-                        Task {
-                            let denmark = await Demark()
-                            
-                            for event in self.events {
-                                if let index = self.events.firstIndex(of: event) {
-                                    if let shortMarkdown = try? await denmark.convertToMarkdown(event.shortDescription.cleanedHTML, options: self.markdownOptions) {
-                                        self.events[index].shortDescription = shortMarkdown
+        // TODO: Switch to Codable
+        self.events = self.dataParser.parse(eventsData: data)
                                     }
-                                    
-                                    if let longMarkdown = try? await denmark.convertToMarkdown(event.longDescription.cleanedHTML, options: self.markdownOptions) {
-                                        self.events[index].longDescription = longMarkdown
-                                    }
-                                    
-                                    if let buttonMarkdown = try? await denmark.convertToMarkdown(event.buttonCaption?.cleanedHTML ?? "", options: self.markdownOptions) {
-                                        self.events[index].buttonCaption = buttonMarkdown
-                                    }
-                                }
-                            }
-                        }
-                    case .failure(let error):
-                        debugPrint(error)
-                }
-                
-                self.updateDownloadProgress()
-            }
-    }
-
-	// MARK: Fetch Member Card if Needed
 
 	private func fetchMemberCard() {
 		if let member = MemberDataManager.sharedInstance.getSavedMember() {
-			MemberDataManager.sharedInstance.delegate = self
 			MemberDataManager.sharedInstance.validateMember(memberID: member.memberID, zipCode: member.memberZip)
-		} else {
-			updateDownloadProgress()
-		}
-	}
-
-	// MARK: Update Download State
-
-	private func updateDownloadProgress() {
-		DispatchQueue.main.async {
-			self.dataFilesRetrieved = self.dataFilesRetrieved + 1
-			self.pctComplete = Float(self.dataFilesRetrieved) / Float(Common.Constants.totalDataFeeds)
-			self.delegate?.downloadProgress(withPctCompleted: self.pctComplete)
-
-			if self.dataFilesRetrieved == Common.Constants.totalDataFeeds {
-				// We're finished
-				self.delegate?.didFinishLoadingData?()
-			}
 		}
 	}
 
@@ -419,8 +296,7 @@ final class AppDataManager {
 		}
 	}
 
-	// MARK: Data Getters
-
+	// MARK: - Data Getters
 	func getObjects(forFloor floor: Int) -> [AICObjectModel] {
 		return app.objects.filter({ $0.location.floor == floor })
 	}
@@ -701,39 +577,28 @@ final class AppDataManager {
 
 	// MARK: Cached App Data Methods
 
-    private func lastModifiedStringsMatch(
-        atURL url: URLConvertible,
-        userDefaultsLastModifiedKey key: String,
-        completion: @escaping (Bool) -> Void
-    ) {
+    private func lastModifiedStringsMatch() async throws -> Bool {
+        let url = Common.Constants.appDataJSON
+        let key = Common.UserDefaults.onDiskAppDataLastModifiedStringKey
+        
         //Make a request to check the appData Last-Modified header
-        AF.request(
-            url,
-            method: .head,
-            parameters: Parameters(),
-            encoding: URLEncoding.default,
-            headers: HTTPHeaders()
-        )
-        .validate()
-        .responseData { response in
-            // If we can't read the headers, something is wrong, try downloading and failover from there
-            guard let headerDictionary = response.response?.allHeaderFields as? [String: Any] else {
-                completion(false)
-                return
-            }
-
-            guard let lastModifiedString = headerDictionary["Last-Modified"] as? String else {
-                completion(false)
-                return
-            }
-
-            guard let localLastModifiedString = UserDefaults.standard.object(forKey: key) as? String else {
-                completion(false)
-                return
-            }
-
-            completion(localLastModifiedString == lastModifiedString)
+        let request = try URLRequest(url: url, method: .head)
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        // If we can't read the headers, something is wrong, try downloading and failover from there
+        guard let headerDictionary = (response as? HTTPURLResponse)?.allHeaderFields as? [String: Any] else {
+            return false
         }
+
+        guard let lastModifiedString = headerDictionary["Last-Modified"] as? String else {
+            return false
+        }
+
+        guard let localLastModifiedString = UserDefaults.standard.object(forKey: key) as? String else {
+            return false
+        }
+
+        return localLastModifiedString == lastModifiedString
     }
 
 	private func writeDataToDisk(data: Data, fileName: String) {
@@ -769,16 +634,5 @@ final class AppDataManager {
 	private func localFileURL(forFileName fileName: String) -> URL? {
 		guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
 		return directory.appendingPathComponent(fileName)
-	}
-}
-
-// MARK: MemberDataManagerDelegate Adoption
-extension AppDataManager: MemberDataManagerDelegate {
-	func memberCardDidLoadForMember(memberCard: AICMemberCardModel) {
-		updateDownloadProgress()
-	}
-
-	func memberCardDataLoadingFailed() {
-		updateDownloadProgress()
 	}
 }
