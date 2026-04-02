@@ -60,12 +60,6 @@ final class AppDataManager {
                 await self.downloadAppData()
             }
             
-            // Get Events from API
-            await self.downloadEvents()
-            
-            // Get Exhibitions from API
-            await self.downloadExhibitions()
-            
             // Download PDFs
             // TODO: Pass in URLs from appData
             try! await self.downloadThePDFs(urls: [])
@@ -74,6 +68,14 @@ final class AppDataManager {
             if let appData {
                 app = dataParser.parse(appData: appData)
             }
+            
+            // These need to happen after the appData has been parsed, to access the URLs
+            
+            // Get Events from API
+            await self.downloadEvents()
+            
+            // Get Exhibitions from API
+            await self.downloadExhibitions()
 
             // Get Member Card Info
             fetchMemberCard()
@@ -173,9 +175,7 @@ final class AppDataManager {
     }
 
 	private func downloadExhibitions() async {
-        // FIXME: Get decoding in place
-//		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
-        var url = "https://api.artic.edu" + "/api/v1/exhibitions"
+		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
         
 		if url.range(of: "/search") == nil {
 			url.append("/search")
@@ -221,9 +221,7 @@ final class AppDataManager {
 	}
 
 	func downloadEvents() async {
-        // FIXME: Get decoding in place
-//		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
-        var url = "https://api.artic.edu" + "/api/v1/event-occurrences"
+		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
         
 		if url.range(of: "/search") == nil {
 			url.append("/search")
