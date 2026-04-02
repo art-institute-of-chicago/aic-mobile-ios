@@ -50,7 +50,7 @@ final class RootViewController: UIViewController {
     // If loading got stopped (backgrounding the app?)
     func resumeLoadingIfNotComplete() {
         if state != .homeTransition {
-            startLoadingData()
+//            startLoadingData()
         }
     }
     

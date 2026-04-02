@@ -1791,7 +1791,7 @@ final class AppDataParser {
 		throw ParseError.missingKey(key: arrayKey)
 	}
 
-	private func getAudioFile(forNID nid: Int) throws -> AICAudioFileModel {
+	func getAudioFile(forNID nid: Int) throws -> AICAudioFileModel {
 		for audioFile in self.audioFiles {
 			if audioFile.nid == nid {
 				return audioFile

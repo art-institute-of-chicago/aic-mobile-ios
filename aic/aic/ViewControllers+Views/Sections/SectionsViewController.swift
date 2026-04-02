@@ -101,7 +101,7 @@ class SectionsViewController: UITabBarController {
 		cardVC.view.accessibilityElementsHidden = false
 
 		homeVC.view.accessibilityElementsHidden = true
-		mapVC.view.accessibilityElementsHidden = true
+//		mapVC.view.accessibilityElementsHidden = true
 		audioGuideVC.view.accessibilityElementsHidden = true
 		infoVC.view.accessibilityElementsHidden = true
 	}
