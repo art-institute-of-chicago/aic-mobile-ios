@@ -60,93 +60,26 @@ final class AppDataManager {
                 await self.downloadAppData()
             }
             
-            print("Download PDFS")
+            // Get Events from API
+//            await self.downloadEvents()
+            
+            // Get Exhibitions from API
+//            await self.downloadExhibitions()
+            
             // Download PDFs
             // TODO: Pass in URLs from appData
             try! await self.downloadThePDFs(urls: [])
             
-            print("START PARSING")
             // Parse CMS data. This needs to happen after floor PDFs have been downloaded/verified
             if let appData {
-//                let decoder = JSONDecoder()
-//                let fullResponse = try! decoder.decode(CMSData.self, from: appData)
-//                
-//                app.objects = fullResponse.objects.map {
-//                    AICObjectModel(
-//                        nid: $0.value.nid,
-//                        objectId: $0.value.id,
-//                        thumbnailUrl: URL(string: "https://artic.edu")!,
-//                        thumbnailCropRect: nil,
-//                        imageUrl: URL(string: "https://artic.edu")!,
-//                        imageCropRect: nil,
-//                        title: $0.value.title,
-//                        audioCommentaries: [],
-//                        tombstone: nil,
-//                        credits: nil,
-//                        imageCopyright: nil,
-//                        location: .init(coordinate: .init(latitude: 0, longitude: 0), floor: -100),
-//                        gallery: .init(id: 0, galleryId: 0, title: $0.value.gallery_location, displayTitle: "", location: .init(coordinate: .init(latitude: 0, longitude: 0), floor: -100), closed: false)
-//                    )
-//                }
-//                
-//                app.dataSettings = [
-//                    .artworksEndpoint: fullResponse.data.artworks_endpoint,
-//                    .dataApiUrl: fullResponse.data.data_api_url,
-//                    .eventsEndpoint: fullResponse.data.events_endpoint_v2,
-//                    .exhibitionsEndpoint: fullResponse.data.exhibitions_endpoint
-//                ]
-//                
-//                app.audioFiles = fullResponse.audio_files.values.map {
-//                    AICAudioFileModel(nid: Int($0.nid)!, translations: [.english: .init(trackTitle: $0.title, url: $0.audio_file_url, transcript: $0.audio_transcript)])
-//                }
-//                
-//                app.tours = fullResponse.tours.map {
-//                    AICTourModel(
-//                        nid: Int($0.nid)!,
-//                        audioCommentary: .init(selectorNumber: 0, audioFile: .init(nid: 0, translations: [:])),
-//                        order: $0.weight,
-//                        category: AICTourCategoryModel(id: "", title: [:]),
-//                        imageUrl: $0.image_url,
-//                        location: .init(coordinate: .init(latitude: $0.latitude, longitude: $0.longitude), floor: Int($0.floor)!),
-//                        allStops: $0.tour_stops.map{ stop in
-//                            AICTourStopModel(
-//                                order: stop.sort,
-//                                object: getObject(forID: stop.object)!,
-//                                audio: app.audioFiles.first(where: { model in
-//                                    model.nid == Int(stop.audio_id)!
-//                                })!,
-//                                audioBumper: app.audioFiles.first(where: { model in
-//                                    model.nid == Int(stop.audio_bumper ?? "")
-//                                })
-//                            )
-//                        },
-//                        translations: [.english: .init(title: $0.title, shortDescription: $0.description, longDescription: $0.intro, durationInMinutes: nil, credits: "")]
-//                    )
-//                }
-                
-                app = dataParser.parse(appData: appData)
+                print("PARSE START")
+                self.app = self.dataParser.parse(appData: appData)
+                print("PARSE END")
             }
-            
-            print("END PARSING)")
-            
-            // These need to happen after the appData has been parsed, to access the URLs
-            
-            // Get Events from API
-            print("GET EVENTS")
-            async let catcha = await self.downloadEvents()
-            
-            // Get Exhibitions from API
-            print("GET EXHIBITIONS")
-            async let boom = await self.downloadExhibitions()
 
-            let _ = await [catcha, boom]
-                                
-            print("GET MEMEBER CARD")
             // Get Member Card Info
-            fetchMemberCard()
+//            fetchMemberCard()
             
-            
-            print("LAUNCHING TO HOME SCREEN")
             // Continue on to Home screen
             // This is not implemented anywhere :(
             //                self.delegate?.didFinishLoadingData?()
@@ -209,7 +142,7 @@ final class AppDataManager {
                 // TODO: How can we tell if the PDF is out of date?
                 let fileURL = URL.applicationSupportDirectory.appending(path: "aicFloor\(index)").appending(path: url.lastPathComponent)
                 guard FileManager.default.fileExists(atPath: fileURL.relativePath) == false else {
-                    mapFloorURLs[index] = url
+                    mapFloorURLs[index] = fileURL
                     continue
                 }
                 
@@ -242,7 +175,6 @@ final class AppDataManager {
     }
 
 	private func downloadExhibitions() async {
-        return
 		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
         
 		if url.range(of: "/search") == nil {
