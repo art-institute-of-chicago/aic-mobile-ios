@@ -441,7 +441,7 @@ extension Common {
             case .spanish:
                 return "es"
             case .chinese:
-                return "zh-Hans"
+                return "zh"
             case .korean:
                 return "ko"
             case .french:
