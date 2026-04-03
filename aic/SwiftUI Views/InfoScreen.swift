@@ -130,7 +130,12 @@ struct InfoScreen: View {
         .navigationTitle(scrollContentOffset > -150 ? "" : "Information")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Destination.self) { destination in
-            Text("PLACEHOLDER SCREEN")
+            switch destination {
+                case .locationSettings:
+                    LocationSettingsView()
+                default:
+                    Text("PLACEHOLDER SCREEN")
+            }
         }
     }
 }
