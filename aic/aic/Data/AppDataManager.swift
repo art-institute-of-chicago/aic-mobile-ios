@@ -60,13 +60,12 @@ final class AppDataManager {
                 await self.downloadAppData()
             }
             
-            // Download PDFs
-            // TODO: Pass in URLs from appData
-            try! await self.downloadThePDFs(urls: [])
-            
-            // Parse CMS data. This needs to happen after floor PDFs have been downloaded/verified, and before Events & Exhibitions are fetched from the API.
             if let appData {
+                // Download PDFs
+                try! await self.downloadThePDFs(urls: dataParser.parseMapFloorsURLs(fromAppData: appData))
+                
                 print("PARSE START")
+                // Parse CMS data. This needs to happen after floor PDFs have been downloaded/verified, and before Events & Exhibitions are fetched from the API.
                 self.app = self.dataParser.parse(appData: appData)
                 print("PARSE END")
             }
@@ -94,7 +93,10 @@ final class AppDataManager {
         Common.Constants.ignoreOverrideImageCrop = configuration.enableIgnoreOverrideImageCrop()
 
         if let appDataURL = configuration.appDataURL() {
-            Common.Constants.appDataJSON = appDataURL
+//            Common.Constants.appDataJSON = appDataURL
+            
+            // TEST: New CMS Endpoint
+            Common.Constants.appDataJSON = "https://mobile-admin-test.artic.edu/api/appData-v3"
         }
 
         if let memberCardSOAPRequestURL = configuration.memberCardSOAPRequestURL() {
@@ -128,26 +130,28 @@ final class AppDataManager {
 
     private func downloadThePDFs(urls: [URL]) async throws {
         // TEST: Override to help test the new CMS /appData-v3 endpoint
-        let floorURLs = [
-            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/20180323_map_floor0_0.pdf")!,
-            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/G3_App_Map_Adjustments_20251216%20%281%29.pdf")!,
-            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/G1_Caillebotte_Regenstein%20Map_AIC%20App_XD_20250608_0.pdf")!,
-            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/20180323_map_floor3.pdf")!
-        ]
+//        let floorURLs = [
+//            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/20180323_map_floor0_0.pdf")!,
+//            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/G3_App_Map_Adjustments_20251216%20%281%29.pdf")!,
+//            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/G1_Caillebotte_Regenstein%20Map_AIC%20App_XD_20250608_0.pdf")!,
+//            URL(string: "http://aic-mobile-tours.artic.edu/sites/default/files/floor-maps/20180323_map_floor3.pdf")!
+//        ]
         
         await withThrowingTaskGroup(of: Void.self) { group in
             // Add a task for each URL
-            for (index, url) in floorURLs.enumerated() {
+            for (index, url) in urls.enumerated() {
                 // Skip download if a file already exists at the location.
                 // TODO: How can we tell if the PDF is out of date?
-                let fileURL = URL.applicationSupportDirectory.appending(path: "aicFloor\(index)").appending(path: url.lastPathComponent)
+                let fileURL = URL.applicationSupportDirectory.appending(path: "floorMaps").appending(path: "aicFloor\(index)").appending(path: url.lastPathComponent)
                 guard FileManager.default.fileExists(atPath: fileURL.relativePath) == false else {
                     mapFloorURLs[index] = fileURL
                     continue
                 }
                 
                 group.addTask {
-                    try await self.fetchPDF(from: url, floorNumber: index)
+                    let cleanedURL = URL(string: url.absoluteString.replacing("172.20.28.120", with: "mobile-admin-test.artic.edu"))!
+                    print(cleanedURL)
+                    try await self.fetchPDF(from: cleanedURL, floorNumber: index)
                 }
             }
         }
@@ -155,7 +159,7 @@ final class AppDataManager {
 
     private func fetchPDF(from url: URL, floorNumber: Int) async throws {
         let folderURL = URL.applicationSupportDirectory
-        let floorFolderURL = folderURL.appendingPathComponent("aicFloor\(floorNumber)/")
+        let floorFolderURL = folderURL.appending(path: "floorMaps").appendingPathComponent("aicFloor\(floorNumber)/")
         let floorDestinationURL = floorFolderURL.appendingPathComponent(url.lastPathComponent)
         
         try! FileManager.default.createDirectory(at: floorFolderURL, withIntermediateDirectories: true)
