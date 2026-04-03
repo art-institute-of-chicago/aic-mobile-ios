@@ -60,25 +60,25 @@ final class AppDataManager {
                 await self.downloadAppData()
             }
             
-            // Get Events from API
-//            await self.downloadEvents()
-            
-            // Get Exhibitions from API
-//            await self.downloadExhibitions()
-            
             // Download PDFs
             // TODO: Pass in URLs from appData
             try! await self.downloadThePDFs(urls: [])
             
-            // Parse CMS data. This needs to happen after floor PDFs have been downloaded/verified
+            // Parse CMS data. This needs to happen after floor PDFs have been downloaded/verified, and before Events & Exhibitions are fetched from the API.
             if let appData {
                 print("PARSE START")
                 self.app = self.dataParser.parse(appData: appData)
                 print("PARSE END")
             }
+            
+            // Get Events from API
+            await self.downloadEvents()
+            
+            // Get Exhibitions from API
+            await self.downloadExhibitions()
 
             // Get Member Card Info
-//            fetchMemberCard()
+            fetchMemberCard()
             
             // Continue on to Home screen
             // This is not implemented anywhere :(
