@@ -157,6 +157,7 @@
 		8DB858F32D8B6E11009E9B1B /* Array+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */; };
 		8DEEDF3B2F6C69E800FD54C6 /* LocationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEDF3A2F6C69E800FD54C6 /* LocationSettingsView.swift */; };
 		8DEEDF3D2F6C6BDA00FD54C6 /* Location.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8DEEDF3C2F6C6BD800FD54C6 /* Location.xcstrings */; };
+		8DEEDF412F6C73A900FD54C6 /* MuseumInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEDF402F6C73A900FD54C6 /* MuseumInfoView.swift */; };
 		E20B1C0829D525A90095E59C /* MapPointOfInterestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */; };
 		E218869429C0036F00803FF9 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */; };
 		E21D01B12BFD0C6100E75C53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E21D01B02BFD0C6100E75C53 /* GoogleService-Info.plist */; };
@@ -426,6 +427,7 @@
 		8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AIC.swift"; sourceTree = "<group>"; };
 		8DEEDF3A2F6C69E800FD54C6 /* LocationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsView.swift; sourceTree = "<group>"; };
 		8DEEDF3C2F6C6BD800FD54C6 /* Location.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Location.xcstrings; sourceTree = "<group>"; };
+		8DEEDF402F6C73A900FD54C6 /* MuseumInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumInfoView.swift; sourceTree = "<group>"; };
 		8DF14D322E6FD10300E22443 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		E20B1C0729D525A90095E59C /* MapPointOfInterestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPointOfInterestType.swift; sourceTree = "<group>"; };
 		E218869329C0036F00803FF9 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
@@ -884,6 +886,7 @@
 				8D40F4F92F69F65100C3334D /* AudioScreen.swift */,
 				8D40F53D2F6B1AAB00C3334D /* InfoScreen.swift */,
 				8DEEDF3A2F6C69E800FD54C6 /* LocationSettingsView.swift */,
+				8DEEDF402F6C73A900FD54C6 /* MuseumInfoView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -1521,6 +1524,7 @@
 				8D40F5402F6B1AEF00C3334D /* ObservableScrollView.swift in Sources */,
 				290B6CCB208510DE0022F6AE /* UIFont+FontNames.swift in Sources */,
 				E2C72F0829C3EFA30021F1EC /* UIViewController+ChildTransition.swift in Sources */,
+				8DEEDF412F6C73A900FD54C6 /* MuseumInfoView.swift in Sources */,
 				294C0B4E201A76F700F2ABB1 /* MapLocationAnnotationView.swift in Sources */,
 				295AC0931FDF8FBA009A0FAF /* MuseumInfoViewController.swift in Sources */,
 				29824BD2200D8779003B6DB5 /* ArtworkTableViewController.swift in Sources */,
