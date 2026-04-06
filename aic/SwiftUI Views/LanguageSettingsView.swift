@@ -39,10 +39,10 @@ struct LanguageSettingsView: View {
                     }
                 }
             }
+            .padding()
         }
         .scrollIndicators(.hidden)
         .scrollBounceBehavior(.basedOnSize)
-        .padding()
         .toolbarBackground(.infoBackground, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)

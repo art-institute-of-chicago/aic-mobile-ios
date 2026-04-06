@@ -171,6 +171,7 @@ final class AppDataManager {
                 _ = try FileManager.default.replaceItemAt(floorDestinationURL, withItemAt: fileURL)
                 print("PDF moved to \(floorDestinationURL)")
                 mapFloorURLs[floorNumber] = floorDestinationURL
+                delegate?.downloadProgress(withPctCompleted: Float(mapFloorURLs.count / 5))
             }
         } catch {
             print("Error downloading PDF files: \(error)")

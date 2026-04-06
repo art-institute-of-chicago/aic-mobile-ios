@@ -116,6 +116,8 @@ struct InfoScreen: View {
                         .background(.infoBackground)
                     }
                     .background(.background)
+                    .padding([.horizontal, .bottom])
+                    .background(.infoBackground)
                 }
                 .ignoresSafeArea(edges: .bottom)
             }
