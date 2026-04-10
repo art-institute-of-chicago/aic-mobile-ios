@@ -148,7 +148,7 @@ struct TourDetailView: View {
             }
         }
         .onAppear {
-            selectedLanguage = Common.Language(rawValue: LanguageManager.sharedInstance.currentLanguage) ?? .english
+            selectedLanguage = Common.currentLanguage
         }
     }
 }
