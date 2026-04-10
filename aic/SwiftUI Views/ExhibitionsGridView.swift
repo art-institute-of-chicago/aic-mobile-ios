@@ -11,6 +11,7 @@ import SwiftUI
 struct ExhibitionsGridView: View {
     let exhibitions: [AICExhibitionModel]
     
+    @EnvironmentObject private var coordinator: HomeNavigationCoordinator
     @State private var selectedExhibition: AICExhibitionModel?
     
     var body: some View {
@@ -27,6 +28,8 @@ struct ExhibitionsGridView: View {
         .navigationTitle("On View")
         .sheet(item: $selectedExhibition) { exhibition in
             ExhibitionDetailView(exhibition: exhibition)
+                .environmentObject(coordinator)
+                .environment(\.locale, LanguageManager.sharedInstance.currentLocale)
         }
     }
 }

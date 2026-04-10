@@ -87,7 +87,10 @@ struct HomeScreen: View {
         }
         .navigationDestination(for: ContentType.self) { content in
             switch content {
-                case .exhibitions: ExhibitionsGridView(exhibitions: exhibitions)
+                case .exhibitions:
+                    ExhibitionsGridView(exhibitions: exhibitions)
+                        .environmentObject(coordinator)
+                    
                 default: EmptyView()
             }
         }
