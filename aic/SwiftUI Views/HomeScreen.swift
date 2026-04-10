@@ -14,6 +14,7 @@ struct HomeScreen: View {
 
     @State private var selectedExhibition: AICExhibitionModel?
     @State private var selectedEvent: AICEventModel?
+    @State private var selectedTour: AICTourModel?
     @State private var scrollContentOffset: CGFloat = 0
     private let topSpacing = 60.0
     
@@ -30,6 +31,50 @@ struct HomeScreen: View {
                     .scaleEffect(titleOpacity)
                 
                 VStack {
+                    // Tours
+                    SwiftUI.Section {
+                        ScrollView(.horizontal) {
+                            HStack(alignment: .top, spacing: 16) {
+                                ForEach(tours, id: \.nid) { tour in
+                                    Button { selectedTour = tour } label: {
+                                        BigCard(
+                                            title: tour.title,
+                                            subtitle: LocalizedStringKey(tour.shortDescription),
+                                            imageURL: tour.imageUrl,
+                                            bottomOverlay: HStack(spacing: 0) {
+                                                Image(.homeTourStopIcon)
+                                                Text("\(tour.stops.count) stops").padding(.trailing)
+                                                
+                                                Image(.homeTourClockIcon)
+                                                Text("\(tour.durationInMinutes ?? "")")
+                                            }
+                                        )
+                                        .frame(width: 300)
+                                    }
+                                    .foregroundStyle(.primary)
+                                }
+                            }
+                            .requestScrollTargetLayout()
+                        }
+                        .requestScrollTargetBehavior()
+                        .requestContentMargins()
+                    } header: {
+                        HStack {
+                            Text(.Base.welcomeToursHeader)
+                                .aicOldFontStyle(.sectionHeader)
+                            Spacer()
+                            NavigationLink(value: ContentType.tours) {
+                                Text(.Base.welcomeSeeAllAction)
+                                    .aicOldFontStyle(.overlay)
+                            }
+                        }
+                        .padding(.horizontal, 24)
+                    }
+                    .padding(.vertical)
+                    Divider()
+                        .padding(.horizontal)
+                        .padding(.bottom)
+
                     // Exhibitions
                     SwiftUI.Section {
                         ScrollView(.horizontal) {
@@ -121,6 +166,9 @@ struct HomeScreen: View {
         .sheet(item: $selectedEvent) { event in
             EventDetailView(event: event)
         }
+        .sheet(item: $selectedTour) { tour in
+            TourDetailView(tour: tour)
+        }
         .navigationDestination(for: ContentType.self) { content in
             switch content {
                 case .exhibitions:
@@ -129,8 +177,9 @@ struct HomeScreen: View {
                 case .events:
                     EventsGridView(events: events)
                         .environmentObject(coordinator)
-
-                default: EmptyView()
+                case .tours:
+                    ToursGridView(tours: tours)
+                        .environmentObject(coordinator)
             }
         }
         .environment(\.locale, languageManager.currentLocale)
@@ -148,6 +197,10 @@ extension HomeScreen {
     
     private var events: [AICEventModel] {
         AppDataManager.sharedInstance.getEventsForHome()
+    }
+    
+    private var tours: [AICTourModel] {
+        AppDataManager.sharedInstance.getToursForHome()
     }
     
     private var title: String {

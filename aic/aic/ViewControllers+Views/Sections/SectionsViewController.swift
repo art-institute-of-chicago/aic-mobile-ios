@@ -512,6 +512,10 @@ extension SectionsViewController: UITabBarControllerDelegate {
 // MARK: Home Delegate
 
 extension SectionsViewController: HomeNavigationControllerDelegate {
+    func startTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
+        tourContentCardDidPressStartTour(tour: tour, language: language, stopIndex: stopIndex)
+    }
+
     func showSearch() {
         searchCardVC.showFullscreen()
     }

@@ -16,6 +16,7 @@ protocol HomeNavigationControllerDelegate: AnyObject {
 	func showExhibitionCard(exhibition: AICExhibitionModel)
 	func showEventCard(event: AICEventModel)
     func showSearch()
+    func startTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?)
     func showExhibitionOnMap(exhibition: AICExhibitionModel)
 }
 
@@ -41,6 +42,9 @@ class HomeNavigationController: SectionNavigationController {
             self?.sectionDelegate?.showExhibitionOnMap(exhibition: exhibition)
         }
 
+        coordinator.startTour = { [weak self] tour, language, stopIndex in
+            self?.sectionDelegate?.startTour(tour: tour, language: language, stopIndex: stopIndex)
+        }
 
         let home = NavigationStack {
             HomeScreen(languageManager: LanguageManager.sharedInstance)
