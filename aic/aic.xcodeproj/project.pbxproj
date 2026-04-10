@@ -862,7 +862,7 @@
 			children = (
 				8D3A29A82F86DA9200200C56 /* AccessCard.xcstrings */,
 				8D40F53B2F6A064A00C3334D /* Audio.xcstrings */,
-				306E6E1B2469CA4C00B17CA8 /* Base.strings */,
+				8D3A2A5E2F8831CA00200C56 /* Base.xcstrings */,
 				8D40F5412F6B1D4600C3334D /* Info.xcstrings */,
 				306E6E0F2469CA4C00B17CA8 /* Localization.strings */,
 				8D9F2ECA2F76D589008AEF5D /* LocalizationUI.xcstrings */,
@@ -888,6 +888,7 @@
 				8DEEDF3A2F6C69E800FD54C6 /* LocationSettingsView.swift */,
 				8DEEDF402F6C73A900FD54C6 /* MuseumInfoView.swift */,
 				8D9F2EC72F76D572008AEF5D /* LanguageSettingsView.swift */,
+				8D3A2A322F8827F300200C56 /* HomeScreen.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -1346,11 +1347,11 @@
 				2926F2172080075F00DE9D4A /* fonts in Resources */,
 				304BEA0B246E1573006E025A /* Assets.xcassets in Resources */,
 				8D40F4F82F69F4CD00C3334D /* Colors.xcassets in Resources */,
+				8D3A2A5F2F8831CA00200C56 /* Base.xcstrings in Resources */,
 				306E6E472469CA4D00B17CA8 /* Search.strings in Resources */,
 				29B9B5911FD0A7590095FE52 /* SeeAllTourCell.xib in Resources */,
 				8D3A29A92F86DA9200200C56 /* AccessCard.xcstrings in Resources */,
 				306E6E492469CA4D00B17CA8 /* Localization.strings in Resources */,
-				306E6E4F2469CA4D00B17CA8 /* Base.strings in Resources */,
 				E4923F9D1C9B6C3700AB255C /* MainStoryboard.storyboard in Resources */,
 				E47A97381CF607990041D0A6 /* Settings.bundle in Resources */,
 				2931277C1FDEF327008BFAB1 /* MapItemCell.xib in Resources */,
@@ -1523,6 +1524,7 @@
 				E433BACF1CFDD64A0086F2ED /* AppDelegate.swift in Sources */,
 				E4F7AF951CFB64DE00524F87 /* AICMapModel.swift in Sources */,
 				E4E108DC1C98A89A00385842 /* AICAudioFileModel.swift in Sources */,
+				8D3A2A3C2F8827F300200C56 /* HomeScreen.swift in Sources */,
 				8D919A752DD9363800FED627 /* GeneralCrashlyticsReport.swift in Sources */,
 				E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */,
 				8D40F5402F6B1AEF00C3334D /* ObservableScrollView.swift in Sources */,
@@ -1676,18 +1678,6 @@
 				306E6E432469CA4C00B17CA8 /* fr */,
 			);
 			name = MediaUI.strings;
-			sourceTree = "<group>";
-		};
-		306E6E1B2469CA4C00B17CA8 /* Base.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				306E6E1C2469CA4C00B17CA8 /* zh-Hans */,
-				306E6E272469CA4C00B17CA8 /* en */,
-				306E6E312469CA4C00B17CA8 /* es */,
-				306E6E3B2469CA4C00B17CA8 /* ko */,
-				306E6E452469CA4C00B17CA8 /* fr */,
-			);
-			name = Base.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
