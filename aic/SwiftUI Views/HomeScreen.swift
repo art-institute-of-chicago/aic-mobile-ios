@@ -10,7 +10,6 @@ import SwiftUI
 
 struct HomeScreen: View {
     @ObservedObject var languageManager: LanguageManager
-    @EnvironmentObject private var coordinator: HomeNavigationCoordinator
 
     @State private var scrollContentOffset: CGFloat = 0
     private let topSpacing = 60.0

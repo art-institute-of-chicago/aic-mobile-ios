@@ -46,7 +46,6 @@ class HomeNavigationController: SectionNavigationController {
                     .foregroundStyle(.white)
                 }
                 .environment(\.locale, LanguageManager.sharedInstance.currentLocale)
-                .environmentObject(coordinator)
         }
         let rootVC = UIHostingController(rootView: home)
         
