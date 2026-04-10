@@ -28,3 +28,7 @@ struct AICEventModel {
     let onSaleDate: Date?
     let offSaleDate: Date?
 }
+
+extension AICEventModel: Hashable, Identifiable {
+    var id: String { eventId }
+}
