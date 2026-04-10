@@ -15,6 +15,7 @@ protocol HomeNavigationControllerDelegate: AnyObject {
 	func showTourCard(tour: AICTourModel)
 	func showExhibitionCard(exhibition: AICExhibitionModel)
 	func showEventCard(event: AICEventModel)
+    func showSearch()
 }
 
 class HomeNavigationController: SectionNavigationController {
