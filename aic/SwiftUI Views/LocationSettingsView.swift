@@ -66,14 +66,3 @@ extension LocationSettingsView {
 #Preview {
     LocationSettingsView()
 }
-
-struct AICButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .aicOldFontStyle(.actionButton)
-            .padding()
-            .padding(.horizontal)
-            .foregroundStyle(.white)
-            .background(Color.infoBackground)
-    }
-}

@@ -10,17 +10,11 @@ import SwiftUI
 
 struct HomeScreen: View {
     @ObservedObject var languageManager: LanguageManager
+    @EnvironmentObject private var coordinator: HomeNavigationCoordinator
 
+    @State private var selectedExhibition: AICExhibitionModel?
     @State private var scrollContentOffset: CGFloat = 0
     private let topSpacing = 60.0
-    
-    private var titleOpacity: Double {
-        if scrollContentOffset > -1 * topSpacing {
-            return 1
-        } else {
-            return 1 - abs((scrollContentOffset + topSpacing) / 50)
-        }
-    }
     
     var body: some View {
         ObservableScrollView(contentOffset: $scrollContentOffset) {
@@ -33,6 +27,42 @@ struct HomeScreen: View {
                     .foregroundStyle(.white)
                     .opacity(titleOpacity)
                     .scaleEffect(titleOpacity)
+                
+                VStack {
+                    // Exhibitions
+                    SwiftUI.Section {
+                        ScrollView(.horizontal) {
+                            HStack(alignment: .top, spacing: 16) {
+                                ForEach(exhibitions, id: \.id) { exhibition in
+                                    Button { selectedExhibition = exhibition } label: {
+                                        BigCard(title: exhibition.title, subtitle: LocalizedStringKey(exhibition.shortDescription), imageURL: exhibition.imageUrl, bottomOverlay: EmptyView())
+                                            .frame(width: 300)
+                                    }
+                                    .foregroundStyle(.primary)
+                                }
+                            }
+                            .requestScrollTargetLayout()
+                        }
+                        .requestScrollTargetBehavior()
+                        .requestContentMargins()
+                    } header: {
+                        HStack {
+                            Text(.Base.welcomeOnViewHeader)
+                                .aicOldFontStyle(.sectionHeader)
+                            Spacer()
+                            NavigationLink(value: ContentType.exhibitions) {
+                                Text(.Base.welcomeSeeAllAction)
+                                    .aicOldFontStyle(.overlay)
+                            }
+                        }
+                        .padding(.horizontal, 24)
+                    }
+                    .padding(.bottom)
+                    Divider()
+                        .padding(.horizontal)
+                        .padding(.bottom)
+                }
+                .background(.background)
             }
             .padding(.top, 64)
             .ignoresSafeArea(edges: .bottom)
@@ -51,16 +81,42 @@ struct HomeScreen: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarBackground(Color.homeBackground, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .sheet(item: $selectedExhibition) { exhibition in
+            ExhibitionDetailView(exhibition: exhibition)
+                .environment(\.locale, languageManager.currentLocale)
+        }
+        .navigationDestination(for: ContentType.self) { content in
+            switch content {
+                case .exhibitions: ExhibitionsGridView(exhibitions: exhibitions)
+                default: EmptyView()
+            }
+        }
         .environment(\.locale, languageManager.currentLocale)
     }
 }
 
 extension HomeScreen {
+    enum ContentType {
+        case tours, exhibitions, events
+    }
+    
+    private var exhibitions: [AICExhibitionModel] {
+        AppDataManager.sharedInstance.getExhibitionsForHome()
+    }
+    
     private var title: String {
         var resource = LocalizedStringResource("welcome_title", table: "Base")
         resource.locale = languageManager.currentLocale
         let translatedString = String(localized: resource)
         
         return translatedString
+    }
+    
+    private var titleOpacity: Double {
+        if scrollContentOffset > -1 * topSpacing {
+            return 1
+        } else {
+            return 1 - abs((scrollContentOffset + topSpacing) / 50)
+        }
     }
 }
