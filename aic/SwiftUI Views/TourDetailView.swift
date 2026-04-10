@@ -43,7 +43,7 @@ struct TourDetailView: View {
                                 
                                 Picker(selection: $selectedLanguage) {
                                     ForEach(tour.availableLanguages, id: \.self) { language in
-                                        Text(language.display).tag(language.rawValue)
+                                        Text(language.display).tag(language)
                                     }
                                 } label: {
                                     Text("Choose a language")
@@ -148,7 +148,7 @@ struct TourDetailView: View {
             }
         }
         .onAppear {
-            selectedLanguage = tour.language
+            selectedLanguage = Common.Language(rawValue: LanguageManager.sharedInstance.currentLanguage) ?? .english
         }
     }
 }
