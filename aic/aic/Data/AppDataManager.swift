@@ -283,8 +283,9 @@ final class AppDataManager {
                             let denmark = await Demark()
                             
                             for exhibition in self.exhibitions {
-                                let markdown = try! await denmark.convertToMarkdown(exhibition.shortDescription.cleanedHTML, options: self.markdownOptions)
-                                exhibition.shortDescription = markdown
+                                if let markdown = try? await denmark.convertToMarkdown(exhibition.shortDescription.cleanedHTML, options: self.markdownOptions) {
+                                    exhibition.shortDescription = markdown
+                                }
                             }
                         }
 
@@ -362,14 +363,18 @@ final class AppDataManager {
                             let denmark = await Demark()
                             
                             for event in self.events {
-                                let shortMarkdown = try! await denmark.convertToMarkdown(event.shortDescription.cleanedHTML, options: self.markdownOptions)
-                                let longMarkdown = try! await denmark.convertToMarkdown(event.longDescription.cleanedHTML, options: self.markdownOptions)
-                                let buttonMarkdown = try! await denmark.convertToMarkdown(event.buttonCaption?.cleanedHTML ?? "", options: self.markdownOptions)
-
                                 if let index = self.events.firstIndex(of: event) {
-                                    self.events[index].shortDescription = shortMarkdown
-                                    self.events[index].longDescription = longMarkdown
-                                    self.events[index].buttonCaption = buttonMarkdown
+                                    if let shortMarkdown = try? await denmark.convertToMarkdown(event.shortDescription.cleanedHTML, options: self.markdownOptions) {
+                                        self.events[index].shortDescription = shortMarkdown
+                                    }
+                                    
+                                    if let longMarkdown = try? await denmark.convertToMarkdown(event.longDescription.cleanedHTML, options: self.markdownOptions) {
+                                        self.events[index].longDescription = longMarkdown
+                                    }
+                                    
+                                    if let buttonMarkdown = try? await denmark.convertToMarkdown(event.buttonCaption?.cleanedHTML ?? "", options: self.markdownOptions) {
+                                        self.events[index].buttonCaption = buttonMarkdown
+                                    }
                                 }
                             }
                         }
