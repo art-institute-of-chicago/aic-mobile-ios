@@ -150,19 +150,17 @@ struct InfoScreen: View {
                 }
             }
             .environment(\.locale, language.currentLocale)
+            .onChange(of: infoCoordinator.shouldShowMemberCard, {
+                path = NavigationPath()
+            })
             .task(id: infoCoordinator.shouldShowMemberCard) {
                 guard infoCoordinator.shouldShowMemberCard else { return }
                 infoCoordinator.shouldShowMemberCard = false
 
-                if !path.isEmpty {
-                    var transaction = Transaction()
-                    transaction.disablesAnimations = true
-                    withTransaction(transaction) {
-                        path = NavigationPath()
-                    }
+                // TODO: Once we remove the UIKit bridging, we should be able to remove this artificial delay.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    path.append(Destination.memberCard)
                 }
-
-                path.append(Destination.memberCard)
             }
         }
     }

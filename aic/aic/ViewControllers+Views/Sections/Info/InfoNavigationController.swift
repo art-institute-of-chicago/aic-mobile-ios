@@ -36,7 +36,8 @@ class InfoNavigationController: SectionNavigationController {
     }
 
     func navigateToMemberCard() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.infoCoordinator.shouldShowMemberCard = false
             self.infoCoordinator.shouldShowMemberCard = true
         }
     }
