@@ -11,8 +11,8 @@ import CoreLocation
 struct AICEventModel {
 	let eventId: String
 	let title: String
-	let shortDescription: String
-	let longDescription: String
+	var shortDescription: String
+	var longDescription: String
 
 	let imageUrl: URL
 
@@ -22,7 +22,7 @@ struct AICEventModel {
 
 	let eventUrl: URL?
 	let buttonText: String
-    let buttonCaption: String?
+    var buttonCaption: String?
     let isTicketed: Bool
     let isSalesButtonHidden: Bool
     let onSaleDate: Date?

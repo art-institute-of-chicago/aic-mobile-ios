@@ -45,9 +45,10 @@ struct EventDetailView: View {
                     
                     if let caption = event.buttonCaption, caption.isEmpty == false {
                         Text(LocalizedStringKey(caption))
+                            .aicOldFontStyle(.infoMenuText)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
-                            .padding(.bottom)
+                            .padding(.vertical)
                     }
                     
                     Text(LocalizedStringKey(event.longDescription))

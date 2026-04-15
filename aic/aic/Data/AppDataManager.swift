@@ -3,8 +3,9 @@ Abstract:
 Manager class that handles loading and manipulating the apps data sources
 */
 
-import UIKit
 import Alamofire
+import Demark
+import UIKit
 
 @objc protocol AppDataManagerDelegate: AnyObject {
 	func downloadProgress(withPctCompleted: Float)
@@ -31,6 +32,7 @@ final class AppDataManager {
 	private var loadFailure = false
     private let dataParser: AppDataParser
     private let configuration: ConfigurationResources
+    private let markdownOptions = DemarkOptions(engine: .htmlToMd, ignoreTags: ["span", "br"])
 
     private init() {
         dataParser = AppDataParser(
@@ -276,6 +278,15 @@ final class AppDataManager {
 				switch response.result {
 				case .success(let value):
                         self.exhibitions = self.dataParser.parse(exhibitionsData: value).sorted(by: { $0.position < $1.position })
+                        
+                        Task {
+                            let denmark = await Demark()
+                            
+                            for exhibition in self.exhibitions {
+                                let markdown = try! await denmark.convertToMarkdown(exhibition.shortDescription.cleanedHTML, options: self.markdownOptions)
+                                exhibition.shortDescription = markdown
+                            }
+                        }
 
 				case .failure(let error):
 					debugPrint(error)
@@ -288,7 +299,7 @@ final class AppDataManager {
 
 	// MARK: Download Events
 
-	func downloadEvents() {
+	private func downloadEvents() {
 		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
 		if url.range(of: "/search") == nil {
 			url.append("/search")
@@ -340,18 +351,35 @@ final class AppDataManager {
 			]
 		]
 
-		AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-			.validate()
-			.responseData { response in
-				switch response.result {
-				case .success(let value):
-					self.events = self.dataParser.parse(eventsData: value)
-				case .failure(let error):
-					debugPrint(error)
-				}
-				self.updateDownloadProgress()
-		}
-	}
+        AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate()
+            .responseData { response in
+                switch response.result {
+                    case .success(let value):
+                        self.events = self.dataParser.parse(eventsData: value)
+                        
+                        Task {
+                            let denmark = await Demark()
+                            
+                            for event in self.events {
+                                let shortMarkdown = try! await denmark.convertToMarkdown(event.shortDescription.cleanedHTML, options: self.markdownOptions)
+                                let longMarkdown = try! await denmark.convertToMarkdown(event.longDescription.cleanedHTML, options: self.markdownOptions)
+                                let buttonMarkdown = try! await denmark.convertToMarkdown(event.buttonCaption?.cleanedHTML ?? "", options: self.markdownOptions)
+
+                                if let index = self.events.firstIndex(of: event) {
+                                    self.events[index].shortDescription = shortMarkdown
+                                    self.events[index].longDescription = longMarkdown
+                                    self.events[index].buttonCaption = buttonMarkdown
+                                }
+                            }
+                        }
+                    case .failure(let error):
+                        debugPrint(error)
+                }
+                
+                self.updateDownloadProgress()
+            }
+    }
 
 	// MARK: Fetch Member Card if Needed
 
