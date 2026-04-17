@@ -179,112 +179,154 @@ final class AppDataManager {
         }
     }
 
-	private func downloadExhibitions() async {
-		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
-        
-		if url.range(of: "/search") == nil {
-			url.append("/search")
-		}
-		url.append("?limit=99")
-		let parameters: [String: Any] = [
-			"fields": [
-				"id",
-				"title",
-				"short_description",
-				"image_url",
-				"gallery_id",
-				"web_url",
-				"aic_start_at",
-				"aic_end_at",
+    private func downloadExhibitions() {
+        var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.exhibitionsEndpoint]!
+        if url.range(of: "/search") == nil {
+            url.append("/search")
+        }
+        url.append("?limit=99")
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        let urlString = urlRequest.url?.absoluteString
+        let parameters: [String: Any] = [
+            "fields": [
+                "id",
+                "title",
+                "short_description",
+                "image_url",
+                "gallery_id",
+                "web_url",
+                "aic_start_at",
+                "aic_end_at",
                 "position"
-			],
-			"query": [
-				"bool": [
-					"must": [
-						[
-							"range": [
-								"aic_start_at": ["lte": "now"]
-							]
-						],
-						[
-							"term": [
-								"is_featured": true
-							]
-						]
-					]
-				]
-			]
-		]
+            ],
+            "query": [
+                "bool": [
+                    "must": [
+                        [
+                            "range": [
+                                "aic_start_at": ["lte": "now"]
+                            ]
+                        ],
+                        [
+                            "term": [
+                                "is_featured": true
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
         
-        var myRequest = try! URLRequest(url: url, method: .post)
-        myRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        myRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
-        let (data, _) = try! await URLSession.shared.data(for: myRequest)
-
-        // TODO: Switch to Codable
-        self.exhibitions = self.dataParser.parse(exhibitionsData: data).sorted(by: { $0.position < $1.position })
-	}
-
-	func downloadEvents() async {
-		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
-        
-		if url.range(of: "/search") == nil {
-			url.append("/search")
-		}
-		url.append("?limit=100")
-		let parameters: [String: Any] = [
-			"fields": [
-				"id",
-				"title",
+        AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate()
+            .responseData { response in
+                switch response.result {
+                    case .success(let value):
+                        self.exhibitions = self.dataParser.parse(exhibitionsData: value).sorted(by: { $0.position < $1.position })
+                        
+                        Task {
+                            let denmark = await Demark()
+                            
+                            for exhibition in self.exhibitions {
+                                if let markdown = try? await denmark.convertToMarkdown(exhibition.shortDescription.cleanedHTML, options: self.markdownOptions) {
+                                    exhibition.shortDescription = markdown
+                                }
+                            }
+                        }
+                        
+                    case .failure(let error):
+                        debugPrint(error)
+                }
+                
+                self.downloadEvents()
+            }
+    }
+    
+    // MARK: Download Events
+    
+    private func downloadEvents() {
+        var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
+        if url.range(of: "/search") == nil {
+            url.append("/search")
+        }
+        url.append("?limit=100")
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        let urlString = urlRequest.url?.absoluteString
+        let parameters: [String: Any] = [
+            "fields": [
+                "id",
+                "title",
                 "title_display",
-				"description",
-				"short_description",
-				"image_url",
-				"location",
-				"start_at",
-				"end_at",
-				"button_text",
+                "description",
+                "short_description",
+                "image_url",
+                "location",
+                "start_at",
+                "end_at",
+                "button_text",
                 "button_caption",
                 "is_ticketed",
-				"button_url",
-				"is_private",
+                "button_url",
+                "is_private",
                 "is_sales_button_hidden",
                 "on_sale_at",
                 "off_sale_at"
-			],
-			"sort": ["start_at", "end_at"],
-			"query": [
-				"bool": [
-					"must": [
-						[
-							"range": [
-								"start_at": ["lte": "now+2w"]
-							]
-						],
-						[
-							"range": [
-								"end_at": ["gte": "now"]
-							]
-						],
-						[
-							"term": [
-								"is_private": false
-							]
-						]
-					]
-				]
-			]
-		]
+            ],
+            "sort": ["start_at", "end_at"],
+            "query": [
+                "bool": [
+                    "must": [
+                        [
+                            "range": [
+                                "start_at": ["lte": "now+2w"]
+                            ]
+                        ],
+                        [
+                            "range": [
+                                "end_at": ["gte": "now"]
+                            ]
+                        ],
+                        [
+                            "term": [
+                                "is_private": false
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
         
-        
-        var myRequest = try! URLRequest(url: url, method: .post)
-        myRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        myRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
-        let (data, _) = try! await URLSession.shared.data(for: myRequest)
-
-        // TODO: Switch to Codable
-        self.events = self.dataParser.parse(eventsData: data)
+        AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate()
+            .responseData { response in
+                switch response.result {
+                    case .success(let value):
+                        self.events = self.dataParser.parse(eventsData: value)
+                        
+                        Task {
+                            let denmark = await Demark()
+                            
+                            for event in self.events {
+                                if let index = self.events.firstIndex(of: event) {
+                                    if let shortMarkdown = try? await denmark.convertToMarkdown(event.shortDescription.cleanedHTML, options: self.markdownOptions) {
+                                        self.events[index].shortDescription = shortMarkdown
                                     }
+                                    
+                                    if let longMarkdown = try? await denmark.convertToMarkdown(event.longDescription.cleanedHTML, options: self.markdownOptions) {
+                                        self.events[index].longDescription = longMarkdown
+                                    }
+                                    
+                                    if let buttonMarkdown = try? await denmark.convertToMarkdown(event.buttonCaption?.cleanedHTML ?? "", options: self.markdownOptions) {
+                                        self.events[index].buttonCaption = buttonMarkdown
+                                    }
+                                }
+                            }
+                        }
+                    case .failure(let error):
+                        debugPrint(error)
+                }
+            }
+    }
 
 	private func fetchMemberCard() {
 		if let member = MemberDataManager.sharedInstance.getSavedMember() {
