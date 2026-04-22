@@ -512,6 +512,10 @@ extension SectionsViewController: UITabBarControllerDelegate {
 // MARK: Home Delegate
 
 extension SectionsViewController: HomeNavigationControllerDelegate {
+    func showSearch() {
+        searchCardVC.showFullscreen()
+    }
+    
 	func showMemberCard() {
         if currentViewController == infoVC {
             // Force screen to reload, to handle case where the app was already on the Info tab

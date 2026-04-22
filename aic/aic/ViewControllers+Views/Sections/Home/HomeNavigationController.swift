@@ -6,14 +6,16 @@
 //  Copyright © 2017 Art Institute of Chicago. All rights reserved.
 //
 
-import UIKit
 import Localize_Swift
+import UIKit
+import SwiftUI
 
 protocol HomeNavigationControllerDelegate: AnyObject {
 	func showMemberCard()
 	func showTourCard(tour: AICTourModel)
 	func showExhibitionCard(exhibition: AICExhibitionModel)
 	func showEventCard(event: AICEventModel)
+    func showSearch()
 }
 
 class HomeNavigationController: SectionNavigationController {
@@ -33,10 +35,25 @@ class HomeNavigationController: SectionNavigationController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.delegate = self
-		homeVC.delegate = self
 
-		self.pushViewController(homeVC, animated: false)
+        let home = NavigationStack {
+            HomeScreen(languageManager: LanguageManager.sharedInstance)
+                .toolbar {
+                    Button {
+                        self.sectionDelegate?.showSearch()
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                    }
+                    .foregroundStyle(.white)
+                }
+                .environment(\.locale, LanguageManager.sharedInstance.currentLocale)
+        }
+        let rootVC = UIHostingController(rootView: home)
+        
+        addChild(rootVC)
+        view.addSubview(rootVC.view)
+        rootVC.view.autoPinEdgesToSuperviewEdges()
+        rootVC.didMove(toParent: self)
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
