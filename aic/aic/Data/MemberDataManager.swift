@@ -4,6 +4,7 @@ Validates and Retrieves member card information
 */
 
 import Alamofire
+import Combine
 import SWXMLHash
 import Foundation
 
@@ -12,13 +13,20 @@ protocol MemberDataManagerDelegate: AnyObject {
 	func memberCardDataLoadingFailed()
 }
 
-class MemberDataManager {
+class MemberDataManager: ObservableObject {
 	static let sharedInstance = MemberDataManager()
 
-	private(set) var currentMemberCard: AICMemberCardModel?
-	var currentMemberNameIndex: Int = 0
+    @Published var currentMemberCard: AICMemberCardModel?
+	@Published var currentMemberNameIndex: Int = 0
+    
 	weak var delegate: MemberDataManagerDelegate?
 //	private let dataParser = AppDataParser()
+    
+    init() {
+        if let savedMemeber = getSavedMember() {
+            validateMember(memberID: savedMemeber.memberID, zipCode: savedMemeber.memberZip)
+        }
+    }
 
 	func validateMember(memberID: String, zipCode: String) {
 		//		var url = AppDataManager.sharedInstance.app.dataSettings[.dataApiUrl]!
@@ -81,6 +89,7 @@ class MemberDataManager {
 
 					if let memberCard = self.parse(memberXML: xml, zipCode: zipCode) {
 						self.currentMemberCard = memberCard
+                        
 						// Reset memberNameIndex if it's a new member ID
 						if let savedMemberInfo = self.getSavedMember() {
 							if savedMemberInfo.memberID != memberCard.cardId {
@@ -218,6 +227,31 @@ class MemberDataManager {
 		defaults.set(firstName, forKey: Common.UserDefaults.memberFirstNameUserDefaultsKey)
 		defaults.set(currentMemberNameIndex, forKey: Common.UserDefaults.memberInfoSelectedMemberDefaultsKey)
 	}
+    
+    func switchMember() {
+        guard let memberCard = currentMemberCard else { return }
+        guard memberCard.memberNames.count > 1 else { return }
+        
+        if currentMemberNameIndex == 0 {
+            currentMemberNameIndex = 1
+        } else {
+            currentMemberNameIndex = 0
+        }
+        
+        let defaults = UserDefaults.standard
+        defaults.set(currentMemberNameIndex, forKey: Common.UserDefaults.memberInfoSelectedMemberDefaultsKey)
+    }
+    
+    func deleteSavedMember() {
+        currentMemberCard = nil
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.removeObject(forKey: Common.UserDefaults.memberInfoIDUserDefaultsKey)
+        defaults.removeObject(forKey: Common.UserDefaults.memberInfoZipUserDefaultsKey)
+        defaults.removeObject(forKey: Common.UserDefaults.memberFirstNameUserDefaultsKey)
+        defaults.removeObject(forKey: Common.UserDefaults.memberInfoSelectedMemberDefaultsKey)
+    }
 
 	func getSavedMember() -> AICMemberInfoModel? {
 		let defaults = UserDefaults.standard

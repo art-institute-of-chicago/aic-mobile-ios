@@ -141,8 +141,9 @@ struct InfoScreen: View {
                 case .languageSettings:
                     LanguageSettingsView(languageManager: LanguageManager.sharedInstance)
                         .environment(\.locale, language.currentLocale)
-                default:
-                    Text("PLACEHOLDER SCREEN")
+                case .memberCard:
+                    MemberView()
+                        .environment(\.locale, language.currentLocale)
             }
         }
         .environment(\.locale, language.currentLocale)
