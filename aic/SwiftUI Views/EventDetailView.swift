@@ -65,8 +65,8 @@ struct EventDetailView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            .background(.background)
             .scrollBounceBehavior(.basedOnSize)
+            .background(.background)
             .toolbar {
                 ToolbarItem {
                     if #available(iOS 26.0, *) {
