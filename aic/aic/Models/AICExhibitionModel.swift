@@ -40,3 +40,5 @@ class AICExhibitionModel: NSObject {
 		super.init()
 	}
 }
+
+extension AICExhibitionModel: Identifiable {}

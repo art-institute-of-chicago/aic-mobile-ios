@@ -16,10 +16,12 @@ protocol HomeNavigationControllerDelegate: AnyObject {
 	func showExhibitionCard(exhibition: AICExhibitionModel)
 	func showEventCard(event: AICEventModel)
     func showSearch()
+    func showExhibitionOnMap(exhibition: AICExhibitionModel)
 }
 
 class HomeNavigationController: SectionNavigationController {
 	let homeVC: HomeViewController
+    let coordinator = HomeNavigationCoordinator()
 
 	weak var sectionDelegate: HomeNavigationControllerDelegate?
 
@@ -34,6 +36,10 @@ class HomeNavigationController: SectionNavigationController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        coordinator.showExhibitionOnMap = { [weak self] exhibition in
+            self?.sectionDelegate?.showExhibitionOnMap(exhibition: exhibition)
+        }
 
 
         let home = NavigationStack {
@@ -47,6 +53,7 @@ class HomeNavigationController: SectionNavigationController {
                     .foregroundStyle(.white)
                 }
                 .environment(\.locale, LanguageManager.sharedInstance.currentLocale)
+                .environmentObject(coordinator)
         }
         let rootVC = UIHostingController(rootView: home)
         
