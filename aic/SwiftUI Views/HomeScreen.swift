@@ -13,6 +13,7 @@ struct HomeScreen: View {
     @EnvironmentObject private var coordinator: HomeNavigationCoordinator
 
     @State private var selectedExhibition: AICExhibitionModel?
+    @State private var selectedEvent: AICEventModel?
     @State private var scrollContentOffset: CGFloat = 0
     private let topSpacing = 60.0
     
@@ -61,6 +62,38 @@ struct HomeScreen: View {
                     Divider()
                         .padding(.horizontal)
                         .padding(.bottom)
+                    
+                    // Events
+                    SwiftUI.Section {
+                        ScrollView(.horizontal) {
+                            HStack(alignment: .top, spacing: 16) {
+                                ForEach(events, id: \.eventId) { event in
+                                    Button {
+                                        selectedEvent = event
+                                    } label: {
+                                        BigCard(title: event.title, subtitle: LocalizedStringKey(event.shortDescription), imageURL: event.imageUrl, bottomOverlay: Text(event.startDate.formatted(.dateTime.month().day().hour())))
+                                            .frame(width: 300)
+                                    }
+                                    .foregroundStyle(.primary)
+                                }
+                            }
+                            .requestScrollTargetLayout()
+                        }
+                        .requestScrollTargetBehavior()
+                        .requestContentMargins()
+                    } header: {
+                        HStack {
+                            Text(.Base.welcomeEventsHeader)
+                                .aicOldFontStyle(.sectionHeader)
+                            Spacer()
+                            NavigationLink(value: ContentType.events) {
+                                Text(.Base.welcomeSeeAllAction)
+                                    .aicOldFontStyle(.overlay)
+                            }
+                        }
+                        .padding(.horizontal, 24)
+                    }
+                    .padding(.bottom)
                 }
                 .background(.background)
             }
@@ -85,12 +118,18 @@ struct HomeScreen: View {
             ExhibitionDetailView(exhibition: exhibition)
                 .environment(\.locale, languageManager.currentLocale)
         }
+        .sheet(item: $selectedEvent) { event in
+            EventDetailView(event: event)
+        }
         .navigationDestination(for: ContentType.self) { content in
             switch content {
                 case .exhibitions:
                     ExhibitionsGridView(exhibitions: exhibitions)
                         .environmentObject(coordinator)
-                    
+                case .events:
+                    EventsGridView(events: events)
+                        .environmentObject(coordinator)
+
                 default: EmptyView()
             }
         }
@@ -105,6 +144,10 @@ extension HomeScreen {
     
     private var exhibitions: [AICExhibitionModel] {
         AppDataManager.sharedInstance.getExhibitionsForHome()
+    }
+    
+    private var events: [AICEventModel] {
+        AppDataManager.sharedInstance.getEventsForHome()
     }
     
     private var title: String {
