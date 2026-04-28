@@ -31,6 +31,18 @@ struct HomeScreen: View {
                     .scaleEffect(titleOpacity)
                 
                 VStack {
+                    Button {
+                        coordinator.showMemberCard()
+                    } label: {
+                        Text(.Base.welcomeMemberCardAction)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 24)
+                            .background(Color.gray.opacity(0.4))
+                    }
+                    .foregroundStyle(.primary)
+                    .padding(.bottom)
+
                     // Tours
                     SwiftUI.Section {
                         ScrollView(.horizontal) {
