@@ -11,4 +11,5 @@ import SwiftUI
 final class HomeNavigationCoordinator: ObservableObject {
     var showExhibitionOnMap: (_ exhibition: AICExhibitionModel) -> Void = { _ in }
     var startTour: (AICTourModel, Common.Language, Int?) -> Void = { _, _, _ in }
+    var showMemberCard: () -> Void = {}
 }

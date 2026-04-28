@@ -152,6 +152,7 @@
 		8D3A2A3F2F8827F300200C56 /* ToursGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3A2A362F8827F300200C56 /* ToursGridView.swift */; };
 		8D3A2A402F8827F300200C56 /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3A2A2D2F8827F300200C56 /* EventDetailView.swift */; };
 		8D3A2A412F8827F300200C56 /* TourDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3A2A352F8827F300200C56 /* TourDetailView.swift */; };
+		8D3A2A5D2F882A8800200C56 /* Demark in Frameworks */ = {isa = PBXBuildFile; productRef = 8D3A2A5C2F882A8800200C56 /* Demark */; };
 		8D3A2A5F2F8831CA00200C56 /* Base.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8D3A2A5E2F8831CA00200C56 /* Base.xcstrings */; };
 		8D40F4F82F69F4CD00C3334D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D40F4F72F69F4CD00C3334D /* Colors.xcassets */; };
 		8D40F4FC2F69F65100C3334D /* AudioScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D40F4F92F69F65100C3334D /* AudioScreen.swift */; };
@@ -163,6 +164,7 @@
 		8D40F5402F6B1AEF00C3334D /* ObservableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D40F53F2F6B1AEF00C3334D /* ObservableScrollView.swift */; };
 		8D40F5422F6B1D4700C3334D /* Info.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8D40F5412F6B1D4600C3334D /* Info.xcstrings */; };
 		8D4F9A012F8827F300200C56 /* HomeNavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4F9A002F8827F300200C56 /* HomeNavigationCoordinator.swift */; };
+		8D4F9A032F8827F300200C56 /* InfoNavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4F9A042F8827F300200C56 /* InfoNavigationCoordinator.swift */; };
 		8D5960C32F84516E00267530 /* MemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5960C22F84516E00267530 /* MemberView.swift */; };
 		8D919A752DD9363800FED627 /* GeneralCrashlyticsReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D919A742DD9363800FED627 /* GeneralCrashlyticsReport.swift */; };
 		8D9F2EC82F76D572008AEF5D /* LanguageSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9F2EC72F76D572008AEF5D /* LanguageSettingsView.swift */; };
@@ -438,6 +440,7 @@
 		8D40F53F2F6B1AEF00C3334D /* ObservableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableScrollView.swift; sourceTree = "<group>"; };
 		8D40F5412F6B1D4600C3334D /* Info.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Info.xcstrings; sourceTree = "<group>"; };
 		8D4F9A002F8827F300200C56 /* HomeNavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationCoordinator.swift; sourceTree = "<group>"; };
+		8D4F9A042F8827F300200C56 /* InfoNavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNavigationCoordinator.swift; sourceTree = "<group>"; };
 		8D5960C22F84516E00267530 /* MemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberView.swift; sourceTree = "<group>"; };
 		8D919A742DD9363800FED627 /* GeneralCrashlyticsReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCrashlyticsReport.swift; sourceTree = "<group>"; };
 		8D9F2EC62F76D572008AEF5D /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
@@ -531,6 +534,7 @@
 				E28F3B1229BAC28E00C03BFD /* Atributika in Frameworks */,
 				E28F3AFE29B96E6A00C03BFD /* FirebaseAuth in Frameworks */,
 				E28F3B0C29BAC1F900C03BFD /* SwiftyJSON in Frameworks */,
+				8D3A2A5D2F882A8800200C56 /* Demark in Frameworks */,
 				E28F3B0329BAC14A00C03BFD /* Kingfisher in Frameworks */,
 				E28F3B1529BAC33300C03BFD /* Localize_Swift in Frameworks */,
 				E28F3B0029B96E6A00C03BFD /* FirebaseCrashlytics in Frameworks */,
@@ -927,6 +931,7 @@
 				8D3A2A352F8827F300200C56 /* TourDetailView.swift */,
 				8D3A2A362F8827F300200C56 /* ToursGridView.swift */,
 				8D4F9A002F8827F300200C56 /* HomeNavigationCoordinator.swift */,
+				8D4F9A042F8827F300200C56 /* InfoNavigationCoordinator.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -1254,6 +1259,7 @@
 				E28F3B1129BAC28E00C03BFD /* Atributika */,
 				E28F3B1429BAC33300C03BFD /* Localize_Swift */,
 				E276C4002AC5909B007A5917 /* PureLayout */,
+				8D3A2A5C2F882A8800200C56 /* Demark */,
 			);
 			productName = aic;
 			productReference = E40D41C91C6CEBB700A57AF4 /* aic.app */;
@@ -1354,6 +1360,7 @@
 				E28F3B1029BAC28E00C03BFD /* XCRemoteSwiftPackageReference "Atributika" */,
 				E28F3B1329BAC33300C03BFD /* XCRemoteSwiftPackageReference "Localize-Swift" */,
 				E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */,
+				8D3A2A5B2F882A8800200C56 /* XCRemoteSwiftPackageReference "Demark" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E40D41CA1C6CEBB700A57AF4 /* Products */;
@@ -1576,6 +1583,7 @@
 				8D3A2A402F8827F300200C56 /* EventDetailView.swift in Sources */,
 				8D3A2A412F8827F300200C56 /* TourDetailView.swift in Sources */,
 				8D4F9A012F8827F300200C56 /* HomeNavigationCoordinator.swift in Sources */,
+				8D4F9A032F8827F300200C56 /* InfoNavigationCoordinator.swift in Sources */,
 				8D919A752DD9363800FED627 /* GeneralCrashlyticsReport.swift in Sources */,
 				E4F518FB1D2586B0004BFB44 /* AICImageView.swift in Sources */,
 				8D40F5402F6B1AEF00C3334D /* ObservableScrollView.swift in Sources */,
@@ -2237,6 +2245,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8D3A2A5B2F882A8800200C56 /* XCRemoteSwiftPackageReference "Demark" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/steipete/Demark.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 		E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
@@ -2304,6 +2320,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8D3A2A5C2F882A8800200C56 /* Demark */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D3A2A5B2F882A8800200C56 /* XCRemoteSwiftPackageReference "Demark" */;
+			productName = Demark;
+		};
 		E276C4002AC5909B007A5917 /* PureLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E276C3FF2AC5909B007A5917 /* XCRemoteSwiftPackageReference "PureLayout" */;

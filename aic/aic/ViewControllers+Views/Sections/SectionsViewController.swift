@@ -525,10 +525,10 @@ extension SectionsViewController: HomeNavigationControllerDelegate {
             // Force screen to reload, to handle case where the app was already on the Info tab
             setSelectedSection(sectionVC: homeVC)
         }
-        
+
 		setSelectedSection(sectionVC: infoVC)
-		infoVC.shouldShowMemberCard = true
 		selectedIndex = 3
+        infoVC.navigateToMemberCard()
 	}
 
 	func showTourCard(tour: AICTourModel) {

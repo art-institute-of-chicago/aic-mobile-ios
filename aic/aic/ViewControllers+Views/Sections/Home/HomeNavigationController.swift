@@ -45,6 +45,9 @@ class HomeNavigationController: SectionNavigationController {
         coordinator.startTour = { [weak self] tour, language, stopIndex in
             self?.sectionDelegate?.startTour(tour: tour, language: language, stopIndex: stopIndex)
         }
+        coordinator.showMemberCard = { [weak self] in
+            self?.sectionDelegate?.showMemberCard()
+        }
 
         let home = NavigationStack {
             HomeScreen(languageManager: LanguageManager.sharedInstance)
