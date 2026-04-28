@@ -8,7 +8,7 @@ import CoreLocation
 class AICExhibitionModel: NSObject {
 	let id: Int
 	let title: String
-	let shortDescription: String
+	var shortDescription: String
 	var imageUrl: URL?
 	let startDate: Date
 	let endDate: Date?
