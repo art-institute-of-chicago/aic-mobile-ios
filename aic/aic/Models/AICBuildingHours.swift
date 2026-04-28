@@ -120,7 +120,6 @@ struct AICBuildingHours: Decodable {
     }
 }
 
-#if DEBUG
 extension AICBuildingHours {
     static var preview: AICBuildingHours {
         AICBuildingHours(data: [
@@ -167,4 +166,3 @@ extension AICBuildingHours {
         ])
     }
 }
-#endif
