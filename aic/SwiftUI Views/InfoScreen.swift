@@ -136,7 +136,7 @@ struct InfoScreen: View {
                     LocationSettingsView()
                         .environment(\.locale, language.currentLocale)
                 case .museumInfo:
-                    MuseumInfoView()
+                    MuseumInfoView(buildingHours: AppDataManager.sharedInstance.buildingHours!)
                         .environment(\.locale, language.currentLocale)
                 case .languageSettings:
                     LanguageSettingsView(languageManager: LanguageManager.sharedInstance)

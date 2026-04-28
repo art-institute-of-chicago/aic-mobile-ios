@@ -170,6 +170,7 @@
 		8D9F2ECB2F76D589008AEF5D /* LocalizationUI.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8D9F2ECA2F76D589008AEF5D /* LocalizationUI.xcstrings */; };
 		8DA06C292F3502FA00D15056 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA06C282F3502FA00D15056 /* SceneDelegate.swift */; };
 		8DB858F32D8B6E11009E9B1B /* Array+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */; };
+		8DECAA682F9FF35200E12A85 /* AICBuildingHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DECAA672F9FF35200E12A85 /* AICBuildingHours.swift */; };
 		8DEEDF3B2F6C69E800FD54C6 /* LocationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEDF3A2F6C69E800FD54C6 /* LocationSettingsView.swift */; };
 		8DEEDF3D2F6C6BDA00FD54C6 /* Location.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8DEEDF3C2F6C6BD800FD54C6 /* Location.xcstrings */; };
 		8DEEDF412F6C73A900FD54C6 /* MuseumInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEDF402F6C73A900FD54C6 /* MuseumInfoView.swift */; };
@@ -444,6 +445,7 @@
 		8D9F2ECA2F76D589008AEF5D /* LocalizationUI.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = LocalizationUI.xcstrings; sourceTree = "<group>"; };
 		8DA06C282F3502FA00D15056 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8DB858F22D8B6E11009E9B1B /* Array+AIC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+AIC.swift"; sourceTree = "<group>"; };
+		8DECAA672F9FF35200E12A85 /* AICBuildingHours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICBuildingHours.swift; sourceTree = "<group>"; };
 		8DEEDF3A2F6C69E800FD54C6 /* LocationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsView.swift; sourceTree = "<group>"; };
 		8DEEDF3C2F6C6BD800FD54C6 /* Location.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Location.xcstrings; sourceTree = "<group>"; };
 		8DEEDF402F6C73A900FD54C6 /* MuseumInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumInfoView.swift; sourceTree = "<group>"; };
@@ -1089,6 +1091,7 @@
 		E415ABBD1C7298420093B719 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8DECAA672F9FF35200E12A85 /* AICBuildingHours.swift */,
 				E497FA5B1CFF3803007FA272 /* AICAppDataModel.swift */,
 				2915B0EF202BD73400DEBB03 /* AICAudioCommentaryModel.swift */,
 				E4E108DB1C98A89A00385842 /* AICAudioFileModel.swift */,
@@ -1643,6 +1646,7 @@
 				29F12BC2204F4C37009C1A47 /* MapTourStartContentView.swift in Sources */,
 				2994891F1FA3849C00943197 /* AICGeneralInfoModel.swift in Sources */,
 				2984611E203A046C001E5378 /* MapTextContentView.swift in Sources */,
+				8DECAA682F9FF35200E12A85 /* AICBuildingHours.swift in Sources */,
 				294338541FDD5FC900ECF321 /* MapItemsCollectionContainerCell.swift in Sources */,
 				E2447C732BFC0B0C0016A590 /* ParseError.swift in Sources */,
 			);

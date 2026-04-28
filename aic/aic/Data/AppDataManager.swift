@@ -19,6 +19,7 @@ final class AppDataManager {
     private(set) var app = AICAppDataModel(generalInfo: .init(translations: [:]), map: .init(floors: []))
 	private(set) var exhibitions = [AICExhibitionModel]()
 	private(set) var events = [AICEventModel]()
+    private(set) var buildingHours: AICBuildingHours?
 
 	private var dataFilesRetrieved = 0
 	var pctComplete = Float(0)
@@ -222,6 +223,10 @@ final class AppDataManager {
 				self.app = self.dataParser.parse(appData: appData)
 				self.updateDownloadProgress()
 				self.downloadExhibitions()
+                
+                Task {
+                    await self.downloadBuildingHours()
+                }
 			} else {
 				// If we couldn't load some floor pdfs let the user know
 				self.notifyLoadFailure(withMessage: "Failed to load application data.")
@@ -229,7 +234,23 @@ final class AppDataManager {
 			}
 		}
 	}
+    
+    private func downloadBuildingHours() async {
+        do {
+            guard let baseURL = app.dataSettings[.dataApiUrl] else { return }
+            guard let url = URL(string: baseURL) else { return }
+            
+            
+            let buildingHoursURL = url.appending(path: "api/v1/hours").appending(queryItems: [.init(name: "limit", value: "2")])
+            let (data, _) = try await URLSession.shared.data(from: buildingHoursURL)
+            let hours = try JSONDecoder().decode(AICBuildingHours.self, from: data)
+            self.buildingHours = hours
+        } catch {
+            print("WARN: Unable to fetch building hours: \(error.localizedDescription)")
+        }
+    }
 
+    
 	// MARK: Download Exhibitions
 
 	private func downloadExhibitions() {
