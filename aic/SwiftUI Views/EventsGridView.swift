@@ -29,6 +29,7 @@ struct EventsGridView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
         .padding(.horizontal)
         .navigationTitle("Events")
         .navigationDestination(for: AICEventModel.self) { event in

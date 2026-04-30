@@ -128,7 +128,7 @@ struct HomeScreen: View {
                                     Button {
                                         selectedEvent = event
                                     } label: {
-                                        BigCard(title: event.title, subtitle: LocalizedStringKey(event.shortDescription), imageURL: event.imageUrl, bottomOverlay: Text(event.startDate.formatted(.dateTime.month().day().hour())))
+                                        BigCard(title: event.title, subtitle: LocalizedStringKey(event.shortDescription), imageURL: smallerImage(for: event.imageUrl), bottomOverlay: Text(event.startDate.formatted(.dateTime.month().day().hour())))
                                             .frame(width: 300)
                                     }
                                     .foregroundStyle(.primary)
@@ -184,13 +184,13 @@ struct HomeScreen: View {
         .navigationDestination(for: ContentType.self) { content in
             switch content {
                 case .exhibitions:
-                    ExhibitionsGridView(exhibitions: exhibitions)
+                    ExhibitionsGridView(exhibitions: AppDataManager.sharedInstance.exhibitions)
                         .environmentObject(coordinator)
                 case .events:
-                    EventsGridView(events: events)
+                    EventsGridView(events: AppDataManager.sharedInstance.events)
                         .environmentObject(coordinator)
                 case .tours:
-                    ToursGridView(tours: tours)
+                    ToursGridView(tours: AppDataManager.sharedInstance.getToursForSeeAll())
                         .environmentObject(coordinator)
             }
         }
@@ -213,6 +213,10 @@ extension HomeScreen {
     
     private var tours: [AICTourModel] {
         AppDataManager.sharedInstance.getToursForHome()
+    }
+    
+    private func smallerImage(for url: URL) -> URL {
+        url.updatingQueryItem(key: "w", value: "400").updatingQueryItem(key: "h", value: "225)")
     }
     
     private var title: String {
