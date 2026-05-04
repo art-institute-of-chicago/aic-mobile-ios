@@ -166,6 +166,7 @@
 		8D4F9A012F8827F300200C56 /* HomeNavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4F9A002F8827F300200C56 /* HomeNavigationCoordinator.swift */; };
 		8D4F9A032F8827F300200C56 /* InfoNavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4F9A042F8827F300200C56 /* InfoNavigationCoordinator.swift */; };
 		8D5960C32F84516E00267530 /* MemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5960C22F84516E00267530 /* MemberView.swift */; };
+		8D7E3AA12FA39A4300F71266 /* URL+AIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E3AA02FA39A4300F71266 /* URL+AIC.swift */; };
 		8D919A752DD9363800FED627 /* GeneralCrashlyticsReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D919A742DD9363800FED627 /* GeneralCrashlyticsReport.swift */; };
 		8D9F2EC82F76D572008AEF5D /* LanguageSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9F2EC72F76D572008AEF5D /* LanguageSettingsView.swift */; };
 		8D9F2EC92F76D572008AEF5D /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9F2EC62F76D572008AEF5D /* LanguageManager.swift */; };
@@ -442,6 +443,7 @@
 		8D4F9A002F8827F300200C56 /* HomeNavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationCoordinator.swift; sourceTree = "<group>"; };
 		8D4F9A042F8827F300200C56 /* InfoNavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNavigationCoordinator.swift; sourceTree = "<group>"; };
 		8D5960C22F84516E00267530 /* MemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberView.swift; sourceTree = "<group>"; };
+		8D7E3AA02FA39A4300F71266 /* URL+AIC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+AIC.swift"; sourceTree = "<group>"; };
 		8D919A742DD9363800FED627 /* GeneralCrashlyticsReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCrashlyticsReport.swift; sourceTree = "<group>"; };
 		8D9F2EC62F76D572008AEF5D /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		8D9F2EC72F76D572008AEF5D /* LanguageSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsView.swift; sourceTree = "<group>"; };
@@ -958,6 +960,7 @@
 				E421782F1CC57BE200815B41 /* UITextView+AIC.swift */,
 				E2C72F0729C3EFA30021F1EC /* UIViewController+ChildTransition.swift */,
 				E260C3AF2B751728004911C4 /* Bundle+ApplicationInfo.swift */,
+				8D7E3AA02FA39A4300F71266 /* URL+AIC.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1485,6 +1488,7 @@
 				E4F82F6E1CA45F3400E4224B /* SectionViewController.swift in Sources */,
 				294C0B4F201A76F700F2ABB1 /* MapObjectAnnotationView.swift in Sources */,
 				E411DE811CCD50BE00E22047 /* AICTourStopModel.swift in Sources */,
+				8D7E3AA12FA39A4300F71266 /* URL+AIC.swift in Sources */,
 				E497FA5C1CFF3803007FA272 /* AICAppDataModel.swift in Sources */,
 				294C0B57201A76F700F2ABB1 /* MapImageAnnotation.swift in Sources */,
 				29AC501A2059C4210085EE5B /* AICTourCategoryModel.swift in Sources */,
