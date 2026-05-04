@@ -136,7 +136,6 @@ private extension RootViewController {
   func setup() {
     registerSettingsBundle()
     setupDelegate()
-    startLoadingData()
   }
 
   func startLoadingData() {
