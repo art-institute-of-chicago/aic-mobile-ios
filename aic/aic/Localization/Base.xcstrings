@@ -212,6 +212,41 @@
         }
       }
     },
+    "currently_off_view" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently off view"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acutualmente no está exhibido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas exposé actuellement"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현재 전시 중"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前不展出"
+          }
+        }
+      }
+    },
     "event_buy_tickets_action" : {
       "comment" : "Currently not used in iOS",
       "extractionState" : "manual",
@@ -600,6 +635,9 @@
           }
         }
       }
+    },
+    "Key" : {
+      "extractionState" : "manual"
     },
     "messages_next_action" : {
       "extractionState" : "manual",
