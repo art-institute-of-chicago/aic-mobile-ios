@@ -62,7 +62,7 @@ struct ExhibitionDetailView: View {
                             .padding(.horizontal)
                     } else {
                         // TODO: Missing translation
-                        Text("Ongoing")
+                        Text(.Base.ongoing)
                             .aicOldFontStyle(.subtitle).italic()
                             .padding(.horizontal)
                     }
