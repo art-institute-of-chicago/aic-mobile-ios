@@ -177,10 +177,10 @@ final class AppDataManager {
 			let floorSourceURL = floorsURLs[floorNumber]
 
 			// Create destination URL for this floor
-			let cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .allDomainsMask).first!
-			let floorFolderURL = cachesFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
+            let appSupportFolderURL = URL.applicationSupportDirectory
+			let floorFolderURL = appSupportFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
 			let floorDestinationURL = floorFolderURL.appendingPathComponent(floorSourceURL.lastPathComponent)
-
+            
 			// If a pdf file already exists with the same name, load from caches folder
 			if FileManager.default.fileExists(atPath: floorDestinationURL.path) {
 				self.numberMapFloorsLoaded += 1
