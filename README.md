@@ -1,4 +1,4 @@
-![Art Institute of Chicago](Documentation/AIC-logo3.jpg)
+<img src="https://github.com/art-institute-of-chicago/aic-mobile-ios/blob/readme-update/Documentation/AIC-logo3.jpg" width="200" />
 
 # Art Institute of Chicago Official Mobile App
 > A digital guide to the Art Institute of Chicago. Built with Swift for iOS.
