@@ -79,15 +79,36 @@
         <string>fonts/sourcesanspro/SourceSansPro-Regular.ttf</string>
         <string>fonts/sourcesanspro/SourceSansPro-Semibold.ttf</string>
         <string>fonts/sourcesanspro/SourceSansPro-SemiboldItalic.ttf</string>
-        <string>fonts/lora/Lora-Bold.ttf</string>
-        <string>fonts/lora/Lora-BoldItalic.ttf</string>
-        <string>fonts/lora/Lora-Italic.ttf</string>
-        <string>fonts/lora/Lora-Regular.ttf</string>
+        <string>fonts/amiri/Amiri-Bold.ttf</string>
+        <string>fonts/amiri/Amiri-BoldItalic.ttf</string>
+        <string>fonts/amiri/Amiri-Italic.ttf</string>
+        <string>fonts/amiri/Amiri-Regular.ttf</string>
 	</array>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict>
+            <key>UIWindowSceneSessionRoleApplication</key>
+            <array>
+                <dict>
+                    <key>UISceneConfigurationName</key>
+                    <string>Default Configuration</string>
+                    <key>UISceneDelegateClassName</key>
+                    <string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+                    <key>UISceneStoryboardFile</key>
+                    <string>MainStoryboard</string>
+                </dict>
+            </array>
+        </dict>
+    </dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 	</array>
+    <key>UIDesignRequiresCompatibility</key>
+    <true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
