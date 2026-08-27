@@ -1867,13 +1867,13 @@
 				INFOPLIST_FILE = aic/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1910,13 +1910,13 @@
 				INFOPLIST_FILE = aic/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -2100,13 +2100,13 @@
 				INFOPLIST_FILE = aic/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Art Institute";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.9;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",

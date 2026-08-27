@@ -106,6 +106,8 @@ final class AppDataManager {
 
         if let appDataURL = configuration.appDataURL() {
             Common.Constants.appDataJSON = appDataURL
+            // TEST: New CMS Endpoint
+            Common.Constants.appDataJSON = "https://mobile-admin-test.artic.edu/api/appData-v3"
         }
 
         if let memberCardSOAPRequestURL = configuration.memberCardSOAPRequestURL() {
@@ -171,12 +173,14 @@ final class AppDataManager {
 		}
 
 		for floorNumber in 0..<Common.Map.totalFloors {
-			let floorSourceURL = floorsURLs[floorNumber]
+            let staticURL = floorsURLs[floorNumber]
+            let floorSourceURL = URL(string: staticURL.absoluteString.replacing("172.20.28.120", with: "mobile-admin-test.artic.edu"))!
 
 			// Create destination URL for this floor
 			let cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .allDomainsMask).first!
 			let floorFolderURL = cachesFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
 			let floorDestinationURL = floorFolderURL.appendingPathComponent(floorSourceURL.lastPathComponent)
+            print("Saving PDF files to \(floorFolderURL)")
 
 			// If a pdf file already exists with the same name, load from caches folder
 			if FileManager.default.fileExists(atPath: floorDestinationURL.path) {
