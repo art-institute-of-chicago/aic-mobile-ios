@@ -22,6 +22,7 @@ struct ConfigurationResources {
             case appDataURL = "appDataJSON"
             case memberCardSOAPRequestURL = "memberCardSOAPRequestURL"
             case ignoreOverrideImageCrop = "ignoreOverrideImageCrop"
+            case iiifUserAgentHeaderValue = "iiifUserAgentHeaderValue"
             var key: String { self.rawValue }
         }
     }
@@ -52,6 +53,14 @@ struct ConfigurationResources {
         let result = try? value(
             in: .dataConstants,
             key: Root.DataConstants.memberCardSOAPRequestURL.key
+        ) as? String
+        return result
+    }
+
+    func iiifUserAgentHeaderValue() -> String? {
+        let result = try? value(
+            in: .dataConstants,
+            key: Root.DataConstants.iiifUserAgentHeaderValue.key
         ) as? String
         return result
     }
