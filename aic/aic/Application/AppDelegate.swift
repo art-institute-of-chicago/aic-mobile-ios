@@ -3,11 +3,12 @@
  Main app delegate
  */
 
-import UIKit
 import CoreData
-import MediaPlayer
 import CoreLocation
+import Kingfisher
 import MapKit
+import MediaPlayer
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if !DEBUG
         setupAnalytics()
 #endif
-        
+        setupKingfisher()
+
         // Set initial state for location tracking
         let locationManager = CLLocationManager()
         Common.Location.hasLoggedOnsite = false
@@ -51,6 +53,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AnalyticsProperty.make(by: .deviceLanguage),
             AnalyticsProperty.make(by: .membership)
         ])
+    }
+
+    private func setupKingfisher() {
+        let iiifUserAgentModifier = AnyModifier { request in
+            var request = request
+            
+            if request.url?.path.contains("/iiif/") == true {
+                request.setValue("aic-mobile-ios", forHTTPHeaderField: "aic-user-agent")
+            }
+            
+            return request
+        }
+        
+        KingfisherManager.shared.defaultOptions = [.requestModifier(iiifUserAgentModifier)]
     }
     
     func registerForAppRestartTomorrowMorning() {
