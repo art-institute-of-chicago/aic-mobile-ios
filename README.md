@@ -1,7 +1,7 @@
-![Art Institute of Chicago](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/master/aic-logo.gif)
+<img src="/Documentation/AIC-logo3.jpg" width="200" />
 
 # Art Institute of Chicago Official Mobile App
-> A digital guide to the Art Institute of Chicago. Built with Swift 4 for iOS.
+> A digital guide to the Art Institute of Chicago. Built with Swift for iOS.
 
 The Art Insitute of Chicago [Official Mobile App](http://extras.artic.edu/new-mobile/) is your personal,
 pocket-sized guide to our collection. The mobile experience merges location-aware technology with audio
@@ -124,9 +124,7 @@ We included some SampleData with this repo, so you don't _need_ the CMS in order
 
 ### Prerequisites
 
-1. Mac OS X (tested with Sierra)
-1. Xcode 9+ (Swift 4 support)
-1. [CocoaPods](https://cocoapods.org)
+1. Xcode 26+
 
 Throughout this guide, we assume that you know the basics of using Git and Terminal, or another terminal emulator of your choice.
 
@@ -142,11 +140,11 @@ git clone https://github.com/art-institute-of-chicago/aic-mobile-ios.git
 
 **Note:** We recommend against downloading the ZIP of this project to avoid "Missing Reference" issues.
 
-Once you have downloaded the repo, one way or another, open your terminal and change your directory to the top level of the project:
+Open the Xcode project file located at `aic/aic.xcodeproj`
 
-```bash
-cd /path/to/aic-mobile-ios
-```
+Wait for Xcode to resolve and fetch the Swift Packages.
+
+Run the app on a simulator or device using iOS 17 or later.
 
 You should now be up-and-running in Xcode! The next steps will be to get started with some test data so you can run the app in the Simulator.
 
@@ -544,22 +542,23 @@ Our membership system is based on Gateway's [Galaxy Connect](http://www.gatewayt
 
 ## External Libs
 
-The application relies on a few external libs, all of which are built using [Cocoapods](https://cocoapods.org/).
+The application relies on a few external libs, all of which are built using [Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/).
 
 - [PureLayout](https://github.com/PureLayout/PureLayout) is used for handling the layout and managing views.
 - [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) is used for parsing the JSON data.
 - [SWXMLHash](https://github.com/drmohundro/SWXMLHash) is used for parsing the SOAP response from the Member Card API
 - [AlamoFire](https://github.com/Alamofire/Alamofire) is used for all networking requests of data, assets, SOAP, etc.
 - [Kingfisher](https://github.com/onevcat/Kingfisher) is used for asynchronously load and cache images retreived from the different APIs.
-- [Localize-Swift](https://github.com/marmelroy/Localize-Swift) is used for the localization of content in English, Spanish and Chinese
-- [Atributika](https://github.com/psharanda/Atributika) is used for rendering HTML tags into iOS's attributed strings (rich text)
-- [GoogleAnalytics](https://cocoapods.org/pods/GoogleAnalytics) provides data analytics on general app usage.
+- [Localize-Swift](https://github.com/marmelroy/Localize-Swift) is used for the localization of content in English, Spanish and Chinese.
+- [Atributika](https://github.com/psharanda/Atributika) is used for rendering HTML tags into iOS's attributed strings (rich text).
+- [GoogleAnalytics](https://github.com/firebase/firebase-ios-sdk) provides data analytics on general app usage.
+- [Demark](https://github.com/steipete/Demark.git) is used to convert HTML content to Markdown.
 
 
 
 ## Analytics
 
-The app uses Google Analytics, installed using CocoaPods. 
+The app uses Google Analytics. 
 
 You will need to configure [GoogleService-Info.plist](#googleservice-infoplist) to enable analytics.
 

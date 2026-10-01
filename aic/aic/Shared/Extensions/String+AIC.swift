@@ -444,4 +444,12 @@ extension String {
         
         return result
     }
+    
+    var cleanedHTML: String {
+        self
+            .replacingOccurrences(of: "</p>", with: "</p>\n\n")
+            .replacingOccurrences(of: "<li>", with: "\n<li>•\t")
+            .replacingOccurrences(of: "</h2>", with: "</h2>\n")
+            .replacingOccurrences(of: "<br class=\"softbreak\"></strong>", with: "</strong><br>")
+    }
 }

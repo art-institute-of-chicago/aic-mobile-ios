@@ -512,15 +512,23 @@ extension SectionsViewController: UITabBarControllerDelegate {
 // MARK: Home Delegate
 
 extension SectionsViewController: HomeNavigationControllerDelegate {
+    func startTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?) {
+        tourContentCardDidPressStartTour(tour: tour, language: language, stopIndex: stopIndex)
+    }
+
+    func showSearch() {
+        searchCardVC.showFullscreen()
+    }
+    
 	func showMemberCard() {
         if currentViewController == infoVC {
             // Force screen to reload, to handle case where the app was already on the Info tab
             setSelectedSection(sectionVC: homeVC)
         }
-        
+
 		setSelectedSection(sectionVC: infoVC)
-		infoVC.shouldShowMemberCard = true
 		selectedIndex = 3
+        infoVC.navigateToMemberCard()
 	}
 
 	func showTourCard(tour: AICTourModel) {

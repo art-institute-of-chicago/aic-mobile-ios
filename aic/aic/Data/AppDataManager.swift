@@ -3,8 +3,9 @@ Abstract:
 Manager class that handles loading and manipulating the apps data sources
 */
 
-import UIKit
 import Alamofire
+import Demark
+import UIKit
 
 @objc protocol AppDataManagerDelegate: AnyObject {
 	func downloadProgress(withPctCompleted: Float)
@@ -19,6 +20,7 @@ final class AppDataManager {
     private(set) var app = AICAppDataModel(generalInfo: .init(translations: [:]), map: .init(floors: []))
 	private(set) var exhibitions = [AICExhibitionModel]()
 	private(set) var events = [AICEventModel]()
+    private(set) var buildingHours: AICBuildingHours?
 
 	private var dataFilesRetrieved = 0
 	var pctComplete = Float(0)
@@ -31,6 +33,7 @@ final class AppDataManager {
 	private var loadFailure = false
     private let dataParser: AppDataParser
     private let configuration: ConfigurationResources
+    private let markdownOptions = DemarkOptions(engine: .htmlToMd, ignoreTags: ["span", "br"])
 
     private init() {
         dataParser = AppDataParser(
@@ -174,10 +177,10 @@ final class AppDataManager {
 			let floorSourceURL = floorsURLs[floorNumber]
 
 			// Create destination URL for this floor
-			let cachesFolderURL = FileManager.default.urls(for: .cachesDirectory, in: .allDomainsMask).first!
-			let floorFolderURL = cachesFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
+            let appSupportFolderURL = URL.applicationSupportDirectory
+			let floorFolderURL = appSupportFolderURL.appendingPathComponent("aicFloor\(floorNumber)/")
 			let floorDestinationURL = floorFolderURL.appendingPathComponent(floorSourceURL.lastPathComponent)
-
+            
 			// If a pdf file already exists with the same name, load from caches folder
 			if FileManager.default.fileExists(atPath: floorDestinationURL.path) {
 				self.numberMapFloorsLoaded += 1
@@ -222,6 +225,10 @@ final class AppDataManager {
 				self.app = self.dataParser.parse(appData: appData)
 				self.updateDownloadProgress()
 				self.downloadExhibitions()
+                
+                Task {
+                    await self.downloadBuildingHours()
+                }
 			} else {
 				// If we couldn't load some floor pdfs let the user know
 				self.notifyLoadFailure(withMessage: "Failed to load application data.")
@@ -229,7 +236,23 @@ final class AppDataManager {
 			}
 		}
 	}
+    
+    private func downloadBuildingHours() async {
+        do {
+            guard let baseURL = app.dataSettings[.dataApiUrl] else { return }
+            guard let url = URL(string: baseURL) else { return }
+            
+            
+            let buildingHoursURL = url.appending(path: "api/v1/hours").appending(queryItems: [.init(name: "limit", value: "2")])
+            let (data, _) = try await URLSession.shared.data(from: buildingHoursURL)
+            let hours = try JSONDecoder().decode(AICBuildingHours.self, from: data)
+            self.buildingHours = hours
+        } catch {
+            print("WARN: Unable to fetch building hours: \(error.localizedDescription)")
+        }
+    }
 
+    
 	// MARK: Download Exhibitions
 
 	private func downloadExhibitions() {
@@ -276,6 +299,16 @@ final class AppDataManager {
 				switch response.result {
 				case .success(let value):
                         self.exhibitions = self.dataParser.parse(exhibitionsData: value).sorted(by: { $0.position < $1.position })
+                        
+                        Task {
+                            let denmark = await Demark()
+                            
+                            for exhibition in self.exhibitions {
+                                if let markdown = try? await denmark.convertToMarkdown(exhibition.shortDescription.cleanedHTML, options: self.markdownOptions) {
+                                    exhibition.shortDescription = markdown
+                                }
+                            }
+                        }
 
 				case .failure(let error):
 					debugPrint(error)
@@ -288,7 +321,7 @@ final class AppDataManager {
 
 	// MARK: Download Events
 
-	func downloadEvents() {
+	private func downloadEvents() {
 		var url: String = app.dataSettings[.dataApiUrl]! + app.dataSettings[.eventsEndpoint]!
 		if url.range(of: "/search") == nil {
 			url.append("/search")
@@ -340,18 +373,39 @@ final class AppDataManager {
 			]
 		]
 
-		AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-			.validate()
-			.responseData { response in
-				switch response.result {
-				case .success(let value):
-					self.events = self.dataParser.parse(eventsData: value)
-				case .failure(let error):
-					debugPrint(error)
-				}
-				self.updateDownloadProgress()
-		}
-	}
+        AF.request(urlString!, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate()
+            .responseData { response in
+                switch response.result {
+                    case .success(let value):
+                        self.events = self.dataParser.parse(eventsData: value)
+                        
+                        Task {
+                            let denmark = await Demark()
+                            
+                            for event in self.events {
+                                if let index = self.events.firstIndex(of: event) {
+                                    if let shortMarkdown = try? await denmark.convertToMarkdown(event.shortDescription.cleanedHTML, options: self.markdownOptions) {
+                                        self.events[index].shortDescription = shortMarkdown
+                                    }
+                                    
+                                    if let longMarkdown = try? await denmark.convertToMarkdown(event.longDescription.cleanedHTML, options: self.markdownOptions) {
+                                        self.events[index].longDescription = longMarkdown
+                                    }
+                                    
+                                    if let buttonMarkdown = try? await denmark.convertToMarkdown(event.buttonCaption?.cleanedHTML ?? "", options: self.markdownOptions) {
+                                        self.events[index].buttonCaption = buttonMarkdown
+                                    }
+                                }
+                            }
+                        }
+                    case .failure(let error):
+                        debugPrint(error)
+                }
+                
+                self.updateDownloadProgress()
+            }
+    }
 
 	// MARK: Fetch Member Card if Needed
 

@@ -1,5 +1,5 @@
 {
-  "originHash" : "e560b5f1dff81670d19e009b9f0358dfb2327144879ec4c25bbfa5e774ad8abf",
+  "originHash" : "c83a1af683ad45cc54b0a6f0336b265872bc0cef1dbdb761c25c9907c7069927",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "d018897afbd55d9065ef859650585bac890ada7e",
         "version" : "4.10.1"
+      }
+    },
+    {
+      "identity" : "demark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/steipete/Demark.git",
+      "state" : {
+        "revision" : "9d12266c98f51099beec92e50483392869b12d77",
+        "version" : "1.1.0"
       }
     },
     {

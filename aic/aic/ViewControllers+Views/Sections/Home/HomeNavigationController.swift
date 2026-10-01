@@ -6,18 +6,23 @@
 //  Copyright © 2017 Art Institute of Chicago. All rights reserved.
 //
 
-import UIKit
 import Localize_Swift
+import UIKit
+import SwiftUI
 
 protocol HomeNavigationControllerDelegate: AnyObject {
 	func showMemberCard()
 	func showTourCard(tour: AICTourModel)
 	func showExhibitionCard(exhibition: AICExhibitionModel)
 	func showEventCard(event: AICEventModel)
+    func showSearch()
+    func startTour(tour: AICTourModel, language: Common.Language, stopIndex: Int?)
+    func showExhibitionOnMap(exhibition: AICExhibitionModel)
 }
 
 class HomeNavigationController: SectionNavigationController {
 	let homeVC: HomeViewController
+    let coordinator = HomeNavigationCoordinator()
 
 	weak var sectionDelegate: HomeNavigationControllerDelegate?
 
@@ -32,11 +37,37 @@ class HomeNavigationController: SectionNavigationController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        coordinator.showExhibitionOnMap = { [weak self] exhibition in
+            self?.sectionDelegate?.showExhibitionOnMap(exhibition: exhibition)
+        }
 
-		self.delegate = self
-		homeVC.delegate = self
+        coordinator.startTour = { [weak self] tour, language, stopIndex in
+            self?.sectionDelegate?.startTour(tour: tour, language: language, stopIndex: stopIndex)
+        }
+        coordinator.showMemberCard = { [weak self] in
+            self?.sectionDelegate?.showMemberCard()
+        }
 
-		self.pushViewController(homeVC, animated: false)
+        let home = NavigationStack {
+            HomeScreen(languageManager: LanguageManager.sharedInstance)
+                .toolbar {
+                    Button {
+                        self.sectionDelegate?.showSearch()
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                    }
+                    .foregroundStyle(.white)
+                }
+                .environment(\.locale, LanguageManager.sharedInstance.currentLocale)
+                .environmentObject(coordinator)
+        }
+        let rootVC = UIHostingController(rootView: home)
+        
+        addChild(rootVC)
+        view.addSubview(rootVC.view)
+        rootVC.view.autoPinEdgesToSuperviewEdges()
+        rootVC.didMove(toParent: self)
 	}
 
 	override func viewDidAppear(_ animated: Bool) {

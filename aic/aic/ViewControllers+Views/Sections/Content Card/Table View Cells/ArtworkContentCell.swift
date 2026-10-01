@@ -52,7 +52,7 @@ class ArtworkContentCell: UITableViewCell {
 			artistDisplayLabel.textColor = .white
 			artistDisplayLabel.font = .aicTextFont
 
-            galleryTitleLabel.text = artworkModel.gallery?.title ?? "Currently off view"
+            galleryTitleLabel.text = artworkModel.gallery?.title ?? "currently_off_view".localized(using: "Base")
 			galleryTitleLabel.textColor = .white
 			galleryTitleLabel.font = .aicTextItalicFont
 
