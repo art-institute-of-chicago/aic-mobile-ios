@@ -22,6 +22,8 @@ struct ConfigurationResources {
             case appDataURL = "appDataJSON"
             case memberCardSOAPRequestURL = "memberCardSOAPRequestURL"
             case ignoreOverrideImageCrop = "ignoreOverrideImageCrop"
+            case iiifCFAccessClientId = "iiifCFAccessClientId"
+            case iiifCFAccessClientSecret = "iiifCFAccessClientSecret"
             var key: String { self.rawValue }
         }
     }
@@ -61,6 +63,22 @@ struct ConfigurationResources {
             in: .dataConstants,
             key: Root.DataConstants.ignoreOverrideImageCrop.key
         ) as? Bool else { return false }
+        return result
+    }
+
+    func iiifCFAccessClientId() -> String? {
+        let result = try? value(
+            in: .dataConstants,
+            key: Root.DataConstants.iiifCFAccessClientId.key
+        ) as? String
+        return result
+    }
+
+    func iiifCFAccessClientSecret() -> String? {
+        let result = try? value(
+            in: .dataConstants,
+            key: Root.DataConstants.iiifCFAccessClientSecret.key
+        ) as? String
         return result
     }
 

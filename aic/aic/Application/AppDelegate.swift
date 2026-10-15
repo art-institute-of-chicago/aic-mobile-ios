@@ -26,6 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var request = request
             if url.contains("/iiif/2") {
                 request.url = URL(string: url.replacingOccurrences(of: "www.artic.edu", with: "www-test.artic.edu"))
+
+                // Cloudflare Access service token. Values are read at request time, after
+                // AppDataManager has loaded them from Config.plist.
+                if let clientId = Common.Constants.iiifCFAccessClientId, !clientId.isEmpty {
+                    request.setValue(clientId, forHTTPHeaderField: "CF-Access-Client-Id")
+                }
+                if let clientSecret = Common.Constants.iiifCFAccessClientSecret, !clientSecret.isEmpty {
+                    request.setValue(clientSecret, forHTTPHeaderField: "CF-Access-Client-Secret")
+                }
             } else {
                 print("No need to change. Not an /iiif/2 URL: \(url)")
             }
