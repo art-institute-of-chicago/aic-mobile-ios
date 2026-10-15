@@ -1364,7 +1364,7 @@ final class AppDataParser {
                     var imageUrl: URL?
                     do {
                         let imageId = try getString(fromJSON: resultJSON, forKey: "image_id")
-                        let iiifString = AppDataManager.sharedInstance.app.dataSettings[.imageServerUrl]! + "/" + imageId
+                        let iiifString = AppDataManager.sharedInstance.app.dataSettings[.imageServerUrl]!.replacingOccurrences(of: "www.artic.edu", with: "www-test.artic.edu") + "/" + imageId
                         let thumbnailString: String = iiifString + "/full/!200,200/0/default.jpg"
                         let imageString: String = iiifString + "/full/!800,800/0/default.jpg"
                         thumbnailUrl = URL(string: thumbnailString)

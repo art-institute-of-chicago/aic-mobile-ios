@@ -16,7 +16,7 @@ class MapImageAnnotation: MapAnnotation {
 		self.image = nil
 		super.init(coordinate: coordinate)
 
-		ImageDownloader.default.downloadImage(with: imageUrl, options: nil, progressBlock: nil) { (result) in
+		ImageDownloader.default.downloadImage(with: imageUrl, options: KingfisherManager.shared.defaultOptions, progressBlock: nil) { (result) in
 			if let result = try? result.get() {
 				self.image = result.image
 			}

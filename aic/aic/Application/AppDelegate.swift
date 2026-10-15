@@ -3,8 +3,8 @@
  Main app delegate
  */
 
+import Kingfisher
 import UIKit
-import CoreData
 import MediaPlayer
 import CoreLocation
 import MapKit
@@ -17,6 +17,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if !DEBUG
         setupAnalytics()
 #endif
+        
+        /////////////////////////////////
+        // TEST CODE FOR /iiif IMAGE URLS
+        let imageURLRewriter = AnyModifier { request in
+            guard let url = request.url?.absoluteString else { return request }
+            
+            var request = request
+            if url.contains("/iiif/2") {
+                request.url = URL(string: url.replacingOccurrences(of: "www.artic.edu", with: "www-test.artic.edu"))
+            } else {
+                print("No need to change. Not an /iiif/2 URL: \(url)")
+            }
+            
+            return request
+        }
+        
+        KingfisherManager.shared.defaultOptions += [.requestModifier(imageURLRewriter)]
+        /////////////////////////////////
         
         // Set initial state for location tracking
         let locationManager = CLLocationManager()
