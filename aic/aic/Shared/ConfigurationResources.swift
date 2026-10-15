@@ -24,6 +24,7 @@ struct ConfigurationResources {
             case ignoreOverrideImageCrop = "ignoreOverrideImageCrop"
             case iiifCFAccessClientId = "iiifCFAccessClientId"
             case iiifCFAccessClientSecret = "iiifCFAccessClientSecret"
+            case iiifUserAgentHeaderValue = "iiifUserAgentHeaderValue"
             var key: String { self.rawValue }
         }
     }
@@ -81,6 +82,14 @@ struct ConfigurationResources {
         ) as? String
         return result
     }
+    
+    func iiifUserAgentHeaderValue() -> String? {
+            let result = try? value(
+                in: .dataConstants,
+                key: Root.DataConstants.iiifUserAgentHeaderValue.key
+            ) as? String
+            return result
+        }
 
     private func value(in container: Root, key: String) throws -> Any {
         let content = try plistFile.content()

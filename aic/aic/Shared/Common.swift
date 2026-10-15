@@ -28,6 +28,7 @@ struct Common {
         // from Config.plist; a header is only sent when its value is present and non-empty.
         static var iiifCFAccessClientId: String?
         static var iiifCFAccessClientSecret: String?
+        static var iiifUserAgentHeader: String?
 
         // Used to cache JSON data locally until remote file changes
         static let localAppDataFilename = "app.data"

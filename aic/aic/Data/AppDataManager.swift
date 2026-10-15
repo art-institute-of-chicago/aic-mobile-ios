@@ -114,6 +114,7 @@ final class AppDataManager {
 
         Common.Constants.iiifCFAccessClientId = configuration.iiifCFAccessClientId()
         Common.Constants.iiifCFAccessClientSecret = configuration.iiifCFAccessClientSecret()
+        Common.Constants.iiifUserAgentHeader = configuration.iiifUserAgentHeaderValue()
     }
 
 	// MARK: Download App Data
