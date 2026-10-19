@@ -24,6 +24,11 @@ struct Common {
         // Feature #886 - Override crop rects for SOLR images
         static var ignoreOverrideImageCrop = true
 
+        // Cloudflare Access service token sent with /iiif image requests.
+        static var iiifCFAccessClientId: String?
+        static var iiifCFAccessClientSecret: String?
+        static var iiifUserAgentHeader: String?
+
         // Used to cache JSON data locally until remote file changes
         static let localAppDataFilename = "app.data"
     }
