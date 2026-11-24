@@ -3,8 +3,8 @@
  Main app delegate
  */
 
+import Kingfisher
 import UIKit
-import CoreData
 import MediaPlayer
 import CoreLocation
 import MapKit
@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if !DEBUG
         setupAnalytics()
 #endif
+        
+        setupKingfisherCloudflareAccess()
         
         // Set initial state for location tracking
         let locationManager = CLLocationManager()
@@ -51,6 +53,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AnalyticsProperty.make(by: .deviceLanguage),
             AnalyticsProperty.make(by: .membership)
         ])
+    }
+    
+    private func setupKingfisherCloudflareAccess() {
+        let imageURLRewriter = AnyModifier { request in
+            guard let url = request.url?.absoluteString else { return request }
+            
+            var request = request
+            if url.contains("/iiif/2") {
+                if let userAgent = Common.Constants.iiifUserAgentHeader, !userAgent.isEmpty {
+                    request.setValue(userAgent, forHTTPHeaderField: "aic-user-agent")
+                }
+                
+                if let clientId = Common.Constants.iiifCFAccessClientId, !clientId.isEmpty {
+                    request.setValue(clientId, forHTTPHeaderField: "CF-Access-Client-Id")
+                }
+                
+                if let clientSecret = Common.Constants.iiifCFAccessClientSecret, !clientSecret.isEmpty {
+                    request.setValue(clientSecret, forHTTPHeaderField: "CF-Access-Client-Secret")
+                }
+            }
+            
+            return request
+        }
+        
+        KingfisherManager.shared.defaultOptions += [.requestModifier(imageURLRewriter)]
+        
     }
     
     func registerForAppRestartTomorrowMorning() {

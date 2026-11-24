@@ -111,6 +111,10 @@ final class AppDataManager {
         if let memberCardSOAPRequestURL = configuration.memberCardSOAPRequestURL() {
             Common.Constants.memberCardSOAPRequestURL = memberCardSOAPRequestURL
         }
+
+        Common.Constants.iiifCFAccessClientId = configuration.iiifCFAccessClientId()
+        Common.Constants.iiifCFAccessClientSecret = configuration.iiifCFAccessClientSecret()
+        Common.Constants.iiifUserAgentHeader = configuration.iiifUserAgentHeaderValue()
     }
 
 	// MARK: Download App Data

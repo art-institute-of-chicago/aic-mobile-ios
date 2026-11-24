@@ -22,6 +22,9 @@ struct ConfigurationResources {
             case appDataURL = "appDataJSON"
             case memberCardSOAPRequestURL = "memberCardSOAPRequestURL"
             case ignoreOverrideImageCrop = "ignoreOverrideImageCrop"
+            case iiifCFAccessClientId = "iiifCFAccessClientId"
+            case iiifCFAccessClientSecret = "iiifCFAccessClientSecret"
+            case iiifUserAgentHeaderValue = "iiifUserAgentHeaderValue"
             var key: String { self.rawValue }
         }
     }
@@ -63,6 +66,30 @@ struct ConfigurationResources {
         ) as? Bool else { return false }
         return result
     }
+
+    func iiifCFAccessClientId() -> String? {
+        let result = try? value(
+            in: .dataConstants,
+            key: Root.DataConstants.iiifCFAccessClientId.key
+        ) as? String
+        return result
+    }
+
+    func iiifCFAccessClientSecret() -> String? {
+        let result = try? value(
+            in: .dataConstants,
+            key: Root.DataConstants.iiifCFAccessClientSecret.key
+        ) as? String
+        return result
+    }
+    
+    func iiifUserAgentHeaderValue() -> String? {
+            let result = try? value(
+                in: .dataConstants,
+                key: Root.DataConstants.iiifUserAgentHeaderValue.key
+            ) as? String
+            return result
+        }
 
     private func value(in container: Root, key: String) throws -> Any {
         let content = try plistFile.content()
